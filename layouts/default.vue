@@ -1,8 +1,33 @@
 <template>
   <div>
-    <nuxt />
+    <!-- START HEADER -->
+    <!--<el-header>-->
+      <Header></Header>
+    <!--</el-header>-->
+    <!-- END HEADER -->
+    <!-- START CONTENT -->
+    <el-main>
+      <nuxt />
+    </el-main>
+    <!-- End CONTENT -->
+    <!-- START FOOTER -->
+    <Footer></Footer>
+    <!-- END FOOTER -->
   </div>
 </template>
+
+<script>
+  import Header from '~/components/Header.vue'
+  import Footer from '~/components/Footer.vue'
+  import NavBar from '~/components/NavBar.vue'
+  export default {
+      components: {
+          Header,
+          Footer,
+          NavBar
+      }
+  }
+</script>
 
 <style>
 html {
@@ -22,34 +47,5 @@ html {
 *:after {
   box-sizing: border-box;
   margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
 }
 </style>
