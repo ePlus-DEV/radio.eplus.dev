@@ -1,6 +1,6 @@
 jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
 jwplayer("radio-player").setup({
-  width: "530",
+  width: "300",
   height: "40",
   "playlist": [
     {
