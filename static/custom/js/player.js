@@ -11,11 +11,10 @@ jwplayer("radio-player").setup({
           "title": "Sintel Trailer",
           "type": "hls",
           "label": "0"
-        }
-      ]
-    }
-  ],
-  'flashplayer': '/jwplayer/player.swf',
+}
+]
+}
+],
   "primary": "html5",
   "hlshtml": true,
   "autostart": true,
