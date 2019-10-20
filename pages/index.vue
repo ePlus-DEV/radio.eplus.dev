@@ -1,40 +1,54 @@
 <template>
   <div>
 
-
-
-
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Việt Nam</span>
-        <div class="grid-content bg-purple">
-          <el-autocomplete
-            class="inline-input"
-            v-model="state1"
-            :fetch-suggestions="querySearch"
-            placeholder="Please Input"
-            @select="handleSelect"
-          ></el-autocomplete>
-        </div>
       </div>
 
       <el-row :gutter="12">
-        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
           <router-link to="/viet-nam/vov1">
           <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov1.png" lazy></el-image>
           </router-link>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov2">
           <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov2.png" lazy></el-image>
+          </router-link>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov3">
           <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov3.png" lazy></el-image>
+          </router-link>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov4">
           <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-4.png" lazy></el-image>
+          </router-link>
+        </el-col>
+
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov5">
+            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov5.png" lazy></el-image>
+          </router-link>
+        </el-col>
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov-english">
+            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-english.png" lazy></el-image>
+          </router-link>
+        </el-col>
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov-gt-hcm">
+            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-gt.png" lazy></el-image>
+          </router-link>
+        </el-col>
+        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
+          <router-link to="/viet-nam/vov-giao-thong">
+            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-giao-thong.png" lazy></el-image>
+          </router-link>
         </el-col>
       </el-row>
-
 
     </el-card>
   </div>
@@ -46,18 +60,18 @@
     export default {
         head() {
             return {
-                title: 'HomePage',
+                title: 'Trang Chủ - Radio Online Việt Nam',
                 meta: [
                     // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                     {
-                        hid: 'description',
-                        name: 'description',
-                        content: 'My custom description'
+                        // hid: 'description',
+                        // name: 'description',
+                        content: 'VOV Giao Thông, VOV1, VOV2, VOV3, VOV4 - Radio Online Việt Nam'
                     }
                 ],
                 script: [
                     // {src: 'https://cdn.jwplayer.com/libraries/EmuDAgVd.js', body: false, ssr: false},
-                    {src: 'custom/js/player.js', body: false, ssr: false},
+                    // {src: 'custom/js/player.js', body: false, ssr: false},
 
                 ],
             }
@@ -98,6 +112,30 @@
         },
         mounted() {
             this.links = this.loadAll();
+            jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
+            jwplayer("radio-player").setup({
+                width: "100%",
+                height: "45",
+                localization: {
+                    liveBroadcast: "Đài VOV Giao Thông"
+                },
+                "playlist": [{
+                    "sources": [{
+                        "default": false,
+                        // "file": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8",
+                        "file": "https://5a6872aace0ce.streamlock.net/nghevovgthn/vovgthn.stream_aac/playlist.m3u8",
+                        "type": "hls",
+                        "label": "0"
+                    }]
+                }],
+                "primary": "html5",
+                "hlshtml": true,
+                "autostart": true,
+                "androidhls": true,
+                "skin": {
+                    name:"thin"
+                }
+            });
         },
         components: {
         }
