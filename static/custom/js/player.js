@@ -7,7 +7,8 @@ jwplayer("radio-player").setup({
       "sources": [
         {
           "default": false,
-          "file": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8",
+          // "file": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8",
+          "file": "https://5a6872aace0ce.streamlock.net/nghevovgthn/vovgthn.stream_aac/playlist.m3u8",
           "title": "Sintel Trailer",
           "type": "hls",
           "label": "0"
