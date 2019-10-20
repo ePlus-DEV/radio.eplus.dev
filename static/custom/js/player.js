@@ -7,7 +7,7 @@ jwplayer("radio-player").setup({
       "sources": [
         {
           "default": false,
-          "file": "//a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_radio_three.m3u8",
+          "file": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8",
           "title": "Sintel Trailer",
           "type": "hls",
           "label": "0"
