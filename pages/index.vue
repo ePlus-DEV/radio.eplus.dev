@@ -1,33 +1,37 @@
 <template>
   <div>
-    <el-container>
 
-    </el-container>
+
+
+
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Việt Nam</span>
+        <div class="grid-content bg-purple">
+          <el-autocomplete
+            class="inline-input"
+            v-model="state1"
+            :fetch-suggestions="querySearch"
+            placeholder="Please Input"
+            @select="handleSelect"
+          ></el-autocomplete>
+        </div>
       </div>
 
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <div class="grid-content bg-purple">
-            <el-autocomplete
-              class="inline-input"
-              v-model="state1"
-              :fetch-suggestions="querySearch"
-              placeholder="Please Input"
-              @select="handleSelect"
-            ></el-autocomplete>
-          </div>
+      <el-row :gutter="12">
+        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+          <router-link to="/viet-nam/vov1">
+          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov1.png" lazy></el-image>
+          </router-link>
         </el-col>
-        <el-col :span="6">
-          <div class="grid-content bg-purple">11</div>
+        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov2.png" lazy></el-image>
         </el-col>
-        <el-col :span="6">
-          <div class="grid-content bg-purple">11</div>
+        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov3.png" lazy></el-image>
         </el-col>
-        <el-col :span="6">
-          <div class="grid-content bg-purple">222</div>
+        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="1">
+          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-4.png" lazy></el-image>
         </el-col>
       </el-row>
 
@@ -37,6 +41,8 @@
 </template>
 
 <script>
+    // import { videoPlayer } from 'vue-video-player'
+
     export default {
         head() {
             return {
@@ -50,7 +56,9 @@
                     }
                 ],
                 script: [
-                    {src: '/assets/custom/js/fix.js', body: true, ssr: true},
+                    // {src: 'https://cdn.jwplayer.com/libraries/EmuDAgVd.js', body: false, ssr: false},
+                    {src: 'custom/js/player.js', body: false, ssr: false},
+
                 ],
             }
         },
@@ -58,7 +66,7 @@
             return {
                 links: [],
                 state1: '',
-                state2: ''
+                state2: '',
             };
         },
         methods: {
@@ -91,7 +99,8 @@
         mounted() {
             this.links = this.loadAll();
         },
-        components: {}
+        components: {
+        }
     }
 </script>
 

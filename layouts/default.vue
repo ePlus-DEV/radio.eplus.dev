@@ -7,6 +7,7 @@
     <!-- END HEADER -->
     <!-- START CONTENT -->
     <el-main>
+      <Player></Player>
       <nuxt />
     </el-main>
     <!-- End CONTENT -->
@@ -20,11 +21,23 @@
   import Header from '~/components/Header.vue'
   import Footer from '~/components/Footer.vue'
   import NavBar from '~/components/NavBar.vue'
+  import Player from '~/components/Player.vue'
+
   export default {
+      head() {
+          return {
+              script: [
+                  // {src: '//code.jquery.com/jquery-1.11.0.min.js', body: false, ssr: true},
+                  // {src: 'http://jwpsrv.com/library/4+R8PsscEeO69iIACooLPQ.js', body: false, ssr: true},
+                  // {src: '/custom/js/player.js', body: false, ssr: false},
+              ],
+          }
+      },
       components: {
           Header,
           Footer,
-          NavBar
+          NavBar,
+          Player
       }
   }
 </script>
