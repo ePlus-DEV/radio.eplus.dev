@@ -30,7 +30,7 @@
         },
         mounted () {
 
-            this.$axios.get('/assets/radio/viet-nam/data.json')
+            this.$axios.get('assets/radio/viet-nam/data.json')
                 .then((res) => {
 
                     if(res.data.hasOwnProperty(this.$route.params.name)){
