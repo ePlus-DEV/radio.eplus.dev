@@ -55,7 +55,6 @@
 </template>
 
 <script>
-    // import { videoPlayer } from 'vue-video-player'
 
     export default {
         head() {
@@ -71,7 +70,7 @@
                 ],
                 script: [
                     // {src: 'https://cdn.jwplayer.com/libraries/EmuDAgVd.js', body: false, ssr: false},
-                    // {src: 'custom/js/player.js', body: false, ssr: false},
+                    {src: 'custom/js/player.js', body: false, ssr: false},
 
                 ],
             }
@@ -112,22 +111,43 @@
         },
         mounted() {
             this.links = this.loadAll();
-            jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
+
+            $('#radio-player').html("<audio id='my-player' class='video-js' style=\"margin-top: 25px\" autoplay controls preload='auto' width=\"500\" height=\"250\" data-setup='{\n" +
+                "            \"inactivityTimeout\": 0,\n" +
+                "            \"aspectRatio\": \"1:0\",\n" +
+                "            \"fluid\": true,\n" +
+                "            \"controlBar\": {\"fullscreenToggle\": false},\n" +
+                "            \"language\":\"vi\"\n" +
+                "           }'>\n" +
+                "        <source src='http://media-ice.musicradio.com:80/HeartLondon' type='audio/mpeg' />\n" +
+                "\n" +
+                "        <p class='vjs-no-js'>\n" +
+                "          To view this video please enable JavaScript, and consider upgrading to a web browser that\n" +
+                "          <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>\n" +
+                "        </p>\n" +
+                "      </audio>");
+
+            // myPlayer.src({type: "audio/mpeg", src: "https://media-ice.musicradio.com/HeartLondon.m3u"});
+
+
+            /*jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
             jwplayer("radio-player").setup({
                 width: "100%",
                 height: "45",
                 localization: {
                     liveBroadcast: "Đài VOV Giao Thông"
                 },
-                "playlist": [{
+                /!*"playlist": [{
                     "sources": [{
                         "default": false,
-                        // "file": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8",
-                        "file": "https://5a6872aace0ce.streamlock.net/nghevovgthn/vovgthn.stream_aac/playlist.m3u8",
+                        "file": "assets/radio/uk.data.rss",
+                        // "file": "https://5a6872aace0ce.streamlock.net/nghevovgthn/vovgthn.stream_aac/playlist.m3u8",
                         "type": "hls",
                         "label": "0"
                     }]
-                }],
+                }],*!/
+                "flashplayer":"//cdn.jsdelivr.net/jwplayer/5.10/player.swf",
+                "playlist": "assets/radio/uk/data.rss",
                 "primary": "html5",
                 "hlshtml": true,
                 "autostart": true,
@@ -135,7 +155,7 @@
                 "skin": {
                     name:"thin"
                 }
-            });
+            });*/
         },
         components: {
         }

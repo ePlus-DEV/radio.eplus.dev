@@ -17,9 +17,9 @@
                         content: 'Radio tại Việt Nam'
                     }
                 ],
-                /*script: [
-                    {src: '/assets/custom/js/fix.js', body: true, ssr: true},
-                ],*/
+                script: [
+                    {src: '/custom/js/player.js', body: false, ssr: false},
+                ],
             }
         },
         data () {
@@ -30,7 +30,7 @@
         },
         mounted () {
 
-            this.$axios.get('https://radio.eplus.dev/assets/radio/viet-nam/data.json')
+            this.$axios.get('/assets/radio/viet-nam/data.json')
                 .then((res) => {
 
                     if(res.data.hasOwnProperty(this.$route.params.name)){
@@ -44,11 +44,26 @@
 
 
                         var self = this;
-                        self.title = this.$route.params.name.toUpperCase()+' - '+data.title
-                        self.$emit('updateHead')
+                        self.title = this.$route.params.name.toUpperCase()+' - '+data.title;
+                        self.$emit('updateHead');
 
-                        jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
-                        jwplayer("radio-player").setup({
+                        $('#radio-player').html("<audio id='my-player' class='video-js' style=\"margin-top: 25px\" autoplay controls preload='auto' width=\"500\" height=\"250\" data-setup='{\n" +
+                            "            \"inactivityTimeout\": 0,\n" +
+                            "            \"aspectRatio\": \"1:0\",\n" +
+                            "            \"fluid\": true,\n" +
+                            "            \"controlBar\": {\"fullscreenToggle\": false},\n" +
+                            "            \"language\":\"vi\"\n" +
+                            "           }'>\n" +
+                            "        <source src='"+data.stream+"' type='"+data.type+"' />\n" +
+                            "\n" +
+                            "        <p class='vjs-no-js'>\n" +
+                            "          To view this video please enable JavaScript, and consider upgrading to a web browser that\n" +
+                            "          <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>\n" +
+                            "        </p>\n" +
+                            "      </audio>");
+
+                        // jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
+                        /*jwplayer("radio-player").setup({
                             width: "100%",
                             height: "45",
                             localization: {
@@ -69,7 +84,7 @@
                             "skin": {
                                 name:"thin"
                             }
-                        });
+                        });*/
 
                     }else{
 

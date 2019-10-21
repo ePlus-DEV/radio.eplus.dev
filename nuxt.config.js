@@ -59,6 +59,10 @@ export default {
   axios: {
     baseURL: 'https://radio.eplus.dev',
     proxyHeaders: false,
-    credentials: false
+    credentials: false,
+    proxy: true
+  },
+  proxy: {
+    '/assets/': { target: 'https://radio.eplus.dev/', pathRewrite: {'^/assets/': ''}, changeOrigin: true }
   }
 }

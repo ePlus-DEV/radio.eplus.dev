@@ -1,34 +1,42 @@
 {
   "vov1": {
     "title": "VOV 1",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8"
   },
   "vov2": {
     "title": "VOV 2",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevov2/vov2.stream_aac/playlist.m3u8"
   },
   "vov3": {
     "title": "VOV 3",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevov3/vov3.stream_aac/playlist.m3u8"
   },
   "vov4": {
     "title": "VOV 4",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevovtaybac/vovtaybac.stream_aac/playlist.m3u8"
   },
   "vov5": {
     "title": "VOV 5",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevov5/vov5.stream_aac/playlist.m3u8"
   },
   "vov-english": {
     "title": "VOV - English",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevov247/vov247.stream_aac/playlist.m3u8"
   },
   "vov-gt-hcm": {
     "title": "VOV Giao Thông TP.HCM",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevovgthcm/vovgthcm.stream_aac/playlist.m3u8"
   },
   "vov-giao-thong": {
     "title": "VOV Giao Thông Hà Nội",
+    "type": "application/x-mpegURL",
     "stream": "https://5a6872aace0ce.streamlock.net/nghevovgthn/vovgthn.stream_aac/playlist.m3u8"
   }
 }
