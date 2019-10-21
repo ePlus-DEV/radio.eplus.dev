@@ -8,7 +8,7 @@
 
       <div slot="header" class="clearfix">
         <el-badge value="Live" class="item">
-          <el-button size="small">Heart London</el-button>
+          <el-button size="small" id="radio-name">Radio.ePlus.DEV</el-button>
         </el-badge>
       </div>
 

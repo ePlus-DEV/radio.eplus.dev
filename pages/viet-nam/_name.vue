@@ -30,6 +30,8 @@
         },
         mounted () {
 
+            myPlayer.dispose();
+
             this.$axios.get('/assets/radio/viet-nam/data.json')
                 .then((res) => {
 
@@ -42,6 +44,7 @@
                             message: 'Phát chương trình từ radio '+data.title,
                         });
 
+                        $('#radio-name').text(data.title);
 
                         var self = this;
                         self.title = this.$route.params.name.toUpperCase()+' - '+data.title;

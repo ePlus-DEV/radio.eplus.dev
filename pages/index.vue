@@ -111,6 +111,13 @@
         },
         mounted() {
             this.links = this.loadAll();
+            $('#radio-name').text('Heart London');
+
+
+            if (typeof variable !== 'undefined') {
+                myPlayer.dispose();
+                $('#radio-player').html('');
+            }
 
             $('#radio-player').html("<audio id='my-player' class='video-js' style=\"margin-top: 25px\" autoplay controls preload='auto' width=\"500\" height=\"250\" data-setup='{\n" +
                 "            \"inactivityTimeout\": 0,\n" +
