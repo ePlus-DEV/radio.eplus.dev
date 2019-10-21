@@ -52,5 +52,13 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  /*
+  ** axios configuration
+  */
+  axios: {
+    baseURL: 'https://radio.eplus.dev',
+    proxyHeaders: false,
+    credentials: false
   }
 }
