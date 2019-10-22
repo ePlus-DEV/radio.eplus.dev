@@ -65,9 +65,14 @@ export default {
   },
   generate: {
     routes: [
-      '/viet-nam/vov-1',
-      '/viet-nam/vov-2',
-      '/viet-nam/vov-3'
+      '/viet-nam/vov1',
+      '/viet-nam/vov2',
+      '/viet-nam/vov3',
+      '/viet-nam/vov4',
+      '/viet-nam/vov5',
+      '/viet-nam/vov-english',
+      '/viet-nam/vov-gt-hcm',
+      '/viet-nam/vov-giao-thong',
     ]
   }
 }
