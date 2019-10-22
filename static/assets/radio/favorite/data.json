@@ -1,5 +1,7 @@
 {
-    "title": "Heart London",
-    "type": "audio/mpeg",
-    "stream": "http://media-ice.musicradio.com:80/HeartLondon"
+  "title": "Heart UK",
+  "type": "audio/mpeg",
+  "frequency": "106.2 FM",
+  "countries": "United Kingdom (Vương Quốc Anh)",
+  "stream": "https://media-ssl.musicradio.com/HeartUK"
 }

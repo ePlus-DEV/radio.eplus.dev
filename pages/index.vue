@@ -7,6 +7,10 @@
         <el-badge value="Live" class="item">
           <el-button size="small" id="radio-name">Radio.ePlus.DEV</el-button>
         </el-badge>
+        <el-badge class="item">
+          <div class="ticker">
+          </div>
+        </el-badge>
       </div>
 
       <audio id='my-player' class='video-js' style="margin-top: 25px;" controls preload='auto' width="500" height="250" >
@@ -79,6 +83,8 @@
                         }]
                     }).ready(function(){
                         console.log('VideoJS init');
+                        $('.ticker').html('<ul><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul>');
+                        $('.ticker').ticker();
                     });
 
                 })
@@ -221,5 +227,17 @@
 
   .links {
     padding-top: 15px;
+  }
+
+  .ticker {
+    width: 500px;
+    margin: 10px auto;
+  }
+  /* The HTML list gets replaced with a single div,
+     which contains the active ticker item, so you
+     can easily style that as well */
+  .ticker div {
+    display: inline-block;
+    word-wrap: break-word;
   }
 </style>
