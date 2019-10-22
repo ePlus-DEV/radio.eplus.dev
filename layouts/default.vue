@@ -7,8 +7,8 @@
     <!-- END HEADER -->
     <!-- START CONTENT -->
     <el-main>
-      <Player></Player>
       <nuxt />
+      <PanelRadio></PanelRadio>
     </el-main>
     <!-- End CONTENT -->
     <!-- START FOOTER -->
@@ -21,7 +21,8 @@
   import Header from '~/components/Header.vue'
   import Footer from '~/components/Footer.vue'
   import NavBar from '~/components/NavBar.vue'
-  import Player from '~/components/Player.vue'
+  // import Player from '~/components/Player.vue'
+  import PanelRadio from '~/components/PanelRadio.vue'
 
   export default {
       head() {
@@ -37,7 +38,8 @@
           Header,
           Footer,
           NavBar,
-          Player
+          // Player,
+          PanelRadio
       }
   }
 </script>

@@ -1,60 +1,33 @@
 <template>
   <div>
 
-    <el-card class="box-card">
+    <el-card class="box-card" style="margin: 15px 0 15px 0">
+
       <div slot="header" class="clearfix">
-        <span>Việt Nam</span>
+        <el-badge value="Live" class="item">
+          <el-button size="small" id="radio-name">Radio.ePlus.DEV</el-button>
+        </el-badge>
       </div>
 
-      <el-row :gutter="12">
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov1">
-          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov1.png" lazy></el-image>
-          </router-link>
-        </el-col>
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov2">
-          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov2.png" lazy></el-image>
-          </router-link>
-        </el-col>
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov3">
-          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov3.png" lazy></el-image>
-          </router-link>
-        </el-col>
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov4">
-          <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-4.png" lazy></el-image>
-          </router-link>
-        </el-col>
+      <audio id='my-player' class='video-js' style="margin-top: 25px;" controls preload='auto' width="500" height="250" >
 
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov5">
-            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov5.png" lazy></el-image>
-          </router-link>
-        </el-col>
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov-english">
-            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-english.png" lazy></el-image>
-          </router-link>
-        </el-col>
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov-gt-hcm">
-            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-gt.png" lazy></el-image>
-          </router-link>
-        </el-col>
-        <el-col :xs="12" :sm="4" :md="4" :lg="3" :xl="3">
-          <router-link to="/viet-nam/vov-giao-thong">
-            <el-image shape="square" :size="100" fit="cover" src="https://cdn.webrad.io/images/logos/radioonline-vn/vov-giao-thong.png" lazy></el-image>
-          </router-link>
-        </el-col>
-      </el-row>
+        <p class='vjs-no-js'>
+          To view this video please enable JavaScript, and consider upgrading to a web browser that
+          <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+        </p>
+      </audio>
 
     </el-card>
+
+
   </div>
 </template>
 
 <script>
+
+  import "video.js/dist/video-js.css";
+  import videojs from "video.js";
+  import "videojs-contrib-hls";
 
     export default {
         head() {
@@ -70,20 +43,55 @@
                 ],
                 script: [
                     // {src: 'https://cdn.jwplayer.com/libraries/EmuDAgVd.js', body: false, ssr: false},
-                    {src: 'custom/js/player.js', body: false, ssr: false},
-
+                    // {src: 'custom/js/player.js', body: false, ssr: false},
+                    /*{src: 'https://cdnjs.cloudflare.com/ajax/libs/video.js/6.7.3/video.min.js', body: false, ssr: false},
+                    {src: 'https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js', body: false, ssr: false},*/
                 ],
             }
         },
+        beforeRouteLeave(to, from, next){
+            console.log("before route leave...")
+            videojs('my-player').dispose();
+            next();
+        },
+        mounted() {
+            this.$axios.get('/assets/radio/favorite/data.json')
+                .then((res) => {
+
+                    const data = res.data;
+
+                    this.$notify.success({
+                        title: 'Thành công',
+                        message: 'Phát chương trình từ radio '+data['title'],
+                    });
+
+                    var player = videojs('my-player', {
+                        "autoplay": true,
+                        "inactivityTimeout": 0,
+                        "aspectRatio": "1:0",
+                        "fluid": true,
+                        "controlBar": {"fullscreenToggle": false},
+                        sources: [{
+                            type: data['type'],
+                            src: data['stream']
+                        }]
+                    }).ready(function(){
+                        console.log('VideoJS init');
+                    });
+
+                })
+        },
         data() {
             return {
-                links: [],
+                streamLink: null,
+                typeStream: null
+                /*links: [],
                 state1: '',
-                state2: '',
+                state2: '',*/
             };
         },
         methods: {
-            querySearch(queryString, cb) {
+            /*querySearch(queryString, cb) {
                 var links = this.links;
                 var results = queryString ? links.filter(this.createFilter(queryString)) : links;
                 // call callback function to return suggestions
@@ -107,19 +115,30 @@
             },
             handleSelect(item) {
                 console.log(item);
-            }
+            }*/
         },
-        mounted() {
-            this.links = this.loadAll();
-            $('#radio-name').text('Heart London');
+        /*mounted() {
+            // this.links = this.loadAll();
+            // $('#radio-name').text('Heart London');
+
+            /!*window.addEventListener('load', () => {
+                // run after everything is in-place
+                videojs("my-player", {}, function(){
+                    // Player (this) is initialized and ready.
+                    console.log('testttttttttttt')
+                });
+            })*!/
 
 
-            if (typeof variable !== 'undefined') {
+
+
+
+            /!*if (typeof variable !== 'undefined') {
                 myPlayer.dispose();
                 $('#radio-player').html('');
-            }
+            }*!/
 
-            $('#radio-player').html("<audio id='my-player' class='video-js' style=\"margin-top: 25px\" autoplay controls preload='auto' width=\"500\" height=\"250\" data-setup='{\n" +
+            /!*$('#radio-player').html("<audio id='my-player' class='video-js' style=\"margin-top: 25px\" autoplay controls preload='auto' width=\"500\" height=\"250\" data-setup='{\n" +
                 "            \"inactivityTimeout\": 0,\n" +
                 "            \"aspectRatio\": \"1:0\",\n" +
                 "            \"fluid\": true,\n" +
@@ -132,12 +151,12 @@
                 "          To view this video please enable JavaScript, and consider upgrading to a web browser that\n" +
                 "          <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>\n" +
                 "        </p>\n" +
-                "      </audio>");
+                "      </audio>");*!/
 
             // myPlayer.src({type: "audio/mpeg", src: "https://media-ice.musicradio.com/HeartLondon.m3u"});
 
 
-            /*jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
+            /!*jwplayer.key = "YgtWotBOi+JsQi+stgRlQ3SK21W2vbKi/K2V86kVbwU=";
             jwplayer("radio-player").setup({
                 width: "100%",
                 height: "45",
@@ -162,9 +181,10 @@
                 "skin": {
                     name:"thin"
                 }
-            });*/
-        },
+            });*!/
+        },*/
         components: {
+            // Player
         }
     }
 </script>
