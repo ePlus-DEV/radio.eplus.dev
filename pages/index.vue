@@ -62,8 +62,10 @@
 
                     this.$notify.success({
                         title: 'Thành công',
-                        message: 'Phát chương trình từ radio '+data['title'],
+                        message: 'Phát chương trình từ Radio '+data['title'],
                     });
+
+                    $('#radio-name').text(data['title']);
 
                     var player = videojs('my-player', {
                         "autoplay": true,
