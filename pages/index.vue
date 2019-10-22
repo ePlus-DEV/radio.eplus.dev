@@ -62,7 +62,7 @@
 
                     this.$notify.success({
                         title: 'Thành công',
-                        message: 'Phát chương trình từ Radio '+data['title'],
+                        message: 'Phát từ Radio '+data['title'],
                     });
 
                     $('#radio-name').text(data['title']);

@@ -70,7 +70,7 @@
 
                         this.$notify.success({
                             title: 'Thành công',
-                            message: 'Phát chương trình từ radio '+data.title,
+                            message: 'Phát từ radio '+data.title,
                         });
 
                         $('#radio-name').text(data.title);
