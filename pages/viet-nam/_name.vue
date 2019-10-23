@@ -24,9 +24,6 @@
 </template>
 
 <script>
-    /*import "video.js/dist/video-js.css";
-    import videojs from "video.js";
-    import "videojs-contrib-hls";*/
     // To import only MediaElement class
     import 'mediaelement';
     import 'mediaelement/build/mediaelementplayer.min.css';
@@ -48,16 +45,6 @@
                 ],*/
             }
         },
-        /*beforeRouteLeave(to, from, next){
-            console.log("before route leave...");
-            // videojs('my-player').dispose();
-            next();
-        },
-        beforeRouteUpdate(to, from, next){
-            // videojs('my-player').dispose();
-            console.log("leave update...");
-            next();
-        },*/
         data () {
             return {
                 name: null,
@@ -89,26 +76,10 @@
                             stretching: 'responsive',
                             success: function(mediaElement, originalNode) {
                                 console.log("Player initialised");
-                                // document.querySelector("audio").play();
-
 
                             }
                         });
                         player.setSrc(data.stream);
-
-                        /*var player = videojs('my-player', {
-                            "autoplay": true,
-                            "inactivityTimeout": 0,
-                            "aspectRatio": "1:0",
-                            "fluid": true,
-                            "controlBar": {"fullscreenToggle": false},
-                            sources: [{
-                                type: data.type,
-                                src: data.stream
-                            }]
-                        }).ready(function(){
-                            console.log('VideoJS init');
-                        });*/
 
                     }else{
 
