@@ -119,7 +119,7 @@
     "stream": "https://tv.canthotv.vn/live/radio/radio.m3u8"
   },
   "da-nang": {
-    "title": "CĐà Nẵng",
+    "title": "Đà Nẵng",
     "type": "application/x-mpegURL",
     "category": "Đà Nẵng",
     "url": "http://www.drt.danang.vn/",
