@@ -14,6 +14,7 @@
     "@nuxtjs/axios": "^5.7.1",
     "@nuxtjs/sitemap": "^2.0.0",
     "element-ui": "^2.4.11",
+    "mediaelement": "^4.2.12",
     "nuxt": "^2.10.2",
     "video.js": "^7.6.5",
     "videojs-contrib-hls": "^5.15.0",

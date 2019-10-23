@@ -8,13 +8,15 @@
         </el-badge>
       </div>
 
-      <audio id='my-player' class='video-js' style="margin-top: 25px;" controls preload='auto' width="500" height="250" >
+      <!--<audio id='my-player' class='video-js' style="margin-top: 25px;" controls preload='auto' width="500" height="250" >
 
         <p class='vjs-no-js'>
           To view this video please enable JavaScript, and consider upgrading to a web browser that
           <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
         </p>
-      </audio>
+      </audio>-->
+
+      <audio id="player" preload="none" autoplay></audio>
 
     </el-card>
 
@@ -22,9 +24,12 @@
 </template>
 
 <script>
-    import "video.js/dist/video-js.css";
+    /*import "video.js/dist/video-js.css";
     import videojs from "video.js";
-    import "videojs-contrib-hls";
+    import "videojs-contrib-hls";*/
+    // To import only MediaElement class
+    import 'mediaelement';
+    import 'mediaelement/build/mediaelementplayer.min.css';
 
     export default {
         head() {
@@ -43,16 +48,16 @@
                 ],*/
             }
         },
-        beforeRouteLeave(to, from, next){
+        /*beforeRouteLeave(to, from, next){
             console.log("before route leave...");
-            videojs('my-player').dispose();
+            // videojs('my-player').dispose();
             next();
         },
         beforeRouteUpdate(to, from, next){
-            videojs('my-player').dispose();
+            // videojs('my-player').dispose();
             console.log("leave update...");
             next();
-        },
+        },*/
         data () {
             return {
                 name: null,
@@ -79,8 +84,19 @@
                         self.title = this.$route.params.name.toUpperCase()+' - Radio tại Việt Nam - ';
                         self.$emit('updateHead');
 
+                        var player = new MediaElementPlayer('player', {
+                            enableProgressTooltip: false,
+                            stretching: 'responsive',
+                            success: function(mediaElement, originalNode) {
+                                console.log("Player initialised");
+                                // document.querySelector("audio").play();
 
-                        var player = videojs('my-player', {
+
+                            }
+                        });
+                        player.setSrc(data.stream);
+
+                        /*var player = videojs('my-player', {
                             "autoplay": true,
                             "inactivityTimeout": 0,
                             "aspectRatio": "1:0",
@@ -92,7 +108,7 @@
                             }]
                         }).ready(function(){
                             console.log('VideoJS init');
-                        });
+                        });*/
 
                     }else{
 

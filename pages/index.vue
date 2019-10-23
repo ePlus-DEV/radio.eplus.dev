@@ -13,13 +13,15 @@
         </el-badge>
       </div>
 
-      <audio id='my-player' class='video-js' style="margin-top: 25px;" controls preload='auto' width="500" height="250" >
+      <!--<audio id='my-player' class='video-js' style="margin-top: 25px;" controls preload='auto' width="500" height="250" >
 
         <p class='vjs-no-js'>
           To view this video please enable JavaScript, and consider upgrading to a web browser that
           <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
         </p>
-      </audio>
+      </audio>-->
+
+      <audio id="player" preload="none" autoplay></audio>
 
     </el-card>
 
@@ -29,11 +31,14 @@
 
 <script>
 
-  import "video.js/dist/video-js.css";
+  /*import "video.js/dist/video-js.css";
   import videojs from "video.js";
-  import "videojs-contrib-hls";
+  import "videojs-contrib-hls";*/
+  // To import only MediaElement class
+  import 'mediaelement';
+  import 'mediaelement/build/mediaelementplayer.min.css';
 
-    export default {
+  export default {
         head() {
             return {
                 title: 'Trang Chủ - ',
@@ -53,11 +58,11 @@
                 ],
             }
         },
-        beforeRouteLeave(to, from, next){
+        /*beforeRouteLeave(to, from, next){
             console.log("before route leave...")
-            videojs('my-player').dispose();
+            // videojs('my-player').dispose();
             next();
-        },
+        },*/
         mounted() {
             this.$axios.get('/assets/radio/favorite/data.json')
                 .then((res) => {
@@ -71,7 +76,19 @@
 
                     $('#radio-name').text(data['title']);
 
-                    var player = videojs('my-player', {
+                    var player = new MediaElementPlayer('player', {
+                        enableProgressTooltip: false,
+                        stretching: 'responsive',
+                        success: function(mediaElement, originalNode) {
+                            console.log("Player initialised");
+                            // document.querySelector("audio").play();
+
+
+                        }
+                    });
+                    player.setSrc("https://media-ssl.musicradio.com/HeartUK");
+
+                    /*var player = videojs('my-player', {
                         "autoplay": true,
                         "inactivityTimeout": 0,
                         "aspectRatio": "1:0",
@@ -85,7 +102,7 @@
                         console.log('VideoJS init');
                         $('.ticker').html('<ul><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul>');
                         $('.ticker').ticker();
-                    });
+                    });*/
 
                 })
         },
