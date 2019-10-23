@@ -19,7 +19,7 @@
 
     </el-card>
 
-    <PanelVietnam></PanelVietnam>
+    <PanelVietNam></PanelVietNam>
 
   </div>
 </template>
