@@ -22,7 +22,7 @@
 
     </el-card>
 
-    <PanelVietnam></PanelVietnam>
+    <PanelVietNam></PanelVietNam>
 
 
   </div>
@@ -33,7 +33,7 @@
     // To import only MediaElement class
     import 'mediaelement';
     import 'mediaelement/build/mediaelementplayer.min.css';
-    import PanelVietnam from '~/components/PanelVietnam.vue'
+    import PanelVietNam from '~/components/PanelVietNam.vue'
 
     export default {
         head() {
@@ -82,7 +82,7 @@
                 })
         },
         components: {
-            PanelVietnam
+            PanelVietNam
         }
     }
 </script>

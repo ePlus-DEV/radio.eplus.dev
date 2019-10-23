@@ -28,7 +28,7 @@
     // To import only MediaElement class
     import 'mediaelement';
     import 'mediaelement/build/mediaelementplayer.min.css';
-    import PanelVietnam from '~/components/PanelVietnam.vue'
+    import PanelVietNam from '~/components/PanelVietNam.vue'
 
 
     export default {
@@ -110,7 +110,7 @@
 
         },
         components: {
-            PanelVietnam
+            PanelVietNam
         }
     }
 </script>
