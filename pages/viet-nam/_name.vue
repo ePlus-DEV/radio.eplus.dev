@@ -76,7 +76,7 @@
                         $('#radio-name').text(data.title);
 
                         var self = this;
-                        self.title = this.$route.params.name.toUpperCase()+' - '+data.title;
+                        self.title = this.$route.params.name.toUpperCase()+' - Radio tại Việt Nam - ';
                         self.$emit('updateHead');
 
 

@@ -36,13 +36,13 @@
     export default {
         head() {
             return {
-                title: 'Trang Chủ - Radio Online Việt Nam',
+                title: 'Trang Chủ - ',
                 meta: [
                     // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                     {
-                        // hid: 'description',
-                        // name: 'description',
-                        content: 'VOV Giao Thông, VOV1, VOV2, VOV3, VOV4 - Radio Online Việt Nam'
+                        hid: 'description',
+                        name: 'description',
+                        content: 'Radio Online Việt Nam, Singapore, Indonesia, Malaysia, Philippines, Pakistan, Hong Kong, ประเทศไทย, 中国, 台灣, Australia, New Zealand, Sri Lankā, Nepāla, United Kingdom, .v.v'
                     }
                 ],
                 script: [

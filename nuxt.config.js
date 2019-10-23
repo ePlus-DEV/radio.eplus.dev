@@ -4,14 +4,39 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    // title: process.env.npm_package_name || '',
+    titleTemplate: '%sRadio Internet | Radio.ePlus.DEV',
+    htmlAttrs: {
+      lang: 'vi',
+      amp: true
+    },
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+      {hid: 'description', name: 'description', content: '%s'+process.env.npm_package_description || ''},
+      {name: 'msapplication-TileColor', content: '#603cba'},
+      {property: 'article:author', content: 'https://www.facebook.com/hoangsvit'},
+      {property: 'article:publisher', content: 'https://www.facebook.com/hoangsvit'},
+      {property: 'og:image', content: '/brand/logo-share.png'},
+      {property: 'fb:pages', content: '179495025583990'},
+      {property: 'og:title', content: 'Radio Internet | Radio.ePlus.DEV'},
+      {property: 'og:description', content: process.env.npm_package_description || ''},
+      {property: 'og:type', content: 'music.radio_station'},
+      {property: 'og:url', content: 'https://radio.eplus.dev'},
+      {property: 'og:image:alt', content: 'Radio Internet | Radio.ePlus.DEV'},
+      {property: 'og:site_name', content: 'Radio Internet | Radio.ePlus.DEV'},
+      {property: 'music:creator', content: 'https://www.facebook.com/hoangsvit'},
+      {property: 'og:audio', content: 'https://media-ssl.musicradio.com/HeartUK'},
+      {property: 'og:audio:type', content: 'audio/mpeg'},
+
+
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      {type: 'apple-touch-icon', size: '180x180', href: '/brand/apple-touch-icon.png'},
+      {rel: 'icon', type: 'image/x-icon', size: '32x32', href: '/brand/favicon-32x32.png'},
+      {rel: 'icon', type: 'image/x-icon', size: '16x16', href: '/brand/favicon-16x16.png'},
+      {rel: 'manifest', href: '/brand/site.webmanifest'},
+      {rel: 'mask-icon', color: '#5bbad5', href: '/brand/safari-pinned-tab.svg'},
     ]
   },
   /*
@@ -39,6 +64,7 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/sitemap'
   ],
   /*
   ** Build configuration
@@ -74,5 +100,30 @@ export default {
       '/viet-nam/vov-gt-hcm',
       '/viet-nam/vov-giao-thong',
     ]
+  },
+  /* SiteMap */
+  sitemap: {
+    path: '/sitemap.xml',
+    hostname: 'https://radio.eplus.dev',
+    gzip: true,
+    exclude: [
+      '/secret',
+      '/admin/**'
+    ],
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date(),
+      lastmodrealtime: true
+    },
+    /*routes: [
+      '/page/1',
+      {
+        url: '/page/2',
+        changefreq: 'daily',
+        priority: 1,
+        lastmodISO: '2017-06-30T13:30:00.000Z'
+      }
+    ]*/
   }
 }
