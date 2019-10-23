@@ -81,6 +81,48 @@
     "type": "application/x-mpegURL",
     "category": "VOH - FM 87.7 MHZ",
     "url": "https://voh.com.vn",
-    "stream": "https://strm.voh.com.vn/radio/channel4/playlist.m3u8"
+    "stream": "https://strm.voh.com.vn/live/channel5/playlist.m3u8"
+  },
+  "ba-ria-vung-tau": {
+    "title": "Bà Rịa-Vũng Tàu",
+    "type": "application/x-mpegURL",
+    "category": "Bà Rịa-Vũng Tàu",
+    "url": "http://brt.vn/",
+    "stream": "http://113.163.216.23:1935/live/radio1.sdp_audio/playlist.m3u8"
+  },
+  "binh-phuoc": {
+    "title": "Bình Phước",
+    "type": "application/x-mpegURL",
+    "category": "Bình Phước",
+    "url": "http://bptv.vn/",
+    "stream": "http://118.69.197.145/hls/radio.m3u8"
+  },
+  "binh-thuan": {
+    "title": "Bình Thuận",
+    "type": "application/x-mpegURL",
+    "category": "Bình Thuận",
+    "url": "http://binhthuantv.vn/",
+    "stream": "http://202.43.109.142:1935/thbtradio/btradio/playlist.m3u8"
+  },
+  "ca-mau": {
+    "title": "Cà Mau",
+    "type": "application/x-mpegURL",
+    "category": "Cà Mau",
+    "url": "http://ctvcamau.vn/",
+    "stream": "http://tv.ctvcamau.vn/live/radio/radio.m3u8"
+  },
+  "can-tho": {
+    "title": "Cần Thơ",
+    "type": "application/x-mpegURL",
+    "category": "Cần Thơ",
+    "url": "http://canthotv.vn/",
+    "stream": "https://tv.canthotv.vn/live/radio/radio.m3u8"
+  },
+  "da-nang": {
+    "title": "CĐà Nẵng",
+    "type": "application/x-mpegURL",
+    "category": "Đà Nẵng",
+    "url": "http://www.drt.danang.vn/",
+    "stream": "http://drtdnglive.e49a7c38.cdnviet.com/liveradio/playlist.m3u8"
   }
 }
