@@ -3,6 +3,11 @@ export default {
   /*
   ** Headers of the page
   */
+  metaInfo: {
+    noscript: [
+      { innerHTML: 'This website requires JavaScript.' }
+    ]
+  },
   head: {
     // title: process.env.npm_package_name || '',
     titleTemplate: '%sRadio Internet | Radio.ePlus.DEV',
@@ -17,7 +22,7 @@ export default {
       {name: 'msapplication-TileColor', content: '#603cba'},
       {property: 'article:author', content: 'https://www.facebook.com/hoangsvit'},
       {property: 'article:publisher', content: 'https://www.facebook.com/hoangsvit'},
-      {property: 'og:image', content: '/brand/logo-share.png'},
+      {property: 'og:image', content: 'https://radio.eplus.dev/brand/logo-share.png'},
       {property: 'fb:pages', content: '179495025583990'},
       {property: 'og:title', content: 'Radio Internet | Radio.ePlus.DEV'},
       {property: 'og:description', content: process.env.npm_package_description || ''},
