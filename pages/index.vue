@@ -68,7 +68,6 @@
                         success: function(mediaElement) {
                             $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data['title']+'</strong></li><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul></div>');
                             console.log("Player initialised");
-                            $('.ticker').html('<ul><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul>');
                             $('.ticker').ticker();
                         }
                     });
