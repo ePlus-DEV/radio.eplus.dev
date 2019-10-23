@@ -24,6 +24,7 @@ export default {
       {property: 'article:publisher', content: 'https://www.facebook.com/hoangsvit'},
       {property: 'og:image', content: 'https://radio.eplus.dev/brand/logo-share.png'},
       {property: 'fb:pages', content: '179495025583990'},
+      {property: 'fb:app_id', content: '363745774395676'},
       {property: 'og:title', content: 'Radio Internet | Radio.ePlus.DEV'},
       {property: 'og:description', content: process.env.npm_package_description || ''},
       {property: 'og:type', content: 'music.radio_station'},
