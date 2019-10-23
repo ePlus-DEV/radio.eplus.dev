@@ -13,7 +13,7 @@ export default {
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: '%s'+process.env.npm_package_description || ''},
+      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''},
       {name: 'msapplication-TileColor', content: '#603cba'},
       {property: 'article:author', content: 'https://www.facebook.com/hoangsvit'},
       {property: 'article:publisher', content: 'https://www.facebook.com/hoangsvit'},
