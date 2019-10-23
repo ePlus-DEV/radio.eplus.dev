@@ -54,6 +54,7 @@ export default {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
+    '@/assets/custom/css/style.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -64,7 +65,8 @@ export default {
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [],
+  buildModules: [
+  ],
   /*
   ** Nuxt.js modules
   */

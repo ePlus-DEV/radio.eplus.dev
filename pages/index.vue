@@ -13,7 +13,7 @@
         </el-badge>
       </div>
 
-      <audio id="player" preload="auto" autoplay></audio>
+      <audio id="player" preload="auto" autoplay width="100%"></audio>
 
     </el-card>
 
@@ -62,9 +62,11 @@
 
                     var player = new MediaElementPlayer('player', {
                         enableProgressTooltip: false,
-                        stretching: 'responsive',
-                        currentTime: false,
+                        // stretching: 'responsive',
+                        features: ['playpause','progress','tracks','volume'],
+                        enableKeyboard: true,
                         success: function(mediaElement) {
+                            $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data['title']+'</strong></li><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul></div>');
                             console.log("Player initialised");
                             $('.ticker').html('<ul><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul>');
                             $('.ticker').ticker();
