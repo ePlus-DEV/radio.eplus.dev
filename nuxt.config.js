@@ -107,6 +107,7 @@ export default {
       '/viet-nam/vov5',
       '/viet-nam/vov-english',
       '/viet-nam/vov-gt-hcm',
+      '/viet-nam/vov-giao-thong',
       '/viet-nam/voh-am-610khz',
       '/viet-nam/voh-fm-99.9-mhz',
       '/viet-nam/voh-fm-95.6-mhz',

@@ -310,7 +310,7 @@
     "url": "http://gialaitv.vn",
     "status": true,
     "time": "Từ 5h30 - 23h",
-    "schedule": true,
+    "schedule": false,
     "stream": "http://113.161.25.3:8134/hls/radio/radio.m3u8",
     "features": "/img/viet-nam/gia-lai.png"
   },
