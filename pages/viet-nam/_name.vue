@@ -17,6 +17,8 @@
 
       <audio id="player" preload="none" autoplay width="100%"></audio>
 
+      <div class="player-errors"></div>
+
     </el-card>
 
     <PanelVietNam></PanelVietNam>
@@ -29,6 +31,7 @@
     import 'mediaelement';
     import 'mediaelement/build/mediaelementplayer.min.css';
     import PanelVietNam from '~/components/PanelVietNam.vue'
+    import error from "../../static/assets/js/jwplayer/js/templates/error";
 
 
     export default {
@@ -63,24 +66,65 @@
 
                         const data = res.data[this.$route.params.name];
 
-                        this.$notify.success({
-                            title: 'Thành công',
-                            message: 'Phát từ radio '+data.title,
-                        });
-
                         $('#radio-name').text(data.title);
                         this.name = data.title;
                         var self = this;
                         self.title = data.title+' - Radio tại Việt Nam - ';
                         self.$emit('updateHead');
 
+                        var notify = this.$notify;
+
                         var player = new MediaElementPlayer('player', {
-                            features: ['playpause','progress','tracks','volume'],
+                            features: ['playpause','progress',"airplay", "chromecast",'volume'],
                             enableKeyboard: true,
+                            error: true,
+                            readyState: true,
                             success: function(mediaElement) {
-                                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data.title+'</strong></li><li>Thể loại: <strong>'+data.category+'</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>');
+
+                                mediaElement.addEventListener('canplay', function() {
+                                    notify.success({
+                                        title: 'Thành công',
+                                        message: 'Phát từ radio '+data.title,
+                                    });
+
+                                    $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data.title+'</strong></li><li>Thể loại: <strong>'+data.category+'</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>');
+                                    $('.ticker').ticker();
+
+                                }, false);
+
+                                mediaElement.addEventListener('error', function () {
+                                    /*var checkNetworkStateTimer = setInterval(function () {
+                                        if (!paused) {
+                                            if (domObject.networkState == 1 || domObject.networkState == 3) {
+                                                var nocache = Math.floor((Math.random() * 1000000) + 1);
+                                                mediaElement.setSrc(data.stream+'?nocache='+nocache);
+                                                mediaElement.load();
+                                                mediaElement.play();
+                                                console.log('re-connecting after error due to networkState: '+domObject.networkState); //2 indicates NETWORK_LOADING state
+                                            }
+                                        }
+                                    }, 3000);*/
+
+                                    // $('.player-errors').text('Gặp vấn đề khi tải Live Stream');
+                                    notify.error({
+                                        title: 'Thất bại',
+                                        message: 'Tải không thành công radio '+data.title,
+                                    });
+
+                                    console.log(error);
+
+                                }, false);
+
+                                /*mediaElement.addEventListener('loadeddata', function() {
+
+                                    notify.error({
+                                        title: 'Thất bại',
+                                        message: 'Tải không thành công '+data.title,
+                                    });
+
+                                }, false);*/
+
                                 console.log("Player initialised");
-                                $('.ticker').ticker();
                             }
                         });
                         player.setSrc(data.stream);
