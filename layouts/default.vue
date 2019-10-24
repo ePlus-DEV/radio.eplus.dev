@@ -5,16 +5,16 @@
       <Header></Header>
     <!--</el-header>-->
     <!-- END HEADER -->
+
+    <el-main scroll-container>
     <!-- START CONTENT -->
-    <el-main>
-<!--      <Player></Player>-->
       <nuxt />
-<!--      <PanelRadio></PanelRadio>-->
-    </el-main>
     <!-- End CONTENT -->
     <!-- START FOOTER -->
     <Footer></Footer>
     <!-- END FOOTER -->
+    </el-main>
+
   </div>
 </template>
 

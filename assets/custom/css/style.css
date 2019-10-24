@@ -6,3 +6,50 @@
   width: 100%;
   margin: unset !important;
 }
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.align-middle {
+  vertical-align: middle!important;
+}
+
+.img-center {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.mx-auto {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.my-auto {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.chanel-radio {
+  width: 96px !important;
+  height: 66px !important;
+}
+
+.border-img {
+  border: 1px solid rgb(0, 160, 206);
+}
+
+.chanel-is-active {
+  border: 1px solid rgb(245, 108, 108) !important;
+}
+
+.pad-box-chanel {
+  padding: 6px 0;
+}
