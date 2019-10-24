@@ -5,99 +5,49 @@
     </div>
 
     <el-row :gutter="12">
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov1" class="mx-auto border-img" active-class="chanel-is-active">
-            <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov1.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov2" class="mx-auto border-img" active-class="chanel-is-active">
-            <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov2.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov3" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam//vov3.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov4" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov4.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov5" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov5.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov-english" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov-english.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov-gt-hcm" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov-gt-tphcm.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/vov-giao-thong" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/vov-giao-thong-ha-noi.png"
-                    lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/voh-am-610khz" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/voh.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/voh-fm-99.9-mhz" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/voh-fm.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/voh-fm-95.6-mhz" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/voh-fm-95-6.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/voh-fm-87.7-mhz" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/voh-87-7-mhz.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/ba-ria-vung-tau" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/ba-ria-vung-tau.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/binh-phuoc" class="mx-auto border-img">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/binh-phuoc.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/binh-thuan" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/binh-thuan.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/ca-mau" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/ca-mau.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/can-tho" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/can-tho.png" lazy></el-image>
-        </nuxt-link>
-      </el-col>
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
-        <nuxt-link to="/viet-nam/da-nang" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" src="/img/viet-nam/da-nang.png" lazy></el-image>
+      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel" v-for="(data, index) in results" :key="index">
+        <nuxt-link :to="'/viet-nam/'+index" class="mx-auto border-img" active-class="chanel-is-active">
+          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" :src="data.features" lazy/>
         </nuxt-link>
       </el-col>
     </el-row>
 
+
   </el-card>
 </template>
+<script>
+    export default {
+        head() {
+            return {
+                title: 'Trang Chủ - ',
+                meta: [
+                    // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                    {
+                        hid: 'description',
+                        name: 'description',
+                        content: 'Radio Online Việt Nam, Singapore, Indonesia, Malaysia, Philippines, Pakistan, Hong Kong, ประเทศไทย, 中国, 台灣, Australia, New Zealand, Sri Lankā, Nepāla, United Kingdom, .v.v'
+                    }
+                ],
+                script: [
+                    // {src: 'https://cdn.jwplayer.com/libraries/EmuDAgVd.js', body: false, ssr: false},
+                    // {src: 'custom/js/player.js', body: false, ssr: false},
+                    /*{src: 'https://cdnjs.cloudflare.com/ajax/libs/video.js/6.7.3/video.min.js', body: false, ssr: false},
+                    {src: 'https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js', body: false, ssr: false},*/
+                ],
+            }
+        },
+        data(){
+            return {
+                results: []
+            }
+        },
+        mounted() {
+            this.$axios.get('/assets/radio/viet-nam/data.json')
+                .then((res) => {
+
+                    this.results = res.data;
+
+                })
+        },
+    }
+</script>
