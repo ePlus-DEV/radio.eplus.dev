@@ -160,5 +160,169 @@
     "status": false,
     "stream": "http://drtdnglive.e49a7c38.cdnviet.com/liveradio/playlist.m3u8",
     "features": "/img/viet-nam/da-nang.png"
+  },
+  "ha-noi": {
+    "title": "Hà Nội - FM96",
+    "type": "application/x-mpegURL",
+    "category": "Hà Nội - FM96",
+    "url": "http://hanoitv.vn",
+    "status": true,
+    "stream": "http://cdn.mediatech.vn/hntvRadio/fm96.sdp_aac/playlist.m3u8",
+    "features": "/img/viet-nam/ha-noi.png"
+  },
+  "ha-noi-joyfm": {
+    "title": "Hà Nội - JOYFM",
+    "type": "application/x-mpegURL",
+    "category": "Hà Nội - JOYFM",
+    "url": "http://hanoitv.vn",
+    "status": true,
+    "stream": "http://cdn.mediatech.vn/hntvRadio/joyfm.stream_aac/playlist.m3u8",
+    "features": "/img/viet-nam/joy.png"
+  },
+  "ha-noi-fm90": {
+    "title": "Hà Nội - FM90",
+    "type": "application/x-mpegURL",
+    "category": "Hà Nội - FM90",
+    "url": "http://hanoitv.vn",
+    "status": true,
+    "stream": "http://media.mediatech.vn:1935/hntvRadio/fm90live/playlist.m3u8",
+    "features": "/img/viet-nam/fm90.png"
+  },
+  "hai-duong": {
+    "title": "Hải Dương",
+    "type": "audio/mpeg",
+    "category": "Hải Dương",
+    "url": "http://haiduongtv.com.vn",
+    "status": true,
+    "stream": "http://113.160.131.11:8000",
+    "features": "/img/viet-nam/hai-duong.png"
+  },
+  "khanh-hoa": {
+    "title": "Khánh Hòa",
+    "type": "application/x-mpegURL",
+    "category": "Khánh Hòa",
+    "url": "http://ktv.org.vn",
+    "status": false,
+    "stream": "http://210.245.20.94/hls/radio.m3u8",
+    "features": "/img/viet-nam/khanh-hoa.png"
+  },
+  "kien-giang": {
+    "title": "Kiên Giang",
+    "type": "application/x-mpegURL",
+    "category": "Kiên Giang",
+    "url": "http://tv.kgtv.vn",
+    "status": false,
+    "stream": "http://tv.kgtv.vn/live/kgaudio/kgaudio.m3u8",
+    "features": "/img/viet-nam/kien-giang.png"
+  },
+  "ninh-binh": {
+    "title": "Ninh Bình",
+    "type": "audio/mpeg",
+    "category": "Ninh Bình",
+    "url": "http://nbtv.vn",
+    "status": true,
+    "stream": "http://113.160.203.109:8001/",
+    "features": "/img/viet-nam/ninh-binh.png"
+  },
+  "soc-trang": {
+    "title": "Sóc Trăng",
+    "type": "application/x-mpegURL",
+    "category": "Sóc Trăng",
+    "url": "http://thst.vn",
+    "status": false,
+    "stream": "http://113.163.189.104/hls-live/livepkgr/_definst_/liveevent/livestreamf1.m3u8",
+    "features": "/img/viet-nam/soc-trang.png"
+  },
+  "thua-thien-hue": {
+    "title": "Thừa Thiên Huế",
+    "type": "audio/mp4",
+    "category": "Thừa Thiên Huế",
+    "url": "http://trt.com.vn",
+    "status": false,
+    "stream": "rtmp://118.69.176.149:1936/live/radio",
+    "features": "/img/viet-nam/thua-thien-hue.png"
+  },
+  "bac-giang": {
+    "title": "Bắc Giang",
+    "type": "application/x-mpegURL",
+    "category": "Bắc Giang",
+    "url": "http://bacgiangtv.vn",
+    "status": false,
+    "time": "Từ 5h - 22h",
+    "stream": "http://cdn.mediatech.vn/bgtvlive/radiolive/playlist.m3u8",
+    "features": "/img/viet-nam/bac-giang.png"
+  },
+  "ha-tinh": {
+    "title": "Hà Tĩnh",
+    "type": "application/x-mpegURL",
+    "category": "Hà Tĩnh",
+    "url": "http://hatinhtv.vn",
+    "status": false,
+    "time": "Từ 6h - 18h",
+    "stream": "http://hatinhtv.vn/phatthanh/m3u8/audio.m3u8",
+    "features": "/img/viet-nam/ha-tinh.png"
+  },
+  "phu-yen": {
+    "title": "Phú Yên",
+    "type": "application/x-mpegURL",
+    "category": "Phú Yên",
+    "url": "http://ptpphuyen.vn",
+    "status": true,
+    "time": "Chưa rõ",
+    "stream": "http://113.161.4.48:8080/phuyen/radio.m3u8",
+    "features": "/img/viet-nam/phu-yen.png"
+  },
+  "tien-giang": {
+    "title": "Tiền Giang 96.2 FM",
+    "type": "application/x-mpegURL",
+    "category": "Tiền Giang 96.2 FM",
+    "url": "http://thtg.vn",
+    "status": true,
+    "time": "Chưa rõ",
+    "stream": "http://thtg.vn:8002/radiolive.m3u8",
+    "features": "/img/viet-nam/tien-giang.png"
+  },
+  "ben-tre": {
+    "title": "Bến Tre",
+    "type": "application/x-mpegURL",
+    "category": "Bến Tre",
+    "url": "http://thbt.vn",
+    "status": false,
+    "time": "Từ 5h - 22h30",
+    "stream": "http://113.163.94.245/hls-live/livepkgr/_definst_/liveevent/audiostream.m3u8",
+    "features": "/img/viet-nam/ben-tre.png"
+  },
+  "dong-thap": {
+    "title": "Đồng Tháp",
+    "type": "application/x-mpegURL",
+    "category": "Đồng Tháp",
+    "url": "https://thdt.vn",
+    "status": true,
+    "time": "Từ 5h - 20h",
+    "schedule": true,
+    "stream": "http://202.43.109.144:1935/thdtradio/thdtradio/playlist.m3u8",
+    "features": "/img/viet-nam/dong-thap.png"
+  },
+  "gia-lai": {
+    "title": "Gia Lai",
+    "type": "application/x-mpegURL",
+    "category": "Gia Lai",
+    "url": "http://gialaitv.vn",
+    "status": true,
+    "time": "Từ 5h30 - 23h",
+    "schedule": true,
+    "stream": "http://113.161.25.3:8134/hls/radio/radio.m3u8",
+    "features": "/img/viet-nam/gia-lai.png"
+  },
+  "thai-binh": {
+    "title": "Thái Bình",
+    "type": "application/x-mpegURL",
+    "category": "Thái Bìnhi",
+    "url": "http://thaibinhtv.vn",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": true,
+    "stream": "http://118.70.118.191:1935/tbtvlive/radio/playlist.m3u8",
+    "features": "/img/viet-nam/thai-binh.png"
   }
 }

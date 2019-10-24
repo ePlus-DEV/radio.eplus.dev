@@ -1,13 +1,16 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <span>Việt Nam</span>
+
+      <nuxt-link class="text-decoration-none" to="/viet-nam"><span>Việt Nam</span></nuxt-link>
     </div>
 
     <el-row :gutter="12">
-      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel" v-for="(data, index) in results" :key="index">
+      <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel" v-for="(data, index) in results"
+              :key="index">
         <nuxt-link :to="'/viet-nam/'+index" class="mx-auto border-img" active-class="chanel-is-active">
-          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" :src="data.features" lazy/>
+          <el-image class="align-middle img-center" shape="square" :size="100" fit="scale-down" :src="data.features"
+                    lazy/>
         </nuxt-link>
       </el-col>
     </el-row>
@@ -16,7 +19,7 @@
 </template>
 <script>
     export default {
-        data(){
+        data() {
             return {
                 results: []
             }

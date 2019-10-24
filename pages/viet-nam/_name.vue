@@ -33,7 +33,6 @@
     import PanelVietNam from '~/components/PanelVietNam.vue'
     import error from "../../static/assets/js/jwplayer/js/templates/error";
 
-
     export default {
         head() {
             return {
@@ -51,43 +50,43 @@
                 ],*/
             }
         },
-        data () {
+        data() {
             return {
                 name: null,
                 title: 'Radio tại Việt Nam'
             }
         },
-        mounted () {
+        mounted() {
 
             this.$axios.get('/assets/radio/viet-nam/data.json')
                 .then((res) => {
 
-                    if(res.data.hasOwnProperty(this.$route.params.name)){
+                    if (res.data.hasOwnProperty(this.$route.params.name)) {
 
                         const data = res.data[this.$route.params.name];
 
                         $('#radio-name').text(data.title);
                         this.name = data.title;
                         var self = this;
-                        self.title = data.title+' - Radio tại Việt Nam - ';
+                        self.title = data.title + ' - Radio tại Việt Nam - ';
                         self.$emit('updateHead');
 
                         var notify = this.$notify;
 
                         var player = new MediaElementPlayer('player', {
-                            features: ['playpause','progress',"airplay", "chromecast",'volume'],
+                            features: ['playpause', 'progress', "airplay", "chromecast", 'volume'],
                             enableKeyboard: true,
                             error: true,
                             readyState: true,
-                            success: function(mediaElement) {
+                            success: function (mediaElement) {
 
-                                mediaElement.addEventListener('canplay', function() {
+                                mediaElement.addEventListener('canplay', function () {
                                     notify.success({
                                         title: 'Thành công',
-                                        message: 'Phát từ radio '+data.title,
+                                        message: 'Phát từ radio ' + data.title,
                                     });
 
-                                    $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data.title+'</strong></li><li>Thể loại: <strong>'+data.category+'</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>');
+                                    $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data.title + '</strong></li><li>Thể loại: <strong>' + data.category + '</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>');
                                     $('.ticker').ticker();
 
                                 }, false);
@@ -108,7 +107,7 @@
                                     // $('.player-errors').text('Gặp vấn đề khi tải Live Stream');
                                     notify.error({
                                         title: 'Thất bại',
-                                        message: 'Tải không thành công radio '+data.title,
+                                        message: 'Tải không thành công radio ' + data.title,
                                     });
 
                                     console.log(error);
@@ -129,7 +128,7 @@
                         });
                         player.setSrc(data.stream);
 
-                    }else{
+                    } else {
 
                         this.$confirm('Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!', 'Warning', {
                             confirmButtonText: 'Quay lại',
