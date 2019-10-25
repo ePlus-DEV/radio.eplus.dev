@@ -92,36 +92,13 @@
                                 }, false);
 
                                 mediaElement.addEventListener('error', function () {
-                                    /*var checkNetworkStateTimer = setInterval(function () {
-                                        if (!paused) {
-                                            if (domObject.networkState == 1 || domObject.networkState == 3) {
-                                                var nocache = Math.floor((Math.random() * 1000000) + 1);
-                                                mediaElement.setSrc(data.stream+'?nocache='+nocache);
-                                                mediaElement.load();
-                                                mediaElement.play();
-                                                console.log('re-connecting after error due to networkState: '+domObject.networkState); //2 indicates NETWORK_LOADING state
-                                            }
-                                        }
-                                    }, 3000);*/
 
-                                    // $('.player-errors').text('Gặp vấn đề khi tải Live Stream');
                                     notify.error({
                                         title: 'Thất bại',
                                         message: 'Tải không thành công radio ' + data.title,
                                     });
 
-                                    console.log(error);
-
                                 }, false);
-
-                                /*mediaElement.addEventListener('loadeddata', function() {
-
-                                    notify.error({
-                                        title: 'Thất bại',
-                                        message: 'Tải không thành công '+data.title,
-                                    });
-
-                                }, false);*/
 
                                 console.log("Player initialised");
                             }

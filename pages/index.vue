@@ -57,11 +57,7 @@
                 .then((res) => {
 
                     const data = res.data;
-
-                    this.$notify.success({
-                        title: 'Thành công',
-                        message: 'Phát từ Radio '+data['title'],
-                    });
+                    var notify = this.$notify;
 
                     $('#radio-name').text(data['title']);
 
@@ -69,9 +65,28 @@
                         features: ['playpause','progress','tracks','volume'],
                         enableKeyboard: true,
                         success: function(mediaElement) {
-                            $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data['title']+'</strong></li><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul></div>');
+
+                            mediaElement.addEventListener('canplay', function () {
+                                notify.success({
+                                    title: 'Thành công',
+                                    message: 'Phát từ radio ' + data.title,
+                                });
+
+                                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data['title']+'</strong></li><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul></div>');
+                                $('.ticker').ticker();
+
+                            }, false);
+
+                            mediaElement.addEventListener('error', function () {
+
+                                notify.error({
+                                    title: 'Thất bại',
+                                    message: 'Tải không thành công radio ' + data.title,
+                                });
+
+                            }, false);
+
                             console.log("Player initialised");
-                            $('.ticker').ticker();
                         }
                     });
                     player.setSrc(data['stream']);
