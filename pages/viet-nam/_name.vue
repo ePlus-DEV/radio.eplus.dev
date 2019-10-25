@@ -7,7 +7,7 @@
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-card class="box-card" style="margin: 15px 0 15px 0">
+    <el-card class="box-card mar-card">
 
       <div slot="header" class="clearfix">
         <el-badge value="Live" class="item">

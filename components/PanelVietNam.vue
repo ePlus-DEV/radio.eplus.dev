@@ -1,7 +1,6 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-
       <nuxt-link class="text-decoration-none" to="/viet-nam"><span>Việt Nam</span></nuxt-link>
     </div>
 

@@ -13,10 +13,11 @@
 
 .text-decoration-none {
   text-decoration: none;
+  color: rgba(0,0,0,0.87);
 }
 
 .align-middle {
-  vertical-align: middle!important;
+  vertical-align: middle !important;
 }
 
 .img-center {
@@ -56,4 +57,8 @@
 
 .pad-box-chanel {
   padding: 6px 0;
+}
+
+.mar-card {
+  margin: 15px 0
 }
