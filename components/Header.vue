@@ -2,7 +2,9 @@
   <div>
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="1">
-        <nuxt-link class="text-decoration-none" to="/">Trang Chủ</nuxt-link>
+        <nuxt-link class="text-decoration-none" to="/">
+        <!--<template slot="title">-->Trang Chủ<!--</template>-->
+        </nuxt-link>
       </el-menu-item>
       <el-menu-item index="2" @click="terms_and_conditions = true">
         <template slot="title">Điều khoản</template>
@@ -48,6 +50,10 @@
         },
         methods: {
             handleSelect(key, keyPath) {
+                if(keyPath === 1){
+                    this.$router.push('/')
+                }
+                console.log(keyPath);
                 console.log(key, keyPath);
             }
         }
