@@ -1,0 +1,7 @@
+{
+  "title": "LOVE 97.2FM",
+  "type": "application/x-mpegURL",
+  "frequency": "FM 97.2 MHz",
+  "countries": "Singapore",
+  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVE972FMAAC.aac?dist=radiosingapore"
+}

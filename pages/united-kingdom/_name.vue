@@ -31,7 +31,6 @@
     import 'mediaelement';
     import 'mediaelement/build/mediaelementplayer.min.css';
     import PanelUnitedKingdom from '~/components/PanelUnitedKingdom.vue'
-    import error from "../../static/assets/js/jwplayer/js/templates/error";
 
     export default {
         head() {
@@ -44,21 +43,20 @@
                         name: 'description',
                         content: 'Radio at United Kingdom'
                     }
-                ],
-                /*script: [
-                    {src: '/custom/js/player.js', body: false, ssr: false},
-                ],*/
+                ]
             }
         },
         data() {
             return {
                 name: null,
-                title: 'Radio at United Kingdom'
+                title: 'Radio tại '+this.title_slug,
+                title_slug: 'United Kingdom',
+                slug: 'united-kingdom'
             }
         },
         mounted() {
 
-            this.$axios.get('/assets/radio/united-kingdom/data.json')
+            this.$axios.get('/assets/radio/'+this.slug+'/data.json')
                 .then((res) => {
 
                     if (res.data.hasOwnProperty(this.$route.params.name)) {
@@ -68,7 +66,7 @@
                         $('#radio-name').text(data.title);
                         this.name = data.title;
                         var self = this;
-                        self.title = data.title + ' - Radio tại Việt Nam - ';
+                        self.title = data.title + ' - Radio tại '+this.title_slug+' - ';
                         self.$emit('updateHead');
 
                         var notify = this.$notify;

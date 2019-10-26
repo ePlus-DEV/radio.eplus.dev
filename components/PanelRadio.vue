@@ -17,6 +17,7 @@
               </nuxt-link>
             </el-tooltip>
           </el-col>
+
           <el-col :xs="6" :sm="4" :md="4" :lg="3" :xl="3" class="pad-box-chanel">
             <el-tooltip class="item" effect="dark" content="Singapore" placement="top">
               <nuxt-link to="/singapore" class="mx-auto border-img">

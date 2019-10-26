@@ -1,0 +1,11 @@
+{
+  "love-972": {
+    "title": "LOVE 97.2FM",
+    "type": "audio/aac",
+    "category": "LOVE 97.2FM",
+    "url": "https://www.meradio.sg",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVE972FMAAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/love-972.png"
+  }
+}

@@ -3,7 +3,7 @@
 
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/viet-nam' }">Việt Nam</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/'+slug }">{{ title_slug }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -21,7 +21,7 @@
 
     </el-card>
 
-    <PanelVietNam></PanelVietNam>
+    <PanelSingapore></PanelSingapore>
 
   </div>
 </template>
@@ -30,8 +30,7 @@
     // To import only MediaElement class
     import 'mediaelement';
     import 'mediaelement/build/mediaelementplayer.min.css';
-    import PanelVietNam from '~/components/PanelVietNam.vue'
-    import error from "../../static/assets/js/jwplayer/js/templates/error";
+    import PanelSingapore from '~/components/PanelSingapore.vue'
 
     export default {
         head() {
@@ -42,23 +41,22 @@
                     {
                         hid: 'description',
                         name: 'description',
-                        content: 'Radio tại Việt Nam'
+                        content: 'Radio tại '+this.title_slug
                     }
-                ],
-                /*script: [
-                    {src: '/custom/js/player.js', body: false, ssr: false},
-                ],*/
+                ]
             }
         },
         data() {
             return {
                 name: null,
-                title: 'Radio tại Việt Nam'
+                title: 'Radio tại '+this.title_slug,
+                title_slug: 'Singapore',
+                slug: 'singapore'
             }
         },
         mounted() {
 
-            this.$axios.get('/assets/radio/viet-nam/data.json')
+            this.$axios.get('/assets/radio/'+this.slug+'/data.json')
                 .then((res) => {
 
                     if (res.data.hasOwnProperty(this.$route.params.name)) {
@@ -68,7 +66,7 @@
                         $('#radio-name').text(data.title);
                         this.name = data.title;
                         var self = this;
-                        self.title = data.title + ' - Radio tại Việt Nam - ';
+                        self.title = data.title + ' - Radio tại '+this.title_slug+' - ';
                         self.$emit('updateHead');
 
                         var notify = this.$notify;
@@ -130,7 +128,7 @@
 
         },
         components: {
-            PanelVietNam
+            PanelSingapore
         }
     }
 </script>

@@ -9,7 +9,7 @@
 
       <div slot="header" class="clearfix">
         <el-badge value="Live" class="item">
-          <el-button size="small" id="radio-name">Radio.ePlus.DEV</el-button>
+          <el-button size="small">Thịnh Hành nhất Việt Nam</el-button>
         </el-badge>
         <el-badge class="item">
           <div class="ticker">
@@ -53,13 +53,11 @@
             }
         },
         mounted() {
-            this.$axios.get('/assets/radio/favorite/data.json')
+            this.$axios.get('/assets/radio/favorite/viet-nam.json')
                 .then((res) => {
 
                     const data = res.data;
                     var notify = this.$notify;
-
-                    $('#radio-name').text(data['title']);
 
                     var player = new MediaElementPlayer('player', {
                         features: ['playpause','progress','tracks','volume'],

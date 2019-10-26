@@ -3,14 +3,14 @@
 
     <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
-    <el-breadcrumb-item>Việt Nam</el-breadcrumb-item>
+    <el-breadcrumb-item>{{ title_slug }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-card class="box-card" style="margin: 15px 0 15px 0">
 
       <div slot="header" class="clearfix">
         <el-badge value="Live" class="item">
-          <el-button size="small" id="radio-name">Radio.ePlus.DEV</el-button>
+          <el-button size="small">Thịnh Hành tại {{ title_slug }}</el-button>
         </el-badge>
         <el-badge class="item">
           <div class="ticker">
@@ -38,43 +38,59 @@
     export default {
         head() {
             return {
-                title: 'Trang Chủ Radio Việt Nam - ',
+                title: 'Trang Chủ Radio '+this.title_slug+' - ',
                 meta: [
                     // hid is used as unique identifier. Do not use `vmid` for it as it will not work
                     {
                         hid: 'description',
                         name: 'description',
-                        content: 'Radio Online được phát từ Việt Nam - VOV 1, VOV2, VOV3, VOV4, VOH, VOV Giao Thông'
+                        content: 'Radio Online được phát từ '+this.title_slug+' - VOV 1, VOV2, VOV3, VOV4, VOH, VOV Giao Thông'
                     }
-                ],
-                script: [
-                    // {src: 'https://cdn.jwplayer.com/libraries/EmuDAgVd.js', body: false, ssr: false},
-                    // {src: 'custom/js/player.js', body: false, ssr: false},
-                    /*{src: 'https://cdnjs.cloudflare.com/ajax/libs/video.js/6.7.3/video.min.js', body: false, ssr: false},
-                    {src: 'https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js', body: false, ssr: false},*/
-                ],
+                ]
+            }
+        },
+        data() {
+            return {
+                name: null,
+                title: 'Radio tại ' + this.title_slug,
+                title_slug: 'Việt Nam',
+                slug: 'viet-nam'
             }
         },
         mounted() {
-            this.$axios.get('/assets/radio/favorite/data.json')
+            this.$axios.get('/assets/radio/favorite/'+this.slug+'.json')
                 .then((res) => {
 
                     const data = res.data;
-
-                    this.$notify.success({
-                        title: 'Thành công',
-                        message: 'Phát từ Radio '+data['title'],
-                    });
-
-                    $('#radio-name').text(data['title']);
+                    var notify = this.$notify;
 
                     var player = new MediaElementPlayer('player', {
                         features: ['playpause','progress','tracks','volume'],
                         enableKeyboard: true,
                         success: function(mediaElement) {
-                            $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>'+data['title']+'</strong></li><li>Tần số: <strong>'+data['frequency']+'</strong></li><li>Quốc gia: <strong>'+data['countries']+'</strong></li></ul></div>');
+
+                            mediaElement.addEventListener('canplay', function () {
+                                notify.success({
+                                    title: 'Thành công',
+                                    message: 'Phát từ radio ' + data['title'],
+                                });
+
+                                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data['title'] + '</strong></li><li>Tần số: <strong>' + data['frequency'] + '</strong></li><li>Quốc gia: <strong>' + data['countries'] + '</strong></li></ul></div>');
+                                $('.ticker').ticker();
+
+                            }, false);
+
+                            mediaElement.addEventListener('error', function () {
+
+                                notify.error({
+                                    title: 'Thất bại',
+                                    message: 'Tải không thành công radio ' + data['title'],
+                                });
+
+                            }, false);
+
                             console.log("Player initialised");
-                            $('.ticker').ticker();
+
                         }
                     });
                     player.setSrc(data['stream']);

@@ -1,0 +1,7 @@
+{
+  "title": "VOV Giao Thông TP.HCM",
+  "type": "application/x-mpegURL",
+  "frequency": "FM 91 MHz",
+  "countries": "Việt Nam",
+  "stream": "https://5a6872aace0ce.streamlock.net/nghevovgthcm/vovgthcm.stream_aac/playlist.m3u8"
+}
