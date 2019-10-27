@@ -99,6 +99,7 @@ export default {
   },
   generate: {
     routes: [
+      // Việt Nam
       '/viet-nam',
       '/viet-nam/vov1',
       '/viet-nam/vov2',
@@ -135,6 +136,12 @@ export default {
       '/viet-nam/dong-thap',
       '/viet-nam/gia-lai',
       '/viet-nam/thai-binh',
+      // United Kingdom
+      '/united-kingdom',
+      '/united-kingdom/heart-uk',
+      // Singapore
+      '/singapore',
+      '/singapore/love-972',
     ]
   },
   /* SiteMap */
