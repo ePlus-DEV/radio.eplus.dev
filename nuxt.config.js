@@ -136,6 +136,9 @@ export default {
       '/viet-nam/dong-thap',
       '/viet-nam/gia-lai',
       '/viet-nam/thai-binh',
+      '/viet-nam/vinh-long',
+      '/viet-nam/xone-fm-96-mhz',
+
       // United Kingdom
       '/united-kingdom',
       '/united-kingdom/heart-uk',

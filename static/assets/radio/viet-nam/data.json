@@ -317,12 +317,34 @@
   "thai-binh": {
     "title": "Thái Bình",
     "type": "application/x-mpegURL",
-    "category": "Thái Bìnhi",
+    "category": "Thái Bình",
     "url": "http://thaibinhtv.vn",
     "status": true,
     "time": "Chưa rõ",
     "schedule": true,
     "stream": "http://118.70.118.191:1935/tbtvlive/radio/playlist.m3u8",
     "features": "/img/viet-nam/thai-binh.png"
+  },
+  "vinh-long": {
+    "title": "Vĩnh Long",
+    "type": "application/x-mpegURL",
+    "category": "Vĩnh Long",
+    "url": "https://www.thvl.vn/",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": true,
+    "stream": "http://radio.thvli.vn/7978812d2ed50a2bfe7229ea7330f1521552533698/thvlaudio/playlist.m3u8",
+    "features": "/img/viet-nam/vinh-long.png"
+  },
+  "xone-fm-96-mhz": {
+    "title": "Xone FM 96MHz",
+    "type": "application/x-mpegURL",
+    "category": "Xone FM 96MHz",
+    "url": "https://xonefm.com/",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": true,
+    "stream": "http://stream.zeno.fm/g5wpnsk7khruv",
+    "features": "/img/viet-nam/xone.png"
   }
 }
