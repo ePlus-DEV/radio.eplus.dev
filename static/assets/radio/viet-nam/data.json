@@ -330,9 +330,9 @@
     "type": "application/x-mpegURL",
     "category": "Vĩnh Long",
     "url": "https://www.thvl.vn/",
-    "status": true,
+    "status": false,
     "time": "Chưa rõ",
-    "schedule": true,
+    "schedule": false,
     "stream": "http://radio.thvli.vn/7978812d2ed50a2bfe7229ea7330f1521552533698/thvlaudio/playlist.m3u8",
     "features": "/img/viet-nam/vinh-long.png"
   },
@@ -346,5 +346,16 @@
     "schedule": true,
     "stream": "http://stream.zeno.fm/g5wpnsk7khruv",
     "features": "/img/viet-nam/xone.png"
+  },
+  "dong-nai": {
+    "title": "Đồng Nai - 97.5MHz",
+    "type": "application/x-mpegURL",
+    "category": "Đồng Nai - 97.5MHz",
+    "url": "http://dnrtv.org.vn/",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "http://118.107.76.17:1935/live/Dongnaoradio/playlist.m3u8",
+    "features": "/img/viet-nam/dong-nai.png"
   }
 }

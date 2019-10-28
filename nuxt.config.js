@@ -138,10 +138,13 @@ export default {
       '/viet-nam/thai-binh',
       '/viet-nam/vinh-long',
       '/viet-nam/xone-fm-96-mhz',
-
+      '/viet-nam/dong-nai',
       // United Kingdom
       '/united-kingdom',
       '/united-kingdom/heart-uk',
+      '/united-kingdom/bbc-1',
+      '/united-kingdom/bbc-2',
+      '/united-kingdom/bbc-3',
       // Singapore
       '/singapore',
       '/singapore/love-972',

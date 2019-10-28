@@ -1,4 +1,31 @@
 {
+  "bbc-1": {
+    "title": "BBC Radio 1",
+    "type": "application/x-mpegURL",
+    "category": "BBC Radio 1",
+    "url": "http://www.bbc.co.uk/radio1",
+    "status": true,
+    "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_radio_one.m3u8",
+    "features": "/img/united-kingdom/bbc-1.png"
+  },
+  "bbc-2": {
+    "title": "BBC Radio 2",
+    "type": "audio/mpeg",
+    "category": "BBC Radio 2",
+    "url": "http://www.bbc.co.uk/radio2",
+    "status": true,
+    "stream": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p",
+    "features": "/img/united-kingdom/bbc-2.png"
+  },
+  "bbc-3": {
+    "title": "BBC Radio 3",
+    "type": "application/x-mpegURL",
+    "category": "BBC Radio 3",
+    "url": "http://www.bbc.co.uk/radio32",
+    "status": true,
+    "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_radio_three.m3u8",
+    "features": "/img/united-kingdom/bbc-3.png"
+  },
   "heart-uk": {
     "title": "Heart UK",
     "type": "application/x-mpegURL",
