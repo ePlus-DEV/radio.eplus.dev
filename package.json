@@ -18,7 +18,8 @@
     "nuxt": "^2.10.2",
     "video.js": "^7.6.5",
     "videojs-contrib-hls": "^5.15.0",
-    "vue-head": "^2.1.2"
+    "vue-head": "^2.1.2",
+    "vue-i18n": "^8.15.0"
   },
   "devDependencies": {}
 }
