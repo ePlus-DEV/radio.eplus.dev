@@ -21,7 +21,8 @@
       direction="ttb"
       size="50%">
       <el-main scroll-container>
-        Đang cập nhật...
+        <p>FB: <a target="_blank" href="https://fb.me/hoangsvit">https://fb.me/hoangsvit</a></p>
+        <p>Email: contact@eplus.dev</p>
       </el-main>
     </el-drawer>
     <!-- End - Contact Us -->
