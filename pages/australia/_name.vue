@@ -3,7 +3,7 @@
 
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/united-kingdom' }">United Kingdom</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/'+slug }">{{ title_slug }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 

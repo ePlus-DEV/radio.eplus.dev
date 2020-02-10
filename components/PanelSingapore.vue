@@ -25,6 +25,7 @@
     data() {
       return {
         results: [],
+
         title_slug: 'Singapore',
         slug: 'singapore'
       }
