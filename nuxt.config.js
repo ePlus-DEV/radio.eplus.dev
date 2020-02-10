@@ -148,6 +148,10 @@ export default {
       // Singapore
       '/singapore',
       '/singapore/love-972',
+      // Australia
+      '/australia',
+      '/australia/radio-metro',
+      '/australia/abc-news-radio'
     ]
   },
   /* SiteMap */

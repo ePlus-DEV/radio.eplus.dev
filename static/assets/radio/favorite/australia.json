@@ -1,0 +1,7 @@
+{
+  "title": "Radio Metro",
+  "type": "audio/mpeg",
+  "frequency": "FM 105.7 MHz",
+  "countries": "Australia",
+  "stream": "http://stream.radiometro.com.au:7777/;?type=http&nocache=129112"
+}

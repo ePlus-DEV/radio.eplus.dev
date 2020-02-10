@@ -2,8 +2,8 @@
   <div>
 
     <el-breadcrumb separator="/">
-    <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
-    <el-breadcrumb-item>{{ title_slug }}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ title_slug }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-card class="box-card" style="margin: 15px 0 15px 0">
@@ -29,77 +29,77 @@
 
 <script>
 
-    // To import only MediaElement class
-    import 'mediaelement';
-    import 'mediaelement/build/mediaelementplayer.min.css';
-    import PanelUnitedKingdom from '~/components/PanelUnitedKingdom.vue'
+  // To import only MediaElement class
+  import 'mediaelement';
+  import 'mediaelement/build/mediaelementplayer.min.css';
+  import PanelUnitedKingdom from '~/components/PanelUnitedKingdom.vue'
 
-    export default {
-        head() {
-            return {
-                title: 'Trang Chủ Radio '+this.title_slug+' - ',
-                meta: [
-                    // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-                    {
-                        hid: 'description',
-                        name: 'description',
-                        content: 'Radio Online được phát từ '+this.title_slug+' - Heart UK, Heart London'
-                    }
-                ]
+  export default {
+    head() {
+      return {
+        title: 'Trang Chủ Radio ' + this.title_slug + ' - ',
+        meta: [
+          // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+          {
+            hid: 'description',
+            name: 'description',
+            content: 'Radio Online được phát từ ' + this.title_slug + ' - Heart UK, Heart London'
+          }
+        ]
+      }
+    },
+    data() {
+      return {
+        name: null,
+        title: 'Radio tại ' + this.title_slug,
+        title_slug: 'United Kingdom',
+        slug: 'united-kingdom'
+      }
+    },
+    mounted() {
+      this.$axios.get('/assets/radio/favorite/' + this.slug + '.json')
+        .then((res) => {
+
+          const data = res.data;
+          var notify = this.$notify;
+
+          var player = new MediaElementPlayer('player', {
+            features: ['playpause', 'progress', 'tracks', 'volume'],
+            enableKeyboard: true,
+            success: function (mediaElement) {
+
+              mediaElement.addEventListener('canplay', function () {
+                notify.success({
+                  title: 'Thành công',
+                  message: 'Phát từ radio ' + data['title'],
+                });
+
+                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data['title'] + '</strong></li><li>Tần số: <strong>' + data['frequency'] + '</strong></li><li>Quốc gia: <strong>' + data['countries'] + '</strong></li></ul></div>');
+                $('.ticker').ticker();
+
+              }, false);
+
+              mediaElement.addEventListener('error', function () {
+
+                notify.error({
+                  title: 'Thất bại',
+                  message: 'Tải không thành công radio ' + data['title'],
+                });
+
+              }, false);
+
+              console.log("Player initialised");
+
             }
-        },
-        data() {
-            return {
-                name: null,
-                title: 'Radio tại '+this.title_slug,
-                title_slug: 'United Kingdom',
-                slug: 'united-kingdom'
-            }
-        },
-        mounted() {
-            this.$axios.get('/assets/radio/favorite/'+this.slug+'.json')
-                .then((res) => {
+          });
+          player.setSrc(data['stream']);
 
-                    const data = res.data;
-                    var notify = this.$notify;
-
-                    var player = new MediaElementPlayer('player', {
-                        features: ['playpause','progress','tracks','volume'],
-                        enableKeyboard: true,
-                        success: function(mediaElement) {
-
-                            mediaElement.addEventListener('canplay', function () {
-                                notify.success({
-                                    title: 'Thành công',
-                                    message: 'Phát từ radio ' + data['title'],
-                                });
-
-                                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data['title'] + '</strong></li><li>Tần số: <strong>' + data['frequency'] + '</strong></li><li>Quốc gia: <strong>' + data['countries'] + '</strong></li></ul></div>');
-                                $('.ticker').ticker();
-
-                            }, false);
-
-                            mediaElement.addEventListener('error', function () {
-
-                                notify.error({
-                                    title: 'Thất bại',
-                                    message: 'Tải không thành công radio ' + data['title'],
-                                });
-
-                            }, false);
-
-                            console.log("Player initialised");
-
-                        }
-                    });
-                    player.setSrc(data['stream']);
-
-                })
-        },
-        components: {
-            PanelUnitedKingdom
-        }
+        })
+    },
+    components: {
+      PanelUnitedKingdom
     }
+  }
 </script>
 
 <style>
@@ -138,6 +138,7 @@
     width: 500px;
     margin: 10px auto;
   }
+
   /* The HTML list gets replaced with a single div,
      which contains the active ticker item, so you
      can easily style that as well */

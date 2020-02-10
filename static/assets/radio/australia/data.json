@@ -1,0 +1,20 @@
+{
+  "abc-news-radio": {
+    "title": "ABC News Radio",
+    "type": "application/x-mpegURL",
+    "category": "News",
+    "url": "https://www.abc.net.au/newsradio",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/newsradio_1@327297/master.m3u8",
+    "features": "/img/australia/abc-newsradio.png"
+  },
+  "radio-metro": {
+    "title": "Radio Metro",
+    "type": "audio/x-mpegurl",
+    "category": "Music",
+    "url": "https://radiometro.com.au",
+    "status": true,
+    "stream": "http://stream.radiometro.com.au:7777/;?type=http&nocache=129112",
+    "features": "/img/australia/metro.png"
+  }
+}

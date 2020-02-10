@@ -21,19 +21,19 @@
   </el-card>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                results: [],
-                title_slug: 'Singapore',
-                slug: 'singapore'
-            }
-        },
-        mounted() {
-            this.$axios.get('/assets/radio/' + this.slug + '/data.json')
-                .then((res) => {
-                    this.results = res.data;
-                })
-        },
-    }
+  export default {
+    data() {
+      return {
+        results: [],
+        title_slug: 'Singapore',
+        slug: 'singapore'
+      }
+    },
+    mounted() {
+      this.$axios.get('/assets/radio/' + this.slug + '/data.json')
+        .then((res) => {
+          this.results = res.data;
+        })
+    },
+  }
 </script>
