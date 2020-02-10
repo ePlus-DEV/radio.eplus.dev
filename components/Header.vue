@@ -21,6 +21,7 @@
       direction="ttb"
       size="50%">
       <el-main scroll-container>
+        <p>Chúng tôi luôn ghi nhận mọi đóng góp ý kiến hoặc đóng góp thêm link stream nhằm đa dạng hoá các kênh Radio trên website. Mọi đóng góp vui lòng liên hệ contact bên dưới. Cảm ơn các bạn.</p>
         <p>FB: <a target="_blank" href="https://fb.me/hoangsvit">https://fb.me/hoangsvit</a></p>
         <p>Email: contact@eplus.dev</p>
       </el-main>
@@ -34,7 +35,8 @@
       direction="btt"
       size="50%">
       <el-main scroll-container>
-        Đang cập nhật...
+        Các kênh Radio đều dẫn nguồn từ các nhà đài trên khắp thế giới, chúng tôi không chịu trách nhiệm nội dung của các kênh Radio.
+        Vui lòng cân nhắc trước khi dự định làm theo một điều gì đó.
       </el-main>
     </el-drawer>
     <!-- End - Terms & Conditions -->

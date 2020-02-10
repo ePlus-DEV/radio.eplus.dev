@@ -5,7 +5,7 @@ export default {
   */
   metaInfo: {
     noscript: [
-      { innerHTML: 'This website requires JavaScript.' }
+      {innerHTML: 'This website requires JavaScript.'}
     ]
   },
   head: {
@@ -65,8 +65,7 @@ export default {
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [
-  ],
+  buildModules: [],
   /*
   ** Nuxt.js modules
   */
