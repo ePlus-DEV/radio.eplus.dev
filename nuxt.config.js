@@ -156,7 +156,9 @@ export default {
       // Australia
       '/australia',
       '/australia/radio-metro',
-      '/australia/abc-news-radio'
+      '/australia/abc-news-radio',
+      '/australia/774-abc-melbourne',
+      '/australia/702-abc-sydney'
     ]
   },
   /* SiteMap */
