@@ -53,14 +53,37 @@
     "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_6music.m3u8",
     "features": "/img/united-kingdom/bbc-6.png"
   },
-  "heart-uk": {
-    "title": "Heart UK",
+  "bbc-asian": {
+    "title": "BBC Radio Asian Network",
     "type": "application/x-mpegURL",
-    "category": "Âm nhạc",
-    "url": "https://www.heart.co.uk",
+    "url": "http://www.bbc.co.uk/asiannetwork",
     "status": true,
-    "stream": "https://media-ssl.musicradio.com/HeartUK",
-    "features": "/img/united-kingdom/heart.png"
+    "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_asian_network.m3u8",
+    "features": "/img/united-kingdom/bbc-asian.png"
+  },
+  "classic-rock": {
+    "title": "Absolute Classic Rock",
+    "type": "audio/aac",
+    "url": "https://planetradio.co.uk/absolute-classic-rock",
+    "status": true,
+    "stream": "http://tx.whatson.com/icecast.php?i=absoluteclassicrock.aac",
+    "features": "/img/united-kingdom/classic-rock.png"
+  },
+  "jazz-fm": {
+    "title": "Jazz FM",
+    "type": "audio/mpeg",
+    "url": "https://www.jazzfm.com",
+    "status": true,
+    "stream": "https://edge-ads-01-cr.sharp-stream.com/jazzfmmobile.mp3",
+    "features": "/img/united-kingdom/jazz-fm.png"
+  },
+  "classic-fm": {
+    "title": "Classic FM",
+    "type": "audio/mpeg",
+    "url": "https://www.classicfm.com",
+    "status": true,
+    "stream": "http://vis.media-ice.musicradio.com/ClassicFMMP3",
+    "features": "/img/united-kingdom/classic-fm.png"
   },
   "capital-fm": {
     "title": "Capital FM",
@@ -70,12 +93,22 @@
     "stream": "http://media-ice.musicradio.com/Capital",
     "features": "/img/united-kingdom/capital.png"
   },
-  "classic-rock": {
-    "title": "Absolute Classic Rock",
-    "type": "audio/aac",
-    "url": "https://planetradio.co.uk/absolute-classic-rock",
+  "heart-uk": {
+    "title": "Heart UK",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://www.heart.co.uk",
     "status": true,
-    "stream": "http://tx.whatson.com/icecast.php?i=absoluteclassicrock.aac",
-    "features": "/img/united-kingdom/classic-rock.png"
+    "stream": "https://media-ssl.musicradio.com/HeartUK",
+    "features": "/img/united-kingdom/heart.png"
+  },
+  "virgin": {
+    "title": "Virgin Radio",
+    "type": "audio/mpeg",
+    "category": "Âm nhạc",
+    "url": "https://virginradio.co.uk",
+    "status": true,
+    "stream": "https://radio.virginradio.co.uk/stream",
+    "features": "/img/united-kingdom/virgin.png"
   }
 }

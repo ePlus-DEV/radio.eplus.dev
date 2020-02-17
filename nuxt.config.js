@@ -149,6 +149,10 @@ export default {
       '/united-kingdom/bbc-6',
       '/united-kingdom/capital-fm',
       '/united-kingdom/classic-rock',
+      '/united-kingdom/jazz-fm',
+      '/united-kingdom/bbc-asian',
+      '/united-kingdom/classic-fm',
+      '/united-kingdom/virgin',
       // Singapore
       '/singapore',
       '/singapore/love-972',
