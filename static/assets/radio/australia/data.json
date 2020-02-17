@@ -1,6 +1,7 @@
 {
   "abc-news-radio": {
-    "title": "ABC News Radio",vjs.zencdn.net/
+    "title": "ABC News Radio",
+    vjs.zencdn.net/
     "type": "application/x-mpegURL",
     "category": "News",
     "url": "https://www.abc.net.au/newsradio",
