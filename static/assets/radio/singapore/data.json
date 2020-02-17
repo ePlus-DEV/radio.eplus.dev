@@ -35,13 +35,13 @@
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAPITAL958FMAAC.aac?dist=radiosingapore",
     "features": "/img/singapore/capital-958.png"
   },
-  "capital-958": {
-    "title": "Radio Capital",
+  "one-fm": {
+    "title": "One FM",
     "type": "audio/aac",
-    "signal": "95.8 FM",
-    "url": "https://www.meradio.sg/radio/capital-958",
+    "signal": "91.3 FM",
+    "url": "https://www.onefm.sg",
     "status": true,
-    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAPITAL958FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/capital-958.png"
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ONE_FM_913AAC_SC",
+    "features": "/img/singapore/one-fm.png"
   }
 }

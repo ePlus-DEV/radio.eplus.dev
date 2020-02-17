@@ -87,6 +87,7 @@
                                   $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data.title + '</strong></li><li>Tần số: <strong>' + data.signal + '</strong></li><li>Quốc gia: <strong>Singapore</strong></li></ul></div>');
                                     $('.ticker').ticker();
 
+
                                 }, false);
 
                                 mediaElement.addEventListener('error', function () {
