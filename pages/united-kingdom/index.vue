@@ -74,7 +74,7 @@
                   message: 'Phát từ radio ' + data['title'],
                 });
 
-                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data['title'] + '</strong></li><li>Tần số: <strong>' + data['frequency'] + '</strong></li><li>Quốc gia: <strong>' + data['countries'] + '</strong></li></ul></div>');
+                $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data['title'] + '</strong></li><li>Tần số: <strong>' + title_slug + '</strong></li><li>Quốc gia: <strong>' + data['countries'] + '</strong></li></ul></div>');
                 $('.ticker').ticker();
 
               }, false);

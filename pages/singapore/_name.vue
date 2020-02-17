@@ -84,7 +84,7 @@
                                         message: 'Phát từ radio ' + data.title,
                                     });
 
-                                    $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data.title + '</strong></li><li>Thể loại: <strong>' + data.category + '</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>');
+                                  $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data.title + '</strong></li><li>Tần số: <strong>' + data.signal + '</strong></li><li>Quốc gia: <strong>Singapore</strong></li></ul></div>');
                                     $('.ticker').ticker();
 
                                 }, false);
@@ -132,3 +132,48 @@
         }
     }
 </script>
+
+<style>
+  .container {
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .title {
+    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    display: block;
+    font-weight: 300;
+    font-size: 100px;
+    color: #35495e;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-weight: 300;
+    font-size: 42px;
+    color: #526488;
+    word-spacing: 5px;
+    padding-bottom: 15px;
+  }
+
+  .links {
+    padding-top: 15px;
+  }
+
+  .ticker {
+    width: 500px;
+    margin: 10px auto;
+  }
+  /* The HTML list gets replaced with a single div,
+     which contains the active ticker item, so you
+     can easily style that as well */
+  .ticker div {
+    display: inline-block;
+    word-wrap: break-word;
+  }
+</style>

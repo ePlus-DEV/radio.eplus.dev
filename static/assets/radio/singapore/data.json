@@ -2,10 +2,46 @@
   "love-972": {
     "title": "LOVE 97.2FM",
     "type": "audio/aac",
-    "category": "LOVE 97.2FM",
+    "signal": "97.2FM",
     "url": "https://www.meradio.sg",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVE972FMAAC.aac?dist=radiosingapore",
     "features": "/img/singapore/love-972.png"
+  },
+  "class-95": {
+    "title": "Radio Class 95",
+    "type": "audio/x-mpegurl",
+    "signal": "95.0 FM",
+    "url": "https://www.meradio.sg/radio/class-95",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CLASS95AAC_SC",
+    "features": "/img/singapore/class-95.png"
+  },
+  "987fm": {
+    "title": "Radio 987 FM",
+    "type": "audio/aac",
+    "signal": "98.7 FM",
+    "url": "https://www.meradio.sg/radio/987",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/987FMAAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/987fm.png"
+  },
+  "capital-958": {
+    "title": "Radio Capital",
+    "type": "audio/aac",
+    "signal": "95.8 FM",
+    "url": "https://www.meradio.sg/radio/capital-958",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAPITAL958FMAAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/capital-958.png"
+  },
+  "capital-958": {
+    "title": "Radio Capital",
+    "type": "audio/aac",
+    "signal": "95.8 FM",
+    "url": "https://www.meradio.sg/radio/capital-958",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAPITAL958FMAAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/capital-958.png"
   }
 }

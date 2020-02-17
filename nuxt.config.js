@@ -156,6 +156,8 @@ export default {
       // Singapore
       '/singapore',
       '/singapore/love-972',
+      '/singapore/class-95',
+      '/singapore/987fm',
       // Australia
       '/australia',
       '/australia/radio-metro',

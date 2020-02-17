@@ -69,6 +69,7 @@
 
             $('#radio-name').text(data.title);
             this.name = data.title;
+            this.title_slug = data.title_slug;
             var self = this;
             self.title = data.title + ' - Radio tại Việt Nam - ';
             self.$emit('updateHead');
