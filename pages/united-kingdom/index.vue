@@ -138,7 +138,6 @@
     width: 500px;
     margin: 10px auto;
   }
-
   /* The HTML list gets replaced with a single div,
      which contains the active ticker item, so you
      can easily style that as well */
