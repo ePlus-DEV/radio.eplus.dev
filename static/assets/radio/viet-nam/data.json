@@ -111,7 +111,7 @@
     "title": "Bà Rịa-Vũng Tàu",
     "type": "application/x-mpegURL",
     "category": "Bà Rịa-Vũng Tàu",
-    "url": "http://brt.vn/",
+    "url": "http://brt.vn",
     "status": true,
     "stream": "http://113.163.216.23:1935/live/radio1.sdp_audio/playlist.m3u8",
     "features": "/img/viet-nam/ba-ria-vung-tau.png"
@@ -120,7 +120,7 @@
     "title": "Bình Phước",
     "type": "application/x-mpegURL",
     "category": "Bình Phước",
-    "url": "http://bptv.vn/",
+    "url": "http://bptv.vn",
     "status": false,
     "stream": "http://118.69.197.145/hls/radio.m3u8",
     "features": "/img/viet-nam/binh-phuoc.png"
@@ -129,7 +129,7 @@
     "title": "Bình Thuận",
     "type": "application/x-mpegURL",
     "category": "Bình Thuận",
-    "url": "http://binhthuantv.vn/",
+    "url": "http://binhthuantv.vn",
     "status": true,
     "stream": "http://202.43.109.142:1935/thbtradio/btradio/playlist.m3u8",
     "features": "/img/viet-nam/binh-thuan.png"
@@ -138,7 +138,7 @@
     "title": "Cà Mau",
     "type": "application/x-mpegURL",
     "category": "Cà Mau",
-    "url": "http://ctvcamau.vn/",
+    "url": "http://ctvcamau.vn",
     "status": false,
     "stream": "http://tv.ctvcamau.vn/live/radio/radio.m3u8",
     "features": "/img/viet-nam/ca-mau.png"
@@ -147,7 +147,7 @@
     "title": "Cần Thơ",
     "type": "application/x-mpegURL",
     "category": "Cần Thơ",
-    "url": "http://canthotv.vn/",
+    "url": "http://canthotv.vn",
     "status": false,
     "stream": "https://tv.canthotv.vn/live/radio/radio.m3u8",
     "features": "/img/viet-nam/can-tho.png"
@@ -221,7 +221,7 @@
     "category": "Ninh Bình",
     "url": "http://nbtv.vn",
     "status": true,
-    "stream": "http://113.160.203.109:8001/",
+    "stream": "http://113.160.203.109:8001",
     "features": "/img/viet-nam/ninh-binh.png"
   },
   "soc-trang": {
@@ -329,7 +329,7 @@
     "title": "Vĩnh Long",
     "type": "application/x-mpegURL",
     "category": "Vĩnh Long",
-    "url": "https://www.thvl.vn/",
+    "url": "https://www.thvl.vn",
     "status": false,
     "time": "Chưa rõ",
     "schedule": false,
@@ -340,7 +340,7 @@
     "title": "Xone FM 96MHz",
     "type": "application/x-mpegURL",
     "category": "Xone FM 96MHz",
-    "url": "https://xonefm.com/",
+    "url": "https://xonefm.com",
     "status": true,
     "time": "Chưa rõ",
     "schedule": true,
@@ -351,7 +351,7 @@
     "title": "Đồng Nai - 97.5MHz",
     "type": "application/x-mpegURL",
     "category": "Đồng Nai - 97.5MHz",
-    "url": "http://dnrtv.org.vn/",
+    "url": "http://dnrtv.org.vn",
     "status": true,
     "time": "Chưa rõ",
     "schedule": false,
