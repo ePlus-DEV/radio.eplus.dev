@@ -158,7 +158,8 @@ export default {
       '/singapore/love-972',
       '/singapore/class-95',
       '/singapore/987fm',
-      '/singapore/987fm',
+      '/singapore/capital-958',
+      '/singapore/one-fm',
       // Australia
       '/australia',
       '/australia/radio-metro',
