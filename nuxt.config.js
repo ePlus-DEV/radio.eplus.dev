@@ -194,7 +194,11 @@ export default {
       "/singapore/class-95",
       "/singapore/987fm",
       "/singapore/capital-958",
+      "/singapore/gold-90-5-fm",
       "/singapore/one-fm",
+      "/singapore/oli",
+      "/singapore/ria",
+      "/singapore/kiss92",
       // Australia
       "/australia",
       "/australia/radio-metro",

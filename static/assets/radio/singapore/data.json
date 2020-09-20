@@ -35,6 +35,15 @@
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAPITAL958FMAAC.aac?dist=radiosingapore",
     "features": "/img/singapore/capital-958.png"
   },
+  "gold-90-5-fm": {
+    "title": "Radio Gold",
+    "type": "audio/aac",
+    "signal": "90.5 FM",
+    "url": "https://www.melisten.sg/radio/gold-905",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/GOLD905AAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/gold-90-5-fm.png"
+  },
   "one-fm": {
     "title": "One FM",
     "type": "audio/aac",
@@ -43,5 +52,32 @@
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ONE_FM_913AAC_SC",
     "features": "/img/singapore/one-fm.png"
+  },
+  "oli": {
+    "title": "Radio Oli",
+    "type": "audio/aac",
+    "signal": "96.8 FM",
+    "url": "https://www.melisten.sg/radio/oli968?c=968fm",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/oli.png"
+  },
+  "ria": {
+    "title": "Radio Ria",
+    "type": "audio/aac",
+    "signal": "89.7 FM",
+    "url": "https://www.melisten.sg/radio/oli968?c=968fm",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RIA897FMAAC.aac?dist=radiosingapore",
+    "features": "/img/singapore/ria.png"
+  },
+  "kiss92": {
+    "title": "Radio Kiss92",
+    "type": "audio/aac",
+    "signal": "89.7 FM",
+    "url": "https://www.kiss92.sg/",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/KISS_92AAC_SC",
+    "features": "/img/singapore/kiss92.png"
   }
 }
