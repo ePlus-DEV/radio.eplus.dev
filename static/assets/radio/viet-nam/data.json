@@ -1,24 +1,27 @@
 {
   "vov1": {
     "title": "VOV 1",
+    "description": "VOV1 Radio là kênh phát thanh tổng hợp các tin tức thời sự, chính trị, ngoại giao, kinh tế, văn học nghệ thuật... mới nhất, trực thuộc đài phát thanh Việt Nam VOV, phát sóng 24/24h hàng ngày.",
     "type": "application/x-mpegURL",
     "category": "Thời sự",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevov1/vov1.stream_aac/playlist.m3u8",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov1.stream_aac/media_w1168994727_5935.aac",
     "features": "/img/viet-nam/vov1.png"
   },
   "vov2": {
     "title": "VOV 2",
+    "description": "Hệ văn hóa - đời sống - khoa học VOV2 trực thuộc Đài tiếng nói Việt Nam, là kênh phát thanh quốc gia quốc gia, phát sóng 19 giờ/ ngày, tập trung vào các chương trình liên quan đến văn hóa, giáo dục và xã hội.",
     "type": "application/x-mpegURL",
     "category": "Văn Hóa - Xã Hội",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevov2/vov2.stream_aac/playlist.m3u8",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov2.stream_aac/playlist.m3u8",
     "features": "/img/viet-nam/vov2.png"
   },
   "vov3": {
     "title": "VOV 3",
+    "description": "VOV3 Radio là kênh phát thanh thuộc đài tiếng nói Việt Nam, cung cấp các chương trình liên quan đến âm nhạc trong nước và quốc tế, cũng như các thông tin cập nhật trong ngành giải trí.",
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "https://vov.vn",
@@ -28,33 +31,37 @@
   },
   "vov4": {
     "title": "VOV 4",
+    "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
     "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevovtaybac/vovtaybac.stream_aac/playlist.m3u8",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovTTTB.stream_aac/playlist.m3u8",
     "features": "/img/viet-nam/vov4.png"
   },
   "vov5": {
     "title": "VOV 5",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
     "type": "application/x-mpegURL",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevov5/vov5.stream_aac/playlist.m3u8",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov5.stream_aac/playlist.m3u8",
     "features": "/img/viet-nam/vov5.png"
   },
   "vov-english": {
     "title": "VOV - English",
+    "description": "VOV5 English là một trong những kênh đầu tiên của Dịch vụ VOV5 hải ngoại, bắt đầu phát sóng vào ngày 7 tháng 9 năm 1945. Từ năm 1998, các chương trình tiếng Anh đã chính thức được phát trên FM cho cộng đồng nước ngoài tại Việt Nam và khán giả trong nước.",
     "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevov247/vov247.stream_aac/playlist.m3u8",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov247.stream_aac/playlist.m3u8",
     "features": "/img/viet-nam/vov-english.png"
   },
   "vov-gt-hcm": {
     "title": "VOV Giao Thông TP.HCM",
+    "description": "VOV Giao thông TPHCM ra đời vào năm 2010, cùng với VOV Giao thông Hà Nội đã trở thành một người bạn đường tin cậy của các tài xế. Kênh tập trung vào việc tuyên truyền giao thông, thông tin cảnh báo nhằm giảm thiểu ùn tắc giao thông cũng như các chương trình giải trí khác.",
     "type": "application/x-mpegURL",
     "category": "Giao Thông",
     "url": "https://vov.vn",
@@ -64,11 +71,12 @@
   },
   "vov-giao-thong": {
     "title": "VOV Giao Thông Hà Nội",
+    "description": "Kênh VOV Giao Thông FM 91 MHz là kênh phát thanh thực tế đầu tiên tại Việt Nam, ra đời năm 2010, trực thuộc Đài tiếng nói Việt Nam. Kênh cung cấp các diễn biến giao thông đang xảy ra trên thực tế giúp các thính giả có cái nhìn toàn cảnh và chính xác nhất về giao thông.",
     "type": "application/x-mpegURL",
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevovgthn/vovgthn.stream_aac/playlist.m3u8",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovGT.stream_aac/playlist.m3u8",
     "features": "/img/viet-nam/vov-giao-thong-ha-noi.png"
   },
   "voh-am-610khz": {
