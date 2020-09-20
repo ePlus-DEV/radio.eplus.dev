@@ -81,6 +81,7 @@
   },
   "voh-am-610khz": {
     "title": "Đài tiếng nói nhân dân TP.HCM - AM 610KHZ",
+    "description": "Đài Tiếng nói Nhân dân Thành phố Hồ Chí Minh, là đài phát thanh của Thành phố Hồ Chí Minh và trực thuộc Ủy ban Nhân dân Thành phố Hồ Chí Minh, thành lập theo quyết định số 55/ GP-TTĐT cấp ngày 02/10/2014 của Cục Phát thành Truyền hình và Thông tin điện tử - Bộ Thông tin và Truyền thông.",
     "type": "application/x-mpegURL",
     "category": "VOH - AM 610KHZ",
     "url": "https://voh.com.vn",
@@ -90,6 +91,7 @@
   },
   "voh-fm-99.9-mhz": {
     "title": "Đài tiếng nói nhân dân TP.HCM - FM 99.9 MHZ",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "VOH - FM 99.9 MHZ",
     "url": "https://voh.com.vn",
@@ -99,6 +101,7 @@
   },
   "voh-fm-95.6-mhz": {
     "title": "Đài tiếng nói nhân dân TP.HCM - FM 95.6 MHZ",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "VOH - FM 95.6 MHZ",
     "url": "https://voh.com.vn",
@@ -108,6 +111,7 @@
   },
   "voh-fm-87.7-mhz": {
     "title": "Đài tiếng nói nhân dân TP.HCM - FM 87.7 MHZ",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "VOH - FM 87.7 MHZ",
     "url": "https://voh.com.vn",
@@ -117,6 +121,7 @@
   },
   "ba-ria-vung-tau": {
     "title": "Bà Rịa-Vũng Tàu",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Bà Rịa-Vũng Tàu",
     "url": "http://brt.vn",
@@ -126,6 +131,7 @@
   },
   "binh-phuoc": {
     "title": "Bình Phước",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Bình Phước",
     "url": "http://bptv.vn",
@@ -135,6 +141,7 @@
   },
   "binh-thuan": {
     "title": "Bình Thuận",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Bình Thuận",
     "url": "http://binhthuantv.vn",
@@ -144,6 +151,7 @@
   },
   "ca-mau": {
     "title": "Cà Mau",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Cà Mau",
     "url": "http://ctvcamau.vn",
@@ -153,6 +161,7 @@
   },
   "can-tho": {
     "title": "Cần Thơ",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Cần Thơ",
     "url": "http://canthotv.vn",
@@ -162,6 +171,7 @@
   },
   "da-nang": {
     "title": "Đà Nẵng",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Đà Nẵng",
     "url": "http://www.drt.danang.vn/",
@@ -171,6 +181,7 @@
   },
   "ha-noi": {
     "title": "Hà Nội - FM96",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Hà Nội - FM96",
     "url": "http://hanoitv.vn",
@@ -180,6 +191,7 @@
   },
   "ha-noi-joyfm": {
     "title": "Hà Nội - JOYFM",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Hà Nội - JOYFM",
     "url": "http://hanoitv.vn",
@@ -189,6 +201,7 @@
   },
   "ha-noi-fm90": {
     "title": "Hà Nội - FM90",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Hà Nội - FM90",
     "url": "http://hanoitv.vn",
@@ -198,6 +211,7 @@
   },
   "hai-duong": {
     "title": "Hải Dương",
+    "description": "",
     "type": "audio/mpeg",
     "category": "Hải Dương",
     "url": "http://haiduongtv.com.vn",
@@ -207,6 +221,7 @@
   },
   "khanh-hoa": {
     "title": "Khánh Hòa",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Khánh Hòa",
     "url": "http://ktv.org.vn",
@@ -216,6 +231,7 @@
   },
   "kien-giang": {
     "title": "Kiên Giang",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Kiên Giang",
     "url": "http://tv.kgtv.vn",
@@ -225,6 +241,7 @@
   },
   "ninh-binh": {
     "title": "Ninh Bình",
+    "description": "",
     "type": "audio/mpeg",
     "category": "Ninh Bình",
     "url": "http://nbtv.vn",
@@ -234,6 +251,7 @@
   },
   "soc-trang": {
     "title": "Sóc Trăng",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Sóc Trăng",
     "url": "http://thst.vn",
@@ -243,6 +261,7 @@
   },
   "thua-thien-hue": {
     "title": "Thừa Thiên Huế",
+    "description": "",
     "type": "audio/mp4",
     "category": "Thừa Thiên Huế",
     "url": "http://trt.com.vn",
@@ -252,6 +271,7 @@
   },
   "bac-giang": {
     "title": "Bắc Giang",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Bắc Giang",
     "url": "http://bacgiangtv.vn",
@@ -262,6 +282,7 @@
   },
   "ha-tinh": {
     "title": "Hà Tĩnh",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Hà Tĩnh",
     "url": "http://hatinhtv.vn",
@@ -272,6 +293,7 @@
   },
   "phu-yen": {
     "title": "Phú Yên",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Phú Yên",
     "url": "http://ptpphuyen.vn",
@@ -282,6 +304,7 @@
   },
   "tien-giang": {
     "title": "Tiền Giang 96.2 FM",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Tiền Giang 96.2 FM",
     "url": "http://thtg.vn",
@@ -292,6 +315,7 @@
   },
   "ben-tre": {
     "title": "Bến Tre",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Bến Tre",
     "url": "http://thbt.vn",
@@ -302,6 +326,7 @@
   },
   "dong-thap": {
     "title": "Đồng Tháp",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Đồng Tháp",
     "url": "https://thdt.vn",
@@ -313,6 +338,7 @@
   },
   "gia-lai": {
     "title": "Gia Lai",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Gia Lai",
     "url": "http://gialaitv.vn",
@@ -324,6 +350,7 @@
   },
   "thai-binh": {
     "title": "Thái Bình",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Thái Bình",
     "url": "http://thaibinhtv.vn",
@@ -335,6 +362,7 @@
   },
   "vinh-long": {
     "title": "Vĩnh Long",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Vĩnh Long",
     "url": "https://www.thvl.vn",
@@ -346,6 +374,7 @@
   },
   "xone-fm-96-mhz": {
     "title": "Xone FM 96MHz",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Xone FM 96MHz",
     "url": "https://xonefm.com",
@@ -357,6 +386,7 @@
   },
   "dong-nai": {
     "title": "Đồng Nai - 97.5MHz",
+    "description": "",
     "type": "application/x-mpegURL",
     "category": "Đồng Nai - 97.5MHz",
     "url": "http://dnrtv.org.vn",
