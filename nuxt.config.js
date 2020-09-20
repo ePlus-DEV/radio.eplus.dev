@@ -11,7 +11,7 @@ export default {
     titleTemplate: "%sRadio Internet | Radio.ePlus.DEV",
     htmlAttrs: {
       lang: "vi",
-      amp: true
+      amp: false
     },
     meta: [
       { charset: "utf-8" },
