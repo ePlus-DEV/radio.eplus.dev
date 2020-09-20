@@ -52,58 +52,72 @@ export default {
             slug: "viet-nam"
         };
     },
-    mounted() {
-        this.$axios
-            .get("/assets/radio/favorite/" + this.slug + ".json")
-            .then(res => {
-                const data = res.data;
-                var notify = this.$notify;
-
-                var player = new MediaElementPlayer("player", {
-                    features: ["playpause", "progress", "tracks", "volume"],
-                    enableKeyboard: true,
-                    success: function (mediaElement) {
-                        mediaElement.addEventListener(
-                            "canplay",
-                            function () {
-                                notify.success({
-                                    title: "Thành công",
-                                    message: "Phát từ radio " + data["title"]
-                                });
-
-                                $(".mejs__time-rail").html(
-                                    '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
-                                    data["title"] +
-                                    "</strong></li><li>Tần số: <strong>" +
-                                    data["frequency"] +
-                                    "</strong></li><li>Quốc gia: <strong>" +
-                                    data["countries"] +
-                                    "</strong></li></ul></div>"
-                                );
-                                $(".ticker").ticker();
-                            },
-                            false
-                        );
-
-                        mediaElement.addEventListener(
-                            "error",
-                            function () {
-                                notify.error({
-                                    title: "Thất bại",
-                                    message: "Tải không thành công radio " + data["title"]
-                                });
-                            },
-                            false
-                        );
-
-                        console.log("Player initialised");
-                    }
-                });
-                player.setSrc(data["stream"]);
-            });
-    },
     components: {
         PanelVietNam
+    },
+    methods: {
+        async fetchData() {
+            this.$axios
+                .get("/assets/radio/favorite/" + this.slug + ".json")
+                .then(res => {
+                    const data = res.data;
+                    var notify = this.$notify;
+
+                    var player = new MediaElementPlayer("player", {
+                        features: ["playpause", "progress", "tracks", "volume"],
+                        enableKeyboard: true,
+                        success: function (mediaElement) {
+                            mediaElement.addEventListener(
+                                "canplay",
+                                function () {
+                                    notify.success({
+                                        title: "Thành công",
+                                        message: "Phát từ radio " + data["title"]
+                                    });
+
+                                    $(".mejs__time-rail").html(
+                                        '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
+                                        data["title"] +
+                                        "</strong></li><li>Tần số: <strong>" +
+                                        data["frequency"] +
+                                        "</strong></li><li>Quốc gia: <strong>" +
+                                        data["countries"] +
+                                        "</strong></li></ul></div>"
+                                    );
+                                    $(".ticker").ticker();
+                                },
+                                false
+                            );
+
+                            mediaElement.addEventListener(
+                                "error",
+                                function () {
+                                    notify.error({
+                                        title: "Thất bại",
+                                        message: "Tải không thành công radio " + data["title"]
+                                    });
+                                },
+                                false
+                            );
+
+                            console.log("Player initialised");
+                        }
+                    });
+                    player.setSrc(data["stream"]);
+                });
+        }
+    },
+    created() {
+        this.loading = true;
+        Promise.all([this.fetchData()]).then(() => {
+            const loading = this.$loading({
+                lock: true,
+                text: "Loading",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)"
+            });
+            loading.close();
+        });
     }
 };
 </script>

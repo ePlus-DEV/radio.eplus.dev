@@ -1,180 +1,206 @@
 <template>
-  <div>
-
+<div>
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/'+slug }">{{ title_slug }}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' + slug }">{{
+        title_slug
+      }}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-card class="box-card mar-card">
+        <div slot="header" class="clearfix">
+            <el-badge value="Live" class="item">
+                <el-button size="small">{{ stream_name }}</el-button>
+            </el-badge>
+        </div>
 
-      <div slot="header" class="clearfix">
-        <el-badge value="Live" class="item">
-          <el-button size="small">Radio.ePlus.DEV</el-button>
-        </el-badge>
-      </div>
+        <audio id="player" preload="none" autoplay width="100%"></audio>
 
-      <audio id="player" preload="none" autoplay width="100%"></audio>
-
-      <div class="player-errors"></div>
-
+        <div class="player-errors"></div>
     </el-card>
 
     <PanelSingapore></PanelSingapore>
-
-  </div>
+</div>
 </template>
 
 <script>
-    // To import only MediaElement class
-    import 'mediaelement';
-    import 'mediaelement/build/mediaelementplayer.min.css';
-    import PanelSingapore from '~/components/PanelSingapore.vue'
+// To import only MediaElement class
+import "mediaelement";
+import "mediaelement/build/mediaelementplayer.min.css";
+import PanelSingapore from "~/components/PanelSingapore.vue";
 
-    export default {
-        head() {
-            return {
-                title: this.title,
-                meta: [
-                    // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-                    {
-                        hid: 'description',
-                        name: 'description',
-                        content: 'Radio tại '+this.title_slug
-                    }
-                ]
-            }
-        },
-        data() {
-            return {
-                name: null,
-                title: 'Radio tại '+this.title_slug,
-                title_slug: 'Singapore',
-                slug: 'singapore'
-            }
-        },
-        mounted() {
+export default {
+    head() {
+        return {
+            title: this.title,
+            meta: [
+                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+                {
+                    hid: "description",
+                    name: "description",
+                    content: "Radio tại " + this.title_slug
+                }
+            ]
+        };
+    },
+    data() {
+        return {
+            name: null,
+            title: "Radio tại " + this.title_slug,
+            title_slug: "Singapore",
+            slug: "singapore",
+            stream_name: "Radio.ePlus.DEV"
+        };
+    },
+    components: {
+        PanelSingapore
+    },
+    methods: {
+        async fetchData() {
+            this.$axios.get("/assets/radio/" + this.slug + "/data.json").then(res => {
+                if (res.data.hasOwnProperty(this.$route.params.name)) {
+                    const data = res.data[this.$route.params.name];
 
-            this.$axios.get('/assets/radio/'+this.slug+'/data.json')
-                .then((res) => {
+                    $("#radio-name").text(data.title);
+                    this.name = data.title;
+                    this.stream_name = data.title;
+                    var self = this;
+                    self.title = data.title + " - Radio tại " + this.title_slug + " - ";
+                    self.$emit("updateHead");
 
-                    if (res.data.hasOwnProperty(this.$route.params.name)) {
+                    var notify = this.$notify;
 
-                        const data = res.data[this.$route.params.name];
-
-                        $('#radio-name').text(data.title);
-                        this.name = data.title;
-                        var self = this;
-                        self.title = data.title + ' - Radio tại '+this.title_slug+' - ';
-                        self.$emit('updateHead');
-
-                        var notify = this.$notify;
-
-                        var player = new MediaElementPlayer('player', {
-                            features: ['playpause', 'progress', "airplay", "chromecast", 'volume'],
-                            enableKeyboard: true,
-                            error: true,
-                            readyState: true,
-                            success: function (mediaElement) {
-
-                                mediaElement.addEventListener('canplay', function () {
+                    var player = new MediaElementPlayer("player", {
+                        features: [
+                            "playpause",
+                            "progress",
+                            "airplay",
+                            "chromecast",
+                            "volume"
+                        ],
+                        enableKeyboard: true,
+                        error: true,
+                        readyState: true,
+                        success: function (mediaElement) {
+                            mediaElement.addEventListener(
+                                "canplay",
+                                function () {
                                     notify.success({
-                                        title: 'Thành công',
-                                        message: 'Phát từ radio ' + data.title,
+                                        title: "Thành công",
+                                        message: "Phát từ radio " + data.title
                                     });
 
-                                  $('.mejs__time-rail').html('<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' + data.title + '</strong></li><li>Tần số: <strong>' + data.signal + '</strong></li><li>Quốc gia: <strong>Singapore</strong></li></ul></div>');
-                                    $('.ticker').ticker();
+                                    $(".mejs__time-rail").html(
+                                        '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
+                                        data.title +
+                                        "</strong></li><li>Thể loại: <strong>" +
+                                        data.category +
+                                        "</strong></li><li>Quốc gia: <strong>United Kingdom</strong></li></ul></div>"
+                                    );
+                                    $(".ticker").ticker();
+                                },
+                                false
+                            );
 
-
-                                }, false);
-
-                                mediaElement.addEventListener('error', function () {
-
+                            mediaElement.addEventListener(
+                                "error",
+                                function () {
                                     notify.error({
-                                        title: 'Thất bại',
-                                        message: 'Tải không thành công radio ' + data.title,
+                                        title: "Thất bại",
+                                        message: "Tải không thành công radio " + data.title
                                     });
+                                },
+                                false
+                            );
 
-                                }, false);
-
-                                console.log("Player initialised");
+                            console.log("Player initialised");
+                        }
+                    });
+                    player.setSrc(data.stream);
+                } else {
+                    this.$confirm(
+                            "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!",
+                            "Warning", {
+                                confirmButtonText: "Quay lại",
+                                showCancelButton: false,
+                                closeOnPressEscape: false,
+                                closeOnClickModal: false,
+                                showClose: false,
+                                type: "warning",
+                                center: true
                             }
-                        });
-                        player.setSrc(data.stream);
-
-                    } else {
-
-                        this.$confirm('Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!', 'Warning', {
-                            confirmButtonText: 'Quay lại',
-                            showCancelButton: false,
-                            closeOnPressEscape: false,
-                            closeOnClickModal: false,
-                            showClose: false,
-                            type: 'warning',
-                            center: true
-                        }).then(() => {
-                            this.$router.push('/')
-                        }).catch(() => {
+                        )
+                        .then(() => {
+                            this.$router.push("/");
+                        })
+                        .catch(() => {
                             this.$message({
-                                type: 'info',
-                                message: 'Delete canceled'
+                                type: "info",
+                                message: "Delete canceled"
                             });
                         });
-
-                    }
-
-                })
-
-        },
-        components: {
-            PanelSingapore
+                }
+            });
         }
+    },
+    created() {
+        this.loading = true;
+        Promise.all([this.fetchData()]).then(() => {
+            const loading = this.$loading({
+                lock: true,
+                text: "Loading",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)"
+            });
+            loading.close();
+        });
     }
+};
 </script>
 
 <style>
-  .container {
+.container {
     margin: 0 auto;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
+}
 
-  .title {
-    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+.title {
+    font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     display: block;
     font-weight: 300;
     font-size: 100px;
     color: #35495e;
     letter-spacing: 1px;
-  }
+}
 
-  .subtitle {
+.subtitle {
     font-weight: 300;
     font-size: 42px;
     color: #526488;
     word-spacing: 5px;
     padding-bottom: 15px;
-  }
+}
 
-  .links {
+.links {
     padding-top: 15px;
-  }
+}
 
-  .ticker {
+.ticker {
     width: 500px;
     margin: 10px auto;
-  }
-  /* The HTML list gets replaced with a single div,
+}
+
+/* The HTML list gets replaced with a single div,
      which contains the active ticker item, so you
      can easily style that as well */
-  .ticker div {
+.ticker div {
     display: inline-block;
     word-wrap: break-word;
-  }
+}
 </style>

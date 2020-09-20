@@ -52,7 +52,6 @@ export default {
             slug: "united-kingdom"
         };
     },
-    mounted() {},
     components: {
         PanelUnitedKingdom
     },
@@ -80,7 +79,7 @@ export default {
                                         '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
                                         data["title"] +
                                         "</strong></li><li>Tần số: <strong>" +
-                                        title_slug +
+                                        data["frequency"] +
                                         "</strong></li><li>Quốc gia: <strong>" +
                                         data["countries"] +
                                         "</strong></li></ul></div>"
