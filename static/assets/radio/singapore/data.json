@@ -79,5 +79,14 @@
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/KISS_92AAC_SC",
     "features": "/img/singapore/kiss92.png"
+  },
+  "ufm-1003": {
+    "title": "Radio UFM",
+    "type": "audio/aac",
+    "signal": "100.3 FM",
+    "url": "https://www.ufm1003.sg/",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/UFM_1003AAC_SC",
+    "features": "/img/singapore/ufm-1003.png"
   }
 }
