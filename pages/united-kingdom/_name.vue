@@ -94,9 +94,7 @@ export default {
                                         data.title +
                                         "</strong></li><li>Thể loại: <strong>" +
                                         data.category +
-                                        "</strong></li><li>Quốc gia: <strong>" +
-                                        title_slug +
-                                        "</strong></li></ul></div>"
+                                        "</strong></li><li>Quốc gia: <strong>United Kingdom</strong></li></ul></div>"
                                     );
                                     $(".ticker").ticker();
                                 },

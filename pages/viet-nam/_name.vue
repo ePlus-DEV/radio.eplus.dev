@@ -83,7 +83,7 @@ export default {
           this.stream_name = data.title;
 
           var self = this;
-          self.title = data.title + " - Radio tại " + title_slug + " - ";
+          self.title = data.title + " - Radio tại Việt Nam - ";
           self.$emit("updateHead");
 
           var notify = this.$notify;
@@ -113,9 +113,7 @@ export default {
                       data.title +
                       "</strong></li><li>Thể loại: <strong>" +
                       data.category +
-                      "</strong></li><li>Quốc gia: <strong>" +
-                      title_slug +
-                      "</strong></li></ul></div>"
+                      "</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>"
                   );
                   $(".ticker").ticker();
                 },
