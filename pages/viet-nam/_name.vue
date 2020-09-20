@@ -14,12 +14,22 @@
                 <el-button size="small">{{ this.stream_name }}</el-button>
             </el-badge>
         </div>
-
+        <!-- BEGIN - Player -->
         <audio id="player" preload="none" autoplay width="100%"></audio>
-
-        <el-card v-if="this.description.length > 0"><b> Mô tả:</b> {{ this.description }}</el-card>
-
         <div class="player-errors"></div>
+        <!-- END - Player -->
+
+        <!-- BEGIN - Description -->
+        <el-card v-if="this.description.length > 0"><b> Mô tả:</b> {{ this.description }}</el-card>
+        <!-- BEGIN - Description -->
+        <!-- BEGIN - Facebook Comment -->
+        <!--<el-card>
+            <div class="fb-comments" :data-href="`https://radio.eplus.dev/${this.$nuxt.$route.path}`" data-numposts="5" data-width="100%"></div>
+            <div id="fb-root"></div>
+            
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=261709015086825&autoLogAppEvents=1" nonce="UN4FgEEC"></script>
+        </el-card>-->
+        <!-- END - Facebook Comment -->
     </el-card>
 
     <PanelVietNam></PanelVietNam>
@@ -34,135 +44,136 @@ import PanelVietNam from "~/components/PanelVietNam.vue";
 import error from "../../static/assets/js/jwplayer/js/templates/error";
 
 export default {
-    head() {
-        return {
-            title: this.title,
-            meta: [
-                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-                {
-                    hid: "description",
-                    name: "description",
-                    content: "Radio tại Việt Nam"
-                }
-            ]
-        };
-    },
-    data() {
-        return {
-            name: null,
-            title: "Radio tại Việt Nam",
-            title_slug: "Việt Nam",
-            slug: "viet-nam",
-            description: "",
-            stream_name: "Radio.ePlus.DEV"
-        };
-    },
-    components: {
-        PanelVietNam
-    },
-    methods: {
-        async fetchData() {
-            this.$axios.get("/assets/radio/viet-nam/data.json").then(res => {
-                if (res.data.hasOwnProperty(this.$route.params.name)) {
-                    const data = res.data[this.$route.params.name];
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: "description",
+          name: "description",
+          content: "Radio tại Việt Nam"
+        }
+      ]
+    };
+  },
+  data() {
+    return {
+      name: null,
+      title: "Radio tại Việt Nam",
+      title_slug: "Việt Nam",
+      slug: "viet-nam",
+      description: "",
+      stream_name: "Radio.ePlus.DEV"
+    };
+  },
+  components: {
+    PanelVietNam
+  },
+  methods: {
+    async fetchData() {
+      this.$axios.get("/assets/radio/viet-nam/data.json").then(res => {
+        if (res.data.hasOwnProperty(this.$route.params.name)) {
+          const data = res.data[this.$route.params.name];
 
-                    $("#radio-name").text(data.title);
+          $("#radio-name").text(data.title);
 
-                    this.name = data.title;
-                    this.description = data.description;
-                    this.stream_name = data.title;
+          this.name = data.title;
+          this.description = data.description;
+          this.stream_name = data.title;
 
-                    var self = this;
-                    self.title = data.title + " - Radio tại Việt Nam - ";
-                    self.$emit("updateHead");
+          var self = this;
+          self.title = data.title + " - Radio tại Việt Nam - ";
+          self.$emit("updateHead");
 
-                    var notify = this.$notify;
+          var notify = this.$notify;
 
-                    var player = new MediaElementPlayer("player", {
-                        features: [
-                            "playpause",
-                            "progress",
-                            "airplay",
-                            "chromecast",
-                            "volume"
-                        ],
-                        enableKeyboard: true,
-                        error: true,
-                        readyState: true,
-                        success: function (mediaElement) {
-                            mediaElement.addEventListener(
-                                "canplay",
-                                function () {
-                                    notify.success({
-                                        title: "Thành công",
-                                        message: "Phát từ radio " + data.title
-                                    });
+          var player = new MediaElementPlayer("player", {
+            features: [
+              "playpause",
+              "progress",
+              "airplay",
+              "chromecast",
+              "volume"
+            ],
+            enableKeyboard: true,
+            error: true,
+            readyState: true,
+            success: function(mediaElement) {
+              mediaElement.addEventListener(
+                "canplay",
+                function() {
+                  notify.success({
+                    title: "Thành công",
+                    message: "Phát từ radio " + data.title
+                  });
 
-                                    $(".mejs__time-rail").html(
-                                        '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
-                                        data.title +
-                                        "</strong></li><li>Thể loại: <strong>" +
-                                        data.category +
-                                        "</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>"
-                                    );
-                                    $(".ticker").ticker();
-                                },
-                                false
-                            );
+                  $(".mejs__time-rail").html(
+                    '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
+                      data.title +
+                      "</strong></li><li>Thể loại: <strong>" +
+                      data.category +
+                      "</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>"
+                  );
+                  $(".ticker").ticker();
+                },
+                false
+              );
 
-                            mediaElement.addEventListener(
-                                "error",
-                                function () {
-                                    notify.error({
-                                        title: "Thất bại",
-                                        message: "Tải không thành công radio " + data.title
-                                    });
-                                },
-                                false
-                            );
+              mediaElement.addEventListener(
+                "error",
+                function() {
+                  notify.error({
+                    title: "Thất bại",
+                    message: "Tải không thành công radio " + data.title
+                  });
+                },
+                false
+              );
 
-                            console.log("Player initialised");
-                        }
-                    });
-                    player.setSrc(data.stream);
-                } else {
-                    this.$confirm(
-                            "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!",
-                            "Warning", {
-                                confirmButtonText: "Quay lại",
-                                showCancelButton: false,
-                                closeOnPressEscape: false,
-                                closeOnClickModal: false,
-                                showClose: false,
-                                type: "warning",
-                                center: true
-                            }
-                        )
-                        .then(() => {
-                            this.$router.push("/");
-                        })
-                        .catch(() => {
-                            this.$message({
-                                type: "info",
-                                message: "Delete canceled"
-                            });
-                        });
-                }
+              console.log("Player initialised");
+            }
+          });
+          player.setSrc(data.stream);
+        } else {
+          this.$confirm(
+            "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!",
+            "Warning",
+            {
+              confirmButtonText: "Quay lại",
+              showCancelButton: false,
+              closeOnPressEscape: false,
+              closeOnClickModal: false,
+              showClose: false,
+              type: "warning",
+              center: true
+            }
+          )
+            .then(() => {
+              this.$router.push("/");
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "Delete canceled"
+              });
             });
         }
-    },
-    created() {
-        this.loading = true;
-
-        Promise.all([this.fetchData()]).then(() => {
-            const loading = this.$loading({
-                lock: true,
-                text: "Loading",
-                spinner: "el-icon-loading",
-                background: "rgba(0, 0, 0, 0.7)"
-            });
-            loading.close();
-        });
+      });
     }
+  },
+  created() {
+    this.loading = true;
+
+    Promise.all([this.fetchData()]).then(() => {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
+      loading.close();
+    });
+  }
 };
 </script>
