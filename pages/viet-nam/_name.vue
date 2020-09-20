@@ -26,7 +26,7 @@
         <!--<el-card>
             <div class="fb-comments" :data-href="`https://radio.eplus.dev/${this.$nuxt.$route.path}`" data-numposts="5" data-width="100%"></div>
             <div id="fb-root"></div>
-            
+
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=261709015086825&autoLogAppEvents=1" nonce="UN4FgEEC"></script>
         </el-card>-->
         <!-- END - Facebook Comment -->
@@ -164,7 +164,6 @@ export default {
   },
   created() {
     this.loading = true;
-
     Promise.all([this.fetchData()]).then(() => {
       const loading = this.$loading({
         lock: true,
