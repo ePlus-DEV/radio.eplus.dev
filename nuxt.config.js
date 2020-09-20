@@ -172,6 +172,7 @@ export default {
       "/viet-nam/vinh-long",
       "/viet-nam/xone-fm-96-mhz",
       "/viet-nam/dong-nai",
+      "/viet-nam/nhk-vietnam",
       // United Kingdom
       "/united-kingdom",
       "/united-kingdom/heart-uk",
