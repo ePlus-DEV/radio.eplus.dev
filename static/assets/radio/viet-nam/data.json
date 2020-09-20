@@ -6,7 +6,7 @@
     "category": "Thời sự",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov1.stream_aac/media_w1168994727_5935.aac",
+    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov1.stream_aac/playlist.m3u8",
     "features": "/img/viet-nam/vov1.png"
   },
   "vov2": {
@@ -395,5 +395,17 @@
     "schedule": false,
     "stream": "http://118.107.76.17:1935/live/Dongnaoradio/playlist.m3u8",
     "features": "/img/viet-nam/dong-nai.png"
+  },
+  "nhk-vietnam": {
+    "title": "NHK - Việt Nam",
+    "description": "NHK là hãng truyền hình - phát thanh công cộng Nhật Bản, Radio NHK Việt Nam thuộc NHK World, cung cấp các chương trình tin tức, giải trí Nhật Bản khách quan bằng tiếng Việt dành cho các thính giả Việt Nam.",
+    "type": "application/x-mpegURL",
+    "category": "NHK",
+    "url": "http://www3.nhk.or.jp/nhkworld/vi/",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "https://nhkworld.webcdn.stream.ne.jp/www11/radiojapan/all/263949/live_s.m3u8",
+    "features": "/img/viet-nam/nhk-vietnam.png"
   }
 }
