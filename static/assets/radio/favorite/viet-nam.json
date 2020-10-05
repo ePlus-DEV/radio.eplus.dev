@@ -3,5 +3,5 @@
   "type": "application/x-mpegURL",
   "frequency": "FM 91 MHz",
   "countries": "Việt Nam",
-  "stream": "http://stream2.mobiradio.vn/vovradio/vovgthcm.stream/chunklist.m3u8"
+  "stream": " http://stream2.mobiradio.vn/vovradio/vovgthcm.stream/playlist.m3u8"
 }
