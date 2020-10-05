@@ -6,7 +6,7 @@
     "category": "Thời sự",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov1.stream_aac/playlist.m3u8",
+    "stream": "http://stream2.mobiradio.vn/vovradio/vov1.stream/playlist.m3u8",
     "features": "/img/viet-nam/vov1.png"
   },
   "vov2": {
@@ -16,7 +16,7 @@
     "category": "Văn Hóa - Xã Hội",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov2.stream_aac/playlist.m3u8",
+    "stream": "http://stream2.mobiradio.vn/vovradio/vov2.stream/playlist.m3u8",
     "features": "/img/viet-nam/vov2.png"
   },
   "vov3": {
@@ -26,7 +26,7 @@
     "category": "Âm nhạc",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://5a6872aace0ce.streamlock.net/nghevov3/vov3.stream_aac/playlist.m3u8",
+    "stream": "http://stream2.mobiradio.vn/vovradio/vov3.stream/playlist.m3u8",
     "features": "/img/viet-nam/vov3.png"
   },
   "vov4": {
