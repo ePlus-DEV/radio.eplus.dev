@@ -15,11 +15,11 @@
     "@nuxtjs/sitemap": "^2.4.0",
     "element-ui": "^2.13.2",
     "mediaelement": "^4.2.16",
-    "nuxt": "^2.14.5",
-    "video.js": "^7.8.4",
+    "nuxt": "^2.14.7",
+    "video.js": "^7.10.1",
     "videojs-contrib-hls": "^5.15.0",
     "vue-head": "^2.2.0",
-    "vue-i18n": "^8.21.1"
+    "vue-i18n": "^8.22.1"
   },
   "devDependencies": {}
 }
