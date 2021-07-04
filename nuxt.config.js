@@ -275,6 +275,7 @@ export default {
   },
   /* SiteMap */
   sitemap: {
+    generate: true,
     path: "/sitemap.xml",
     hostname: process.env.BASE_URl,
     gzip: true,
