@@ -77,19 +77,19 @@ export default {
       {
         type: "apple-touch-icon",
         size: "180x180",
-        href: process.env.BASE_URL + "/brand/apple-touch-icon.png"
+        href: "/brand/apple-touch-icon.png"
       },
       {
         rel: "icon",
         type: "image/x-icon",
         size: "32x32",
-        href: process.env.BASE_URL + "/brand/favicon-32x32.png"
+        href: "/brand/favicon-32x32.png"
       },
       {
         rel: "icon",
         type: "image/x-icon",
         size: "16x16",
-        href: process.env.BASE_URL + "/brand/favicon-16x16.png"
+        href: "/brand/favicon-16x16.png"
       },
       {
         rel: "manifest",
@@ -98,7 +98,7 @@ export default {
       {
         rel: "mask-icon",
         color: "#5bbad5",
-        href: process.env.BASE_URL + "/brand/safari-pinned-tab.svg"
+        href: "/brand/safari-pinned-tab.svg"
       }
     ]
   },
