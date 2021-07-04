@@ -103,7 +103,33 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios", "@nuxtjs/sitemap"],
+  modules: [
+    "@nuxtjs/axios",
+    "@nuxtjs/sitemap",
+    [
+      "nuxt-i18n",
+      {
+        locales: [
+          {
+            code: "en",
+            file: "en-US.js",
+            name: "English",
+            flag: "/img/flags/europe/united-kingdom.png"
+          },
+          {
+            code: "vi",
+            file: "vi-VN.js",
+            name: "Tiếng Việt",
+            flag: "/img/flags/asia/viet-nam.png"
+          }
+        ],
+        strategy: "no_prefix",
+        lazy: true,
+        langDir: "lang/",
+        defaultLocale: "en"
+      }
+    ]
+  ],
   /*
    ** Build configuration
    */

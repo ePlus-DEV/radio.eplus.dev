@@ -1,39 +1,35 @@
 <template>
-<div>
+  <div>
     <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">Trang Chủ</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' + slug }">{{
-        this.title_slug
+      <el-breadcrumb-item :to="{ path: '/' }">{{
+        $t("navmenu.homepage")
       }}</el-breadcrumb-item>
-        <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' + slug }">{{
+        $t("world.asia.vietnam")
+      }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-card class="box-card mar-card">
-        <div slot="header" class="clearfix">
-            <el-badge value="Live" class="item">
-                <el-button size="small">{{ this.stream_name }}</el-button>
-            </el-badge>
-        </div>
-        <!-- BEGIN - Player -->
-        <audio id="player" preload="none" autoplay width="100%"></audio>
-        <div class="player-errors"></div>
-        <!-- END - Player -->
+      <div slot="header" class="clearfix">
+        <el-badge value="Live" class="item">
+          <el-button size="small">{{ this.stream_name }}</el-button>
+        </el-badge>
+      </div>
+      <!-- BEGIN - Player -->
+      <audio id="player" preload="none" autoplay width="100%"></audio>
+      <div class="player-errors"></div>
+      <!-- END - Player -->
 
-        <!-- BEGIN - Description -->
-        <el-card v-if="this.description.length > 0"><b> Mô tả:</b> {{ this.description }}</el-card>
-        <!-- BEGIN - Description -->
-        <!-- BEGIN - Facebook Comment -->
-        <!--<el-card>
-            <div class="fb-comments" :data-href="`https://radio.eplus.dev/${this.$nuxt.$route.path}`" data-numposts="5" data-width="100%"></div>
-            <div id="fb-root"></div>
-
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v8.0&appId=261709015086825&autoLogAppEvents=1" nonce="UN4FgEEC"></script>
-        </el-card>-->
-        <!-- END - Facebook Comment -->
+      <!-- BEGIN - Description -->
+      <el-card v-if="this.description.length > 0"
+        ><b> {{ $t("panel.description") }}:</b> {{ this.description }}</el-card
+      >
+      <!-- BEGIN - Description -->
     </el-card>
 
     <PanelVietNam></PanelVietNam>
-</div>
+  </div>
 </template>
 
 <script>
@@ -48,31 +44,31 @@ export default {
     return {
       title: this.title,
       meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
           hid: "description",
           name: "description",
-          content: "Radio tại Việt Nam"
-        }
-      ]
+          content: "Radio in " + this.title_slug,
+        },
+      ],
     };
   },
   data() {
     return {
       name: null,
-      title: "Radio tại Việt Nam",
+      title: "Radio in " + this.title_slug,
       title_slug: "Việt Nam",
       slug: "viet-nam",
       description: "",
-      stream_name: "Radio.ePlus.DEV"
+      stream_name: "Radio.ePlus.DEV",
     };
   },
   components: {
-    PanelVietNam
+    PanelVietNam,
   },
   methods: {
     async fetchData() {
-      this.$axios.get("/assets/radio/viet-nam/data.json").then(res => {
+      this.$axios.get("/assets/radio/" + this.slug + "/data.json").then((res) => {
+        const $t = this.$t.bind(this);
         if (res.data.hasOwnProperty(this.$route.params.name)) {
           const data = res.data[this.$route.params.name];
 
@@ -83,84 +79,74 @@ export default {
           this.stream_name = data.title;
 
           var self = this;
-          self.title = data.title + " - Radio tại Việt Nam - ";
+          self.title =
+            data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
           self.$emit("updateHead");
 
           var notify = this.$notify;
 
           var player = new MediaElementPlayer("player", {
-            features: [
-              "playpause",
-              "progress",
-              "airplay",
-              "chromecast",
-              "volume"
-            ],
+            features: ["playpause", "progress", "tracks", "volume"],
             enableKeyboard: true,
-            error: true,
-            readyState: true,
-            success: function(mediaElement) {
-              mediaElement.addEventListener(
-                "canplay",
-                function() {
-                  notify.success({
-                    title: "Thành công",
-                    message: "Phát từ radio " + data.title
-                  });
-
+            success: function (mediaElement) {
+              // Event
+              $("#player")
+                .on("canplay", function () {
                   $(".mejs__time-rail").html(
-                    '<div class="ticker radio-name-player"><ul><li>Phát từ Radio <strong>' +
-                      data.title +
-                      "</strong></li><li>Thể loại: <strong>" +
-                      data.category +
-                      "</strong></li><li>Quốc gia: <strong>Việt Nam</strong></li></ul></div>"
+                    '<div class="ticker radio-name-player"><ul><li>' +
+                      $t("panel.play_from_radio") +
+                      " <strong>" +
+                      data["title"] +
+                      "</strong></li><li>" +
+                      $t("panel.frequency") +
+                      ": <strong>" +
+                      data["url"] +
+                      "</strong></li><li>" +
+                      $t("panel.category") +
+                      ": <strong>" +
+                      data["category"] +
+                      "</strong></li></ul></div>"
                   );
                   $(".ticker").ticker();
-                },
-                false
-              );
-
-              mediaElement.addEventListener(
-                "error",
-                function() {
-                  notify.error({
-                    title: "Thất bại",
-                    message: "Tải không thành công radio " + data.title
+                  notify.success({
+                    title: $t("notify.success"),
+                    message: $t("notify.success_content", { radio: data.title }),
                   });
-                },
-                false
-              );
+                })
+                .on("error", function () {
+                  notify.error({
+                    title: $t("notify.error"),
+                    message: $t("notify.error_content", { radio: data.title }),
+                  });
+                });
 
-              console.log("Player initialised");
-            }
+              console.info("Player initialised");
+            },
           });
+
           player.setSrc(data.stream);
         } else {
-          this.$confirm(
-            "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!",
-            "Warning",
-            {
-              confirmButtonText: "Quay lại",
-              showCancelButton: false,
-              closeOnPressEscape: false,
-              closeOnClickModal: false,
-              showClose: false,
-              type: "warning",
-              center: true
-            }
-          )
+          this.$confirm($t("404.content"), "Warning", {
+            confirmButtonText: $t("button.back"),
+            showCancelButton: false,
+            closeOnPressEscape: false,
+            closeOnClickModal: false,
+            showClose: false,
+            type: "warning",
+            center: true,
+          })
             .then(() => {
               this.$router.push("/");
             })
             .catch(() => {
               this.$message({
                 type: "info",
-                message: "Delete canceled"
+                message: "Delete canceled",
               });
             });
         }
       });
-    }
+    },
   },
   created() {
     this.loading = true;
@@ -169,10 +155,10 @@ export default {
         lock: true,
         text: "Loading",
         spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)"
+        background: "rgba(0, 0, 0, 0.7)",
       });
       loading.close();
     });
-  }
+  },
 };
 </script>

@@ -16,10 +16,10 @@
     "element-ui": "^2.13.2",
     "mediaelement": "^4.2.16",
     "nuxt": "^2.14.7",
+    "nuxt-i18n": "^6.27.2",
     "video.js": "^7.10.1",
     "videojs-contrib-hls": "^5.15.0",
-    "vue-head": "^2.2.0",
-    "vue-i18n": "^8.22.1"
+    "vue-head": "^2.2.0"
   },
   "devDependencies": {}
 }
