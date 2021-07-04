@@ -20,7 +20,7 @@
       <p>
         Now you will find some output after running above command in console as below:
       </p>
-      <el-image src="https://i.imgur.com/GhOC4Xz.png"></el-image>
+      <el-image src="https://i.imgur.com/8p4rmiN.png"></el-image>
       <p>
         Visit
         <el-link type="danger" href="http://localhost:3030/" target="_blank"

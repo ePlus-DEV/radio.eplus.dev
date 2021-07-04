@@ -1,5 +1,5 @@
 export default {
-  mode: "spa",
+  ssr: true,
   publicRuntimeConfig: {
     Base_URL: process.env.BASE_URL || "https://radio.eplus.dev",
     Site_Name: process.env.Site_Name || "Radio.ePlus.DEV",
