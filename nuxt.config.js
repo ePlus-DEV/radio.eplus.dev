@@ -275,9 +275,8 @@ export default {
   },
   /* SiteMap */
   sitemap: {
-    generate: true,
     path: "/sitemap.xml",
-    hostname: process.env.BASE_URl,
+    hostname: "https://radio.eplus.dev",
     gzip: true,
     exclude: ["/secret", "/admin/**"],
     defaults: {
