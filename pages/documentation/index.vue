@@ -23,8 +23,8 @@
       <el-image src="https://i.imgur.com/GhOC4Xz.png"></el-image>
       <p>
         Visit
-        <el-link type="danger" href="http://localhost:8080/" target="_blank"
-          >http://localhost:8080/</el-link
+        <el-link type="danger" href="http://localhost:3030/" target="_blank"
+          >http://localhost:3030/</el-link
         >
         to check frontend.
       </p>
