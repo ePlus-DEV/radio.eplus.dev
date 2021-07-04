@@ -48,7 +48,7 @@ export default {
       title: "Radio in " + this.title_slug,
       title_slug: "Singapore",
       slug: "singapore",
-      stream_name: "Radio.ePlus.DEV",
+      stream_name: process.env.Site_Name,
     };
   },
   components: {

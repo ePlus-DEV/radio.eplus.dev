@@ -12,7 +12,7 @@
         }}</nuxt-link>
       </el-menu-item>
       <el-menu-item>
-        <el-link href="https://www.facebook.com/groups/radio.eplus.dev" target="_blank">{{
+        <el-link :href="$config.Group_Facebook" target="_blank">{{
           $t("navmenu.group")
         }}</el-link>
       </el-menu-item>
@@ -48,17 +48,22 @@
         </p>
         <p>
           Facebook:
-          <el-link href="https://fb.me/hoangsvit" target="_blank"
-            >https://fb.me/hoangsvit</el-link
-          >
+          <el-link :href="$config.Facebook" target="_blank">{{
+            $config.Facebook
+          }}</el-link>
         </p>
         <p>
           Group Facebook:
-          <el-link href="https://www.facebook.com/groups/radio.eplus.dev" target="_blank"
-            >https://www.facebook.com/groups/radio.eplus.dev</el-link
-          >
+          <el-link :href="$config.Group_Facebook" target="_blank">{{
+            $config.Group_Facebook
+          }}</el-link>
         </p>
-        <p>Email: contact@eplus.dev</p>
+        <p>
+          Email:
+          <el-link :href="'mailto:' + $config.Email_Contact">{{
+            $config.Email_Contact
+          }}</el-link>
+        </p>
       </el-main>
     </el-drawer>
     <!-- End - Contact Us -->

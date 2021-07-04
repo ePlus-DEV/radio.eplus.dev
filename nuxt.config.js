@@ -1,5 +1,15 @@
 export default {
   mode: "spa",
+  publicRuntimeConfig: {
+    Base_URL: process.env.BASE_URL || "https://radio.eplus.dev",
+    Site_Name: process.env.Site_Name || "Radio.ePlus.DEV",
+    Facebook: process.env.Facebook || "https://www.facebook.com/hoangsvit",
+    Fanpage: process.env.FanPage || "https://www.facebook.com/hoangsvit",
+    Group_Facebook:
+      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
+    Email_Contact:
+      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit"
+  },
   /*
    ** Headers of the page
    */
@@ -7,10 +17,9 @@ export default {
     noscript: [{ innerHTML: "This website requires JavaScript." }]
   },
   head: {
-    // title: process.env.npm_package_name || '',
-    titleTemplate: "%sRadio Internet | Radio.ePlus.DEV",
+    titleTemplate: "%sRadio Internet | " + process.env.Site_Name,
     htmlAttrs: {
-      lang: "vi",
+      lang: "en",
       amp: false
     },
     meta: [
@@ -19,35 +28,44 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: process.env.npm_package_description || ""
+        content: process.env.Description || ""
       },
       { name: "msapplication-TileColor", content: "#603cba" },
       {
         property: "article:author",
-        content: "https://www.facebook.com/hoangsvit"
+        content: process.env.FanPage
       },
       {
         property: "article:publisher",
-        content: "https://www.facebook.com/hoangsvit"
+        content: process.env.FanPage
       },
       {
         property: "og:image",
-        content: "https://radio.eplus.dev/brand/logo-share.png"
+        content: process.env.BASE_URL + "brand/logo-share.png"
       },
       { property: "fb:pages", content: "179495025583990" },
       { property: "fb:app_id", content: "363745774395676" },
-      { property: "og:title", content: "Radio Internet | Radio.ePlus.DEV" },
+      {
+        property: "og:title",
+        content: "Radio Internet | " + process.env.Site_Name
+      },
       {
         property: "og:description",
-        content: process.env.npm_package_description || ""
+        content: process.env.Description || ""
       },
       { property: "og:type", content: "music.radio_station" },
-      { property: "og:url", content: "https://radio.eplus.dev" },
-      { property: "og:image:alt", content: "Radio Internet | Radio.ePlus.DEV" },
-      { property: "og:site_name", content: "Radio Internet | Radio.ePlus.DEV" },
+      { property: "og:url", content: process.env.BASE_URL },
+      {
+        property: "og:image:alt",
+        content: "Radio Internet | " + process.env.Site_Name
+      },
+      {
+        property: "og:site_name",
+        content: "Radio Internet | " + process.env.Site_Name
+      },
       {
         property: "music:creator",
-        content: "https://www.facebook.com/hoangsvit"
+        content: process.env.FanPage
       },
       {
         property: "og:audio",
@@ -59,25 +77,28 @@ export default {
       {
         type: "apple-touch-icon",
         size: "180x180",
-        href: "/brand/apple-touch-icon.png"
+        href: process.env.BASE_URL + "/brand/apple-touch-icon.png"
       },
       {
         rel: "icon",
         type: "image/x-icon",
         size: "32x32",
-        href: "/brand/favicon-32x32.png"
+        href: process.env.BASE_URL + "/brand/favicon-32x32.png"
       },
       {
         rel: "icon",
         type: "image/x-icon",
         size: "16x16",
-        href: "/brand/favicon-16x16.png"
+        href: process.env.BASE_URL + "/brand/favicon-16x16.png"
       },
-      { rel: "manifest", href: "/brand/site.webmanifest" },
+      {
+        rel: "manifest",
+        href: "/brand/site.webmanifest"
+      },
       {
         rel: "mask-icon",
         color: "#5bbad5",
-        href: "/brand/safari-pinned-tab.svg"
+        href: process.env.BASE_URL + "/brand/safari-pinned-tab.svg"
       }
     ]
   },
@@ -104,6 +125,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    "@nuxtjs/dotenv",
     "@nuxtjs/axios",
     "@nuxtjs/sitemap",
     [
@@ -144,14 +166,14 @@ export default {
    ** axios configuration
    */
   axios: {
-    baseURL: "https://radio.eplus.dev",
+    baseURL: process.env.BASE_URL,
     proxyHeaders: false,
     credentials: false,
     proxy: true
   },
   proxy: {
     "/assets/": {
-      target: "https://radio.eplus.dev/",
+      target: process.env.BASE_URL,
       pathRewrite: { "^/assets/": "" },
       changeOrigin: true
     }
@@ -246,13 +268,15 @@ export default {
       "/australia/radio-metro",
       "/australia/abc-news-radio",
       "/australia/774-abc-melbourne",
-      "/australia/702-abc-sydney"
+      "/australia/702-abc-sydney",
+      // Documentation
+      "/documentation"
     ]
   },
   /* SiteMap */
   sitemap: {
     path: "/sitemap.xml",
-    hostname: "https://radio.eplus.dev",
+    hostname: process.env.BASE_URl,
     gzip: true,
     exclude: ["/secret", "/admin/**"],
     defaults: {

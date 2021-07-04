@@ -5,7 +5,6 @@
         $t("navmenu.homepage")
       }}</el-breadcrumb-item>
     </el-breadcrumb>
-
     <el-card class="box-card mar-card">
       <div slot="header" class="clearfix">
         <el-badge value="Live" class="item">

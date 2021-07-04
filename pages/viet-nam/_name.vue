@@ -59,7 +59,7 @@ export default {
       title_slug: "Việt Nam",
       slug: "viet-nam",
       description: "",
-      stream_name: "Radio.ePlus.DEV",
+      stream_name: process.env.Site_Name,
     };
   },
   components: {
