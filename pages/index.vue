@@ -19,7 +19,6 @@
 
       <audio id="player" preload="auto" autoplay width="100%"></audio>
     </el-card>
-
     <PanelRadio></PanelRadio>
   </div>
 </template>
@@ -50,52 +49,54 @@ export default {
   },
   methods: {
     async fetchData() {
-      this.$axios.get("/assets/radio/favorite/viet-nam.json").then((res) => {
-        const data = res.data;
-        var notify = this.$notify;
-        const $t = this.$t.bind(this);
+      this.$axios
+        .get("/assets/radio/favorite/" + this.$config.Pin_Channel_Favorites + ".json")
+        .then((res) => {
+          const data = res.data;
+          var notify = this.$notify;
+          const $t = this.$t.bind(this);
 
-        var player = new MediaElementPlayer("player", {
-          features: ["playpause", "progress", "tracks", "volume"],
-          enableKeyboard: true,
-          success: function (mediaElement) {
-            // Event
-            $("#player")
-              .on("canplay", function () {
-                $(".mejs__time-rail").html(
-                  '<div class="ticker radio-name-player"><ul><li>' +
-                    $t("panel.play_from_radio") +
-                    " <strong>" +
-                    data["title"] +
-                    "</strong></li><li>" +
-                    $t("panel.frequency") +
-                    ": <strong>" +
-                    data["frequency"] +
-                    "</strong></li><li>" +
-                    $t("panel.country") +
-                    ": <strong>" +
-                    data["countries"] +
-                    "</strong></li></ul></div>"
-                );
-                $(".ticker").ticker();
-                notify.success({
-                  title: $t("notify.success"),
-                  message: $t("notify.success_content", { radio: data.title }),
+          var player = new MediaElementPlayer("player", {
+            features: ["playpause", "progress", "tracks", "volume"],
+            enableKeyboard: true,
+            success: function (mediaElement) {
+              // Event
+              $("#player")
+                .on("canplay", function () {
+                  $(".mejs__time-rail").html(
+                    '<div class="ticker radio-name-player"><ul><li>' +
+                      $t("panel.play_from_radio") +
+                      " <strong>" +
+                      data["title"] +
+                      "</strong></li><li>" +
+                      $t("panel.frequency") +
+                      ": <strong>" +
+                      data["frequency"] +
+                      "</strong></li><li>" +
+                      $t("panel.country") +
+                      ": <strong>" +
+                      data["countries"] +
+                      "</strong></li></ul></div>"
+                  );
+                  $(".ticker").ticker();
+                  notify.success({
+                    title: $t("notify.success"),
+                    message: $t("notify.success_content", { radio: data.title }),
+                  });
+                })
+                .on("error", function () {
+                  notify.error({
+                    title: $t("notify.error"),
+                    message: $t("notify.error_content", { radio: data.title }),
+                  });
                 });
-              })
-              .on("error", function () {
-                notify.error({
-                  title: $t("notify.error"),
-                  message: $t("notify.error_content", { radio: data.title }),
-                });
-              });
 
-            console.info("Player initialised");
-          },
+              console.info("Player initialised");
+            },
+          });
+
+          player.setSrc(res.data["stream"]);
         });
-
-        player.setSrc(res.data["stream"]);
-      });
     },
   },
   created() {

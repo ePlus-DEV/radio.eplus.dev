@@ -8,7 +8,8 @@ export default {
     Group_Facebook:
       process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
     Email_Contact:
-      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit"
+      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
+    Pin_Channel_Favorites: process.env.Pin_Channel_Favorites || "viet-nam"
   },
   /*
    ** Headers of the page
@@ -276,7 +277,7 @@ export default {
   /* SiteMap */
   sitemap: {
     path: "/sitemap.xml",
-    hostname: "https://radio.eplus.dev",
+    hostname: process.env.BASE_URL,
     gzip: true,
     exclude: ["/secret", "/admin/**"],
     defaults: {
@@ -285,14 +286,5 @@ export default {
       lastmod: new Date(),
       lastmodrealtime: true
     }
-    /*routes: [
-      '/page/1',
-      {
-        url: '/page/2',
-        changefreq: 'daily',
-        priority: 1,
-        lastmodISO: '2017-06-30T13:30:00.000Z'
-      }
-    ]*/
   }
 };

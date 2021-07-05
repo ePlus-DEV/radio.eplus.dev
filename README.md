@@ -4,7 +4,7 @@
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ npm run install
 
@@ -18,5 +18,9 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
+
+### Documentation
+
+http://localhost:3000/documentation or http://radio.eplus.dev/documentation
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
