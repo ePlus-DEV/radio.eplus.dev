@@ -126,6 +126,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
     "@nuxtjs/sitemap",
@@ -171,6 +172,26 @@ export default {
     proxyHeaders: false,
     credentials: false,
     proxy: true
+  },
+  /*
+   ** Auth Config
+   */
+  auth: {
+    redirect: {
+      login: "/admin/login",
+      logout: "/",
+      callback: "/admin/login",
+      home: "/admin"
+    },
+    strategies: {
+      local: false,
+      auth0: {
+        domain: "eplus-dev.auth0.com",
+        clientId: "7I96ALVZfqpPKV7ebdcHFkYpXqY1Qf37"
+        // audience: process.env.BASE_URL,
+        // logoutRedirectUri: process.env.BASE_URL
+      }
+    }
   },
   proxy: {
     "/assets/": {
