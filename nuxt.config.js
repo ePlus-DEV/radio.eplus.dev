@@ -126,6 +126,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    "@nuxtjs/recaptcha",
     "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
@@ -172,6 +173,15 @@ export default {
     proxyHeaders: false,
     credentials: false,
     proxy: true
+  },
+  /*
+   ** reCaptcha
+   */
+  recaptcha: {
+    // hideBadge: Boolean, // Hide badge element (v3 & v2 via size=invisible)
+    siteKey: "6LcRnoAUAAAAAIZc1xC0Tsh3XYIWqf9FW5KALsIv", // Site key for requests
+    version: 3 // Version
+    // size: String // Size: 'compact', 'normal', 'invisible' (v2)
   },
   /*
    ** Auth Config
