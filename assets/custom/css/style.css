@@ -81,3 +81,7 @@
   white-space: nowrap;
   border: 1px solid #fff;
 }
+
+span.mejs__time-total.mejs__time-slider {
+  display: none;
+}

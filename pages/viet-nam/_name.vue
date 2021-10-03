@@ -10,23 +10,7 @@
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">
-        <el-badge value="Live" class="item">
-          <el-button size="small">{{ this.stream_name }}</el-button>
-        </el-badge>
-      </div>
-      <!-- BEGIN - Player -->
-      <audio id="player" preload="none" autoplay width="100%"></audio>
-      <div class="player-errors"></div>
-      <!-- END - Player -->
-
-      <!-- BEGIN - Description -->
-      <el-card v-if="this.description.length > 0"
-        ><b> {{ $t("panel.description") }}:</b> {{ this.description }}</el-card
-      >
-      <!-- BEGIN - Description -->
-    </el-card>
+    <Player :stream="stream_name"></Player>
 
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
@@ -37,7 +21,7 @@
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
 import PanelStation from "~/components/PanelStation.vue";
-import error from "../../static/assets/js/jwplayer/js/templates/error";
+import Player from "~/components/Player.vue";
 
 export default {
   head() {
@@ -66,6 +50,7 @@ export default {
   },
   components: {
     PanelStation,
+    Player,
   },
   methods: {
     async fetchData() {

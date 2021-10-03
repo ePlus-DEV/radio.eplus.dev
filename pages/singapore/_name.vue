@@ -8,17 +8,7 @@
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">
-        <el-badge value="Live" class="item">
-          <el-button size="small">{{ stream_name }}</el-button>
-        </el-badge>
-      </div>
-
-      <audio id="player" preload="none" autoplay width="100%"></audio>
-
-      <div class="player-errors"></div>
-    </el-card>
+    <Player :stream="stream_name"></Player>
 
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
@@ -29,6 +19,7 @@
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
 import PanelStation from "~/components/PanelStation.vue";
+import Player from "~/components/Player.vue";
 
 export default {
   head() {
@@ -56,6 +47,7 @@ export default {
   },
   components: {
     PanelStation,
+    Player,
   },
   methods: {
     async fetchData() {

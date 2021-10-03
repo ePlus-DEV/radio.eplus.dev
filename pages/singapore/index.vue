@@ -7,20 +7,7 @@
       <el-breadcrumb-item>{{ title_slug }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-card class="box-card" style="margin: 15px 0 15px 0">
-      <div slot="header" class="clearfix">
-        <el-badge value="Live" class="item">
-          <el-button size="small">{{
-            $t("panel.most_popular", { name: title_slug })
-          }}</el-button>
-        </el-badge>
-        <el-badge class="item">
-          <div class="ticker"></div>
-        </el-badge>
-      </div>
-
-      <audio id="player" preload="auto" autoplay width="100%"></audio>
-    </el-card>
+    <Player country="world.asia.singapore"></Player>
 
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
@@ -31,6 +18,7 @@
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
 import PanelStation from "~/components/PanelStation.vue";
+import Player from "~/components/Player.vue";
 
 export default {
   head() {
@@ -55,6 +43,7 @@ export default {
   },
   components: {
     PanelStation,
+    Player,
   },
   methods: {
     async fetchData() {

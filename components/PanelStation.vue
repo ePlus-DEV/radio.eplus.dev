@@ -37,6 +37,7 @@
     </el-row>
   </el-card>
 </template>
+
 <script>
 export default {
   props: ["area", "slug", "i18n"],

@@ -5,20 +5,9 @@
         $t("navmenu.homepage")
       }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">
-        <el-badge value="Live" class="item">
-          <el-button size="small">{{
-            $t("panel.most_popular", { name: $t("world.asia.vietnam") })
-          }}</el-button>
-        </el-badge>
-        <el-badge class="item">
-          <div class="ticker"></div>
-        </el-badge>
-      </div>
 
-      <audio id="player" preload="auto" autoplay width="100%"></audio>
-    </el-card>
+    <Player country="world.asia.vietnam"></Player>
+
     <PanelRadio></PanelRadio>
   </div>
 </template>
@@ -28,6 +17,7 @@
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
 import PanelRadio from "~/components/PanelRadio.vue";
+import Player from "~/components/Player.vue";
 
 export default {
   head() {
@@ -46,6 +36,7 @@ export default {
   },
   components: {
     PanelRadio,
+    Player,
   },
   methods: {
     async fetchData() {
