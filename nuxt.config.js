@@ -121,7 +121,13 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [],
+  buildModules: [
+    "@nuxtjs/moment"
+  ],
+  // momentjs
+  moment: {
+    timezone: true
+  },
   /*
    ** Nuxt.js modules
    */

@@ -25,6 +25,7 @@
     "vue-head": "^2.2.0"
   },
   "devDependencies": {
-    "@nuxtjs/dotenv": "^1.4.1"
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/moment": "^1.6.1"
   }
 }

@@ -10,6 +10,16 @@
 
     <Player :stream="stream_name"></Player>
 
+    <!-- {{ $moment.tz("Asia/Singapore").format("MM/DD/YYYY HH:mm:ss") }} -->
+
+    <!-- <iframe
+      src="https://radiovolna.net/en/embed/?ids=405569&logo=1&play=1&bg=%23ffffff&title=%231b1c1f"
+      frameborder="0"
+      width="100%"
+      height="55px"
+      scrolling="no"
+    ></iframe> -->
+
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
 </template>
@@ -102,6 +112,14 @@ export default {
           });
 
           player.setSrc(data.stream);
+
+          // Schedule
+          if (data.schedule !== undefined) {
+            console.log(data.schedule);
+            this.fetchSchedule(
+              data.schedule + this.$moment().tz("Asia/Singapore").unix()
+            );
+          }
         } else {
           this.$confirm($t("404.content"), "Warning", {
             confirmButtonText: $t("button.back"),
@@ -123,6 +141,38 @@ export default {
             });
         }
       });
+    },
+    async fetchSchedule(url) {
+      /* const json = JSON.stringify({
+        access_token:
+          "SMK/w6nDksK6MsKww4cyU8K6U0XCsjzDhn3DhsO5fTvDrcOtfTw7w4bCsl7DhsOtPMOPwrJzwrrDkl1zwqHCukXCsMKyR0o8UlhMw4fDjsONY8OZ",
+        radio_id: "407702",
+      });
+      this.$axios
+        .post(url, json, {
+          headers: {
+            // Overwrite Axios's automatically set Content-Type
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        }); */
+
+      const json = JSON.stringify({
+        widget_id: "dmEhK3vCr8KieyUnw5JDw4N7J8OZRzw2w7w1w5J4",
+        params: { radio_id: "407702" },
+      });
+
+      this.$axios
+        .post("https://ajax.mytuner-radio.com/ajax/register-widget/", json, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
     },
   },
   created() {
