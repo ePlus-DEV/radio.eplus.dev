@@ -20,7 +20,7 @@
       <div class="player-errors"></div>
     </el-card>
 
-    <PanelUnitedKingdom></PanelUnitedKingdom>
+    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
 </template>
 
@@ -28,7 +28,7 @@
 // To import only MediaElement class
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
-import PanelUnitedKingdom from "~/components/PanelAustralia.vue";
+import PanelStation from "~/components/PanelStation.vue";
 
 export default {
   head() {
@@ -50,14 +50,16 @@ export default {
       title_slug: "Australia",
       slug: "australia",
       stream_name: process.env.Site_Name,
+      area: "oceania",
+      i18n: "world.oceania.australia",
     };
   },
   components: {
-    PanelUnitedKingdom,
+    PanelStation,
   },
   methods: {
     async fetchData() {
-      this.$axios.get("/assets/radio/" + this.slug + "/data.json").then((res) => {
+      this.$axios.get("/assets/radio/oceania/" + this.slug + ".json").then((res) => {
         const $t = this.$t.bind(this);
         if (res.data.hasOwnProperty(this.$route.params.name)) {
           const data = res.data[this.$route.params.name];

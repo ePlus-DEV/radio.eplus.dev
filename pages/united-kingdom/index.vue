@@ -24,7 +24,7 @@
       <audio id="player" preload="auto" autoplay width="100%"></audio>
     </el-card>
 
-    <PanelUnitedKingdom></PanelUnitedKingdom>
+    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
 </template>
 
@@ -32,7 +32,7 @@
 // To import only MediaElement class
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
-import PanelUnitedKingdom from "~/components/PanelUnitedKingdom.vue";
+import PanelStation from "~/components/PanelStation.vue";
 
 export default {
   head() {
@@ -58,10 +58,12 @@ export default {
       title: "Radio in " + this.title_slug,
       title_slug: "United Kingdom",
       slug: "united-kingdom",
+      area: "europe",
+      i18n: "world.europe.united_kingdom",
     };
   },
   components: {
-    PanelUnitedKingdom,
+    PanelStation,
   },
   methods: {
     async fetchData() {

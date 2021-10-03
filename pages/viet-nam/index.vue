@@ -22,7 +22,7 @@
       <audio id="player" preload="auto" autoplay width="100%"></audio>
     </el-card>
 
-    <PanelVietNam></PanelVietNam>
+    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
 </template>
 
@@ -30,7 +30,7 @@
 // To import only MediaElement class
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
-import PanelVietNam from "~/components/PanelVietNam.vue";
+import PanelStation from "~/components/PanelStation.vue";
 
 export default {
   head() {
@@ -58,10 +58,12 @@ export default {
       title: "Radio in " + this.title_slug,
       title_slug: "Việt Nam",
       slug: "viet-nam",
+      area: "asia",
+      i18n: "world.asia.vietnam",
     };
   },
   components: {
-    PanelVietNam,
+    PanelStation,
   },
   methods: {
     async fetchData() {

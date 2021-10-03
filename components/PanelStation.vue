@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <div slot="header" class="clearfix">
       <nuxt-link class="text-decoration-none" :to="'/' + slug">
-        {{ title_slug }}
+        <span>{{ $t(i18n) }}</span>
       </nuxt-link>
     </div>
 
@@ -39,18 +39,18 @@
 </template>
 <script>
 export default {
+  props: ["area", "slug", "i18n"],
   data() {
     return {
       results: [],
-
-      title_slug: "Singapore",
-      slug: "singapore",
     };
   },
   mounted() {
-    this.$axios.get("/assets/radio/" + this.slug + "/data.json").then((res) => {
-      this.results = res.data;
-    });
+    this.$axios
+      .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
+      .then((res) => {
+        this.results = res.data;
+      });
   },
 };
 </script>

@@ -124,23 +124,23 @@ export default {
   methods: {
     async fetchData() {
       // BEGIN - Asia
-      this.$axios.get("/assets/radio/viet-nam/data.json").then((res) => {
+      this.$axios.get("/assets/radio/asia/viet-nam.json").then((res) => {
         this.vietnam = Object.keys(res.data).length;
       });
 
-      this.$axios.get("/assets/radio/singapore/data.json").then((res) => {
+      this.$axios.get("/assets/radio/asia/singapore.json").then((res) => {
         this.singapore = Object.keys(res.data).length;
       });
       // END - Asia
 
       // BEGIN - Europe
-      this.$axios.get("/assets/radio/united-kingdom/data.json").then((res) => {
+      this.$axios.get("/assets/radio/europe/united-kingdom.json").then((res) => {
         this.united_kingdom = Object.keys(res.data).length;
       });
       // END - Europe
 
       // BEGIN - Oceania
-      this.$axios.get("/assets/radio/australia/data.json").then((res) => {
+      this.$axios.get("/assets/radio/oceania/australia.json").then((res) => {
         this.australia = Object.keys(res.data).length;
       });
       // END - Oceania

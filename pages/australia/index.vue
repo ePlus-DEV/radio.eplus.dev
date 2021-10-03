@@ -22,7 +22,7 @@
       <audio id="player" preload="auto" autoplay width="100%"></audio>
     </el-card>
 
-    <PanelUnitedKingdom></PanelUnitedKingdom>
+    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
 </template>
 
@@ -30,7 +30,7 @@
 // To import only MediaElement class
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
-import PanelUnitedKingdom from "~/components/PanelAustralia.vue";
+import PanelStation from "~/components/PanelStation.vue";
 
 export default {
   head() {
@@ -49,10 +49,12 @@ export default {
     return {
       title_slug: "Australia",
       slug: "australia",
+      area: "oceania",
+      i18n: "world.oceania.australia",
     };
   },
   components: {
-    PanelUnitedKingdom,
+    PanelStation,
   },
   methods: {
     async fetchData() {

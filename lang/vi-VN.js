@@ -29,8 +29,8 @@ export default async (context, locale) => {
       },
       north_america: {},
       oceania: {
-        name: "Châu Úc",
-        australia: "Australia",
+        name: "Châu Đại Dương",
+        australia: "Châu Úc",
         new_zealand: "New Zealand"
       },
       south_america: {}

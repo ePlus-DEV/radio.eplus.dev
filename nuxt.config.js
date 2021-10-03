@@ -326,8 +326,6 @@ export default {
       "/australia/abc-news-radio",
       "/australia/774-abc-melbourne",
       "/australia/702-abc-sydney",
-      // Documentation
-      "/documentation"
     ]
   },
   /* SiteMap */

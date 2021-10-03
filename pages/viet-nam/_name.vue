@@ -28,7 +28,7 @@
       <!-- BEGIN - Description -->
     </el-card>
 
-    <PanelVietNam></PanelVietNam>
+    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
 </template>
 
@@ -36,7 +36,7 @@
 // To import only MediaElement class
 import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
-import PanelVietNam from "~/components/PanelVietNam.vue";
+import PanelStation from "~/components/PanelStation.vue";
 import error from "../../static/assets/js/jwplayer/js/templates/error";
 
 export default {
@@ -58,16 +58,18 @@ export default {
       title: "Radio in " + this.title_slug,
       title_slug: "Việt Nam",
       slug: "viet-nam",
+      area: "asia",
+      i18n: "world.asia.vietnam",
       description: "",
       stream_name: process.env.Site_Name,
     };
   },
   components: {
-    PanelVietNam,
+    PanelStation,
   },
   methods: {
     async fetchData() {
-      this.$axios.get("/assets/radio/" + this.slug + "/data.json").then((res) => {
+      this.$axios.get("/assets/radio/asia/" + this.slug + ".json").then((res) => {
         const $t = this.$t.bind(this);
         if (res.data.hasOwnProperty(this.$route.params.name)) {
           const data = res.data[this.$route.params.name];
