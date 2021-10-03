@@ -6,7 +6,7 @@
     "category": "Thời sự",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "http://stream2.mobiradio.vn/vovradio/vov1.stream/playlist.m3u8",
+    "stream": "https://stream.vovlive.vn/4e2d0c965746c0d7ff7382724f4887531633274903/vovlive/vov1vov5Vietnamese.sdp_aac/chunklist_w674228427.m3u8",
     "features": "/img/asia/viet-nam/vov1.png"
   },
   "vov2": {
@@ -26,7 +26,7 @@
     "category": "Âm nhạc",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "http://118.70.205.22:1935/vovlive/vov3.sdp_aac/playlist.m3u8",
+    "stream": "https://stream.vovlive.vn/3bddc1424ca741ffbbe5dc95a7d2b50a1633274904/vovlive/vov3.sdp_aac/chunklist_w1642662505.m3u8",
     "features": "/img/asia/viet-nam/vov3.png"
   },
   "vov4": {
@@ -136,7 +136,7 @@
     "category": "Bình Phước",
     "url": "http://bptv.vn",
     "status": false,
-    "stream": "http://118.69.197.145/hls/radio.m3u8",
+    "stream": "https://live.baobinhphuoc.com.vn/bptvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/binh-phuoc.png"
   },
   "binh-thuan": {
@@ -246,7 +246,7 @@
     "category": "Ninh Bình",
     "url": "http://nbtv.vn",
     "status": true,
-    "stream": "http://113.160.203.109:8001",
+    "stream": "https://nbtv.vncdn.vn/nbtvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/ninh-binh.png"
   },
   "soc-trang": {
@@ -395,6 +395,30 @@
     "schedule": false,
     "stream": "http://118.107.76.17:1935/live/Dongnaoradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/dong-nai.png"
+  },
+  "qnr1": {
+    "title": "Radio Quảng Ninh QNR1",
+    "description": "",
+    "type": "application/x-mpegURL",
+    "category": "Radio Quảng Ninh QNR1",
+    "url": "https://baoquangninh.com.vn/?c=radio1",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "https://qtv.vncdn.vn/qtvlive/qnr1.m3u8",
+    "features": "/img/asia/viet-nam/qnr1.png"
+  },
+  "qnr2": {
+    "title": "Radio Quảng Ninh QNR2",
+    "description": "",
+    "type": "application/x-mpegURL",
+    "category": "Radio Quảng Ninh QNR1",
+    "url": "https://baoquangninh.com.vn/?c=radio2",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "https://qtv.vncdn.vn/qtvlive/qnr2.m3u8",
+    "features": "/img/asia/viet-nam/qnr2.png"
   },
   "nhk-vietnam": {
     "title": "NHK - Việt Nam",
