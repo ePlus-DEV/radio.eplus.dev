@@ -326,6 +326,23 @@ export default {
       "/australia/abc-news-radio",
       "/australia/774-abc-melbourne",
       "/australia/702-abc-sydney",
+      // Cuba
+      "/cuba/habana",
+      "/cuba/rebelde",
+      "/cuba/reloj",
+      "/cuba/taino",
+      "/cuba/enciclopedia",
+      "/cuba/progreso",
+      "/cuba/cmbf",
+      "/cuba/baire",
+      "/cuba/marti",
+      "/cuba/cuba-libre",
+      "/cuba/campesina",
+      "/cuba/tu-zona-musical",
+      "/cuba/angulo",
+      "/cuba/ciudad-del-mar",
+      "/cuba/cadena-habana",
+      "/cuba/guama"
     ]
   },
   /* SiteMap */

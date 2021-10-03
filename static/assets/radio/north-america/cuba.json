@@ -1,0 +1,146 @@
+{
+  "habana": {
+    "title": "Radio Habana",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiohc.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/McW3fLhs",
+    "features": "/img/north-america/cuba/habana.png"
+  },
+  "rebelde": {
+    "title": "Radio Rebelde",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiorebelde.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/zrXXWK9F",
+    "features": "/img/north-america/cuba/rebelde.png"
+  },
+  "reloj": {
+    "title": "Radio Reloj",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radioreloj.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/b3jbfThq",
+    "features": "/img/north-america/cuba/reloj.png"
+  },
+  "taino": {
+    "title": "Radio Taino",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiotaino.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/3MCwWg3V",
+    "features": "/img/north-america/cuba/taino.png"
+  },
+  "enciclopedia": {
+    "title": "Radio Enciclopedia",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radioenciclopedia.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/9Rnrbjzq",
+    "features": "/img/north-america/cuba/enciclopedia.png"
+  },
+  "progreso": {
+    "title": "Radio Progreso",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radioprogreso.icrt.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/XjfW7qWN",
+    "features": "/img/north-america/cuba/progreso.png"
+  },
+  "cmbf": {
+    "title": "CMBF Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiocubana.cu/emisoras/237-nacionales/21120-cmbf-radio-musical-nacional-audio-en-vivo",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/Nbtz7HT3",
+    "features": "/img/north-america/cuba/cmbf.png"
+  },
+  "baire": {
+    "title": "Radio Grito de Baire",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiogritodebaire.icrt.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/PMxFRLK7?1605458698011",
+    "features": "/img/north-america/cuba/baire.png"
+  },
+  "marti": {
+    "title": "Radio Marti",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiotelevisionmarti.com/",
+    "status": true,
+    "stream": "https://stream.radiojar.com/3ds9yqpgq3quv",
+    "features": "/img/north-america/cuba/marti.png"
+  },
+  "cuba-libre": {
+    "title": "Radio Cuba Libre Internacional",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radiocubalibreinternacional.com/",
+    "status": true,
+    "stream": "https://usa8.fastcast4u.com/proxy/fracaner?mp=/;",
+    "features": "/img/north-america/cuba/cuba-libre.png"
+  },
+  "campesina": {
+    "title": "Radio Campesina Cubana",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "http://radiocampesinacubana.playtheradio.com/",
+    "status": true,
+    "stream": "https://stream.laut.fm/radiocampesinacubana",
+    "features": "/img/north-america/cuba/campesina.png"
+  },
+  "tu-zona-musical": {
+    "title": "Tu Zona Musical",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://tuzonamusical.com/",
+    "status": true,
+    "stream": "https://radiomachado.com/radio/8000/radio.mp3",
+    "features": "/img/north-america/cuba/tu-zona-musical.png"
+  },
+  "angulo": {
+    "title": "Radio Angulo",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.radioangulo.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/hmVcdgM7",
+    "features": "/img/north-america/cuba/angulo.png"
+  },
+  "ciudad-del-mar": {
+    "title": "Radio Ciudad Del Mar",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.rcm.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/CL7jRXqn",
+    "features": "/img/north-america/cuba/ciudad-del-mar.png"
+  },
+  "cadena-habana": {
+    "title": "Radio Cadena Habana",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.cadenahabana.icrt.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/Jdq3Rbrg",
+    "features": "/img/north-america/cuba/cadena-habana.png"
+  },
+  "guama": {
+    "title": "Radio Guamá",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.rguama.icrt.cu/",
+    "status": true,
+    "stream": "https://icecast.teveo.cu/ngcdcV3k",
+    "features": "/img/north-america/cuba/guama.png"
+  }
+}
