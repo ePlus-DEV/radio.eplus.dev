@@ -112,7 +112,6 @@ export default {
               console.info("Player initialised");
             },
           });
-
           player.setSrc(data.stream);
         } else {
           this.$confirm($t("404.content"), "Warning", {
