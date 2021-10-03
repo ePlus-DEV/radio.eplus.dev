@@ -6,7 +6,7 @@
     "url": "https://www.meradio.sg",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVE972FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/love-972.png"
+    "features": "/img/asia/singapore/love-972.png"
   },
   "class-95": {
     "title": "Radio Class 95",
@@ -15,7 +15,7 @@
     "url": "https://www.meradio.sg/radio/class-95",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CLASS95AAC_SC",
-    "features": "/img/singapore/class-95.png"
+    "features": "/img/asia/singapore/class-95.png"
   },
   "987fm": {
     "title": "Radio 987 FM",
@@ -24,7 +24,7 @@
     "url": "https://www.meradio.sg/radio/987",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/987FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/987fm.png"
+    "features": "/img/asia/singapore/987fm.png"
   },
   "capital-958": {
     "title": "Radio Capital",
@@ -33,7 +33,7 @@
     "url": "https://www.meradio.sg/radio/capital-958",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAPITAL958FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/capital-958.png"
+    "features": "/img/asia/singapore/capital-958.png"
   },
   "gold-90-5-fm": {
     "title": "Radio Gold",
@@ -42,7 +42,7 @@
     "url": "https://www.melisten.sg/radio/gold-905",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/GOLD905AAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/gold-90-5-fm.png"
+    "features": "/img/asia/singapore/gold-90-5-fm.png"
   },
   "one-fm": {
     "title": "One FM",
@@ -51,7 +51,7 @@
     "url": "https://www.onefm.sg",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ONE_FM_913AAC_SC",
-    "features": "/img/singapore/one-fm.png"
+    "features": "/img/asia/singapore/one-fm.png"
   },
   "oli": {
     "title": "Radio Oli",
@@ -60,7 +60,7 @@
     "url": "https://www.melisten.sg/radio/oli968?c=968fm",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/oli.png"
+    "features": "/img/asia/singapore/oli.png"
   },
   "ria": {
     "title": "Radio Ria",
@@ -69,7 +69,7 @@
     "url": "https://www.melisten.sg/radio/oli968?c=968fm",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RIA897FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/ria.png"
+    "features": "/img/asia/singapore/ria.png"
   },
   "kiss92": {
     "title": "Radio Kiss92",
@@ -78,7 +78,7 @@
     "url": "https://www.kiss92.sg/",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/KISS_92AAC_SC",
-    "features": "/img/singapore/kiss92.png"
+    "features": "/img/asia/singapore/kiss92.png"
   },
   "ufm-1003": {
     "title": "Radio UFM",
@@ -87,7 +87,7 @@
     "url": "https://www.ufm1003.sg/",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/UFM_1003AAC_SC",
-    "features": "/img/singapore/ufm-1003.png"
+    "features": "/img/asia/singapore/ufm-1003.png"
   },
   "warna": {
     "title": "Radio Warna",
@@ -96,7 +96,7 @@
     "url": "https://www.melisten.sg/radio/warna-942fm",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/WARNA942FMAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/warna.png"
+    "features": "/img/asia/singapore/warna.png"
   },
   "883-jia": {
     "title": "Radio 88.3JIA",
@@ -105,7 +105,7 @@
     "url": "https://www.camokakis.sg/",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/883JIAAAC_SC",
-    "features": "/img/singapore/883-jia.png"
+    "features": "/img/asia/singapore/883-jia.png"
   },
   "symphony": {
     "title": "Radio Symphony",
@@ -114,7 +114,7 @@
     "url": "https://www.melisten.sg/radio/symphony924",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/SYMPHONY924AAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/symphony.png"
+    "features": "/img/asia/singapore/symphony.png"
   },
   "cna938": {
     "title": "Radio Symphony",
@@ -123,7 +123,7 @@
     "url": "https://www.channelnewsasia.com/news/cna938",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/938NOWAAC.aac?dist=radiosingapore",
-    "features": "/img/singapore/cna938.png"
+    "features": "/img/asia/singapore/cna938.png"
   },
   "power": {
     "title": "Power 98 Love Songs",
@@ -132,7 +132,7 @@
     "url": "https://www.camokakis.sg/",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/POWER98_LOVESONGSAAC_SC",
-    "features": "/img/singapore/power.png"
+    "features": "/img/asia/singapore/power.png"
   },
   "masti-24x7": {
     "title": "Radio Masti 24x7",
@@ -141,7 +141,7 @@
     "url": "http://radiomasti.com.sg/index.html",
     "status": true,
     "stream": "https://hls.rastream.com/radiomasti-masti24x7.web.hls/playlist.m3u8?awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Aradiomasti-masti24x7&playerid=Radio%20Masti%2024x7%20LIVE!_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE2MDA2MDYyNzIsImV4cCI6MTYwMDY5MjY3Mn0.BnJAYX3opr0eWjs12VCccw91W51MhU1zTECfINoMgUY&lan=%5B%22en%22%2C%22hi%22%5D&setLanguage=true",
-    "features": "/img/singapore/masti-24x7.png"
+    "features": "/img/asia/singapore/masti-24x7.png"
   },
   "desi-dance": {
     "title": "Desi Dance",
@@ -150,7 +150,7 @@
     "url": "http://radiomasti.com.sg/index.html",
     "status": true,
     "stream": "https://usa6.fastcast4u.com/proxy/vinsingh?mp=/stream",
-    "features": "/img/singapore/desi-dance.png"
+    "features": "/img/asia/singapore/desi-dance.png"
   },
   "money-89-3": {
     "title": "Money FM",
@@ -159,7 +159,7 @@
     "url": "https://www.moneyfm893.sg",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/MONEY_893AAC_SC",
-    "features": "/img/singapore/money-89-3.png"
+    "features": "/img/asia/singapore/money-89-3.png"
   },
   "973fm": {
     "title": "Radio 973 FM",
@@ -168,7 +168,7 @@
     "url": "http://973fm.weebly.com/",
     "status": true,
     "stream": "https://c16.radioboss.fm:18115/stream",
-    "features": "/img/singapore/973fm.png"
+    "features": "/img/asia/singapore/973fm.png"
   },
   "bible-witness-web": {
     "title": "Bible Witness Web Radio",
@@ -177,7 +177,7 @@
     "url": "https://biblewitness.com/webradio/",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R3179571_SC",
-    "features": "/img/singapore/bible-witness-web.png"
+    "features": "/img/asia/singapore/bible-witness-web.png"
   },
   "naga-fm": {
     "title": "Naga FM",
@@ -186,7 +186,7 @@
     "url": "https://www.nagafm.com/",
     "status": true,
     "stream": "http://songs.nagafm.com:8006/stream/1/",
-    "features": "/img/singapore/naga-fm.png"
+    "features": "/img/asia/singapore/naga-fm.png"
   },
   "ccn-cyprus-chinese": {
     "title": "CCN Cyprus Chinese Radio Tv",
@@ -195,7 +195,7 @@
     "url": "https://ccnnetwork.cn",
     "status": true,
     "stream": "https://cdn.istoikona.com/ccnradio/ccnradio/icecast.audio",
-    "features": "/img/singapore/ccn-cyprus-chinese.png"
+    "features": "/img/asia/singapore/ccn-cyprus-chinese.png"
   },
   "melody-with-brother-bjorn": {
     "title": "Radio melody with Brother Bjorn",
@@ -204,7 +204,7 @@
     "url": "https://www.rmelody.net",
     "status": true,
     "stream": "https://ssl.geckohost.nz/proxy/bjorn?mp=/stream",
-    "features": "/img/singapore/melody-with-brother-bjorn.png"
+    "features": "/img/asia/singapore/melody-with-brother-bjorn.png"
   },
   "orion-station": {
     "title": "Orion Station",
@@ -213,7 +213,7 @@
     "url": "http://www.orionstation.net",
     "status": true,
     "stream": "http://188.165.192.5:8528/stream/1/",
-    "features": "/img/singapore/orion-station.png"
+    "features": "/img/asia/singapore/orion-station.png"
   },
   "96-3hao": {
     "title": "96.3好FM",
@@ -222,7 +222,7 @@
     "url": "https://www.963haofm.sg",
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/HAO_963AAC_SC",
-    "features": "/img/singapore/96-3hao.png"
+    "features": "/img/asia/singapore/96-3hao.png"
   },
   "predication": {
     "title": "Radio Prédication",
@@ -231,6 +231,6 @@
     "url": "https://radiopredication.blogspot.com",
     "status": true,
     "stream": "https://rbx2.hnux.com/http://4000.cloudrad.io:8220/stream/1/",
-    "features": "/img/singapore/predication.png"
+    "features": "/img/asia/singapore/predication.png"
   }
 }

@@ -6,7 +6,7 @@
     "url": "http://www.bbc.co.uk/radio1",
     "status": true,
     "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_radio_one.m3u8",
-    "features": "/img/united-kingdom/bbc-1.png"
+    "features": "/img/europe/united-kingdom/bbc-1.png"
   },
   "bbc-2": {
     "title": "BBC Radio 2",
@@ -15,7 +15,7 @@
     "url": "http://www.bbc.co.uk/radio2",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_two",
-    "features": "/img/united-kingdom/bbc-2.png"
+    "features": "/img/europe/united-kingdom/bbc-2.png"
   },
   "bbc-3": {
     "title": "BBC Radio 3",
@@ -24,7 +24,7 @@
     "url": "http://www.bbc.co.uk/radio32",
     "status": true,
     "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_radio_three.m3u8",
-    "features": "/img/united-kingdom/bbc-3.png"
+    "features": "/img/europe/united-kingdom/bbc-3.png"
   },
   "bbc-4": {
     "title": "BBC Radio 4",
@@ -33,7 +33,7 @@
     "url": "http://www.bbc.co.uk/radio4",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourfm",
-    "features": "/img/united-kingdom/bbc-4.png"
+    "features": "/img/europe/united-kingdom/bbc-4.png"
   },
   "bbc-4-extra": {
     "title": "BBC Radio 4 Extra",
@@ -42,7 +42,7 @@
     "url": "http://www.bbc.co.uk/radio4extra",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_four_extra",
-    "features": "/img/united-kingdom/bbc-4-extra.png"
+    "features": "/img/europe/united-kingdom/bbc-4-extra.png"
   },
   "bbc-5-live": {
     "title": "BBC Radio 5 Live",
@@ -51,7 +51,7 @@
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_radio_five_live",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_five_live_online_nonuk",
-    "features": "/img/united-kingdom/bbc-5-live.png"
+    "features": "/img/europe/united-kingdom/bbc-5-live.png"
   },
   "bbc-6": {
     "title": "BBC Radio 6",
@@ -60,7 +60,7 @@
     "url": "http://www.bbc.co.uk/6music",
     "status": true,
     "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_6music.m3u8",
-    "features": "/img/united-kingdom/bbc-6.png"
+    "features": "/img/europe/united-kingdom/bbc-6.png"
   },
   "bbc-world-service": {
     "title": "BBC Radio World Service",
@@ -69,7 +69,7 @@
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_world_service",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
-    "features": "/img/united-kingdom/bbc-world-service.png"
+    "features": "/img/europe/united-kingdom/bbc-world-service.png"
   },
   "bbc-asian": {
     "title": "BBC Radio Asian Network",
@@ -78,7 +78,7 @@
     "url": "http://www.bbc.co.uk/asiannetwork",
     "status": true,
     "stream": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/low/ak/bbc_asian_network.m3u8",
-    "features": "/img/united-kingdom/bbc-asian.png"
+    "features": "/img/europe/united-kingdom/bbc-asian.png"
   },
   "classic-rock": {
     "title": "Absolute Classic Rock",
@@ -87,7 +87,7 @@
     "url": "https://planetradio.co.uk/absolute-classic-rock",
     "status": true,
     "stream": "https://stream-ar.planetradio.co.uk/absoluteclassicrockhigh.aac",
-    "features": "/img/united-kingdom/classic-rock.png"
+    "features": "/img/europe/united-kingdom/classic-rock.png"
   },
   "planet-rock": {
     "title": "Planet Rock",
@@ -96,7 +96,7 @@
     "url": "https://planetradio.co.uk/planet-rock/",
     "status": true,
     "stream": "https://stream-mz.planetradio.co.uk/planetrock.mp3",
-    "features": "/img/united-kingdom/planet-rock.png"
+    "features": "/img/europe/united-kingdom/planet-rock.png"
   },
   "jazz-fm": {
     "title": "Jazz FM",
@@ -105,7 +105,7 @@
     "url": "https://www.jazzfm.com",
     "status": true,
     "stream": "https://edge-ads-01-cr.sharp-stream.com/jazzfmmobile.mp3",
-    "features": "/img/united-kingdom/jazz-fm.png"
+    "features": "/img/europe/united-kingdom/jazz-fm.png"
   },
   "classic-fm": {
     "title": "Classic FM",
@@ -114,7 +114,7 @@
     "url": "https://www.classicfm.com",
     "status": true,
     "stream": "http://vis.media-ice.musicradio.com/ClassicFMMP3",
-    "features": "/img/united-kingdom/classic-fm.png"
+    "features": "/img/europe/united-kingdom/classic-fm.png"
   },
   "capital-fm": {
     "title": "Capital FM",
@@ -123,7 +123,7 @@
     "url": "https://www.capitalfm.com",
     "status": true,
     "stream": "http://media-ice.musicradio.com/Capital",
-    "features": "/img/united-kingdom/capital.png"
+    "features": "/img/europe/united-kingdom/capital.png"
   },
   "heart-uk": {
     "title": "Heart UK",
@@ -132,7 +132,7 @@
     "url": "https://www.heart.co.uk",
     "status": true,
     "stream": "https://media-ssl.musicradio.com/HeartUK",
-    "features": "/img/united-kingdom/heart.png"
+    "features": "/img/europe/united-kingdom/heart.png"
   },
   "virgin": {
     "title": "Virgin Radio",
@@ -141,7 +141,7 @@
     "url": "https://virginradio.co.uk",
     "status": true,
     "stream": "https://radio.virginradio.co.uk/stream",
-    "features": "/img/united-kingdom/virgin.png"
+    "features": "/img/europe/united-kingdom/virgin.png"
   },
   "1mix": {
     "title": "1 Mix EDM",
@@ -150,7 +150,7 @@
     "url": "https://www.1mix.co.uk/",
     "status": true,
     "stream": "http://fr1.1mix.co.uk:8060/index.html?sid=1",
-    "features": "/img/united-kingdom/1mix.png"
+    "features": "/img/europe/united-kingdom/1mix.png"
   },
   "smooth": {
     "title": "Smooth Radio",
@@ -159,7 +159,7 @@
     "url": "https://www.smoothradio.com/",
     "status": true,
     "stream": "https://media-ice.musicradio.com/SmoothUKMP3",
-    "features": "/img/united-kingdom/smooth.png"
+    "features": "/img/europe/united-kingdom/smooth.png"
   },
   "rinse-fm": {
     "title": "Rinse FM",
@@ -168,7 +168,7 @@
     "url": "https://rinse.fm/",
     "status": true,
     "stream": "https://streamer-uk.rinse.fm:8443/stream",
-    "features": "/img/united-kingdom/rinse-fm.png"
+    "features": "/img/europe/united-kingdom/rinse-fm.png"
   },
   "radio-x": {
     "title": "Radio X",
@@ -177,7 +177,7 @@
     "url": "https://www.radiox.co.uk/",
     "status": true,
     "stream": "https://media-ice.musicradio.com/RadioXLondonMP3",
-    "features": "/img/united-kingdom/radio-x.png"
+    "features": "/img/europe/united-kingdom/radio-x.png"
   },
   "absolute": {
     "title": "Absolute Radio",
@@ -186,7 +186,7 @@
     "url": "https://planetradio.co.uk/absolute-radio/",
     "status": true,
     "stream": "https://stream-ar.planetradio.co.uk/absoluteradiohigh.aac",
-    "features": "/img/united-kingdom/absolute.png"
+    "features": "/img/europe/united-kingdom/absolute.png"
   },
   "discover-trance-uk": {
     "title": "Discover Trance",
@@ -195,7 +195,7 @@
     "url": "https://www.discovertrance.com/",
     "status": true,
     "stream": "https://uk01.discovertrance.com/9216/",
-    "features": "/img/united-kingdom/discover-trance-uk.png"
+    "features": "/img/europe/united-kingdom/discover-trance-uk.png"
   },
   "caroline": {
     "title": "Radio Caroline",
@@ -204,7 +204,7 @@
     "url": "https://www.radiocaroline.co.uk/",
     "status": true,
     "stream": "http://sc6.radiocaroline.net:8040/stream/1/",
-    "features": "/img/united-kingdom/caroline.png"
+    "features": "/img/europe/united-kingdom/caroline.png"
   },
   "kiss-london": {
     "title": "KISS (London)",
@@ -213,7 +213,7 @@
     "url": "https://planetradio.co.uk/kiss/",
     "status": true,
     "stream": "https://stream-kiss.planetradio.co.uk/kissnational.mp3",
-    "features": "/img/united-kingdom/kiss-london.png"
+    "features": "/img/europe/united-kingdom/kiss-london.png"
   },
   "greatest-hits-radio": {
     "title": "Greatest Hits Radio",
@@ -222,7 +222,7 @@
     "url": "https://planetradio.co.uk/greatest-hits/",
     "status": true,
     "stream": "https://stream-mz.planetradio.co.uk/net2national.aac",
-    "features": "/img/united-kingdom/greatest-hits-radio.png"
+    "features": "/img/europe/united-kingdom/greatest-hits-radio.png"
   },
   "manx": {
     "title": "Manx Radio",
@@ -231,7 +231,7 @@
     "url": "https://www.manxradio.com/",
     "status": true,
     "stream": "https://listen-manxradio.sharp-stream.com/manxradioam.aac",
-    "features": "/img/united-kingdom/manx.png"
+    "features": "/img/europe/united-kingdom/manx.png"
   },
   "kane-fm": {
     "title": "Kane FM (London)",
@@ -240,7 +240,7 @@
     "url": "https://www.kanefm.com/",
     "status": true,
     "stream": "https://stream.kanefm.com:10375/listen",
-    "features": "/img/united-kingdom/kane-fm.png"
+    "features": "/img/europe/united-kingdom/kane-fm.png"
   },
   "sunshine-hereford": {
     "title": "Sunshine Radio",
@@ -249,7 +249,7 @@
     "url": "https://www.sunshineradio.co.uk/",
     "status": true,
     "stream": "https://icecast.easystream.co.uk:8000/herefordFM",
-    "features": "/img/united-kingdom/sunshine-hereford.png"
+    "features": "/img/europe/united-kingdom/sunshine-hereford.png"
   },
   "1xtra": {
     "title": "BBC Radio 1 Xtra",
@@ -258,7 +258,7 @@
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_1xtra",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_1xtra",
-    "features": "/img/united-kingdom/1xtra.png"
+    "features": "/img/europe/united-kingdom/1xtra.png"
   },
   "solar": {
     "title": "Solar Radio",
@@ -267,7 +267,7 @@
     "url": "http://www.solarradio.com/",
     "status": true,
     "stream": "https://strm5.radiostreamer.co.uk/proxy/mp3high22?mp=/stream/1/",
-    "features": "/img/united-kingdom/solar.png"
+    "features": "/img/europe/united-kingdom/solar.png"
   },
   "choice-london": {
     "title": "Capital Xtra (London)",
@@ -276,7 +276,7 @@
     "url": "https://www.capitalxtra.com/",
     "status": true,
     "stream": "https://media-ice.musicradio.com/CapitalXTRALondonMP3",
-    "features": "/img/united-kingdom/choice-london.png"
+    "features": "/img/europe/united-kingdom/choice-london.png"
   },
   "bbc-glasgow": {
     "title": "BBC Radio Scotland (Glasgow)",
@@ -285,7 +285,7 @@
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_radio_scotland_fm",
     "status": true,
     "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_scotland_fm",
-    "features": "/img/united-kingdom/bbc-glasgow.png"
+    "features": "/img/europe/united-kingdom/bbc-glasgow.png"
   },
   "absolute-80s": {
     "title": "Absolute 80s Radio",
@@ -294,7 +294,7 @@
     "url": "https://planetradio.co.uk/absolute-80s/",
     "status": true,
     "stream": "https://stream-ar.planetradio.co.uk/absolute80shigh.aac",
-    "features": "/img/united-kingdom/absolute-80s.png"
+    "features": "/img/europe/united-kingdom/absolute-80s.png"
   },
   "magic-london": {
     "title": "Radio Magic FM (London)",
@@ -303,7 +303,7 @@
     "url": "https://planetradio.co.uk/magic/",
     "status": true,
     "stream": "https://stream-mz.planetradio.co.uk/magicnational.mp3",
-    "features": "/img/united-kingdom/magic-london.png"
+    "features": "/img/europe/united-kingdom/magic-london.png"
   },
   "talk": {
     "title": "talkRADIO",
@@ -312,7 +312,7 @@
     "url": "https://talkradio.co.uk",
     "status": true,
     "stream": "https://radio.talkradio.co.uk/stream",
-    "features": "/img/united-kingdom/talk.png"
+    "features": "/img/europe/united-kingdom/talk.png"
   },
   "fun-radio-uk": {
     "title": "Fun Kids",
@@ -321,7 +321,7 @@
     "url": "https://www.funkidslive.com/",
     "status": true,
     "stream": "https://listen-funkids.sharp-stream.com/funkids.mp3",
-    "features": "/img/united-kingdom/fun-radio-uk.png"
+    "features": "/img/europe/united-kingdom/fun-radio-uk.png"
   },
   "sanskar-leicester": {
     "title": "Sanskar Radio (Leicester)",
@@ -330,7 +330,7 @@
     "url": "http://sanskarradio.com/",
     "status": true,
     "stream": "https://radio.canstream.co.uk:8024/live.mp3",
-    "features": "/img/united-kingdom/sanskar-leicester.png"
+    "features": "/img/europe/united-kingdom/sanskar-leicester.png"
   },
   "island": {
     "title": "Island FM",
@@ -339,6 +339,6 @@
     "url": "https://www.islandfm.com/",
     "status": true,
     "stream": "https://n07a-eu.rcs.revma.com/epatpyebanzuv",
-    "features": "/img/united-kingdom/island.png"
+    "features": "/img/europe/united-kingdom/island.png"
   }
 }

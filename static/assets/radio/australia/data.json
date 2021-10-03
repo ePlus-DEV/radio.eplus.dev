@@ -6,7 +6,7 @@
     "url": "https://www.abc.net.au/newsradio",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/newsradio_1@327297/master.m3u8",
-    "features": "/img/australia/abc-newsradio.png"
+    "features": "/img/oceania/australia/abc-newsradio.png"
   },
   "radio-metro": {
     "title": "Radio Metro",
@@ -15,7 +15,7 @@
     "url": "https://radiometro.com.au",
     "status": true,
     "stream": "http://s1.voscast.com:10152/metro1057",
-    "features": "/img/australia/metro.png"
+    "features": "/img/oceania/australia/metro.png"
   },
   "774-abc-melbourne": {
     "title": "774 ABC (Melbourne)",
@@ -23,7 +23,7 @@
     "url": "https://www.abc.net.au/melbourne",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localmelbourne_1@327266/master.m3u8",
-    "features": "/img/australia/774-abc-melbourne.png"
+    "features": "/img/oceania/australia/774-abc-melbourne.png"
   },
   "702-abc-sydney": {
     "title": "702 ABC (Sydney)",
@@ -31,6 +31,6 @@
     "url": "https://www.abc.net.au/sydney",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localsydney_1@327264/master.m3u8",
-    "features": "/img/australia/702-abc-sydney.png"
+    "features": "/img/oceania/australia/702-abc-sydney.png"
   }
 }

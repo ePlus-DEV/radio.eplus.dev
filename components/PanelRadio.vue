@@ -20,7 +20,7 @@
                   shape="square"
                   width="100"
                   fit="scale-down"
-                  src="/img/flags/asia/viet-nam.png"
+                  src="/img/asia/flags/viet-nam.png"
                   lazy
                 />
                 <div class="notify-badge">{{ vietnam }}</div>
@@ -41,7 +41,7 @@
                   shape="square"
                   width="100"
                   fit="scale-down"
-                  src="/img/flags/asia/singapore.png"
+                  src="/img/asia/flags/singapore.png"
                   lazy
                 />
                 <div class="notify-badge">{{ singapore }}</div>
@@ -69,7 +69,7 @@
                 shape="square"
                 width="100"
                 fit="scale-down"
-                src="/img/flags/europe/united-kingdom.png"
+                src="/img/europe/flags/united-kingdom.png"
                 lazy
               />
               <div class="notify-badge">{{ united_kingdom }}</div>
@@ -96,7 +96,7 @@
                 shape="square"
                 width="100"
                 fit="scale-down"
-                src="/img/flags/oceania/australia.png"
+                src="/img/oceania/flags/australia.png"
                 lazy
               />
               <div class="notify-badge">{{ australia }}</div>
