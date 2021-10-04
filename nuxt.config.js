@@ -126,7 +126,9 @@ export default {
   ],
   // momentjs
   moment: {
-    timezone: true
+    timezone: true,
+    defaultLocale: 'en',
+    locales: ['vi']
   },
   /*
    ** Nuxt.js modules

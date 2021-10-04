@@ -8,17 +8,7 @@
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <Player :stream="stream_name"></Player>
-
-    <!-- {{ $moment.tz("Asia/Singapore").format("MM/DD/YYYY HH:mm:ss") }} -->
-
-    <!-- <iframe
-      src="https://radiovolna.net/en/embed/?ids=405569&logo=1&play=1&bg=%23ffffff&title=%231b1c1f"
-      frameborder="0"
-      width="100%"
-      height="55px"
-      scrolling="no"
-    ></iframe> -->
+    <Player :stream="stream_name" :playlist="data"></Player>
 
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
@@ -53,6 +43,7 @@ export default {
       stream_name: process.env.Site_Name,
       area: "asia",
       i18n: "world.asia.singapore",
+      data: [],
     };
   },
   components: {
@@ -115,10 +106,7 @@ export default {
 
           // Schedule
           if (data.schedule !== undefined) {
-            console.log(data.schedule);
-            this.fetchSchedule(
-              data.schedule + this.$moment().tz("Asia/Singapore").unix()
-            );
+            this.fetchSchedule(data.schedule);
           }
         } else {
           this.$confirm($t("404.content"), "Warning", {
@@ -143,36 +131,17 @@ export default {
       });
     },
     async fetchSchedule(url) {
-      /* const json = JSON.stringify({
-        access_token:
-          "SMK/w6nDksK6MsKww4cyU8K6U0XCsjzDhn3DhsO5fTvDrcOtfTw7w4bCsl7DhsOtPMOPwrJzwrrDkl1zwqHCukXCsMKyR0o8UlhMw4fDjsONY8OZ",
-        radio_id: "407702",
-      });
-      this.$axios
-        .post(url, json, {
-          headers: {
-            // Overwrite Axios's automatically set Content-Type
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        }); */
+      this.$axios.get(url + this.$moment().tz("Asia/Singapore").unix()).then((res) => {
+        if (res.data.success) {
+          this.data = res.data.result;
+        }
 
-      const json = JSON.stringify({
-        widget_id: "dmEhK3vCr8KieyUnw5JDw4N7J8OZRzw2w7w1w5J4",
-        params: { radio_id: "407702" },
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchSchedule(url);
+        }, 60000);
       });
-
-      this.$axios
-        .post("https://ajax.mytuner-radio.com/ajax/register-widget/", json, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        });
     },
   },
   created() {

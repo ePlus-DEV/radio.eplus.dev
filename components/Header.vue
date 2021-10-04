@@ -27,7 +27,7 @@
           class="text-decoration-none"
           v-for="locale in availableLocales"
           :key="locale.code"
-          @click.prevent.stop="$i18n.setLocale(locale.code)"
+          @click.prevent.stop="$i18n.setLocale(locale.code), $moment.locale(locale.code)"
           >{{ $t("navmenu.language") }} {{ locale.name }}
           <!-- <el-image style="width: 50px" :src="locale.flag" fit="none"></el-image
         > --></el-link

@@ -133,7 +133,7 @@
     "status": true,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/POWER98_LOVESONGSAAC_SC",
     "features": "/img/asia/singapore/power.png",
-    "schedule": "https://metadata-api.mytuner.mobi/api/v1/metadata-api/widgets/metadata?radio_id=407702"
+    "schedule": "https://api.webrad.io/data/playlist/66/power?time="
   },
   "masti-24x7": {
     "title": "Radio Masti 24x7",
