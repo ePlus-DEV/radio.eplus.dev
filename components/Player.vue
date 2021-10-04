@@ -30,11 +30,7 @@
           >
             <img
               class="playlist__img"
-              :src="
-                playlist[0].track_image !== ''
-                  ? playlist[0].track_image
-                  : '/img/asia/singapore/power.png'
-              "
+              :src="playlist[0].track_image !== '' ? playlist[0].track_image : thumb"
               :alt="playlist[0].track_title + ' - ' + playlist[0].track_artist"
               height="42"
               importance="low"
@@ -60,11 +56,7 @@
               >
                 <img
                   class="playlist__img"
-                  :src="
-                    item.track_image !== ''
-                      ? item.track_image
-                      : '/img/asia/singapore/power.png'
-                  "
+                  :src="item.track_image !== '' ? item.track_image : thumb"
                   :alt="item.track_title + ' - ' + item.track_artist"
                   height="42"
                   importance="low"
@@ -94,6 +86,6 @@
 
 <script>
 export default {
-  props: ["country", "stream", "playlist"],
+  props: ["country", "stream", "playlist", "thumb"],
 };
 </script>

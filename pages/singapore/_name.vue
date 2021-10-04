@@ -8,7 +8,7 @@
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <Player :stream="stream_name" :playlist="data"></Player>
+    <Player :stream="stream_name" :playlist="data" :thumb="thumb"></Player>
 
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
@@ -44,6 +44,7 @@ export default {
       area: "asia",
       i18n: "world.asia.singapore",
       data: [],
+      thumb: null,
     };
   },
   components: {
@@ -60,6 +61,7 @@ export default {
           $("#radio-name").text(data.title);
           this.name = data.title;
           this.stream_name = data.title;
+          this.thumb = data.features;
           var self = this;
           self.title =
             data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
