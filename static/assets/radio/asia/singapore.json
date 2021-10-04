@@ -127,11 +127,11 @@
   },
   "power": {
     "title": "Power 98 Love Songs",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "98.0 FM",
     "url": "https://www.camokakis.sg/",
     "status": true,
-    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/POWER98_LOVESONGSAAC_SC",
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/POWER98_LOVESONGS_SC",
     "features": "/img/asia/singapore/power.png",
     "schedule": "https://api.webrad.io/data/playlist/66/power?time="
   },
