@@ -1,0 +1,40 @@
+{
+  "asia": {
+    "viet-nam": {
+      "name": "world.asia.vietnam",
+      "flag": "/img/asia/flags/viet-nam.png",
+      "data": "/assets/radio/asia/viet-nam.json",
+      "station": 0
+    },
+    "singapore": {
+      "name": "world.asia.singapore",
+      "flag": "/img/asia/flags/singapore.png",
+      "data": "/assets/radio/asia/singapore.json",
+      "station": 0
+    }
+  },
+  "europe": {
+    "united-kingdom": {
+      "name": "world.europe.united_kingdom",
+      "flag": "/img/europe/flags/united-kingdom.png",
+      "data": "/assets/radio/europe/united-kingdom.json",
+      "station": 0
+    }
+  },
+  "north_america": {
+    "cuba": {
+      "name": "world.north_america.cuba",
+      "flag": "/img/north-america/flags/cuba.png",
+      "data": "/assets/radio/north-america/cuba.json",
+      "station": 0
+    }
+  },
+  "oceania": {
+    "australia": {
+      "name": "world.oceania.australia",
+      "flag": "/img/oceania/flags/australia.png",
+      "data": "/assets/radio/oceania/australia.json",
+      "station": 0
+    }
+  }
+}
