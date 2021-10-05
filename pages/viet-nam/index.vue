@@ -104,14 +104,44 @@ export default {
         player.setSrc(data["stream"]);
       });
 
-      this.$axios
-        .post("https://vovlive.vn/api/appGetvovschedule", {
-          vov: "vovovgthn",
-          date: "05/10/2021",
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
+      // this.$axios
+      //   .post(
+      //     "https://cors-anywhere.herokuapp.com/corsdemo/https://vovlive.vn/api/appGetvovschedule",
+      //     {
+      //       vov: "vovovgthn",
+      //       date: "05/10/2021",
+      //     },
+      //     {
+      //       headers: {
+      //         "Access-Control-Allow-Origin": "*",
+      //       },
+      //       /* proxy: {
+      //         host: "104.236.174.88",
+      //         port: 3128,
+      //       }, */
+      //     }
+      //   )
+      //   .then((res) => {
+      //     console.log(res.data);
+      //   });
+
+      var url = "https://vovlive.vn/api/appGetvovschedule";
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+        }
+      };
+
+      var data = "vov=vovgthn&date=05%2F10%2F2021";
+
+      xhr.send(data);
     },
   },
   created() {
