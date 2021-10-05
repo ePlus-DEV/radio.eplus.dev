@@ -121,14 +121,12 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [
-    "@nuxtjs/moment"
-  ],
+  buildModules: ["@nuxtjs/moment"],
   // momentjs
   moment: {
     timezone: true,
-    defaultLocale: 'en',
-    locales: ['vi']
+    defaultLocale: "en",
+    locales: ["vi"]
   },
   /*
    ** Nuxt.js modules
@@ -359,7 +357,31 @@ export default {
       "/cuba/angulo",
       "/cuba/ciudad-del-mar",
       "/cuba/cadena-habana",
-      "/cuba/guama"
+      "/cuba/guama",
+      "/cuba/caribe",
+      "/cuba/artemisa",
+      "/cuba/mayabeque",
+      "/cuba/ciudad-de-la-habana",
+      "/cuba/radio-26",
+      "/cuba/cmhw",
+      "/cuba/sancti-spiritus",
+      "/cuba/surco",
+      "/cuba/cadena-agramonte",
+      "/cuba/bayamo",
+      "/cuba/revolucion",
+      "/cuba/minas",
+      "/cuba/sandino",
+      "/cuba/jaruco",
+      "/cuba/metropolitana",
+      "/cuba/coco",
+      "/cuba/ciudad-bandera",
+      "/cuba/llanura-de-colon",
+      "/cuba/sagua",
+      "/cuba/caibarien",
+      "/cuba/placetas",
+      "/cuba/cabaiguan",
+      "/cuba/banes",
+      "/cuba/cubitas"
     ]
   },
   /* SiteMap */
