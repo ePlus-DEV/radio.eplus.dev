@@ -103,6 +103,15 @@ export default {
 
         player.setSrc(data["stream"]);
       });
+
+      this.$axios
+        .post("https://vovlive.vn/api/appGetvovschedule", {
+          vov: "vovovgthn",
+          date: "05/10/2021",
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
     },
   },
   created() {
