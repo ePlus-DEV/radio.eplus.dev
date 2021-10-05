@@ -1,0 +1,92 @@
+{
+  "cbs-eum-agfm-seuteuliming": {
+    "title": "CBS 음악FM",
+    "type": "application/x-mpegURL",
+    "signal": "93.9 FM",
+    "url": "https://www.cbs.co.kr/radio/",
+    "status": true,
+    "stream": "https://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8",
+    "features": "/img/asia/korea/cbs-eum-agfm-seuteuliming.png"
+  },
+  "kbs-keullaesig-ladio": {
+    "title": "KBS 클래식FM",
+    "type": "application/x-mpegURL",
+    "signal": "93.1 FM",
+    "url": "https://radio.kbs.co.kr/list01.html?section_id=6563",
+    "status": true,
+    "stream": "https://1fm.gscdn.kbs.co.kr/1fm_192_1.m3u8?Expires=1917417019&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly8xZm0uZ3NjZG4ua2JzLmNvLmtyLzFmbV8xOTJfMS5tM3U4IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjMzNjE3NzMxfX19XX0_&Signature=oB7XMy8W7Vs0dWCBGn0LYdxPyVuihZo0m7Fo1g7qw-~hKep6iD~RmR7HSPFWbAro19I97f0ZSSdqdOHq0bc3O2kESWtAxCl4kvNXq28OMZdyquiEHzCCRO6bg4p7r9IVWOEo6PLF1E6CLd5eS59atelWFcZK63n-LTn7o2pSqQ4V9M8rIK7hB5GIdto5dOzgJklw2e~k9PoM6inALl4-Yg5tp0kVpV8NPkbLRjEtAStgtp-TgiZnpE29GDf6iOZQfplHxXGZbthalH5kWniFrLj6FmdfbdPwJuz6VhLJ7IWt2plHvWifaODb5UiSc3mfeEK2ebB4LvvTCedeV3QD~A__&Key-Pair-Id=APKAICDSGT3Y7IXGJ3TA",
+    "features": "/img/asia/korea/kbs-keullaesig-ladio.png"
+  },
+  "ebs-ladio-bangsong": {
+    "title": "KBS 클래식FM",
+    "type": "application/x-mpegURL",
+    "signal": "104.5 FM",
+    "url": "https://www.ebs.co.kr/radio/home",
+    "status": true,
+    "stream": "http://amdlive-ch03.ctnd.com.edgesuite.net/arirang_3ch/smil:arirang_3ch.smil/playlist.m3u8",
+    "features": "/img/asia/korea/ebs-ladio-bangsong.png"
+  },
+  "arirang-radio": {
+    "title": "아리랑 라디오 FM (Arirang Radio)",
+    "type": "application/x-mpegURL",
+    "signal": "88.7 FM",
+    "url": "http://www.arirang.co.kr/Radio/Radio_index.asp",
+    "status": true,
+    "stream": "https://ebsonair.ebs.co.kr/fmradiofamilypc/familypc1m/playlist.m3u8",
+    "features": "/img/asia/korea/arirang-radio.png"
+  },
+  "tbs-fm-onlain": {
+    "title": "TBS FM",
+    "type": "application/x-mpegURL",
+    "signal": "95.1 FM",
+    "url": "http://www.tbs.seoul.kr",
+    "status": true,
+    "stream": "https://tbs.hscdn.com/tbsradio/fm/playlist.m3u8",
+    "features": "/img/asia/korea/tbs-fm-onlain.png"
+  },
+  "tbs-efm-ladio-cheongchwi": {
+    "title": "TBS eFM",
+    "type": "application/x-mpegURL",
+    "signal": "101.3 FM",
+    "url": "http://tbsefm.seoul.kr",
+    "status": true,
+    "stream": "https://cdnefm.tbs.seoul.kr/tbs/_definst_/tbs_efm_web_720.smil/playlist.m3u8",
+    "features": "/img/asia/korea/tbs-efm-ladio-cheongchwi.png"
+  },
+  "mbc-pyojunfm-ladio": {
+    "title": "MBC 표준FM",
+    "type": "application/x-mpegURL",
+    "signal": "95.9 FM",
+    "url": "http://www.imbc.com/broad/radio/index.html",
+    "status": true,
+    "stream": "https://mini.imbc.com/webapp_v3/mini.html?channel=sfm",
+    "features": "/img/asia/korea/mbc-pyojunfm-ladio.png"
+  },
+  "ytn-ladio-deudgi": {
+    "title": "YTN 라디오 FM",
+    "type": "application/x-mpegURL",
+    "signal": "94.5 FM",
+    "url": "https://radio.ytn.co.kr/",
+    "status": true,
+    "stream": "https://slive.ytn.co.kr/live/_definst_/fmlive_0624_1.sdp/playlist.m3u8",
+    "features": "/img/asia/korea/ytn-ladio-deudgi.png"
+  },
+  "mbc-fm4u-deudgi": {
+    "title": "MBC FM4U FM",
+    "type": "application/x-mpegURL",
+    "signal": "91.9 FM",
+    "url": "http://www.imbc.com/broad/radio/index.html",
+    "status": true,
+    "stream": "https://mini.imbc.com/webapp_v3/mini.html?channel=mfm",
+    "features": "/img/asia/korea/mbc-fm4u-deudgi.png"
+  },
+  "cbs-pyojunfm-onlain-laibeu": {
+    "title": "CBS 표준FM",
+    "type": "application/x-mpegURL",
+    "signal": "98.1 FM",
+    "url": "https://www.cbs.co.kr/radio/",
+    "status": true,
+    "stream": "https://aac.cbs.co.kr/cbs981/_definst_/cbs981.stream/playlist.m3u8",
+    "features": "/img/asia/korea/cbs-pyojunfm-onlain-laibeu.png"
+  }
+}

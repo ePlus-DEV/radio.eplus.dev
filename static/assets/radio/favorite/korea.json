@@ -1,0 +1,7 @@
+{
+  "title": "CBS 음악FM",
+  "type": "application/x-mpegURL",
+  "frequency": "Stream",
+  "countries": "Korea",
+  "stream": "https://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8"
+}

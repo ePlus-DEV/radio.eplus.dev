@@ -4,12 +4,21 @@
       "name": "world.asia.vietnam",
       "flag": "/img/asia/flags/viet-nam.png",
       "data": "/assets/radio/asia/viet-nam.json",
+      "timezone": "Asia/Asia/Ho_Chi_Minh",
       "station": 0
     },
     "singapore": {
       "name": "world.asia.singapore",
       "flag": "/img/asia/flags/singapore.png",
       "data": "/assets/radio/asia/singapore.json",
+      "timezone": "Asia/Singapore",
+      "station": 0
+    },
+    "korea": {
+      "name": "world.asia.korea",
+      "flag": "/img/asia/flags/korea.png",
+      "data": "/assets/radio/asia/korea.json",
+      "timezone": "Asia/Seoul",
       "station": 0
     }
   },
@@ -18,6 +27,7 @@
       "name": "world.europe.united_kingdom",
       "flag": "/img/europe/flags/united-kingdom.png",
       "data": "/assets/radio/europe/united-kingdom.json",
+      "timezone": "Europe/London",
       "station": 0
     }
   },
@@ -26,6 +36,7 @@
       "name": "world.north_america.cuba",
       "flag": "/img/north-america/flags/cuba.png",
       "data": "/assets/radio/north-america/cuba.json",
+      "timezone": "America/Havana",
       "station": 0
     }
   },
@@ -34,6 +45,7 @@
       "name": "world.oceania.australia",
       "flag": "/img/oceania/flags/australia.png",
       "data": "/assets/radio/oceania/australia.json",
+      "timezone": "Australia/Sydney",
       "station": 0
     }
   }

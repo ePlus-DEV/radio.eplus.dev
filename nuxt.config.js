@@ -381,7 +381,18 @@ export default {
       "/cuba/placetas",
       "/cuba/cabaiguan",
       "/cuba/banes",
-      "/cuba/cubitas"
+      "/cuba/cubitas",
+      // Korea
+      "/korea/cbs-eum-agfm-seuteuliming",
+      "/korea/kbs-keullaesig-ladio",
+      "/korea/ebs-ladio-bangsong",
+      "/korea/arirang-radio",
+      "/korea/tbs-fm-onlain",
+      "/korea/tbs-efm-ladio-cheongchwi",
+      "/korea/mbc-pyojunfm-ladio",
+      "/korea/ytn-ladio-deudgi",
+      "/korea/mbc-fm4u-deudgi",
+      "/korea/cbs-pyojunfm-onlain-laibeu"
     ]
   },
   /* SiteMap */
