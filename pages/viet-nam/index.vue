@@ -128,10 +128,10 @@ export default {
       var url = "https://vovlive.vn/api/appGetvovschedule";
 
       var xhr = new XMLHttpRequest();
-      xhr.open("POST", url);
+      xhr.open("GET", url);
 
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
+      // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           console.log(xhr.status);
@@ -139,7 +139,7 @@ export default {
         }
       };
 
-      var data = "vov=vovgthn&date=05%2F10%2F2021";
+      var data = "vov=vovgthn&date=04%2F10%2F2021";
 
       xhr.send(data);
     },
