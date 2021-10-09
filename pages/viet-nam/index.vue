@@ -7,7 +7,7 @@
       <el-breadcrumb-item>{{ $t("world.asia.vietnam") }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <Player country="world.asia.vietnam" />
+    <Player country="world.asia.vietnam" :schedule="schedule_data" />
 
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
   </div>
@@ -48,6 +48,7 @@ export default {
       slug: "viet-nam",
       area: "asia",
       i18n: "world.asia.vietnam",
+      schedule_data: [],
     };
   },
   components: {
@@ -102,46 +103,49 @@ export default {
         });
 
         player.setSrc(data["stream"]);
+
+        // Get Schedule
+        var form = new FormData();
+        form.append("vov", "vovgthcm");
+        form.append("date", "08/10/2021");
+
+        var self = this;
+
+        var settings = {
+          url: data["schedule"],
+          method: "POST",
+          timeout: 0,
+          processData: false,
+          mimeType: "multipart/form-data",
+          contentType: false,
+          data: form,
+        };
+
+        $.ajax(settings).done(function (response) {
+          // self.schedule_data = JSON.parse(response).result_detail;
+        });
+
+        //
+
+        /*  var settings = {
+          url:
+            "https://cors.bridged.cc/https://vovgiaothong.vn/VOVRadio/SearchList.aspx/GetRadios",
+          method: "POST",
+          timeout: 0,
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: "ASP.NET_SessionId=dugde5uylpuc0csuftpnk044",
+          },
+          data: JSON.stringify({
+            channel: "1",
+            day: "01/10/2021",
+          }),
+        };
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+        }); */
       });
-
-      // this.$axios
-      //   .post(
-      //     "https://cors-anywhere.herokuapp.com/corsdemo/https://vovlive.vn/api/appGetvovschedule",
-      //     {
-      //       vov: "vovovgthn",
-      //       date: "05/10/2021",
-      //     },
-      //     {
-      //       headers: {
-      //         "Access-Control-Allow-Origin": "*",
-      //       },
-      //       /* proxy: {
-      //         host: "104.236.174.88",
-      //         port: 3128,
-      //       }, */
-      //     }
-      //   )
-      //   .then((res) => {
-      //     console.log(res.data);
-      //   });
-
-      var url = "https://vovlive.vn/api/appGetvovschedule";
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", url);
-
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          console.log(xhr.status);
-          console.log(xhr.responseText);
-        }
-      };
-
-      var data = "vov=vovgthn&date=04%2F10%2F2021";
-
-      xhr.send(data);
     },
   },
   created() {

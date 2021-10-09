@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-bottom: 40px">
     <el-divider><i class="el-icon-star-on"></i></el-divider>
     <el-row>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="text-center">

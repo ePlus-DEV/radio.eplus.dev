@@ -22,7 +22,8 @@
     "nuxt-i18n": "^6.27.2",
     "video.js": "^7.10.1",
     "videojs-contrib-hls": "^5.15.0",
-    "vue-head": "^2.2.0"
+    "vue-head": "^2.2.0",
+    "vue-scrollmagic": "^1.2.0"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",

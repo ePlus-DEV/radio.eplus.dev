@@ -16,8 +16,11 @@
           <div class="ticker"></div>
         </el-badge>
       </div>
+
       <!-- BEGIN - Player -->
-      <audio id="player" preload="auto" autoplay width="100%"></audio>
+      <div id="sticker">
+        <audio id="player" preload="auto" autoplay width="100%"></audio>
+      </div>
       <!-- END - Player -->
 
       <!-- BEGIN - Playlist -->
@@ -75,6 +78,35 @@
         </div>
       </template>
       <!-- END - Playlist -->
+
+      <!-- BEGIN - Schedule -->
+      <template v-if="schedule !== undefined && schedule.length > 0">
+        <el-collapse accordion>
+          <el-collapse-item name="1">
+            <template slot="title">
+              Schedule <i class="header-icon el-icon-info"></i> - {{ now }}
+            </template>
+            <div>
+              <!-- <template v-for="(item, index) in playlist">
+              </template> -->
+              <!-- Content -->
+              <el-timeline>
+                <el-timeline-item
+                  v-for="(activity, index) in schedule"
+                  :key="index"
+                  :timestamp="activity.Time"
+                  :color="check(index, activity.Time)"
+                >
+                  {{ activity.Title }}
+                </el-timeline-item>
+              </el-timeline>
+              <!-- Content -->
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+      </template>
+      <!-- END - Schedule -->
+
       <!-- BEGIN - Description -->
       <!-- <el-card v-if="this.description.length > 0"
         ><b> {{ $t("panel.description") }}:</b> {{ this.description }}</el-card
@@ -86,6 +118,62 @@
 
 <script>
 export default {
-  props: ["country", "stream", "playlist", "thumb"],
+  props: ["country", "stream", "playlist", "schedule", "thumb"],
+  data() {
+    return {
+      now: null,
+    };
+  },
+  mounted() {
+    // Declare Scene
+    const player = this.$scrollmagic.scene({
+      // ID of element where animation starts
+      triggerElement: "#sticker",
+
+      // {0,0.5,1} - animations starts from {top,center,end} of window
+      triggerHook: 0,
+
+      // Duration of animation
+      duration: 40,
+    });
+    // Helpful tags for orientation on the screen
+    // .addIndicators({ name: "player" });
+    // Destroy
+    player.destroy(true);
+    // Add Scene to controller
+    this.$scrollmagic.addScene(player);
+
+    player.on("progress", function (event) {
+      if (event.progress >= 1) {
+        $(".mejs__audio").css({
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          "z-index": 10000,
+          animation: "spin 10s linear infinite",
+        });
+      } else if (event.progress == 0) {
+        $(".mejs__audio").css({
+          position: "",
+          bottom: "",
+          left: "",
+          right: "",
+          "z-index": "",
+        });
+      }
+    });
+  },
+  methods: {
+    check(key, time) {
+      console.log(time.split("-"));
+      return "#0bbd87";
+    },
+  },
+  created() {
+    setInterval(() => {
+      this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
+    }, 1000);
+  },
 };
 </script>

@@ -3,5 +3,6 @@
   "type": "application/x-mpegURL",
   "frequency": "FM 91 MHz",
   "countries": "Việt Nam",
-  "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovGT.stream_aac/playlist.m3u8"
+  "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovGT.stream_aac/playlist.m3u8",
+  "schedule": "https://vovlive.vn/api/appGetvovschedule"
 }

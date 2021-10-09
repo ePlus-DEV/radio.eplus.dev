@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- START HEADER -->
-    <!--<el-header>-->
+    <!-- <el-header> -->
     <Header></Header>
-    <!--</el-header>-->
+    <!-- </el-header> -->
     <!-- END HEADER -->
 
     <el-main scroll-container>

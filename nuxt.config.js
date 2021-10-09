@@ -117,7 +117,12 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["@/plugins/element-ui"],
+  plugins: [
+    {
+      src: "@/plugins/element-ui"
+    },
+    { src: "~plugins/scrollmagic.js", ssr: false }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -132,7 +137,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    "@nuxtjs/recaptcha",
+    // "@nuxtjs/recaptcha",
     "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
@@ -183,12 +188,12 @@ export default {
   /*
    ** reCaptcha
    */
-  recaptcha: {
+  /* recaptcha: {
     // hideBadge: Boolean, // Hide badge element (v3 & v2 via size=invisible)
     siteKey: "6LcRnoAUAAAAAIZc1xC0Tsh3XYIWqf9FW5KALsIv", // Site key for requests
     version: 3 // Version
     // size: String // Size: 'compact', 'normal', 'invisible' (v2)
-  },
+  }, */
   /*
    ** Auth Config
    */
