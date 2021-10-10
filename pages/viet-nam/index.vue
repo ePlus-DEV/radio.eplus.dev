@@ -106,9 +106,8 @@ export default {
 
         // Get Schedule
         var form = new FormData();
-        form.append("vov", "vovgthcm");
-        form.append("date", "08/10/2021");
-
+        form.append("vov", "vovgthn");
+        form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
         var self = this;
 
         var settings = {
@@ -122,29 +121,8 @@ export default {
         };
 
         $.ajax(settings).done(function (response) {
-          // self.schedule_data = JSON.parse(response).result_detail;
+          self.schedule_data = JSON.parse(response).result_detail;
         });
-
-        //
-
-        /*  var settings = {
-          url:
-            "https://cors.bridged.cc/https://vovgiaothong.vn/VOVRadio/SearchList.aspx/GetRadios",
-          method: "POST",
-          timeout: 0,
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: "ASP.NET_SessionId=dugde5uylpuc0csuftpnk044",
-          },
-          data: JSON.stringify({
-            channel: "1",
-            day: "01/10/2021",
-          }),
-        };
-
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-        }); */
       });
     },
   },

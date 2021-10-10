@@ -83,25 +83,19 @@
       <template v-if="schedule !== undefined && schedule.length > 0">
         <el-collapse accordion>
           <el-collapse-item name="1">
-            <template slot="title">
-              Schedule <i class="header-icon el-icon-info"></i> - {{ now }}
-            </template>
-            <div>
-              <!-- <template v-for="(item, index) in playlist">
-              </template> -->
-              <!-- Content -->
-              <el-timeline>
-                <el-timeline-item
-                  v-for="(activity, index) in schedule"
-                  :key="index"
-                  :timestamp="activity.Time"
-                  :color="check(index, activity.Time)"
-                >
-                  {{ activity.Title }}
-                </el-timeline-item>
-              </el-timeline>
-              <!-- Content -->
-            </div>
+            <template slot="title"> {{ $t("panel.schedule") }} - {{ now }} </template>
+            <!-- Content -->
+            <el-timeline>
+              <el-timeline-item
+                v-for="(activity, index) in schedule"
+                :key="index"
+                :timestamp="activity.Time"
+                :color="check(index, activity.Time)"
+              >
+                {{ activity.Title }}
+              </el-timeline-item>
+            </el-timeline>
+            <!-- Content -->
           </el-collapse-item>
         </el-collapse>
       </template>
@@ -166,14 +160,43 @@ export default {
   },
   methods: {
     check(key, time) {
-      console.log(time.split("-"));
-      return "#0bbd87";
+      var arr = time.split("-");
+      var format = "HH:mm";
+      var hours = this.$moment().tz("Asia/Ho_Chi_Minh").format(format);
+      var beforeTimeformat = this.$moment(arr[0].replace("h", ":"), "HH:mm")
+        .tz("Asia/Ho_Chi_Minh")
+        .format("HH:mm");
+
+      var beforeTime = this.$moment(arr[0].replace("h", ":"), format).tz(
+        "Asia/Ho_Chi_Minh"
+      );
+
+      var afterTime = this.$moment(arr[1].replace("h", ":"), format).tz(
+        "Asia/Ho_Chi_Minh"
+      );
+
+      var afterTimeformat = this.$moment(arr[1].replace("h", ":"), "HH:mm")
+        .tz("Asia/Ho_Chi_Minh")
+        .format("HH:mm");
+
+      if (
+        this.$moment(hours, "HH:mm").isSameOrAfter(beforeTime) &&
+        this.$moment(hours, "HH:mm").isSameOrAfter(afterTime)
+      ) {
+        return "#F56C6C";
+      }
+      // Check Live
+      if (this.$moment(hours, "HH:mm").isBetween(beforeTime, afterTime)) {
+        return "#0bbd87";
+      } else {
+        return "#e0dee9";
+      }
     },
   },
   created() {
-    setInterval(() => {
-      this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
-    }, 1000);
+    // setInterval(() => {
+    this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
+    // }, 1000);
   },
 };
 </script>

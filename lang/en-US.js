@@ -46,7 +46,8 @@ export default async (context, locale) => {
       country: "Country",
       radio_in: "Radio in {name}",
       description: "Description",
-      category: "Category"
+      category: "Category",
+      schedule: "Schedule"
     },
     button: {
       back: "Back"

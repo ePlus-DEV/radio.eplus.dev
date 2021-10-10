@@ -46,7 +46,8 @@ export default async (context, locale) => {
       country: "Quốc gia",
       radio_in: "Radio tại {name}",
       description: "Mô tả",
-      category: "Thể Loại"
+      category: "Thể Loại",
+      schedule: "Lịch phát sóng"
     },
     button: {
       back: "Quay lại"
