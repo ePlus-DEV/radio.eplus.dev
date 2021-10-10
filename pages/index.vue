@@ -6,7 +6,7 @@
       }}</el-breadcrumb-item>
     </el-breadcrumb>
 
-    <Player country="world.asia.vietnam"></Player>
+    <Player country="world.asia.vietnam" :schedule="schedule_data"></Player>
 
     <PanelRadio></PanelRadio>
   </div>
@@ -32,6 +32,11 @@ export default {
             "Radio Online Việt Nam, Singapore, Indonesia, Malaysia, Philippines, Pakistan, Hong Kong, ประเทศไทย, 中国, 台灣, Australia, New Zealand, Sri Lankā, Nepāla, United Kingdom, .v.v",
         },
       ],
+    };
+  },
+  data() {
+    return {
+      schedule_data: [],
     };
   },
   components: {
@@ -87,6 +92,26 @@ export default {
           });
 
           player.setSrc(res.data["stream"]);
+
+          // Get Schedule
+          var form = new FormData();
+          form.append("vov", "vovgthn");
+          form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
+          var self = this;
+
+          var settings = {
+            url: data["schedule"],
+            method: "POST",
+            timeout: 0,
+            processData: false,
+            mimeType: "multipart/form-data",
+            contentType: false,
+            data: form,
+          };
+
+          $.ajax(settings).done(function (response) {
+            self.schedule_data = JSON.parse(response).result_detail;
+          });
         });
     },
   },

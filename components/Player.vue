@@ -194,9 +194,9 @@ export default {
     },
   },
   created() {
-    // setInterval(() => {
-    this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
-    // }, 1000);
+    setInterval(() => {
+      this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
+    }, 1000);
   },
 };
 </script>
