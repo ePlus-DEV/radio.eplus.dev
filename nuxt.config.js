@@ -264,6 +264,9 @@ export default {
       "/viet-nam/xone-fm-96-mhz",
       "/viet-nam/dong-nai",
       "/viet-nam/nhk-vietnam",
+      "/viet-nam/m-radio",
+      "/viet-nam/cai-luong-viet-nam",
+      "/viet-nam/pre-1975",
       // United Kingdom
       "/united-kingdom",
       "/united-kingdom/heart-uk",

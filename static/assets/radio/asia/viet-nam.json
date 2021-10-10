@@ -6,7 +6,7 @@
     "category": "Thời sự",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://stream.vovlive.vn/4e2d0c965746c0d7ff7382724f4887531633274903/vovlive/vov1vov5Vietnamese.sdp_aac/chunklist_w674228427.m3u8",
+    "stream": "https://stream.vovlive.vn/c4d55848b6837c4a1f6e06724553ee3e1633842753/vovlive/vov1vov5Vietnamese.sdp_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov1.png"
   },
   "vov2": {
@@ -26,7 +26,7 @@
     "category": "Âm nhạc",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://stream.vovlive.vn/3bddc1424ca741ffbbe5dc95a7d2b50a1633274904/vovlive/vov3.sdp_aac/chunklist_w1642662505.m3u8",
+    "stream": "https://stream.vovlive.vn/e3610b3b645879f7f45b78630e5618371633842753/vovlive/vov3.sdp_aac/media_w1845170270_216218.aac",
     "features": "/img/asia/viet-nam/vov3.png"
   },
   "vov4": {
@@ -126,7 +126,7 @@
     "category": "Bà Rịa-Vũng Tàu",
     "url": "http://brt.vn",
     "status": true,
-    "stream": "http://113.163.216.23:1935/live/radio1.sdp_audio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://113.163.216.23:1935/live/radio1.sdp_audio/playlist.m3u8",
     "features": "/img/asia/viet-nam/ba-ria-vung-tau.png"
   },
   "binh-phuoc": {
@@ -146,7 +146,7 @@
     "category": "Bình Thuận",
     "url": "http://binhthuantv.vn",
     "status": true,
-    "stream": "http://202.43.109.142:1935/thbtradio/btradio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://202.43.109.142:1935/thbtradio/btradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/binh-thuan.png"
   },
   "ca-mau": {
@@ -156,7 +156,7 @@
     "category": "Cà Mau",
     "url": "http://ctvcamau.vn",
     "status": false,
-    "stream": "http://tv.ctvcamau.vn/live/radio/radio.m3u8",
+    "stream": "https://cors.bridged.cc/http://tv.ctvcamau.vn/live/radio/radio.m3u8",
     "features": "/img/asia/viet-nam/ca-mau.png"
   },
   "can-tho": {
@@ -176,7 +176,7 @@
     "category": "Đà Nẵng",
     "url": "http://www.drt.danang.vn/",
     "status": false,
-    "stream": "http://drtdnglive.e49a7c38.cdnviet.com/liveradio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://drtdnglive.e49a7c38.cdnviet.com/liveradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/da-nang.png"
   },
   "ha-noi": {
@@ -186,7 +186,7 @@
     "category": "Hà Nội - FM96",
     "url": "http://hanoitv.vn",
     "status": true,
-    "stream": "http://cdn.mediatech.vn/hntvRadio/fm96.sdp_aac/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://cdn.mediatech.vn/hntvRadio/fm96.sdp_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/ha-noi.png"
   },
   "ha-noi-joyfm": {
@@ -196,7 +196,7 @@
     "category": "Hà Nội - JOYFM",
     "url": "http://hanoitv.vn",
     "status": true,
-    "stream": "http://cdn.mediatech.vn/hntvRadio/joyfm.stream_aac/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://cdn.mediatech.vn/hntvRadio/joyfm.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/joy.png"
   },
   "ha-noi-fm90": {
@@ -206,7 +206,7 @@
     "category": "Hà Nội - FM90",
     "url": "http://hanoitv.vn",
     "status": true,
-    "stream": "http://media.mediatech.vn:1935/hntvRadio/fm90live/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://media.mediatech.vn:1935/hntvRadio/fm90live/playlist.m3u8",
     "features": "/img/asia/viet-nam/fm90.png"
   },
   "hai-duong": {
@@ -216,7 +216,7 @@
     "category": "Hải Dương",
     "url": "http://haiduongtv.com.vn",
     "status": true,
-    "stream": "http://113.160.131.11:8000",
+    "stream": "https://cors.bridged.cc/http://113.160.131.11:8000",
     "features": "/img/asia/viet-nam/hai-duong.png"
   },
   "khanh-hoa": {
@@ -226,7 +226,7 @@
     "category": "Khánh Hòa",
     "url": "http://ktv.org.vn",
     "status": false,
-    "stream": "http://210.245.20.94/hls/radio.m3u8",
+    "stream": "https://cors.bridged.cc/http://210.245.20.94/hls/radio.m3u8",
     "features": "/img/asia/viet-nam/khanh-hoa.png"
   },
   "kien-giang": {
@@ -234,9 +234,9 @@
     "description": "",
     "type": "application/x-mpegURL",
     "category": "Kiên Giang",
-    "url": "http://tv.kgtv.vn",
+    "url": "http://kgtv.vn",
     "status": false,
-    "stream": "http://tv.kgtv.vn/live/kgaudio/kgaudio.m3u8",
+    "stream": "https://cors.bridged.cc/http://tv.kgtv.vn/live/kgaudio/kgaudio.m3u8",
     "features": "/img/asia/viet-nam/kien-giang.png"
   },
   "ninh-binh": {
@@ -256,7 +256,7 @@
     "category": "Sóc Trăng",
     "url": "http://thst.vn",
     "status": false,
-    "stream": "http://113.163.189.104/hls-live/livepkgr/_definst_/liveevent/livestreamf1.m3u8",
+    "stream": "https://cors.bridged.cc/http://113.163.189.104:8135/hls-live/livepkgr/_definst_/liveevent/livestreamf.m3u8",
     "features": "/img/asia/viet-nam/soc-trang.png"
   },
   "thua-thien-hue": {
@@ -266,7 +266,7 @@
     "category": "Thừa Thiên Huế",
     "url": "http://trt.com.vn",
     "status": false,
-    "stream": "rtmp://118.69.176.149:1936/live/radio",
+    "stream": "https://live.trt.com.vn/Radio-online/playlist.m3u8",
     "features": "/img/asia/viet-nam/thua-thien-hue.png"
   },
   "bac-giang": {
@@ -277,7 +277,7 @@
     "url": "http://bacgiangtv.vn",
     "status": false,
     "time": "Từ 5h - 22h",
-    "stream": "http://cdn.mediatech.vn/bgtvlive/radiolive/playlist.m3u8",
+    "stream": "https://live.bacgiangtv.vn/bgtvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/bac-giang.png"
   },
   "ha-tinh": {
@@ -299,7 +299,7 @@
     "url": "http://ptpphuyen.vn",
     "status": true,
     "time": "Chưa rõ",
-    "stream": "http://113.161.4.48:8080/phuyen/radio.m3u8",
+    "stream": "https://cors.bridged.cc/http://113.161.4.48:8080/phuyen/radio.m3u8",
     "features": "/img/asia/viet-nam/phu-yen.png"
   },
   "tien-giang": {
@@ -310,7 +310,7 @@
     "url": "http://thtg.vn",
     "status": true,
     "time": "Chưa rõ",
-    "stream": "http://thtg.vn:8002/radiolive.m3u8",
+    "stream": "https://cors.bridged.cc/http://thtg.vn:8002/radiolive.m3u8",
     "features": "/img/asia/viet-nam/tien-giang.png"
   },
   "ben-tre": {
@@ -321,7 +321,7 @@
     "url": "http://thbt.vn",
     "status": false,
     "time": "Từ 5h - 22h30",
-    "stream": "http://113.163.94.245/hls-live/livepkgr/_definst_/liveevent/audiostream.m3u8",
+    "stream": "https://cors.bridged.cc/http://113.163.94.245/hls-live/livepkgr/_definst_/liveevent/audiostream.m3u8",
     "features": "/img/asia/viet-nam/ben-tre.png"
   },
   "dong-thap": {
@@ -333,7 +333,7 @@
     "status": true,
     "time": "Từ 5h - 20h",
     "schedule": true,
-    "stream": "http://202.43.109.144:1935/thdtradio/thdtradio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://202.43.109.144:1935/thdtradio/thdtradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/dong-thap.png"
   },
   "gia-lai": {
@@ -345,7 +345,7 @@
     "status": true,
     "time": "Từ 5h30 - 23h",
     "schedule": false,
-    "stream": "http://113.161.25.3:8134/hls/radio/radio.m3u8",
+    "stream": "https://cors.bridged.cc/http://113.161.25.3:8134/hls/radio/radio.m3u8",
     "features": "/img/asia/viet-nam/gia-lai.png"
   },
   "thai-binh": {
@@ -357,7 +357,7 @@
     "status": true,
     "time": "Chưa rõ",
     "schedule": true,
-    "stream": "http://118.70.118.191:1935/tbtvlive/radio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://118.70.118.191:1935/tbtvlive/radio/playlist.m3u8",
     "features": "/img/asia/viet-nam/thai-binh.png"
   },
   "vinh-long": {
@@ -369,7 +369,7 @@
     "status": false,
     "time": "Chưa rõ",
     "schedule": false,
-    "stream": "http://radio.thvli.vn/7978812d2ed50a2bfe7229ea7330f1521552533698/thvlaudio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/https://live1.thvli.vn/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiIvdGh2bHJhZGlvIiwiZXhwIjoxNjMzODY0NzQ4fQ.i7liqgkqOCud8C3fgIqRj5WCPaXA0RI_vWqk2gdH1lk-/thvlradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/vinh-long.png"
   },
   "xone-fm-96-mhz": {
@@ -381,7 +381,7 @@
     "status": true,
     "time": "Chưa rõ",
     "schedule": true,
-    "stream": "http://stream.zeno.fm/v51ym0g96qruv",
+    "stream": "https://cors.bridged.cc/http://stream.zeno.fm/v51ym0g96qruv",
     "features": "/img/asia/viet-nam/xone.png"
   },
   "dong-nai": {
@@ -393,7 +393,7 @@
     "status": true,
     "time": "Chưa rõ",
     "schedule": false,
-    "stream": "http://118.107.76.17:1935/live/Dongnaoradio/playlist.m3u8",
+    "stream": "https://cors.bridged.cc/http://118.107.85.5:1935/radio/dongnai_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/dong-nai.png"
   },
   "qnr1": {
@@ -431,5 +431,41 @@
     "schedule": false,
     "stream": "https://nhkworld.webcdn.stream.ne.jp/www11/radiojapan/all/263949/live_s.m3u8",
     "features": "/img/asia/viet-nam/nhk-vietnam.png"
+  },
+  "m-radio": {
+    "title": "M Radio Việt Nam",
+    "description": "nhac vang bolero 2021",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "Chưa rõ",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "https://stream.zeno.fm/4q7y9hvkp2zuv",
+    "features": "/img/asia/viet-nam/m-radio.png"
+  },
+  "cai-luong-viet-nam": {
+    "title": "Cải Lương Việt Nam",
+    "description": "Cải Lương Việt Nam",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "Chưa rõ",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "https://stream.zeno.fm/0trm6wrnga0uv",
+    "features": "/img/asia/viet-nam/cai-luong-viet-nam.png"
+  },
+  "pre-1975": {
+    "title": "Pre 1975",
+    "description": "Pre 1975",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "Chưa rõ",
+    "status": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "https://stream.zeno.fm/x2z45v7d84zuv",
+    "features": "/img/asia/viet-nam/pre-1975.png"
   }
 }
