@@ -435,7 +435,16 @@ export default {
       "/korea/breez-onlain-seuteuliming",
       "/korea/jeonnamcbs-pyojunfm-silsigan",
       "/korea/yeongdong-geugdongbangsong-fm",
-      "/korea/daegupyeonghwabangsong-ladio-c"
+      "/korea/daegupyeonghwabangsong-ladio-c",
+      // China
+      "/china/xiang-gang1tai",
+      "/china/fu-shan883",
+      "/china/bei-jing-yin-le",
+      "/china/fu-shan94-6",
+      "/china/xiang-gang",
+      "/china/bei-jing",
+      "/china/yin-le-zhi-sheng",
+      "/china/cri-news"
     ]
   },
   /* SiteMap */
