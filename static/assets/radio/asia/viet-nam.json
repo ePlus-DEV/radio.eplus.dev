@@ -66,8 +66,8 @@
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovGT.stream_aac/playlist.m3u8",
-    "features": "/img/asia/viet-nam/vov-gt-tphcm.png"
+    "stream": "https://str.vov.gov.vn/vovlive/vovGTHCM.sdp_aac/chunklist_w1213978008.m3u8",
+    "features": "/img/asia/viet-nam/vov-giao-thong.png"
   },
   "vov-giao-thong": {
     "title": "VOV Giao Thông Hà Nội",
@@ -76,8 +76,28 @@
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "status": true,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovGT.stream_aac/playlist.m3u8",
+    "stream": "https://str.vov.gov.vn/vovlive/vovGTHN.sdp_aac/chunklist_w601606653.m3u8",
     "features": "/img/asia/viet-nam/vov-giao-thong-ha-noi.png"
+  },
+  "vov-mekong": {
+    "title": "VOV Mekong",
+    "description": "VOV Mekong là kênh phát thanh chuyên biệt về đời sống của đồng bào ở Đồng bằng sông Cửu Long phục vụ riêng cho 20 triệu thính giả ở 13 tỉnh, thành phố miền Tây Nam bộ. Với khu vực Đồng bằng Sông Cửu Long, trước đây, giao thông đường thuỷ là chủ yếu, nhưng hiện nay các tuyến đường bộ rất phát triển và nhu cầu di chuyển, cũng như thông tin về đường bộ cần được phổ biến tới người tham gia giao thông ở khu vực này; đồng thời, mang lại những thông tin hữu ích về giao thông, văn hoá, giải trí cũng như những thông tin về đời sống xã hội. Thời gian phát sóng VOV Mekong: Từ 0 giờ đến 24 giờ hàng ngày.",
+    "type": "application/x-mpegURL",
+    "category": "Giao Thông",
+    "url": "https://vov.vn",
+    "status": true,
+    "stream": "https://str.vov.gov.vn/vovlive/vovgtMeKong.sdp_aac/chunklist_w1338501805.m3u8",
+    "features": "/img/asia/viet-nam/vov-mekong.png"
+  },
+  "vov-suc-khoe": {
+    "title": "VOV Sức Khỏe",
+    "description": "VOV FM89 là kênh phát thanh chuyên biệt với thông tin tin cậy, liên tục cập nhật, mới mẻ và hấp dẫn về các vấn đề liên quan đến sức khỏe, môi trường và an toàn vệ sinh thực phẩm.",
+    "type": "application/x-mpegURL",
+    "category": "Giao Thông",
+    "url": "https://vov.vn",
+    "status": true,
+    "stream": "https://cors.bridged.cc/http://media.kythuatvov.vn:7021/;stream/",
+    "features": "/img/asia/viet-nam/vov-suc-khoe.png"
   },
   "voh-am-610khz": {
     "title": "Đài tiếng nói nhân dân TP.HCM - AM 610KHZ",
