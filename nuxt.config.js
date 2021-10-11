@@ -18,7 +18,7 @@ export default {
     noscript: [{ innerHTML: "This website requires JavaScript." }]
   },
   head: {
-    titleTemplate: "%sRadio Internet | " + process.env.Site_Name,
+    titleTemplate: "%s - Radio Internet | " + process.env.Site_Name,
     htmlAttrs: {
       lang: "en",
       amp: false
@@ -402,7 +402,40 @@ export default {
       "/korea/mbc-pyojunfm-ladio",
       "/korea/ytn-ladio-deudgi",
       "/korea/mbc-fm4u-deudgi",
-      "/korea/cbs-pyojunfm-onlain-laibeu"
+      "/korea/cbs-pyojunfm-onlain-laibeu",
+      "/korea/no-1pawomyujig-inlaibeu-cheong",
+      "/korea/kbs-kulfm-ladio",
+      "/korea/kbs-haepifm-seuteuliming",
+      "/korea/simjangsoli-inlaibeu-deudgi",
+      "/korea/gwangju-yeong-eo-ladio",
+      "/korea/bulgyobangsong-ladio-cheongchw",
+      "/korea/kbs-1ladio-laibeu-seuteuliming",
+      "/korea/geugdongbangsong-fm-silsigan",
+      "/korea/gug-agbangsong-ladio-onlain-la",
+      "/korea/waussissiem-chan-yang-bangsong",
+      "/korea/pyeonghwabangsong-ladio-seuteu",
+      "/korea/lag-balladeu",
+      "/korea/myujig-aenpipeul-inlaibeu-cheo",
+      "/korea/busangeugdongbangsong-ladio-on",
+      "/korea/geugdongbangsong-fm-onlain-che",
+      "/korea/pohang-geugdongbangsong-fm-lad",
+      "/korea/amalanseu-inlaibeu-cheongchwi",
+      "/korea/jejugeugdongbangsong-ladio-ban",
+      "/korea/myukeulkaeseuteu-inteones-seut",
+      "/korea/busancbs-eum-agfm-bangsong-che",
+      "/korea/24sigan-udong-ine-inlaibeu-sil",
+      "/korea/jeonjubangsong-ladio-deudgi",
+      "/korea/daegucbs-ladio-laibeu",
+      "/korea/pyeon-anhan-seon-yul-inlaibeu",
+      "/korea/gwan-agfm-ladio-bangsong",
+      "/korea/won-eumbangsong-ladio-deudgi",
+      "/korea/kbs-3ladio-onlain-laibeu",
+      "/korea/aleumdaun-in-yeon-4050-inlaibe",
+      "/korea/seongseogongdongchefm-ladio-ba",
+      "/korea/breez-onlain-seuteuliming",
+      "/korea/jeonnamcbs-pyojunfm-silsigan",
+      "/korea/yeongdong-geugdongbangsong-fm",
+      "/korea/daegupyeonghwabangsong-ladio-c"
     ]
   },
   /* SiteMap */
