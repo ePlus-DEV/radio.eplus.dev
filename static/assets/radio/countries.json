@@ -20,6 +20,13 @@
       "data": "/assets/radio/asia/korea.json",
       "timezone": "Asia/Seoul",
       "station": 0
+    },
+    "china": {
+      "name": "world.asia.china",
+      "flag": "/img/asia/flags/china.png",
+      "data": "/assets/radio/asia/china.json",
+      "timezone": "Asia/Shanghai",
+      "station": 0
     }
   },
   "europe": {

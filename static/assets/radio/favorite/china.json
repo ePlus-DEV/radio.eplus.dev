@@ -1,0 +1,7 @@
+{
+  "title": "香港电台网站第1台",
+  "type": "application/x-mpegURL",
+  "frequency": "Stream",
+  "countries": "China",
+  "stream": "https://rthkaudio1-lh.akamaihd.net/i/radio1_1@355864/master.m3u8"
+}

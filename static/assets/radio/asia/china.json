@@ -1,0 +1,75 @@
+{
+  "xiang-gang1tai": {
+    "title": "香港电台网站第1台",
+    "type": "application/x-mpegURL",
+    "signal": "92.6 FM",
+    "url": "https://www.rthk.hk/radio/radio1",
+    "status": true,
+    "stream": "https://rthkaudio1-lh.akamaihd.net/i/radio1_1@355864/master.m3u8",
+    "features": "/img/asia/china/xiang-gang1tai.png"
+  },
+  "fu-shan883": {
+    "title": "佛山电台FM883",
+    "type": "application/x-mpegURL",
+    "signal": "88.3 FM",
+    "url": "http://www.radiofoshan.com.cn/fm883/",
+    "status": true,
+    "stream": "https://cors.bridged.cc/http://61.142.208.174:1935/883/883.sdp/playlist.m3u8",
+    "features": "/img/asia/china/fu-shan883.png"
+  },
+  "bei-jing-yin-le": {
+    "title": "北京音乐广播",
+    "type": "application/x-mpegURL",
+    "signal": "97.4 FM",
+    "url": "http://fm974.rbc.cn/",
+    "status": true,
+    "stream": "https://rtmp-push.tingtingfm.com/bjradio/fm974.m3u8?auth_key=1634828588-CBrEfvcH-0-eb354c141e70dda8061b94dc00900d48",
+    "features": "/img/asia/china/bei-jing-yin-le.png",
+    "schedule": "https://api-v3.tingtingfm.com/broadcast/get_radio_programs?version=h5_5.2&client=h5_Ucio1kxUWYWLPzq41GmRla8kCy9BzF&h_radio_id=R6gayOdeVM&api_sign=5242ff74e032695798bd958a30d5a55d"
+  },
+  "fu-shan94-6": {
+    "title": "佛山电台FM94.6",
+    "type": "application/x-mpegURL",
+    "signal": "94.6 FM",
+    "url": "http://www.946.com.cn/",
+    "status": true,
+    "stream": "https://cors.bridged.cc/http://61.142.208.174:1935/946/946.sdp/playlist.m3u8",
+    "features": "/img/asia/china/fu-shan94-6.png"
+  },
+  "xiang-gang": {
+    "title": "香港电台网站第2台",
+    "type": "application/x-mpegURL",
+    "signal": "94.8 FM",
+    "url": "https://www.rthk.hk/radio/radio2",
+    "status": true,
+    "stream": "https://rthkaudio2-lh.akamaihd.net/i/radio2_1@355865/master.m3u8",
+    "features": "/img/asia/china/xiang-gang.png"
+  },
+  "bei-jing": {
+    "title": "北京广播网",
+    "type": "application/x-mpegURL",
+    "signal": "87.6 FM",
+    "url": "http://www.rbc.cn/",
+    "status": true,
+    "stream": "https://cors.bridged.cc/http://123.56.16.201:1935/live/fm876/96K/tzwj_video.m3u8",
+    "features": "/img/asia/china/bei-jing.png"
+  },
+  "yin-le-zhi-sheng": {
+    "title": "中国广播网音乐之声",
+    "type": "application/x-mpegURL",
+    "signal": "90.0 FM",
+    "url": "https://www.cnr.cn/",
+    "status": true,
+    "stream": "https://lhttp.qingting.fm/live/388/64k.mp3",
+    "features": "/img/asia/china/yin-le-zhi-sheng.png"
+  },
+  "cri-news": {
+    "title": "环球资讯广播",
+    "type": "application/x-mpegURL",
+    "signal": "90.5 FM",
+    "url": "http://newsradio.cri.cn/",
+    "status": true,
+    "stream": "https://cors.bridged.cc/http://sk.cri.cn/905.m3u8",
+    "features": "/img/asia/china/cri-news.png"
+  }
+}

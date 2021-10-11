@@ -4,7 +4,9 @@
       <el-breadcrumb-item :to="{ path: '/' }">{{
         $t("navmenu.homepage")
       }}</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/' + slug }">{{ title_slug }}</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/' + slug }">{{
+        $t("world.north_america.cuba")
+      }}</el-breadcrumb-item>
       <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -54,7 +56,7 @@ export default {
   methods: {
     async fetchData() {
       this.$axios
-        .get("/assets/radio/north-america/" + this.slug + ".json")
+        .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
         .then((res) => {
           const $t = this.$t.bind(this);
           if (res.data.hasOwnProperty(this.$route.params.name)) {

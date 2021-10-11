@@ -21,7 +21,8 @@ export default async (context, locale) => {
         name: "Asia",
         vietnam: "Vietnam",
         singapore: "Singapore",
-        korea: "Korea"
+        korea: "Korea",
+        china: "China"
       },
       central_america: {},
       europe: {
