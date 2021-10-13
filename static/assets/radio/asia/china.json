@@ -14,7 +14,7 @@
     "signal": "88.3 FM",
     "url": "http://www.radiofoshan.com.cn/fm883/",
     "status": true,
-    "stream": "https://cors.bridged.cc/http://61.142.208.174:1935/883/883.sdp/playlist.m3u8",
+    "stream": "https://e-cros.herokuapp.com/http://61.142.208.174:1935/883/883.sdp/playlist.m3u8",
     "features": "/img/asia/china/fu-shan883.png"
   },
   "bei-jing-yin-le": {
@@ -33,7 +33,7 @@
     "signal": "94.6 FM",
     "url": "http://www.946.com.cn/",
     "status": true,
-    "stream": "https://cors.bridged.cc/http://61.142.208.174:1935/946/946.sdp/playlist.m3u8",
+    "stream": "https://e-cros.herokuapp.com/http://61.142.208.174:1935/946/946.sdp/playlist.m3u8",
     "features": "/img/asia/china/fu-shan94-6.png"
   },
   "xiang-gang": {
@@ -51,7 +51,7 @@
     "signal": "87.6 FM",
     "url": "http://www.rbc.cn/",
     "status": true,
-    "stream": "https://cors.bridged.cc/http://123.56.16.201:1935/live/fm876/96K/tzwj_video.m3u8",
+    "stream": "https://e-cros.herokuapp.com/http://123.56.16.201:1935/live/fm876/96K/tzwj_video.m3u8",
     "features": "/img/asia/china/bei-jing.png"
   },
   "yin-le-zhi-sheng": {
@@ -69,7 +69,7 @@
     "signal": "90.5 FM",
     "url": "http://newsradio.cri.cn/",
     "status": true,
-    "stream": "https://cors.bridged.cc/http://sk.cri.cn/905.m3u8",
+    "stream": "https://e-cros.herokuapp.com/http://sk.cri.cn/905.m3u8",
     "features": "/img/asia/china/cri-news.png"
   },
   "xiang-gang4tai": {
@@ -97,7 +97,7 @@
     "signal": "90.6 FM",
     "url": "http://www.radiofoshan.com.cn/fm906/",
     "status": true,
-    "stream": "http://lhttp.qingting.fm/live/1264/64k.mp3",
+    "stream": "https://lhttp.qingting.fm/live/1264/64k.mp3",
     "features": "/img/asia/china/fu-shan906.png"
   },
   "chutian-music": {
@@ -151,7 +151,7 @@
     "signal": "846 AM",
     "url": "http://chinaplus.cri.cn/",
     "status": true,
-    "stream": "https://cors.bridged.cc/http://sk.cri.cn/am846.m3u8",
+    "stream": "https://e-cros.herokuapp.com/http://sk.cri.cn/am846.m3u8",
     "features": "/img/asia/china/news-plus.png"
   },
   "zhu-jiang-jing-ji": {
@@ -179,7 +179,7 @@
     "signal": "107.5 FM",
     "url": "http://www.sun0769.com",
     "status": true,
-    "stream": "https://cors.bridged.cc/https://stream.sun0769.com/dgrtv1/mp4:tv11/index.m3u8?channel=1&t=1634044138&ttl=1200&key=6bb08cb005fdd5a87dde7e822082ce7a",
+    "stream": "https://e-cros.herokuapp.com/https://stream.sun0769.com/dgrtv1/mp4:tv11/index.m3u8?channel=1&t=1634044138&ttl=1200&key=6bb08cb005fdd5a87dde7e822082ce7a",
     "features": "/img/asia/china/dongguan-traffic-music.png"
   },
   "zhongshan-happy": {
@@ -199,7 +199,7 @@
     "status": true,
     "stream": "https://lhttp.qtfm.cn/live/1006/64k.mp3?app_id=web&ts=61659be6&sign=97a5bf0878a6b9773ba4bde5aa4dc027",
     "features": "/img/asia/china/qing-song.png",
-    "schedule": "https://cors.bridged.cc/http://ezfm.cri.cn/qertyuiy/program/programList?startTime=2021-10-12&endTime=2021-10-12"
+    "schedule": "https://e-cros.herokuapp.com/http://ezfm.cri.cn/qertyuiy/program/programList?startTime=2021-10-12&endTime=2021-10-12"
   },
   "wai-yu": {
     "title": "北京外语广播",
@@ -286,7 +286,7 @@
     "status": true,
     "stream": "https://lhttp.qtfm.cn/live/1948/64k.mp3",
     "features": "/img/asia/china/an-hui-sheng-huo.png",
-    "schedule": "https://cors.bridged.cc/https://webapi.qingting.fm/api/pc/radio/1948"
+    "schedule": "https://e-cros.herokuapp.com/https://webapi.qingting.fm/api/pc/radio/1948"
   },
   "nan-fang-sheng-huo": {
     "title": "广东南方生活广播",
@@ -349,7 +349,7 @@
     "signal": "93.6 FM",
     "url": "http://www.ahrtv.cn/am936/",
     "status": true,
-    "stream": "https://cors.bridged.cc/http://live2.ahtv.cn/aac_xwzhgb/playlist.m3u8?_upt=fded59171634057158",
+    "stream": "https://e-cros.herokuapp.com/http://live2.ahtv.cn/aac_xwzhgb/playlist.m3u8?_upt=fded59171634057158",
     "features": "/img/asia/china/an-hui-zong-he.png"
   },
   "qin-qiang": {

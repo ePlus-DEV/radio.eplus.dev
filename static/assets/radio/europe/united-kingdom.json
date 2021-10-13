@@ -113,7 +113,7 @@
     "category": "Âm nhạc",
     "url": "https://www.classicfm.com",
     "status": true,
-    "stream": "http://vis.media-ice.musicradio.com/ClassicFMMP3",
+    "stream": "https://e-cros.herokuapp.com/http://vis.media-ice.musicradio.com/ClassicFMMP3",
     "features": "/img/europe/united-kingdom/classic-fm.png"
   },
   "capital-fm": {
@@ -122,7 +122,7 @@
     "category": "Âm nhạc",
     "url": "https://www.capitalfm.com",
     "status": true,
-    "stream": "http://media-ice.musicradio.com/Capital",
+    "stream": "https://e-cros.herokuapp.com/http://media-ice.musicradio.com/Capital",
     "features": "/img/europe/united-kingdom/capital.png"
   },
   "heart-uk": {
@@ -149,7 +149,7 @@
     "category": "Âm nhạc",
     "url": "https://www.1mix.co.uk/",
     "status": true,
-    "stream": "http://fr1.1mix.co.uk:8060/index.html?sid=1",
+    "stream": "https://e-cros.herokuapp.com/http://fr1.1mix.co.uk:8060/index.html?sid=1",
     "features": "/img/europe/united-kingdom/1mix.png"
   },
   "smooth": {
@@ -203,7 +203,7 @@
     "category": "Âm nhạc",
     "url": "https://www.radiocaroline.co.uk/",
     "status": true,
-    "stream": "http://sc6.radiocaroline.net:8040/stream/1/",
+    "stream": "https://e-cros.herokuapp.com/http://sc6.radiocaroline.net:8040/stream/1/",
     "features": "/img/europe/united-kingdom/caroline.png"
   },
   "kiss-london": {

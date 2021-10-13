@@ -244,7 +244,7 @@
     "signal": "Stream",
     "url": "https://www.nagafm.com/",
     "status": true,
-    "stream": "http://songs.nagafm.com:8006/stream/1/",
+    "stream": "https://e-cros.herokuapp.com/http://songs.nagafm.com:8006/stream/1/",
     "features": "/img/asia/singapore/naga-fm.png",
     "schedule": "https://api.webrad.io/data/playlist/66/naga-fm?time="
   },
@@ -274,7 +274,7 @@
     "signal": "Stream",
     "url": "http://www.orionstation.net",
     "status": true,
-    "stream": "http://188.165.192.5:8528/stream/1/",
+    "stream": "https://e-cros.herokuapp.com/http://188.165.192.5:8528/stream/1/",
     "features": "/img/asia/singapore/orion-station.png",
     "schedule": "https://api.webrad.io/data/playlist/66/orion-station?time="
   },

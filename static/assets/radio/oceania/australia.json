@@ -14,7 +14,7 @@
     "category": "Music",
     "url": "https://radiometro.com.au",
     "status": true,
-    "stream": "http://s1.voscast.com:10152/metro1057",
+    "stream": "https://e-cros.herokuapp.com/http://s1.voscast.com:10152/metro1057",
     "features": "/img/oceania/australia/metro.png"
   },
   "774-abc-melbourne": {
