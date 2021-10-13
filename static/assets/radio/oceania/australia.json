@@ -8,6 +8,42 @@
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/newsradio_1@327297/master.m3u8",
     "features": "/img/oceania/australia/abc-newsradio.png"
   },
+  "abc-national": {
+    "title": "ABC Radio National",
+    "type": "audio/x-mpegurl",
+    "category": "Music",
+    "url": "https://www.abc.net.au/radionational/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/rnnsw_1@327290/master.m3u8",
+    "features": "/img/oceania/australia/abc-national.png"
+  },
+  "triple-j": {
+    "title": "Triple J",
+    "type": "audio/x-mpegurl",
+    "category": "Music",
+    "url": "https://www.rrr.org.au/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/triplejnsw_1@327300/master.m3u8",
+    "features": "/img/oceania/australia/triple-j.png"
+  },
+  "triple-r": {
+    "title": "Triple R",
+    "type": "audio/aac",
+    "category": "Music",
+    "url": "https://www.rrr.org.au/",
+    "status": true,
+    "stream": "https://realtime.rrr.org.au/p1m",
+    "features": "/img/oceania/australia/triple-r.png"
+  },
+  "abc-australia": {
+    "title": "ABC Radio",
+    "type": "audio/aac",
+    "category": "Music",
+    "url": "https://www.rrr.org.au/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/ramultilang_1@176827/master.m3u8",
+    "features": "/img/oceania/australia/abc-australia.png"
+  },
   "radio-metro": {
     "title": "Radio Metro",
     "type": "audio/x-mpegurl",
