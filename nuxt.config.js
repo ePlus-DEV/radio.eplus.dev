@@ -25,10 +25,6 @@ export default {
   },
   head: {
     titleTemplate: "%s - Radio Internet | " + process.env.Site_Name,
-    htmlAttrs: {
-      lang: "en",
-      amp: false
-    },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -228,7 +224,14 @@ export default {
     }
   },
   generate: {
-    routes: [
+     routes: function () {
+      return axios.get('/assets/radio/asia/vietnam.json')
+      .then((res) => {
+        return res.data.map((staion ,index) => {
+          return '/viet-nam/' +index
+        })
+      })
+   /*  routes: [
       // Việt Nam
       "/viet-nam",
       "/viet-nam/vov1",
@@ -489,7 +492,7 @@ export default {
       "/china/shan-xi-gu-shi",
       "/china/fu-shan924",
       "/china/an-hui-nong-cun"
-    ]
+    ] */
   },
   /* SiteMap */
   sitemap: {

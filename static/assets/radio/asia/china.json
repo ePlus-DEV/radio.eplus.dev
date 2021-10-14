@@ -199,7 +199,7 @@
     "status": true,
     "stream": "https://lhttp.qtfm.cn/live/1006/64k.mp3?app_id=web&ts=61659be6&sign=97a5bf0878a6b9773ba4bde5aa4dc027",
     "features": "/img/asia/china/qing-song.png",
-    "schedule": "https://radio-eplus.netlify.app/cors-proxy/http://ezfm.cri.cn/qertyuiy/program/programList?startTime=2021-10-12&endTime=2021-10-12"
+    "schedule": "https://e-cros.herokuapp.com/http://ezfm.cri.cn/qertyuiy/program/programList?startTime=2021-10-12&endTime=2021-10-12"
   },
   "wai-yu": {
     "title": "北京外语广播",
