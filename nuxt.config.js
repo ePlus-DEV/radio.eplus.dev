@@ -1,4 +1,14 @@
-import axios from "axios";
+// Asia
+import vietnam from "./static/assets/radio/asia/viet-nam.json";
+import korea from "./static/assets/radio/asia/korea.json";
+import china from "./static/assets/radio/asia/china.json";
+import singapore from "./static/assets/radio/asia/singapore.json";
+// Europe
+import uk from "./static/assets/radio/europe/united-kingdom.json";
+// North America
+import cuba from "./static/assets/radio/north-america/cuba.json";
+// Oceania
+import australia from "./static/assets/radio/oceania/australia.json";
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -145,6 +155,7 @@ export default {
     "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
+    "@nuxt/content",
     "@nuxtjs/sitemap",
     [
       "nuxt-i18n",
@@ -226,12 +237,38 @@ export default {
     }
   },
   generate: {
-    routes: function() {
-      return axios.get("/assets/radio/asia/vietnam.json").then(res => {
-        return res.data.map((staion, index) => {
-          return "/viet-nam/" + index;
-        });
-      });
+    routes() {
+      const routesToGenerate = [];
+      // BEGIN - Asia
+      for (const [key, value] of Object.entries(vietnam)) {
+        routesToGenerate.push("/viet-nam/" + key);
+      }
+      for (const [key, value] of Object.entries(korea)) {
+        routesToGenerate.push("/korea/" + key);
+      }
+      for (const [key, value] of Object.entries(singapore)) {
+        routesToGenerate.push("/singapore/" + key);
+      }
+      for (const [key, value] of Object.entries(china)) {
+        routesToGenerate.push("/china/" + key);
+      }
+      // END - Asia
+      // BEGIN - Europe
+      for (const [key, value] of Object.entries(uk)) {
+        routesToGenerate.push("/united-kingdom/" + key);
+      }
+      // END - Europe
+      // BEGIN - North America
+      for (const [key, value] of Object.entries(cuba)) {
+        routesToGenerate.push("/cuba/" + key);
+      }
+      // END - North America
+      // BEGIN - Oceania
+      for (const [key, value] of Object.entries(australia)) {
+        routesToGenerate.push("/australia/" + key);
+      }
+      // END - Oceania
+      return routesToGenerate;
     }
   },
   /* SiteMap */
