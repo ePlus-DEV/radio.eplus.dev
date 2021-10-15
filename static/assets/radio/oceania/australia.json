@@ -2,7 +2,7 @@
   "abc-news-radio": {
     "title": "ABC News Radio",
     "type": "application/x-mpegURL",
-    "category": "News",
+    "category": "Stream",
     "url": "https://www.abc.net.au/newsradio",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/newsradio_1@327297/master.m3u8",
@@ -11,7 +11,7 @@
   "abc-national": {
     "title": "ABC Radio National",
     "type": "audio/x-mpegurl",
-    "category": "Music",
+    "category": "Stream",
     "url": "https://www.abc.net.au/radionational/",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/rnnsw_1@327290/master.m3u8",
@@ -20,7 +20,7 @@
   "triple-j": {
     "title": "Triple J",
     "type": "audio/x-mpegurl",
-    "category": "Music",
+    "category": "Stream",
     "url": "https://www.rrr.org.au/",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/triplejnsw_1@327300/master.m3u8",
@@ -29,44 +29,371 @@
   "triple-r": {
     "title": "Triple R",
     "type": "audio/aac",
-    "category": "Music",
+    "category": "Stream",
     "url": "https://www.rrr.org.au/",
     "status": true,
     "stream": "https://realtime.rrr.org.au/p1m",
-    "features": "/img/oceania/australia/triple-r.png"
+    "features": "/img/oceania/australia/triple-r.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/triple-r?time="
   },
   "abc-australia": {
     "title": "ABC Radio",
     "type": "audio/aac",
-    "category": "Music",
+    "category": "Stream",
     "url": "https://www.rrr.org.au/",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/ramultilang_1@176827/master.m3u8",
     "features": "/img/oceania/australia/abc-australia.png"
   },
-  "radio-metro": {
-    "title": "Radio Metro",
-    "type": "audio/x-mpegurl",
-    "category": "Music",
-    "url": "https://radiometro.com.au",
+  "2sm": {
+    "title": "2SM",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://2smsupernetwork.com/",
     "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://s1.voscast.com:10152/metro1057",
-    "features": "/img/oceania/australia/metro.png"
+    "stream": "https://e-cros.herokuapp.com/http://144.140.228.109:8220/stream/1/",
+    "features": "/img/oceania/australia/2sm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/2sm?time="
+  },
+  "abc-brisbane": {
+    "title": "ABC Radio (Brisbane)",
+    "type": "audio/x-mpegURL",
+    "category": "Stream",
+    "url": "https://www.abc.net.au/brisbane/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localbrisbane_1@327262/master.m3u8",
+    "features": "/img/oceania/australia/abc-brisbane.png"
+  },
+  "702-abc-sydney": {
+    "title": "702 ABC (Sydney)",
+    "type": "application/x-mpegURL",
+    "category": "Stream",
+    "url": "https://www.abc.net.au/sydney",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localsydney_1@327264/master.m3u8",
+    "features": "/img/oceania/australia/702-abc-sydney.png"
+  },
+  "720-abc-perth": {
+    "title": "720 ABC (Perth)",
+    "type": "application/x-mpegURL",
+    "category": "Stream",
+    "url": "https://www.abc.net.au/perth/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localperth_1@327265/master.m3u8",
+    "features": "/img/oceania/australia/720-abc-perth.png"
+  },
+  "voice-of-islam": {
+    "title": "Voice of Islam",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://thevoiceofislam.com.au/",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://voiceofislam.appsunder.com:8000/voiceofislam.mp3",
+    "features": "/img/oceania/australia/voice-of-islam.png"
+  },
+  "raw-fm": {
+    "title": "Raw FM",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://www.rawfm.com.au/",
+    "status": true,
+    "stream": "https://frontend.stream.rawfm.net.au/i/syd-stream-192k.aac",
+    "features": "/img/oceania/australia/raw-fm.png"
+  },
+  "hope-103-2": {
+    "title": "Hope",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://hope1032.com.au/",
+    "status": true,
+    "stream": "https://stream.hopemedia.com.au/hope",
+    "features": "/img/oceania/australia/hope-103-2.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/hope-103-2?time="
   },
   "774-abc-melbourne": {
     "title": "774 ABC (Melbourne)",
     "type": "application/x-mpegURL",
+    "category": "Stream",
     "url": "https://www.abc.net.au/melbourne",
     "status": true,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localmelbourne_1@327266/master.m3u8",
     "features": "/img/oceania/australia/774-abc-melbourne.png"
   },
-  "702-abc-sydney": {
-    "title": "702 ABC (Sydney)",
+  "891-abc-adelaide": {
+    "title": "891 ABC (Adelaide)",
     "type": "application/x-mpegURL",
-    "url": "https://www.abc.net.au/sydney",
+    "category": "Stream",
+    "url": "https://www.abc.net.au/adelaide/",
     "status": true,
-    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localsydney_1@327264/master.m3u8",
-    "features": "/img/oceania/australia/702-abc-sydney.png"
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localadelaide_1@327267/master.m3u8",
+    "features": "/img/oceania/australia/891-abc-adelaide.png"
+  },
+  "936-abc-hobart": {
+    "title": "936 ABC Hobart",
+    "type": "application/x-mpegURL",
+    "category": "Stream",
+    "url": "https://www.abc.net.au/hobart/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localhobart_1@327274/master.m3u8",
+    "features": "/img/oceania/australia/936-abc-hobart.png"
+  },
+  "fresh-92-7": {
+    "title": "Fresh",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://fresh927.com.au/",
+    "status": true,
+    "stream": "https://live.fresh927.com.au/freshaac",
+    "features": "/img/oceania/australia/fresh-92-7.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/fresh-92-7?time="
+  },
+  "3xy-hellas": {
+    "title": "3XY Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.greekmediagroup.com.au/",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://streamer2.rightclickitservices.com:1128/stream/1/",
+    "features": "/img/oceania/australia/3xy-hellas.png"
+  },
+  "tab": {
+    "title": "TAB Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.tabtouch.com.au/",
+    "status": true,
+    "stream": "https://racingradio.rwwa.com.au/live",
+    "features": "/img/oceania/australia/tab.png"
+  },
+  "joy-94-9": {
+    "title": "JOY",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://joy.org.au/",
+    "status": true,
+    "stream": "https://stream.joy.org.au/proxy/joy949?mp=/live",
+    "features": "/img/oceania/australia/joy-94-9.png"
+  },
+  "rsn-racing-sport": {
+    "title": "RSN Racing & Sport",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.rsn.net.au/",
+    "status": true,
+    "stream": "https://livestream.whooshkaa.com/icecast/rsn/carnival",
+    "features": "/img/oceania/australia/rsn-racing-sport.png"
+  },
+  "kiss-fm": {
+    "title": "Kiss FM",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://kissfm.com.au/",
+    "status": true,
+    "stream": "https://s9.nexuscast.com:9565/kissfm.aac",
+    "features": "/img/oceania/australia/kiss-fm.png"
+  },
+  "abc-classic-fm": {
+    "title": "ABC Classic FM",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.abc.net.au/classic/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/classicfmnsw_1@327292/master.m3u8",
+    "features": "/img/oceania/australia/abc-classic-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/66/abc-classic-fm?time="
+  },
+  "abc-classic-2": {
+    "title": "ABC Classic 2",
+    "type": "application/x-mpegURL",
+    "category": "Stream",
+    "url": "http://abcclassic2.tumblr.com/",
+    "status": true,
+    "stream": "https://abcradiolivehls-lh.akamaihd.net/i/classic2_1@327291/master.m3u8",
+    "features": "/img/oceania/australia/abc-classic-2.png"
+  },
+  "sunshine-fm-104-9": {
+    "title": "Sunshine FM",
+    "type": "application/x-mpegURL",
+    "category": "Stream",
+    "url": "https://www.sunshinefm.com.au/",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4SFM_SC",
+    "features": "/img/oceania/australia/sunshine-fm-104-9.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/sunshine-fm-104-9?time="
+  },
+  "radio-metro": {
+    "title": "Radio Metro",
+    "type": "audio/x-mpegurl",
+    "category": "Stream",
+    "url": "https://radiometro.com.au",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://s1.voscast.com:10152/metro1057",
+    "features": "/img/oceania/australia/metro.png"
+  },
+  "fbi": {
+    "title": "FBi Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://fbiradio.com/",
+    "status": true,
+    "stream": "https://streamer.fbiradio.com/stream",
+    "features": "/img/oceania/australia/fbi.png",
+    "schedule": "https://airnet.org.au/rest/stations/2FBI/guides/fm?time="
+  },
+  "4zzz": {
+    "title": "4ZZZ",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://4zzz.org.au/",
+    "status": true,
+    "stream": "https://iheart.4zzz.org.au/4zzz",
+    "features": "/img/oceania/australia/4zzz.png"
+  },
+  "pbs-fm": {
+    "title": "PBS-FM",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://www.pbsfm.org.au/",
+    "status": true,
+    "stream": "https://cast-1.nucleusstreaming.com:4443/pbsfm_live_64.aacp",
+    "features": "/img/oceania/australia/pbs-fm.png"
+  },
+  "2nurfm": {
+    "title": "2NURFM",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.2nurfm.com.au/",
+    "status": true,
+    "stream": "https://broadcaster1.newcastle.edu.au:8443/live",
+    "features": "/img/oceania/australia/2nurfm.png"
+  },
+  "89-9-lightfm": {
+    "title": "89.9 TheLight",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://thelight.com.au/",
+    "status": true,
+    "stream": "https://securestreams.autopo.st:1122/stream/1/",
+    "features": "/img/oceania/australia/89-9-lightfm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/89-9-lightfm?time="
+  },
+  "2me-arabic": {
+    "title": "2ME Radio Arabic",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.2me.com.au/",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://icecast.conexim.net:8000/2me",
+    "features": "/img/oceania/australia/2me-arabic.png"
+  },
+  "101-fm": {
+    "title": "101FM (Logan City)",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://101fm.com.au/",
+    "status": true,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4CBLAAC_SC",
+    "features": "/img/oceania/australia/101-fm.png"
+  },
+  "2mm": {
+    "title": "2MM Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.2mm.com.au/",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://110.175.9.78:8001/stream/1/",
+    "features": "/img/oceania/australia/2mm.png"
+  },
+  "casey": {
+    "title": "Casey Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.3ser.org.au/",
+    "status": true,
+    "stream": "https://s3.radio.co/s8f8288fe9/listen",
+    "features": "/img/oceania/australia/casey.png"
+  },
+  "96five-family": {
+    "title": "96five Family Radio",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.96five.com/",
+    "status": true,
+    "stream": "https://stream1.cnmns.net/96five",
+    "features": "/img/oceania/australia/96five-family.png"
+  },
+  "curtin-fm": {
+    "title": "Curtin FM",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.curtinfm.com.au/",
+    "status": true,
+    "stream": "https://usa7.fastcast4u.com/proxy/curtinfm?mp=/stream/1/",
+    "features": "/img/oceania/australia/curtin-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/curtin-fm?time="
+  },
+  "sportfm": {
+    "title": "SportFM",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://www.sportfm.com.au/",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://203.59.231.157:8000/live",
+    "features": "/img/oceania/australia/sportfm.png"
+  },
+  "austral": {
+    "title": "Radio Austral",
+    "type": "audio/mpeg",
+    "category": "Stream",
+    "url": "https://radioaustral.com.au/",
+    "status": true,
+    "stream": "https://e-cros.herokuapp.com/http://radioaustral.serverroom.us:8516/stream/1/",
+    "features": "/img/oceania/australia/austral.png"
+  },
+  "4mbs-classic-fm": {
+    "title": "4MBS Classic FM",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://www.4mbs.com.au/",
+    "status": true,
+    "stream": "https://stream.4mbs.com.au/4mbsclassicfm",
+    "features": "/img/oceania/australia/4mbs-classic-fm.png"
+  },
+  "puradsifm": {
+    "title": "4MBS Classic FM",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://puradsi.com/",
+    "status": true,
+    "stream": "https://stream.4mbs.com.au/4mbsclassicfm",
+    "features": "/img/oceania/australia/puradsifm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/puradsifm?time="
+  },
+  "hobart-fm": {
+    "title": "Hobart FM",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://www.hobartfm.org.au/",
+    "status": true,
+    "stream": "https://syd-radio2.shoutcast.net.au/proxy/hobartfm?mp=/stream/1/",
+    "features": "/img/oceania/australia/hobart-fm.png"
+  },
+  "northside-99-3": {
+    "title": "Northside Radio",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://northsideradio.com.au/",
+    "status": true,
+    "stream": "https://s1.reliastream.com/proxy/nsblive?mp=/nsblive",
+    "features": "/img/oceania/australia/northside-99-3.png"
+  },
+  "mix-fm-927": {
+    "title": "Mix FM",
+    "type": "audio/aac",
+    "category": "Stream",
+    "url": "https://www.mixfm.com.au/",
+    "status": true,
+    "stream": "https://n01a-eu.rcs.revma.com/z06q4stdwhruv?1598277631=&rj-tok=AAABdCDQJuUAKBp0Or7FjJ9O5Q&rj-ttl=5",
+    "features": "/img/oceania/australia/mix-fm-927.png"
   }
 }
