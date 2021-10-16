@@ -115,7 +115,13 @@ export default {
               },
             });
 
-            player.setSrc(data.stream);
+            const url = new URL(data.stream);
+            console.log(url.protocol);
+            if (url.protocol == "http:") {
+              player.setSrc(process.env.CORS_SERVER_1 + data.stream);
+            } else {
+              player.setSrc(data.stream);
+            }
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),
