@@ -7,14 +7,23 @@
     </el-breadcrumb> -->
 
     <Player
-      :datasource="datasource"
       country="world.asia.vietnam"
       :schedule="schedule_data"
+      :stream="stream_name"
+      thumb="/img/asia/flags/viet-nam.png"
     ></Player>
 
-    <!-- <vue-plyr ref="plyr">
-      <audio autoplay controls crossorigin playsinline id="player1"></audio>
-    </vue-plyr> -->
+    <select
+      v-model="$colorMode.preference"
+      class="border w-24 h-8 dark:bg-gray-900 dark:text-white dark:border-gray-700"
+    >
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="sepia">Sepia</option>
+    </select>
+
+    <nuxt-link to="/viet-nam">vietnam</nuxt-link>
 
     <!-- <PanelRadio></PanelRadio> -->
   </div>
@@ -46,7 +55,7 @@ export default {
   data() {
     return {
       schedule_data: [],
-      datasource: null,
+      stream_name: null,
     };
   },
   components: {
@@ -59,60 +68,20 @@ export default {
         .get("/assets/radio/favorite/" + this.$config.Pin_Channel_Favorites + ".json")
         .then((res) => {
           const data = res.data;
-          var notify = this.$notify;
-          const $t = this.$t.bind(this);
-
-          /* var player = new MediaElementPlayer("player", {
-            features: ["playpause", "progress", "tracks", "volume"],
-            enableKeyboard: true,
-            success: function (mediaElement) {
-              // Event
-              $("#player")
-                .on("canplay", function () {
-                  $(".mejs__time-rail").html(
-                    '<div class="ticker radio-name-player"><ul><li>' +
-                      $t("panel.play_from_radio") +
-                      " <strong>" +
-                      data["title"] +
-                      "</strong></li><li>" +
-                      $t("panel.frequency") +
-                      ": <strong>" +
-                      data["frequency"] +
-                      "</strong></li><li>" +
-                      $t("panel.country") +
-                      ": <strong>" +
-                      data["countries"] +
-                      "</strong></li></ul></div>"
-                  );
-                  $(".ticker").ticker();
-                  notify.success({
-                    title: $t("notify.success"),
-                    message: $t("notify.success_content", { radio: data.title }),
-                  });
-                })
-                .on("error", function () {
-                  notify.error({
-                    title: $t("notify.error"),
-                    message: $t("notify.error_content", { radio: data.title }),
-                  });
-                });
-
-              console.info("Player initialised");
-            },
-          });
-
-          player.setSrc(res.data["stream"]); */
-
+          this.stream_name = data.title;
           var audio = document.querySelector("#player");
-          if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(res.data["stream"]);
-            hls.attachMedia(audio);
+
+          // Check HLS
+          if (data.type === "application/x-mpegURL") {
+            if (Hls.isSupported()) {
+              var hls = new Hls();
+              hls.loadSource(res.data["stream"]);
+              hls.attachMedia(audio);
+            }
           }
 
-          // audio.play();
+          audio.play();
 
-          // this.datasource = res.data["stream"];
           // Get Schedule
           var form = new FormData();
           form.append("vov", "vovgthn");

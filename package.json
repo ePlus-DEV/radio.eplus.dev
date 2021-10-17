@@ -30,6 +30,7 @@
     "vue-scrollmagic": "^1.2.0"
   },
   "devDependencies": {
+    "@nuxtjs/color-mode": "^2.1.1",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/moment": "^1.6.1",

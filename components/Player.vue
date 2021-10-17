@@ -8,52 +8,34 @@
       class="bg-white dark:bg-gray-800 rounded-tl-xl sm:rounded-t-xl p-4 pb-6 sm:p-8 lg:p-4 lg:pb-6 xl:p-8 space-y-6 sm:space-y-8 lg:space-y-6 xl:space-y-8"
     >
       <div class="flex items-center space-x-3.5 sm:space-x-5 lg:space-x-3.5 xl:space-x-5">
-        <img
-          src="https://tailwindcss.com/_next/static/media/full-stack-radio.485d0b2c6e3aa1cacc6b50e462cd3675.png"
-          alt=""
-          width="160"
-          height="160"
-          class="flex-none w-20 h-20 rounded-lg bg-gray-100"
-        />
+        <img :src="thumb" alt="" class="flex-none rounded-lg bg-gray-100" />
         <div class="min-w-0 flex-auto space-y-0.5">
           <p
             class="text-lime-600 dark:text-lime-400 text-sm sm:text-base lg:text-sm xl:text-base font-semibold uppercase"
           >
-            <abbr title="Episode">Ep.</abbr> 128
+            <abbr title="Time">{{ now }}</abbr>
           </p>
           <h2
             class="text-black dark:text-white text-base sm:text-xl lg:text-base xl:text-xl font-semibold truncate"
           >
-            Scaling CSS at Heroku with Utility Classes
+            {{ stream }}
           </h2>
           <p
             class="text-gray-500 dark:text-gray-400 text-base sm:text-lg lg:text-base xl:text-lg font-medium"
           >
-            Full Stack Radio
+            <template v-if="country !== undefined">
+              {{ $t("panel.most_popular", { name: $t(country) }) }}
+            </template>
+            <template v-else>
+              {{ country }}
+            </template>
           </p>
         </div>
       </div>
       <div class="space-y-2">
-        <!-- <div class="bg-gray-200 dark:bg-black rounded-full overflow-hidden">
-          <div
-            class="bg-lime-500 dark:bg-lime-400 w-1/2 h-1.5"
-            role="progressbar"
-            aria-valuenow="1456"
-            aria-valuemin="0"
-            aria-valuemax="4550"
-          ></div>
-        </div>
-        <div
-          class="text-gray-500 dark:text-gray-400 flex justify-between text-sm font-medium tabular-nums"
-        >
-          <div>24:16</div>
-          <div>75:50</div>
-        </div> -->
         <div id="sticker">
           <vue-plyr ref="plyr">
-            <audio controls crossorigin playsinline id="player">
-              <source :src="datasource" />
-            </audio>
+            <audio controls crossorigin playsinline id="player"></audio>
           </vue-plyr>
         </div>
       </div>
@@ -90,7 +72,12 @@
           <path d="M17 0L9 6l8 6V0z" fill="currentColor" />
         </svg>
       </button>
-      <button type="button" class="mx-auto" @click="onPlay">
+      <button
+        type="button"
+        class="mx-auto"
+        :class="[!button ? 'hidden' : '']"
+        @click="onPause"
+      >
         <svg width="50" height="50" fill="none">
           <circle
             class="text-gray-300 dark:text-gray-500"
@@ -101,6 +88,26 @@
             stroke-width="1.5"
           />
           <path d="M18 16h4v18h-4V16zM28 16h4v18h-4z" fill="currentColor" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="mx-auto"
+        :class="[button ? 'hidden' : '']"
+        @click="onPlay"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="50"
+          height="50"
+          viewBox="0 0 50 50"
+          style="fill: #000000"
+        >
+          <path
+            d="M 7.3847656 1 C 6.4461117 1 5.5415977 1.3405474 4.921875 2.0078125 C 4.3021523 2.6750776 4 3.6068401 4 4.6347656 L 4 45.363281 C 4 46.391594 4.3021532 47.324738 4.921875 47.992188 C 5.5415968 48.659636 6.4461117 49 7.3847656 49 C 8.3762396 49 9.2122771 48.715937 10.015625 48.251953 L 28.146484 37.875 L 32.5 35.384766 L 44.769531 28.361328 L 44.771484 28.361328 C 45.865386 27.730994 47 26.626492 47 25 C 47 23.374065 45.86621 22.267775 44.767578 21.636719 L 42.203125 20.162109 C 39.90096 12.564756 32.841808 7.0195313 24.5 7.0195312 C 23.002786 7.0195312 21.554957 7.2177954 20.160156 7.5546875 L 10.015625 1.7480469 C 9.2129723 1.2838219 8.3762396 1 7.3847656 1 z M 7.3847656 3 C 8.0612916 3 8.3743246 3.1106937 9.0136719 3.4804688 L 9.015625 3.4804688 L 17.574219 8.3769531 C 10.796043 11.124024 6 17.76442 6 25.519531 C 6 32.87687 10.305274 39.237376 16.539062 42.214844 L 9.0175781 46.519531 L 9.015625 46.519531 C 8.3749698 46.889548 8.0612916 47 7.3847656 47 C 6.8924196 47 6.6032001 46.86191 6.3886719 46.630859 C 6.1741437 46.399809 6 46.012969 6 45.363281 L 6 25.519531 L 6 4.6347656 C 6 3.9856912 6.1741445 3.6001256 6.3886719 3.3691406 C 6.6031992 3.1381557 6.8924196 3 7.3847656 3 z M 24.5 9.0195312 C 33.624562 9.0195312 41 16.394969 41 25.519531 C 41 26.493839 40.896196 27.440628 40.734375 28.367188 L 35.542969 31.337891 C 36.468902 29.593602 37 27.608349 37 25.5 C 37 18.608285 31.391715 13 24.5 13 C 17.608285 13 12 18.608285 12 25.5 C 12 32.206368 17.315024 37.682153 23.951172 37.972656 L 18.708984 40.972656 C 12.45608 38.628715 8 32.602733 8 25.519531 C 8 16.394969 15.375438 9.0195314 24.5 9.0195312 z M 24.5 15 C 30.310835 15 35 19.689165 35 25.5 C 35 31.310835 30.310835 36 24.5 36 C 18.689165 36 14 31.310835 14 25.5 C 14 19.689165 18.689165 15 24.5 15 z M 25 19 L 25 26.044922 C 24.6 25.815922 24.14225 25.673828 23.65625 25.673828 C 22.17025 25.673828 21 26.875937 21 28.335938 C 21 29.825937 22.168 31 23.625 31 C 25.111 31 26.5 29.836 26.5 28.375 L 26.5 21.875 L 29 21.875 L 29 19 L 25 19 z M 42.777344 22.798828 L 43.771484 23.371094 C 44.594852 23.844038 45 24.229935 45 25 C 45 25.769508 44.595488 26.153287 43.773438 26.626953 L 42.927734 27.111328 C 42.972432 26.586102 43 26.055979 43 25.519531 C 43 24.592654 42.909399 23.689399 42.777344 22.798828 z"
+          ></path>
         </svg>
       </button>
       <button type="button" class="mx-auto">
@@ -135,14 +142,14 @@
 
 <script>
 export default {
-  props: ["datasource", "country", "stream", "playlist", "schedule", "thumb"],
+  props: ["country", "stream", "playlist", "schedule", "thumb"],
   data() {
     return {
       now: null,
+      button: false,
     };
   },
   mounted() {
-    console.log(this.datasource);
     this.$refs.plyr.player.on("event", () => console.log("event fired"));
     this.$refs.plyr.player.on("ready", (event) => {
       console.log(event);
@@ -154,18 +161,23 @@ export default {
       // const instance = event.detail.plyr;
       console.log("waiting");
     });
-    /* const player = new Player(this.$refs.iframe);
-    player.on("play", (data) => this.onPlay(data));
-    player.on("pause", (data) => this.onPause(data)); */
+    this.$refs.plyr.player.on("playing", (event) => {
+      console.log("playing");
+      this.button = true;
+    });
+    this.$refs.plyr.player.on("pause", (event) => {
+      console.log("pause");
+      this.button = false;
+    });
   },
   methods: {
     onPlay() {
-      // console.log("Video is playing", data);
       var audio = document.querySelector("#player");
       audio.play();
     },
-    onPause(data) {
-      console.log("Video is paused", data);
+    onPause() {
+      var audio = document.querySelector("#player");
+      audio.pause();
     },
     check(key, time) {
       var arr = time.split("-");
@@ -202,7 +214,6 @@ export default {
     },
   },
   created() {
-    console.log(this.datasource);
     setInterval(() => {
       this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
     }, 1000);

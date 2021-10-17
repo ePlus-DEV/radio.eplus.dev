@@ -144,6 +144,7 @@ export default {
   buildModules: [
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
     "@nuxtjs/google-analytics"
   ],
   // GA
@@ -295,5 +296,9 @@ export default {
       lastmod: new Date(),
       lastmodrealtime: true
     }
+  },
+  // Darkmode
+  colorMode: {
+    classSuffix: ""
   }
 };

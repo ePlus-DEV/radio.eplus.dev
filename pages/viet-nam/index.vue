@@ -9,7 +9,9 @@
 
     <Player country="world.asia.vietnam" :schedule="schedule_data" />
 
-    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
+    <nuxt-link to="/">home</nuxt-link>
+
+    <!-- <PanelStation :area="area" :slug="slug" :i18n="i18n" /> -->
   </div>
 </template>
 
@@ -19,6 +21,7 @@ import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
 import PanelStation from "~/components/PanelStation.vue";
 import Player from "~/components/Player.vue";
+import Hls from "hls.js";
 
 export default {
   head() {
@@ -63,46 +66,14 @@ export default {
 
         const $t = this.$t.bind(this);
 
-        var player = new MediaElementPlayer("player", {
-          features: ["playpause", "progress", "tracks", "volume"],
-          enableKeyboard: true,
-          success: function (mediaElement) {
-            // Event
-            $("#player")
-              .on("canplay", function () {
-                $(".mejs__time-rail").html(
-                  '<div class="ticker radio-name-player"><ul><li>' +
-                    $t("panel.play_from_radio") +
-                    " <strong>" +
-                    data["title"] +
-                    "</strong></li><li>" +
-                    $t("panel.frequency") +
-                    ": <strong>" +
-                    data["frequency"] +
-                    "</strong></li><li>" +
-                    $t("panel.country") +
-                    ": <strong>" +
-                    data["countries"] +
-                    "</strong></li></ul></div>"
-                );
-                $(".ticker").ticker();
-                notify.success({
-                  title: $t("notify.success"),
-                  message: $t("notify.success_content", { radio: data.title }),
-                });
-              })
-              .on("error", function () {
-                notify.error({
-                  title: $t("notify.error"),
-                  message: $t("notify.error_content", { radio: data.title }),
-                });
-              });
+        var audio = document.querySelector("#player");
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(res.data["stream"]);
+          hls.attachMedia(audio);
+        }
 
-            console.info("Player initialised");
-          },
-        });
-
-        player.setSrc(data["stream"]);
+        audio.play();
 
         // Get Schedule
         var form = new FormData();

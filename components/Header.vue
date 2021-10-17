@@ -180,24 +180,36 @@
           <div
             class="w-20 h-full flex items-center justify-center border-r border-gray-700 cursor-pointer text-gray-400"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-bell"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+            <button
+              id="switchTheme"
+              class="h-10 w-10 flex justify-center items-center focus:outline-none text-yellow-500"
+              @click="darkmode()"
             >
-              <path stroke="none" d="M0 0h24v24H0z" />
-              <path
-                d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"
-              />
-              <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-            </svg>
+              <svg
+                class="w-6 h-6"
+                :class="[this.$colorMode.value == 'light' ? 'block' : 'hidden']"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                :class="[this.$colorMode.value == 'dark' ? 'block' : 'hidden']"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M9.353 2.939a1 1 0 01.22 1.08 8 8 0 0010.408 10.408 1 1 0 011.301 1.3A10.003 10.003 0 0112 22C6.477 22 2 17.523 2 12c0-4.207 2.598-7.805 6.273-9.282a1 1 0 011.08.22z"
+                ></path>
+              </svg>
+            </button>
           </div>
           <div
             class="flex items-center pl-8 relative cursor-pointer"
@@ -527,6 +539,13 @@ export default {
     };
   },
   methods: {
+    darkmode() {
+      if (this.$colorMode.value === "light") {
+        this.$colorMode.value = "dark";
+      } else {
+        this.$colorMode.value = "light";
+      }
+    },
     dropdownHandler(event) {
       let single = event.currentTarget.getElementsByTagName("ul")[0];
       single.classList.toggle("hidden");
