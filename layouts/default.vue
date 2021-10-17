@@ -1,24 +1,27 @@
 <template>
   <div>
     <!-- START HEADER -->
-    <!-- <el-header> -->
-    <Header></Header>
-    <!-- </el-header> -->
+    <Header />
     <!-- END HEADER -->
 
-    <body class="bg-gray-200" scroll-container>
+    <div class="container mx-auto px-4" scroll-container>
+      <!-- START BREADCRUMBS -->
+      <Breadcrumbs />
+      <!-- END BREADCRUMBS -->
+
       <!-- START CONTENT -->
       <nuxt />
       <!-- End CONTENT -->
       <!-- START FOOTER -->
-      <Footer></Footer>
+      <Footer />
       <!-- END FOOTER -->
-    </body>
+    </div>
   </div>
 </template>
 
 <script>
 import Header from "~/components/Header.vue";
+import Breadcrumbs from "~/components/Breadcrumbs.vue";
 import Footer from "~/components/Footer.vue";
 // import NavBar from "~/components/NavBar.vue";
 // import Player from '~/components/Player.vue'
@@ -36,6 +39,7 @@ export default {
   },
   components: {
     Header,
+    Breadcrumbs,
     Footer,
     // NavBar,
     // Player,

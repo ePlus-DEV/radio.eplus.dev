@@ -16,6 +16,7 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/recaptcha": "^1.0.4",
     "@nuxtjs/sitemap": "^2.4.0",
+    "daisyui": "^1.14.5",
     "dotenv": "^9.0.2",
     "element-ui": "^2.13.2",
     "fs": "0.0.1-security",
