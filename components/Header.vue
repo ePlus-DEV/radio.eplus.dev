@@ -178,7 +178,7 @@
             </svg>
           </div>
           <div
-            class="w-20 h-full flex items-center justify-center border-r border-gray-700 cursor-pointer text-gray-400"
+            class="w-20 h-full flex items-center justify-center border-r border-gray-700 text-gray-400"
           >
             <button
               id="switchTheme"
@@ -542,8 +542,10 @@ export default {
     darkmode() {
       if (this.$colorMode.value === "light") {
         this.$colorMode.value = "dark";
+        localStorage.setItem("theme", "dark");
       } else {
         this.$colorMode.value = "light";
+        localStorage.setItem("theme", "light");
       }
     },
     dropdownHandler(event) {
@@ -573,6 +575,17 @@ export default {
       Input.classList.toggle("w-0");
       Input.classList.toggle("w-24");
     },
+  },
+  created() {
+    if (
+      localStorage.theme === "dark" ||
+      (!"theme" in localStorage &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.querySelector("html").classList.add("dark");
+    } else if (localStorage.theme === "dark") {
+      document.querySelector("html").classList.add("dark");
+    }
   },
 };
 </script>

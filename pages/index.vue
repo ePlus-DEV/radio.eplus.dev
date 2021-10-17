@@ -13,16 +13,6 @@
       thumb="/img/asia/flags/viet-nam.png"
     ></Player>
 
-    <select
-      v-model="$colorMode.preference"
-      class="border w-24 h-8 dark:bg-gray-900 dark:text-white dark:border-gray-700"
-    >
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-      <option value="sepia">Sepia</option>
-    </select>
-
     <nuxt-link to="/viet-nam">vietnam</nuxt-link>
 
     <!-- <PanelRadio></PanelRadio> -->
