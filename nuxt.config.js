@@ -125,22 +125,34 @@ export default {
    ** Global CSS
    */
   css: [
-    "element-ui/lib/theme-chalk/index.css",
-    "@/assets/custom/css/style.css"
+    // "element-ui/lib/theme-chalk/index.css",
+    // "@/assets/custom/css/style.css"
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    {
+    /* {
       src: "@/plugins/element-ui"
-    },
+    }, */
+    { src: "~/plugins/plyr.js" },
     { src: "~plugins/scrollmagic.js", ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ["@nuxtjs/moment"],
+  buildModules: [
+    "@nuxtjs/moment",
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/google-analytics"
+  ],
+  // GA
+  googleAnalytics: {
+    id: "UA-129271342-9",
+    debug: {
+      enabled: process.env.NODE_ENV === "production"
+    }
+  },
   // momentjs
   moment: {
     timezone: true,
@@ -185,7 +197,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    // transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */

@@ -1,14 +1,22 @@
 <template>
   <div>
-    <el-breadcrumb separator="/">
+    <!-- <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">{{
         $t("navmenu.homepage")
       }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    </el-breadcrumb> -->
 
-    <Player country="world.asia.vietnam" :schedule="schedule_data"></Player>
+    <Player
+      :datasource="datasource"
+      country="world.asia.vietnam"
+      :schedule="schedule_data"
+    ></Player>
 
-    <PanelRadio></PanelRadio>
+    <!-- <vue-plyr ref="plyr">
+      <audio autoplay controls crossorigin playsinline id="player1"></audio>
+    </vue-plyr> -->
+
+    <!-- <PanelRadio></PanelRadio> -->
   </div>
 </template>
 
@@ -18,6 +26,7 @@ import "mediaelement";
 import "mediaelement/build/mediaelementplayer.min.css";
 import PanelRadio from "~/components/PanelRadio.vue";
 import Player from "~/components/Player.vue";
+import Hls from "hls.js";
 
 export default {
   head() {
@@ -37,6 +46,7 @@ export default {
   data() {
     return {
       schedule_data: [],
+      datasource: null,
     };
   },
   components: {
@@ -52,7 +62,7 @@ export default {
           var notify = this.$notify;
           const $t = this.$t.bind(this);
 
-          var player = new MediaElementPlayer("player", {
+          /* var player = new MediaElementPlayer("player", {
             features: ["playpause", "progress", "tracks", "volume"],
             enableKeyboard: true,
             success: function (mediaElement) {
@@ -91,8 +101,18 @@ export default {
             },
           });
 
-          player.setSrc(res.data["stream"]);
+          player.setSrc(res.data["stream"]); */
 
+          var audio = document.querySelector("#player");
+          if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(res.data["stream"]);
+            hls.attachMedia(audio);
+          }
+
+          // audio.play();
+
+          // this.datasource = res.data["stream"];
           // Get Schedule
           var form = new FormData();
           form.append("vov", "vovgthn");
@@ -129,49 +149,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-
-.ticker {
-  width: 500px;
-  margin: 10px auto;
-}
-
-/* The HTML list gets replaced with a single div,
-     which contains the active ticker item, so you
-     can easily style that as well */
-.ticker div {
-  display: inline-block;
-  word-wrap: break-word;
-}
-</style>
