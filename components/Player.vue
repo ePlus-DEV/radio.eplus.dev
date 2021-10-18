@@ -112,7 +112,7 @@
               <audio controls crossorigin playsinline id="player" class="hidden"></audio>
             </vue-plyr>
 
-            <div class="ticker radio-name-player">
+            <div class="ticker radio-name-player dark:text-white">
               <ul>
                 <li>{{ $t("panel.play_from_radio") }} {{ stream }}</li>
                 <li>
@@ -270,3 +270,8 @@ export default {
   },
 };
 </script>
+<style>
+.plyr {
+  display: none;
+}
+</style>
