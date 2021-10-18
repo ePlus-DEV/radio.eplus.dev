@@ -543,9 +543,11 @@ export default {
       if (this.$colorMode.value === "light") {
         this.$colorMode.value = "dark";
         localStorage.setItem("theme", "dark");
+        $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
       } else {
         this.$colorMode.value = "light";
         localStorage.setItem("theme", "light");
+        $("html").addClass("bg-gray-200").removeClass("bg-gray-800");
       }
     },
     dropdownHandler(event) {
@@ -577,14 +579,16 @@ export default {
     },
   },
   created() {
-    if (
+    /* if (
       localStorage.theme === "dark" ||
       (!"theme" in localStorage &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
-      document.querySelector("html").classList.add("dark");
-    } else if (localStorage.theme === "dark") {
-      document.querySelector("html").classList.add("dark");
+      // document.querySelector("html").classList.add("dark");
+    } else  */
+    if (localStorage.theme === "dark") {
+      this.$colorMode.value = localStorage.theme;
+      $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
     }
   },
 };

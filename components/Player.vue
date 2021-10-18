@@ -1,7 +1,9 @@
 <template>
   <div class="transform -rotate-1">
     <!-- BEGIN - Player -->
-    <div class="flex w-8/12 bg-white shadow-md rounded-lg overflow-hidden mx-auto">
+    <div
+      class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"
+    >
       <div class="flex flex-col w-full">
         <div class="flex p-5 border-b">
           <img
@@ -10,8 +12,12 @@
             src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200"
           />
           <div class="flex flex-col px-2 w-full">
-            <span class="text-xs text-gray-700 uppercase font-medium"> now playing </span>
-            <span class="text-sm text-red-500 capitalize font-semibold pt-1">
+            <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
+              now playing
+            </span>
+            <span
+              class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
+            >
               I think I need a sunrise, I'm tired of the sunset
             </span>
             <span class="text-xs text-gray-500 uppercase font-medium">
@@ -102,6 +108,10 @@
           <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
             <!-- <div class="bg-red-300 h-2 w-full rounded-lg"></div>
             <div class="bg-red-500 h-2 w-1/2 rounded-lg absolute top-0"></div> -->
+            <vue-plyr ref="plyr">
+              <audio controls crossorigin playsinline id="player" class="hidden"></audio>
+            </vue-plyr>
+
             <div class="ticker radio-name-player">
               <ul>
                 <li>{{ $t("panel.play_from_radio") }} {{ stream }}</li>
@@ -120,7 +130,9 @@
             </div>
           </div>
           <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
-            <span class="text-xs text-gray-700 uppercase font-medium pl-2">
+            <span
+              class="text-xs dark:text-white text-gray-700 uppercase font-medium pl-2"
+            >
               02:00/04:00
             </span>
           </div>
@@ -128,7 +140,7 @@
 
         <div class="flex flex-col p-5">
           <div class="border-b pb-1 flex justify-between items-center mb-2">
-            <span class="text-base font-semibold uppercase text-gray-700">
+            <span class="text-base dark:text-white font-semibold uppercase text-gray-700">
               play list</span
             >
             <img
@@ -144,10 +156,12 @@
               src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200"
             />
             <div class="flex flex-col px-2 w-full">
-              <span class="text-sm text-red-500 capitalize font-semibold pt-1">
+              <span
+                class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1"
+              >
                 I think I need a sunrise, I'm tired of the sunset
               </span>
-              <span class="text-xs text-gray-500 uppercase font-medium">
+              <span class="text-xs dark:text-white text-gray-500 uppercase font-medium">
                 -"Boston," Augustana
               </span>
             </div>
@@ -159,10 +173,12 @@
               src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200"
             />
             <div class="flex flex-col px-2 w-full">
-              <span class="text-sm text-red-500 capitalize font-semibold pt-1">
+              <span
+                class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1"
+              >
                 I think I need a sunrise, I'm tired of the sunset
               </span>
-              <span class="text-xs text-gray-500 uppercase font-medium">
+              <span class="text-xs dark:text-white text-gray-500 uppercase font-medium">
                 -"Boston," Augustana
               </span>
             </div>
@@ -171,138 +187,6 @@
       </div>
     </div>
     <!-- END - Player -->
-
-    <div
-      class="bg-white dark:bg-gray-800 rounded-tl-xl sm:rounded-t-xl p-4 pb-6 sm:p-8 lg:p-4 lg:pb-6 xl:p-8 space-y-6 sm:space-y-8 lg:space-y-6 xl:space-y-8"
-    >
-      <div class="flex items-center space-x-3.5 sm:space-x-5 lg:space-x-3.5 xl:space-x-5">
-        <img :src="thumb" alt="" class="flex-none rounded-lg bg-gray-100" />
-        <div class="min-w-0 flex-auto space-y-0.5">
-          <p
-            class="text-lime-600 dark:text-lime-400 text-sm sm:text-base lg:text-sm xl:text-base font-semibold uppercase"
-          >
-            <abbr title="Time">{{ now }}</abbr>
-          </p>
-          <h2
-            class="text-black dark:text-white text-base sm:text-xl lg:text-base xl:text-xl font-semibold truncate"
-          >
-            {{ stream }}
-          </h2>
-          <p
-            class="text-gray-500 dark:text-gray-400 text-base sm:text-lg lg:text-base xl:text-lg font-medium"
-          >
-            <template v-if="country !== undefined">
-              {{ $t("panel.most_popular", { name: $t(country) }) }}
-            </template>
-            <template v-else>
-              {{ country }}
-            </template>
-          </p>
-        </div>
-      </div>
-      <div class="space-y-2">
-        <vue-plyr ref="plyr">
-          <audio controls crossorigin playsinline id="player"></audio>
-        </vue-plyr>
-      </div>
-    </div>
-    <div
-      class="bg-gray-50 text-black dark:bg-gray-900 dark:text-white lg:rounded-b-xl py-4 px-1 sm:px-3 lg:px-1 xl:px-3 grid grid-cols-5 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7 items-center"
-    >
-      <button type="button" class="mx-auto">
-        <svg width="24" height="24" fill="none">
-          <path
-            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
-      <button type="button" class="hidden sm:block lg:hidden xl:block mx-auto">
-        <svg width="17" height="18">
-          <path d="M0 0h2v18H0V0zM4 9l13-9v18L4 9z" fill="currentColor" />
-        </svg>
-      </button>
-      <button type="button" class="mx-auto">
-        <svg width="34" height="39" fill="none">
-          <path
-            d="M12.878 26.12c1.781 0 3.09-1.066 3.085-2.515.004-1.104-.665-1.896-1.824-2.075v-.068c.912-.235 1.505-.95 1.5-1.93.005-1.283-1.048-2.379-2.727-2.379-1.602 0-2.89.968-2.932 2.387h1.274c.03-.801.784-1.287 1.64-1.287.892 0 1.475.541 1.471 1.346.004.844-.673 1.398-1.64 1.398h-.738v1.074h.737c1.21 0 1.91.614 1.91 1.491 0 .848-.738 1.424-1.765 1.424-.946 0-1.683-.486-1.734-1.262H9.797c.055 1.424 1.317 2.395 3.08 2.395zm7.734.025c2.016 0 3.196-1.645 3.196-4.504 0-2.838-1.197-4.488-3.196-4.488-2.003 0-3.196 1.645-3.2 4.488 0 2.855 1.18 4.5 3.2 4.504zm0-1.138c-1.18 0-1.892-1.185-1.892-3.366.004-2.174.716-3.371 1.892-3.371 1.172 0 1.888 1.197 1.888 3.37 0 2.182-.712 3.367-1.888 3.367z"
-            fill="currentColor"
-          />
-          <path
-            d="M1 22c0 8.837 7.163 16 16 16s16-7.163 16-16S25.837 6 17 6"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path d="M17 0L9 6l8 6V0z" fill="currentColor" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="mx-auto"
-        :class="[!button ? 'hidden' : '']"
-        @click="onPause"
-      >
-        <svg width="50" height="50" fill="none">
-          <circle
-            class="text-gray-300 dark:text-gray-500"
-            cx="25"
-            cy="25"
-            r="24"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path d="M18 16h4v18h-4V16zM28 16h4v18h-4z" fill="currentColor" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="mx-auto"
-        :class="[button ? 'hidden' : '']"
-        @click="onPlay"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
-          width="50"
-          height="50"
-          viewBox="0 0 50 50"
-          style="fill: #000000"
-        >
-          <path
-            d="M 7.3847656 1 C 6.4461117 1 5.5415977 1.3405474 4.921875 2.0078125 C 4.3021523 2.6750776 4 3.6068401 4 4.6347656 L 4 45.363281 C 4 46.391594 4.3021532 47.324738 4.921875 47.992188 C 5.5415968 48.659636 6.4461117 49 7.3847656 49 C 8.3762396 49 9.2122771 48.715937 10.015625 48.251953 L 28.146484 37.875 L 32.5 35.384766 L 44.769531 28.361328 L 44.771484 28.361328 C 45.865386 27.730994 47 26.626492 47 25 C 47 23.374065 45.86621 22.267775 44.767578 21.636719 L 42.203125 20.162109 C 39.90096 12.564756 32.841808 7.0195313 24.5 7.0195312 C 23.002786 7.0195312 21.554957 7.2177954 20.160156 7.5546875 L 10.015625 1.7480469 C 9.2129723 1.2838219 8.3762396 1 7.3847656 1 z M 7.3847656 3 C 8.0612916 3 8.3743246 3.1106937 9.0136719 3.4804688 L 9.015625 3.4804688 L 17.574219 8.3769531 C 10.796043 11.124024 6 17.76442 6 25.519531 C 6 32.87687 10.305274 39.237376 16.539062 42.214844 L 9.0175781 46.519531 L 9.015625 46.519531 C 8.3749698 46.889548 8.0612916 47 7.3847656 47 C 6.8924196 47 6.6032001 46.86191 6.3886719 46.630859 C 6.1741437 46.399809 6 46.012969 6 45.363281 L 6 25.519531 L 6 4.6347656 C 6 3.9856912 6.1741445 3.6001256 6.3886719 3.3691406 C 6.6031992 3.1381557 6.8924196 3 7.3847656 3 z M 24.5 9.0195312 C 33.624562 9.0195312 41 16.394969 41 25.519531 C 41 26.493839 40.896196 27.440628 40.734375 28.367188 L 35.542969 31.337891 C 36.468902 29.593602 37 27.608349 37 25.5 C 37 18.608285 31.391715 13 24.5 13 C 17.608285 13 12 18.608285 12 25.5 C 12 32.206368 17.315024 37.682153 23.951172 37.972656 L 18.708984 40.972656 C 12.45608 38.628715 8 32.602733 8 25.519531 C 8 16.394969 15.375438 9.0195314 24.5 9.0195312 z M 24.5 15 C 30.310835 15 35 19.689165 35 25.5 C 35 31.310835 30.310835 36 24.5 36 C 18.689165 36 14 31.310835 14 25.5 C 14 19.689165 18.689165 15 24.5 15 z M 25 19 L 25 26.044922 C 24.6 25.815922 24.14225 25.673828 23.65625 25.673828 C 22.17025 25.673828 21 26.875937 21 28.335938 C 21 29.825937 22.168 31 23.625 31 C 25.111 31 26.5 29.836 26.5 28.375 L 26.5 21.875 L 29 21.875 L 29 19 L 25 19 z M 42.777344 22.798828 L 43.771484 23.371094 C 44.594852 23.844038 45 24.229935 45 25 C 45 25.769508 44.595488 26.153287 43.773438 26.626953 L 42.927734 27.111328 C 42.972432 26.586102 43 26.055979 43 25.519531 C 43 24.592654 42.909399 23.689399 42.777344 22.798828 z"
-          ></path>
-        </svg>
-      </button>
-      <button type="button" class="mx-auto">
-        <svg width="34" height="39" fill="none">
-          <path
-            d="M12.878 26.12c1.781 0 3.09-1.066 3.085-2.515.004-1.104-.665-1.896-1.824-2.075v-.068c.912-.235 1.505-.95 1.5-1.93.005-1.283-1.048-2.379-2.727-2.379-1.602 0-2.89.968-2.932 2.387h1.274c.03-.801.784-1.287 1.64-1.287.892 0 1.475.541 1.471 1.346.004.844-.673 1.398-1.64 1.398h-.738v1.074h.737c1.21 0 1.91.614 1.91 1.491 0 .848-.738 1.424-1.765 1.424-.946 0-1.683-.486-1.734-1.262H9.797c.055 1.424 1.317 2.395 3.08 2.395zm7.734.025c2.016 0 3.196-1.645 3.196-4.504 0-2.838-1.197-4.488-3.196-4.488-2.003 0-3.196 1.645-3.2 4.488 0 2.855 1.18 4.5 3.2 4.504zm0-1.138c-1.18 0-1.892-1.185-1.892-3.366.004-2.174.716-3.371 1.892-3.371 1.172 0 1.888 1.197 1.888 3.37 0 2.182-.712 3.367-1.888 3.367z"
-            fill="currentColor"
-          />
-          <path
-            d="M33 22c0 8.837-7.163 16-16 16S1 30.837 1 22 8.163 6 17 6"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path d="M17 0l8 6-8 6V0z" fill="currentColor" />
-        </svg>
-      </button>
-      <button type="button" class="hidden sm:block lg:hidden xl:block mx-auto">
-        <svg width="17" height="18" viewBox="0 0 17 18" fill="none">
-          <path d="M17 0H15V18H17V0Z" fill="currentColor" />
-          <path d="M13 9L0 0V18L13 9Z" fill="currentColor" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        class="mx-auto border border-gray-300 rounded-md text-sm font-medium py-0.5 px-2 text-gray-500 dark:border-gray-600 dark:text-gray-400"
-      >
-        1.0x
-      </button>
-    </div>
   </div>
 </template>
 
