@@ -25,37 +25,39 @@
           <h3
             class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"
           >
-            The North
+            Radio.ePlus.DEV
           </h3>
         </div>
         <ul class="hidden xl:flex items-center h-full">
+          <nuxt-link to="/">
+            <li
+              class="cursor-pointer h-full flex items-center text-sm text-red-500 tracking-normal transition duration-150 ease-in-out"
+            >
+              <span class="mr-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-grid"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" />
+                  <rect x="4" y="4" width="6" height="6" rx="1" />
+                  <rect x="14" y="4" width="6" height="6" rx="1" />
+                  <rect x="4" y="14" width="6" height="6" rx="1" />
+                  <rect x="14" y="14" width="6" height="6" rx="1" />
+                </svg>
+              </span>
+              Dashboard
+            </li>
+          </nuxt-link>
           <li
-            class="cursor-pointer h-full flex items-center text-sm text-indigo-700 tracking-normal transition duration-150 ease-in-out"
-          >
-            <span class="mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-grid"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <rect x="4" y="4" width="6" height="6" rx="1" />
-                <rect x="14" y="4" width="6" height="6" rx="1" />
-                <rect x="4" y="14" width="6" height="6" rx="1" />
-                <rect x="14" y="14" width="6" height="6" rx="1" />
-              </svg>
-            </span>
-            Dashboard
-          </li>
-          <li
-            class="cursor-pointer h-full flex items-center text-sm hover:text-indigo-700 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
+            class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
           >
             <span class="mr-2">
               <svg
@@ -79,7 +81,7 @@
             Products
           </li>
           <li
-            class="cursor-pointer h-full flex items-center text-sm hover:text-indigo-700 text-white mr-10 tracking-normal transition duration-150 ease-in-out"
+            class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mr-10 tracking-normal transition duration-150 ease-in-out"
           >
             <span class="mr-2">
               <svg
@@ -102,7 +104,7 @@
             Performance
           </li>
           <li
-            class="cursor-pointer h-full flex items-center text-sm hover:text-indigo-700 text-white tracking-normal transition duration-150 ease-in-out"
+            class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white tracking-normal transition duration-150 ease-in-out"
           >
             <span class="mr-2">
               <svg

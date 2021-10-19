@@ -108,9 +108,9 @@
           <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
             <!-- <div class="bg-red-300 h-2 w-full rounded-lg"></div>
             <div class="bg-red-500 h-2 w-1/2 rounded-lg absolute top-0"></div> -->
-            <vue-plyr ref="plyr">
-              <audio controls crossorigin playsinline id="player" class="hidden"></audio>
-            </vue-plyr>
+            <!-- <vue-plyr ref="plyr"> -->
+            <audio controls crossorigin playsinline id="player" class="hidden"></audio>
+            <!-- </vue-plyr> -->
 
             <div class="ticker radio-name-player dark:text-white">
               <ul>
@@ -199,10 +199,11 @@ export default {
       button: false,
     };
   },
-  mounted() {
+  /* mounted() {
     this.$refs.plyr.player.on("event", () => console.log("event fired"));
     this.$refs.plyr.player.on("ready", (event) => {
       console.log(event);
+      console.log(this.$store.getters["getVN"]);
     });
     this.$refs.plyr.player.on("canplay", (event) => {
       console.log(event.detail.plyr);
@@ -219,7 +220,7 @@ export default {
       console.log("pause");
       this.button = false;
     });
-  },
+  }, */
   methods: {
     onPlay() {
       var audio = document.querySelector("#player");

@@ -1,27 +1,21 @@
 <template>
   <div>
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">{{
-        $t("navmenu.homepage")
-      }}</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/' + slug }">{{
-        $t("world.asia.vietnam")
-      }}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    <!-- BEGIN - Breadcrumbs -->
+    <Breadcrumbs level_1="world.asia.vietnam" :level_1_slug="slug" :level_2="name" />
+    <!-- END - Breadcrumbs -->
 
-    <Player :stream="stream_name"></Player>
+    <!-- BEGIN - Player -->
+    <Player :stream="stream_name" stream_url="stream_url"></Player>
+    <!-- END - Player -->
 
+    <!-- BEGIN - PanelStation -->
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
+    <!-- END - PanelStation -->
   </div>
 </template>
 
 <script>
-// To import only MediaElement class
-import "mediaelement";
-import "mediaelement/build/mediaelementplayer.min.css";
-import PanelStation from "~/components/PanelStation.vue";
-import Player from "~/components/Player.vue";
+import Hls from "hls.js";
 
 export default {
   head() {
@@ -46,22 +40,66 @@ export default {
       i18n: "world.asia.vietnam",
       description: "",
       stream_name: process.env.Site_Name,
+      stream_url: null,
     };
   },
-  components: {
-    PanelStation,
-    Player,
-  },
+  /* mounted() {
+    this.$axios
+      .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
+      .then((res) => {
+        const $t = this.$t.bind(this);
+        if (res.data.hasOwnProperty(this.$route.params.name)) {
+          const data = res.data[this.$route.params.name];
+
+          this.name = data.title;
+          this.description = data.description;
+          this.stream_name = data.title;
+
+          var self = this;
+          self.title =
+            data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
+          self.$emit("updateHead");
+
+          var audio = document.querySelector("#player");
+
+          const url = new URL(data.stream);
+
+          if (url.protocol == "http:") {
+            this.stream_url = process.env.CORS_SERVER_1 + data.stream;
+          } else {
+            this.stream_url = data.stream;
+          }
+        } else {
+          this.$confirm($t("404.content"), "Warning", {
+            confirmButtonText: $t("button.back"),
+            showCancelButton: false,
+            closeOnPressEscape: false,
+            closeOnClickModal: false,
+            showClose: false,
+            type: "warning",
+            center: true,
+          })
+            .then(() => {
+              this.$router.push("/");
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "Delete canceled",
+              });
+            });
+        }
+      });
+  }, */
   methods: {
     async fetchData() {
       this.$axios
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
         .then((res) => {
+          this.$store.dispatch("storeVN", res.data);
           const $t = this.$t.bind(this);
           if (res.data.hasOwnProperty(this.$route.params.name)) {
             const data = res.data[this.$route.params.name];
-
-            $("#radio-name").text(data.title);
 
             this.name = data.title;
             this.description = data.description;
@@ -72,56 +110,29 @@ export default {
               data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
             self.$emit("updateHead");
 
-            var notify = this.$notify;
-
-            var player = new MediaElementPlayer("player", {
-              features: ["playpause", "progress", "tracks", "volume"],
-              enableKeyboard: true,
-              success: function (mediaElement) {
-                // Event
-                $("#player")
-                  .on("canplay", function () {
-                    $(".mejs__time-rail").html(
-                      '<div class="ticker radio-name-player"><ul><li>' +
-                        $t("panel.play_from_radio") +
-                        " <strong>" +
-                        data["title"] +
-                        "</strong></li><li>" +
-                        $t("panel.frequency") +
-                        ": <strong>" +
-                        data["url"] +
-                        "</strong></li><li>" +
-                        $t("panel.category") +
-                        ": <strong>" +
-                        data["category"] +
-                        "</strong></li></ul></div>"
-                    );
-                    $(".ticker").ticker();
-                    notify.success({
-                      title: $t("notify.success"),
-                      message: $t("notify.success_content", {
-                        radio: data.title,
-                      }),
-                    });
-                  })
-                  .on("error", function () {
-                    notify.error({
-                      title: $t("notify.error"),
-                      message: $t("notify.error_content", { radio: data.title }),
-                    });
-                  });
-
-                console.info("Player initialised");
-              },
-            });
-
+            var audio = document.querySelector("#player");
+            var stream_url = "";
             const url = new URL(data.stream);
-            console.log(url.protocol);
-            if (url.protocol == "http:") {
-              player.setSrc(process.env.CORS_SERVER_1 + data.stream);
+
+            /*  if (url.protocol == "http:") {
+              stream_url += process.env.CORS_SERVER_1 + data.stream;
             } else {
-              player.setSrc(data.stream);
+              stream_url += data.stream;
+            } */
+
+            // Check HLS
+            if (data.type === "application/x-mpegURL") {
+              if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(data.stream);
+                hls.attachMedia(audio);
+              }
             }
+
+            audio.play();
+            plyr.setup(audio);
+
+            $(".ticker").ticker();
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),
@@ -146,16 +157,7 @@ export default {
     },
   },
   created() {
-    this.loading = true;
-    Promise.all([this.fetchData()]).then(() => {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      loading.close();
-    });
+    Promise.all([this.fetchData()]).then(() => {});
   },
 };
 </script>

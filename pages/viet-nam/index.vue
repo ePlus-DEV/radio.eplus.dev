@@ -1,26 +1,24 @@
 <template>
   <div>
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">{{
-        $t("navmenu.homepage")
-      }}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ $t("world.asia.vietnam") }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    <!-- BEGIN - Breadcrumbs -->
+    <Breadcrumbs
+      level_1="world.asia.vietnam"
+      :level_1_slug="slug"
+      thumb="/img/asia/flags/viet-nam.png"
+    />
+    <!-- END - Breadcrumbs -->
 
+    <!-- BEGIN - Player -->
     <Player country="world.asia.vietnam" :schedule="schedule_data" />
+    <!-- END - Player -->
 
-    <nuxt-link to="/">home</nuxt-link>
-
-    <!-- <PanelStation :area="area" :slug="slug" :i18n="i18n" /> -->
+    <!-- BEGIN - PanelStation -->
+    <PanelStation :area="area" :slug="slug" :i18n="i18n" />
+    <!-- END - PanelStation -->
   </div>
 </template>
 
 <script>
-// To import only MediaElement class
-import "mediaelement";
-import "mediaelement/build/mediaelementplayer.min.css";
-import PanelStation from "~/components/PanelStation.vue";
-import Player from "~/components/Player.vue";
 import Hls from "hls.js";
 
 export default {
@@ -54,9 +52,42 @@ export default {
       schedule_data: [],
     };
   },
-  components: {
-    PanelStation,
-    Player,
+  mounted() {
+    this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+      const data = res.data;
+      var notify = this.$notify;
+
+      const $t = this.$t.bind(this);
+
+      var audio = document.querySelector("#player");
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(res.data["stream"]);
+        hls.attachMedia(audio);
+      }
+
+      audio.play();
+
+      // Get Schedule
+      var form = new FormData();
+      form.append("vov", "vovgthn");
+      form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
+      var self = this;
+
+      var settings = {
+        url: data["schedule"],
+        method: "POST",
+        timeout: 0,
+        processData: false,
+        mimeType: "multipart/form-data",
+        contentType: false,
+        data: form,
+      };
+
+      $.ajax(settings).done(function (response) {
+        self.schedule_data = JSON.parse(response).result_detail;
+      });
+    });
   },
   methods: {
     async fetchData() {
@@ -98,7 +129,7 @@ export default {
     },
   },
   created() {
-    this.loading = true;
+    /* this.loading = true;
     Promise.all([this.fetchData()]).then(() => {
       const loading = this.$loading({
         lock: true,
@@ -107,7 +138,7 @@ export default {
         background: "rgba(0, 0, 0, 0.7)",
       });
       loading.close();
-    });
+    }); */
   },
 };
 </script>

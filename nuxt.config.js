@@ -138,6 +138,10 @@ export default {
     { src: "~/plugins/plyr.js" },
     { src: "~plugins/scrollmagic.js", ssr: false }
   ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  components: true,
+
   /*
    ** Nuxt.js dev-modules
    */
@@ -165,7 +169,7 @@ export default {
    */
   modules: [
     // "@nuxtjs/recaptcha",
-    "@nuxtjs/auth-next",
+    // "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
     "@nuxt/content",
@@ -225,7 +229,7 @@ export default {
   /*
    ** Auth Config
    */
-  auth: {
+  /* auth: {
     redirect: {
       login: "/admin/login",
       logout: "/",
@@ -241,7 +245,7 @@ export default {
         // logoutRedirectUri: process.env.BASE_URL
       }
     }
-  },
+  }, */
   proxy: {
     "/assets/": {
       target: process.env.BASE_URL,

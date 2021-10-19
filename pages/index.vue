@@ -1,23 +1,27 @@
 <template>
   <div>
+    <!-- BEGIN - Breadcrumbs -->
+    <Breadcrumbs level_1="world.asia.vietnam" :level_1_slug="slug" />
+    <!-- END - Breadcrumbs -->
+
+    <!-- BEGIN - Player -->
     <Player
       country="world.asia.vietnam"
       :schedule="schedule_data"
       :stream="stream_name"
       thumb="/img/asia/flags/viet-nam.png"
     ></Player>
+    <!-- END - Player -->
 
+    <!-- BEGIN - PanelRadio -->
     <PanelRadio></PanelRadio>
+    <!-- BEGIN - PanelRadio -->
   </div>
 </template>
 
 <script>
-// To import only MediaElement class
-import "mediaelement";
-import "mediaelement/build/mediaelementplayer.min.css";
-import PanelRadio from "~/components/PanelRadio.vue";
-import Player from "~/components/Player.vue";
 import Hls from "hls.js";
+// import Plyr from "plyr";
 
 export default {
   head() {
@@ -40,10 +44,6 @@ export default {
       stream_name: null,
     };
   },
-  components: {
-    PanelRadio,
-    Player,
-  },
   methods: {
     async fetchData() {
       this.$axios
@@ -63,6 +63,8 @@ export default {
           }
 
           audio.play();
+          plyr.setup(audio);
+
           $(".ticker").ticker();
 
           // Get Schedule
