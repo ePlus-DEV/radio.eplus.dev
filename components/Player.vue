@@ -1,5 +1,5 @@
 <template>
-  <div class="transform -rotate-1">
+  <div class="transform -rotate-1 pb-8">
     <!-- BEGIN - Player -->
     <div
       class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"

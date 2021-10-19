@@ -1,5 +1,5 @@
 <template>
-  <div class="text-sm breadcrumbs">
+  <div class="text-sm breadcrumbs dark:text-white">
     <ul>
       <li>
         <svg
