@@ -27,7 +27,7 @@
     </div>
     <!-- Noti -->
 
-    <footer class="p-10 footer bg-base-200 text-base-content">
+    <footer class="p-10 footer bg-base-200 text-base-content mt-10">
       <div>
         <span class="footer-title">Services</span>
         <a class="link link-hover">Branding</a>

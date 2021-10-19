@@ -7,31 +7,7 @@
       thumb="/img/asia/flags/viet-nam.png"
     ></Player>
 
-    <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg">
-      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
-        <h2 class="text-2xl dark:text-white">Applicant Information</h2>
-        <p class="text-sm text-gray-500 dark:text-white">
-          Personal details and application.
-        </p>
-      </div>
-      <div class="flex items-center justify-center">
-        <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-4 m-4">
-          <div
-            class="border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white"
-            v-for="index in 20"
-            :key="index"
-          >
-            <img
-              src="https://radio.eplus.dev/img/asia/flags/viet-nam.png"
-              alt="Alejandro Escamilla"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- <PanelRadio></PanelRadio> -->
+    <PanelRadio></PanelRadio>
   </div>
 </template>
 

@@ -1,166 +1,36 @@
 <template>
   <div>
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">
-        <span>{{ $t("world.asia.name") }}</span>
+    <!-- BEGIN - Asia -->
+    <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg">
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
+        <h2 class="text-2xl dark:text-white">{{ $t("world.asia.name") }}</h2>
+        <!-- <p class="text-sm text-gray-500 dark:text-white">
+        Personal details and application.
+      </p> -->
       </div>
-
-      <el-row>
-        <el-row :gutter="12">
+      <div class="flex items-center justify-center">
+        <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-4 m-4">
           <!-- BEGIN - Country -->
           <template v-for="(country, index) in world.asia">
-            <el-col
-              :xs="6"
-              :sm="4"
-              :md="4"
-              :lg="3"
-              :xl="3"
-              class="pad-box-chanel"
+            <div
+              class="border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
               v-bind:key="index"
             >
-              <el-tooltip
-                class="item"
-                effect="dark"
-                :content="$t(country.name)"
-                placement="top"
-              >
-                <nuxt-link :to="index" class="mx-auto border-img">
-                  <el-image
-                    class="align-middle img-center"
-                    shape="square"
-                    width="100"
-                    fit="scale-down"
-                    :src="country.flag"
-                    lazy
-                  />
-                  <div class="notify-badge">{{ country.station }}</div>
-                </nuxt-link>
-              </el-tooltip>
-            </el-col>
+              <div class="indicator-item badge badge-accent">
+                {{ country.station }}
+              </div>
+              <img
+                :src="country.flag"
+                :alt="$t(country.name)"
+                class="p-0 sm:p-1 md:p-5 lg:p-10"
+              />
+            </div>
           </template>
           <!-- END - Country -->
-        </el-row>
-      </el-row>
-    </el-card>
-
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">{{ $t("world.europe.name") }}</div>
-
-      <el-row :gutter="12">
-        <!-- BEGIN - Country -->
-        <template v-for="(country, index) in world.europe">
-          <el-col
-            :xs="6"
-            :sm="4"
-            :md="4"
-            :lg="3"
-            :xl="3"
-            class="pad-box-chanel"
-            v-bind:key="index"
-          >
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="$t(country.name)"
-              placement="top"
-            >
-              <nuxt-link :to="index" class="mx-auto border-img">
-                <el-image
-                  class="align-middle img-center"
-                  shape="square"
-                  width="100"
-                  fit="scale-down"
-                  :src="country.flag"
-                  lazy
-                />
-                <div class="notify-badge">{{ country.station }}</div>
-              </nuxt-link>
-            </el-tooltip>
-          </el-col>
-        </template>
-        <!-- END - Country -->
-      </el-row>
-    </el-card>
-
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">
-        {{ $t("world.north_america.name") }}
+        </div>
       </div>
-
-      <el-row :gutter="12">
-        <!-- BEGIN - Country -->
-        <template v-for="(country, index) in world.north_america">
-          <el-col
-            :xs="6"
-            :sm="4"
-            :md="4"
-            :lg="3"
-            :xl="3"
-            class="pad-box-chanel"
-            v-bind:key="index"
-          >
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="$t(country.name)"
-              placement="top"
-            >
-              <nuxt-link :to="index" class="mx-auto border-img">
-                <el-image
-                  class="align-middle img-center"
-                  shape="square"
-                  width="100"
-                  fit="scale-down"
-                  :src="country.flag"
-                  lazy
-                />
-                <div class="notify-badge">{{ country.station }}</div>
-              </nuxt-link>
-            </el-tooltip>
-          </el-col>
-        </template>
-        <!-- END - Country -->
-      </el-row>
-    </el-card>
-
-    <el-card class="box-card mar-card">
-      <div slot="header" class="clearfix">{{ $t("world.oceania.name") }}</div>
-
-      <el-row :gutter="12">
-        <!-- BEGIN - Country -->
-        <template v-for="(country, index) in world.oceania">
-          <el-col
-            :xs="6"
-            :sm="4"
-            :md="4"
-            :lg="3"
-            :xl="3"
-            class="pad-box-chanel"
-            v-bind:key="index"
-          >
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="$t(country.name)"
-              placement="top"
-            >
-              <nuxt-link :to="index" class="mx-auto border-img">
-                <el-image
-                  class="align-middle img-center"
-                  shape="square"
-                  width="100"
-                  fit="scale-down"
-                  :src="country.flag"
-                  lazy
-                />
-                <div class="notify-badge">{{ country.station }}</div>
-              </nuxt-link>
-            </el-tooltip>
-          </el-col>
-        </template>
-        <!-- END - Country -->
-      </el-row>
-    </el-card>
+    </div>
+    <!-- END - Asia -->
   </div>
 </template>
 
