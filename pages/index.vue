@@ -173,19 +173,17 @@
       thumb="/img/asia/flags/viet-nam.png"
     ></Player>
 
-    <div
-      class="min-h-screen flex items-center justify-center bg-opacity-95 bg-white dark:bg-gray-700"
-    >
-      <section class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-8 gap-4 m-4">
+    <div class="flex items-center justify-center bg-opacity-95 bg-white dark:bg-gray-700">
+      <section class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 gap-4 m-4">
         <div
-          class="border border-base-300 hover:border-purple-700"
+          class="border border-base-300 hover:border-purple-700 dark:border-gray-500"
           v-for="index in 20"
           :key="index"
         >
           <img
             src="https://radio.eplus.dev/img/asia/flags/viet-nam.png"
             alt="Alejandro Escamilla"
-            class="p-4"
+            class="p-0 sm:p-1 md:p-5 lg:p-10"
           />
         </div>
       </section>
@@ -193,7 +191,7 @@
 
     <nuxt-link to="/viet-nam">vietnam</nuxt-link>
 
-    <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+    <div class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-4">
       <!-- SMALL CARD ROUNDED -->
       <div
         class="bg-gray-100 border-indigo-600 dark:bg-gray-800 bg-opacity-95 border-opacity-60 | p-4 border-solid rounded-3xl border-2 | flex justify-around cursor-pointer | hover:bg-indigo-400 dark:hover:bg-indigo-600 hover:border-transparent | transition-colors duration-500"
