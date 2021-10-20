@@ -5,41 +5,40 @@
       class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"
     >
       <div class="flex flex-col w-full">
-        <div class="flex p-5 border-b">
+        <div class="flex items-center p-5 border-b">
           <img
-            class="w-20 h-20 object-cover"
-            alt="User avatar"
-            src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200"
+            class="w-35 h-25 object-cover"
+            :key="player.title"
+            :src="player.features"
           />
           <div class="flex flex-col px-2 w-full">
             <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
-              now playing
+              {{ $t("panel.play_from_radio") }}
             </span>
             <span
               class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
             >
-              I think I need a sunrise, I'm tired of the sunset
+              {{ player.title }}
             </span>
             <span class="text-xs text-gray-500 uppercase font-medium">
-              -"Boston," Augustana
+              {{ $t(country) }}
             </span>
-            <div class="flex justify-end">
-              <img
-                class="w-5 cursor-pointer"
-                src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
-              />
-              <img
-                class="w-5 cursor-pointer mx-2"
-                src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
-              />
-              <img
-                class="w-5 cursor-pointer"
-                src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
-              />
-            </div>
+          </div>
+          <div class="flex justify-end">
+            <img
+              class="w-5 cursor-pointer"
+              src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
+            />
+            <img
+              class="w-5 cursor-pointer mx-2"
+              src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
+            />
+            <img
+              class="w-5 cursor-pointer"
+              src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
+            />
           </div>
         </div>
-        {{ player }}
 
         <div class="flex flex-col sm:flex-row items-center p-5">
           <div class="flex items-center">
@@ -172,8 +171,8 @@
             </span>
           </div> -->
         </div>
-
-        <div class="flex flex-col p-5">
+        <!-- BEGIN - Playlist -->
+        <!--  <div class="flex flex-col p-5">
           <div class="border-b pb-1 flex justify-between items-center mb-2">
             <span class="text-base dark:text-white font-semibold uppercase text-gray-700">
               play list</span
@@ -218,7 +217,8 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> -->
+        <!-- END - Playlist -->
       </div>
     </div>
     <!-- END - Player -->
