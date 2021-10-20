@@ -540,6 +540,11 @@ export default {
         "https://tuk-cdn.s3.amazonaws.com/assets/components/horizontal_navigation/hn_1.png",
     };
   },
+  watch: {
+    $route() {
+      this.$colorMode.value = localStorage.theme;
+    },
+  },
   methods: {
     darkmode() {
       if (this.$colorMode.value === "light") {
@@ -581,14 +586,9 @@ export default {
     },
   },
   created() {
-    /* if (
-      localStorage.theme === "dark" ||
-      (!"theme" in localStorage &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      // document.querySelector("html").classList.add("dark");
-    } else  */
-    if (localStorage.theme === "dark") {
+    if (localStorage.getItem("theme") === null) {
+      localStorage.setItem("theme", "light");
+    } else if (localStorage.getItem("theme") === "dark") {
       this.$colorMode.value = localStorage.theme;
       $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
     }

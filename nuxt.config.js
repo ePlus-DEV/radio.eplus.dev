@@ -303,6 +303,7 @@ export default {
   },
   // Darkmode
   colorMode: {
+    classPrefix: "",
     classSuffix: ""
   }
 };
