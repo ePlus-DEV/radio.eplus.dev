@@ -114,10 +114,6 @@ export default {
         rel: "mask-icon",
         color: "#5bbad5",
         href: "/brand/safari-pinned-tab.svg"
-      },
-      {
-        rel: "stylesheet",
-        src: "https://unpkg.com/vue-plyr/dist/vue-plyr.css"
       }
     ]
   },
