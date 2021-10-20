@@ -24,19 +24,15 @@
               {{ $t(country) }}
             </span>
           </div>
-          <div class="flex justify-end">
-            <img
-              class="w-5 cursor-pointer"
-              src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
-            />
-            <img
-              class="w-5 cursor-pointer mx-2"
-              src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
-            />
-            <img
-              class="w-5 cursor-pointer"
-              src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png"
-            />
+          <div class="flex">
+            <svg width="24" height="24" fill="none">
+              <path
+                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+            </svg>
           </div>
         </div>
 
