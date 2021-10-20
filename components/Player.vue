@@ -39,6 +39,7 @@
             </div>
           </div>
         </div>
+        {{ player }}
 
         <div class="flex flex-col sm:flex-row items-center p-5">
           <div class="flex items-center">
@@ -58,7 +59,11 @@
                 </svg>
               </button>
               <!-- BEIGN - Button Play -->
-              <button :class="[!button ? 'hidden' : '']" @click="onPause">
+              <button
+                v-show="!waiting"
+                :class="[!button ? 'hidden' : '']"
+                @click="onPause"
+              >
                 <svg width="50" height="50" fill="none">
                   <circle
                     class="text-gray-300 dark:text-gray-500"
@@ -73,7 +78,12 @@
               </button>
               <!-- END - Button Play -->
               <!-- END - Button Pause -->
-              <button type="button" :class="[button ? 'hidden' : '']" @click="onPlay">
+              <button
+                v-show="!waiting"
+                type="button"
+                :class="[button ? 'hidden' : '']"
+                @click="onPlay"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
@@ -89,6 +99,31 @@
                 </svg>
               </button>
               <!-- END - Button Pause -->
+              <!-- Waiting -->
+              <svg
+                v-show="waiting"
+                class="animate-spin -ml-1 mr-3 text-red-500"
+                width="50"
+                height="50"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <!-- Waiting -->
               <button class="focus:outline-none">
                 <svg
                   class="w-4 h-4"
@@ -105,14 +140,14 @@
               </button>
             </div>
           </div>
-          <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
+          <div class="relative w-full ml-2">
             <!-- <div class="bg-red-300 h-2 w-full rounded-lg"></div>
             <div class="bg-red-500 h-2 w-1/2 rounded-lg absolute top-0"></div> -->
-            <!-- <vue-plyr ref="plyr"> -->
-            <audio controls crossorigin playsinline id="player" class="hidden"></audio>
-            <!-- </vue-plyr> -->
+            <vue-plyr ref="plyr">
+              <audio controls crossorigin playsinline id="player" class="hidden"></audio>
+            </vue-plyr>
 
-            <div class="ticker radio-name-player dark:text-white">
+            <!-- <div class="ticker radio-name-player dark:text-white">
               <ul>
                 <li>{{ $t("panel.play_from_radio") }} {{ stream }}</li>
                 <li>
@@ -127,15 +162,15 @@
                   {{ $t("panel.frequency") }}
                 </li>
               </ul>
-            </div>
+            </div> -->
           </div>
-          <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
+          <!-- <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
             <span
               class="text-xs dark:text-white text-gray-700 uppercase font-medium pl-2"
             >
               02:00/04:00
             </span>
-          </div>
+          </div> -->
         </div>
 
         <div class="flex flex-col p-5">
@@ -191,19 +226,21 @@
 </template>
 
 <script>
+import Hls from "hls.js";
+
 export default {
-  props: ["country", "stream", "playlist", "schedule", "thumb"],
+  props: ["country", "stream", "stream_url", "playlist", "schedule", "thumb"],
   data() {
     return {
       now: null,
       button: false,
+      waiting: false,
     };
   },
-  /* mounted() {
+  mounted() {
     this.$refs.plyr.player.on("event", () => console.log("event fired"));
     this.$refs.plyr.player.on("ready", (event) => {
       console.log(event);
-      console.log(this.$store.getters["getVN"]);
     });
     this.$refs.plyr.player.on("canplay", (event) => {
       console.log(event.detail.plyr);
@@ -211,17 +248,80 @@ export default {
     this.$refs.plyr.player.on("waiting", (event) => {
       // const instance = event.detail.plyr;
       console.log("waiting");
+      this.waiting = true;
     });
     this.$refs.plyr.player.on("playing", (event) => {
       console.log("playing");
       this.button = true;
+      this.waiting = false;
     });
     this.$refs.plyr.player.on("pause", (event) => {
       console.log("pause");
       this.button = false;
+      this.waiting = false;
     });
-  }, */
+    this.$refs.plyr.player.on("stopped", (event) => {
+      console.log("stopped");
+    });
+  },
+  computed: {
+    player() {
+      return this.$store.state.player;
+    },
+  },
   methods: {
+    init() {
+      var audio = document.querySelector("#player");
+
+      var stream_url = "";
+      const url = new URL(this.$store.state.player.stream);
+
+      if (url.protocol == "http:") {
+        stream_url += process.env.CORS_SERVER_1 + this.$store.state.player.stream;
+      } else {
+        stream_url += this.$store.state.player.stream;
+      }
+
+      // Check HLS
+      if (this.$store.state.player.type === "application/x-mpegURL") {
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(stream_url);
+          hls.attachMedia(audio);
+        }
+      }
+
+      const playPromise = audio.play();
+      // const play = plyr.setup(audio); // Plyr
+
+      /* play.on("ready", (event) => {
+        const instance = event.detail.plyr;
+        console.log(instance);
+      }); */
+
+      /* playPromise.on("playing", (event) => {
+        console.log("playing");
+        this.button = true;
+      });
+
+      playPromise.on("pause", (event) => {
+        console.log("pause");
+        this.button = false;
+      }); */
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then((_) => {
+            // Automatic playback started!
+            // Show playing UI.
+          })
+          .catch((error) => {
+            // Auto-play was prevented
+            // Show paused UI.
+            console.log(error);
+          });
+      }
+    },
     onPlay() {
       var audio = document.querySelector("#player");
       audio.play();
@@ -272,7 +372,7 @@ export default {
 };
 </script>
 <style>
-.plyr {
+.plyr__controls__item.plyr__control.plyr__control--pressed {
   display: none;
 }
 </style>

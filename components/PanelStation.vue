@@ -11,7 +11,7 @@
             :to="'/' + slug + '/' + index"
             v-bind:key="index"
             class="tooltip border"
-            :data-tip="$t(data.title)"
+            :data-tip="data.title"
             active-class="active border-red-700"
             :class="[
               isRouteActive(index)
@@ -21,7 +21,7 @@
           >
             <img
               :src="data.features"
-              :alt="$t(data.title)"
+              :alt="data.title"
               class="p-0 sm:p-1 md:p-5 lg:p-10"
             />
           </nuxt-link>

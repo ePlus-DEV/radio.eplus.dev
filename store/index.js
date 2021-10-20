@@ -1,22 +1,22 @@
 // Enable store for auth module
 export const state = () => ({
-  vietnam: {}
+  player: {}
 });
 
 export const mutations = {
-  STORE_VIETNAM(state, data) {
-    state.vietnam = data;
+  STORE_PLAYER(state, data) {
+    state.player = data;
   }
 };
 
 export const actions = {
-  storeVN({ commit }, data) {
-    commit("STORE_VIETNAM", data);
+  storePLAYER({ commit }, data) {
+    commit("STORE_PLAYER", data);
   }
 };
 
 export const getters = {
-  getVN(state) {
-    return state.vietnam;
+  getPLAYER(state) {
+    return state.player;
   }
 };

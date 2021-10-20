@@ -282,7 +282,7 @@
   "thua-thien-hue": {
     "title": "Thừa Thiên Huế",
     "description": "",
-    "type": "audio/mp4",
+    "type": "application/x-mpegURL",
     "category": "Thừa Thiên Huế",
     "url": "http://trt.com.vn",
     "status": false,
