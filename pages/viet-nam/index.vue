@@ -9,7 +9,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player country="world.asia.vietnam" :schedule="schedule_data" />
+    <Player
+      ref="player"
+      country="world.asia.vietnam"
+      :schedule="schedule_data"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -19,8 +25,6 @@
 </template>
 
 <script>
-import Hls from "hls.js";
-
 export default {
   head() {
     return {
@@ -44,8 +48,7 @@ export default {
   data() {
     return {
       name: null,
-      title: "Radio in " + this.title_slug,
-      title_slug: "Việt Nam",
+      title: this.$t("navmenu.homepage") + " - Radio " + this.$t("world.asia.vietnam"),
       slug: "viet-nam",
       area: "asia",
       i18n: "world.asia.vietnam",
@@ -55,18 +58,11 @@ export default {
   mounted() {
     this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
       const data = res.data;
-      var notify = this.$notify;
 
-      const $t = this.$t.bind(this);
+      // Vuex
+      this.$store.dispatch("storePLAYERHOME", data);
 
-      var audio = document.querySelector("#player");
-      if (Hls.isSupported()) {
-        var hls = new Hls();
-        hls.loadSource(res.data["stream"]);
-        hls.attachMedia(audio);
-      }
-
-      audio.play();
+      this.$refs.player.init(true);
 
       // Get Schedule
       var form = new FormData();

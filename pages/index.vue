@@ -1,14 +1,15 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs level_1="world.asia.vietnam" :level_1_slug="slug" />
+    <Breadcrumbs level_1="world.asia.vietnam" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
     <Player
+      ref="player"
       country="world.asia.vietnam"
       :schedule="schedule_data"
-      :stream="stream_name"
+      :home="true"
       thumb="/img/asia/flags/viet-nam.png"
     ></Player>
     <!-- END - Player -->
@@ -20,13 +21,10 @@
 </template>
 
 <script>
-import Hls from "hls.js";
-// import Plyr from "plyr";
-
 export default {
   head() {
     return {
-      title: this.$t("navmenu.homepage") + " - ",
+      title: this.$t("navmenu.homepage"),
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
@@ -51,21 +49,11 @@ export default {
         .then((res) => {
           const data = res.data;
           this.stream_name = data.title;
-          var audio = document.querySelector("#player");
 
-          // Check HLS
-          if (data.type === "application/x-mpegURL") {
-            if (Hls.isSupported()) {
-              var hls = new Hls();
-              hls.loadSource(res.data["stream"]);
-              hls.attachMedia(audio);
-            }
-          }
+          // Vuex
+          this.$store.dispatch("storePLAYERHOME", data);
 
-          audio.play();
-          plyr.setup(audio);
-
-          $(".ticker").ticker();
+          this.$refs.player.init(true);
 
           // Get Schedule
           var form = new FormData();
@@ -90,16 +78,7 @@ export default {
     },
   },
   created() {
-    this.loading = true;
-    Promise.all([this.fetchData()]).then(() => {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      loading.close();
-    });
+    Promise.all([this.fetchData()]).then(() => {});
   },
 };
 </script>

@@ -3,5 +3,6 @@
   "type": "audio/mpeg",
   "frequency": "106.2 FM",
   "countries": "United Kingdom",
-  "stream": "https://media-ssl.musicradio.com/HeartUK"
+  "stream": "https://media-ssl.musicradio.com/HeartUK",
+  "cros": false
 }

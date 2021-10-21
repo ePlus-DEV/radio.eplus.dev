@@ -2,9 +2,7 @@
   <div>
     <!-- BEGIN - Asia -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">{{ $t("world.asia.name") }}</h2>
       </div>
       <div class="flex items-center justify-center">
@@ -35,9 +33,7 @@
 
     <!-- BEGIN - Europe -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">{{ $t("world.europe.name") }}</h2>
       </div>
       <div class="flex items-center justify-center">
@@ -68,9 +64,7 @@
 
     <!-- BEGIN - North America -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">
           {{ $t("world.north_america.name") }}
         </h2>
@@ -103,9 +97,7 @@
 
     <!-- BEGIN - Oceania -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">
           {{ $t("world.oceania.name") }}
         </h2>
@@ -146,63 +138,52 @@ export default {
         asia: {},
         europe: {},
         north_america: {},
-        oceania: {}
-      }
+        oceania: {},
+      },
     };
   },
   methods: {
     async fetchData() {
       // Countries
-      this.$axios.get("/assets/radio/countries.json").then(res => {
+      this.$axios.get("/assets/radio/countries.json").then((res) => {
         this.world = res.data;
         var self = this;
         // BEGIN - Asia
-        $.each(res.data.asia, function(key, country) {
-          self.$axios.get(country.data).then(res => {
+        $.each(res.data.asia, function (key, country) {
+          self.$axios.get(country.data).then((res) => {
             self.world.asia[key]["station"] = Object.keys(res.data).length;
           });
         });
         // END - Asia
 
         // BEGIN - Europe
-        $.each(res.data.europe, function(key, country) {
-          self.$axios.get(country.data).then(res => {
+        $.each(res.data.europe, function (key, country) {
+          self.$axios.get(country.data).then((res) => {
             self.world.europe[key]["station"] = Object.keys(res.data).length;
           });
         });
         // END - Europe
 
         // BEGIN - North America
-        $.each(res.data.north_america, function(key, country) {
-          self.$axios.get(country.data).then(res => {
-            self.world.north_america[key]["station"] = Object.keys(
-              res.data
-            ).length;
+        $.each(res.data.north_america, function (key, country) {
+          self.$axios.get(country.data).then((res) => {
+            self.world.north_america[key]["station"] = Object.keys(res.data).length;
           });
         });
         // END - North America
 
         // BEGIN - Oceania
-        $.each(res.data.oceania, function(key, country) {
-          self.$axios.get(country.data).then(res => {
+        $.each(res.data.oceania, function (key, country) {
+          self.$axios.get(country.data).then((res) => {
             self.world.oceania[key]["station"] = Object.keys(res.data).length;
           });
         });
         // END - Oceania
       });
-    }
+    },
   },
   created() {
-    this.loading = true;
-    Promise.all([this.fetchData()]).then(() => {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)"
-      });
-      loading.close();
-    });
-  }
+    Promise.all([this.fetchData()]).then(() => {});
+  },
 };
 </script>

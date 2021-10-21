@@ -8,8 +8,8 @@
         <div class="flex items-center p-5 border-b">
           <img
             class="w-35 h-25 object-cover"
-            :key="player.title"
-            :src="player.features"
+            :key="home !== undefined ? player_home.title : player.title"
+            :src="home !== undefined ? thumb : player.features"
           />
           <div class="flex flex-col px-2 w-full">
             <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
@@ -18,7 +18,7 @@
             <span
               class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
             >
-              {{ player.title }}
+              {{ home !== undefined ? player_home.title : player.title }}
             </span>
             <span class="text-xs text-gray-500 uppercase font-medium">
               {{ $t(country) }}
@@ -138,8 +138,11 @@
           <div class="relative w-full ml-2">
             <!-- <div class="bg-red-300 h-2 w-full rounded-lg"></div>
             <div class="bg-red-500 h-2 w-1/2 rounded-lg absolute top-0"></div> -->
-            <vue-plyr ref="plyr">
-              <audio controls crossorigin playsinline id="player" class="hidden"></audio>
+
+            <vue-plyr ref="plyr" @player="setPlayer">
+              <audio controls crossorigin playsinline id="player" class="hidden">
+                <!-- <source :src="player_home.stream" :type="player_home.type" /> -->
+              </audio>
             </vue-plyr>
 
             <!-- <div class="ticker radio-name-player dark:text-white">
@@ -225,7 +228,7 @@
 import Hls from "hls.js";
 
 export default {
-  props: ["country", "stream", "stream_url", "playlist", "schedule", "thumb"],
+  props: ["country", "home", "playlist", "schedule", "thumb"],
   data() {
     return {
       now: null,
@@ -264,59 +267,97 @@ export default {
     player() {
       return this.$store.state.player;
     },
+    player_home() {
+      return this.$store.state.player_home;
+    },
   },
   methods: {
-    init() {
+    init(state = false) {
       var audio = document.querySelector("#player");
 
-      var stream_url = "";
-      const url = new URL(this.$store.state.player.stream);
+      if (state) {
+        // Check Cros
+        if (this.$store.state.player_home.cros) {
+          var stream_url =
+            process.env.CORS_SERVER_1 + this.$store.state.player_home.stream;
+        } else {
+          var stream_url = this.$store.state.player_home.stream;
+        }
+        // Check Type
+        if (this.$store.state.player_home.type === "application/x-mpegURL") {
+          if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(stream_url);
+            hls.attachMedia(audio);
+          }
 
-      if (url.protocol == "http:") {
-        stream_url += process.env.CORS_SERVER_1 + this.$store.state.player.stream;
+          const playPromise = audio.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                // Automatic playback started!
+                // Show playing UI.
+              })
+              .catch((error) => {
+                // Auto-play was prevented
+                // Show paused UI.
+                console.log(error);
+              });
+          }
+        } else {
+          this.setPlayer(stream_url, this.$store.state.player.type);
+        }
       } else {
-        stream_url += this.$store.state.player.stream;
-      }
+        // Check Cros
+        if (this.$store.state.player.cros) {
+          var stream_url = process.env.CORS_SERVER_1 + this.$store.state.player.stream;
+        } else {
+          var stream_url = this.$store.state.player.stream;
+        }
+        // Check Type
+        if (this.$store.state.player.type === "application/x-mpegURL") {
+          if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(stream_url);
+            hls.attachMedia(audio);
+          }
 
-      // Check HLS
-      if (this.$store.state.player.type === "application/x-mpegURL") {
-        if (Hls.isSupported()) {
-          var hls = new Hls();
-          hls.loadSource(stream_url);
-          hls.attachMedia(audio);
+          const playPromise = audio.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                // Automatic playback started!
+                // Show playing UI.
+              })
+              .catch((error) => {
+                // Auto-play was prevented
+                // Show paused UI.
+                console.log(error);
+              });
+          }
+        } else {
+          this.setPlayer(stream_url, this.$store.state.player.type);
         }
       }
+    },
+    setPlayer(stream_url, type) {
+      let player = this.$refs.plyr.player;
+      player.source = {
+        type: "audio",
+        sources: [
+          {
+            src: stream_url,
+            type: type,
+          },
+        ],
+      };
 
-      const playPromise = audio.play();
-      // const play = plyr.setup(audio); // Plyr
+      player.play();
 
-      /* play.on("ready", (event) => {
-        const instance = event.detail.plyr;
-        console.log(instance);
-      }); */
-
-      /* playPromise.on("playing", (event) => {
-        console.log("playing");
-        this.button = true;
-      });
-
-      playPromise.on("pause", (event) => {
-        console.log("pause");
-        this.button = false;
-      }); */
-
-      if (playPromise !== undefined) {
-        playPromise
-          .then((_) => {
-            // Automatic playback started!
-            // Show playing UI.
-          })
-          .catch((error) => {
-            // Auto-play was prevented
-            // Show paused UI.
-            console.log(error);
-          });
-      }
+      /*  var audio = document.querySelector("#player");
+      audio.play(); */
     },
     onPlay() {
       var audio = document.querySelector("#player");

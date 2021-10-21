@@ -5,18 +5,19 @@
       <h2 class="text-2xl dark:text-white">{{ $t("world.asia.name") }}</h2>
     </div>
     <div class="flex items-center justify-center">
-      <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-4 m-4">
+      <div
+        class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
+      >
         <template v-for="(data, index) in results">
           <nuxt-link
             :to="'/' + slug + '/' + index"
             v-bind:key="index"
-            class="tooltip border"
-            :data-tip="data.title"
+            class="border"
             active-class="active border-red-700"
             :class="[
               isRouteActive(index)
                 ? 'border-red-700'
-                : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white',
+                : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
             ]"
           >
             <img

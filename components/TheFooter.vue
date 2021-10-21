@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Noti -->
-    <div class="fixed bottom-0 left-0 pb-4 w-full px-2 md:px-0">
+    <!-- <div class="fixed bottom-0 left-0 pb-4 w-full px-2 md:px-0">
       <div
         class="w-full md:w-3/4 mx-auto bg-black opacity-75 rounded-lg md:rounded-full px-4 md:pl-8 md:pr-2 py-2 md:flex items-center justify-between"
       >
@@ -24,7 +24,7 @@
           </a>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Noti -->
 
     <footer class="p-10 footer bg-base-200 text-base-content mt-10">

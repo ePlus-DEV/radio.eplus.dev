@@ -5,27 +5,29 @@
     >
       <div class="flex items-center">
         <div class="mr-10 flex items-center">
-          <svg
-            aria-label="Home"
-            id="logo"
-            enable-background="new 0 0 300 300"
-            height="44"
-            viewBox="0 0 300 300"
-            width="43"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-          >
-            <g>
-              <path
-                fill="#4c51bf"
-                d="m234.735 35.532c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16zm0 24c-4.412 0-8-3.588-8-8s3.588-8 8-8 8 3.588 8 8-3.588 8-8 8zm-62.529-14c0-2.502 2.028-4.53 4.53-4.53s4.53 2.028 4.53 4.53c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.027-4.53-4.529zm89.059 60c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.028-4.53-4.529c0-2.502 2.028-4.53 4.53-4.53s4.53 2.029 4.53 4.53zm-40.522-5.459-88-51.064c-1.242-.723-2.773-.723-4.016 0l-88 51.064c-1.232.715-1.992 2.033-1.992 3.459v104c0 1.404.736 2.705 1.938 3.428l88 52.936c.635.381 1.35.572 2.062.572s1.428-.191 2.062-.572l88-52.936c1.201-.723 1.938-2.023 1.938-3.428v-104c0-1.426-.76-2.744-1.992-3.459zm-90.008-42.98 80.085 46.47-52.95 31.289-23.135-13.607v-21.713c0-2.209-1.791-4-4-4s-4 1.791-4 4v21.713l-26.027 15.309c-1.223.719-1.973 2.029-1.973 3.447v29.795l-52 30.727v-94.688zm0 198.707-80.189-48.237 51.467-30.412 24.723 14.539v19.842c0 2.209 1.791 4 4 4s4-1.791 4-4v-19.842l26.027-15.307c1.223-.719 1.973-2.029 1.973-3.447v-31.667l52-30.728v94.729z"
-              />
-            </g>
-          </svg>
+          <nuxt-link to="/">
+            <svg
+              aria-label="Home"
+              id="logo"
+              enable-background="new 0 0 300 300"
+              height="44"
+              viewBox="0 0 300 300"
+              width="43"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g>
+                <path
+                  fill="#4c51bf"
+                  d="m234.735 35.532c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16zm0 24c-4.412 0-8-3.588-8-8s3.588-8 8-8 8 3.588 8 8-3.588 8-8 8zm-62.529-14c0-2.502 2.028-4.53 4.53-4.53s4.53 2.028 4.53 4.53c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.027-4.53-4.529zm89.059 60c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.028-4.53-4.529c0-2.502 2.028-4.53 4.53-4.53s4.53 2.029 4.53 4.53zm-40.522-5.459-88-51.064c-1.242-.723-2.773-.723-4.016 0l-88 51.064c-1.232.715-1.992 2.033-1.992 3.459v104c0 1.404.736 2.705 1.938 3.428l88 52.936c.635.381 1.35.572 2.062.572s1.428-.191 2.062-.572l88-52.936c1.201-.723 1.938-2.023 1.938-3.428v-104c0-1.426-.76-2.744-1.992-3.459zm-90.008-42.98 80.085 46.47-52.95 31.289-23.135-13.607v-21.713c0-2.209-1.791-4-4-4s-4 1.791-4 4v21.713l-26.027 15.309c-1.223.719-1.973 2.029-1.973 3.447v29.795l-52 30.727v-94.688zm0 198.707-80.189-48.237 51.467-30.412 24.723 14.539v19.842c0 2.209 1.791 4 4 4s4-1.791 4-4v-19.842l26.027-15.307c1.223-.719 1.973-2.029 1.973-3.447v-31.667l52-30.728v94.729z"
+                />
+              </g>
+            </svg>
+          </nuxt-link>
           <h3
             class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"
           >
-            Radio.ePlus.DEV
+            <nuxt-link to="/">Radio.ePlus.DEV</nuxt-link>
           </h3>
         </div>
         <ul class="hidden xl:flex items-center h-full">
@@ -53,7 +55,7 @@
                   <rect x="14" y="14" width="6" height="6" rx="1" />
                 </svg>
               </span>
-              Dashboard
+              {{ $t("navmenu.homepage") }}
             </li>
           </nuxt-link>
           <li
@@ -489,12 +491,44 @@
             </div>
           </li>
         </ul>
+        <!-- BEGIN - Dark Mode - Mobile -->
+        <button
+          id="switchTheme"
+          class="h-10 w-10 flex justify-center items-center focus:outline-none text-yellow-500"
+          @click="darkmode()"
+        >
+          <svg
+            class="w-6 h-6"
+            :class="[this.$colorMode.value == 'light' ? 'block' : 'hidden']"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          <svg
+            class="w-6 h-6"
+            fill="currentColor"
+            :class="[this.$colorMode.value == 'dark' ? 'block' : 'hidden']"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M9.353 2.939a1 1 0 01.22 1.08 8 8 0 0010.408 10.408 1 1 0 011.301 1.3A10.003 10.003 0 0112 22C6.477 22 2 17.523 2 12c0-4.207 2.598-7.805 6.273-9.282a1 1 0 011.08.22z"
+            ></path>
+          </svg>
+        </button>
+        <!-- END - Dark Mode - Mobile -->
         <svg
           @click="MenuHandler($event, true)"
           aria-haspopup="true"
           aria-label="Main Menu"
           xmlns="http://www.w3.org/2000/svg"
-          class="visible xl:hidden icon icon-tabler icon-tabler-menu show-m-menu"
+          class="visible xl:hidden icon icon-tabler text-white icon-tabler-menu show-m-menu"
           width="32"
           height="32"
           viewBox="0 0 24 24"
@@ -508,7 +542,10 @@
           <line x1="4" y1="8" x2="20" y2="8" />
           <line x1="4" y1="16" x2="20" y2="16" />
         </svg>
-        <div @click="MenuHandler($event, false)" class="hidden close-m-menu p-1">
+        <div
+          @click="MenuHandler($event, false)"
+          class="hidden text-white close-m-menu p-1"
+        >
           <svg
             aria-label="Close"
             xmlns="http://www.w3.org/2000/svg"

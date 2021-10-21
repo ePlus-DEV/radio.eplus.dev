@@ -3,5 +3,6 @@
   "type": "audio/mpeg",
   "frequency": "FM 105.7 MHz",
   "countries": "Australia",
-  "stream": "https://e-cros.herokuapp.com/http://s1.voscast.com:10152/metro1057"
+  "stream": "https://e-cros.herokuapp.com/http://s1.voscast.com:10152/metro1057",
+  "cros": true
 }

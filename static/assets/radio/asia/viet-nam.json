@@ -5,7 +5,7 @@
     "type": "application/x-mpegURL",
     "category": "Thời sự",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://str.vov.gov.vn/vovlive/vov1vov5Vietnamese.sdp_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov1.png"
   },
@@ -15,7 +15,7 @@
     "type": "application/x-mpegURL",
     "category": "Văn Hóa - Xã Hội",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": true,
     "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov2.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov2.png"
   },
@@ -25,7 +25,7 @@
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://str.vov.gov.vn/vovlive/vov3.sdp_aac/media_w1423277935_269140.aac",
     "features": "/img/asia/viet-nam/vov3.png"
   },
@@ -35,7 +35,7 @@
     "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovTTTB.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov4.png"
   },
@@ -45,7 +45,7 @@
     "type": "application/x-mpegURL",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov5.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov5.png"
   },
@@ -55,7 +55,7 @@
     "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov247.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov-english.png"
   },
@@ -65,7 +65,7 @@
     "type": "application/x-mpegURL",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://str.vov.gov.vn/vovlive/vovGTHCM.sdp_aac/chunklist_w1213978008.m3u8",
     "features": "/img/asia/viet-nam/vov-giao-thong.png"
   },
@@ -75,7 +75,7 @@
     "type": "application/x-mpegURL",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://str.vov.gov.vn/vovlive/vovGTHN.sdp_aac/chunklist_w601606653.m3u8",
     "features": "/img/asia/viet-nam/vov-giao-thong-ha-noi.png"
   },
@@ -85,7 +85,7 @@
     "type": "application/x-mpegURL",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://str.vov.gov.vn/vovlive/vovgtMeKong.sdp_aac/chunklist_w1338501805.m3u8",
     "features": "/img/asia/viet-nam/vov-mekong.png"
   },
@@ -95,7 +95,7 @@
     "type": "application/x-mpegURL",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "status": true,
+    "cros": false,
     "stream": "http://media.kythuatvov.vn:7021/;stream/",
     "features": "/img/asia/viet-nam/vov-suc-khoe.png"
   },
@@ -105,7 +105,7 @@
     "type": "application/x-mpegURL",
     "category": "VOH - AM 610KHZ",
     "url": "https://voh.com.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://strm.voh.com.vn/radio/channel2/playlist.m3u8",
     "features": "/img/asia/viet-nam/voh.png"
   },
@@ -115,7 +115,7 @@
     "type": "application/x-mpegURL",
     "category": "VOH - FM 99.9 MHZ",
     "url": "https://voh.com.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://strm.voh.com.vn/radio/channel3/playlist.m3u8",
     "features": "/img/asia/viet-nam/voh-fm.png"
   },
@@ -125,7 +125,7 @@
     "type": "application/x-mpegURL",
     "category": "VOH - FM 95.6 MHZ",
     "url": "https://voh.com.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://strm.voh.com.vn/radio/channel1/playlist.m3u8",
     "features": "/img/asia/viet-nam/voh-fm-95-6.png"
   },
@@ -135,7 +135,7 @@
     "type": "application/x-mpegURL",
     "category": "VOH - FM 87.7 MHZ",
     "url": "https://voh.com.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://strm.voh.com.vn/live/channel5/playlist.m3u8",
     "features": "/img/asia/viet-nam/voh-87-7-mhz.png"
   },
@@ -145,7 +145,7 @@
     "type": "application/x-mpegURL",
     "category": "Bà Rịa-Vũng Tàu",
     "url": "http://brt.vn",
-    "status": true,
+    "cros": true,
     "stream": "http://113.163.216.23:1935/live/radio1.sdp_audio/playlist.m3u8",
     "features": "/img/asia/viet-nam/ba-ria-vung-tau.png"
   },
@@ -155,7 +155,7 @@
     "type": "application/x-mpegURL",
     "category": "Bình Phước",
     "url": "http://bptv.vn",
-    "status": false,
+    "cros": true,
     "stream": "https://live.baobinhphuoc.com.vn/bptvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/binh-phuoc.png"
   },
@@ -165,7 +165,7 @@
     "type": "application/x-mpegURL",
     "category": "Bình Thuận",
     "url": "http://binhthuantv.vn",
-    "status": true,
+    "cros": true,
     "stream": "http://202.43.109.142:1935/thbtradio/btradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/binh-thuan.png"
   },
@@ -175,7 +175,7 @@
     "type": "application/x-mpegURL",
     "category": "Cà Mau",
     "url": "http://ctvcamau.vn",
-    "status": false,
+    "cros": true,
     "stream": "http://tv.ctvcamau.vn/live/radio/radio.m3u8",
     "features": "/img/asia/viet-nam/ca-mau.png"
   },
@@ -185,7 +185,7 @@
     "type": "application/x-mpegURL",
     "category": "Cần Thơ",
     "url": "http://canthotv.vn",
-    "status": false,
+    "cros": true,
     "stream": "https://tv.canthotv.vn/live/radio/radio.m3u8",
     "features": "/img/asia/viet-nam/can-tho.png"
   },
@@ -195,7 +195,7 @@
     "type": "application/x-mpegURL",
     "category": "Đà Nẵng",
     "url": "http://www.drt.danang.vn/",
-    "status": false,
+    "cros": true,
     "stream": "http://drtdnglive.e49a7c38.cdnviet.com/liveradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/da-nang.png"
   },
@@ -205,7 +205,7 @@
     "type": "application/x-mpegURL",
     "category": "Hà Nội - FM96",
     "url": "http://hanoitv.vn",
-    "status": true,
+    "cros": true,
     "stream": "http://cdn.mediatech.vn/hntvRadio/fm96.sdp_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/ha-noi.png"
   },
@@ -215,7 +215,7 @@
     "type": "application/x-mpegURL",
     "category": "Hà Nội - JOYFM",
     "url": "http://hanoitv.vn",
-    "status": true,
+    "cros": true,
     "stream": "http://cdn.mediatech.vn/hntvRadio/joyfm.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/joy.png"
   },
@@ -225,7 +225,7 @@
     "type": "application/x-mpegURL",
     "category": "Hà Nội - FM90",
     "url": "http://hanoitv.vn",
-    "status": true,
+    "cros": true,
     "stream": "http://media.mediatech.vn:1935/hntvRadio/fm90live/playlist.m3u8",
     "features": "/img/asia/viet-nam/fm90.png"
   },
@@ -235,7 +235,7 @@
     "type": "audio/mpeg",
     "category": "Hải Dương",
     "url": "http://haiduongtv.com.vn",
-    "status": true,
+    "cros": true,
     "stream": "http://113.160.131.11:8000",
     "features": "/img/asia/viet-nam/hai-duong.png"
   },
@@ -245,7 +245,7 @@
     "type": "application/x-mpegURL",
     "category": "Khánh Hòa",
     "url": "http://ktv.org.vn",
-    "status": false,
+    "cros": true,
     "stream": "http://210.245.20.94/hls/radio.m3u8",
     "features": "/img/asia/viet-nam/khanh-hoa.png"
   },
@@ -255,7 +255,7 @@
     "type": "application/x-mpegURL",
     "category": "Kiên Giang",
     "url": "http://kgtv.vn",
-    "status": false,
+    "cros": true,
     "stream": "http://tv.kgtv.vn/live/kgaudio/kgaudio.m3u8",
     "features": "/img/asia/viet-nam/kien-giang.png"
   },
@@ -265,7 +265,7 @@
     "type": "audio/mpeg",
     "category": "Ninh Bình",
     "url": "http://nbtv.vn",
-    "status": true,
+    "cros": false,
     "stream": "https://nbtv.vncdn.vn/nbtvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/ninh-binh.png"
   },
@@ -275,7 +275,7 @@
     "type": "application/x-mpegURL",
     "category": "Sóc Trăng",
     "url": "http://thst.vn",
-    "status": false,
+    "cros": true,
     "stream": "http://113.163.189.104:8135/hls-live/livepkgr/_definst_/liveevent/livestreamf.m3u8",
     "features": "/img/asia/viet-nam/soc-trang.png"
   },
@@ -285,7 +285,7 @@
     "type": "application/x-mpegURL",
     "category": "Thừa Thiên Huế",
     "url": "http://trt.com.vn",
-    "status": false,
+    "cros": true,
     "stream": "https://live.trt.com.vn/Radio-online/playlist.m3u8",
     "features": "/img/asia/viet-nam/thua-thien-hue.png"
   },
@@ -295,7 +295,7 @@
     "type": "application/x-mpegURL",
     "category": "Bắc Giang",
     "url": "http://bacgiangtv.vn",
-    "status": false,
+    "cros": false,
     "time": "Từ 5h - 22h",
     "stream": "https://live.bacgiangtv.vn/bgtvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/bac-giang.png"
@@ -306,7 +306,7 @@
     "type": "application/x-mpegURL",
     "category": "Hà Tĩnh",
     "url": "http://hatinhtv.vn",
-    "status": false,
+    "cros": true,
     "time": "Từ 6h - 18h",
     "stream": "http://hatinhtv.vn/phatthanh/m3u8/audio.m3u8",
     "features": "/img/asia/viet-nam/ha-tinh.png"
@@ -317,7 +317,7 @@
     "type": "application/x-mpegURL",
     "category": "Phú Yên",
     "url": "http://ptpphuyen.vn",
-    "status": true,
+    "cros": true,
     "time": "Chưa rõ",
     "stream": "http://113.161.4.48:8080/phuyen/radio.m3u8",
     "features": "/img/asia/viet-nam/phu-yen.png"
@@ -328,7 +328,7 @@
     "type": "application/x-mpegURL",
     "category": "Tiền Giang 96.2 FM",
     "url": "http://thtg.vn",
-    "status": true,
+    "cros": true,
     "time": "Chưa rõ",
     "stream": "http://thtg.vn:8002/radiolive.m3u8",
     "features": "/img/asia/viet-nam/tien-giang.png"
@@ -339,7 +339,7 @@
     "type": "application/x-mpegURL",
     "category": "Bến Tre",
     "url": "http://thbt.vn",
-    "status": false,
+    "cros": true,
     "time": "Từ 5h - 22h30",
     "stream": "http://113.163.94.245/hls-live/livepkgr/_definst_/liveevent/audiostream.m3u8",
     "features": "/img/asia/viet-nam/ben-tre.png"
@@ -350,7 +350,7 @@
     "type": "application/x-mpegURL",
     "category": "Đồng Tháp",
     "url": "https://thdt.vn",
-    "status": true,
+    "cros": true,
     "time": "Từ 5h - 20h",
     "schedule": true,
     "stream": "http://202.43.109.144:1935/thdtradio/thdtradio/playlist.m3u8",
@@ -362,7 +362,7 @@
     "type": "application/x-mpegURL",
     "category": "Gia Lai",
     "url": "http://gialaitv.vn",
-    "status": true,
+    "cros": true,
     "time": "Từ 5h30 - 23h",
     "schedule": false,
     "stream": "http://113.161.25.3:8134/hls/radio/radio.m3u8",
@@ -374,7 +374,7 @@
     "type": "application/x-mpegURL",
     "category": "Thái Bình",
     "url": "http://thaibinhtv.vn",
-    "status": true,
+    "cros": true,
     "time": "Chưa rõ",
     "schedule": true,
     "stream": "http://118.70.118.191:1935/tbtvlive/radio/playlist.m3u8",
@@ -386,7 +386,7 @@
     "type": "application/x-mpegURL",
     "category": "Vĩnh Long",
     "url": "https://www.thvl.vn",
-    "status": false,
+    "cros": true,
     "time": "Chưa rõ",
     "schedule": false,
     "stream": "https://live1.thvli.vn/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiIvdGh2bHJhZGlvIiwiZXhwIjoxNjMzODY0NzQ4fQ.i7liqgkqOCud8C3fgIqRj5WCPaXA0RI_vWqk2gdH1lk-/thvlradio/playlist.m3u8",
@@ -398,7 +398,7 @@
     "type": "application/x-mpegURL",
     "category": "Xone FM 96MHz",
     "url": "https://xonefm.com",
-    "status": true,
+    "cros": true,
     "time": "Chưa rõ",
     "schedule": true,
     "stream": "http://stream.zeno.fm/v51ym0g96qruv",
@@ -410,7 +410,7 @@
     "type": "application/x-mpegURL",
     "category": "Đồng Nai - 97.5MHz",
     "url": "http://dnrtv.org.vn",
-    "status": true,
+    "cros": true,
     "time": "Chưa rõ",
     "schedule": false,
     "stream": "http://118.107.85.5:1935/radio/dongnai_aac/playlist.m3u8",
@@ -422,7 +422,7 @@
     "type": "application/x-mpegURL",
     "category": "Radio Quảng Ninh QNR1",
     "url": "https://baoquangninh.com.vn/?c=radio1",
-    "status": true,
+    "cros": false,
     "time": "Chưa rõ",
     "schedule": false,
     "stream": "https://qtv.vncdn.vn/qtvlive/qnr1.m3u8",
@@ -434,7 +434,7 @@
     "type": "application/x-mpegURL",
     "category": "Radio Quảng Ninh QNR1",
     "url": "https://baoquangninh.com.vn/?c=radio2",
-    "status": true,
+    "cros": false,
     "time": "Chưa rõ",
     "schedule": false,
     "stream": "https://qtv.vncdn.vn/qtvlive/qnr2.m3u8",
@@ -446,7 +446,7 @@
     "type": "application/x-mpegURL",
     "category": "NHK",
     "url": "http://www3.nhk.or.jp/nhkworld/vi/",
-    "status": true,
+    "cros": false,
     "time": "Chưa rõ",
     "schedule": false,
     "stream": "https://nhkworld.webcdn.stream.ne.jp/www11/radiojapan/all/263949/live_s.m3u8",
@@ -458,10 +458,10 @@
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "Chưa rõ",
-    "status": true,
+    "cros": false,
     "time": "Chưa rõ",
-    "schedule": false,
-    "stream": "https://stream.zeno.fm/4q7y9hvkp2zuv",
+    "schedule": true,
+    "stream": "https://node-11.zeno.fm/4q7y9hvkp2zuv",
     "features": "/img/asia/viet-nam/m-radio.png"
   },
   "cai-luong-viet-nam": {
@@ -470,10 +470,10 @@
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "Chưa rõ",
-    "status": true,
+    "cros": false,
     "time": "Chưa rõ",
-    "schedule": false,
-    "stream": "https://stream.zeno.fm/0trm6wrnga0uv",
+    "schedule": true,
+    "stream": "https://node-11.zeno.fm/0trm6wrnga0uv",
     "features": "/img/asia/viet-nam/cai-luong-viet-nam.png"
   },
   "pre-1975": {
@@ -482,10 +482,10 @@
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "Chưa rõ",
-    "status": true,
+    "cros": true,
     "time": "Chưa rõ",
     "schedule": false,
-    "stream": "https://stream.zeno.fm/x2z45v7d84zuv",
+    "stream": "https://node-11.zeno.fm/x2z45v7d84zuv",
     "features": "/img/asia/viet-nam/pre-1975.png"
   }
 }
