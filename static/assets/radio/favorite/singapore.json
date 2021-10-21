@@ -1,8 +1,8 @@
 {
-  "title": "LOVE 97.2FM",
+  "title": "Power 98 Love Songs",
   "type": "audio/aac",
-  "frequency": "FM 97.2 MHz",
+  "frequency": "98.0 FM",
   "countries": "Singapore",
-  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOVE972FMAAC.aac?dist=radiosingapore",
+  "stream": "https://22283.live.streamtheworld.com/POWER98_LOVESONGS_SC",
   "cros": false
 }
