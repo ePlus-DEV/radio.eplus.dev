@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs level_1="world.asia.vietnam" :level_1_slug="slug" :level_2="name" />
+    <Breadcrumbs :level_1="i18n" :level_1_slug="slug" :level_2="name" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->

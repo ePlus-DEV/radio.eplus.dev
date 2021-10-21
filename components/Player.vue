@@ -284,7 +284,10 @@ export default {
           var stream_url = this.$store.state.player_home.stream;
         }
         // Check Type
-        if (this.$store.state.player_home.type === "application/x-mpegURL") {
+        if (
+          this.$store.state.player_home.type === "application/x-mpegURL" ||
+          this.$store.state.player_home.type === "audio/x-mpegurl"
+        ) {
           if (Hls.isSupported()) {
             var hls = new Hls();
             hls.loadSource(stream_url);
@@ -316,7 +319,10 @@ export default {
           var stream_url = this.$store.state.player.stream;
         }
         // Check Type
-        if (this.$store.state.player.type === "application/x-mpegURL") {
+        if (
+          this.$store.state.player.type === "application/x-mpegURL" ||
+          this.$store.state.player.type === "audio/x-mpegurl"
+        ) {
           if (Hls.isSupported()) {
             var hls = new Hls();
             hls.loadSource(stream_url);

@@ -57,7 +57,7 @@
   },
   "abc-brisbane": {
     "title": "ABC Radio (Brisbane)",
-    "type": "audio/x-mpegURL",
+    "type": "audio/x-mpegurl",
     "category": "Stream",
     "url": "https://www.abc.net.au/brisbane/",
     "status": true,
