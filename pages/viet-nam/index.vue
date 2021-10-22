@@ -1,20 +1,16 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs
-      level_1="world.asia.vietnam"
-      :level_1_slug="slug"
-      thumb="/img/asia/flags/viet-nam.png"
-    />
+    <Breadcrumbs :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
     <Player
       ref="player"
-      country="world.asia.vietnam"
+      :country="i18n"
       :schedule="schedule_data"
       :home="true"
-      thumb="/img/asia/flags/viet-nam.png"
+      :thumb="thumb"
     />
     <!-- END - Player -->
 
@@ -40,72 +36,45 @@ export default {
           content:
             "Radio Online được phát từ " +
             this.title_slug +
-            " - VOV 1, VOV2, VOV3, VOV4, VOH, VOV Giao Thông",
-        },
-      ],
+            " - VOV 1, VOV2, VOV3, VOV4, VOH, VOV Giao Thông"
+        }
+      ]
     };
   },
   data() {
     return {
       name: null,
-      title: this.$t("navmenu.homepage") + " - Radio " + this.$t("world.asia.vietnam"),
+      title:
+        this.$t("navmenu.homepage") +
+        " - Radio " +
+        this.$t("world.asia.vietnam"),
       slug: "viet-nam",
       area: "asia",
       i18n: "world.asia.vietnam",
-      schedule_data: [],
+      thumb: "/img/asia/flags/viet-nam.png",
+      schedule_data: []
     };
   },
   mounted() {
-    this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
-      const data = res.data;
-
-      // Vuex
-      this.$store.dispatch("storePLAYERHOME", data);
-
-      this.$refs.player.init(true);
-
-      // Get Schedule
-      var form = new FormData();
-      form.append("vov", "vovgthn");
-      form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
-      var self = this;
-
-      var settings = {
-        url: data["schedule"],
-        method: "POST",
-        timeout: 0,
-        processData: false,
-        mimeType: "multipart/form-data",
-        contentType: false,
-        data: form,
-      };
-
-      $.ajax(settings).done(function (response) {
-        self.schedule_data = JSON.parse(response).result_detail;
-      });
-    });
-  },
-  methods: {
-    async fetchData() {
-      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+    this.$axios
+      .get("/assets/radio/favorite/" + this.slug + ".json")
+      .then(res => {
         const data = res.data;
-        var notify = this.$notify;
 
-        const $t = this.$t.bind(this);
+        // Vuex
+        this.$store.dispatch("storePLAYERHOME", data);
 
-        var audio = document.querySelector("#player");
-        if (Hls.isSupported()) {
-          var hls = new Hls();
-          hls.loadSource(res.data["stream"]);
-          hls.attachMedia(audio);
-        }
-
-        audio.play();
+        this.$refs.player.init(true);
 
         // Get Schedule
         var form = new FormData();
         form.append("vov", "vovgthn");
-        form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
+        form.append(
+          "date",
+          this.$moment()
+            .tz("Asia/Ho_Chi_Minh")
+            .format("DD/MM/YYYY")
+        );
         var self = this;
 
         var settings = {
@@ -115,14 +84,50 @@ export default {
           processData: false,
           mimeType: "multipart/form-data",
           contentType: false,
-          data: form,
+          data: form
         };
 
-        $.ajax(settings).done(function (response) {
+        $.ajax(settings).done(function(response) {
           self.schedule_data = JSON.parse(response).result_detail;
         });
       });
-    },
+  },
+  methods: {
+    async fetchData() {
+      this.$axios
+        .get("/assets/radio/favorite/" + this.slug + ".json")
+        .then(res => {
+          const data = res.data;
+          // Vuex
+          this.$store.dispatch("storePLAYERHOME", data);
+
+          this.$refs.player.init(true);
+          // Get Schedule
+          var form = new FormData();
+          form.append("vov", "vovgthn");
+          form.append(
+            "date",
+            this.$moment()
+              .tz("Asia/Ho_Chi_Minh")
+              .format("DD/MM/YYYY")
+          );
+          var self = this;
+
+          var settings = {
+            url: data["schedule"],
+            method: "POST",
+            timeout: 0,
+            processData: false,
+            mimeType: "multipart/form-data",
+            contentType: false,
+            data: form
+          };
+
+          $.ajax(settings).done(function(response) {
+            self.schedule_data = JSON.parse(response).result_detail;
+          });
+        });
+    }
   },
   created() {
     /* this.loading = true;
@@ -135,6 +140,6 @@ export default {
       });
       loading.close();
     }); */
-  },
+  }
 };
 </script>

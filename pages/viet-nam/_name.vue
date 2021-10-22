@@ -62,8 +62,6 @@ export default {
 
             self.$emit("updateHead");
             this.$refs.player.init();
-
-            // $(".ticker").ticker();
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),

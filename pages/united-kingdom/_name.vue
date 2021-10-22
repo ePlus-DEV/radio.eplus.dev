@@ -1,28 +1,20 @@
 <template>
   <div>
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">{{
-        $t("navmenu.homepage")
-      }}</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/united-kingdom' }">{{
-        $t("world.europe.united_kingdom")
-      }}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ name }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    <!-- BEGIN - Breadcrumbs -->
+    <Breadcrumbs :level_1="i18n" :level_1_slug="slug" :level_2="name" />
+    <!-- END - Breadcrumbs -->
 
-    <Player :stream="stream_name"></Player>
+    <!-- BEGIN - Player -->
+    <Player ref="player" :stream="stream_name" :country="i18n"></Player>
+    <!-- END - Player -->
 
+    <!-- BEGIN - PanelStation -->
     <PanelStation :area="area" :slug="slug" :i18n="i18n" />
+    <!-- END - PanelStation -->
   </div>
 </template>
 
 <script>
-// To import only MediaElement class
-import "mediaelement";
-import "mediaelement/build/mediaelementplayer.min.css";
-import PanelStation from "~/components/PanelStation.vue";
-import Player from "~/components/Player.vue";
-
 export default {
   head() {
     return {
@@ -31,9 +23,9 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: "Radio in " + this.title_slug,
-        },
-      ],
+          content: "Radio in " + this.title_slug
+        }
+      ]
     };
   },
   data() {
@@ -44,73 +36,33 @@ export default {
       slug: "united-kingdom",
       stream_name: process.env.Site_Name,
       area: "europe",
-      i18n: "world.europe.united_kingdom",
+      i18n: "world.europe.united_kingdom"
     };
-  },
-  components: {
-    PanelStation,
-    Player,
   },
   methods: {
     async fetchData() {
       this.$axios
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
-        .then((res) => {
+        .then(res => {
           const $t = this.$t.bind(this);
           if (res.data.hasOwnProperty(this.$route.params.name)) {
             const data = res.data[this.$route.params.name];
 
-            $("#radio-name").text(data.title);
+            // Set variable
             this.name = data.title;
+            this.description = data.description;
             this.stream_name = data.title;
+            // Vuex
+            this.$store.dispatch("storePLAYER", data);
+
             var self = this;
             self.title =
-              data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
+              data.title +
+              " - " +
+              $t("panel.radio_in", { name: this.title_slug });
+
             self.$emit("updateHead");
-
-            var notify = this.$notify;
-
-            var player = new MediaElementPlayer("player", {
-              features: ["playpause", "progress", "tracks", "volume"],
-              enableKeyboard: true,
-              success: function (mediaElement) {
-                // Event
-                $("#player")
-                  .on("canplay", function () {
-                    $(".mejs__time-rail").html(
-                      '<div class="ticker radio-name-player"><ul><li>' +
-                        $t("panel.play_from_radio") +
-                        " <strong>" +
-                        data["title"] +
-                        "</strong></li><li>" +
-                        $t("panel.frequency") +
-                        ": <strong>" +
-                        data["url"] +
-                        "</strong></li><li>" +
-                        $t("panel.category") +
-                        ": <strong>" +
-                        data["category"] +
-                        "</strong></li></ul></div>"
-                    );
-                    $(".ticker").ticker();
-                    notify.success({
-                      title: $t("notify.success"),
-                      message: $t("notify.success_content", {
-                        radio: data.title,
-                      }),
-                    });
-                  })
-                  .on("error", function () {
-                    notify.error({
-                      title: $t("notify.error"),
-                      message: $t("notify.error_content", { radio: data.title }),
-                    });
-                  });
-
-                console.info("Player initialised");
-              },
-            });
-            player.setSrc(data.stream);
+            this.$refs.player.init();
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),
@@ -119,7 +71,7 @@ export default {
               closeOnClickModal: false,
               showClose: false,
               type: "warning",
-              center: true,
+              center: true
             })
               .then(() => {
                 this.$router.push("/");
@@ -127,24 +79,15 @@ export default {
               .catch(() => {
                 this.$message({
                   type: "info",
-                  message: "Delete canceled",
+                  message: "Delete canceled"
                 });
               });
           }
         });
-    },
+    }
   },
   created() {
-    this.loading = true;
-    Promise.all([this.fetchData()]).then(() => {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      loading.close();
-    });
-  },
+    Promise.all([this.fetchData()]).then(() => {});
+  }
 };
 </script>

@@ -415,7 +415,8 @@ export default {
 };
 </script>
 <style>
-.plyr__controls__item.plyr__control.plyr__control--pressed {
+.plyr__controls__item.plyr__control.plyr__control--pressed,
+.plyr__controls__item.plyr__control {
   display: none;
 }
 </style>

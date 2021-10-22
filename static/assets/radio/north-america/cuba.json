@@ -4,7 +4,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiohc.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/McW3fLhs",
     "features": "/img/north-america/cuba/habana.png",
     "schedule": "https://api.webrad.io/data/playlist/45/habana?time="
@@ -14,7 +14,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiorebelde.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/zrXXWK9F",
     "features": "/img/north-america/cuba/rebelde.png",
     "schedule": "https://api.webrad.io/data/playlist/45/rebelde?time="
@@ -24,7 +24,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radioreloj.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/b3jbfThq",
     "features": "/img/north-america/cuba/reloj.png"
   },
@@ -33,7 +33,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiotaino.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/3MCwWg3V",
     "features": "/img/north-america/cuba/taino.png",
     "schedule": "https://api.webrad.io/data/playlist/45/taino?time="
@@ -43,7 +43,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radioenciclopedia.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/9Rnrbjzq",
     "features": "/img/north-america/cuba/enciclopedia.png",
     "schedule": "https://api.webrad.io/data/playlist/45/enciclopedia?time="
@@ -53,7 +53,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radioprogreso.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/XjfW7qWN",
     "features": "/img/north-america/cuba/progreso.png"
   },
@@ -62,7 +62,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocubana.cu/emisoras/237-nacionales/21120-cmbf-radio-musical-nacional-audio-en-vivo",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/Nbtz7HT3",
     "features": "/img/north-america/cuba/cmbf.png",
     "schedule": "https://api.webrad.io/data/playlist/45/cmbf?time="
@@ -72,7 +72,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiogritodebaire.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/PMxFRLK7?1605458698011",
     "features": "/img/north-america/cuba/baire.png",
     "schedule": "https://api.webrad.io/data/playlist/45/baire?time="
@@ -82,8 +82,8 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiotelevisionmarti.com/",
-    "status": true,
-    "stream": "https://stream.radiojar.com/3ds9yqpgq3quv",
+    "cros": true,
+    "stream": "https://n08.radiojar.com/3ds9yqpgq3quv",
     "features": "/img/north-america/cuba/marti.png"
   },
   "cuba-libre": {
@@ -91,18 +91,18 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocubalibreinternacional.com/",
-    "status": true,
+    "cros": false,
     "stream": "https://usa8.fastcast4u.com/proxy/fracaner?mp=/;",
     "features": "/img/north-america/cuba/cuba-libre.png",
     "schedule": "https://api.webrad.io/data/playlist/45/cuba-libre?time="
   },
   "campesina": {
     "title": "Radio Campesina Cubana",
-    "type": "audio/mpeg",
+    "type": "audio/mp3",
     "category": "Stream",
     "url": "http://radiocampesinacubana.playtheradio.com/",
-    "status": true,
-    "stream": "https://stream.laut.fm/radiocampesinacubana",
+    "cros": true,
+    "stream": "https://stream.laut.fm/radiocampesinacubana.m3u",
     "features": "/img/north-america/cuba/campesina.png",
     "schedule": "https://api.webrad.io/data/playlist/45/campesina?time="
   },
@@ -111,7 +111,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://tuzonamusical.com/",
-    "status": true,
+    "cros": false,
     "stream": "https://radiomachado.com/radio/8000/radio.mp3",
     "features": "/img/north-america/cuba/tu-zona-musical.png",
     "schedule": "https://api.webrad.io/data/playlist/45/tu-zona-musical?time="
@@ -121,7 +121,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radioangulo.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/hmVcdgM7",
     "features": "/img/north-america/cuba/angulo.png"
   },
@@ -130,7 +130,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.rcm.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/CL7jRXqn",
     "features": "/img/north-america/cuba/ciudad-del-mar.png",
     "schedule": "https://api.webrad.io/data/playlist/45/ciudad-del-mar?time="
@@ -140,7 +140,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.cadenahabana.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/Jdq3Rbrg",
     "features": "/img/north-america/cuba/cadena-habana.png",
     "schedule": "https://api.webrad.io/data/playlist/45/cadena-habana?time="
@@ -150,7 +150,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.rguama.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/ngcdcV3k",
     "features": "/img/north-america/cuba/guama.png",
     "schedule": "https://api.webrad.io/data/playlist/45/guama?time="
@@ -160,7 +160,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocaribe.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/dXhtHs4P",
     "features": "/img/north-america/cuba/caribe.png"
   },
@@ -169,7 +169,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.rguama.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/9HzjRcjX",
     "features": "/img/north-america/cuba/artemisa.png",
     "schedule": "https://api.webrad.io/data/playlist/45/artemisa?time="
@@ -179,7 +179,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiomayabeque.icrt.cu/en/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/Rsrm7P9h",
     "features": "/img/north-america/cuba/mayabeque.png",
     "schedule": "https://api.webrad.io/data/playlist/45/mayabeque?time="
@@ -189,7 +189,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiociudadhabana.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/g73XCjCH",
     "features": "/img/north-america/cuba/ciudad-de-la-habana.png",
     "schedule": "https://api.webrad.io/data/playlist/45/ciudad-de-la-habana?time="
@@ -199,7 +199,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radio26.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/g73XCjCH",
     "features": "/img/north-america/cuba/radio-26.png",
     "schedule": "https://api.webrad.io/data/playlist/45/radio-26?time="
@@ -209,7 +209,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.cmhw.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/TsxMM94R",
     "features": "/img/north-america/cuba/cmhw.png",
     "schedule": "https://api.webrad.io/data/playlist/45/cmhw?time="
@@ -219,7 +219,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiosanctispiritus.cu/es/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/NqWrgw7j",
     "features": "/img/north-america/cuba/sancti-spiritus.png",
     "schedule": "https://api.webrad.io/data/playlist/45/sancti-spiritus?time="
@@ -229,7 +229,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiosurco.icrt.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/F9tgnJVT",
     "features": "/img/north-america/cuba/surco.png"
   },
@@ -238,7 +238,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.cadenagramonte.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/j99xztkT",
     "features": "/img/north-america/cuba/cadena-agramonte.png"
   },
@@ -247,7 +247,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiobayamo.icrt.cu/en/home-2/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/7hdNcTbM",
     "features": "/img/north-america/cuba/bayamo.png",
     "schedule": "https://api.webrad.io/data/playlist/45/bayamo?time="
@@ -257,7 +257,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.cmkc.icrt.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/C9vVPN7h",
     "features": "/img/north-america/cuba/revolucion.png"
   },
@@ -266,7 +266,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiominas.icrt.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/X9XNRkW4",
     "features": "/img/north-america/cuba/minas.png"
   },
@@ -275,7 +275,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocubana.cu/emisoras/239-municipales/21266-radio-sandino-audio-en-vivo",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/fc79vKJX",
     "features": "/img/north-america/cuba/sandino.png"
   },
@@ -284,7 +284,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.jarucoradioweb.icrt.cu/?lang=en",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/KH9tVwrC",
     "features": "/img/north-america/cuba/jaruco.png"
   },
@@ -293,7 +293,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiometropolitana.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/ktW3mW74",
     "features": "/img/north-america/cuba/metropolitana.png"
   },
@@ -302,7 +302,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocubana.cu/emisoras/239-municipales/21273-radio-coco-audio-en-vivo",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/fvc4RVRz",
     "features": "/img/north-america/cuba/coco.png",
     "schedule": "https://api.webrad.io/data/playlist/45/coco?time="
@@ -312,7 +312,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://radiociudadbandera.wordpress.com/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/rvNtC9rC",
     "features": "/img/north-america/cuba/ciudad-bandera.png"
   },
@@ -321,7 +321,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://radio.eplus.dev",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/sjcNk3Jb",
     "features": "/img/north-america/cuba/llanura-de-colon.png"
   },
@@ -330,7 +330,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiosagua.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/wHm3qrMx",
     "features": "/img/north-america/cuba/sagua.png",
     "schedule": "https://api.webrad.io/data/playlist/45/sagua?time="
@@ -340,7 +340,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocaibarien.icrt.cu/",
-    "status": true,
+    "cros": false,
     "stream": "https://icecast.teveo.cu/srJ4vqkv",
     "features": "/img/north-america/cuba/caibarien.png"
   },
@@ -349,7 +349,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://radioplacetas.wordpress.com/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/wnW3hTrw",
     "features": "/img/north-america/cuba/placetas.png"
   },
@@ -358,7 +358,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.rcabaiguan.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/XK3Ttwmj",
     "features": "/img/north-america/cuba/cabaiguan.png"
   },
@@ -367,7 +367,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiobanes.icrt.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/9cMzdkK7",
     "features": "/img/north-america/cuba/banes.png",
     "schedule": "https://api.webrad.io/data/playlist/45/banes?time="
@@ -377,7 +377,7 @@
     "type": "audio/mpeg",
     "category": "Stream",
     "url": "https://www.radiocubitas.icrt.cu/",
-    "status": true,
+    "cros": true,
     "stream": "https://icecast.teveo.cu/FRKq3RTV",
     "features": "/img/north-america/cuba/cubitas.png",
     "schedule": "https://api.webrad.io/data/playlist/45/cubitas?time="
