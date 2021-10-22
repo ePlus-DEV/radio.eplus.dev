@@ -182,13 +182,13 @@ export default {
             code: "en",
             file: "en-US.js",
             name: "English",
-            flag: "/img/flags/europe/united-kingdom.png"
+            flag: "/img/europe/flags/united-kingdom.png"
           },
           {
             code: "vi",
             file: "vi-VN.js",
             name: "Tiếng Việt",
-            flag: "/img/flags/asia/viet-nam.png"
+            flag: "/img/asia/flags/viet-nam.png"
           }
         ],
         strategy: "no_prefix",

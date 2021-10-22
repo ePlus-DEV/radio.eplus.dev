@@ -58,7 +58,7 @@
               {{ $t("navmenu.homepage") }}
             </li>
           </nuxt-link>
-          <li
+          <!-- <li
             class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
           >
             <span class="mr-2">
@@ -128,7 +128,7 @@
               </svg>
             </span>
             Deliverables
-          </li>
+          </li> -->
         </ul>
       </div>
       <div class="h-full hidden xl:flex items-center justify-end">
@@ -159,7 +159,7 @@
               <line x1="21" y1="21" x2="15" y2="15" />
             </svg>
           </div>
-          <div
+          <!-- <div
             class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
           >
             <svg
@@ -180,9 +180,9 @@
               />
               <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
             </svg>
-          </div>
+          </div> -->
           <div
-            class="w-20 h-full flex items-center justify-center border-r border-gray-700 text-gray-400"
+            class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
           >
             <button
               id="switchTheme"
@@ -215,88 +215,52 @@
               </svg>
             </button>
           </div>
-          <div
-            class="flex items-center pl-8 relative cursor-pointer"
-            @click="dropdownHandler($event)"
-          >
+          <div class="flex items-center pl-8 relative cursor-pointer">
             <ul
               class="p-2 w-40 border-r bg-white absolute rounded left-0 shadow mt-16 top-0 hidden"
             >
               <li
                 class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+                v-for="locale in availableLocales"
+                :key="locale.code"
+                @click.prevent.stop="
+                  $i18n.setLocale(locale.code), $moment.locale(locale.code)
+                "
               >
-                <div class="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-user"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <circle cx="12" cy="7" r="4" />
-                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                  </svg>
-                  <span class="ml-2">My Profile</span>
-                </div>
-              </li>
-              <li
-                class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex items-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-help"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <circle cx="12" cy="12" r="9" />
-                  <line x1="12" y1="17" x2="12" y2="17.01" />
-                  <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />
-                </svg>
-                <span class="ml-2">Help Center</span>
-              </li>
-              <li
-                class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 flex items-center focus:text-indigo-700 focus:outline-none"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-settings"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <path
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-                <span class="ml-2">Account Settings</span>
+                {{ $t("navmenu.language") }} {{ locale.name }}
               </li>
             </ul>
-            <img
-              class="rounded h-10 w-10 object-cover"
-              src="https://tuk-cdn.s3.amazonaws.com/assets/components/horizontal_navigation/hn_1.png"
-              alt="logo"
-            />
-            <p class="text-white text-sm ml-2">Jane Doe</p>
+
+            <template v-for="(locale, index) in availableLocales">
+              <img
+                class="rounded h-10 w-10 object-cover"
+                :src="locale.flag"
+                :alt="locale.name"
+                @click.prevent.stop="
+                  $i18n.setLocale(locale.code), $moment.locale(locale.code)
+                "
+                :key="index"
+              />
+              <p
+                class="text-white text-sm ml-2"
+                @click.prevent.stop="
+                  $i18n.setLocale(locale.code), $moment.locale(locale.code)
+                "
+                :key="index"
+              >
+                {{ locale.name }}
+              </p>
+            </template>
+            <!-- <p
+              class="text-white text-sm ml-2"
+              v-for="locale in availableLocales"
+              :key="locale.code"
+              @click.prevent.stop="
+                $i18n.setLocale(locale.code), $moment.locale(locale.code)
+              "
+            >
+              {{ $t("navmenu.language") }} {{ locale.name }}
+            </p> -->
           </div>
         </div>
       </div>
@@ -574,24 +538,33 @@ export default {
   data() {
     return {
       profilePhoto:
-        "https://tuk-cdn.s3.amazonaws.com/assets/components/horizontal_navigation/hn_1.png",
+        "https://tuk-cdn.s3.amazonaws.com/assets/components/horizontal_navigation/hn_1.png"
     };
   },
   watch: {
     $route() {
       this.$colorMode.value = localStorage.theme;
-    },
+    }
+  },
+  computed: {
+    availableLocales() {
+      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale);
+    }
   },
   methods: {
     darkmode() {
       if (this.$colorMode.value === "light") {
         this.$colorMode.value = "dark";
         localStorage.setItem("theme", "dark");
-        $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
+        $("html")
+          .addClass("bg-gray-800")
+          .removeClass("bg-gray-200");
       } else {
         this.$colorMode.value = "light";
         localStorage.setItem("theme", "light");
-        $("html").addClass("bg-gray-200").removeClass("bg-gray-800");
+        $("html")
+          .addClass("bg-gray-200")
+          .removeClass("bg-gray-800");
       }
     },
     dropdownHandler(event) {
@@ -599,7 +572,9 @@ export default {
       single.classList.toggle("hidden");
     },
     MenuHandler(el, val) {
-      let MainList = el.currentTarget.parentElement.getElementsByTagName("ul")[0];
+      let MainList = el.currentTarget.parentElement.getElementsByTagName(
+        "ul"
+      )[0];
       let closeIcon = el.currentTarget.parentElement.getElementsByClassName(
         "close-m-menu"
       )[0];
@@ -617,18 +592,22 @@ export default {
       }
     },
     searchHandler(event) {
-      let Input = event.currentTarget.parentElement.getElementsByTagName("input")[0];
+      let Input = event.currentTarget.parentElement.getElementsByTagName(
+        "input"
+      )[0];
       Input.classList.toggle("w-0");
       Input.classList.toggle("w-24");
-    },
+    }
   },
   created() {
     if (localStorage.getItem("theme") === null) {
       localStorage.setItem("theme", "light");
     } else if (localStorage.getItem("theme") === "dark") {
       this.$colorMode.value = localStorage.theme;
-      $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
+      $("html")
+        .addClass("bg-gray-800")
+        .removeClass("bg-gray-200");
     }
-  },
+  }
 };
 </script>
