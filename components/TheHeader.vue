@@ -455,6 +455,19 @@
             </div>
           </li>
         </ul>
+        <!-- BEGIN - Toggle Language - Mobile -->
+        <template v-for="(locale, index) in availableLocales">
+          <img
+            class="rounded h-8 w-12 object-cover"
+            :src="locale.flag"
+            :alt="locale.name"
+            @click.prevent.stop="
+              $i18n.setLocale(locale.code), $moment.locale(locale.code)
+            "
+            :key="index"
+          />
+        </template>
+        <!-- BEGIN - Toggle Language - Mobile -->
         <!-- BEGIN - Dark Mode - Mobile -->
         <button
           id="switchTheme"
