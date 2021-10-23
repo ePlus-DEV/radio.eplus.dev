@@ -6,11 +6,22 @@
     >
       <div class="flex flex-col w-full">
         <div class="flex items-center p-5 border-b">
-          <img
-            class="w-35 h-25 object-cover"
-            :key="home !== undefined ? player_home.title : player.title"
-            :src="home !== undefined ? thumb : player.features"
-          />
+          <div class="flex justify-around">
+            <span class="relative inline-flex">
+              <img
+                class="w-35 h-25 object-cover"
+                :key="home !== undefined ? player_home.title : player.title"
+                :src="home !== undefined ? thumb : player.features"
+              />
+              <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+                ></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              </span>
+            </span>
+          </div>
+
           <div class="flex flex-col px-2 w-full">
             <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
               {{ $t("panel.play_from_radio") }}

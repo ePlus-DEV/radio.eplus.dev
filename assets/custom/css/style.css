@@ -1,3 +1,14 @@
 :root {
   --plyr-color-main: brown;
 }
+
+.dark .plyr__controls {
+  background: #111827;
+}
+
+.dark .plyr__time,
+.dark .plyr__menu,
+.dark .icon--pressed,
+.dark .icon--not-pressed {
+  color: #fff;
+}

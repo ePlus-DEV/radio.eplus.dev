@@ -390,6 +390,7 @@ export default {
         this.$colorMode.value = "dark";
         localStorage.setItem("theme", "dark");
         $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
+        $(".plyr__controls").css({ background: "#111827 !important" });
       } else {
         this.$colorMode.value = "light";
         localStorage.setItem("theme", "light");
@@ -430,6 +431,7 @@ export default {
     } else if (localStorage.getItem("theme") === "dark") {
       this.$colorMode.value = localStorage.theme;
       $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
+      $(".plyr__controls").css({ background: "#111827 !important" });
     }
   },
 };

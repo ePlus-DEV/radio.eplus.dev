@@ -127,17 +127,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    // "element-ui/lib/theme-chalk/index.css",
-    "@/assets/custom/css/style.css"
-  ],
+  css: ["@/assets/custom/css/style.css"],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    /* {
-      src: "@/plugins/element-ui"
-    }, */
     { src: "~/plugins/plyr.js" },
     { src: "~plugins/scrollmagic.js", ssr: false }
   ],
