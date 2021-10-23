@@ -2,6 +2,8 @@ export default async (context, locale) => {
   return await Promise.resolve({
     navmenu: {
       homepage: "Trang Chủ",
+      about: "Giới Thiệu",
+      blog: "Blog",
       group: "Nhóm",
       terms: "Điều Khoản",
       contact: "Liên Hệ",

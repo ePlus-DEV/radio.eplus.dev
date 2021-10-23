@@ -2,6 +2,8 @@ export default async (context, locale) => {
   return await Promise.resolve({
     navmenu: {
       homepage: "Homepage",
+      about: "About",
+      blog: "Blog",
       group: "Group",
       terms: "Terms",
       contact: "Contact",

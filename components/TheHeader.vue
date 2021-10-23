@@ -6,23 +6,7 @@
       <div class="flex items-center">
         <div class="mr-10 flex items-center">
           <nuxt-link to="/">
-            <svg
-              aria-label="Home"
-              id="logo"
-              enable-background="new 0 0 300 300"
-              height="44"
-              viewBox="0 0 300 300"
-              width="43"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-            >
-              <g>
-                <path
-                  fill="#4c51bf"
-                  d="m234.735 35.532c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16zm0 24c-4.412 0-8-3.588-8-8s3.588-8 8-8 8 3.588 8 8-3.588 8-8 8zm-62.529-14c0-2.502 2.028-4.53 4.53-4.53s4.53 2.028 4.53 4.53c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.027-4.53-4.529zm89.059 60c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.028-4.53-4.529c0-2.502 2.028-4.53 4.53-4.53s4.53 2.029 4.53 4.53zm-40.522-5.459-88-51.064c-1.242-.723-2.773-.723-4.016 0l-88 51.064c-1.232.715-1.992 2.033-1.992 3.459v104c0 1.404.736 2.705 1.938 3.428l88 52.936c.635.381 1.35.572 2.062.572s1.428-.191 2.062-.572l88-52.936c1.201-.723 1.938-2.023 1.938-3.428v-104c0-1.426-.76-2.744-1.992-3.459zm-90.008-42.98 80.085 46.47-52.95 31.289-23.135-13.607v-21.713c0-2.209-1.791-4-4-4s-4 1.791-4 4v21.713l-26.027 15.309c-1.223.719-1.973 2.029-1.973 3.447v29.795l-52 30.727v-94.688zm0 198.707-80.189-48.237 51.467-30.412 24.723 14.539v19.842c0 2.209 1.791 4 4 4s4-1.791 4-4v-19.842l26.027-15.307c1.223-.719 1.973-2.029 1.973-3.447v-31.667l52-30.728v94.729z"
-                />
-              </g>
-            </svg>
+            <img src="/brand/logo-white.svg" width="43" alt="Radio.ePlus.DEV" />
           </nuxt-link>
           <h3
             class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"
@@ -290,168 +274,7 @@
                 <rect x="4" y="14" width="6" height="6" rx="1"></rect>
                 <rect x="14" y="14" width="6" height="6" rx="1"></rect>
               </svg>
-              <span class="ml-2 font-bold">Dashboard</span>
-            </div>
-          </li>
-          <li
-            class="md:hidden flex-col cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex justify-center"
-            @click="dropdownHandler($event)"
-          >
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-puzzle"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z"></path>
-                <path
-                  d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1"
-                ></path>
-              </svg>
-              <span class="ml-2 font-bold">Products</span>
-            </div>
-            <ul class="ml-6 mt-1 hidden">
-              <li
-                class="cursor-pointer text-gray-600 text-xs leading-3 tracking-normal py-2 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-              >
-                Landing Pages
-              </li>
-              <li
-                class="cursor-pointer text-gray-600 text-xs leading-3 tracking-normal py-2 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-              >
-                Templates
-              </li>
-              <li
-                class="cursor-pointer text-gray-600 text-xs leading-3 tracking-normal pt-2 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-              >
-                Components
-              </li>
-            </ul>
-          </li>
-          <li
-            class="md:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 flex items-center focus:text-indigo-700 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-compass"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z"></path>
-              <polyline points="8 16 10 10 16 8 14 14 8 16"></polyline>
-              <circle cx="12" cy="12" r="9"></circle>
-            </svg>
-            <span class="ml-2 font-bold">Performance</span>
-          </li>
-          <li
-            class="border-b border-gray-300 md:hidden flex-col cursor-pointer text-gray-600 text-sm leading-3 tracking-normal pt-2 pb-4 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex justify-center"
-            @click="dropdownHandler($event)"
-          >
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-code"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z"></path>
-                <polyline points="7 8 3 12 7 16"></polyline>
-                <polyline points="17 8 21 12 17 16"></polyline>
-                <line x1="14" y1="4" x2="10" y2="20"></line>
-              </svg>
-              <span class="ml-2 font-bold">Deliverables</span>
-            </div>
-            <ul class="ml-6 mt-1 hidden">
-              <li
-                class="cursor-pointer text-gray-600 text-xs leading-3 tracking-normal py-2 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-              >
-                Landing Pages
-              </li>
-              <li
-                class="cursor-pointer text-gray-600 text-xs leading-3 tracking-normal py-2 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-              >
-                Templates
-              </li>
-              <li
-                class="cursor-pointer text-gray-600 text-xs leading-3 tracking-normal pt-2 hover:bg-indigo-700 hover:text-white px-3 font-normal"
-              >
-                Components
-              </li>
-            </ul>
-          </li>
-          <li
-            class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 flex items-center focus:text-indigo-700 focus:outline-none"
-          >
-            <div class="flex items-center">
-              <div
-                class="w-12 cursor-pointer flex text-sm border-2 border-transparent rounded focus:outline-none focus:border-white transition duration-150 ease-in-out"
-              >
-                <img
-                  class="rounded h-10 w-10 object-cover"
-                  src="https://tuk-cdn.s3.amazonaws.com/assets/components/horizontal_navigation/hn_1.png"
-                  alt="logo"
-                />
-              </div>
-              <p class="text-sm ml-2 cursor-pointer">Jane Doe</p>
-              <div class="sm:ml-2 text-white relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-chevron-down cursor-pointer"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z"></path>
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </div>
-            </div>
-          </li>
-          <li
-            class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-          >
-            <div class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-user"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <circle cx="12" cy="7" r="4" />
-                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-              </svg>
-              <span class="ml-2">Profile</span>
+              <span class="ml-2 font-bold">{{ $t("navmenu.homepage") }}</span>
             </div>
           </li>
         </ul>
@@ -549,35 +372,28 @@
 export default {
   name: "BlackLeftAlignedWithIcons",
   data() {
-    return {
-      profilePhoto:
-        "https://tuk-cdn.s3.amazonaws.com/assets/components/horizontal_navigation/hn_1.png"
-    };
+    return {};
   },
   watch: {
     $route() {
       this.$colorMode.value = localStorage.theme;
-    }
+    },
   },
   computed: {
     availableLocales() {
-      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale);
-    }
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale);
+    },
   },
   methods: {
     darkmode() {
       if (this.$colorMode.value === "light") {
         this.$colorMode.value = "dark";
         localStorage.setItem("theme", "dark");
-        $("html")
-          .addClass("bg-gray-800")
-          .removeClass("bg-gray-200");
+        $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
       } else {
         this.$colorMode.value = "light";
         localStorage.setItem("theme", "light");
-        $("html")
-          .addClass("bg-gray-200")
-          .removeClass("bg-gray-800");
+        $("html").addClass("bg-gray-200").removeClass("bg-gray-800");
       }
     },
     dropdownHandler(event) {
@@ -585,9 +401,7 @@ export default {
       single.classList.toggle("hidden");
     },
     MenuHandler(el, val) {
-      let MainList = el.currentTarget.parentElement.getElementsByTagName(
-        "ul"
-      )[0];
+      let MainList = el.currentTarget.parentElement.getElementsByTagName("ul")[0];
       let closeIcon = el.currentTarget.parentElement.getElementsByClassName(
         "close-m-menu"
       )[0];
@@ -605,22 +419,18 @@ export default {
       }
     },
     searchHandler(event) {
-      let Input = event.currentTarget.parentElement.getElementsByTagName(
-        "input"
-      )[0];
+      let Input = event.currentTarget.parentElement.getElementsByTagName("input")[0];
       Input.classList.toggle("w-0");
       Input.classList.toggle("w-24");
-    }
+    },
   },
   created() {
     if (localStorage.getItem("theme") === null) {
       localStorage.setItem("theme", "light");
     } else if (localStorage.getItem("theme") === "dark") {
       this.$colorMode.value = localStorage.theme;
-      $("html")
-        .addClass("bg-gray-800")
-        .removeClass("bg-gray-200");
+      $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
     }
-  }
+  },
 };
 </script>

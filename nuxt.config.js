@@ -21,12 +21,14 @@ export default {
   publicRuntimeConfig: {
     Base_URL: process.env.BASE_URL || "https://radio.eplus.dev",
     Site_Name: process.env.Site_Name || "Radio.ePlus.DEV",
-    Facebook: process.env.Facebook || "https://www.facebook.com/hoangsvit",
-    Fanpage: process.env.FanPage || "https://www.facebook.com/hoangsvit",
-    Group_Facebook:
-      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
-    Email_Contact:
-      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
+    Facebook: process.env.Facebook,
+    Instagram: process.env.Instagram,
+    Github: process.env.Github,
+    Fanpage: process.env.FanPage,
+    Copyright: process.env.Copyright,
+    Blog: process.env.Blog,
+    Group_Facebook: process.env.Group_Facebook,
+    Email_Contact: process.env.Group_Facebook,
     Pin_Channel_Favorites: process.env.Pin_Channel_Favorites || "viet-nam"
   },
   /*
@@ -86,7 +88,8 @@ export default {
         property: "og:audio",
         content: "https://media-ssl.musicradio.com/HeartUK"
       },
-      { property: "og:audio:type", content: "audio/mpeg" }
+      { property: "og:audio:type", content: "audio/mpeg" },
+      { property: "application-name", content: process.env.Site_Name }
     ],
     link: [
       {

@@ -39,7 +39,7 @@
         <div class="flex flex-col sm:flex-row items-center p-5">
           <div class="flex items-center">
             <div class="flex space-x-3 p-2">
-              <button class="focus:outline-none">
+              <button class="focus:outline-none cursor-not-allowed">
                 <svg
                   class="w-4 h-4"
                   viewBox="0 0 24 24"
@@ -56,6 +56,7 @@
               <!-- BEIGN - Button Play -->
               <button
                 v-show="!waiting"
+                class="transform hover:scale-125"
                 :class="[!button ? 'hidden' : '']"
                 @click="onPause"
               >
@@ -76,6 +77,7 @@
               <button
                 v-show="!waiting"
                 type="button"
+                class="transform hover:scale-125"
                 :class="[button ? 'hidden' : '']"
                 @click="onPlay"
               >
@@ -119,7 +121,7 @@
                 ></path>
               </svg>
               <!-- Waiting -->
-              <button class="focus:outline-none">
+              <button class="focus:outline-none cursor-not-allowed">
                 <svg
                   class="w-4 h-4"
                   viewBox="0 0 24 24"
