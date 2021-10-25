@@ -12,8 +12,8 @@
         }}</nuxt-link>
       </el-menu-item>
       <el-menu-item>
-        <el-link :href="$config.Group_Facebook" target="_blank">{{
-          $t("navmenu.group")
+        <el-link href="https://old-radio.eplus.dev" target="_blank">{{
+          $t("navmenu.new_version")
         }}</el-link>
       </el-menu-item>
       <el-menu-item index="2" @click="terms_and_conditions = true">
