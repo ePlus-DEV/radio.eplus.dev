@@ -12,7 +12,7 @@
         }}</nuxt-link>
       </el-menu-item>
       <el-menu-item>
-        <el-link href="https://old-radio.eplus.dev" target="_blank">{{
+        <el-link href="https://radio.eplus.dev" target="_blank">{{
           $t("navmenu.new_version")
         }}</el-link>
       </el-menu-item>
