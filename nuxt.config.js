@@ -133,7 +133,8 @@ export default {
    */
   plugins: [
     { src: "~/plugins/plyr.js" },
-    { src: "~plugins/scrollmagic.js", ssr: false }
+    { src: "~plugins/scrollmagic.js", ssr: false },
+    { src: "~/plugins/vue-toastification.js" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

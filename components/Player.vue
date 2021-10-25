@@ -5,7 +5,7 @@
       class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"
     >
       <div class="flex flex-col w-full">
-        <div class="flex items-center p-5 border-b">
+        <div class="flex items-center p-5 border-b dark:border-gray-600">
           <div class="flex justify-around">
             <span class="relative inline-flex">
               <img
@@ -184,52 +184,67 @@
           </div> -->
         </div>
         <!-- BEGIN - Playlist -->
-        <!--  <div class="flex flex-col p-5">
-          <div class="border-b pb-1 flex justify-between items-center mb-2">
+        <div
+          class="flex flex-col p-5"
+          v-if="playlist !== undefined && playlist.length > 0"
+        >
+          <div
+            class="border-b dark:border-gray-600 pb-1 flex justify-between items-center mb-2"
+          >
             <span class="text-base dark:text-white font-semibold uppercase text-gray-700">
-              play list</span
-            >
-            <img
-              class="w-4 cursor-pointer"
-              src="https://p.kindpng.com/picc/s/152-1529312_filter-ios-filter-icon-png-transparent-png.png"
-            />
+              {{ $t("panel.playlist") }}
+            </span>
           </div>
-
-          <div class="flex border-b py-3 cursor-pointer hover:shadow-md px-2">
-            <img
-              class="w-10 h-10 object-cover rounded-lg"
-              alt="User avatar"
-              src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200"
-            />
-            <div class="flex flex-col px-2 w-full">
-              <span
-                class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1"
+          <div class="overflow-auto h-32">
+            <template v-for="(item, index) in playlist">
+              <div
+                class="flex items-center border-b dark:border-gray-600 py-3 hover:shadow-md px-2 rounded"
+                :class="index === 0 ? 'bg-gray-800 dark:bg-black' : ''"
+                :key="index"
               >
-                I think I need a sunrise, I'm tired of the sunset
-              </span>
-              <span class="text-xs dark:text-white text-gray-500 uppercase font-medium">
-                -"Boston," Augustana
-              </span>
-            </div>
+                <img
+                  class="w-10 h-10 object-cover rounded-lg"
+                  alt="User avatar"
+                  :src="
+                    item.track_image !== ''
+                      ? item.track_image
+                      : home !== undefined
+                      ? thumb
+                      : player.features
+                  "
+                />
+                <div class="flex flex-col px-2 w-4/5">
+                  <span
+                    class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1 truncate"
+                  >
+                    {{ item.track_title }}
+                  </span>
+                  <span
+                    class="text-xs dark:text-white text-gray-500 uppercase font-medium truncate"
+                  >
+                    {{ item.track_artist }}
+                  </span>
+                </div>
+                <div class="w-1/5 text-right">
+                  <p class="text-xs text-grey-dark dark:text-white" v-if="index !== 0">
+                    {{ $moment.unix(item.track_played).fromNow() }}
+                  </p>
+                  <div class="relative inline-flex" v-else>
+                    <img src="/brand/favicon.ico" alt="Logo" />
+                    <!-- <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+                      <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+                      ></span>
+                      <span
+                        class="relative inline-flex rounded-full h-3 w-3 bg-red-500"
+                      ></span>
+                    </span> -->
+                  </div>
+                </div>
+              </div>
+            </template>
           </div>
-          <div class="flex border-b py-3 cursor-pointer hover:shadow-md px-2">
-            <img
-              class="w-10 h-10 object-cover rounded-lg"
-              alt="User avatar"
-              src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200"
-            />
-            <div class="flex flex-col px-2 w-full">
-              <span
-                class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1"
-              >
-                I think I need a sunrise, I'm tired of the sunset
-              </span>
-              <span class="text-xs dark:text-white text-gray-500 uppercase font-medium">
-                -"Boston," Augustana
-              </span>
-            </div>
-          </div>
-        </div> -->
+        </div>
         <!-- END - Playlist -->
       </div>
     </div>

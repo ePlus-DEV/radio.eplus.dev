@@ -50,7 +50,8 @@ export default async (context, locale) => {
       radio_in: "Radio tại {name}",
       description: "Mô tả",
       category: "Thể Loại",
-      schedule: "Lịch phát sóng"
+      schedule: "Lịch phát sóng",
+      playlist: "Danh sách phát"
     },
     button: {
       back: "Quay lại"

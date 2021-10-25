@@ -29,7 +29,8 @@
     "videojs-contrib-hls": "^5.15.0",
     "vue-head": "^2.2.0",
     "vue-plyr": "^7.0.0",
-    "vue-scrollmagic": "^1.2.0"
+    "vue-scrollmagic": "^1.2.0",
+    "vue-toastification": "^1.7.14"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^2.1.1",

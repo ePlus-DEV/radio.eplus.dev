@@ -5,7 +5,7 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n"></Player>
+    <Player ref="player" :stream="stream_name" :country="i18n" :playlist="data"></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -23,9 +23,9 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: "Radio in " + this.title_slug
-        }
-      ]
+          content: "Radio in " + this.title_slug,
+        },
+      ],
     };
   },
   data() {
@@ -37,14 +37,14 @@ export default {
       stream_name: process.env.Site_Name,
       area: "north-america",
       i18n: "world.north_america.cuba",
-      data: []
+      data: [],
     };
   },
   methods: {
     async fetchData() {
       this.$axios
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
-        .then(res => {
+        .then((res) => {
           const $t = this.$t.bind(this);
           if (res.data.hasOwnProperty(this.$route.params.name)) {
             const data = res.data[this.$route.params.name];
@@ -58,9 +58,7 @@ export default {
 
             var self = this;
             self.title =
-              data.title +
-              " - " +
-              $t("panel.radio_in", { name: this.title_slug });
+              data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
 
             self.$emit("updateHead");
             this.$refs.player.init();
@@ -77,7 +75,7 @@ export default {
               closeOnClickModal: false,
               showClose: false,
               type: "warning",
-              center: true
+              center: true,
             })
               .then(() => {
                 this.$router.push("/");
@@ -85,35 +83,28 @@ export default {
               .catch(() => {
                 this.$message({
                   type: "info",
-                  message: "Delete canceled"
+                  message: "Delete canceled",
                 });
               });
           }
         });
     },
     async fetchSchedule(url) {
-      this.$axios
-        .get(
-          url +
-            this.$moment()
-              .tz("America/Havana")
-              .unix()
-        )
-        .then(res => {
-          if (res.data.success) {
-            this.data = res.data.result;
-          }
+      this.$axios.get(url + this.$moment().tz("America/Havana").unix()).then((res) => {
+        if (res.data.success) {
+          this.data = res.data.result;
+        }
 
-          // Loop
-          var self = this;
-          setTimeout(function() {
-            self.fetchSchedule(url);
-          }, 60000);
-        });
-    }
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchSchedule(url);
+        }, 60000);
+      });
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});
-  }
+  },
 };
 </script>

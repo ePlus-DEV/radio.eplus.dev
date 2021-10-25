@@ -50,7 +50,8 @@ export default async (context, locale) => {
       radio_in: "Radio in {name}",
       description: "Description",
       category: "Category",
-      schedule: "Schedule"
+      schedule: "Schedule",
+      playlist: "Playlist"
     },
     button: {
       back: "Back"
