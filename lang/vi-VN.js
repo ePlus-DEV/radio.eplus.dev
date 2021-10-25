@@ -5,7 +5,8 @@ export default async (context, locale) => {
       group: "Nhóm",
       terms: "Điều Khoản",
       contact: "Liên Hệ",
-      language: "Ngôn ngữ:"
+      language: "Ngôn ngữ:",
+      new_version: "#phienbanmoi"
     },
     terms: {
       content:

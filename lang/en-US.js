@@ -5,7 +5,8 @@ export default async (context, locale) => {
       group: "Group",
       terms: "Terms",
       contact: "Contact",
-      language: "Language:"
+      language: "Language:",
+      new_version: "#newversion"
     },
     terms: {
       content:

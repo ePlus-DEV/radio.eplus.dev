@@ -15,7 +15,7 @@
           shape="square"
           :size="100"
           fit="cover"
-          src="https://api.netlify.com/api/v1/badges/db14fce6-3e3b-499a-b805-30ece668ded5/deploy-status"
+          src="https://api.netlify.com/api/v1/badges/d0726bb7-9dfd-4e34-98d0-1cf2dcd52bbb/deploy-status"
           lazy
         ></el-image>
       </el-col>
