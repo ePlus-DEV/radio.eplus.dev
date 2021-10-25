@@ -42,77 +42,14 @@
               {{ $t("navmenu.homepage") }}
             </li>
           </nuxt-link>
-          <!-- <li
+          <li
             class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
           >
-            <span class="mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-puzzle"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <path
-                  d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1"
-                />
-              </svg>
-            </span>
-            Products
+            <span class="mr-2"> </span>
+            <a href="https://radio-old.eplus.dev" target="_blank">
+              {{ $t("navmenu.old_version") }}
+            </a>
           </li>
-          <li
-            class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mr-10 tracking-normal transition duration-150 ease-in-out"
-          >
-            <span class="mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-compass"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <polyline points="8 16 10 10 16 8 14 14 8 16" />
-                <circle cx="12" cy="12" r="9" />
-              </svg>
-            </span>
-            Performance
-          </li>
-          <li
-            class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white tracking-normal transition duration-150 ease-in-out"
-          >
-            <span class="mr-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-code"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <polyline points="7 8 3 12 7 16" />
-                <polyline points="17 8 21 12 17 16" />
-                <line x1="14" y1="4" x2="10" y2="20" />
-              </svg>
-            </span>
-            Deliverables
-          </li> -->
         </ul>
       </div>
       <div class="h-full hidden xl:flex items-center justify-end">
