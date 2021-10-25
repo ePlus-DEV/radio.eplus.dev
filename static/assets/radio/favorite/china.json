@@ -3,5 +3,6 @@
   "type": "application/x-mpegURL",
   "frequency": "Stream",
   "countries": "China",
-  "stream": "https://rthkaudio1-lh.akamaihd.net/i/radio1_1@355864/master.m3u8"
+  "stream": "https://rthkaudio1-lh.akamaihd.net/i/radio1_1@355864/master.m3u8",
+  "cros": false
 }

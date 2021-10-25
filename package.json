@@ -16,19 +16,30 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/recaptcha": "^1.0.4",
     "@nuxtjs/sitemap": "^2.4.0",
+    "daisyui": "^1.14.5",
     "dotenv": "^9.0.2",
     "element-ui": "^2.13.2",
     "fs": "0.0.1-security",
+    "hls.js": "^1.0.12-0.canary.7993",
     "mediaelement": "^4.2.16",
     "nuxt": "^2.13.3",
     "nuxt-i18n": "^6.27.2",
+    "plyr": "^3.6.9",
     "video.js": "^7.10.1",
     "videojs-contrib-hls": "^5.15.0",
     "vue-head": "^2.2.0",
-    "vue-scrollmagic": "^1.2.0"
+    "vue-plyr": "^7.0.0",
+    "vue-scrollmagic": "^1.2.0",
+    "vue-toastification": "^1.7.14"
   },
   "devDependencies": {
+    "@nuxtjs/color-mode": "^2.1.1",
     "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/moment": "^1.6.1"
+    "@nuxtjs/google-analytics": "^2.4.0",
+    "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/tailwindcss": "^4.2.1",
+    "autoprefixer": "^10.3.7",
+    "postcss": "^8.3.9",
+    "tailwindcss": "^2.2.17"
   }
 }

@@ -1,7 +1,8 @@
 {
   "title": "Habana",
-  "type": "application/x-mpegURL",
+  "type": "audio/mpeg",
   "frequency": "Stream",
   "countries": "Cuba",
-  "stream": "https://icecast.teveo.cu/McW3fLhs"
+  "stream": "https://icecast.teveo.cu/McW3fLhs",
+  "cros": false
 }

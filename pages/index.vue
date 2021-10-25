@@ -1,28 +1,30 @@
 <template>
   <div>
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">{{
-        $t("navmenu.homepage")
-      }}</el-breadcrumb-item>
-    </el-breadcrumb>
+    <!-- BEGIN - Breadcrumbs -->
+    <Breadcrumbs level_1="world.asia.vietnam" />
+    <!-- END - Breadcrumbs -->
 
-    <Player country="world.asia.vietnam" :schedule="schedule_data"></Player>
+    <!-- BEGIN - Player -->
+    <Player
+      ref="player"
+      country="world.asia.vietnam"
+      :schedule="schedule_data"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+    ></Player>
+    <!-- END - Player -->
 
+    <!-- BEGIN - PanelRadio -->
     <PanelRadio></PanelRadio>
+    <!-- BEGIN - PanelRadio -->
   </div>
 </template>
 
 <script>
-// To import only MediaElement class
-import "mediaelement";
-import "mediaelement/build/mediaelementplayer.min.css";
-import PanelRadio from "~/components/PanelRadio.vue";
-import Player from "~/components/Player.vue";
-
 export default {
   head() {
     return {
-      title: this.$t("navmenu.homepage") + " - ",
+      title: this.$t("navmenu.homepage"),
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
@@ -37,11 +39,8 @@ export default {
   data() {
     return {
       schedule_data: [],
+      stream_name: null,
     };
-  },
-  components: {
-    PanelRadio,
-    Player,
   },
   methods: {
     async fetchData() {
@@ -49,49 +48,12 @@ export default {
         .get("/assets/radio/favorite/" + this.$config.Pin_Channel_Favorites + ".json")
         .then((res) => {
           const data = res.data;
-          var notify = this.$notify;
-          const $t = this.$t.bind(this);
+          this.stream_name = data.title;
 
-          var player = new MediaElementPlayer("player", {
-            features: ["playpause", "progress", "tracks", "volume"],
-            enableKeyboard: true,
-            success: function (mediaElement) {
-              // Event
-              $("#player")
-                .on("canplay", function () {
-                  $(".mejs__time-rail").html(
-                    '<div class="ticker radio-name-player"><ul><li>' +
-                      $t("panel.play_from_radio") +
-                      " <strong>" +
-                      data["title"] +
-                      "</strong></li><li>" +
-                      $t("panel.frequency") +
-                      ": <strong>" +
-                      data["frequency"] +
-                      "</strong></li><li>" +
-                      $t("panel.country") +
-                      ": <strong>" +
-                      data["countries"] +
-                      "</strong></li></ul></div>"
-                  );
-                  $(".ticker").ticker();
-                  notify.success({
-                    title: $t("notify.success"),
-                    message: $t("notify.success_content", { radio: data.title }),
-                  });
-                })
-                .on("error", function () {
-                  notify.error({
-                    title: $t("notify.error"),
-                    message: $t("notify.error_content", { radio: data.title }),
-                  });
-                });
+          // Vuex
+          this.$store.dispatch("storePLAYERHOME", data);
 
-              console.info("Player initialised");
-            },
-          });
-
-          player.setSrc(res.data["stream"]);
+          this.$refs.player.init(true);
 
           // Get Schedule
           var form = new FormData();
@@ -116,62 +78,7 @@ export default {
     },
   },
   created() {
-    this.loading = true;
-    Promise.all([this.fetchData()]).then(() => {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      loading.close();
-    });
+    Promise.all([this.fetchData()]).then(() => {});
   },
 };
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-
-.ticker {
-  width: 500px;
-  margin: 10px auto;
-}
-
-/* The HTML list gets replaced with a single div,
-     which contains the active ticker item, so you
-     can easily style that as well */
-.ticker div {
-  display: inline-block;
-  word-wrap: break-word;
-}
-</style>

@@ -4,7 +4,7 @@
     "type": "application/x-mpegURL",
     "signal": "93.9 FM",
     "url": "https://www.cbs.co.kr/radio/",
-    "status": true,
+    "cros": false,
     "stream": "https://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8",
     "features": "/img/asia/korea/cbs-eum-agfm-seuteuliming.png"
   },
@@ -13,7 +13,7 @@
     "type": "application/x-mpegURL",
     "signal": "93.1 FM",
     "url": "https://radio.kbs.co.kr/list01.html?section_id=6563",
-    "status": true,
+    "cros": false,
     "stream": "https://1fm.gscdn.kbs.co.kr/1fm_192_1.m3u8?Expires=1917417019&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly8xZm0uZ3NjZG4ua2JzLmNvLmtyLzFmbV8xOTJfMS5tM3U4IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjMzNjE3NzMxfX19XX0_&Signature=oB7XMy8W7Vs0dWCBGn0LYdxPyVuihZo0m7Fo1g7qw-~hKep6iD~RmR7HSPFWbAro19I97f0ZSSdqdOHq0bc3O2kESWtAxCl4kvNXq28OMZdyquiEHzCCRO6bg4p7r9IVWOEo6PLF1E6CLd5eS59atelWFcZK63n-LTn7o2pSqQ4V9M8rIK7hB5GIdto5dOzgJklw2e~k9PoM6inALl4-Yg5tp0kVpV8NPkbLRjEtAStgtp-TgiZnpE29GDf6iOZQfplHxXGZbthalH5kWniFrLj6FmdfbdPwJuz6VhLJ7IWt2plHvWifaODb5UiSc3mfeEK2ebB4LvvTCedeV3QD~A__&Key-Pair-Id=APKAICDSGT3Y7IXGJ3TA",
     "features": "/img/asia/korea/kbs-keullaesig-ladio.png"
   },
@@ -22,8 +22,8 @@
     "type": "application/x-mpegURL",
     "signal": "104.5 FM",
     "url": "https://www.ebs.co.kr/radio/home",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://amdlive-ch03.ctnd.com.edgesuite.net/arirang_3ch/smil:arirang_3ch.smil/playlist.m3u8",
+    "cros": true,
+    "stream": "http://amdlive-ch03.ctnd.com.edgesuite.net/arirang_3ch/smil:arirang_3ch.smil/playlist.m3u8",
     "features": "/img/asia/korea/ebs-ladio-bangsong.png"
   },
   "arirang-radio": {
@@ -31,7 +31,7 @@
     "type": "application/x-mpegURL",
     "signal": "88.7 FM",
     "url": "http://www.arirang.co.kr/Radio/Radio_index.asp",
-    "status": true,
+    "cros": false,
     "stream": "https://ebsonair.ebs.co.kr/fmradiofamilypc/familypc1m/playlist.m3u8",
     "features": "/img/asia/korea/arirang-radio.png"
   },
@@ -40,7 +40,7 @@
     "type": "application/x-mpegURL",
     "signal": "95.1 FM",
     "url": "http://www.tbs.seoul.kr",
-    "status": true,
+    "cros": false,
     "stream": "https://tbs.hscdn.com/tbsradio/fm/playlist.m3u8",
     "features": "/img/asia/korea/tbs-fm-onlain.png"
   },
@@ -49,7 +49,7 @@
     "type": "application/x-mpegURL",
     "signal": "101.3 FM",
     "url": "http://tbsefm.seoul.kr",
-    "status": true,
+    "cros": false,
     "stream": "https://cdnefm.tbs.seoul.kr/tbs/_definst_/tbs_efm_web_720.smil/playlist.m3u8",
     "features": "/img/asia/korea/tbs-efm-ladio-cheongchwi.png"
   },
@@ -58,7 +58,7 @@
     "type": "application/x-mpegURL",
     "signal": "95.9 FM",
     "url": "http://www.imbc.com/broad/radio/index.html",
-    "status": true,
+    "cros": false,
     "stream": "https://mini.imbc.com/webapp_v3/mini.html?channel=sfm",
     "features": "/img/asia/korea/mbc-pyojunfm-ladio.png"
   },
@@ -67,7 +67,7 @@
     "type": "application/x-mpegURL",
     "signal": "94.5 FM",
     "url": "https://radio.ytn.co.kr/",
-    "status": true,
+    "cros": false,
     "stream": "https://slive.ytn.co.kr/live/_definst_/fmlive_0624_1.sdp/playlist.m3u8",
     "features": "/img/asia/korea/ytn-ladio-deudgi.png"
   },
@@ -76,7 +76,7 @@
     "type": "application/x-mpegURL",
     "signal": "91.9 FM",
     "url": "http://www.imbc.com/broad/radio/index.html",
-    "status": true,
+    "cros": true,
     "stream": "https://mini.imbc.com/webapp_v3/mini.html?channel=mfm",
     "features": "/img/asia/korea/mbc-fm4u-deudgi.png"
   },
@@ -85,7 +85,7 @@
     "type": "application/x-mpegURL",
     "signal": "98.1 FM",
     "url": "https://www.cbs.co.kr/radio/",
-    "status": true,
+    "cros": false,
     "stream": "https://aac.cbs.co.kr/cbs981/_definst_/cbs981.stream/playlist.m3u8",
     "features": "/img/asia/korea/cbs-pyojunfm-onlain-laibeu.png"
   },
@@ -94,8 +94,8 @@
     "type": "application/x-mpegURL",
     "signal": "92.3 FM",
     "url": "http://www.ubc.co.kr/t_ra_00.html",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://59.23.231.102:1935/live/mp3:UBCfmstream/playlist.m3u8",
+    "cros": true,
+    "stream": "http://59.23.231.102:1935/live/mp3:UBCfmstream/playlist.m3u8",
     "features": "/img/asia/korea/no-1pawomyujig-inlaibeu-cheong.png"
   },
   "kbs-kulfm-ladio": {
@@ -103,7 +103,7 @@
     "type": "application/x-mpegURL",
     "signal": "89.1 FM",
     "url": "https://radio.kbs.co.kr/list01.html?section_id=6564",
-    "status": true,
+    "cros": false,
     "stream": "https://2fm.gscdn.kbs.co.kr/2fm_192_1.m3u8?Expires=1917417019&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly8yZm0uZ3NjZG4ua2JzLmNvLmtyLzJmbV8xOTJfMS5tM3U4IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjM0MTI5ODkzfX19XX0_&Signature=B~dfvERtQTn6KTccMiZ61vjgcJf~jhfxAWC~vo5guLznBPkAaBfsJ6oAHzvp7kmhxIvSoV~s96fbVSvfJvwA0pkh-FvrFqB0Zz1dKYSZuDpB40iWETeQOpIUD6oth1l3YSWLruphcfTprPkIlyKAarGuEsMszqKpbSEzIIJ4OPqWSJpDz9t1bhCVX7eghtTwBk3Zr1WPHVbRqILpJqPcLgOn0YR4CgvllOD0RlvIVwoz8S45VEwpdC9Y-bK-Sx0zSG0p3TydlEkKV5r9aHrO-PwAn37AZzqX5DxI0AQcWiVjhs~QwvgjPtgMmnXcaq1A1PLPlvUJaVopVd~8IGWGcw__&Key-Pair-Id=APKAICDSGT3Y7IXGJ3TA",
     "features": "/img/asia/korea/kbs-kulfm-ladio.png"
   },
@@ -112,7 +112,7 @@
     "type": "application/x-mpegURL",
     "signal": "106.1 FM",
     "url": "https://radio.kbs.co.kr/list01.html?section_id=6561",
-    "status": true,
+    "cros": false,
     "stream": "https://2radio.gscdn.kbs.co.kr/2radio_192_3.m3u8?Expires=1917417019&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly8ycmFkaW8uZ3NjZG4ua2JzLmNvLmtyLzJyYWRpb18xOTJfMy5tM3U4IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjM0MTMwMjA3fX19XX0_&Signature=CfVi3QKq5wSm9gQSrUD6fAUygH4HqtZXxbw4oi8SDHUhCqHKAEw~Dq6x~0zw94vDAE5FNrFJivQ7-2J9mHUQXDqX9nGR5KXfjEoPQlNbeduGV8QUz4OIepMD8HoY0x4tM5dLaNocEMpND~AfkLCcMwKEs0hb9Zg-fXeZYiD9qEQX3N0g8BTH3teEIcxMkeF6XjsBg5VNAEgWz3z4XVC7b3oHSUBJvmYcM1zPrWXc5fckpE4bS6nMz22F5aqLUPXbWvg-6US7xCfuTnI7zG3hMkJmMbLKfUhnwhfsYT3cbUUkPQkUhqT14SgTo2lT5m8Y9C0YKorBi70CzGY4V5ZsFA__&Key-Pair-Id=APKAICDSGT3Y7IXGJ3TA",
     "features": "/img/asia/korea/kbs-haepifm-seuteuliming.png"
   },
@@ -121,7 +121,7 @@
     "type": "application/x-mpegURL",
     "signal": "106.9 FM",
     "url": "http://seoul.febc.net/",
-    "status": true,
+    "cros": false,
     "stream": "https://mlive2.febc.net/live/seoulfm/playlist.m3u8",
     "features": "/img/asia/korea/simjangsoli-inlaibeu-deudgi.png"
   },
@@ -130,8 +130,8 @@
     "type": "application/x-mpegURL",
     "signal": "98.7 FM",
     "url": "http://www.gfn.or.kr/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://media.gfn.or.kr:1935/gfnlive/myStream/playlist.m3u8",
+    "cros": true,
+    "stream": "http://media.gfn.or.kr:1935/gfnlive/myStream/playlist.m3u8",
     "features": "/img/asia/korea/gwangju-yeong-eo-ladio.png"
   },
   "bulgyobangsong-ladio-cheongchw": {
@@ -139,7 +139,7 @@
     "type": "application/x-mpegURL",
     "signal": "101.9 FM",
     "url": "https://www.bbsi.co.kr/HOME/",
-    "status": true,
+    "cros": false,
     "stream": "https://bbslive.clouducs.com/bbsradio-mlive/livestream/playlist.m3u8",
     "features": "/img/asia/korea/bulgyobangsong-ladio-cheongchw.png"
   },
@@ -148,7 +148,7 @@
     "type": "application/x-mpegURL",
     "signal": "104.9 FM",
     "url": "https://radio.kbs.co.kr/list01.html?section_id=6562",
-    "status": true,
+    "cros": false,
     "stream": "https://3radio.gscdn.kbs.co.kr/3radio_192_3.m3u8?Expires=1917417019&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly8zcmFkaW8uZ3NjZG4ua2JzLmNvLmtyLzNyYWRpb18xOTJfMy5tM3U4IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjM0MTMxMTYxfX19XX0_&Signature=P-0bi5etrXTteAEggPVm787BnYbVXB4nY~JEg5tXRjvAbFVbRJzSgWQwS5VHTK-mpm2Lg1eGG5dP4aQtLMzo45mesO3iXJjHYHvy1VB-twVXwM1BgQxzu-d4kB2v7Q1su1pkBfviCHFKrHfDh~OBKAZHP3PXnbUhK-0AwH53uHfZ0X-hXDvjv6RRVlrfRoth8HC~0X53VdXdGwFh9nvbcyznjw-nSB~cSQ7vKKkuh~hicQxnoVylNtie~BdWjSdYPwXCPOlzUgMvicOKQR5qhJZeD-vOd0erYBOS2ypLBQR66riU8e4WO5ga76auJZnm8VlAK~xuLzalOa~yzo2EZg__&Key-Pair-Id=APKAICDSGT3Y7IXGJ3TA",
     "features": "/img/asia/korea/kbs-1ladio-laibeu-seuteuliming.png"
   },
@@ -157,8 +157,8 @@
     "type": "application/x-mpegURL",
     "signal": "90.5 FM",
     "url": "https://www.befm.or.kr/main.php?lang=eng",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://befm905.live.smilecdn.com:1935/befm905_live/live/master.m3u8",
+    "cros": true,
+    "stream": "http://befm905.live.smilecdn.com:1935/befm905_live/live/master.m3u8",
     "features": "/img/asia/korea/geugdongbangsong-fm-silsigan.png"
   },
   "gug-agbangsong-ladio-onlain-la": {
@@ -166,17 +166,17 @@
     "type": "application/x-mpegURL",
     "signal": "97.3 FM",
     "url": "https://radio.kbs.co.kr/",
-    "status": true,
+    "cros": false,
     "stream": "https://1radio.gscdn.kbs.co.kr/1radio_192_1.m3u8?Expires=1917417019&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly8xcmFkaW8uZ3NjZG4ua2JzLmNvLmtyLzFyYWRpb18xOTJfMS5tM3U4IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjM0MTMxNjI3fX19XX0_&Signature=DOVmO2wdwLt1Xr~8xeuIDY-7wx~L5sXqqta~w5wWGAbTpSdsZP0K4wNYQH-wNalohHWzkLq~lRXTQTG1~xtXiQ7b4fJZcLCQZknZ-dO-SApTzhlfSulBIwc1gLuGb9VMGOzdFiIziFdvywIEpLMOcPTPCkDIm25VzIlb2D7cu0Oti1EMM-8HPdPpu~PEsdSN-7DhdqdO-on8NxgLhhAfjd~HVPdEpnbW6gyPVqcm0zKnkWWeW4ymPnt6V5RKQyv3Mj8sPmeCdGiQI7O-LU8wZsBigNmZm6u2WDTSmgt5Nx99apTYg05oaH~3M7c7mkdGvISPSt5IItcNG9IruXkpRA__&Key-Pair-Id=APKAICDSGT3Y7IXGJ3TA",
     "features": "/img/asia/korea/gug-agbangsong-ladio-onlain-la.png"
   },
   "waussissiem-chan-yang-bangsong": {
     "title": "와우씨씨엠",
-    "type": "application/x-mpegURL",
+    "type": "audio/mp3",
     "signal": "Stream",
     "url": "https://wowccm.net/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://175.192.196.90:8000/stream/1/",
+    "cros": true,
+    "stream": "http://wowccm.iptime.org:8000/;",
     "features": "/img/asia/korea/waussissiem-chan-yang-bangsong.png"
   },
   "pyeonghwabangsong-ladio-seuteu": {
@@ -184,17 +184,17 @@
     "type": "application/x-mpegURL",
     "signal": "105.3 FM",
     "url": "https://www.cpbc.co.kr/radio",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://49.1.248.31:1935/live/fmlive.stream/playlist.m3u8",
+    "cros": true,
+    "stream": "http://49.1.248.31:1935/live/fmlive.stream/playlist.m3u8",
     "features": "/img/asia/korea/pyeonghwabangsong-ladio-seuteu.png"
   },
   "lag-balladeu": {
     "title": "락 발라드",
-    "type": "application/x-mpegURL",
+    "type": "audio/x-mpegurl",
     "signal": "Stream",
     "url": "N/A",
-    "status": true,
-    "stream": "http://1.uicl.co.kr:8000/;?DIST=TuneIn&TGT=TuneIn&maxServers=2&partnertok=eyJhbGciOiJIUzI1NiIsImtpZCI6InR1bmVpbiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVkX3BhcnRuZXIiOnRydWUsImlhdCI6MTYzMzk1OTM5MCwiaXNzIjoidGlzcnYifQ.CfGinFrZyQEcPoTYIWn2DNh1XCZlMcpF9tCCo6v7mi0",
+    "cros": true,
+    "stream": "http://1.uicl.co.kr:8000/listen.pls",
     "features": "/img/asia/korea/lag-balladeu.png"
   },
   "myujig-aenpipeul-inlaibeu-cheo": {
@@ -202,8 +202,8 @@
     "type": "application/x-mpegURL",
     "signal": "98.1 FM",
     "url": "https://changwon.febc.net/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://mlive2.febc.net:1935/live/cwlive/playlist.m3u8",
+    "cros": true,
+    "stream": "http://mlive2.febc.net:1935/live/cwlive/playlist.m3u8",
     "features": "/img/asia/korea/myujig-aenpipeul-inlaibeu-cheo.png"
   },
   "busangeugdongbangsong-ladio-on": {
@@ -211,8 +211,8 @@
     "type": "application/x-mpegURL",
     "signal": "1566 AM",
     "url": "http://jeju.febc.net/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://mlive2.febc.net:1935/live/jejufm/playlist.m3u8",
+    "cros": true,
+    "stream": "http://mlive2.febc.net:1935/live/jejufm/playlist.m3u8",
     "features": "/img/asia/korea/busangeugdongbangsong-ladio-on.png"
   },
   "geugdongbangsong-fm-onlain-che": {
@@ -220,7 +220,7 @@
     "type": "application/x-mpegURL",
     "signal": "1188 AM",
     "url": "http://jeju.febc.net/",
-    "status": true,
+    "cros": false,
     "stream": "https://mlive2.febc.net/live/seoulam/playlist.m3u8",
     "features": "/img/asia/korea/geugdongbangsong-fm-onlain-che.png"
   },
@@ -229,8 +229,8 @@
     "type": "application/x-mpegURL",
     "signal": "100.5 FM",
     "url": "http://mokpo.febc.net/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://mlive2.febc.net:1935/live/mplive/playlist.m3u8",
+    "cros": true,
+    "stream": "http://mlive2.febc.net:1935/live/mplive/playlist.m3u8",
     "features": "/img/asia/korea/pohang-geugdongbangsong-fm-lad.png"
   },
   "amalanseu-inlaibeu-cheongchwi": {
@@ -238,7 +238,7 @@
     "type": "application/x-mpegURL",
     "signal": "93.3 FM",
     "url": "https://busan.febc.net/main",
-    "status": true,
+    "cros": false,
     "stream": "https://mlive2.febc.net/live/bsfebc/playlist.m3u8",
     "features": "/img/asia/korea/amalanseu-inlaibeu-cheongchwi.png"
   },
@@ -247,7 +247,7 @@
     "type": "application/x-mpegURL",
     "signal": "90.3 FM",
     "url": "http://pohang.febc.net/",
-    "status": true,
+    "cros": false,
     "stream": "https://mlive2.febc.net/live/phlive/playlist.m3u8",
     "features": "/img/asia/korea/jejugeugdongbangsong-ladio-ban.png"
   },
@@ -256,7 +256,7 @@
     "type": "application/x-mpegURL",
     "signal": "90.3 FM",
     "url": "http://ulsan.febc.net/",
-    "status": true,
+    "cros": false,
     "stream": "https://mlive2.febc.net/live/uslive/playlist.m3u8",
     "features": "/img/asia/korea/myukeulkaeseuteu-inteones-seut.png"
   },
@@ -265,7 +265,7 @@
     "type": "application/x-mpegURL",
     "signal": "102.1 FM",
     "url": "https://www.cbs.co.kr/radio/",
-    "status": true,
+    "cros": false,
     "stream": "https://aac.cbs.co.kr/busan981/_definst_/busan981.stream/playlist.m3u8",
     "features": "/img/asia/korea/busancbs-eum-agfm-bangsong-che.png"
   },
@@ -274,17 +274,17 @@
     "type": "application/x-mpegURL",
     "signal": "102.9 FM",
     "url": "https://www.cbs.co.kr/radio/",
-    "status": true,
+    "cros": false,
     "stream": "https://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8",
     "features": "/img/asia/korea/24sigan-udong-ine-inlaibeu-sil.png"
   },
   "jeonjubangsong-ladio-deudgi": {
     "title": "마포FM",
-    "type": "application/x-mpegURL",
+    "type": "audio/mpeg",
     "signal": "100.7 FM",
     "url": "https://mapofm.net/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://115.85.182.39/mapofm",
+    "cros": true,
+    "stream": "http://115.85.182.39/mapofm",
     "features": "/img/asia/korea/jeonjubangsong-ladio-deudgi.png"
   },
   "daegucbs-ladio-laibeu": {
@@ -292,7 +292,7 @@
     "type": "application/x-mpegURL",
     "signal": "1251 AM",
     "url": "https://dgcbs.co.kr/",
-    "status": true,
+    "cros": false,
     "stream": "https://aac.cbs.co.kr/daegu/_definst_/daegu.stream/playlist.m3u8",
     "features": "/img/asia/korea/daegucbs-ladio-laibeu.png"
   },
@@ -301,7 +301,7 @@
     "type": "application/x-mpegURL",
     "signal": "99.1 FM",
     "url": "https://www.igbf.kr/gugak_web/main/",
-    "status": true,
+    "cros": false,
     "stream": "https://mgugaklive.nowcdn.co.kr/gugakradio/gugakradio.stream/playlist.m3u8",
     "features": "/img/asia/korea/pyeon-anhan-seon-yul-inlaibeu.png"
   },
@@ -310,17 +310,17 @@
     "type": "application/x-mpegURL",
     "signal": "100.3 FM",
     "url": "https://www.radiogfm.net/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://onair.radiogfm.net:8003/;",
+    "cros": true,
+    "stream": "http://onair.radiogfm.net:8003/;",
     "features": "/img/asia/korea/gwan-agfm-ladio-bangsong.png"
   },
   "won-eumbangsong-ladio-deudgi": {
     "title": "원음방송 라디오 FM",
-    "type": "application/x-mpegURL",
+    "type": "audio/mpeg",
     "signal": "89.7 FM",
     "url": "http://www.wbsi.kr/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://45.76.71.4:8000/wbs-smok.m3u",
+    "cros": true,
+    "stream": "http://45.76.71.4:8000/wbs-smok",
     "features": "/img/asia/korea/won-eumbangsong-ladio-deudgi.png"
   },
   "kbs-3ladio-onlain-laibeu": {
@@ -328,8 +328,8 @@
     "type": "application/x-mpegURL",
     "signal": "90.1 FM",
     "url": "https://jtv.co.kr/2012/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://45.76.71.4:8000/wbs-smok.m3u",
+    "cros": false,
+    "stream": "mms://61.85.197.50/magicfm_live",
     "features": "/img/asia/korea/kbs-3ladio-onlain-laibeu.png"
   },
   "aleumdaun-in-yeon-4050-inlaibe": {
@@ -337,26 +337,26 @@
     "type": "application/x-mpegURL",
     "signal": "1170 AM",
     "url": "https://www.kbs.co.kr/",
-    "status": true,
+    "cros": false,
     "stream": null,
     "features": "/img/asia/korea/aleumdaun-in-yeon-4050-inlaibe.png"
   },
   "seongseogongdongchefm-ladio-ba": {
     "title": "성서공동체FM",
-    "type": "application/x-mpegURL",
+    "type": "audio/mpeg",
     "signal": "89.1 FM",
     "url": "http://scnfm.or.kr/",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://onair.scnfm.kr:8000/stream/2/",
+    "cros": true,
+    "stream": "http://onair.scnfm.kr:8000/stream/2/",
     "features": "/img/asia/korea/seongseogongdongchefm-ladio-ba.png"
   },
   "breez-onlain-seuteuliming": {
     "title": "Breez",
-    "type": "application/x-mpegURL",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "http://breez.fm/",
-    "status": true,
-    "stream": "https://stream.zenolive.com/6trddptrsg0uv",
+    "cros": true,
+    "stream": "https://node-35.zeno.fm/6trddptrsg0uv",
     "features": "/img/asia/korea/breez-onlain-seuteuliming.png"
   },
   "jeonnamcbs-pyojunfm-silsigan": {
@@ -364,7 +364,7 @@
     "type": "application/x-mpegURL",
     "signal": "102.1 FM",
     "url": "http://www.jncbs.co.kr",
-    "status": true,
+    "cros": false,
     "stream": "https://aac.cbs.co.kr/jeonnam/_definst_/jeonnam.stream/playlist.m3u8",
     "features": "/img/asia/korea/jeonnamcbs-pyojunfm-silsigan.png"
   },
@@ -373,7 +373,7 @@
     "type": "application/x-mpegURL",
     "signal": "90.1 FM",
     "url": "https://yeongdong.febc.net/",
-    "status": true,
+    "cros": false,
     "stream": "https://mlive2.febc.net/live/ydlive/playlist.m3u8",
     "features": "/img/asia/korea/yeongdong-geugdongbangsong-fm.png"
   },
@@ -382,8 +382,8 @@
     "type": "application/x-mpegURL",
     "signal": "93.1 FM",
     "url": "http://www.dgpbc.co.kr",
-    "status": true,
-    "stream": "https://e-cros.herokuapp.com/http://live.dgpbc.co.kr/cdnlive-hls/dgpbclive/_definst_/liveevent/livestream.m3u8",
+    "cros": true,
+    "stream": "http://live.dgpbc.co.kr/cdnlive-hls/dgpbclive/_definst_/liveevent/livestream.m3u8",
     "features": "/img/asia/korea/daegupyeonghwabangsong-ladio-c.png"
   }
 }

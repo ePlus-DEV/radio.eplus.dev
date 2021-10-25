@@ -4,5 +4,6 @@
   "frequency": "FM 91 MHz",
   "countries": "Việt Nam",
   "stream": "https://str.vov.gov.vn/vovlive/vovGTHCM.sdp_aac/chunklist_w1213978008.m3u8",
-  "schedule": "https://vovlive.vn/api/appGetvovschedule"
+  "schedule": "https://vovlive.vn/api/appGetvovschedule",
+  "cros": false
 }

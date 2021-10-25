@@ -2,10 +2,13 @@ export default async (context, locale) => {
   return await Promise.resolve({
     navmenu: {
       homepage: "Trang Chủ",
+      about: "Giới Thiệu",
+      blog: "Blog",
       group: "Nhóm",
       terms: "Điều Khoản",
       contact: "Liên Hệ",
-      language: "Ngôn ngữ:"
+      language: "Ngôn ngữ:",
+      old_version: "#phienbancu"
     },
     terms: {
       content:
@@ -48,7 +51,8 @@ export default async (context, locale) => {
       radio_in: "Radio tại {name}",
       description: "Mô tả",
       category: "Thể Loại",
-      schedule: "Lịch phát sóng"
+      schedule: "Lịch phát sóng",
+      playlist: "Danh sách phát"
     },
     button: {
       back: "Quay lại"

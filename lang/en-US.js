@@ -2,10 +2,13 @@ export default async (context, locale) => {
   return await Promise.resolve({
     navmenu: {
       homepage: "Homepage",
+      about: "About",
+      blog: "Blog",
       group: "Group",
       terms: "Terms",
       contact: "Contact",
-      language: "Language:"
+      language: "Language:",
+      old_version: "#oldversion"
     },
     terms: {
       content:
@@ -48,7 +51,8 @@ export default async (context, locale) => {
       radio_in: "Radio in {name}",
       description: "Description",
       category: "Category",
-      schedule: "Schedule"
+      schedule: "Schedule",
+      playlist: "Playlist"
     },
     button: {
       back: "Back"

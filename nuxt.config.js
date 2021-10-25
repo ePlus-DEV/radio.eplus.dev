@@ -21,12 +21,14 @@ export default {
   publicRuntimeConfig: {
     Base_URL: process.env.BASE_URL || "https://radio.eplus.dev",
     Site_Name: process.env.Site_Name || "Radio.ePlus.DEV",
-    Facebook: process.env.Facebook || "https://www.facebook.com/hoangsvit",
-    Fanpage: process.env.FanPage || "https://www.facebook.com/hoangsvit",
-    Group_Facebook:
-      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
-    Email_Contact:
-      process.env.Group_Facebook || "https://www.facebook.com/hoangsvit",
+    Facebook: process.env.Facebook,
+    Instagram: process.env.Instagram,
+    Github: process.env.Github,
+    Fanpage: process.env.FanPage,
+    Copyright: process.env.Copyright,
+    Blog: process.env.Blog,
+    Group_Facebook: process.env.Group_Facebook,
+    Email_Contact: process.env.Group_Facebook,
     Pin_Channel_Favorites: process.env.Pin_Channel_Favorites || "viet-nam"
   },
   /*
@@ -86,7 +88,8 @@ export default {
         property: "og:audio",
         content: "https://media-ssl.musicradio.com/HeartUK"
       },
-      { property: "og:audio:type", content: "audio/mpeg" }
+      { property: "og:audio:type", content: "audio/mpeg" },
+      { property: "application-name", content: process.env.Site_Name }
     ],
     link: [
       {
@@ -124,23 +127,35 @@ export default {
   /*
    ** Global CSS
    */
-  css: [
-    "element-ui/lib/theme-chalk/index.css",
-    "@/assets/custom/css/style.css"
-  ],
+  css: ["@/assets/custom/css/style.css"],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    {
-      src: "@/plugins/element-ui"
-    },
-    { src: "~plugins/scrollmagic.js", ssr: false }
+    { src: "~/plugins/plyr.js" },
+    { src: "~plugins/scrollmagic.js", ssr: false },
+    { src: "~/plugins/vue-toastification.js" }
   ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  components: true,
+
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ["@nuxtjs/moment"],
+  buildModules: [
+    "@nuxtjs/moment",
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
+    "@nuxtjs/google-analytics"
+  ],
+  // GA
+  googleAnalytics: {
+    id: "UA-129271342-9",
+    debug: {
+      enabled: process.env.NODE_ENV === "production"
+    }
+  },
   // momentjs
   moment: {
     timezone: true,
@@ -152,7 +167,7 @@ export default {
    */
   modules: [
     // "@nuxtjs/recaptcha",
-    "@nuxtjs/auth-next",
+    // "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
     "@nuxt/content",
@@ -165,13 +180,13 @@ export default {
             code: "en",
             file: "en-US.js",
             name: "English",
-            flag: "/img/flags/europe/united-kingdom.png"
+            flag: "/img/europe/flags/united-kingdom.png"
           },
           {
             code: "vi",
             file: "vi-VN.js",
             name: "Tiếng Việt",
-            flag: "/img/flags/asia/viet-nam.png"
+            flag: "/img/asia/flags/viet-nam.png"
           }
         ],
         strategy: "no_prefix",
@@ -185,7 +200,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    // transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
@@ -212,7 +227,7 @@ export default {
   /*
    ** Auth Config
    */
-  auth: {
+  /* auth: {
     redirect: {
       login: "/admin/login",
       logout: "/",
@@ -228,7 +243,7 @@ export default {
         // logoutRedirectUri: process.env.BASE_URL
       }
     }
-  },
+  }, */
   proxy: {
     "/assets/": {
       target: process.env.BASE_URL,
@@ -283,5 +298,10 @@ export default {
       lastmod: new Date(),
       lastmodrealtime: true
     }
+  },
+  // Darkmode
+  colorMode: {
+    classPrefix: "",
+    classSuffix: ""
   }
 };

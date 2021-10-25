@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie9 ie9" {{ HTML_ATTRS }}><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html {{ HTML_ATTRS }}>
+<html class="bg-gray-200" {{ HTML_ATTRS }}>
 <!--<![endif]-->
 
 <head {{ HEAD_ATTRS }}>
   {{ HEAD }}
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="stylesheet" href="https://unpkg.com/vue-plyr@7.0.0/dist/vue-plyr.css">
 </head>
 
 <body {{ BODY_ATTRS }}>
   {{ APP }}
   <script src="/assets/js/jquery-3.4.1.min.js"></script>
   <script src="/assets/jquery-ticker/jquery.ticker.min.js"></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129271342-9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-129271342-9');
-  </script>
 </body>
 
 </html>
