@@ -128,7 +128,7 @@
         </div>
         <div class="flex justify-center mt-8 space-x-6">
           <img
-            src="https://api.netlify.com/api/v1/badges/d0726bb7-9dfd-4e34-98d0-1cf2dcd52bbb/deploy-status"
+            src="https://api.netlify.com/api/v1/badges/f3032e8d-ed87-4cf5-bc34-df3c63b9f627/deploy-status"
             alt="Serverless by Netlify"
           />
         </div>
