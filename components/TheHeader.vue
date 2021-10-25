@@ -46,7 +46,7 @@
             class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
           >
             <span class="mr-2"> </span>
-            <a href="https://radio-old.eplus.dev" target="_blank">
+            <a href="https://old-radio.eplus.dev" target="_blank">
               {{ $t("navmenu.old_version") }}
             </a>
           </li>
