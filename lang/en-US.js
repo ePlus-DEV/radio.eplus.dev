@@ -8,7 +8,8 @@ export default async (context, locale) => {
       terms: "Terms",
       contact: "Contact",
       language: "Language:",
-      old_version: "#oldversion"
+      old_version: "#oldversion",
+      statistics: "Statistics"
     },
     terms: {
       content:

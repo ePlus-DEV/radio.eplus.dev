@@ -66,6 +66,14 @@
               {{ $t("navmenu.terms") }}
             </a>
           </div>
+          <div class="px-5 py-2">
+            <nuxt-link
+              to="/statistics"
+              class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
+            >
+              {{ $t("navmenu.statistics") }}
+            </nuxt-link>
+          </div>
         </nav>
         <div class="flex justify-center mt-8 space-x-6">
           <a

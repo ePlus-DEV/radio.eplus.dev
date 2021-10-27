@@ -8,7 +8,8 @@ export default async (context, locale) => {
       terms: "Điều Khoản",
       contact: "Liên Hệ",
       language: "Ngôn ngữ:",
-      old_version: "#phienbancu"
+      old_version: "#phienbancu",
+      statistics: "Thống kê"
     },
     terms: {
       content:

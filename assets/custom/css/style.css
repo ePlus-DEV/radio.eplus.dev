@@ -12,3 +12,11 @@
 .dark .icon--not-pressed {
   color: #fff;
 }
+
+.dark .apexcharts-svg {
+  background: rgb(55 65 81);
+}
+
+.dark svg text {
+  fill: white;
+}

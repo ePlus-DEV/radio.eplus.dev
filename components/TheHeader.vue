@@ -307,7 +307,6 @@
 
 <script>
 export default {
-  name: "BlackLeftAlignedWithIcons",
   data() {
     return {};
   },
