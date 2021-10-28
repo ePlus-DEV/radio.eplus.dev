@@ -64,6 +64,9 @@ export default async (context, locale) => {
       error: "Error",
       error_content: "Unable to play radio: {radio}"
     },
+    statistics_tooltip: {
+      text: "Incidents: {num} | Downtime: {time} mins"
+    },
     404: {
       content:
         "We would like to inform that the page you are looking for, does not exist!"

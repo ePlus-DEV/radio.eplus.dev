@@ -64,6 +64,9 @@ export default async (context, locale) => {
       error: "Thất bại",
       error_content: "Không thể phát radio: {radio}"
     },
+    statistics_tooltip: {
+      text: "Sự cố: {num} | Ngừng hoạt động: {time} phút"
+    },
     404: {
       content: "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
     }

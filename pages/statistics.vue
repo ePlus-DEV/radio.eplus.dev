@@ -16,34 +16,66 @@
       <!-- Chart -->
 
       <!-- BEGIN - Calendar -->
-
       <div
-        class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-4 px-2 md:mx-12 overflow-x-auto"
+        class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-10 px-2 md:mx-12 overflow-x-auto"
       >
-        <template v-for="(item, index) in last7days">
+        <template v-for="(item, index) in data_list_sort">
           <div
-            class="flex group bg-green-600 shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
+            :data-tip="
+              $t('statistics_tooltip.text', {
+                num: item.apdex_results_count_frustrated,
+                time: $moment
+                  .duration(item.duration_seconds_total_downtime, 'seconds')
+                  .minutes(),
+              })
+            "
+            class="tooltip"
+            :class="
+              item.apdex_results_count_frustrated === 1
+                ? 'tooltip-error'
+                : 'tooltip-success'
+            "
             :key="index"
           >
-            <span class="flex h-3 w-3 absolute -top-1 -right-1">
-              <span
-                class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full bg-green-400"
-              ></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-100"></span>
-            </span>
-            <div class="flex items-center px-4 py-4">
-              <div class="text-center">
-                <p class="text-gray-100 text-sm">
-                  {{ $moment(item).format("ddd") }}
-                </p>
-                <p class="text-gray-100 mt-3 font-bold">
-                  {{ $moment(item).format("DD/MM") }}
-                </p>
+            <div
+              class="flex group shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
+              :class="
+                item.apdex_results_count_frustrated === 1 ? 'bg-red-600' : 'bg-green-600'
+              "
+            >
+              <span class="flex h-3 w-3 absolute -top-1 -right-1">
+                <span
+                  class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full"
+                  :class="
+                    item.apdex_results_count_frustrated === 1
+                      ? 'bg-red-400'
+                      : 'bg-green-400'
+                  "
+                ></span>
+                <span
+                  class="relative inline-flex rounded-full h-3 w-3"
+                  :class="
+                    item.apdex_results_count_frustrated === 1
+                      ? 'bg-red-100'
+                      : 'bg-green-100'
+                  "
+                ></span>
+              </span>
+              <div class="flex items-center px-4 py-4">
+                <div class="text-center">
+                  <p class="text-gray-100 text-sm">
+                    {{ $moment(last7days[index]).format("ddd") }}
+                  </p>
+                  <p class="text-gray-100 mt-3 font-bold">
+                    {{ $moment(last7days[index]).format("DD/MM") }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </template>
       </div>
+
       <!-- END - Calendar -->
     </div>
   </div>
@@ -52,6 +84,7 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
+import _, { map } from "underscore";
 
 export default {
   head() {
@@ -147,10 +180,16 @@ export default {
         },
       },
       last7days: [],
+      data_list: [],
     };
   },
   components: {
     apexchart: VueApexCharts,
+  },
+  computed: {
+    data_list_sort() {
+      return _.sortBy(this.data_list, "date");
+    },
   },
   methods: {
     async fetchResponseTimesReports() {
@@ -185,43 +224,34 @@ export default {
           });
         });
     },
-    async fetchStatsReports() {
+    async fetchLast7days() {
+      let startDate = this.$moment().subtract(14, "days");
+      let endDate = this.$moment();
+      let date = [];
+
+      for (var m = this.$moment(startDate); m.isSameOrBefore(endDate); m.add(1, "days")) {
+        date.push(m.format("YYYY-MM-DD"));
+        this.fetchData(m.format("YYYY-MM-DD"));
+      }
+
+      this.last7days = date;
+    },
+    async fetchData(date) {
       this.$axios
         .get(
-          process.env.API_FRESHPING + "public-check-stats-reports/690005/?for_hours=48"
+          process.env.API_FRESHPING +
+            "public-check-stats-reports/690040/?start_time=" +
+            date +
+            "T00:00:00.000Z&end_time=" +
+            date +
+            "T23:59:59.999Z"
         )
         .then((res) => {
           const data = res.data;
+          data.date = date;
+
+          this.data_list.push(data);
         });
-    },
-    async fetchLast7days() {
-      var self = this;
-      var enumerateDaysBetweenDates = function (startDate, endDate) {
-        var now = startDate,
-          dates = [];
-
-        while (now.isSameOrBefore(endDate)) {
-          dates.push(now.format("YYYY-MM-DD"));
-          now.add(1, "days");
-          self.$axios
-            .get(
-              process.env.API_FRESHPING +
-                "public-check-stats-reports/690040/?start_time=" +
-                now.format("YYYY-MM-DD") +
-                "T00:00:00.000Z&end_time=" +
-                now.format("YYYY-MM-DD") +
-                "T23:59:59.999Z"
-            )
-            .then((res) => {
-              const data = res.data;
-            });
-        }
-        return dates;
-      };
-
-      var fromDate = this.$moment().subtract(14, "days");
-      var toDate = this.$moment();
-      this.last7days = enumerateDaysBetweenDates(fromDate, toDate);
     },
   },
   created() {
