@@ -132,7 +132,7 @@ export default {
             style: {
               fontSize: "14px",
               fontWeight: "bold",
-              fontFamily: undefined,
+              fontFamily: "Roboto",
               color: "#ed8322",
             },
           },
@@ -169,9 +169,25 @@ export default {
               },
             },
           },
+          yaxis: {
+            title: {
+              text: "ms",
+              style: {
+                fontSize: "14px",
+                fontWeight: "bold",
+                fontFamily: "Roboto",
+                color: "#ed8322",
+              },
+            },
+          },
           tooltip: {
             x: {
               format: "dd/MM/yy HH:mm",
+            },
+            y: {
+              formatter: (value) => {
+                return value + " ms";
+              },
             },
           },
           grid: {
@@ -208,7 +224,7 @@ export default {
           this.$refs.chart.updateSeries(
             [
               {
-                name: "response time",
+                name: "Response Time",
                 data: response_time,
               },
             ],
