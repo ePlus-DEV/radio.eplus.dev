@@ -251,3 +251,21 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: this.$t("navmenu.about"),
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "Radio Online Việt Nam, Singapore, Indonesia, Malaysia, Philippines, Pakistan, Hong Kong, ประเทศไทย, 中国, 台灣, Australia, New Zealand, Sri Lankā, Nepāla, United Kingdom, .v.v",
+        },
+      ],
+    };
+  },
+};
+</script>
