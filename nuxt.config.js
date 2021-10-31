@@ -173,7 +173,7 @@ export default {
     // "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
-    "@nuxt/content",
+    // "@nuxt/content",
     "@nuxtjs/sitemap",
     [
       "nuxt-i18n",
