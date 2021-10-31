@@ -12,7 +12,7 @@ import australia from "./static/assets/radio/oceania/australia.json";
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: true,
+  ssr: false,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",

@@ -313,28 +313,24 @@ export default {
   watch: {
     $route() {
       this.$colorMode.value = localStorage.theme;
-    }
+    },
   },
   computed: {
     availableLocales() {
-      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale);
-    }
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale);
+    },
   },
   methods: {
     darkmode() {
       if (this.$colorMode.value === "light") {
         this.$colorMode.value = "dark";
         localStorage.setItem("theme", "dark");
-        $("html")
-          .addClass("bg-gray-800")
-          .removeClass("bg-gray-200");
+        $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
         $(".plyr__controls").css({ background: "#111827 !important" });
       } else {
         this.$colorMode.value = "light";
         localStorage.setItem("theme", "light");
-        $("html")
-          .addClass("bg-gray-200")
-          .removeClass("bg-gray-800");
+        $("html").addClass("bg-gray-200").removeClass("bg-gray-800");
       }
     },
     dropdownHandler(event) {
@@ -342,9 +338,7 @@ export default {
       single.classList.toggle("hidden");
     },
     MenuHandler(el, val) {
-      let MainList = el.currentTarget.parentElement.getElementsByTagName(
-        "ul"
-      )[0];
+      let MainList = el.currentTarget.parentElement.getElementsByTagName("ul")[0];
       let closeIcon = el.currentTarget.parentElement.getElementsByClassName(
         "close-m-menu"
       )[0];
@@ -362,30 +356,19 @@ export default {
       }
     },
     searchHandler(event) {
-      let Input = event.currentTarget.parentElement.getElementsByTagName(
-        "input"
-      )[0];
+      let Input = event.currentTarget.parentElement.getElementsByTagName("input")[0];
       Input.classList.toggle("w-0");
       Input.classList.toggle("w-24");
-    }
+    },
   },
   created() {
-    if (process.client) {
-      const self = this;
-      window.addEventListener("load", function() {
-        if (localStorage.getItem("theme") === null) {
-          localStorage.setItem("theme", "light");
-        } else if (localStorage.getItem("theme") === "dark") {
-          self.$colorMode.value = localStorage.theme;
-          document.getElementsByTagName("html")[0].classList.add("bg-gray-800");
-          document
-            .getElementsByTagName("html")[0]
-            .classList.remove("bg-gray-200");
-          document.getElementsByClassName("plyr__controls").style.background =
-            "#111827 !important";
-        }
-      });
+    if (localStorage.getItem("theme") === null) {
+      localStorage.setItem("theme", "light");
+    } else if (localStorage.getItem("theme") === "dark") {
+      this.$colorMode.value = localStorage.theme;
+      $("html").addClass("bg-gray-800").removeClass("bg-gray-200");
+      $(".plyr__controls").css({ background: "#111827 !important" });
     }
-  }
+  },
 };
 </script>
