@@ -12,7 +12,7 @@ import australia from "./static/assets/radio/oceania/australia.json";
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -58,7 +58,7 @@ export default {
       },
       {
         property: "og:image",
-        content: process.env.BASE_URL + "brand/logo-share.png"
+        content: process.env.BASE_URL + "/brand/logo-share.png"
       },
       { property: "fb:pages", content: "179495025583990" },
       { property: "fb:app_id", content: "363745774395676" },
@@ -132,9 +132,9 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: "~/plugins/plyr.js" },
+    { src: "~/plugins/plyr.js", ssr: false },
     { src: "~plugins/scrollmagic.js", ssr: false },
-    { src: "~/plugins/vue-toastification.js" }
+    { src: "~/plugins/vue-toastification.js", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -200,7 +200,6 @@ export default {
    ** Build configuration
    */
   build: {
-    // transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
@@ -215,35 +214,7 @@ export default {
     credentials: false,
     proxy: true
   },
-  /*
-   ** reCaptcha
-   */
-  /* recaptcha: {
-    // hideBadge: Boolean, // Hide badge element (v3 & v2 via size=invisible)
-    siteKey: "6LcRnoAUAAAAAIZc1xC0Tsh3XYIWqf9FW5KALsIv", // Site key for requests
-    version: 3 // Version
-    // size: String // Size: 'compact', 'normal', 'invisible' (v2)
-  }, */
-  /*
-   ** Auth Config
-   */
-  /* auth: {
-    redirect: {
-      login: "/admin/login",
-      logout: "/",
-      callback: "/admin/login",
-      home: "/admin"
-    },
-    strategies: {
-      local: false,
-      auth0: {
-        domain: "eplus-dev.auth0.com",
-        clientId: "7I96ALVZfqpPKV7ebdcHFkYpXqY1Qf37"
-        // audience: process.env.BASE_URL,
-        // logoutRedirectUri: process.env.BASE_URL
-      }
-    }
-  }, */
+
   proxy: {
     "/assets/": {
       target: process.env.BASE_URL,
