@@ -56,7 +56,15 @@ export default async (context, locale) => {
       playlist: "Playlist"
     },
     button: {
-      back: "Back"
+      back: "Back",
+      close: "Close"
+    },
+    popup: {
+      search: {
+        text: "Search...",
+        stats:
+          "Page {page} of {nbPages} - {nbHits} hits retrieved in {processingTimeMS} ms"
+      }
     },
     notify: {
       success: "Success",

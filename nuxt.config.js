@@ -55,7 +55,9 @@ export default {
       {
         property: "article:publisher",
         content: process.env.FanPage
-      }
+      },
+      { property: "fb:pages", content: "179495025583990" },
+      { property: "fb:app_id", content: "363745774395676" }
       /* {
         property: "og:image",
         content: process.env.BASE_URL + "/brand/logo-share.png"
@@ -134,7 +136,8 @@ export default {
   plugins: [
     { src: "~/plugins/plyr.js", ssr: false },
     { src: "~plugins/scrollmagic.js", ssr: false },
-    { src: "~/plugins/vue-toastification.js", ssr: false }
+    { src: "~/plugins/vue-toastification.js", ssr: false },
+    { src: "~/plugins/vue-instantsearch.js", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

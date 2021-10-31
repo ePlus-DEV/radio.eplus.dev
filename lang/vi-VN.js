@@ -56,7 +56,15 @@ export default async (context, locale) => {
       playlist: "Danh sách phát"
     },
     button: {
-      back: "Quay lại"
+      back: "Quay lại",
+      close: "Đóng"
+    },
+    popup: {
+      search: {
+        text: "Tìm kiếm...",
+        stats:
+          "Trang {page}/{nbPages} - {nbHits} kết quả trong {processingTimeMS} mili giây"
+      }
     },
     notify: {
       success: "Thành công",
