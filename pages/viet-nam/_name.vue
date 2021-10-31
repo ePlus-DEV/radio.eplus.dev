@@ -15,15 +15,22 @@
 </template>
 
 <script>
+import vietnam from "@/static/assets/radio/asia/viet-nam.json";
+// console.log(vietnam.hasOwnProperty(this.$route.params.name));
+
 export default {
   head() {
     return {
-      title: this.title,
+      title: this.get_title(),
       meta: [
         {
           hid: "description",
           name: "description",
           content: "Radio in " + this.title_slug,
+        },
+        {
+          property: "og:title",
+          content: this.get_title() + " - Radio Internet | " + process.env.Site_Name,
         },
       ],
     };
@@ -41,6 +48,11 @@ export default {
     };
   },
   methods: {
+    get_title() {
+      if (vietnam.hasOwnProperty(this.$route.params.name)) {
+        return vietnam[this.$route.params.name].title;
+      }
+    },
     async fetchData() {
       this.$axios
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
@@ -56,11 +68,11 @@ export default {
             // Vuex
             this.$store.dispatch("storePLAYER", data);
 
-            var self = this;
+            /*   var self = this;
             self.title =
               data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
 
-            self.$emit("updateHead");
+            self.$emit("updateHead"); */
             this.$refs.player.init();
           } else {
             this.$confirm($t("404.content"), "Warning", {
