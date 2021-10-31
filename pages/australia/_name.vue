@@ -15,17 +15,55 @@
 </template>
 
 <script>
+import australia from "@/static/assets/radio/oceania/australia.json";
+
 export default {
   head() {
     return {
-      title: this.title,
+      title: this.get_head("title"),
       meta: [
         {
           hid: "description",
           name: "description",
-          content: "Radio in " + this.title_slug
-        }
-      ]
+          content: "Radio in " + this.title_slug,
+        },
+        {
+          property: "og:title",
+          content:
+            this.get_head("title") + " - Radio Internet | " + process.env.Site_Name,
+        },
+        {
+          property: "og:image",
+          content: process.env.BASE_URL + this.get_head("features"),
+        },
+        {
+          property: "og:description",
+          content: process.env.Description || "",
+        },
+        { property: "og:type", content: "music.radio_station" },
+        {
+          property: "og:url",
+          content: process.env.BASE_URL + $nuxt.$route.path,
+        },
+        {
+          property: "og:image:alt",
+          content: "Radio Internet | " + process.env.Site_Name,
+        },
+        {
+          property: "og:site_name",
+          content: "Radio Internet | " + process.env.Site_Name,
+        },
+        {
+          property: "music:creator",
+          content: process.env.FanPage,
+        },
+        {
+          property: "og:audio",
+          content: this.get_head("stream"),
+        },
+        { property: "og:audio:type", content: this.get_head("type") },
+        { property: "application-name", content: process.env.Site_Name },
+      ],
     };
   },
   data() {
@@ -37,14 +75,19 @@ export default {
       stream_name: process.env.Site_Name,
       area: "oceania",
       i18n: "world.oceania.australia",
-      data: []
+      data: [],
     };
   },
   methods: {
+    get_head(params) {
+      if (australia.hasOwnProperty(this.$route.params.name)) {
+        return australia[this.$route.params.name][params];
+      }
+    },
     async fetchData() {
       this.$axios
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
-        .then(res => {
+        .then((res) => {
           const $t = this.$t.bind(this);
           if (res.data.hasOwnProperty(this.$route.params.name)) {
             const data = res.data[this.$route.params.name];
@@ -56,13 +99,6 @@ export default {
             // Vuex
             this.$store.dispatch("storePLAYER", data);
 
-            var self = this;
-            self.title =
-              data.title +
-              " - " +
-              $t("panel.radio_in", { name: this.title_slug });
-
-            self.$emit("updateHead");
             this.$refs.player.init();
 
             // Schedule
@@ -77,7 +113,7 @@ export default {
               closeOnClickModal: false,
               showClose: false,
               type: "warning",
-              center: true
+              center: true,
             })
               .then(() => {
                 this.$router.push("/");
@@ -85,35 +121,28 @@ export default {
               .catch(() => {
                 this.$message({
                   type: "info",
-                  message: "Delete canceled"
+                  message: "Delete canceled",
                 });
               });
           }
         });
     },
     async fetchSchedule(url) {
-      this.$axios
-        .get(
-          url +
-            this.$moment()
-              .tz("Australia/Sydney")
-              .unix()
-        )
-        .then(res => {
-          if (res.data.success) {
-            this.data = res.data.result;
-          }
+      this.$axios.get(url + this.$moment().tz("Australia/Sydney").unix()).then((res) => {
+        if (res.data.success) {
+          this.data = res.data.result;
+        }
 
-          // Loop
-          var self = this;
-          setTimeout(function() {
-            self.fetchSchedule(url);
-          }, 60000);
-        });
-    }
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchSchedule(url);
+        }, 60000);
+      });
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});
-  }
+  },
 };
 </script>

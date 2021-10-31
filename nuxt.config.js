@@ -55,8 +55,8 @@ export default {
       {
         property: "article:publisher",
         content: process.env.FanPage
-      },
-      {
+      }
+      /* {
         property: "og:image",
         content: process.env.BASE_URL + "/brand/logo-share.png"
       },
@@ -89,7 +89,7 @@ export default {
         content: "https://media-ssl.musicradio.com/HeartUK"
       },
       { property: "og:audio:type", content: "audio/mpeg" },
-      { property: "application-name", content: process.env.Site_Name }
+      { property: "application-name", content: process.env.Site_Name } */
     ],
     link: [
       {

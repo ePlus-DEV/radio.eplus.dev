@@ -16,12 +16,11 @@
 
 <script>
 import vietnam from "@/static/assets/radio/asia/viet-nam.json";
-// console.log(vietnam.hasOwnProperty(this.$route.params.name));
 
 export default {
   head() {
     return {
-      title: this.get_title(),
+      title: this.get_head("title"),
       meta: [
         {
           hid: "description",
@@ -30,8 +29,40 @@ export default {
         },
         {
           property: "og:title",
-          content: this.get_title() + " - Radio Internet | " + process.env.Site_Name,
+          content:
+            this.get_head("title") + " - Radio Internet | " + process.env.Site_Name,
         },
+        {
+          property: "og:image",
+          content: process.env.BASE_URL + this.get_head("features"),
+        },
+        {
+          property: "og:description",
+          content: process.env.Description || "",
+        },
+        { property: "og:type", content: "music.radio_station" },
+        {
+          property: "og:url",
+          content: process.env.BASE_URL + $nuxt.$route.path,
+        },
+        {
+          property: "og:image:alt",
+          content: "Radio Internet | " + process.env.Site_Name,
+        },
+        {
+          property: "og:site_name",
+          content: "Radio Internet | " + process.env.Site_Name,
+        },
+        {
+          property: "music:creator",
+          content: process.env.FanPage,
+        },
+        {
+          property: "og:audio",
+          content: this.get_head("stream"),
+        },
+        { property: "og:audio:type", content: this.get_head("type") },
+        { property: "application-name", content: process.env.Site_Name },
       ],
     };
   },
@@ -48,9 +79,9 @@ export default {
     };
   },
   methods: {
-    get_title() {
+    get_head(params) {
       if (vietnam.hasOwnProperty(this.$route.params.name)) {
-        return vietnam[this.$route.params.name].title;
+        return vietnam[this.$route.params.name][params];
       }
     },
     async fetchData() {
@@ -68,11 +99,6 @@ export default {
             // Vuex
             this.$store.dispatch("storePLAYER", data);
 
-            /*   var self = this;
-            self.title =
-              data.title + " - " + $t("panel.radio_in", { name: this.title_slug });
-
-            self.$emit("updateHead"); */
             this.$refs.player.init();
           } else {
             this.$confirm($t("404.content"), "Warning", {
