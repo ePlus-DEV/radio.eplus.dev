@@ -140,12 +140,13 @@
             alt="Serverless by Netlify"
           />
           <a
+            target="_blank"
             href="//www.dmca.com/Protection/Status.aspx?ID=03ce0666-e688-4ae8-8310-232c7723282d"
             title="DMCA.com Protection Status"
             class="dmca-badge"
           >
             <img
-              src="https://images.dmca.com/Badges/dmca-badge-w150-5x1-03.png?ID=03ce0666-e688-4ae8-8310-232c7723282d"
+              src="https://images.dmca.com/Badges/dmca-badge-w150-5x1-06.png?ID=03ce0666-e688-4ae8-8310-232c7723282d"
               alt="DMCA.com Protection Status"
           /></a>
           <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
