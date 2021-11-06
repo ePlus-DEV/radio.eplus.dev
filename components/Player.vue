@@ -389,17 +389,12 @@ export default {
       };
 
       player.play();
-
-      /*  var audio = document.querySelector("#player");
-      audio.play(); */
     },
     onPlay() {
-      var audio = document.querySelector("#player");
-      audio.play();
+      $(".plyr__controls__item ").click();
     },
     onPause() {
-      var audio = document.querySelector("#player");
-      audio.pause();
+      $(".plyr__controls__item ").click();
     },
     check(key, time) {
       var arr = time.split("-");
