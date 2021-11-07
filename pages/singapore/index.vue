@@ -1,20 +1,11 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs
-      level_1="world.asia.singapore"
-      :level_1_slug="slug"
-      thumb="/img/asia/flags/singapore.png"
-    />
+    <Breadcrumbs :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player
-      ref="player"
-      country="world.asia.singapore"
-      :home="true"
-      thumb="/img/asia/flags/singapore.png"
-    />
+    <Player ref="player" :country="i18n" :home="true" :thumb="thumb" />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -46,6 +37,7 @@ export default {
       slug: "singapore",
       area: "asia",
       i18n: "world.asia.singapore",
+      thumb: "/img/asia/flags/singapore.png",
     };
   },
   methods: {

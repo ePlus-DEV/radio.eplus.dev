@@ -36,45 +36,64 @@ export default {
           content:
             "Radio Online được phát từ " +
             this.title_slug +
-            " - VOV 1, VOV2, VOV3, VOV4, VOH, VOV Giao Thông"
-        }
-      ]
+            " - VOV 1, VOV2, VOV3, VOV4, VOH, VOV Giao Thông",
+        },
+      ],
     };
   },
   data() {
     return {
       name: null,
-      title:
-        this.$t("navmenu.homepage") +
-        " - Radio " +
-        this.$t("world.asia.vietnam"),
+      title: this.$t("navmenu.homepage") + " - Radio " + this.$t("world.asia.vietnam"),
       slug: "viet-nam",
       area: "asia",
       i18n: "world.asia.vietnam",
       thumb: "/img/asia/flags/viet-nam.png",
-      schedule_data: []
+      schedule_data: [],
     };
   },
   mounted() {
-    this.$axios
-      .get("/assets/radio/favorite/" + this.slug + ".json")
-      .then(res => {
-        const data = res.data;
+    this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+      const data = res.data;
 
+      // Vuex
+      this.$store.dispatch("storePLAYERHOME", data);
+
+      this.$refs.player.init(true);
+
+      // Get Schedule
+      var form = new FormData();
+      form.append("vov", "vovgthn");
+      form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
+      var self = this;
+
+      var settings = {
+        url: data["schedule"],
+        method: "POST",
+        timeout: 0,
+        processData: false,
+        mimeType: "multipart/form-data",
+        contentType: false,
+        data: form,
+      };
+
+      $.ajax(settings).done(function (response) {
+        self.schedule_data = JSON.parse(response).result_detail;
+      });
+    });
+  },
+  methods: {
+    async fetchData() {
+      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+        const data = res.data;
         // Vuex
         this.$store.dispatch("storePLAYERHOME", data);
 
         this.$refs.player.init(true);
-
         // Get Schedule
         var form = new FormData();
         form.append("vov", "vovgthn");
-        form.append(
-          "date",
-          this.$moment()
-            .tz("Asia/Ho_Chi_Minh")
-            .format("DD/MM/YYYY")
-        );
+        form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
         var self = this;
 
         var settings = {
@@ -84,50 +103,14 @@ export default {
           processData: false,
           mimeType: "multipart/form-data",
           contentType: false,
-          data: form
+          data: form,
         };
 
-        $.ajax(settings).done(function(response) {
+        $.ajax(settings).done(function (response) {
           self.schedule_data = JSON.parse(response).result_detail;
         });
       });
-  },
-  methods: {
-    async fetchData() {
-      this.$axios
-        .get("/assets/radio/favorite/" + this.slug + ".json")
-        .then(res => {
-          const data = res.data;
-          // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
-
-          this.$refs.player.init(true);
-          // Get Schedule
-          var form = new FormData();
-          form.append("vov", "vovgthn");
-          form.append(
-            "date",
-            this.$moment()
-              .tz("Asia/Ho_Chi_Minh")
-              .format("DD/MM/YYYY")
-          );
-          var self = this;
-
-          var settings = {
-            url: data["schedule"],
-            method: "POST",
-            timeout: 0,
-            processData: false,
-            mimeType: "multipart/form-data",
-            contentType: false,
-            data: form
-          };
-
-          $.ajax(settings).done(function(response) {
-            self.schedule_data = JSON.parse(response).result_detail;
-          });
-        });
-    }
+    },
   },
   created() {
     /* this.loading = true;
@@ -140,6 +123,6 @@ export default {
       });
       loading.close();
     }); */
-  }
+  },
 };
 </script>

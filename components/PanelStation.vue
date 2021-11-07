@@ -12,8 +12,10 @@
           <nuxt-link
             :to="'/' + slug + '/' + index"
             v-bind:key="index"
-            class="border"
+            class="border tooltip tooltip-left"
             active-class="active border-red-700"
+            :title="data.title"
+            :data-tip="data.title"
             :class="[
               isRouteActive(index)
                 ? 'border-red-700'

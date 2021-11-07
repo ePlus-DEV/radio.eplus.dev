@@ -27,6 +27,13 @@
       "data": "/assets/radio/asia/china.json",
       "timezone": "Asia/Shanghai",
       "station": 0
+    },
+    "hong-kong": {
+      "name": "world.asia.hong_kong",
+      "flag": "/img/asia/flags/hong-kong.png",
+      "data": "/assets/radio/asia/hong-kong.json",
+      "timezone": "Asia/Hong_Kong",
+      "station": 0
     }
   },
   "europe": {
