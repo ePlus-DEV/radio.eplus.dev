@@ -1,8 +1,10 @@
+import algoliasearch from "algoliasearch";
 // Asia
 import vietnam from "./static/assets/radio/asia/viet-nam.json";
 import korea from "./static/assets/radio/asia/korea.json";
 import china from "./static/assets/radio/asia/china.json";
 import singapore from "./static/assets/radio/asia/singapore.json";
+import hong_kong from "./static/assets/radio/asia/hong-kong.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 // North America
@@ -227,36 +229,102 @@ export default {
   },
   generate: {
     routes() {
-      const routesToGenerate = [];
+      const client = algoliasearch(
+        "N87NFQVY0Z",
+        "73e93ee2ef3aa6919b7c6495767c7f9d"
+      );
+      const index = client.initIndex("radio.eplus.dev");
+      const routesToGenerate = [],
+        data_algolia = [];
       // BEGIN - Asia
       for (const [key, value] of Object.entries(vietnam)) {
         routesToGenerate.push("/viet-nam/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.vietnam",
+          url: "/viet-nam/" + key,
+          objectID: "viet-nam-" + key
+        });
       }
       for (const [key, value] of Object.entries(korea)) {
         routesToGenerate.push("/korea/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.korea",
+          url: "/korea/" + key,
+          objectID: "korea-" + key
+        });
       }
       for (const [key, value] of Object.entries(singapore)) {
         routesToGenerate.push("/singapore/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.singapore",
+          url: "/singapore/" + key,
+          objectID: "singapore-" + key
+        });
       }
       for (const [key, value] of Object.entries(china)) {
         routesToGenerate.push("/china/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.china",
+          url: "/china/" + key,
+          objectID: "china-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(hong_kong)) {
+        routesToGenerate.push("/hong-kong/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.hong_kong",
+          url: "/hong-kong/" + key,
+          objectID: "hong-kong-" + key
+        });
       }
       // END - Asia
       // BEGIN - Europe
       for (const [key, value] of Object.entries(uk)) {
         routesToGenerate.push("/united-kingdom/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.europe.united_kingdom",
+          url: "/united-kingdom/" + key,
+          objectID: "united-kingdom-" + key
+        });
       }
       // END - Europe
       // BEGIN - North America
       for (const [key, value] of Object.entries(cuba)) {
         routesToGenerate.push("/cuba/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.north_america.cuba",
+          url: "/cuba/" + key,
+          objectID: "cuba-" + key
+        });
       }
       // END - North America
       // BEGIN - Oceania
       for (const [key, value] of Object.entries(australia)) {
         routesToGenerate.push("/australia/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.oceania.australia",
+          url: "/australia/" + key,
+          objectID: "australia-" + key
+        });
       }
       // END - Oceania
+      index.saveObjects(data_algolia).then(({ objectIDs }) => {});
       return routesToGenerate;
     }
   },
