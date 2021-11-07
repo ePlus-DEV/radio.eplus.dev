@@ -1,31 +1,27 @@
 <template>
   <div>
-    <!-- Noti -->
-    <!-- <div class="fixed bottom-0 left-0 pb-4 w-full px-2 md:px-0">
-      <div
-        class="w-full md:w-3/4 mx-auto bg-black opacity-75 rounded-lg md:rounded-full px-4 md:pl-8 md:pr-2 py-2 md:flex items-center justify-between"
+    <!-- BEGIN - Back to top -->
+    <button
+      @click="scrolltoTop"
+      id="topButton"
+      class="fixed z-10 p-3 hidden bg-gray-100 rounded-full shadow-md bottom-10 right-10 animate-bounce"
+    >
+      <svg
+        class="w-8 h-8"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <div class="text-white md:max-w-xl">
-          All components hosted on VueTailwind.com are now open-source!
-        </div>
-
-        <div class="py-2 md:py-0 text-center">
-          <button
-            class="block md:inline-block mx-auto my-2 md:my-0 md:mx-2 px-4 py-2 text-sm text-gray-400 focus:outline-none hover:underline"
-          >
-            Close
-          </button>
-
-          <a
-            href="#"
-            class="block md:inline-block px-4 py-2 text-sm rounded-full bg-indigo-600 text-white"
-          >
-            Github &rarr;
-          </a>
-        </div>
-      </div>
-    </div> -->
-    <!-- Noti -->
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"
+        ></path>
+      </svg>
+    </button>
+    <!-- END - Back to top -->
 
     <!-- Foooter -->
     <section class="bg-white dark:bg-gray-900 rounded-lg">
@@ -156,3 +152,17 @@
     </section>
   </div>
 </template>
+<script>
+window.onscroll = function () {
+  document.body.scrollTop > 20 || document.documentElement.scrollTop > 20
+    ? $("#topButton").removeClass("hidden")
+    : $("#topButton").addClass("hidden");
+};
+export default {
+  methods: {
+    scrolltoTop() {
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+    },
+  },
+};
+</script>
