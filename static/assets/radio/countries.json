@@ -34,6 +34,13 @@
       "data": "/assets/radio/asia/hong-kong.json",
       "timezone": "Asia/Hong_Kong",
       "station": 0
+    },
+    "japan": {
+      "name": "world.asia.japan",
+      "flag": "/img/asia/flags/japan.png",
+      "data": "/assets/radio/asia/japan.json",
+      "timezone": "Asia/Tokyo",
+      "station": 0
     }
   },
   "europe": {

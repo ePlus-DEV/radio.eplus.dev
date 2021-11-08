@@ -1,0 +1,8 @@
+{
+  "title": "Ottava",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Japan",
+  "stream": "https://ottava2.out.airtime.pro/ottava2_a",
+  "cros": false
+}

@@ -5,6 +5,7 @@ import korea from "./static/assets/radio/asia/korea.json";
 import china from "./static/assets/radio/asia/china.json";
 import singapore from "./static/assets/radio/asia/singapore.json";
 import hong_kong from "./static/assets/radio/asia/hong-kong.json";
+import japan from "./static/assets/radio/asia/japan.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 // North America
@@ -285,6 +286,16 @@ export default {
           station_country: "world.asia.hong_kong",
           url: "/hong-kong/" + key,
           objectID: "hong-kong-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(japan)) {
+        routesToGenerate.push("/japan/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.japan",
+          url: "/japan/" + key,
+          objectID: "japan-" + key
         });
       }
       // END - Asia
