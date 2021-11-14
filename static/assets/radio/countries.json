@@ -41,6 +41,13 @@
       "data": "/assets/radio/asia/japan.json",
       "timezone": "Asia/Tokyo",
       "station": 0
+    },
+    "malaysia": {
+      "name": "world.asia.malaysia",
+      "flag": "/img/asia/flags/malaysia.png",
+      "data": "/assets/radio/asia/malaysia.json",
+      "timezone": "Asia/Kuala_Lumpur",
+      "station": 0
     }
   },
   "europe": {
