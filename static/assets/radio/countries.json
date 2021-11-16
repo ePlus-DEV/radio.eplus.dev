@@ -48,6 +48,13 @@
       "data": "/assets/radio/asia/malaysia.json",
       "timezone": "Asia/Kuala_Lumpur",
       "station": 0
+    },
+    "philippines": {
+      "name": "world.asia.philippines",
+      "flag": "/img/asia/flags/philippines.png",
+      "data": "/assets/radio/asia/philippines.json",
+      "timezone": "Asia/Manila",
+      "station": 0
     }
   },
   "europe": {

@@ -20,7 +20,6 @@
     "apexcharts": "^3.29.0",
     "daisyui": "^1.14.5",
     "dotenv": "^9.0.2",
-    "fs": "0.0.1-security",
     "hls.js": "^1.0.12-0.canary.7993",
     "nuxt": "^2.13.3",
     "nuxt-i18n": "^6.27.2",

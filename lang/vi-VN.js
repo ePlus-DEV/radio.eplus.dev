@@ -29,7 +29,8 @@ export default async (context, locale) => {
         china: "Trung Quốc",
         hong_kong: "Hồng Kông",
         japan: "Nhật Bản",
-        malaysia: "Malaysia"
+        malaysia: "Ma-lai-xi-a",
+        philippines: "Phi-líp-pin"
       },
       central_america: {},
       europe: {

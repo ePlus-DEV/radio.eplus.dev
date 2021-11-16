@@ -461,7 +461,7 @@
     "cros": true,
     "time": "Chưa rõ",
     "schedule": true,
-    "stream": "https://node-33.zeno.fm/4q7y9hvkp2zuv?rj-ttl=5&rj-tok=AAABfKhBPaEARjPKWMihV9j2vg",
+    "stream": "https://node-33.zeno.fm/4q7y9hvkp2zuv",
     "features": "/img/asia/viet-nam/m-radio.png"
   },
   "cai-luong-viet-nam": {
@@ -473,7 +473,7 @@
     "cros": true,
     "time": "Chưa rõ",
     "schedule": true,
-    "stream": "https://node-15.zeno.fm/0trm6wrnga0uv?rj-ttl=5&rj-tok=AAABfKg_xWIAkQjBQCMq4lOyog",
+    "stream": "https://node-15.zeno.fm/0trm6wrnga0uv",
     "features": "/img/asia/viet-nam/cai-luong-viet-nam.png"
   },
   "pre-1975": {
