@@ -55,6 +55,13 @@
       "data": "/assets/radio/asia/philippines.json",
       "timezone": "Asia/Manila",
       "station": 0
+    },
+    "indonesia": {
+      "name": "world.asia.indonesia",
+      "flag": "/img/asia/flags/indonesia.png",
+      "data": "/assets/radio/asia/indonesia.json",
+      "timezone": "Asia/Jakarta",
+      "station": 0
     }
   },
   "europe": {

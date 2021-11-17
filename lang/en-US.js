@@ -30,7 +30,8 @@ export default async (context, locale) => {
         hong_kong: "Hong Kong",
         japan: "Janpan",
         malaysia: "Malaysia",
-        philippines: "Phi-líp-pin"
+        philippines: "Philippines",
+        indonesia: "Indonesia"
       },
       central_america: {},
       europe: {
