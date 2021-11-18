@@ -62,6 +62,13 @@
       "data": "/assets/radio/asia/indonesia.json",
       "timezone": "Asia/Jakarta",
       "station": 0
+    },
+    "thailand": {
+      "name": "world.asia.thailand",
+      "flag": "/img/asia/flags/thailand.png",
+      "data": "/assets/radio/asia/thailand.json",
+      "timezone": "Asia/Bangkok",
+      "station": 0
     }
   },
   "europe": {
