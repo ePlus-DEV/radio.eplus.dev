@@ -487,5 +487,113 @@
     "schedule": false,
     "stream": "https://node-11.zeno.fm/x2z45v7d84zuv",
     "features": "/img/asia/viet-nam/pre-1975.png"
+  },
+  "zing-mp3-on-air": {
+    "title": "Zing MP3 On Air",
+    "description": "Kênh âm nhạc dành cho giới trẻ của Zing MP3, với âm nhạc đến từ khắp nơi trên thế giới.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ97AIO.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/9tPzLPYORS8/zhls/playback-realtime/a07d79b945fcaca2f5ed/index.m3u8",
+    "features": "/img/asia/viet-nam/zing-mp3-on-air.png"
+  },
+  "cham-radio-zing-mp3": {
+    "title": "Chạm Radio - Zing MP3",
+    "description": "Chạm - Nơi chia sẻ cảm xúc qua âm nhạc.\r\nCảm xúc thăng hoa cùng Chạm Series 21:00 thứ ba và thứ bảy.\r\nTâm tình với thính giả cùng Chạm x Bạn 21:00 thứ sáu.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979C8.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/62YE6lXdY4w/zhls/playback-realtime/db68d4afe8ea01b458fb/index.m3u8",
+    "features": "/img/asia/viet-nam/cham-radio-zing-mp3.png"
+  },
+  "vpop-radio-zing-mp3": {
+    "title": "V-POP Radio - Zing MP3",
+    "description": "Nhạc Việt thời nay, rất \"hay ho\" và \"này nọ\"!",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979UB.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/wTSwRIGOON0/zhls/playback-realtime/6eeb692c5569bc37e578/index.m3u8",
+    "features": "/img/asia/viet-nam/vpop-radio-zing-mp3.png"
+  },
+  "bolero-zing-mp3": {
+    "title": "Bolero Radio - Zing MP3",
+    "description": "Dành tặng bạn, những tuyệt phẩm nhạc trữ tình và bolero hay nhất mọi thời đại.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979ZI.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/BtRvAOtW5jk/zhls/playback-realtime/e3b9f87ec43b2d65742a/index.m3u8",
+    "features": "/img/asia/viet-nam/bolero-zing-mp3.png"
+  },
+  "us-uk-radio-zing-mp3": {
+    "title": "US-UK Radio - Zing MP3",
+    "description": "Nhạc hay từ Âu đến Mỹ, cùng Zing MP3 khám phá xem thế giới đang nghe gì.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ97A0W.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/RckDo1XPsU4/zhls/playback-realtime/111c87d8bb9d52c30b8c/index.m3u8",
+    "features": "/img/asia/viet-nam/us-uk-radio-zing-mp3.png"
+  },
+  "kpop-radio-zing-mp3": {
+    "title": "K-POP Radio - Zing MP3",
+    "description": "Fan K-POP mau bơi hết vào đây nào các bạn !!!",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979UC.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/94rxZ-Dfzro/zhls/playback-realtime/ff294ded71a898f6c1b9/index.m3u8",
+    "features": "/img/asia/viet-nam/kpop-radio-zing-mp3.png"
+  },
+  "acoustic-radio-zing-mp3": {
+    "title": "Acoustic Radio - Zing MP3",
+    "description": "Nếu đang tìm chút mộc mạc, hãy nghe Acoustic playlist mà Zing MP3 đã chuẩn bị cho bạn.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979C0.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/ktkT8IgzcQQ/zhls/playback-realtime/08aae96dd5283c766539/index.m3u8",
+    "features": "/img/asia/viet-nam/acoustic-radio-zing-mp3.png"
+  },
+  "rap-viet-radio-zing-mp3": {
+    "title": "Rap Việt Radio - Zing MP3",
+    "description": "Ở đây có rap Việt mới nhất, chất nhất cho bạn cháy hết mình!",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ97996.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://multi-playlist-zmp3.zadn.vn/Itsn5VCb5Uo/zhls/playback-realtime/4f2980eebcab55f50cba/index.m3u8",
+    "features": "/img/asia/viet-nam/rap-viet-radio-zing-mp3.png"
+  },
+  "the-one-radio-zing-mp3": {
+    "title": "The One Radio - Zing MP3",
+    "description": "The One Radio - Kênh giải trí âm nhạc quốc gia. Nơi đăng tải các chương trình radio như After work - sau giờ làm, Chuyến bay sáng, Những giai điệu ủi an, Gieo mầm yêu thương,... với sự dẫn dắt của các MC hoạt ngôn, vui tính.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ98EEC.html",
+    "cros": false,
+    "time": "24/7",
+    "schedule": false,
+    "stream": "https://mplaylist-zmp3.zadn.vn/qm_zvfUgxa8/zhls/live/5c0872cf4e8aa7d4fe9b/index.m3u8",
+    "features": "/img/asia/viet-nam/the-one-radio-zing-mp3.png"
   }
 }
