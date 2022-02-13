@@ -502,7 +502,7 @@
   },
   "cham-radio-zing-mp3": {
     "title": "Chạm Radio - Zing MP3",
-    "description": "Chạm - Nơi chia sẻ cảm xúc qua âm nhạc.\r\nCảm xúc thăng hoa cùng Chạm Series 21:00 thứ ba và thứ bảy.\r\nTâm tình với thính giả cùng Chạm x Bạn 21:00 thứ sáu.",
+    "description": "Chạm - Nơi chia sẻ cảm xúc qua âm nhạc. Cảm xúc thăng hoa cùng Chạm Series 21:00 thứ ba và thứ bảy. Tâm tình với thính giả cùng Chạm x Bạn 21:00 thứ sáu.",
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "https://zingmp3.vn/liveradio/IWZ979C8.html",
@@ -514,7 +514,7 @@
   },
   "vpop-radio-zing-mp3": {
     "title": "V-POP Radio - Zing MP3",
-    "description": "Nhạc Việt thời nay, rất \"hay ho\" và \"này nọ\"!",
+    "description": "Nhạc Việt thời nay, rất hay ho và này nọ!",
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "https://zingmp3.vn/liveradio/IWZ979UB.html",
