@@ -78,6 +78,13 @@
       "data": "/assets/radio/europe/united-kingdom.json",
       "timezone": "Europe/London",
       "station": 0
+    },
+    "ukraina": {
+      "name": "world.europe.ukraina",
+      "flag": "/img/europe/flags/ukraina.png",
+      "data": "/assets/radio/europe/ukraina.json",
+      "timezone": "Europe/Kiev",
+      "station": 0
     }
   },
   "north_america": {

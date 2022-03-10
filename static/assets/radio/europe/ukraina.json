@@ -1,0 +1,58 @@
+{
+  "hit-fm": {
+    "title": "Хіт FM",
+    "type": "audio/mpeg",
+    "url": "https://www.hitfm.ua/",
+    "cros": true,
+    "stream": "https://online.hitfm.ua/HitFM_Live",
+    "features": "/img/europe/ukraina/hit-fm.png"
+  },
+  "kiss-fm": {
+    "title": "KISS FM",
+    "type": "audio/mpeg",
+    "url": "https://www.kissfm.ua/",
+    "cros": true,
+    "stream": "https://online.kissfm.ua/KissFM",
+    "features": "/img/europe/ukraina/kiss-fm.png"
+  },
+  "nashe": {
+    "title": "Наше радіо",
+    "type": "audio/mpeg",
+    "url": "https://www.nasheradio.ua/",
+    "cros": true,
+    "stream": "https://online.nasheradio.ua/NasheRadio",
+    "features": "/img/europe/ukraina/nashe.png"
+  },
+  "russkoe-ukraine": {
+    "title": "Русское Радио",
+    "type": "audio/mpeg",
+    "url": "https://www.rusradio.ua/",
+    "cros": true,
+    "stream": "https://online.rusradio.ua/RusRadio_Live",
+    "features": "/img/europe/ukraina/russkoe-ukraine.png"
+  },
+  "retro-fm": {
+    "title": "Ретро FM",
+    "type": "audio/mpeg",
+    "url": "https://radioclub.ua/radio/retro-fm",
+    "cros": true,
+    "stream": "https://cast.radiogroup.com.ua/retro",
+    "features": "/img/europe/ukraina/retro-fm.png"
+  },
+  "shanson": {
+    "title": "Радіо Шансон",
+    "type": "audio/aac",
+    "url": "https://shanson.ua/player/index.php",
+    "cros": true,
+    "stream": "https://cast.radiogroup.com.ua/shanson96.aac",
+    "features": "/img/europe/ukraina/shanson.png"
+  },
+  "lviv-wave": {
+    "title": "Радіо Львівська хвиля",
+    "type": "audio/mpeg",
+    "url": "https://lviv.fm/",
+    "cros": true,
+    "stream": "https://onair.lviv.fm:8443/lviv32.fm",
+    "features": "/img/europe/ukraina/lviv-wave.png"
+  }
+}
