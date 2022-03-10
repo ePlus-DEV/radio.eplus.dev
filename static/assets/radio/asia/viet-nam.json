@@ -440,6 +440,18 @@
     "stream": "https://qtv.vncdn.vn/qtvlive/qnr2.m3u8",
     "features": "/img/asia/viet-nam/qnr2.png"
   },
+  "tay-ninh": {
+    "title": "Radio Tây Ninh",
+    "description": "",
+    "type": "application/x-mpegURL",
+    "category": "Radio",
+    "url": "http://ttv11.vn/",
+    "cros": true,
+    "time": "Chưa rõ",
+    "schedule": false,
+    "stream": "http://202.43.109.142:1935/radio11/tnradio/playlist.m3u8",
+    "features": "/img/asia/viet-nam/tay-ninh.png"
+  },
   "nhk-vietnam": {
     "title": "NHK - Việt Nam",
     "description": "NHK là hãng truyền hình - phát thanh công cộng Nhật Bản, Radio NHK Việt Nam thuộc NHK World, cung cấp các chương trình tin tức, giải trí Nhật Bản khách quan bằng tiếng Việt dành cho các thính giả Việt Nam.",
