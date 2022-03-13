@@ -2,7 +2,7 @@
   "title": "Радио Monte Carlo",
   "type": "audio/mpeg",
   "frequency": "98.0 FM",
-  "countries": "Singapore",
+  "countries": "Russia",
   "stream": "https://icecast227.ptspb.ru:8443/monte",
   "cros": false
 }

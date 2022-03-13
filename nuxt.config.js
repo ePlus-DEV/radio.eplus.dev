@@ -12,6 +12,8 @@ import indonesia from "./static/assets/radio/asia/indonesia.json";
 import thailand from "./static/assets/radio/asia/thailand.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
+import ukraine from "./static/assets/radio/europe/ukraine.json";
+import russia from "./static/assets/radio/europe/russia.json";
 // North America
 import cuba from "./static/assets/radio/north-america/cuba.json";
 // Oceania
@@ -352,6 +354,26 @@ export default {
           station_country: "world.europe.united_kingdom",
           url: "/united-kingdom/" + key,
           objectID: "united-kingdom-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(ukraine)) {
+        routesToGenerate.push("/ukraine/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.europe.ukraine",
+          url: "/ukraine/" + key,
+          objectID: "ukraine-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(russia)) {
+        routesToGenerate.push("/russia/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.europe.russia",
+          url: "/russia/" + key,
+          objectID: "russia-" + key
         });
       }
       // END - Europe
