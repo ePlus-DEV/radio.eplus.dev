@@ -85,6 +85,13 @@
       "data": "/assets/radio/europe/ukraine.json",
       "timezone": "Europe/Kiev",
       "station": 0
+    },
+    "russia": {
+      "name": "world.europe.russia",
+      "flag": "/img/europe/flags/russia.png",
+      "data": "/assets/radio/europe/russia.json",
+      "timezone": "Europe/Moscow",
+      "station": 0
     }
   },
   "north_america": {

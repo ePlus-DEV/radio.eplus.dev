@@ -38,7 +38,8 @@ export default async (context, locale) => {
       europe: {
         name: "Châu Âu",
         united_kingdom: "Vương quốc Anh",
-        ukraine: "U-cà-rai-na"
+        ukraine: "U-cà-rai-na",
+        russia: "Nga"
       },
       north_america: {
         name: "Bắc Mỹ",
