@@ -129,7 +129,7 @@ export default {
         });
     },
     async fetchSchedule(url) {
-      this.$axios.get(url + this.$moment().tz("Europe/Kiev").unix()).then((res) => {
+      this.$axios.get(url + this.$moment().tz("Europe/Moscow").unix()).then((res) => {
         if (res.data.success) {
           this.data = res.data.result;
         }
