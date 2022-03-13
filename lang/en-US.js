@@ -38,7 +38,7 @@ export default async (context, locale) => {
       europe: {
         name: "Europe",
         united_kingdom: "United Kingdom",
-        ukraina: "Ukraina"
+        ukraine: "Ukraine"
       },
       north_america: {
         name: "North America",

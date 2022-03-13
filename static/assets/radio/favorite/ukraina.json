@@ -2,7 +2,7 @@
   "title": "Хіт FM",
   "type": "audio/aac",
   "frequency": "96.4 FM",
-  "countries": "Ukraina",
+  "countries": "Ukraine",
   "stream": "https://online.hitfm.ua/HitFM_Live",
   "cros": true
 }

@@ -27,7 +27,7 @@ export default {
       title:
         this.$t("navmenu.homepage") +
         " -  Radio " +
-        this.$t("world.europe.ukraina") +
+        this.$t("world.europe.ukraine") +
         " - ",
       meta: [
         {
@@ -43,11 +43,11 @@ export default {
     return {
       name: null,
       title: "Radio in " + this.title_slug,
-      title_slug: "Ukraina",
-      slug: "ukraina",
+      title_slug: "Ukraine",
+      slug: "ukraine",
       area: "europe",
-      i18n: "world.europe.ukraina",
-      thumb: "/img/europe/flags/ukraina.png",
+      i18n: "world.europe.ukraine",
+      thumb: "/img/europe/flags/ukraine.png",
     };
   },
   methods: {

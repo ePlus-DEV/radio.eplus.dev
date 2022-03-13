@@ -79,10 +79,10 @@
       "timezone": "Europe/London",
       "station": 0
     },
-    "ukraina": {
-      "name": "world.europe.ukraina",
-      "flag": "/img/europe/flags/ukraina.png",
-      "data": "/assets/radio/europe/ukraina.json",
+    "ukraine": {
+      "name": "world.europe.ukraine",
+      "flag": "/img/europe/flags/ukraine.png",
+      "data": "/assets/radio/europe/ukraine.json",
       "timezone": "Europe/Kiev",
       "station": 0
     }

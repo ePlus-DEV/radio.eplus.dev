@@ -5,7 +5,7 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n"></Player>
+    <Player ref="player" :stream="stream_name" :country="i18n" :playlist="data"></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import uk from "@/static/assets/radio/europe/ukraina.json";
+import uk from "@/static/assets/radio/europe/ukraine.json";
 
 export default {
   head() {
@@ -70,11 +70,13 @@ export default {
     return {
       name: null,
       title: "Radio in " + this.title_slug,
-      title_slug: "Ukraina",
-      slug: "ukraina",
+      title_slug: "Ukraine",
+      slug: "ukraine",
       stream_name: process.env.Site_Name,
       area: "europe",
-      i18n: "world.europe.ukraina",
+      i18n: "world.europe.ukraine",
+      data: [],
+      thumb: null,
     };
   },
   methods: {
@@ -99,6 +101,11 @@ export default {
             this.$store.dispatch("storePLAYER", data);
 
             this.$refs.player.init();
+
+            // Schedule
+            if (data.schedule !== undefined) {
+              this.fetchSchedule(data.schedule);
+            }
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),
@@ -120,6 +127,19 @@ export default {
               });
           }
         });
+    },
+    async fetchSchedule(url) {
+      this.$axios.get(url + this.$moment().tz("Europe/Kiev").unix()).then((res) => {
+        if (res.data.success) {
+          this.data = res.data.result;
+        }
+
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchSchedule(url);
+        }, 60000);
+      });
     },
   },
   created() {
