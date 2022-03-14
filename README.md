@@ -24,3 +24,8 @@ $ npm run generate
 http://localhost:3000/documentation or http://radio.eplus.dev/documentation
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+```plantext
+https://github.com/umpirsky/country-list/blob/master/data/vi/country.txt
+https://www.textfixer.com/tutorials/country-dropdowns.php
+```
