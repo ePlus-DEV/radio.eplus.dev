@@ -129,17 +129,19 @@ export default {
         });
     },
     async fetchSchedule(url) {
-      this.$axios.get(url + this.$moment().tz("Europe/Moscow").unix()).then((res) => {
-        if (res.data.success) {
-          this.data = res.data.result;
-        }
+      this.$axios
+        .get(url + this.$moment().tz("America/Port-au-Prince").unix())
+        .then((res) => {
+          if (res.data.success) {
+            this.data = res.data.result;
+          }
 
-        // Loop
-        var self = this;
-        setTimeout(function () {
-          self.fetchSchedule(url);
-        }, 60000);
-      });
+          // Loop
+          var self = this;
+          setTimeout(function () {
+            self.fetchSchedule(url);
+          }, 60000);
+        });
     },
   },
   created() {

@@ -106,7 +106,14 @@
       "name": "world.north_america.haiti",
       "flag": "/img/north-america/flags/haiti.png",
       "data": "/assets/radio/north-america/haiti.json",
-      "timezone": "America/Havana",
+      "timezone": "America/Port-au-Prince",
+      "station": 0
+    },
+    "jamaica": {
+      "name": "world.north_america.jamaica",
+      "flag": "/img/north-america/flags/jamaica.png",
+      "data": "/assets/radio/north-america/jamaica.json",
+      "timezone": "America/Jamaica",
       "station": 0
     }
   },
