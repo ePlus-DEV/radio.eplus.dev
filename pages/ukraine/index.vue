@@ -48,6 +48,7 @@ export default {
       area: "europe",
       i18n: "world.europe.ukraine",
       thumb: "/img/europe/flags/ukraine.png",
+      schedule_data: [],
     };
   },
   methods: {

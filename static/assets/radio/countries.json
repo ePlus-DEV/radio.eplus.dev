@@ -101,6 +101,13 @@
       "data": "/assets/radio/north-america/cuba.json",
       "timezone": "America/Havana",
       "station": 0
+    },
+    "haiti": {
+      "name": "world.north_america.haiti",
+      "flag": "/img/north-america/flags/haiti.png",
+      "data": "/assets/radio/north-america/haiti.json",
+      "timezone": "America/Havana",
+      "station": 0
     }
   },
   "oceania": {

@@ -43,7 +43,8 @@ export default async (context, locale) => {
       },
       north_america: {
         name: "North America",
-        cuba: "Cuba"
+        cuba: "Cuba",
+        haiti: "Haiti"
       },
       oceania: {
         name: "Oceania",

@@ -1,0 +1,8 @@
+{
+  "title": "Radio Télé Ginen",
+  "type": "audio/aac",
+  "frequency": "Stream",
+  "countries": "Haiti",
+  "stream": "http://node-14.zeno.fm:80/f3bysky14neuv",
+  "cros": true
+}

@@ -48,6 +48,7 @@ export default {
       area: "europe",
       i18n: "world.europe.russia",
       thumb: "/img/europe/flags/russia.png",
+      schedule_data: [],
     };
   },
   methods: {
