@@ -115,6 +115,13 @@
       "data": "/assets/radio/north-america/jamaica.json",
       "timezone": "America/Jamaica",
       "station": 0
+    },
+    "mexico": {
+      "name": "world.north_america.mexico",
+      "flag": "/img/north-america/flags/mexico.png",
+      "data": "/assets/radio/north-america/mexico.json",
+      "timezone": "America/Mexico_City",
+      "station": 0
     }
   },
   "oceania": {

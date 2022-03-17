@@ -1,0 +1,382 @@
+{
+  "los-40": {
+    "title": "Los 40 Principales",
+    "type": "audio/aac",
+    "url": "https://los40.com.mx/",
+    "cros": false,
+    "stream": "https://25103.live.streamtheworld.com/LOS40_MEXICOAAC_SC",
+    "features": "/img/north-america/mexico/los-40.png"
+  },
+  "amor-cdmx": {
+    "title": "Radio Amor (Ciudad de México)",
+    "type": "audio/aac",
+    "url": "https://amorfm.mx",
+    "cros": false,
+    "stream": "https://22973.live.streamtheworld.com/XHSHFM_SC",
+    "features": "/img/north-america/mexico/amor-cdmx.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/amor-cdmx?time="
+  },
+  "mvs-df": {
+    "title": "Noticias MVS (Ciudad de México)",
+    "type": "audio/aac",
+    "url": "https://mvsnoticias.com/",
+    "cros": false,
+    "stream": "https://26503.live.streamtheworld.com/XHMVSFM_SC",
+    "features": "/img/north-america/mexico/mvs-df.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/mvs-df?time="
+  },
+  "ke-buena": {
+    "title": "Ke Buena",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.kebuena.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/KEBUENA.pls",
+    "features": "/img/north-america/mexico/ke-buena.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/ke-buena?time="
+  },
+  "alfa": {
+    "title": "Alfa Radio",
+    "type": "audio/x-mpegurl",
+    "url": "https://alfaenlinea.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHFAJ_FMAAC.pls",
+    "features": "/img/north-america/mexico/alfa.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/alfa?time="
+  },
+  "la-z-fm": {
+    "title": "La Z FM",
+    "type": "audio/x-mpegurl",
+    "url": "https://laz.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEQR_FMAAC.pls",
+    "features": "/img/north-america/mexico/la-z-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/la-z-fm?time="
+  },
+  "universal": {
+    "title": "Universal Stereo",
+    "type": "audio/x-mpegurl",
+    "url": "https://universal881.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHRED_FMAAC.pls",
+    "features": "/img/north-america/mexico/universal.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/universal?time="
+  },
+  "stereo-joya": {
+    "title": "Stereo Joya 93.7 (Ciudad de México)",
+    "type": "audio/x-mpegurl",
+    "url": "https://joya937.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEJP_FMAAC.pls",
+    "features": "/img/north-america/mexico/stereo-joya.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/stereo-joya?time="
+  },
+  "sabrosita": {
+    "title": "Sabrosita 590 AM",
+    "type": "audio/x-mpegurl",
+    "url": "https://sabrositadigital.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEPHAMAAC.pls",
+    "features": "/img/north-america/mexico/sabrosita.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/sabrosita?time="
+  },
+  "beat-100-9": {
+    "title": "Beat",
+    "type": "audio/x-mpegurl",
+    "url": "https://beat1009.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHSONFM.pls",
+    "features": "/img/north-america/mexico/beat-100-9.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/beat-100-9?time="
+  },
+  "noticias": {
+    "title": "88.9 Noticias",
+    "type": "audio/x-mpegurl",
+    "url": "https://889noticias.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHMFM.pls",
+    "features": "/img/north-america/mexico/noticias.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/noticias?time="
+  },
+  "exa-104-9": {
+    "title": "Exa",
+    "type": "audio/x-mpegurl",
+    "url": "https://exafm.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHEXA.pls",
+    "features": "/img/north-america/mexico/exa-104-9.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/exa-104-9?time="
+  },
+  "disney": {
+    "title": "Disney",
+    "type": "audio/mpeg",
+    "url": "https://radiodisney.disneylatino.com/mexico/",
+    "cros": false,
+    "stream": "https://radiodisney.spiritmedia.mx/xhfo921_m",
+    "features": "/img/north-america/mexico/disney.png"
+  },
+  "formula": {
+    "title": "Radio Fórmula 104.1 FM",
+    "type": "audio/mpeg",
+    "url": "https://www.radioformula.com.mx/",
+    "cros": false,
+    "stream": "https://sg.centrocibernetico.com/formula104",
+    "features": "/img/north-america/mexico/formula.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/formula?time="
+  },
+  "w-96-9": {
+    "title": "W Radio",
+    "type": "audio/x-mpegurl",
+    "url": "https://wradio.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/W_RADIO.pls",
+    "features": "/img/north-america/mexico/w-96-9.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/w-96-9?time="
+  },
+  "reactor": {
+    "title": "Reactor",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.imer.mx/reactor/",
+    "cros": true,
+    "stream": "http://s2.mexside.net:8002/listen.pls?sid=1",
+    "features": "/img/north-america/mexico/reactor.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/reactor?time="
+  },
+  "la-z-ciudad-juarez": {
+    "title": "La Z (Ciudad Juárez Chihuahua)",
+    "type": "audio/x-mpegurl",
+    "url": "http://lazradio.com.mx/juarez/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHEM_FM.pls",
+    "features": "/img/north-america/mexico/la-z-ciudad-juarez.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/la-z-ciudad-juarez?time="
+  },
+  "oye": {
+    "title": "Oye",
+    "type": "audio/x-mpegurl",
+    "url": "https://oye897.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEOYEFMAAC.pls",
+    "features": "/img/north-america/mexico/oye.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/oye?time="
+  },
+  "mix-cdmx": {
+    "title": "Mix (Ciudad de México)",
+    "type": "audio/x-mpegurl",
+    "url": "https://mixfm.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHDFMFM.pls",
+    "features": "/img/north-america/mexico/mix-cdmx.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/mix-cdmx?time="
+  },
+  "banda-monterrey": {
+    "title": "Banda (Monterrey)",
+    "type": "audio/x-mpegurl",
+    "url": "http://banda933.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHQQ_FMAAC.pls",
+    "features": "/img/north-america/mexico/banda-monterrey.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/banda-monterrey?time="
+  },
+  "panda-show": {
+    "title": "Panda Show Radio",
+    "type": "audio/mpeg",
+    "url": "http://elpandazambrano.com",
+    "cros": false,
+    "stream": "https://pandashow.b-cdn.net/stream",
+    "features": "/img/north-america/mexico/panda-show.png"
+  },
+  "rg690": {
+    "title": "RG la Deportiva (Monterrey)",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.mmradio.com/radio-envivo/29511",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/RG690.pls",
+    "features": "/img/north-america/mexico/rg690.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/rg690?time="
+  },
+  "rancherita-piedras-negras": {
+    "title": "La Rancherita del Aire",
+    "type": "audio/aac",
+    "url": "https://rancherita.com.mx/",
+    "cros": false,
+    "stream": "https://ais-sa2.cdnstream1.com/2577_64.aac",
+    "features": "/img/north-america/mexico/rancherita-piedras-negras.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/rancherita-piedras-negras?time="
+  },
+  "fiesta-mexicana": {
+    "title": "Fiesta Mexicana  (Guadalajara)",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.fiestamexicanafm.com/",
+    "cros": true,
+    "stream": "http://streaming1.promomedios.com:8004/listen.pls?sid=1",
+    "features": "/img/north-america/mexico/fiesta-mexicana.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/fiesta-mexicana?time="
+  },
+  "la-mejor-ciudad-de-mexico": {
+    "title": "La Mejor (Ciudad de México)",
+    "type": "audio/x-mpegurl",
+    "url": "https://lamejor.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XERCFM.pls",
+    "features": "/img/north-america/mexico/la-mejor-ciudad-de-mexico.png"
+  },
+  "fusion": {
+    "title": "Fusión",
+    "type": "audio/mpeg",
+    "url": "https://www.fusionradio.mx/index.cfm",
+    "cros": false,
+    "stream": "https://sg.centrocibernetico.com/fusion",
+    "features": "/img/north-america/mexico/fusion.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/fusion?time="
+  },
+  "ranchera-monterrey": {
+    "title": "La Ranchera de Monterrey",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.larancherademonterrey.com.mx/",
+    "cros": true,
+    "stream": "http://streamingcwsradio20.com:9410/listen.pls?sid=1",
+    "features": "/img/north-america/mexico/ranchera-monterrey.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/ranchera-monterrey?time="
+  },
+  "ibero": {
+    "title": "Ibero",
+    "type": "audio/x-mpegurl",
+    "url": "https://ibero909.fm/",
+    "cros": false,
+    "stream": "https://noasrv.caster.fm:10182/stream.m3u",
+    "features": "/img/north-america/mexico/ibero.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/ibero?time="
+  },
+  "imagen": {
+    "title": "Imagen",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.imagenradio.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEDAFMAAC.pls",
+    "features": "/img/north-america/mexico/imagen.png"
+  },
+  "el-heraldo": {
+    "title": "El Heraldo Radio",
+    "type": "audio/x-mpegurl",
+    "url": "https://heraldodemexico.com.mx/",
+    "cros": false,
+    "stream": "https://stream.radiojar.com/g33sp4yqd6quv.m3u",
+    "features": "/img/north-america/mexico/el-heraldo.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/el-heraldo?time="
+  },
+  "match-fm": {
+    "title": "Match FM",
+    "type": "audio/x-mpegurl",
+    "url": "https://matchmx.fm/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHPOPFM.pls",
+    "features": "/img/north-america/mexico/match-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/match-fm?time="
+  },
+  "felicidad": {
+    "title": "Radio Felicidad (CDMX)",
+    "type": "audio/x-mpegurl",
+    "url": "https://radiofelicidad.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEFRAM.pls",
+    "features": "/img/north-america/mexico/felicidad.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/felicidad?time="
+  },
+  "max-tlaxcala": {
+    "title": "Stereo Max (Tlaxcala)",
+    "type": "audio/x-mpegurl",
+    "url": "https://cincoradio.com.mx/en-vivo/?estacion=stereo",
+    "cros": true,
+    "stream": "http://45.169.236.3:8000/stereomax-mp3.m3u",
+    "features": "/img/north-america/mexico/max-tlaxcala.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/max-tlaxcala?time="
+  },
+  "grupera-puebla": {
+    "title": "La Grupera (Puebla)",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.lagrupera.mx/",
+    "cros": true,
+    "stream": "http://stream.zenolive.com/ekpa8qg0mv8uv.m3u",
+    "features": "/img/north-america/mexico/grupera-puebla.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/grupera-puebla?time="
+  },
+  "casa-de-oracion": {
+    "title": "Casa de Oración Radio",
+    "type": "audio/x-mpegurl",
+    "url": "https://casadeoracionmexico.com/",
+    "cros": true,
+    "stream": "http://91.121.164.210:8032/listen.pls?sid=1",
+    "features": "/img/north-america/mexico/casa-de-oracion.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/casa-de-oracion?time="
+  },
+  "grande-leon": {
+    "title": "LG La Grande (León)",
+    "type": "audio/x-mpegurl",
+    "url": "https://lglagrande-fm.mx/",
+    "cros": true,
+    "stream": "http://stream.zenolive.com/hzwy93arcwzuv.m3u",
+    "features": "/img/north-america/mexico/grande-leon.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/grande-leon?time="
+  },
+  "unam": {
+    "title": "UNAM",
+    "type": "audio/x-mpegurl",
+    "url": "https://www.radio.unam.mx/",
+    "cros": true,
+    "stream": "http://server1.usatelk.com:27547/listen.pls?sid=1",
+    "features": "/img/north-america/mexico/unam.png"
+  },
+  "maquina-xalapa": {
+    "title": "La Máquina (Xalapa)",
+    "type": "audio/x-mpegurl",
+    "url": "https://maquina977.com/",
+    "cros": true,
+    "stream": "http://51.161.84.170:8404/listen.pls?sid=1",
+    "features": "/img/north-america/mexico/maquina-xalapa.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/maquina-xalapa?time="
+  },
+  "ke-buena-940": {
+    "title": "Ke Buena",
+    "type": "audio/x-mpegurl",
+    "url": "http://www.kebuena940.com.mx/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/BESAME.pls",
+    "features": "/img/north-america/mexico/ke-buena-940.png"
+  },
+  "stereorey-mexico": {
+    "title": "Stereorey",
+    "type": "audio/x-mpegurl",
+    "url": "http://www.stereorey.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/STEREOREY.pls",
+    "features": "/img/north-america/mexico/stereorey-mexico.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/stereorey-mexico?time="
+  },
+  "globo-mexicali": {
+    "title": "FM Globo (Mexicali)",
+    "type": "audio/x-mpegurl",
+    "url": "https://fmglobo.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XHPFFM.pls",
+    "features": "/img/north-america/mexico/globo-mexicali.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/globo-mexicali?time="
+  },
+  "centro-690": {
+    "title": "Radio Centro y El Fonógrafo",
+    "type": "audio/x-mpegurl",
+    "url": "https://radiocentroelfonografo.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEN_AMAAC.pls",
+    "features": "/img/north-america/mexico/centro-690.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/centro-690?time="
+  },
+  "centro-df": {
+    "title": "Radio Centro y El Fonógrafo",
+    "type": "audio/x-mpegurl",
+    "url": "https://radiocentro.com/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/pls/XEQR_AM.pls",
+    "features": "/img/north-america/mexico/centro-df.png",
+    "schedule": "https://api.webrad.io/data/playlist/15/centro-df?time="
+  }
+}
