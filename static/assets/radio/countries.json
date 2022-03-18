@@ -122,6 +122,13 @@
       "data": "/assets/radio/north-america/mexico.json",
       "timezone": "America/Mexico_City",
       "station": 0
+    },
+    "puerto-rico": {
+      "name": "world.north_america.puerto_rico",
+      "flag": "/img/north-america/flags/puerto-rico.png",
+      "data": "/assets/radio/north-america/puerto-rico.json",
+      "timezone": "America/Puerto_Rico",
+      "station": 0
     }
   },
   "oceania": {

@@ -1,0 +1,8 @@
+{
+  "title": "Noti Uno",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Puerto Rico",
+  "stream": "https://server20.servistreaming.com:9022/stream",
+  "cros": true
+}

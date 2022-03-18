@@ -46,7 +46,8 @@ export default async (context, locale) => {
         cuba: "Cuba",
         haiti: "Haiti",
         jamaica: "Jamaica",
-        mexico: "Mê-xi-cô"
+        mexico: "Mê-xi-cô",
+        puerto_rico: "Puerto Rico"
       },
       oceania: {
         name: "Châu Đại Dương",

@@ -18,6 +18,8 @@ import russia from "./static/assets/radio/europe/russia.json";
 import cuba from "./static/assets/radio/north-america/cuba.json";
 import haiti from "./static/assets/radio/north-america/haiti.json";
 import jamaica from "./static/assets/radio/north-america/jamaica.json";
+import mexico from "./static/assets/radio/north-america/mexico.json";
+import puerto_rico from "./static/assets/radio/north-america/puerto-rico.json";
 // Oceania
 import australia from "./static/assets/radio/oceania/australia.json";
 
@@ -408,6 +410,26 @@ export default {
           station_country: "world.north_america.jamaica",
           url: "/jamaica/" + key,
           objectID: "jamaica-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(mexico)) {
+        routesToGenerate.push("/mexico/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.north_america.mexico",
+          url: "/mexico/" + key,
+          objectID: "mexico-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(puerto_rico)) {
+        routesToGenerate.push("/puerto-rico/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.north_america.puerto_rico",
+          url: "/puerto-rico/" + key,
+          objectID: "puerto-rico-" + key
         });
       }
       // END - North America
