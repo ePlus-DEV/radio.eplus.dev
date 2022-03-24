@@ -5,7 +5,7 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n"></Player>
+    <Player ref="player" :stream="stream_name" :country="i18n" :playlist="data"></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->

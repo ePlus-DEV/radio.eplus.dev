@@ -114,7 +114,8 @@
     "url": "https://www.classicfm.com",
     "cros": false,
     "stream": "https://e-cros.herokuapp.com/http://vis.media-ice.musicradio.com/ClassicFMMP3",
-    "features": "/img/europe/united-kingdom/classic-fm.png"
+    "features": "/img/europe/united-kingdom/classic-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/classic-fm?time="
   },
   "capital-fm": {
     "title": "Capital FM",
@@ -123,7 +124,8 @@
     "url": "https://www.capitalfm.com",
     "cros": false,
     "stream": "https://e-cros.herokuapp.com/http://media-ice.musicradio.com/Capital",
-    "features": "/img/europe/united-kingdom/capital.png"
+    "features": "/img/europe/united-kingdom/capital.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/capital?time="
   },
   "heart-uk": {
     "title": "Heart UK",
@@ -132,7 +134,8 @@
     "url": "https://www.heart.co.uk",
     "cros": false,
     "stream": "https://media-ssl.musicradio.com/HeartUK",
-    "features": "/img/europe/united-kingdom/heart.png"
+    "features": "/img/europe/united-kingdom/heart.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/heart?time="
   },
   "virgin": {
     "title": "Virgin Radio",
@@ -150,7 +153,8 @@
     "url": "https://www.1mix.co.uk/",
     "cros": true,
     "stream": "http://fr1.1mix.co.uk:8060/320",
-    "features": "/img/europe/united-kingdom/1mix.png"
+    "features": "/img/europe/united-kingdom/1mix.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/1mix?time="
   },
   "smooth": {
     "title": "Smooth Radio",
@@ -159,7 +163,8 @@
     "url": "https://www.smoothradio.com/",
     "cros": false,
     "stream": "https://media-ice.musicradio.com/SmoothUKMP3",
-    "features": "/img/europe/united-kingdom/smooth.png"
+    "features": "/img/europe/united-kingdom/smooth.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/smooth?time="
   },
   "rinse-fm": {
     "title": "Rinse FM",
@@ -177,7 +182,8 @@
     "url": "https://www.radiox.co.uk/",
     "cros": false,
     "stream": "https://media-ice.musicradio.com/RadioXLondonMP3",
-    "features": "/img/europe/united-kingdom/radio-x.png"
+    "features": "/img/europe/united-kingdom/radio-x.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/x?time="
   },
   "absolute": {
     "title": "Absolute Radio",
@@ -195,7 +201,8 @@
     "url": "https://www.discovertrance.com/",
     "cros": false,
     "stream": "https://uk01.discovertrance.com/9216/",
-    "features": "/img/europe/united-kingdom/discover-trance-uk.png"
+    "features": "/img/europe/united-kingdom/discover-trance-uk.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/discover-trance-uk?time="
   },
   "caroline": {
     "title": "Radio Caroline",
@@ -204,7 +211,8 @@
     "url": "https://www.radiocaroline.co.uk/",
     "cros": false,
     "stream": "https://e-cros.herokuapp.com/http://sc6.radiocaroline.net:8040/stream/1/",
-    "features": "/img/europe/united-kingdom/caroline.png"
+    "features": "/img/europe/united-kingdom/caroline.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/caroline?time="
   },
   "kiss-london": {
     "title": "KISS (London)",
@@ -224,6 +232,15 @@
     "stream": "https://stream-mz.planetradio.co.uk/net2national.aac",
     "features": "/img/europe/united-kingdom/greatest-hits-radio.png"
   },
+  "more-worthing": {
+    "title": "More Radio (Worthing)",
+    "type": "audio/aac",
+    "url": "https://www.moreradio.online/",
+    "cros": false,
+    "stream": "https://s2.xrad.io:9596/stream/1/",
+    "features": "/img/europe/united-kingdom/more-worthing.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/more-worthing?time="
+  },
   "manx": {
     "title": "Manx Radio",
     "type": "audio/aac",
@@ -231,7 +248,8 @@
     "url": "https://www.manxradio.com/",
     "cros": false,
     "stream": "https://listen-manxradio.sharp-stream.com/manxradioam.aac",
-    "features": "/img/europe/united-kingdom/manx.png"
+    "features": "/img/europe/united-kingdom/manx.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/manx?time="
   },
   "kane-fm": {
     "title": "Kane FM (London)",
@@ -251,6 +269,32 @@
     "stream": "https://icecast.easystream.co.uk:8000/herefordFM",
     "features": "/img/europe/united-kingdom/sunshine-hereford.png"
   },
+  "talksport": {
+    "title": "Talk Sport",
+    "type": "audio/mpeg",
+    "url": "https://talksport.com/",
+    "cros": false,
+    "stream": "https://radio.talksport.com/stream",
+    "features": "/img/europe/united-kingdom/talksport.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/talksport?time="
+  },
+  "william-hill-racing": {
+    "title": "William Hill Racing Radio",
+    "type": "application/x-mpegURL",
+    "url": "https://news.williamhill.com/",
+    "cros": false,
+    "stream": "https://betamg-i.akamaihd.net/hls/live/513429/willhill/racingradio/playlist.m3u8",
+    "features": "/img/europe/united-kingdom/william-hill-racing.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/william-hill-racing?time="
+  },
+  "sheffield": {
+    "title": "Sheffield Live",
+    "type": "audio/mpeg",
+    "url": "https://web.sheffieldlive.org/",
+    "cros": true,
+    "stream": "http://live.sheffieldlive.org:8000/stream/1/",
+    "features": "/img/europe/united-kingdom/sheffield.png"
+  },
   "1xtra": {
     "title": "BBC Radio 1 Xtra",
     "type": "audio/mpeg",
@@ -267,7 +311,8 @@
     "url": "http://www.solarradio.com/",
     "cros": false,
     "stream": "https://strm5.radiostreamer.co.uk/proxy/mp3high22?mp=/stream/1/",
-    "features": "/img/europe/united-kingdom/solar.png"
+    "features": "/img/europe/united-kingdom/solar.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/solar?time="
   },
   "choice-london": {
     "title": "Capital Xtra (London)",
@@ -276,7 +321,8 @@
     "url": "https://www.capitalxtra.com/",
     "cros": false,
     "stream": "https://media-ice.musicradio.com/CapitalXTRALondonMP3",
-    "features": "/img/europe/united-kingdom/choice-london.png"
+    "features": "/img/europe/united-kingdom/choice-london.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/choice-london?time="
   },
   "bbc-glasgow": {
     "title": "BBC Radio Scotland (Glasgow)",
@@ -321,7 +367,8 @@
     "url": "https://www.funkidslive.com/",
     "cros": false,
     "stream": "https://listen-funkids.sharp-stream.com/funkids.mp3",
-    "features": "/img/europe/united-kingdom/fun-radio-uk.png"
+    "features": "/img/europe/united-kingdom/fun-radio-uk.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/fun-radio-uk?time="
   },
   "sanskar-leicester": {
     "title": "Sanskar Radio (Leicester)",
@@ -330,7 +377,8 @@
     "url": "http://sanskarradio.com/",
     "cros": false,
     "stream": "https://radio.canstream.co.uk:8024/live.mp3",
-    "features": "/img/europe/united-kingdom/sanskar-leicester.png"
+    "features": "/img/europe/united-kingdom/sanskar-leicester.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/sanskar-leicester?time="
   },
   "island": {
     "title": "Island FM",
@@ -339,6 +387,109 @@
     "url": "https://www.islandfm.com/",
     "cros": false,
     "stream": "https://n07a-eu.rcs.revma.com/epatpyebanzuv",
-    "features": "/img/europe/united-kingdom/island.png"
+    "features": "/img/europe/united-kingdom/island.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/island?time="
+  },
+  "serenade-radio": {
+    "title": "Serenade Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.serenade-radio.com/",
+    "cros": true,
+    "stream": "http://4534.cloudrad.io:8284/stream/1/",
+    "features": "/img/europe/united-kingdom/serenade-radio.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/serenade-radio?time="
+  },
+  "greatest-hits-harrogate": {
+    "title": "Greatest Hits Radio (Harrogate and the Yorkshire Dales)",
+    "type": "audio/aac",
+    "url": "https://planetradio.co.uk/greatest-hits/harrogate-yorkshire-dales/",
+    "cros": false,
+    "stream": "https://stream-mz.planetradio.co.uk/net2harrogate.aac",
+    "features": "/img/europe/united-kingdom/greatest-hits-harrogate.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/greatest-hits-harrogate?time="
+  },
+  "amazing": {
+    "title": "Amazing Radio",
+    "type": "audio/mpeg",
+    "url": "https://amazingradio.com/",
+    "cros": true,
+    "stream": "https://stream5.amazingradio.com:8443/stream.mp3?redirected=1",
+    "features": "/img/europe/united-kingdom/amazing.png"
+  },
+  "lbc": {
+    "title": "LBC",
+    "type": "audio/mpeg",
+    "url": "https://www.lbc.co.uk/",
+    "cros": false,
+    "stream": "https://media-ice.musicradio.com/LBCLondonMP3",
+    "features": "/img/europe/united-kingdom/lbc.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/lbc?time="
+  },
+  "more-hastings": {
+    "title": "More Radio (Hastings)",
+    "type": "audio/mpeg",
+    "url": "https://www.moreradio.online/",
+    "cros": false,
+    "stream": "https://s2.xrad.io:9592/stream/1/",
+    "features": "/img/europe/united-kingdom/more-hastings.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/more-hastings?time="
+  },
+  "hayes-fm": {
+    "title": "Radio Hayes",
+    "type": "audio/mpeg",
+    "url": "https://hayesfm.co.uk/",
+    "cros": false,
+    "stream": "https://s19.myradiostream.com/8026/stream/1/",
+    "features": "/img/europe/united-kingdom/hayes-fm.png"
+  },
+  "absolute-aberdeen": {
+    "title": "Absolute Radio (Aberdeen)",
+    "type": "audio/aac",
+    "url": "https://planetradio.co.uk/absolute-radio/",
+    "cros": false,
+    "stream": "https://stream-ar.planetradio.co.uk/absoluteradiohigh.aac",
+    "features": "/img/europe/united-kingdom/absolute-aberdeen.png"
+  },
+  "mearns-stonehaven": {
+    "title": "Mearns FM (Stonehaven)",
+    "type": "audio/mpeg",
+    "url": "https://www.mearnsfm.org.uk/",
+    "cros": false,
+    "stream": "https://stream3.hippynet.co.uk/stream/mearnsfm",
+    "features": "/img/europe/united-kingdom/mearns-stonehaven.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/mearns-stonehaven?time="
+  },
+  "original-aberdeen": {
+    "title": "Original 106 Aberdeen (Durris)",
+    "type": "audio/mpeg",
+    "url": "https://www.originalfm.com/",
+    "cros": false,
+    "stream": "https://listen-original.sharp-stream.com/original106.mp3",
+    "features": "/img/europe/united-kingdom/original-aberdeen.png",
+    "schedule": "https://api.webrad.io/data/playlist/42/original-aberdeen?time="
+  },
+  "shmu-aberdeen": {
+    "title": "Shmu FM (Aberdeen)",
+    "type": "audio/mpeg",
+    "url": "http://www.shmu.org.uk/",
+    "cros": true,
+    "stream": "http://stream.shmu.org.uk:8000/shmufm_high.mp3",
+    "features": "/img/europe/united-kingdom/shmu-aberdeen.png"
+  },
+  "talk-aberdeen": {
+    "title": "Talk Sport UK (Aberdeen)",
+    "type": "audio/mpeg",
+    "url": "https://talksport.com/",
+    "cros": false,
+    "stream": "https://radio.talksport.com/stream",
+    "features": "/img/europe/united-kingdom/talk-aberdeen.png"
+  },
+  "blast-belfast": {
+    "title": "Blast FM (Belfast)",
+    "type": "audio/aac",
+    "url": "http://blast106.com/",
+    "cros": true,
+    "stream": "http://radiocentre.duckdns.org:8000/blast",
+    "features": "/img/europe/united-kingdom/blast-belfast.png"
   }
 }

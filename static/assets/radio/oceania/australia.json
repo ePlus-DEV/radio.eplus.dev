@@ -6,7 +6,8 @@
     "url": "https://www.abc.net.au/newsradio",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/newsradio_1@327297/master.m3u8",
-    "features": "/img/oceania/australia/abc-newsradio.png"
+    "features": "/img/oceania/australia/abc-newsradio.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/abc-newsradio?time="
   },
   "abc-national": {
     "title": "ABC Radio National",
@@ -24,7 +25,8 @@
     "url": "https://www.rrr.org.au/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/triplejnsw_1@327300/master.m3u8",
-    "features": "/img/oceania/australia/triple-j.png"
+    "features": "/img/oceania/australia/triple-j.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/triple-j?time="
   },
   "triple-r": {
     "title": "Triple R",
@@ -43,7 +45,8 @@
     "url": "https://www.rrr.org.au/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/ramultilang_1@176827/master.m3u8",
-    "features": "/img/oceania/australia/abc-australia.png"
+    "features": "/img/oceania/australia/abc-australia.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/abc-australia?time="
   },
   "2sm": {
     "title": "2SM",
@@ -62,7 +65,8 @@
     "url": "https://www.abc.net.au/brisbane/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localbrisbane_1@327262/master.m3u8",
-    "features": "/img/oceania/australia/abc-brisbane.png"
+    "features": "/img/oceania/australia/abc-brisbane.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/abc-brisbane?time="
   },
   "702-abc-sydney": {
     "title": "702 ABC (Sydney)",
@@ -71,7 +75,8 @@
     "url": "https://www.abc.net.au/sydney",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localsydney_1@327264/master.m3u8",
-    "features": "/img/oceania/australia/702-abc-sydney.png"
+    "features": "/img/oceania/australia/702-abc-sydney.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/702-abc-sydney?time="
   },
   "720-abc-perth": {
     "title": "720 ABC (Perth)",
@@ -80,7 +85,8 @@
     "url": "https://www.abc.net.au/perth/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localperth_1@327265/master.m3u8",
-    "features": "/img/oceania/australia/720-abc-perth.png"
+    "features": "/img/oceania/australia/720-abc-perth.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/720-abc-perth?time="
   },
   "voice-of-islam": {
     "title": "Voice of Islam",
@@ -117,7 +123,8 @@
     "url": "https://www.abc.net.au/melbourne",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localmelbourne_1@327266/master.m3u8",
-    "features": "/img/oceania/australia/774-abc-melbourne.png"
+    "features": "/img/oceania/australia/774-abc-melbourne.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/774-abc-melbourne?time="
   },
   "891-abc-adelaide": {
     "title": "891 ABC (Adelaide)",
@@ -126,7 +133,8 @@
     "url": "https://www.abc.net.au/adelaide/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localadelaide_1@327267/master.m3u8",
-    "features": "/img/oceania/australia/891-abc-adelaide.png"
+    "features": "/img/oceania/australia/891-abc-adelaide.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/891-abc-adelaide?time="
   },
   "936-abc-hobart": {
     "title": "936 ABC Hobart",
@@ -135,7 +143,8 @@
     "url": "https://www.abc.net.au/hobart/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/localhobart_1@327274/master.m3u8",
-    "features": "/img/oceania/australia/936-abc-hobart.png"
+    "features": "/img/oceania/australia/936-abc-hobart.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/936-abc-hobart?time="
   },
   "fresh-92-7": {
     "title": "Fresh",
@@ -209,7 +218,8 @@
     "url": "http://abcclassic2.tumblr.com/",
     "cros": false,
     "stream": "https://abcradiolivehls-lh.akamaihd.net/i/classic2_1@327291/master.m3u8",
-    "features": "/img/oceania/australia/abc-classic-2.png"
+    "features": "/img/oceania/australia/abc-classic-2.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/abc-classic-2?time="
   },
   "sunshine-fm-104-9": {
     "title": "Sunshine FM",
@@ -311,7 +321,8 @@
     "url": "https://www.3ser.org.au/",
     "cros": false,
     "stream": "https://s3.radio.co/s8f8288fe9/listen",
-    "features": "/img/oceania/australia/casey.png"
+    "features": "/img/oceania/australia/casey.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/casey?time="
   },
   "96five-family": {
     "title": "96five Family Radio",
@@ -394,6 +405,7 @@
     "url": "https://www.mixfm.com.au/",
     "cros": false,
     "stream": "https://n01a-eu.rcs.revma.com/z06q4stdwhruv?1598277631=&rj-tok=AAABdCDQJuUAKBp0Or7FjJ9O5Q&rj-ttl=5",
-    "features": "/img/oceania/australia/mix-fm-927.png"
+    "features": "/img/oceania/australia/mix-fm-927.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/mix-fm-927?time="
   }
 }
