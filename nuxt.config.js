@@ -20,6 +20,7 @@ import haiti from "./static/assets/radio/north-america/haiti.json";
 import jamaica from "./static/assets/radio/north-america/jamaica.json";
 import mexico from "./static/assets/radio/north-america/mexico.json";
 import puerto_rico from "./static/assets/radio/north-america/puerto-rico.json";
+import dominican_republic from "./static/assets/radio/north-america/dominican-republic.json";
 // Oceania
 import australia from "./static/assets/radio/oceania/australia.json";
 
@@ -430,6 +431,16 @@ export default {
           station_country: "world.north_america.puerto_rico",
           url: "/puerto-rico/" + key,
           objectID: "puerto-rico-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(dominican_republic)) {
+        routesToGenerate.push("/dominican-republic/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.north_america.dominican_republic",
+          url: "/dominican-republic/" + key,
+          objectID: "dominican-republic-" + key
         });
       }
       // END - North America

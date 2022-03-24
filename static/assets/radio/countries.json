@@ -129,6 +129,13 @@
       "data": "/assets/radio/north-america/puerto-rico.json",
       "timezone": "America/Puerto_Rico",
       "station": 0
+    },
+    "dominican-republic": {
+      "name": "world.north_america.dominican_republic",
+      "flag": "/img/north-america/flags/dominican-republic.png",
+      "data": "/assets/radio/north-america/dominican-republic.json",
+      "timezone": "America/Santo_Domingo",
+      "station": 0
     }
   },
   "oceania": {
