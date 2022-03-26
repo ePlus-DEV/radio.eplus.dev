@@ -6,7 +6,8 @@
     "url": "https://greenwave.atimeonline.com/",
     "cros": false,
     "stream": "https://atimeonline3.smartclick.co.th/green",
-    "features": "/img/asia/thailand/green.png"
+    "features": "/img/asia/thailand/green.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/green?time="
   },
   "cool": {
     "title": "COOLfahrenheit (Bangkok)",
@@ -15,7 +16,8 @@
     "url": "https://www.coolism.net/index.php",
     "cros": true,
     "stream": "http://coolism-web3rd.cdn.byteark.com:5002/stream/1/",
-    "features": "/img/asia/thailand/cool.png"
+    "features": "/img/asia/thailand/cool.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/cool?time="
   },
   "mellow": {
     "title": "Mellow",
@@ -24,7 +26,8 @@
     "url": "https://mellow975.mcot.net/home",
     "cros": false,
     "stream": "https://mcotdigital-3bgyw0.cdn.byteark.com/radiocdn_edge/fm975.stream_aac/playlist.m3u8",
-    "features": "/img/asia/thailand/mellow.png"
+    "features": "/img/asia/thailand/mellow.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/eazy-fm?time="
   },
   "eazy-fm": {
     "title": "Eazy FM (Bangkok)",
@@ -116,7 +119,8 @@
     "url": "https://www.fmone1035.com/",
     "cros": false,
     "stream": "https://fmone.plathong.net/7010/stream/1/",
-    "features": "/img/asia/thailand/one-fm.png"
+    "features": "/img/asia/thailand/one-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/one-fm?time="
   },
   "city": {
     "title": "City Radio",
@@ -125,7 +129,8 @@
     "url": "https://www.cityradiopattaya.com/",
     "cros": true,
     "stream": "http://n13.radiojar.com/493e3018b9quv",
-    "features": "/img/asia/thailand/city.png"
+    "features": "/img/asia/thailand/city.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/city?time="
   },
   "thailand-88": {
     "title": "88 FM NBT Radio Thailand (Bangkok)",
@@ -134,7 +139,8 @@
     "url": "https://nbt.prd.go.th/",
     "cros": true,
     "stream": "http://prdonline.prd.go.th:8200/;",
-    "features": "/img/asia/thailand/thailand-88.png"
+    "features": "/img/asia/thailand/thailand-88.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/thailand-88?time="
   },
   "mitikao905": {
     "title": "Mitikao",
@@ -170,7 +176,8 @@
     "url": "https://nbt.prd.go.th/",
     "cros": true,
     "stream": "http://prdonline.prd.go.th:8200/;",
-    "features": "/img/asia/thailand/88-fm.png"
+    "features": "/img/asia/thailand/88-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/88-fm?time="
   },
   "fm91": {
     "title": "FM 91",
@@ -380,7 +387,8 @@
     "url": "https://nbt.prd.go.th/",
     "cros": true,
     "stream": "http://prdonline.prd.go.th:8210/;",
-    "features": "/img/asia/thailand/fm-105.png"
+    "features": "/img/asia/thailand/fm-105.png",
+    "schedule": "https://api.webrad.io/data/playlist/96/fm-105?time="
   },
   "capitol-fm-bangkok": {
     "title": "Capitol FM (Bangkok)",
