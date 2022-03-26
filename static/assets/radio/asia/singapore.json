@@ -343,8 +343,7 @@
     "url": "https://www.kastkast.com/",
     "cros": false,
     "stream": "https://s3.radio.co/sef15894a2/listen",
-    "features": "/img/asia/singapore/kast-kast.png",
-    "schedule": "https://api.webrad.io/data/playlist/66/kast-kast?time="
+    "features": "/img/asia/singapore/kast-kast.png"
   },
   "axr": {
     "title": "AXR",
