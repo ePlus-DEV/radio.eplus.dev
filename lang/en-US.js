@@ -66,7 +66,8 @@ export default async (context, locale) => {
       description: "Description",
       category: "Category",
       schedule: "Schedule",
-      playlist: "Playlist"
+      playlist: "Playlist",
+      next: "Next"
     },
     button: {
       back: "Back",

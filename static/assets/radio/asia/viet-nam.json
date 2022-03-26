@@ -508,9 +508,23 @@
     "url": "https://zingmp3.vn/liveradio/IWZ97AIO.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ97AIO&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ97AIO&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/9tPzLPYORS8/zhls/playback-realtime/a07d79b945fcaca2f5ed/index.m3u8",
     "features": "/img/asia/viet-nam/zing-mp3-on-air.png"
+  },
+  "edm-radio-zing-mp3": {
+    "title": "EDM Radio - Zing MP3",
+    "description": "Đây là 'sàn' EDM. Các bạn đã sẵn sàng chưa? Nhạc lên rồi, cùng nhảy thôi!",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ9799A.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ9799A&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ9799A&time=",
+    "stream": "https://multi-playlist-zmp3.zadn.vn/AYtg9UVhc4c/zhls/playback-realtime/7ad38814b4515d0f0440/index.m3u8",
+    "features": "/img/asia/viet-nam/edm-radio-zing-mp3.png"
   },
   "cham-radio-zing-mp3": {
     "title": "Chạm Radio - Zing MP3",
@@ -520,7 +534,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ979C8.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979C8&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979C8&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/62YE6lXdY4w/zhls/playback-realtime/db68d4afe8ea01b458fb/index.m3u8",
     "features": "/img/asia/viet-nam/cham-radio-zing-mp3.png"
   },
@@ -532,7 +547,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ979UB.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979UB&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979UB&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/wTSwRIGOON0/zhls/playback-realtime/6eeb692c5569bc37e578/index.m3u8",
     "features": "/img/asia/viet-nam/vpop-radio-zing-mp3.png"
   },
@@ -544,7 +560,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ979ZI.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979ZI&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979ZI&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/BtRvAOtW5jk/zhls/playback-realtime/e3b9f87ec43b2d65742a/index.m3u8",
     "features": "/img/asia/viet-nam/bolero-zing-mp3.png"
   },
@@ -556,7 +573,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ97A0W.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ97A0W&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ97A0W&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/RckDo1XPsU4/zhls/playback-realtime/111c87d8bb9d52c30b8c/index.m3u8",
     "features": "/img/asia/viet-nam/us-uk-radio-zing-mp3.png"
   },
@@ -568,7 +586,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ979UC.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979UC&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979UC&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/94rxZ-Dfzro/zhls/playback-realtime/ff294ded71a898f6c1b9/index.m3u8",
     "features": "/img/asia/viet-nam/kpop-radio-zing-mp3.png"
   },
@@ -580,7 +599,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ979C0.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979C0&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979C0&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/ktkT8IgzcQQ/zhls/playback-realtime/08aae96dd5283c766539/index.m3u8",
     "features": "/img/asia/viet-nam/acoustic-radio-zing-mp3.png"
   },
@@ -592,7 +612,8 @@
     "url": "https://zingmp3.vn/liveradio/IWZ97996.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ97996&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ97996&time=",
     "stream": "https://multi-playlist-zmp3.zadn.vn/Itsn5VCb5Uo/zhls/playback-realtime/4f2980eebcab55f50cba/index.m3u8",
     "features": "/img/asia/viet-nam/rap-viet-radio-zing-mp3.png"
   },
@@ -601,10 +622,11 @@
     "description": "The One Radio - Kênh giải trí âm nhạc quốc gia. Nơi đăng tải các chương trình radio như After work - sau giờ làm, Chuyến bay sáng, Những giai điệu ủi an, Gieo mầm yêu thương,... với sự dẫn dắt của các MC hoạt ngôn, vui tính.",
     "type": "application/x-mpegURL",
     "category": "Âm nhạc",
-    "url": "https://zingmp3.vn/liveradio/IWZ98EEC.html",
+    "url": "https://zingmp3.vn/liveradio/IWZ979DW.html",
     "cros": false,
     "time": "24/7",
-    "schedule": false,
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979DW&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979DW&time=",
     "stream": "https://mplaylist-zmp3.zadn.vn/qm_zvfUgxa8/zhls/live/5c0872cf4e8aa7d4fe9b/index.m3u8",
     "features": "/img/asia/viet-nam/the-one-radio-zing-mp3.png"
   }

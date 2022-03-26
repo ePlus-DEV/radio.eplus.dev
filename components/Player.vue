@@ -46,6 +46,59 @@
             </svg>
           </div>
         </div>
+        <!-- BEGIN - Zing - Only -->
+
+        <div
+          class="flex flex-col items-center p-5 border-b dark:border-gray-600"
+          v-if="song !== undefined && song.currentMedia !== undefined"
+        >
+          <figure
+            class="shadow-lg rounded-xl flex-none w-auto md:w-xl"
+            style="transform: rotate(1deg) translateZ(0px)"
+          >
+            <figcaption
+              class="flex items-center space-x-4 p-6 md:px-10 md:py-6 bg-gradient-to-r from-green-400 to-blue-500 rounded-t-xl leading-6 font-semibold text-white"
+            >
+              <div
+                class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
+              >
+                <img
+                  :src="song.currentMedia.thumbnail"
+                  :alt="song.currentMedia.title"
+                  loading="lazy"
+                  class="w-20 h-20 rounded-full bg-orange-100"
+                />
+              </div>
+              <div class="flex-auto">
+                {{ song.currentMedia.title }}<br /><span class="text-orange-100">
+                  {{ song.currentMedia.artists }}
+                </span>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure
+            class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"
+            v-if="song.nextMedia.encodeId !== undefined"
+          >
+            <img
+              class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
+              :src="song.nextMedia.thumbnail"
+              alt=""
+            />
+            <div class="md:p-2 text-center md:text-left space-y-4">
+              <figcaption class="font-medium">
+                <div class="text-sky-500 dark:text-white">
+                  {{ $t("panel.next") }}: {{ song.nextMedia.title }}
+                </div>
+                <div class="text-slate-700 dark:text-white">
+                  {{ song.nextMedia.artists }}
+                </div>
+              </figcaption>
+            </div>
+          </figure>
+        </div>
+        <!-- END - Zing - Only -->
 
         <div class="flex flex-col sm:flex-row items-center p-5">
           <div class="flex items-center">
@@ -149,40 +202,64 @@
             </div>
           </div>
           <div class="relative w-full ml-2">
-            <!-- <div class="bg-red-300 h-2 w-full rounded-lg"></div>
-            <div class="bg-red-500 h-2 w-1/2 rounded-lg absolute top-0"></div> -->
-
             <vue-plyr ref="plyr" @player="setPlayer">
-              <audio controls crossorigin playsinline id="player" class="hidden">
-                <!-- <source :src="player_home.stream" :type="player_home.type" /> -->
-              </audio>
+              <audio controls crossorigin playsinline id="player" class="hidden"></audio>
             </vue-plyr>
-
-            <!-- <div class="ticker radio-name-player dark:text-white">
-              <ul>
-                <li>{{ $t("panel.play_from_radio") }} {{ stream }}</li>
-                <li>
-                  <template v-if="country !== undefined">
-                    {{ $t("panel.most_popular", { name: $t(country) }) }}
-                  </template>
-                  <template v-else>
-                    {{ country }}
-                  </template>
-                </li>
-                <li>
-                  {{ $t("panel.frequency") }}
-                </li>
-              </ul>
-            </div> -->
           </div>
-          <!-- <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
-            <span
-              class="text-xs dark:text-white text-gray-700 uppercase font-medium pl-2"
-            >
-              02:00/04:00
-            </span>
-          </div> -->
         </div>
+
+        <!-- BEGIN - Program -->
+        <div
+          class="h-full flex flex-col"
+          v-if="program !== undefined && program.length > 0"
+        >
+          <div
+            class="bg-white dark:bg-gray-800 text-sm text-gray-500 dark:text-white font-bold px-5 py-2 shadow border-b border-gray-300"
+          >
+            {{ $t("panel.schedule") }}
+          </div>
+
+          <div
+            class="w-full h-full overflow-auto shadow bg-white dark:bg-gray-800"
+            id="journal-scroll"
+          >
+            <table class="w-full">
+              <tbody class="">
+                <template v-for="(item, index) in program">
+                  <tr
+                    class="relative transform scale-100 text-xs py-1 border-b-2 border-blue-100 cursor-default"
+                    :class="index === 0 ? 'bg-blue-500 bg-opacity-25' : ''"
+                    :key="index"
+                  >
+                    <td class="pl-5 pr-3 whitespace-no-wrap">
+                      <div class="text-gray-400">
+                        {{ $moment.unix(item.startTime).format("dddd - DD/MM//YYYY") }}
+                      </div>
+                      <div class="dark:text-white">
+                        {{
+                          $moment.unix(item.startTime).format("HH:mm") +
+                          " - " +
+                          $moment.unix(item.endTime).format("HH:mm")
+                        }}
+                      </div>
+                    </td>
+
+                    <td class="px-2 py-2 whitespace-no-wrap">
+                      <div class="leading-5 text-gray-500 font-medium">
+                        {{ item.title }}
+                      </div>
+                      <div class="leading-5 text-gray-900 dark:text-gray-200">
+                        {{ item.description }}
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- END - Program  -->
+
         <!-- BEGIN - Playlist -->
         <div
           class="flex flex-col p-5"
@@ -231,14 +308,6 @@
                   </p>
                   <div class="relative inline-flex" v-else>
                     <img src="/brand/favicon.ico" alt="Logo" />
-                    <!-- <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
-                      <span
-                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
-                      ></span>
-                      <span
-                        class="relative inline-flex rounded-full h-3 w-3 bg-red-500"
-                      ></span>
-                    </span> -->
                   </div>
                 </div>
               </div>
@@ -256,7 +325,7 @@
 import Hls from "hls.js";
 
 export default {
-  props: ["country", "home", "playlist", "schedule", "thumb"],
+  props: ["country", "home", "info", "playlist", "song", "program", "thumb"],
   data() {
     return {
       now: null,

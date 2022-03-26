@@ -66,7 +66,8 @@ export default async (context, locale) => {
       description: "Mô tả",
       category: "Thể Loại",
       schedule: "Lịch phát sóng",
-      playlist: "Danh sách phát"
+      playlist: "Danh sách phát",
+      next: "Kế tiếp"
     },
     button: {
       back: "Quay lại",

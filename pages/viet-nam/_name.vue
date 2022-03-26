@@ -5,7 +5,14 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n"></Player>
+    <Player
+      ref="player"
+      :stream="stream_name"
+      :country="i18n"
+      :song="song"
+      :program="program"
+      :info="info"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -76,6 +83,9 @@ export default {
       i18n: "world.asia.vietnam",
       description: "",
       stream_name: process.env.Site_Name,
+      program: [],
+      song: {},
+      info: [],
     };
   },
   methods: {
@@ -100,6 +110,15 @@ export default {
             this.$store.dispatch("storePLAYER", data);
 
             this.$refs.player.init();
+
+            // Schedule
+            if (data.schedule !== undefined) {
+              this.fetchSchedule(data.schedule);
+            }
+            // Info
+            // if (data.info !== undefined) {
+            //   this.fetchInfo(data.info);
+            // }
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),
@@ -121,6 +140,49 @@ export default {
               });
           }
         });
+    },
+    async fetchSchedule(url) {
+      this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
+        if (res.data.err === 0) {
+          this.program = res.data.data.items;
+
+          this.fetchSong(
+            process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL +
+              res.data.data.items[0].encodeId +
+              "&time="
+          );
+        }
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchSchedule(url);
+        }, 60000);
+      });
+    },
+    async fetchSong(url) {
+      this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
+        if (res.data.err === 0) {
+          this.song = res.data.data;
+        }
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchSong(url);
+        }, 60000);
+      });
+    },
+    async fetchInfo(url) {
+      this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
+        if (res.data.success) {
+          console.log(res.data);
+          this.info = res.data;
+        }
+        // Loop
+        var self = this;
+        setTimeout(function () {
+          self.fetchInfo(url);
+        }, 60000);
+      });
     },
   },
   created() {
