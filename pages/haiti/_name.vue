@@ -77,7 +77,13 @@ export default {
       i18n: "world.north_america.haiti",
       data: [],
       thumb: null,
+      polling_schedule: null,
+      polling_song: null,
     };
+  },
+  beforeDestroy() {
+    window.clearTimeout(this.polling_schedule);
+    window.clearTimeout(this.polling_song);
   },
   methods: {
     get_head(params) {
@@ -138,7 +144,8 @@ export default {
 
           // Loop
           var self = this;
-          setTimeout(function () {
+          window.clearTimeout(this.polling_schedule);
+          this.polling_schedule = setTimeout(function () {
             self.fetchSchedule(url);
           }, 60000);
         });

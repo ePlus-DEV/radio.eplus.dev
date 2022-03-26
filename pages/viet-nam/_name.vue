@@ -86,7 +86,13 @@ export default {
       program: [],
       song: {},
       info: [],
+      polling_schedule: null,
+      polling_song: null,
     };
+  },
+  beforeDestroy() {
+    window.clearTimeout(this.polling_schedule);
+    window.clearTimeout(this.polling_song);
   },
   methods: {
     get_head(params) {
@@ -154,7 +160,8 @@ export default {
         }
         // Loop
         var self = this;
-        setTimeout(function () {
+        window.clearTimeout(this.polling_schedule);
+        this.polling_schedule = setInterval(function () {
           self.fetchSchedule(url);
         }, 60000);
       });
@@ -166,12 +173,14 @@ export default {
         }
         // Loop
         var self = this;
-        setTimeout(function () {
+        window.clearTimeout(this.polling_song);
+        this.polling_song = setInterval(function () {
           self.fetchSong(url);
         }, 60000);
       });
     },
     async fetchInfo(url) {
+      var fetch;
       this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
         if (res.data.success) {
           console.log(res.data);
@@ -179,7 +188,8 @@ export default {
         }
         // Loop
         var self = this;
-        setTimeout(function () {
+        // clearTimeout(fetch);
+        fetch = setInterval(function () {
           self.fetchInfo(url);
         }, 60000);
       });
