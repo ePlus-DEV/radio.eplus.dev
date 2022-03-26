@@ -1,4 +1,13 @@
 {
+  "yes-933": {
+    "title": "Radio Y.E.S.",
+    "type": "audio/aac",
+    "url": "https://www.melisten.sg/radio/yes-933/",
+    "cros": false,
+    "stream": "https://22903.live.streamtheworld.com/YES933_SC?dist=radiosingapor",
+    "features": "/img/asia/singapore/yes-933.png",
+    "schedule": "https://api.webrad.io/data/playlist/66/yes-933?time="
+  },
   "love-972": {
     "title": "LOVE 97.2FM",
     "type": "audio/aac",
@@ -324,9 +333,8 @@
     "signal": "Stream",
     "url": "https://18.9rsfmsingapore.com/",
     "cros": false,
-    "stream": "https://sonic.whitelabelservers.co.uk/6294/stream/1/",
-    "features": "/img/asia/singapore/18-9-rsfm.png",
-    "schedule": "https://api.webrad.io/data/playlist/66/18-9-rsfm?time="
+    "stream": "https://stream.hornhost.com:6294/stream/1/",
+    "features": "/img/asia/singapore/18-9-rsfm.png"
   },
   "kast-kast": {
     "title": "卡卡思  Radio (Kast Kast)",
@@ -337,5 +345,14 @@
     "stream": "https://s3.radio.co/sef15894a2/listen",
     "features": "/img/asia/singapore/kast-kast.png",
     "schedule": "https://api.webrad.io/data/playlist/66/kast-kast?time="
+  },
+  "axr": {
+    "title": "AXR",
+    "type": "audio/aac",
+    "url": "http://www.axr.online/",
+    "cros": false,
+    "stream": "https://22283.live.streamtheworld.com/AXRAAC_SC",
+    "features": "/img/asia/singapore/axr.png",
+    "schedule": "https://api.webrad.io/data/playlist/66/axr?time="
   }
 }
