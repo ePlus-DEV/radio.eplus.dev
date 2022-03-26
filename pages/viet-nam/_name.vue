@@ -115,7 +115,7 @@ export default {
             if (data.schedule !== undefined) {
               this.fetchSchedule(data.schedule);
             }
-            // Info
+            /// Info
             // if (data.info !== undefined) {
             //   this.fetchInfo(data.info);
             // }
