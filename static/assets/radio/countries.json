@@ -136,6 +136,13 @@
       "data": "/assets/radio/north-america/dominican-republic.json",
       "timezone": "America/Santo_Domingo",
       "station": 0
+    },
+    "trinidad-and-tobago": {
+      "name": "world.north_america.trinidad_and_tobago",
+      "flag": "/img/north-america/flags/trinidad-and-tobago.png",
+      "data": "/assets/radio/north-america/trinidad-and-tobago.json",
+      "timezone": "America/Port_of_Spain",
+      "station": 0
     }
   },
   "oceania": {

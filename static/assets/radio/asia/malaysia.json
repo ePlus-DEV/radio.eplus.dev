@@ -362,8 +362,7 @@
     "url": false,
     "cros": false,
     "stream": "https://astro4.rastream.com/osai",
-    "features": "/img/asia/malaysia/osai.png",
-    "schedule": "https://api.webrad.io/data/playlist/65/osai?time="
+    "features": "/img/asia/malaysia/osai.png"
   },
   "traxx-kuala-lumpur": {
     "title": "TraXX FM (Kuala Lumpur)",
