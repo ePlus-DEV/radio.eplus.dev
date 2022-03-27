@@ -6,7 +6,8 @@
     "url": "https://ottava.jp/",
     "cros": false,
     "stream": "https://ottava2.out.airtime.pro/ottava2_a",
-    "features": "/img/asia/japan/ottava.png"
+    "features": "/img/asia/japan/ottava.png",
+    "schedule": "https://api.webrad.io/data/playlist/144/ottava?time="
   },
   "shonan-beach-fm": {
     "title": "湘南ビーチFM",
@@ -15,7 +16,8 @@
     "url": "https://www.beachfm.co.jp/",
     "cros": false,
     "stream": "https://shonanbeachfm.out.airtime.pro/shonanbeachfm_c",
-    "features": "/img/asia/japan/shonan-beach-fm.png"
+    "features": "/img/asia/japan/shonan-beach-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/144/shonan-beach-fm?time="
   },
   "nhk-1": {
     "title": "R1 NHKラジオ第1",

@@ -102,7 +102,7 @@
     "type": "audio/aac",
     "signal": "91.1 FM",
     "url": "https://mix.my/",
-    "cros": false,
+    "cros": true,
     "stream": "https://astro3.rastream.com/raaga",
     "features": "/img/asia/malaysia/mix-fm.png",
     "schedule": "https://api.webrad.io/data/playlist/65/mix-fm?time="
@@ -312,7 +312,7 @@
     "signal": "Stream",
     "url": "https://goxuan.my/",
     "cros": false,
-    "stream": "https://astro3.rastream.com/astro-goxuan.web.hls/playlist.m3u8?awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Agoxuan&playerid=Listen%20to%20GOXUAN%20on%20SYOK_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE2MzY4ODc1OTMsImV4cCI6MTYzNjk3Mzk5M30.wuqf-yDXKiLKy76tCJaMwJcS0TGjdDn1WhQtkoJI5-A&lan=%5B%22zh%22%5D&setLanguage=true",
+    "stream": "https://astro3.rastream.com/astro-goxuan.web.hls/playlist.m3u8?awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Agoxuan&playerid=Listen%20to%20GOXUAN%20on%20SYOK_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE2NDgzNjY2OTMsImV4cCI6MTY0ODQ1MzA5M30.bcboOjgJnHuW9e2Rni3zOfw0tsCxFpSRAgq9glNHIBw&lan=%5B%22zh%22%5D&setLanguage=true",
     "features": "/img/asia/malaysia/goxuan.png"
   },
   "manis": {
@@ -331,7 +331,7 @@
     "signal": "96.3 FM",
     "url": "http://kupikupifm.my/",
     "cros": false,
-    "stream": "https://censemedia.rastream.com/censemedia-kupitv.web.hls/playlist.m3u8?listeningSessionID=617c13508210acea_1366406_7mDu6PzE_MTAzLjIxLjgxLjM6ODA!_00000021CKI&downloadSessionID=0&awparams=companionads%3Atrue%3Btags%3Aradioactive%3Btags%3Akupitv%3Btags%3Acensemedia-joox%3Bstationid%3Acensemedia-kupitv&playerid=Kupi%20TV_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE2MzY4ODc3NjAsImV4cCI6MTYzNjk3NDE2MH0.OS-9y4a8WCAyRw7Oaxz016jt4_8GwodKi6wu433eh_U&lan=%5B%22ms%22%5D&setLanguage=true",
+    "stream": "https://censemedia.rastream.com/censemedia-kupitv.web.hls/playlist.m3u8?awparams=companionads%3Atrue%3Btags%3Aradioactive%3Btags%3Akupitv%3Btags%3Acensemedia-joox%3Bstationid%3Acensemedia-kupitv&playerid=Kupi%20TV_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE2NDgzNjY5OTksImV4cCI6MTY0ODQ1MzM5OX0.zvs6dGaIKeor_R0qyovWNGVKtxGx8LZizsCoJW4Yrjk&lan=%5B%22ms%22%5D&setLanguage=true",
     "features": "/img/asia/malaysia/kupi-kupi.png",
     "schedule": "https://api.webrad.io/data/playlist/65/kupi-kupi?time="
   },
@@ -347,12 +347,13 @@
   },
   "durian-fm": {
     "title": "Durian FM",
-    "type": "audio/x-mpegurl",
+    "type": "audio/aac",
     "signal": "Stream",
     "url": "https://durianfm.com/",
     "cros": true,
-    "stream": "http://s3.voscast.com:7140/listen.pls?sid=1",
-    "features": "/img/asia/malaysia/durian-fm.png"
+    "stream": "http://s3.voscast.com:7140/stream/1/",
+    "features": "/img/asia/malaysia/durian-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/65/durian-fm?time="
   },
   "osai": {
     "title": "Osai FM",
