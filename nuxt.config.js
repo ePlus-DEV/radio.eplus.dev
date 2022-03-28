@@ -21,6 +21,7 @@ import jamaica from "./static/assets/radio/north-america/jamaica.json";
 import mexico from "./static/assets/radio/north-america/mexico.json";
 import puerto_rico from "./static/assets/radio/north-america/puerto-rico.json";
 import dominican_republic from "./static/assets/radio/north-america/dominican-republic.json";
+import trinidad_and_tobago from "./static/assets/radio/north-america/trinidad-and-tobago.json";
 // Oceania
 import australia from "./static/assets/radio/oceania/australia.json";
 
@@ -443,6 +444,16 @@ export default {
           station_country: "world.north_america.dominican_republic",
           url: "/dominican-republic/" + key,
           objectID: "dominican-republic-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(trinidad_and_tobago)) {
+        routesToGenerate.push("/trinidad-and-tobago/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.north_america.trinidad_and_tobago",
+          url: "/trinidad-and-tobago/" + key,
+          objectID: "trinidad-and-tobago-" + key
         });
       }
       // END - North America
