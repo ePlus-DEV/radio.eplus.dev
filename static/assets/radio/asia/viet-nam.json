@@ -392,18 +392,6 @@
     "stream": "https://live1.thvli.vn/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiIvdGh2bHJhZGlvIiwiZXhwIjoxNjMzODY0NzQ4fQ.i7liqgkqOCud8C3fgIqRj5WCPaXA0RI_vWqk2gdH1lk-/thvlradio/playlist.m3u8",
     "features": "/img/asia/viet-nam/vinh-long.png"
   },
-  "xone-fm-96-mhz": {
-    "title": "Xone FM 96MHz",
-    "description": "",
-    "type": "application/x-mpegURL",
-    "category": "Xone FM 96MHz",
-    "url": "https://xonefm.com",
-    "cros": true,
-    "time": "Chưa rõ",
-    "schedule": true,
-    "stream": "https://vnso-zn-2-tf-mplaylist-zmp3.zadn.vn/99YFw722aFg/zhls/live/855a669d5ad8b386eac9/index.m3u8",
-    "features": "/img/asia/viet-nam/xone.png"
-  },
   "dong-nai": {
     "title": "Đồng Nai - 97.5MHz",
     "description": "",
@@ -499,6 +487,19 @@
     "schedule": false,
     "stream": "https://node-11.zeno.fm/x2z45v7d84zuv",
     "features": "/img/asia/viet-nam/pre-1975.png"
+  },
+  "xone-fm-96-mhz": {
+    "title": "Xone FM 96MHz",
+    "description": "",
+    "type": "application/x-mpegURL",
+    "category": "Xone FM 96MHz",
+    "url": "https://xonefm.com",
+    "cros": true,
+    "time": "Chưa rõ",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979CW&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979CW&time=",
+    "stream": "https://vnso-zn-2-tf-mplaylist-zmp3.zadn.vn/99YFw722aFg/zhls/live/855a669d5ad8b386eac9/index.m3u8",
+    "features": "/img/asia/viet-nam/xone.png"
   },
   "zing-mp3-on-air": {
     "title": "Zing MP3 On Air",
