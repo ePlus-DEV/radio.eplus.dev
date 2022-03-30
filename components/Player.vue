@@ -63,7 +63,11 @@
                 class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
               >
                 <img
-                  :src="song.currentMedia.thumbnail"
+                  :src="
+                    song.currentMedia.thumbnail !== undefined
+                      ? song.currentMedia.thumbnail
+                      : song.thumbnail
+                  "
                   :alt="song.currentMedia.title"
                   loading="lazy"
                   class="w-20 h-20 rounded-full bg-orange-100"
@@ -79,11 +83,15 @@
 
           <figure
             class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"
-            v-if="song.nextMedia.encodeId !== undefined"
+            v-if="song.nextMedia.title !== undefined"
           >
             <img
               class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
-              :src="song.nextMedia.thumbnail"
+              :src="
+                song.nextMedia.thumbnail !== undefined
+                  ? song.nextMedia.thumbnail
+                  : song.thumbnail
+              "
               alt=""
             />
             <div class="md:p-2 text-center md:text-left space-y-4">
