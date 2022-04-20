@@ -88,6 +88,7 @@ export default {
       info: [],
       polling_schedule: null,
       polling_song: null,
+      polling_title: null,
     };
   },
   beforeDestroy() {
@@ -171,6 +172,17 @@ export default {
         if (res.data.err === 0) {
           this.song = res.data.data;
         }
+        // BEGIN - Browser title
+        document.title = this.get_head("title");
+        if (this.song !== undefined && this.song.currentMedia !== undefined) {
+          document.title =
+            this.song.currentMedia.title +
+            " - " +
+            this.song.currentMedia.artists +
+            " | " +
+            this.get_head("title");
+        }
+        // END - Browser title
         // Loop
         var self = this;
         window.clearTimeout(this.polling_song);
@@ -183,7 +195,6 @@ export default {
       var fetch;
       this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
         if (res.data.success) {
-          console.log(res.data);
           this.info = res.data;
         }
         // Loop

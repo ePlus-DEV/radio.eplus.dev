@@ -138,7 +138,17 @@ export default {
         if (res.data.success) {
           this.data = res.data.result;
         }
-
+        // BEGIN - Browser title
+        document.title = this.get_head("title");
+        if (this.data !== undefined && this.data.length > 0) {
+          document.title =
+            this.data[0].track_title +
+            " - " +
+            this.data[0].track_artist +
+            " | " +
+            this.get_head("title");
+        }
+        // END - Browser title
         // Loop
         var self = this;
         window.clearTimeout(this.polling_schedule);

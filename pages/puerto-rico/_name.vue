@@ -141,7 +141,17 @@ export default {
           if (res.data.success) {
             this.data = res.data.result;
           }
-
+          // BEGIN - Browser title
+          document.title = this.get_head("title");
+          if (this.song !== undefined && this.song.currentMedia !== undefined) {
+            document.title =
+              this.song.currentMedia.title +
+              " - " +
+              this.song.currentMedia.artists +
+              " | " +
+              this.get_head("title");
+          }
+          // END - Browser title
           // Loop
           var self = this;
           window.clearTimeout(this.polling_schedule);
