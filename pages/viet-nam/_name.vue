@@ -4,6 +4,52 @@
     <Breadcrumbs :level_1="i18n" :level_1_slug="slug" :level_2="name" />
     <!-- END - Breadcrumbs -->
 
+    <!-- BEGIN - Lyric -->
+    <button
+      class="fixed left-4 bottom-2 uppercase text-sm px-4 py-3 bg-gray-900 text-white rounded-full"
+      @click="lyric_popup = !lyric_popup"
+    >
+      🎼
+    </button>
+    <div class="fixed left-0 bottom-2 z-40" :class="lyric_popup ? '' : 'hidden'">
+      <div
+        class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden"
+      >
+        <!-- Text -->
+        <div class="">
+          <div class="relative overflow-hidden px-8 pt-8">
+            <div
+              width="80"
+              height="77"
+              class="absolute -top-10 -right-10 text-yellow-500"
+            >
+              <svg
+                width="120"
+                height="119"
+                viewBox="0 0 120 119"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  opacity="0.3"
+                  d="M6.38128 49.1539C3.20326 32.893 13.809 17.1346 30.0699 13.9566L70.3846 6.07751C86.6455 2.89948 102.404 13.5052 105.582 29.7661L113.461 70.0808C116.639 86.3417 106.033 102.1 89.7724 105.278L49.4577 113.157C33.1968 116.335 17.4384 105.729 14.2604 89.4686L6.38128 49.1539Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div class="text-2xl flex flex-col pb-4">
+              <small id="song"></small>
+              <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
+            </div>
+            <div class="pb-4 overflow-y-auto h-64" id="lyric">
+              {{ $t("panel.updating") }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END - Lyric -->
+
     <!-- BEGIN - Player -->
     <Player
       ref="player"
@@ -89,6 +135,7 @@ export default {
       polling_schedule: null,
       polling_song: null,
       polling_title: null,
+      lyric_popup: false,
     };
   },
   beforeDestroy() {
@@ -122,10 +169,6 @@ export default {
             if (data.schedule !== undefined) {
               this.fetchSchedule(data.schedule);
             }
-            /// Info
-            // if (data.info !== undefined) {
-            //   this.fetchInfo(data.info);
-            // }
           } else {
             this.$confirm($t("404.content"), "Warning", {
               confirmButtonText: $t("button.back"),
@@ -183,6 +226,16 @@ export default {
             this.get_head("title");
         }
         // END - Browser title
+        // BEGIN - Lyric
+        $("#song").text(
+          this.song.currentMedia.title + " - " + this.song.currentMedia.artists
+        );
+        if (this.song.currentMedia.hasLyric) {
+          this.fetchLyric(this.song.currentMedia.encodeId);
+        } else {
+          $("#lyric").html(this.$t("panel.no_lyric"));
+        }
+        // END - Lyric
         // Loop
         var self = this;
         window.clearTimeout(this.polling_song);
@@ -204,6 +257,35 @@ export default {
           self.fetchInfo(url);
         }, 60000);
       });
+    },
+    async fetchLyric(id) {
+      this.$axios
+        .get(
+          process.env.API_ZING_GET_LYRIC +
+            id +
+            "&time=" +
+            this.$moment().tz("Asia/Ho_Chi_Minh").unix()
+        )
+        .then((res) => {
+          if (res.data.err === 0) {
+            var lyric = "";
+            for (let i = 0; i < res.data.data.sentences.length; i++) {
+              const words = res.data.data.sentences[i].words;
+
+              const line = "";
+              for (let x = 0; x < words.length; x++) {
+                if (x === 0) {
+                  line += words[x].data;
+                } else {
+                  line += " " + words[x].data;
+                }
+              }
+
+              lyric += '<p class="pb-1">' + line + "</p>";
+            }
+            $("#lyric").html(lyric);
+          }
+        });
     },
   },
   created() {

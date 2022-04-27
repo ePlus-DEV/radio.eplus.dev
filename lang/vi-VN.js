@@ -68,7 +68,10 @@ export default async (context, locale) => {
       category: "Thể Loại",
       schedule: "Lịch phát sóng",
       playlist: "Danh sách phát",
-      next: "Kế tiếp"
+      next: "Kế tiếp",
+      lyric: "Lời bài hát",
+      no_lyric: "Không có lời",
+      updating: "Đang cập nhật..."
     },
     button: {
       back: "Quay lại",

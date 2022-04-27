@@ -17,6 +17,7 @@
     "@nuxtjs/recaptcha": "^1.0.4",
     "@nuxtjs/sitemap": "^2.4.0",
     "algoliasearch": "^4.11.0",
+    "alpinejs": "^3.10.2",
     "apexcharts": "^3.29.0",
     "daisyui": "^1.14.5",
     "dotenv": "^9.0.2",

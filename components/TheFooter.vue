@@ -153,7 +153,7 @@
   </div>
 </template>
 <script>
-window.onscroll = function () {
+window.onscroll = function() {
   document.body.scrollTop > 20 || document.documentElement.scrollTop > 20
     ? $("#topButton").removeClass("hidden")
     : $("#topButton").addClass("hidden");
@@ -162,7 +162,7 @@ export default {
   methods: {
     scrolltoTop() {
       $("html, body").animate({ scrollTop: 0 }, "slow");
-    },
-  },
+    }
+  }
 };
 </script>

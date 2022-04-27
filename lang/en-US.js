@@ -68,7 +68,10 @@ export default async (context, locale) => {
       category: "Category",
       schedule: "Schedule",
       playlist: "Playlist",
-      next: "Next"
+      next: "Next",
+      lyric: "Lyric",
+      no_lyric: "No lyric",
+      updating: "Updating..."
     },
     button: {
       back: "Back",

@@ -46,7 +46,8 @@ export default {
     Email_Contact: process.env.Group_Facebook,
     Pin_Channel_Favorites: process.env.Pin_Channel_Favorites || "viet-nam",
     API_ZING_LIVE_STREAM_PROGRAM_DETAIL:
-      process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL
+      process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
+    API_ZING_GET_LYRIC: process.env.API_ZING_GET_LYRIC
   },
   /*
    ** Headers of the page
