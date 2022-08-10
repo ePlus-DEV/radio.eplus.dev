@@ -24,6 +24,7 @@ import dominican_republic from "./static/assets/radio/north-america/dominican-re
 import trinidad_and_tobago from "./static/assets/radio/north-america/trinidad-and-tobago.json";
 // Oceania
 import australia from "./static/assets/radio/oceania/australia.json";
+import new_zealand from "./static/assets/radio/oceania/new-zealand.json";
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -467,6 +468,16 @@ export default {
           station_country: "world.oceania.australia",
           url: "/australia/" + key,
           objectID: "australia-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(new_zealand)) {
+        routesToGenerate.push("/new-zealand/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.oceania.new_zealand",
+          url: "/new-zealand/" + key,
+          objectID: "new-zealand-" + key
         });
       }
       // END - Oceania

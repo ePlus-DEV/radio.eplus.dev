@@ -152,6 +152,13 @@
       "data": "/assets/radio/oceania/australia.json",
       "timezone": "Australia/Sydney",
       "station": 0
+    },
+    "new-zealand": {
+      "name": "world.oceania.new_zealand",
+      "flag": "/img/oceania/flags/new-zealand.png",
+      "data": "/assets/radio/oceania/new-zealand.json",
+      "timezone": "Pacific/Auckland",
+      "station": 0
     }
   }
 }
