@@ -60,11 +60,11 @@
   },
   "one-fm": {
     "title": "One FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "91.3 FM",
     "url": "https://www.onefm.sg",
     "cros": false,
-    "stream": "https://14073.live.streamtheworld.com/ONE_FM_913AAC_SC",
+    "stream": "https://23743.live.streamtheworld.com/ONE_FM_913_SC",
     "features": "/img/asia/singapore/one-fm.png",
     "schedule": "https://api.webrad.io/data/playlist/66/one-fm?time="
   },
@@ -100,11 +100,11 @@
   },
   "ufm-1003": {
     "title": "Radio UFM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "100.3 FM",
     "url": "https://www.ufm1003.sg/",
     "cros": false,
-    "stream": "https://14073.live.streamtheworld.com/UFM_1003AAC_SC",
+    "stream": "https://23743.live.streamtheworld.com/UFM_1003_SC",
     "features": "/img/asia/singapore/ufm-1003.png",
     "schedule": "https://api.webrad.io/data/playlist/66/ufm-1003?time="
   },
@@ -219,11 +219,11 @@
   },
   "money-89-3": {
     "title": "Money FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "89.3 FM",
     "url": "https://www.moneyfm893.sg",
     "cros": false,
-    "stream": "https://14073.live.streamtheworld.com/MONEY_893AAC_SC",
+    "stream": "https://23683.live.streamtheworld.com/MONEY_893_SC",
     "features": "/img/asia/singapore/money-89-3.png",
     "schedule": "https://api.webrad.io/data/playlist/66/money-89-3?time="
   },
@@ -249,11 +249,11 @@
   },
   "naga-fm": {
     "title": "Naga FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.nagafm.com/",
-    "cros": true,
-    "stream": "http://songs.nagafm.com:8006/stream/1/",
+    "cros": false,
+    "stream": "https://rdopanel.cobrasoftwares.org:1065/stream",
     "features": "/img/asia/singapore/naga-fm.png",
     "schedule": "https://api.webrad.io/data/playlist/66/naga-fm?time="
   },
@@ -283,7 +283,7 @@
     "signal": "Stream",
     "url": "http://www.orionstation.net",
     "cros": true,
-    "stream": "http://188.165.192.5:8528/stream/1/",
+    "stream": "http://quasar.shoutca.st:8528/stream/1/",
     "features": "/img/asia/singapore/orion-station.png",
     "schedule": "https://api.webrad.io/data/playlist/66/orion-station?time="
   },
@@ -350,7 +350,7 @@
     "type": "audio/aac",
     "url": "http://www.axr.online/",
     "cros": false,
-    "stream": "https://22283.live.streamtheworld.com/AXRAAC_SC",
+    "stream": "https://23743.live.streamtheworld.com/AXRAAC_SC",
     "features": "/img/asia/singapore/axr.png",
     "schedule": "https://api.webrad.io/data/playlist/66/axr?time="
   }
