@@ -134,7 +134,7 @@ export default {
         });
     },
     async fetchSchedule(url) {
-      this.$axios.get(url + this.$moment().tz("Australia/Sydney").unix()).then((res) => {
+      this.$axios.get(url + this.$moment().tz("Pacific/Auckland").unix()).then((res) => {
         if (res.data.success) {
           this.data = res.data.result;
         }
