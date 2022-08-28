@@ -9,7 +9,8 @@ export default async (context, locale) => {
       contact: "Contact",
       language: "Language:",
       old_version: "#oldversion",
-      statistics: "Statistics"
+      statistics: "Statistics",
+      changelog: "Changelog"
     },
     terms: {
       content:
@@ -99,6 +100,12 @@ export default async (context, locale) => {
     404: {
       content:
         "We would like to inform that the page you are looking for, does not exist!"
+    },
+    table: {
+      commit: "Commit",
+      created: "Created",
+      updated: "Updated",
+      published: "Published"
     }
   });
 };

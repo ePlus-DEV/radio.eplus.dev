@@ -9,7 +9,8 @@ export default async (context, locale) => {
       contact: "Liên Hệ",
       language: "Ngôn ngữ:",
       old_version: "#phienbancu",
-      statistics: "Thống kê"
+      statistics: "Thống kê",
+      changelog: "Nhật ký thay đổi"
     },
     terms: {
       content:
@@ -98,6 +99,12 @@ export default async (context, locale) => {
     },
     404: {
       content: "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
+    },
+    table: {
+      commit: "Cam kết",
+      created: "Khởi tạo",
+      updated: "Cập nhật",
+      published: "Phát hành"
     }
   });
 };

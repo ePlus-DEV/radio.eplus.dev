@@ -6,36 +6,52 @@
     </div>
     <div class="flex justify-center mt-8 space-x-6">
       <!-- website monitoring -->
-      <img src="https://statuspage.freshping.io/badge/31630134-99cc-447d-9789-e89d57071666?0.4862714836619788"
+      <img
+        src="https://statuspage.freshping.io/badge/31630134-99cc-447d-9789-e89d57071666?0.4862714836619788"
         class="border-dashed border-2 border-indigo-600 dark:border-indigo-300 rounded-full"
-        alt="website monitoring pass 100 days" />
+        alt="website monitoring pass 100 days"
+      />
       <!-- website monitoring -->
     </div>
     <div>
       <!-- Chart -->
-      <apexchart ref="chart" type="area" height="350" :options="chart.chartOptions" :series="chart.series"></apexchart>
+      <apexchart
+        ref="chart"
+        type="area"
+        height="350"
+        :options="chart.chartOptions"
+        :series="chart.series"
+      ></apexchart>
       <!-- Chart -->
 
       <!-- BEGIN - Calendar -->
       <div
-        class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-10 px-2 md:mx-12 overflow-x-auto">
+        class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-10 px-2 md:mx-12 overflow-x-auto"
+      >
         <template v-for="(item, index) in data_list_sort">
-          <div :data-tip="
+          <div
+            :data-tip="
               $t('statistics_tooltip.text', {
                 num: item.apdex_results_count_frustrated,
                 time: $moment
                   .duration(item.duration_seconds_total_downtime, 'seconds')
                   .minutes(),
               })
-            " class="tooltip" :class="
+            "
+            class="tooltip"
+            :class="
               item.apdex_results_count_frustrated === 1
                 ? 'tooltip-error'
                 : 'tooltip-success'
-            " :key="index">
-            <div class="flex group shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
+            "
+            :key="index"
+          >
+            <div
+              class="flex group shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
               :class="
                 item.apdex_results_count_frustrated === 1 ? 'bg-red-600' : 'bg-green-600'
-              ">
+              "
+            >
               <span class="flex h-3 w-3 absolute -top-1 -right-1">
                 <span
                   class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full"
@@ -43,12 +59,16 @@
                     item.apdex_results_count_frustrated === 1
                       ? 'bg-red-400'
                       : 'bg-green-400'
-                  "></span>
-                <span class="relative inline-flex rounded-full h-3 w-3" :class="
+                  "
+                ></span>
+                <span
+                  class="relative inline-flex rounded-full h-3 w-3"
+                  :class="
                     item.apdex_results_count_frustrated === 1
                       ? 'bg-red-100'
                       : 'bg-green-100'
-                  "></span>
+                  "
+                ></span>
               </span>
               <div class="flex items-center px-4 py-4">
                 <div class="text-center">
