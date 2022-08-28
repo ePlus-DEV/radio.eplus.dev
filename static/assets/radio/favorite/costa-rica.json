@@ -1,0 +1,8 @@
+{
+  "title": "Bésame (San José)",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Costa Rica",
+  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/BESAME_CR_SC",
+  "cros": false
+}

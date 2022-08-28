@@ -71,6 +71,15 @@
       "station": 0
     }
   },
+  "central_america": {
+    "costa-rica": {
+      "name": "world.central_america.costa_rica",
+      "flag": "/img/central-america/flags/costa-rica.png",
+      "data": "/assets/radio/central-america/costa-rica.json",
+      "timezone": "America/Costa_Rica",
+      "station": 0
+    }
+  },
   "europe": {
     "united-kingdom": {
       "name": "world.europe.united_kingdom",
