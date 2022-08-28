@@ -10,6 +10,8 @@ import malaysia from "./static/assets/radio/asia/malaysia.json";
 import philippines from "./static/assets/radio/asia/philippines.json";
 import indonesia from "./static/assets/radio/asia/indonesia.json";
 import thailand from "./static/assets/radio/asia/thailand.json";
+// Central America
+import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 import ukraine from "./static/assets/radio/europe/ukraine.json";
@@ -355,6 +357,18 @@ export default {
         });
       }
       // END - Asia
+      // BEGIN - Central America
+      for (const [key, value] of Object.entries(costa_rica)) {
+        routesToGenerate.push("/costa-rica/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.central_america.costa_rica",
+          url: "/costa-rica/" + key,
+          objectID: "costa-rica-" + key
+        });
+      }
+      // END - Central America
       // BEGIN - Europe
       for (const [key, value] of Object.entries(uk)) {
         routesToGenerate.push("/united-kingdom/" + key);
