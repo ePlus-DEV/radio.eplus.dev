@@ -104,7 +104,8 @@ export default async (context, locale) => {
       commit: "Cam kết",
       created: "Khởi tạo",
       updated: "Cập nhật",
-      published: "Phát hành"
+      published: "Phát hành",
+      view: "Xem"
     }
   });
 };

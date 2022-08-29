@@ -50,7 +50,10 @@ export default {
     Pin_Channel_Favorites: process.env.Pin_Channel_Favorites || "viet-nam",
     API_ZING_LIVE_STREAM_PROGRAM_DETAIL:
       process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
-    API_ZING_GET_LYRIC: process.env.API_ZING_GET_LYRIC
+    API_ZING_GET_LYRIC: process.env.API_ZING_GET_LYRIC,
+    NETLIFY_BASE_URL: process.env.NETLIFY_BASE_URL,
+    NETLIFY_TOKEN: process.env.NETLIFY_TOKEN,
+    NETLIFY_SITE_ID: process.env.NETLIFY_SITE_ID
   },
   /*
    ** Headers of the page

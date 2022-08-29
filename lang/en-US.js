@@ -105,7 +105,8 @@ export default async (context, locale) => {
       commit: "Commit",
       created: "Created",
       updated: "Updated",
-      published: "Published"
+      published: "Published",
+      view: "View"
     }
   });
 };

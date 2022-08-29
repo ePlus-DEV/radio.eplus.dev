@@ -119,8 +119,9 @@
                       target="_blank"
                       :href="item.links.permalink"
                       class="text-blue-600 dark:text-blue-500 hover:underline"
-                      >View</a
-                    >
+                      >
+                      {{ $t("table.view") }}
+                      </a>
                   </td>
                 </tr>
               </tbody>
@@ -157,9 +158,9 @@ export default {
       var config = {
         method: "get",
         url:
-          "https://api.netlify.com/api/v1/sites/5dece2ab-a118-4a62-8178-646ac69a9b2c/deploys?page=1&per_page=20",
+          process.env.NETLIFY_BASE_URL + process.env.NETLIFY_SITE_ID + "/deploys?page=1&per_page=20",
         headers: {
-          Authorization: "Bearer aX2qWp9v0f-YTiRt_gs45AyY96dPBU6koMnq-TLBsHY",
+          Authorization: "Bearer " + process.env.NETLIFY_TOKEN,
         },
       };
 
