@@ -161,7 +161,8 @@ export default {
     { src: "~/plugins/plyr.js", ssr: false },
     { src: "~plugins/scrollmagic.js", ssr: false },
     { src: "~/plugins/vue-toastification.js", ssr: false },
-    { src: "~/plugins/vue-instantsearch.js", ssr: false }
+    { src: "~/plugins/vue-instantsearch.js", ssr: false },
+    { src: "~/plugins/moment.js" }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -194,11 +195,8 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // "@nuxtjs/recaptcha",
-    // "@nuxtjs/auth-next",
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
-    // "@nuxt/content",
     "@nuxtjs/sitemap",
     [
       "nuxt-i18n",

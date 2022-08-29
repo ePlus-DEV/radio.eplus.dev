@@ -146,16 +146,6 @@
                   {{ locale.name }}
                 </p>
               </template>
-              <!-- <p
-              class="text-white text-sm ml-2"
-              v-for="locale in availableLocales"
-              :key="locale.code"
-              @click.prevent.stop="
-                $i18n.setLocale(locale.code), $moment.locale(locale.code)
-              "
-            >
-              {{ $t("navmenu.language") }} {{ locale.name }}
-            </p> -->
             </div>
           </div>
         </div>
