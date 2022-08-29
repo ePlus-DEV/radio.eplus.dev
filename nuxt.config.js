@@ -175,8 +175,7 @@ export default {
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics",
-    "@nuxtjs/pwa"
+    "@nuxtjs/google-analytics"
   ],
   // GA
   googleAnalytics: {
