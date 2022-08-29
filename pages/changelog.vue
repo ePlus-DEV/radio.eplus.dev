@@ -1,135 +1,93 @@
 <template>
-  <div>
-    <div class="flex flex-col">
-      <div class="overflow-x-auto shadow-md sm:rounded-lg mb-4">
-        <div class="inline-block min-w-full align-middle">
-          <div class="overflow-hidden">
-            <table
-              class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700"
-            >
-              <thead class="bg-gray-100 dark:bg-gray-700">
-                <tr>
-                  <th scope="col" class="p-4">
-                    <div class="flex items-center">
-                      <input
-                        id="checkbox-all"
-                        type="checkbox"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label for="checkbox-all" class="sr-only">checkbox</label>
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    {{ $t("table.commit") }}
-                  </th>
-                  <th
-                    scope="col"
-                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    {{ $t("table.created") }}
-                  </th>
-                  <th
-                    scope="col"
-                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    {{ $t("table.updated") }}
-                  </th>
-                  <th
-                    scope="col"
-                    class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
-                  >
-                    {{ $t("table.published") }}
-                  </th>
-                  <th scope="col" class="p-4">
-                    <span class="sr-only">URL</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
-              >
-                <tr
-                  class="hover:bg-gray-100 dark:hover:bg-gray-700"
-                  v-for="(item, index) in data"
-                  :key="index"
-                >
-                  <td class="p-4 w-4">
-                    <div class="flex items-center">
-                      <input
-                        id="checkbox-table-1"
-                        type="checkbox"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label for="checkbox-table-1" class="sr-only">checkbox</label>
-                    </div>
-                  </td>
-                  <td
-                    class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {{ item.title }}
-                  </td>
-                  <td
-                    class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
-                  >
-                    <div
-                      :data-tip="
-                        $moment(item.created_at)
-                          .tz('Asia/Ho_Chi_Minh')
-                          .format('YYYY-MM-DD HH:mm:ss')
-                      "
-                      class="tooltip"
-                    >
-                      {{ $moment(item.created_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
-                    </div>
-                  </td>
-                  <td
-                    class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white"
-                  >
-                    <div
-                      :data-tip="
-                        $moment(item.updated_at)
-                          .tz('Asia/Ho_Chi_Minh')
-                          .format('YYYY-MM-DD HH:mm:ss')
-                      "
-                      class="tooltip"
-                    >
-                      {{ $moment(item.updated_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
-                    </div>
-                  </td>
-                  <td
-                    class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <div
-                      :data-tip="
-                        $moment(item.published_at)
-                          .tz('Asia/Ho_Chi_Minh')
-                          .format('YYYY-MM-DD HH:mm:ss')
-                      "
-                      class="tooltip"
-                    >
-                      {{ $moment(item.published_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
-                    </div>
-                  </td>
+  <div class="overflow-x-auto w-full mb-4">
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th>
+              {{ $t("table.status") }}
+          </th>
+          <th>{{ $t("table.commit") }}</th>
+          <th>{{ $t("table.created") }}</th>
+          <th>{{ $t("table.updated") }}</th>
+          <th>{{ $t("table.published") }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in data" :key="index">
+          <th class="flex justify-center">
+           <div v-if="item.state === 'ready'" :data-tip="item.state" class="tooltip">
+              <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="rgba(4, 120, 87, var(--tw-bg-opacity))" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div v-else-if="item.state === 'processing'" :data-tip="item.state" class="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+              </svg>
+            </div>
+            <div v-else-if="item.state === 'uploading'" :data-tip="item.state" class="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+              </svg>
+            </div>
+            <div v-else-if="item.state === 'building'" :data-tip="item.state" class="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+            </div>
+            <div v-else-if="item.state === 'enqueued'" :data-tip="item.state" class="tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+              </svg>
+            </div>
+            <div v-else :data-tip="item.state" class="tooltip">
+              <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="rgba(220, 38, 38, var(--tw-bg-opacity))" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+            </div>
+          </th>
+          <td>
+            <a :href="item.commit_url" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
+          </td>
+          <td>
+            <div :data-tip=" $moment(item.created_at).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')" class="tooltip">
+              {{ $moment(item.created_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
+            </div>
+          </td>
+          <td>
+            <div :data-tip=" $moment(item.updated_at).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')" class="tooltip">
+              {{ $moment(item.updated_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
+            </div>
+          </td>
+          <th>
+            <div :data-tip=" $moment(item.published_at).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')" class="tooltip">
+              {{ $moment(item.published_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
+            </div>
+          </th>
+          <th>
+            <a target="_blank" :href="item.links.permalink" class="text-blue-600 dark:text-blue-500 hover:underline">
+              {{ $t("table.view") }}
+            </a>
+          </th>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>
+            <label>
+              {{ $t("table.status") }}
+            </label>
+          </th>
+          <th>{{ $t("table.commit") }}</th>
+          <th>{{ $t("table.created") }}</th>
+          <th>{{ $t("table.updated") }}</th>
+          <th>{{ $t("table.published") }}</th>
+          <th></th>
+        </tr>
+      </tfoot>
 
-                  <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-                    <a
-                      target="_blank"
-                      :href="item.links.permalink"
-                      class="text-blue-600 dark:text-blue-500 hover:underline"
-                      >
-                      {{ $t("table.view") }}
-                      </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+    </table>
   </div>
 </template>
 

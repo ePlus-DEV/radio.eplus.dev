@@ -131,12 +131,14 @@
           </a>
         </div>
         <div class="flex justify-center mt-8 space-x-6">
-          <nuxt-link to="/changelog">
-            <img
-              src="https://api.netlify.com/api/v1/badges/5dece2ab-a118-4a62-8178-646ac69a9b2c/deploy-status"
-              alt="Serverless by Netlify"
-            />
-          </nuxt-link>
+          <div :data-tip="$t('navmenu.changelog')" class="tooltip">
+            <nuxt-link to="/changelog">
+              <img
+                src="https://api.netlify.com/api/v1/badges/5dece2ab-a118-4a62-8178-646ac69a9b2c/deploy-status"
+                alt="Serverless by Netlify"
+              />
+            </nuxt-link>
+          </div>
         </div>
         <p class="mt-8 text-center text-gray-400">
           Copyright © {{ new Date().getFullYear() }}
@@ -156,6 +158,15 @@
   </div>
 </template>
 <script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3128683,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+
 window.onscroll = function () {
   document.body.scrollTop > 20 || document.documentElement.scrollTop > 20
     ? $("#topButton").removeClass("hidden")

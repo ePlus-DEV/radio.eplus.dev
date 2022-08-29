@@ -101,6 +101,7 @@ export default async (context, locale) => {
       content: "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
     },
     table: {
+      status: "Trạng thái",
       commit: "Cam kết",
       created: "Khởi tạo",
       updated: "Cập nhật",

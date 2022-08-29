@@ -102,6 +102,7 @@ export default async (context, locale) => {
         "We would like to inform that the page you are looking for, does not exist!"
     },
     table: {
+      status: "Status",
       commit: "Commit",
       created: "Created",
       updated: "Updated",
