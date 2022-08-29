@@ -3,19 +3,17 @@
     <table class="table w-full">
       <thead>
         <tr>
-          <th>
-              {{ $t("table.status") }}
-          </th>
-          <th>{{ $t("table.commit") }}</th>
-          <th>{{ $t("table.created") }}</th>
-          <th>{{ $t("table.updated") }}</th>
-          <th>{{ $t("table.published") }}</th>
-          <th></th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.status") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.commit") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.created") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.updated") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.published") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
-          <th class="flex justify-center">
+          <th class="flex justify-center dark:bg-gray-700 dark:text-gray-200">
            <div v-if="item.state === 'ready'" :data-tip="item.state" class="tooltip">
               <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="rgba(4, 120, 87, var(--tw-bg-opacity))" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -47,26 +45,26 @@
               </svg>
             </div>
           </th>
-          <td>
+          <td class="dark:bg-gray-700 dark:text-gray-200">
             <a :href="item.commit_url" target="_blank" rel="noopener noreferrer">{{ item.title }}</a>
           </td>
-          <td>
+          <td class="dark:bg-gray-700 dark:text-gray-200">
             <div :data-tip=" $moment(item.created_at).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')" class="tooltip">
               {{ $moment(item.created_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
             </div>
           </td>
-          <td>
+          <td class="dark:bg-gray-700 dark:text-gray-200">
             <div :data-tip=" $moment(item.updated_at).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')" class="tooltip">
               {{ $moment(item.updated_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
             </div>
           </td>
-          <th>
+          <th class="dark:bg-gray-700 dark:text-gray-200">
             <div :data-tip=" $moment(item.published_at).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD HH:mm:ss')" class="tooltip">
               {{ $moment(item.published_at).tz("Asia/Ho_Chi_Minh").fromNow() }}
             </div>
           </th>
-          <th>
-            <a target="_blank" :href="item.links.permalink" class="text-blue-600 dark:text-blue-500 hover:underline">
+          <th class="dark:bg-gray-700 dark:text-gray-200">
+            <a target="_blank" :href="item.links.permalink" class="text-blue-600 dark:text-blue-200 hover:underline">
               {{ $t("table.view") }}
             </a>
           </th>
@@ -74,16 +72,12 @@
       </tbody>
       <tfoot>
         <tr>
-          <th>
-            <label>
-              {{ $t("table.status") }}
-            </label>
-          </th>
-          <th>{{ $t("table.commit") }}</th>
-          <th>{{ $t("table.created") }}</th>
-          <th>{{ $t("table.updated") }}</th>
-          <th>{{ $t("table.published") }}</th>
-          <th></th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.status") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.commit") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.created") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.updated") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.published") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200"></th>
         </tr>
       </tfoot>
 
