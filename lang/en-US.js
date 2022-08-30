@@ -108,6 +108,12 @@ export default async (context, locale) => {
       updated: "Updated",
       published: "Published",
       view: "View"
+    },
+    alert: {
+      play_button: "By default of the browser, you need to press the ▶ button to start listening to the Radio."
+    },
+    text: {
+      guide: "Guide"
     }
   });
 };

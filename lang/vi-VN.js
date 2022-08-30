@@ -107,6 +107,12 @@ export default async (context, locale) => {
       updated: "Cập nhật",
       published: "Phát hành",
       view: "Xem"
+    },
+    alert: {
+      play_button: "Theo mặc định của trình duyệt, bạn cần phải nhấn nút ▶ để bắt đầu nghe Radio."
+    },
+    text: {
+      guide: "Hướng dẫn"
     }
   });
 };
