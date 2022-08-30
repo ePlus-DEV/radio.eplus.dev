@@ -1,0 +1,8 @@
+{
+  "title": "Radio Bautista (San Salvador)",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "El Salvador",
+  "stream": "https://s2.radio.co/s3a7dc3d82/listen",
+  "cros": false
+}

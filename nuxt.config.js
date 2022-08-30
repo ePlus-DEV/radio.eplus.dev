@@ -12,6 +12,7 @@ import indonesia from "./static/assets/radio/asia/indonesia.json";
 import thailand from "./static/assets/radio/asia/thailand.json";
 // Central America
 import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
+import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 import ukraine from "./static/assets/radio/europe/ukraine.json";
@@ -367,6 +368,16 @@ export default {
           station_country: "world.central_america.costa_rica",
           url: "/costa-rica/" + key,
           objectID: "costa-rica-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(el_salvador)) {
+        routesToGenerate.push("/el-salvador/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.central_america.el_salvador",
+          url: "/el-salvador/" + key,
+          objectID: "el-salvador-" + key
         });
       }
       // END - Central America

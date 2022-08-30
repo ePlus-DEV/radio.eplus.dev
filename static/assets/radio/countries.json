@@ -78,6 +78,13 @@
       "data": "/assets/radio/central-america/costa-rica.json",
       "timezone": "America/Costa_Rica",
       "station": 0
+    },
+    "el-salvador": {
+      "name": "world.central_america.el_salvador",
+      "flag": "/img/central-america/flags/el-salvador.png",
+      "data": "/assets/radio/central-america/el-salvador.json",
+      "timezone": "America/El_Salvador",
+      "station": 0
     }
   },
   "europe": {

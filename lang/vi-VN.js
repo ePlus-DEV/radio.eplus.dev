@@ -37,7 +37,8 @@ export default async (context, locale) => {
       },
       central_america: {
         name: "Trung Mỹ",
-        costa_rica: "Costa Rica"
+        costa_rica: "Costa Rica",
+        el_salvador: "El Salvador"
       },
       europe: {
         name: "Châu Âu",
@@ -109,7 +110,8 @@ export default async (context, locale) => {
       view: "Xem"
     },
     alert: {
-      play_button: "Theo mặc định của trình duyệt, bạn cần phải nhấn nút ▶ để bắt đầu nghe Radio."
+      play_button:
+        "Theo mặc định của trình duyệt, bạn cần phải nhấn nút ▶ để bắt đầu nghe Radio."
     },
     text: {
       guide: "Hướng dẫn"

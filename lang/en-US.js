@@ -37,7 +37,8 @@ export default async (context, locale) => {
       },
       central_america: {
         name: "Central America",
-        costa_rica: "Costa Rica"
+        costa_rica: "Costa Rica",
+        el_salvador: "El Salvador"
       },
       europe: {
         name: "Europe",
@@ -110,7 +111,8 @@ export default async (context, locale) => {
       view: "View"
     },
     alert: {
-      play_button: "By default of the browser, you need to press the ▶ button to start listening to the Radio."
+      play_button:
+        "By default of the browser, you need to press the ▶ button to start listening to the Radio."
     },
     text: {
       guide: "Guide"
