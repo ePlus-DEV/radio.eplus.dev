@@ -13,6 +13,7 @@ import thailand from "./static/assets/radio/asia/thailand.json";
 // Central America
 import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
+import guatemala from "./static/assets/radio/central-america/guatemala.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 import ukraine from "./static/assets/radio/europe/ukraine.json";
@@ -378,6 +379,16 @@ export default {
           station_country: "world.central_america.el_salvador",
           url: "/el-salvador/" + key,
           objectID: "el-salvador-" + key
+        });
+      }
+      for (const [key, value] of Object.entries(guatemala)) {
+        routesToGenerate.push("/guatemala/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.central_america.guatemala",
+          url: "/guatemala/" + key,
+          objectID: "guatemala-" + key
         });
       }
       // END - Central America

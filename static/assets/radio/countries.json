@@ -85,6 +85,13 @@
       "data": "/assets/radio/central-america/el-salvador.json",
       "timezone": "America/El_Salvador",
       "station": 0
+    },
+    "guatemala": {
+      "name": "world.central_america.guatemala",
+      "flag": "/img/central-america/flags/guatemala.png",
+      "data": "/assets/radio/central-america/guatemala.json",
+      "timezone": "America/Guatemala",
+      "station": 0
     }
   },
   "europe": {
