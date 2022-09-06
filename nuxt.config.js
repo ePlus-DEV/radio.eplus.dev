@@ -223,6 +223,14 @@ export default {
       }
     ]
   ],
+  "nuxt-umami-module": {
+    autoTrack: process.env.NODE_ENV === "production",
+    doNotTrack: false,
+    cache: false,
+    domains: process.env.NODE_ENV === "production" ? 'radio.eplus.dev' : null,
+    websiteId: process.env.NODE_ENV === "production" ? '1ab44e9f-eb50-408c-a262-41f4595a916a' : null,
+    scriptUrl: process.env.NODE_ENV === "production" ? 'https://analytics.eplus.dev' : null,
+  },
   /*
    ** Build configuration
    */
