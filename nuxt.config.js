@@ -146,7 +146,15 @@ export default {
         color: "#5bbad5",
         href: "/brand/safari-pinned-tab.svg"
       }
-    ]
+    ],
+    // script: [
+    //   {
+    //     src: "https://analytics.eplus.dev/umami.js",
+    //     async: true,
+    //     defer: true,
+    //     "data-website-id": process.env.NODE_ENV === "production"? "1ab44e9f-eb50-408c-a262-41f4595a916a" : null,
+    //   },
+    // ]
   },
   /*
    ** Customize the progress-bar color
@@ -221,13 +229,16 @@ export default {
         langDir: "lang/",
         defaultLocale: "en"
       }
+    ],
+    ["nuxt-umami-module",
+      {
+        autoTrack: process.env.NODE_ENV === "production",
+        doNotTrack: process.env.NODE_ENV !== "production",
+        websiteId: '1ab44e9f-eb50-408c-a262-41f4595a916a',
+        scriptUrl: 'https://analytics.eplus.dev/umami.js',
+      }
     ]
   ],
-  "nuxt-umami-module": {
-    autoTrack: process.env.NODE_ENV === "production",
-    websiteId: process.env.NODE_ENV === "production" ? '1ab44e9f-eb50-408c-a262-41f4595a916a' : null,
-    scriptUrl: process.env.NODE_ENV === "production" ? 'https://analytics.eplus.dev' : null,
-  },
   /*
    ** Build configuration
    */
