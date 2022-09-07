@@ -84,40 +84,6 @@ export default {
       },
       { property: "fb:pages", content: "179495025583990" },
       { property: "fb:app_id", content: "363745774395676" }
-      /* {
-        property: "og:image",
-        content: process.env.BASE_URL + "/brand/logo-share.png"
-      },
-      { property: "fb:pages", content: "179495025583990" },
-      { property: "fb:app_id", content: "363745774395676" },
-      {
-        property: "og:title",
-        content: "Radio Internet | " + process.env.Site_Name
-      },
-      {
-        property: "og:description",
-        content: process.env.Description || ""
-      },
-      { property: "og:type", content: "music.radio_station" },
-      { property: "og:url", content: process.env.BASE_URL },
-      {
-        property: "og:image:alt",
-        content: "Radio Internet | " + process.env.Site_Name
-      },
-      {
-        property: "og:site_name",
-        content: "Radio Internet | " + process.env.Site_Name
-      },
-      {
-        property: "music:creator",
-        content: process.env.FanPage
-      },
-      {
-        property: "og:audio",
-        content: "https://media-ssl.musicradio.com/HeartUK"
-      },
-      { property: "og:audio:type", content: "audio/mpeg" },
-      { property: "application-name", content: process.env.Site_Name } */
     ],
     link: [
       {
@@ -146,15 +112,7 @@ export default {
         color: "#5bbad5",
         href: "/brand/safari-pinned-tab.svg"
       }
-    ],
-    // script: [
-    //   {
-    //     src: "https://analytics.eplus.dev/umami.js",
-    //     async: true,
-    //     defer: true,
-    //     "data-website-id": process.env.NODE_ENV === "production"? "1ab44e9f-eb50-408c-a262-41f4595a916a" : null,
-    //   },
-    // ]
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -207,35 +165,37 @@ export default {
     "@nuxtjs/dotenv",
     "@nuxtjs/axios",
     "@nuxtjs/sitemap",
+    "@nuxtjs/i18n",
+    // [
+    //   "@nuxtjs/i18n",
+    //   {
+    //     locales: [
+    //       {
+    //         code: "en",
+    //         file: "en-US.js",
+    //         name: "English",
+    //         flag: "/img/europe/flags/united-kingdom.png"
+    //       },
+    //       {
+    //         code: "vi",
+    //         file: "vi-VN.js",
+    //         name: "Tiếng Việt",
+    //         flag: "/img/asia/flags/viet-nam.png"
+    //       }
+    //     ],
+    //     strategy: "no_prefix",
+    //     lazy: true,
+    //     langDir: "lang/",
+    //     defaultLocale: "en"
+    //   }
+    // ],
     [
-      "nuxt-i18n",
-      {
-        locales: [
-          {
-            code: "en",
-            file: "en-US.js",
-            name: "English",
-            flag: "/img/europe/flags/united-kingdom.png"
-          },
-          {
-            code: "vi",
-            file: "vi-VN.js",
-            name: "Tiếng Việt",
-            flag: "/img/asia/flags/viet-nam.png"
-          }
-        ],
-        strategy: "no_prefix",
-        lazy: true,
-        langDir: "lang/",
-        defaultLocale: "en"
-      }
-    ],
-    ["nuxt-umami-module",
+      "nuxt-umami-module",
       {
         autoTrack: process.env.NODE_ENV === "production",
         doNotTrack: process.env.NODE_ENV !== "production",
-        websiteId: '1ab44e9f-eb50-408c-a262-41f4595a916a',
-        scriptUrl: 'https://analytics.eplus.dev/umami.js',
+        websiteId: "1ab44e9f-eb50-408c-a262-41f4595a916a",
+        scriptUrl: "https://analytics.eplus.dev/umami.js"
       }
     ]
   ],
@@ -257,7 +217,28 @@ export default {
     credentials: false,
     proxy: true
   },
-
+  i18n: {
+    locales: [
+      {
+        code: "en",
+        file: "en-US.js",
+        iso: "en-US",
+        name: "English",
+        flag: "/img/europe/flags/united-kingdom.png"
+      },
+      {
+        code: "vi",
+        file: "vi-VN.js",
+        iso: "vi-VN",
+        name: "Tiếng Việt",
+        flag: "/img/asia/flags/viet-nam.png"
+      }
+    ],
+    strategy: "no_prefix",
+    lazy: true,
+    langDir: "lang/",
+    defaultLocale: "en"
+  },
   proxy: {
     "/assets/": {
       target: process.env.BASE_URL,
