@@ -1,20 +1,26 @@
 <template>
   <!-- BEGIN - Statistics -->
+
   <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
     <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
       <h2 class="text-2xl dark:text-white">{{ $t("navmenu.statistics") }}</h2>
     </div>
+
     <div class="flex justify-center mt-8 space-x-6">
       <!-- website monitoring -->
+
       <img
         src="https://statuspage.freshping.io/badge/31630134-99cc-447d-9789-e89d57071666?0.4862714836619788"
         class="border-dashed border-2 border-indigo-600 dark:border-indigo-300 rounded-full"
         alt="website monitoring pass 100 days"
       />
+
       <!-- website monitoring -->
     </div>
+
     <div>
       <!-- Chart -->
+
       <apexchart
         ref="chart"
         type="area"
@@ -22,9 +28,11 @@
         :options="chart.chartOptions"
         :series="chart.series"
       ></apexchart>
+
       <!-- Chart -->
 
       <!-- BEGIN - Calendar -->
+
       <div
         class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-10 px-2 md:mx-12 overflow-x-auto"
       >
@@ -61,6 +69,7 @@
                       : 'bg-green-400'
                   "
                 ></span>
+
                 <span
                   class="relative inline-flex rounded-full h-3 w-3"
                   :class="
@@ -70,11 +79,13 @@
                   "
                 ></span>
               </span>
+
               <div class="flex items-center px-4 py-4">
                 <div class="text-center">
                   <p class="text-gray-100 text-sm">
                     {{ $moment(last7days[index]).format("ddd") }}
                   </p>
+
                   <p class="text-gray-100 mt-3 font-bold">
                     {{ $moment(last7days[index]).format("DD/MM") }}
                   </p>
@@ -88,6 +99,7 @@
       <!-- END - Calendar -->
     </div>
   </div>
+
   <!-- END - Statistics -->
 </template>
 

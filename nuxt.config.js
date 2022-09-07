@@ -166,29 +166,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/sitemap",
     "@nuxtjs/i18n",
-    // [
-    //   "@nuxtjs/i18n",
-    //   {
-    //     locales: [
-    //       {
-    //         code: "en",
-    //         file: "en-US.js",
-    //         name: "English",
-    //         flag: "/img/europe/flags/united-kingdom.png"
-    //       },
-    //       {
-    //         code: "vi",
-    //         file: "vi-VN.js",
-    //         name: "Tiếng Việt",
-    //         flag: "/img/asia/flags/viet-nam.png"
-    //       }
-    //     ],
-    //     strategy: "no_prefix",
-    //     lazy: true,
-    //     langDir: "lang/",
-    //     defaultLocale: "en"
-    //   }
-    // ],
+    "@nuxt/image",
     [
       "nuxt-umami-module",
       {
