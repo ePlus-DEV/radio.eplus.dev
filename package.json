@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
-    "@nuxt/image": "^0.7.1",
     "@nuxtjs/auth-next": "^5.0.0-1624817847.21691f1",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/i18n": "^7.3.0",
@@ -29,6 +28,8 @@
     "nuxt-umami-module": "^1.0.0",
     "plyr": "^3.6.9",
     "underscore": "^1.13.1",
+    "video.js": "^7.10.1",
+    "videojs-contrib-hls": "^5.15.0",
     "vue-apexcharts": "^1.6.2",
     "vue-head": "^2.2.0",
     "vue-instantsearch": "^4.1.1",

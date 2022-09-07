@@ -2,7 +2,7 @@
   <div class="text-sm breadcrumbs dark:text-white">
     <ul>
       <li class="font-medium">
-        <nuxt-link provider="static" to="/" class="hover:no-underline">
+        <nuxt-link to="/" class="hover:no-underline">
           <svg
             class="w-5 h-5 mr-2.5"
             fill="currentColor"
