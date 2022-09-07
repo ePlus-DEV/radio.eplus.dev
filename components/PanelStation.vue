@@ -25,6 +25,7 @@
             ]"
           >
             <nuxt-img
+              provider="static"
               :src="data.features"
               :alt="data.title"
               class="p-0 sm:p-1 md:p-5 lg:p-10"
