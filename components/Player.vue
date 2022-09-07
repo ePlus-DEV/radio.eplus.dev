@@ -10,6 +10,7 @@
           <div class="flex justify-around">
             <span class="relative inline-flex">
               <nuxt-img
+                provider="static"
                 class="w-35 h-25 object-cover"
                 :key="home !== undefined ? player_home.title : player.title"
                 :src="home !== undefined ? thumb : player.features"
@@ -70,6 +71,7 @@
                 class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
               >
                 <nuxt-img
+                  provider="static"
                   :src="
                     song.currentMedia.thumbnail !== undefined
                       ? song.currentMedia.thumbnail
@@ -97,6 +99,7 @@
             v-if="song.nextMedia.title !== undefined"
           >
             <nuxt-img
+              provider="static"
               class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
               :src="
                 song.nextMedia.thumbnail !== undefined
@@ -351,6 +354,7 @@
                 :key="index"
               >
                 <nuxt-img
+                  provider="static"
                   class="w-10 h-10 object-cover rounded-lg"
                   alt="User avatar"
                   :src="
@@ -382,7 +386,7 @@
                   </p>
 
                   <div class="relative inline-flex" v-else>
-                    <nuxt-img src="/brand/favicon.ico" alt="Logo" />
+                    <nuxt-img provider="static" src="/brand/favicon.ico" alt="Logo" />
                   </div>
                 </div>
               </div>

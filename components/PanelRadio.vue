@@ -23,6 +23,7 @@
               </div>
 
               <nuxt-img
+                provider="static"
                 :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
@@ -62,6 +63,7 @@
               </div>
 
               <nuxt-img
+                provider="static"
                 :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
@@ -99,6 +101,7 @@
               </div>
 
               <nuxt-img
+                provider="static"
                 :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
@@ -138,6 +141,7 @@
               </div>
 
               <nuxt-img
+                provider="static"
                 :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
@@ -177,6 +181,7 @@
               </div>
 
               <nuxt-img
+                provider="static"
                 :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
