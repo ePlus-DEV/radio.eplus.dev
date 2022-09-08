@@ -143,7 +143,8 @@ export default {
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics"
+    "@nuxtjs/google-analytics",
+    "@nuxt/image",
   ],
   // GA
   googleAnalytics: {
@@ -166,7 +167,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/sitemap",
     "@nuxtjs/i18n",
-    "@nuxt/image",
+    "@nuxtjs/cloudinary",
     [
       "nuxt-umami-module",
       {
@@ -194,6 +195,16 @@ export default {
     proxyHeaders: false,
     credentials: false,
     proxy: true
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+  },
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
+    }
   },
   i18n: {
     locales: [
