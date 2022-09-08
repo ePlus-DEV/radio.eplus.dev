@@ -67,7 +67,7 @@
               <div
                 class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
               >
-                <nuxt-img
+                <img
                   loading="lazy"
                   :src="
                     song.currentMedia.thumbnail !== undefined
