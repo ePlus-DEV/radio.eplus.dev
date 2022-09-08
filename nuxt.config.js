@@ -143,8 +143,7 @@ export default {
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics",
-    "@nuxt/image",
+    "@nuxtjs/google-analytics"
   ],
   // GA
   googleAnalytics: {
@@ -168,6 +167,7 @@ export default {
     "@nuxtjs/sitemap",
     "@nuxtjs/i18n",
     "@nuxtjs/cloudinary",
+    "@nuxt/image",
     [
       "nuxt-umami-module",
       {
