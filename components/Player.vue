@@ -13,7 +13,11 @@
                 loading="lazy"
                 class="w-35 h-25 object-cover"
                 :key="home !== undefined ? player_home.title : player.title"
-                :src="home !== undefined ? thumb : player.features"
+                :src="
+                  home !== undefined
+                    ? $config.Base_URL + thumb
+                    : $config.Base_URL + player.features
+                "
               />
 
               <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
@@ -78,7 +82,6 @@
                       : song.thumbnail
                   "
                   :alt="song.currentMedia.title"
-                  loading="lazy"
                   class="w-20 h-20 rounded-full bg-orange-100"
                 />
               </div>
@@ -386,7 +389,7 @@
                   </p>
 
                   <div class="relative inline-flex" v-else>
-                    <nuxt-img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
+                    <img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
                   </div>
                 </div>
               </div>

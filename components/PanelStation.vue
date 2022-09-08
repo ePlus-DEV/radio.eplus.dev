@@ -26,7 +26,7 @@
           >
             <nuxt-img
               loading="lazy"
-              :src="data.features"
+              :src="$config.Base_URL + data.features"
               :alt="data.title"
               class="p-0 sm:p-1 md:p-5 lg:p-10"
             />

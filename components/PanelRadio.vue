@@ -24,7 +24,7 @@
 
               <nuxt-img
                 loading="lazy"
-                :src="country.flag"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -64,7 +64,7 @@
 
               <nuxt-img
                 loading="lazy"
-                :src="country.flag"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -102,7 +102,7 @@
 
               <nuxt-img
                 loading="lazy"
-                :src="country.flag"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -142,7 +142,7 @@
 
               <nuxt-img
                 loading="lazy"
-                :src="country.flag"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -182,7 +182,7 @@
 
               <nuxt-img
                 loading="lazy"
-                :src="country.flag"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
