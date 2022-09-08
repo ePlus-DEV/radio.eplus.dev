@@ -205,7 +205,7 @@ export default {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
     },
-    provider: 'netlify'
+    provider: 'cloudinary'
   },
   i18n: {
     locales: [
