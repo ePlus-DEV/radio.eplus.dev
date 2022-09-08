@@ -143,7 +143,8 @@ export default {
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics"
+    "@nuxtjs/google-analytics",
+    "@nuxt/image",
   ],
   // GA
   googleAnalytics: {
@@ -166,29 +167,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/sitemap",
     "@nuxtjs/i18n",
-    // [
-    //   "@nuxtjs/i18n",
-    //   {
-    //     locales: [
-    //       {
-    //         code: "en",
-    //         file: "en-US.js",
-    //         name: "English",
-    //         flag: "/img/europe/flags/united-kingdom.png"
-    //       },
-    //       {
-    //         code: "vi",
-    //         file: "vi-VN.js",
-    //         name: "Tiếng Việt",
-    //         flag: "/img/asia/flags/viet-nam.png"
-    //       }
-    //     ],
-    //     strategy: "no_prefix",
-    //     lazy: true,
-    //     langDir: "lang/",
-    //     defaultLocale: "en"
-    //   }
-    // ],
+    "@nuxtjs/cloudinary",
     [
       "nuxt-umami-module",
       {
@@ -216,6 +195,16 @@ export default {
     proxyHeaders: false,
     credentials: false,
     proxy: true
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+  },
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
+    }
   },
   i18n: {
     locales: [

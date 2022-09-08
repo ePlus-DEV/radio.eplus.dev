@@ -18,8 +18,11 @@
               <div class="indicator-item badge badge-accent">
                 {{ country.station }}
               </div>
-              <img
-                :src="country.flag"
+
+              <nuxt-img
+                provider="cloudinary"
+                loading="lazy"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -51,8 +54,11 @@
               <div class="indicator-item badge badge-accent">
                 {{ country.station }}
               </div>
-              <img
-                :src="country.flag"
+
+              <nuxt-img
+                provider="cloudinary"
+                loading="lazy"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -82,8 +88,11 @@
               <div class="indicator-item badge badge-accent">
                 {{ country.station }}
               </div>
-              <img
-                :src="country.flag"
+
+              <nuxt-img
+                provider="cloudinary"
+                loading="lazy"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -115,8 +124,11 @@
               <div class="indicator-item badge badge-accent">
                 {{ country.station }}
               </div>
-              <img
-                :src="country.flag"
+
+              <nuxt-img
+                provider="cloudinary"
+                loading="lazy"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -148,8 +160,11 @@
               <div class="indicator-item badge badge-accent">
                 {{ country.station }}
               </div>
-              <img
-                :src="country.flag"
+
+              <nuxt-img
+                provider="cloudinary"
+                loading="lazy"
+                :src="$config.Base_URL + country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />

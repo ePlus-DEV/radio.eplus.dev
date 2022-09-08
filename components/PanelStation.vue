@@ -22,8 +22,10 @@
                 : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
             ]"
           >
-            <img
-              :src="data.features"
+            <nuxt-img
+              provider="cloudinary"
+              loading="lazy"
+              :src="$config.Base_URL + data.features"
               :alt="data.title"
               class="p-0 sm:p-1 md:p-5 lg:p-10"
             />
