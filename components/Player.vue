@@ -1,7 +1,6 @@
 <template>
   <div class="transform -rotate-1 pb-8">
     <!-- BEGIN - Player -->
-
     <div
       class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"
     >
@@ -19,12 +18,10 @@
                     : $config.Base_URL + player.features
                 "
               />
-
               <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                 <span
                   class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
                 ></span>
-
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
               </span>
             </span>
@@ -34,18 +31,15 @@
             <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
               {{ $t("panel.play_from_radio") }}
             </span>
-
             <span
               class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
             >
               {{ home !== undefined ? player_home.title : player.title }}
             </span>
-
             <span class="text-xs text-gray-500 uppercase font-medium">
               {{ $t(country) }}
             </span>
           </div>
-
           <div class="flex">
             <svg width="24" height="24" fill="none">
               <path
@@ -57,7 +51,6 @@
             </svg>
           </div>
         </div>
-
         <!-- BEGIN - Zing - Only -->
 
         <div
@@ -85,12 +78,8 @@
                   class="w-20 h-20 rounded-full bg-orange-100"
                 />
               </div>
-
               <div class="flex-auto">
-                {{ song.currentMedia.title }}
-                <br />
-
-                <span class="text-orange-100">
+                {{ song.currentMedia.title }}<br /><span class="text-orange-100">
                   {{ song.currentMedia.artists }}
                 </span>
               </div>
@@ -101,7 +90,7 @@
             class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"
             v-if="song.nextMedia.title !== undefined"
           >
-            <nuxt-img
+            <img
               loading="lazy"
               class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
               :src="
@@ -111,13 +100,11 @@
               "
               alt=""
             />
-
             <div class="md:p-2 text-center md:text-left space-y-4">
               <figcaption class="font-medium">
                 <div class="text-sky-500 dark:text-white">
                   {{ $t("panel.next") }}: {{ song.nextMedia.title }}
                 </div>
-
                 <div class="text-slate-700 dark:text-white">
                   {{ song.nextMedia.artists }}
                 </div>
@@ -142,13 +129,10 @@
                   stroke-linejoin="round"
                 >
                   <polygon points="19 20 9 12 19 4 19 20"></polygon>
-
                   <line x1="5" y1="19" x2="5" y2="5"></line>
                 </svg>
               </button>
-
               <!-- BEIGN - Button Play -->
-
               <button
                 v-show="!waiting"
                 class="transform hover:scale-125"
@@ -164,15 +148,11 @@
                     stroke="#ef4444"
                     stroke-width="1.5"
                   />
-
                   <path d="M18 16h4v18h-4V16zM28 16h4v18h-4z" fill="#ef4444" />
                 </svg>
               </button>
-
               <!-- END - Button Play -->
-
               <!-- END - Button Pause -->
-
               <button
                 v-show="!waiting"
                 type="button"
@@ -194,11 +174,8 @@
                   ></path>
                 </svg>
               </button>
-
               <!-- END - Button Pause -->
-
               <!-- Waiting -->
-
               <svg
                 v-show="waiting"
                 class="animate-spin -ml-1 mr-3 text-red-500"
@@ -216,16 +193,13 @@
                   stroke="currentColor"
                   stroke-width="4"
                 ></circle>
-
                 <path
                   class="opacity-75"
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-
               <!-- Waiting -->
-
               <button class="focus:outline-none cursor-not-allowed">
                 <svg
                   class="w-4 h-4"
@@ -237,13 +211,11 @@
                   stroke-linejoin="round"
                 >
                   <polygon points="5 4 15 12 5 20 5 4"></polygon>
-
                   <line x1="19" y1="5" x2="19" y2="19"></line>
                 </svg>
               </button>
             </div>
           </div>
-
           <div class="relative w-full ml-2">
             <vue-plyr ref="plyr" @player="setPlayer">
               <audio controls crossorigin playsinline id="player" class="hidden"></audio>
@@ -252,7 +224,6 @@
         </div>
 
         <!-- BEGIN: Guide -->
-
         <div
           v-if="!button"
           class="flex bg-red-100 rounded-lg p-4 text-sm text-red-700"
@@ -270,17 +241,14 @@
               clip-rule="evenodd"
             ></path>
           </svg>
-
           <div>
             <span class="font-medium">{{ $t("text.guide") }}:</span>
             {{ $t("alert.play_button") }}
           </div>
         </div>
-
         <!-- END: Guide -->
 
         <!-- BEGIN - Program -->
-
         <div
           class="h-full flex flex-col"
           v-if="program !== undefined && program.length > 0"
@@ -307,7 +275,6 @@
                       <div class="text-gray-400">
                         {{ $moment.unix(item.startTime).format("dddd - DD/MM//YYYY") }}
                       </div>
-
                       <div class="dark:text-white">
                         {{
                           $moment.unix(item.startTime).format("HH:mm") +
@@ -321,7 +288,6 @@
                       <div class="leading-5 text-gray-500 font-medium">
                         {{ item.title }}
                       </div>
-
                       <div class="leading-5 text-gray-900 dark:text-gray-200">
                         {{ item.description }}
                       </div>
@@ -332,11 +298,9 @@
             </table>
           </div>
         </div>
-
         <!-- END - Program  -->
 
         <!-- BEGIN - Playlist -->
-
         <div
           class="flex flex-col p-5"
           v-if="playlist !== undefined && playlist.length > 0"
@@ -348,7 +312,6 @@
               {{ $t("panel.playlist") }}
             </span>
           </div>
-
           <div class="overflow-auto h-32">
             <template v-for="(item, index) in playlist">
               <div
@@ -356,7 +319,7 @@
                 :class="index === 0 ? 'bg-gray-800 dark:bg-black' : ''"
                 :key="index"
               >
-                <nuxt-img
+                <img
                   loading="lazy"
                   class="w-10 h-10 object-cover rounded-lg"
                   alt="User avatar"
@@ -368,26 +331,22 @@
                       : player.features
                   "
                 />
-
                 <div class="flex flex-col px-2 w-4/5">
                   <span
                     class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1 truncate"
                   >
                     {{ item.track_title }}
                   </span>
-
                   <span
                     class="text-xs dark:text-white text-gray-500 uppercase font-medium truncate"
                   >
                     {{ item.track_artist }}
                   </span>
                 </div>
-
                 <div class="w-1/5 text-right">
                   <p class="text-xs text-grey-dark dark:text-white" v-if="index !== 0">
                     {{ $moment.unix(item.track_played).fromNow() }}
                   </p>
-
                   <div class="relative inline-flex" v-else>
                     <img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
                   </div>
@@ -396,11 +355,9 @@
             </template>
           </div>
         </div>
-
         <!-- END - Playlist -->
       </div>
     </div>
-
     <!-- END - Player -->
   </div>
 </template>
@@ -590,7 +547,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .plyr__controls__item.plyr__control.plyr__control--pressed,
 .plyr__controls__item.plyr__control {

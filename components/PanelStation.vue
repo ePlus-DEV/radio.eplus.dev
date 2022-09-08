@@ -1,11 +1,9 @@
 <template>
   <!-- BEGIN - Station -->
-
   <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
     <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
       <h2 class="text-2xl dark:text-white">{{ $t(i18n) }}</h2>
     </div>
-
     <div class="flex items-center justify-center">
       <div
         class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
@@ -35,7 +33,6 @@
       </div>
     </div>
   </div>
-
   <!-- END - Station -->
 </template>
 

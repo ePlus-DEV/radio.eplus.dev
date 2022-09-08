@@ -143,8 +143,7 @@ export default {
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics",
-    "@nuxt/image",
+    "@nuxtjs/google-analytics"
   ],
   // GA
   googleAnalytics: {
@@ -168,6 +167,7 @@ export default {
     "@nuxtjs/sitemap",
     "@nuxtjs/i18n",
     "@nuxtjs/cloudinary",
+    "@nuxt/image",
     [
       "nuxt-umami-module",
       {
@@ -204,9 +204,6 @@ export default {
   image: {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
-    },
-    imagekit: {
-      baseURL: 'https://ik.imagekit.io/radio'
     },
     domains: [process.env.Base_URL],
     provider: 'cloudinary'

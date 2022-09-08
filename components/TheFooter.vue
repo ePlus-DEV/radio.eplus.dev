@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- BEGIN - Back to top -->
-
     <button
       @click="scrolltoTop"
       id="topButton"
@@ -22,11 +21,9 @@
         ></path>
       </svg>
     </button>
-
     <!-- END - Back to top -->
 
     <!-- Foooter -->
-
     <section class="bg-white dark:bg-gray-900 rounded-lg">
       <div
         class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8"
@@ -40,7 +37,6 @@
               {{ $t("navmenu.about") }}
             </nuxt-link>
           </div>
-
           <div class="px-5 py-2">
             <a
               target="_blank"
@@ -50,7 +46,6 @@
               {{ $t("navmenu.blog") }}
             </a>
           </div>
-
           <div class="px-5 py-2">
             <a
               href="javascript:;"
@@ -59,7 +54,6 @@
               {{ $t("navmenu.contact") }}
             </a>
           </div>
-
           <div class="px-5 py-2">
             <a
               href="javascript:;"
@@ -68,7 +62,6 @@
               {{ $t("navmenu.terms") }}
             </a>
           </div>
-
           <div class="px-5 py-2">
             <nuxt-link
               to="/statistics"
@@ -78,7 +71,6 @@
             </nuxt-link>
           </div>
         </nav>
-
         <div class="flex justify-center mt-8 space-x-6">
           <a
             target="_blank"
@@ -86,7 +78,6 @@
             class="text-gray-400 hover:text-gray-500"
           >
             <span class="sr-only">Facebook</span>
-
             <svg
               class="w-6 h-6"
               aria-hidden="true"
@@ -100,14 +91,12 @@
               ></path>
             </svg>
           </a>
-
           <a
             target="_blank"
             :href="$config.Instagram"
             class="text-gray-400 hover:text-gray-500"
           >
             <span class="sr-only">Instagram</span>
-
             <svg
               class="w-6 h-6"
               aria-hidden="true"
@@ -121,14 +110,12 @@
               ></path>
             </svg>
           </a>
-
           <a
             target="_blank"
             :href="$config.Github"
             class="text-gray-400 hover:text-gray-500"
           >
             <span class="sr-only">GitHub</span>
-
             <svg
               class="w-6 h-6"
               aria-hidden="true"
@@ -143,7 +130,6 @@
             </svg>
           </a>
         </div>
-
         <div class="flex justify-center mt-8 space-x-6">
           <div :data-tip="$t('navmenu.changelog')" class="tooltip">
             <nuxt-link to="/changelog">
@@ -154,42 +140,32 @@
             </nuxt-link>
           </div>
         </div>
-
         <p class="mt-8 text-center text-gray-400">
           Copyright © {{ new Date().getFullYear() }}
           <a
             class="hover:text-gray-900 dark:hover:text-white cursor-pointer"
             :href="$config.Copyright"
             target="_blank"
-          >
-            <img
+            ><img
               src="https://cdn.eplus.dev/img/brand/logo.svg"
               alt="logo eplus.dev"
               class="w-7 h-7 inline-block cursor-pointer"
-            />
-            Plus.DEV
-          </a>
-          .
+            />Plus.DEV</a
+          >.
         </p>
       </div>
     </section>
   </div>
 </template>
-
 <script>
-(function (h, o, t, j, a, r) {
-  h.hj =
-    h.hj ||
-    function () {
-      (h.hj.q = h.hj.q || []).push(arguments);
-    };
-  h._hjSettings = { hjid: 3128683, hjsv: 6 };
-  a = o.getElementsByTagName("head")[0];
-  r = o.createElement("script");
-  r.async = 1;
-  r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-  a.appendChild(r);
-})(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3128683,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 
 window.onscroll = function () {
   document.body.scrollTop > 20 || document.documentElement.scrollTop > 20

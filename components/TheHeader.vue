@@ -14,14 +14,12 @@
                 alt="Radio.ePlus.DEV"
               />
             </nuxt-link>
-
             <h3
               class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"
             >
               <nuxt-link to="/">Radio.ePlus.DEV</nuxt-link>
             </h3>
           </div>
-
           <ul class="hidden xl:flex items-center h-full">
             <nuxt-link to="/">
               <li
@@ -41,32 +39,25 @@
                     stroke-linejoin="round"
                   >
                     <path stroke="none" d="M0 0h24v24H0z" />
-
                     <rect x="4" y="4" width="6" height="6" rx="1" />
-
                     <rect x="14" y="4" width="6" height="6" rx="1" />
-
                     <rect x="4" y="14" width="6" height="6" rx="1" />
-
                     <rect x="14" y="14" width="6" height="6" rx="1" />
                   </svg>
                 </span>
                 {{ $t("navmenu.homepage") }}
               </li>
             </nuxt-link>
-
             <li
               class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
             >
               <span class="mr-2"> </span>
-
               <a href="https://old-radio.eplus.dev" target="_blank">
                 {{ $t("navmenu.old_version") }}
               </a>
             </li>
           </ul>
         </div>
-
         <div class="h-full hidden xl:flex items-center justify-end">
           <div class="h-full flex">
             <div
@@ -86,13 +77,10 @@
                 stroke-linejoin="round"
               >
                 <path stroke="none" d="M0 0h24v24H0z" />
-
                 <circle cx="10" cy="10" r="7" />
-
                 <line x1="21" y1="21" x2="15" y2="15" />
               </svg>
             </div>
-
             <div
               class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
             >
@@ -114,7 +102,6 @@
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-
                 <svg
                   class="w-6 h-6"
                   fill="currentColor"
@@ -128,7 +115,6 @@
                 </svg>
               </button>
             </div>
-
             <div class="flex items-center pl-8 relative cursor-pointer">
               <ul
                 class="p-2 w-40 border-r bg-white absolute rounded left-0 shadow mt-16 top-0 hidden"
@@ -156,7 +142,6 @@
                   "
                   :key="index"
                 />
-
                 <p
                   class="text-white text-sm ml-2"
                   @click.prevent.stop="
@@ -170,7 +155,6 @@
             </div>
           </div>
         </div>
-
         <div class="flex items-center xl:hidden">
           <ul
             class="p-2 border-r bg-white absolute rounded top-0 left-0 right-0 shadow mt-16 md:mt-16 hidden"
@@ -192,23 +176,16 @@
                   stroke-linejoin="round"
                 >
                   <path stroke="none" d="M0 0h24v24H0z"></path>
-
                   <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-
                   <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-
                   <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-
                   <rect x="14" y="14" width="6" height="6" rx="1"></rect>
                 </svg>
-
                 <span class="ml-2 font-bold">{{ $t("navmenu.homepage") }}</span>
               </div>
             </li>
           </ul>
-
           <!-- BEGIN - Toggle Language - Mobile -->
-
           <template v-for="(locale, index) in availableLocales">
             <nuxt-img
               loading="lazy"
@@ -221,11 +198,8 @@
               :key="index"
             />
           </template>
-
           <!-- BEGIN - Toggle Language - Mobile -->
-
           <!-- BEGIN - Search - Mobile -->
-
           <button
             id="switchTheme"
             class="h-10 w-10 flex justify-center items-center"
@@ -244,17 +218,12 @@
               stroke-linejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" />
-
               <circle cx="10" cy="10" r="7" />
-
               <line x1="21" y1="21" x2="15" y2="15" />
             </svg>
           </button>
-
           <!-- BEGIN - Search - Mobile -->
-
           <!-- BEGIN - Dark Mode - Mobile -->
-
           <button
             id="switchTheme"
             class="h-10 w-10 flex justify-center items-center focus:outline-none text-yellow-500"
@@ -273,7 +242,6 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-
             <svg
               class="w-6 h-6"
               fill="currentColor"
@@ -286,9 +254,7 @@
               ></path>
             </svg>
           </button>
-
           <!-- END - Dark Mode - Mobile -->
-
           <svg
             @click="MenuHandler($event, true)"
             aria-haspopup="true"
@@ -305,12 +271,9 @@
             stroke-linejoin="round"
           >
             <path stroke="none" d="M0 0h24v24H0z" />
-
             <line x1="4" y1="8" x2="20" y2="8" />
-
             <line x1="4" y1="16" x2="20" y2="16" />
           </svg>
-
           <div
             @click="MenuHandler($event, false)"
             class="hidden text-white close-m-menu p-1"
@@ -328,25 +291,19 @@
               stroke-linejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" />
-
               <line x1="18" y1="6" x2="6" y2="18" />
-
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </div>
         </div>
       </div>
     </nav>
-
     <label for="search-modal" class="modal-button"></label>
-
     <input type="checkbox" id="search-modal" class="modal-toggle" />
-
     <div class="modal">
       <div class="modal-box">
         <p>
           <!-- BEGIN - ais-instant-search -->
-
           <ais-instant-search :search-client="searchClient" index-name="radio.eplus.dev">
             <ais-search-box>
               <template v-slot="{ currentRefinement, isSearchStalled, refine }">
@@ -361,7 +318,6 @@
                     />
                   </div>
                 </div>
-
                 <ais-stats>
                   <template v-slot="{ nbPages, nbHits, page, processingTimeMS }">
                     {{
@@ -374,13 +330,10 @@
                     }}
                   </template>
                 </ais-stats>
-
                 <span :hidden="!isSearchStalled">Loading...</span>
               </template>
             </ais-search-box>
-
             <ais-configure :hits-per-page.camel="5" />
-
             <ais-hits>
               <template v-slot="{ items }">
                 <div class="flex flex-col items-center">
@@ -392,7 +345,6 @@
                         >
                           <div class="flex flex-col w-full">
                             <!-- item -->
-
                             <nuxt-link
                               :to="item.url"
                               class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100"
@@ -414,7 +366,6 @@
                                     />
                                   </div>
                                 </div>
-
                                 <div class="w-full items-center flex">
                                   <div class="mx-2 -mt-1 truncate">
                                     {{ item.station_name }}
@@ -427,7 +378,6 @@
                                 </div>
                               </div>
                             </nuxt-link>
-
                             <!-- item  -->
                           </div>
                         </div>
@@ -437,9 +387,7 @@
                 </div>
               </template>
             </ais-hits>
-
             <!-- pagination -->
-
             <ais-pagination>
               <template
                 v-slot="{
@@ -459,7 +407,6 @@
                   >
                     ‹‹
                   </button>
-
                   <button
                     class="btn btn-sm"
                     v-if="!isFirstPage"
@@ -467,7 +414,6 @@
                   >
                     ‹
                   </button>
-
                   <button
                     class="btn btn-sm"
                     :class="page === currentRefinement ? 'btn-active' : ''"
@@ -477,7 +423,6 @@
                   >
                     {{ page + 1 }}
                   </button>
-
                   <button
                     class="btn btn-sm"
                     v-if="!isLastPage"
@@ -485,7 +430,6 @@
                   >
                     ›
                   </button>
-
                   <button
                     class="btn btn-sm"
                     v-if="!isLastPage"
@@ -496,13 +440,10 @@
                 </div>
               </template>
             </ais-pagination>
-
             <!-- pagination -->
           </ais-instant-search>
-
           <!-- END - ais-instant-search -->
         </p>
-
         <div class="modal-action">
           <label for="search-modal" class="btn btn-sm bg-red-500 hover:bg-red-700">
             {{ $t("button.close") }}
