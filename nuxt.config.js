@@ -205,8 +205,11 @@ export default {
     cloudinary: {
       baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
     },
-    provider: 'netlify',
-    dir: 'static/img'
+    imagekit: {
+      baseURL: 'https://ik.imagekit.io/radio'
+    },
+    domains: [process.env.Base_URL],
+    provider: 'cloudinary'
   },
   i18n: {
     locales: [

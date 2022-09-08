@@ -7,7 +7,12 @@
         <div class="flex items-center">
           <div class="mr-10 flex items-center">
             <nuxt-link to="/">
-              <nuxt-img loading="lazy" src="/brand/logo-white.svg" width="43" alt="Radio.ePlus.DEV" />
+              <img
+                loading="lazy"
+                src="/brand/logo-white.svg"
+                width="43"
+                alt="Radio.ePlus.DEV"
+              />
             </nuxt-link>
             <h3
               class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"
@@ -185,7 +190,7 @@
             <nuxt-img
               loading="lazy"
               class="rounded h-8 w-12 object-cover"
-              :src="locale.flag"
+              :src="$config.Base_URL + locale.flag"
               :alt="locale.name"
               @click.prevent.stop="
                 $i18n.setLocale(locale.code), $moment.locale(locale.code)
