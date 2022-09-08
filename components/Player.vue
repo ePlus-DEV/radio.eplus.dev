@@ -8,7 +8,8 @@
         <div class="flex items-center p-5 border-b dark:border-gray-600">
           <div class="flex justify-around">
             <span class="relative inline-flex">
-              <img
+              <nuxt-img
+                loading="lazy"
                 class="w-35 h-25 object-cover"
                 :key="home !== undefined ? player_home.title : player.title"
                 :src="home !== undefined ? thumb : player.features"
@@ -62,7 +63,8 @@
               <div
                 class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
               >
-                <img
+                <nuxt-img
+                  loading="lazy"
                   :src="
                     song.currentMedia.thumbnail !== undefined
                       ? song.currentMedia.thumbnail
@@ -85,7 +87,8 @@
             class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"
             v-if="song.nextMedia.title !== undefined"
           >
-            <img
+            <nuxt-img
+              loading="lazy"
               class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
               :src="
                 song.nextMedia.thumbnail !== undefined
@@ -297,7 +300,8 @@
                 :class="index === 0 ? 'bg-gray-800 dark:bg-black' : ''"
                 :key="index"
               >
-                <img
+                <nuxt-img
+                  loading="lazy"
                   class="w-10 h-10 object-cover rounded-lg"
                   alt="User avatar"
                   :src="
@@ -325,7 +329,7 @@
                     {{ $moment.unix(item.track_played).fromNow() }}
                   </p>
                   <div class="relative inline-flex" v-else>
-                    <img src="/brand/favicon.ico" alt="Logo" />
+                    <nuxt-img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
                   </div>
                 </div>
               </div>

@@ -20,9 +20,8 @@
               </div>
 
               <nuxt-img
-                provider="cloudinary"
                 loading="lazy"
-                :src="$config.Base_URL + country.flag"
+                :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -56,9 +55,8 @@
               </div>
 
               <nuxt-img
-                provider="cloudinary"
                 loading="lazy"
-                :src="$config.Base_URL + country.flag"
+                :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -90,9 +88,8 @@
               </div>
 
               <nuxt-img
-                provider="cloudinary"
                 loading="lazy"
-                :src="$config.Base_URL + country.flag"
+                :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -126,9 +123,8 @@
               </div>
 
               <nuxt-img
-                provider="cloudinary"
                 loading="lazy"
-                :src="$config.Base_URL + country.flag"
+                :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
@@ -162,9 +158,8 @@
               </div>
 
               <nuxt-img
-                provider="cloudinary"
                 loading="lazy"
-                :src="$config.Base_URL + country.flag"
+                :src="country.flag"
                 :alt="$t(country.name)"
                 class="p-0 sm:p-1 md:p-5 lg:p-10"
               />
