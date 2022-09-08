@@ -7,7 +7,7 @@
         <div class="flex items-center">
           <div class="mr-10 flex items-center">
             <nuxt-link to="/">
-              <nuxt-img src="/brand/logo-white.svg" width="43" alt="Radio.ePlus.DEV" />
+              <nuxt-img loading="lazy" src="/brand/logo-white.svg" width="43" alt="Radio.ePlus.DEV" />
             </nuxt-link>
 
             <h3
@@ -142,6 +142,7 @@
 
               <template v-for="(locale, index) in availableLocales">
                 <nuxt-img
+                  loading="lazy"
                   class="rounded h-10 w-10 object-cover"
                   :src="locale.flag"
                   :alt="locale.name"
@@ -205,6 +206,7 @@
 
           <template v-for="(locale, index) in availableLocales">
             <nuxt-img
+              loading="lazy"
               class="rounded h-8 w-12 object-cover"
               :src="locale.flag"
               :alt="locale.name"
@@ -401,6 +403,7 @@
                                     class="flex relative bg-orange-500 justify-center items-center m-1 mr-2 w-10 h-6 mt-1 rounded-full"
                                   >
                                     <nuxt-img
+                                      loading="lazy"
                                       :alt="item.station_name"
                                       :src="item.station_image"
                                     />
