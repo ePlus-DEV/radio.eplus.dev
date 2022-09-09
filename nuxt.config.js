@@ -168,6 +168,7 @@ export default {
     "@nuxtjs/i18n",
     "@nuxtjs/cloudinary",
     "@nuxt/image",
+    "@nuxt/content",
     [
       "nuxt-umami-module",
       {
@@ -206,6 +207,10 @@ export default {
       baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
     },
     provider: 'cloudinary'
+  },
+  content: {
+    // Disable for security reason on CodeSandBox
+    liveEdit: false
   },
   i18n: {
     locales: [
