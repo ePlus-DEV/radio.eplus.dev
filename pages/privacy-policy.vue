@@ -452,7 +452,7 @@
 export default {
   head() {
     return {
-      title: this.$t("navmenu.terms"),
+      title: this.$t("navmenu.privacy"),
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
         {
