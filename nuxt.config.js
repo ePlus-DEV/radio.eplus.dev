@@ -168,7 +168,6 @@ export default {
     "@nuxtjs/i18n",
     "@nuxtjs/cloudinary",
     "@nuxt/image",
-    "@nuxt/content",
     [
       "nuxt-umami-module",
       {

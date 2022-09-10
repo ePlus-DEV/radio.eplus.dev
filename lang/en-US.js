@@ -6,6 +6,7 @@ export default async (context, locale) => {
       blog: "Blog",
       group: "Group",
       terms: "Terms",
+      privacy: "Privacy",
       contact: "Contact",
       language: "Language:",
       old_version: "#oldversion",

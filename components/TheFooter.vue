@@ -47,20 +47,20 @@
             </a>
           </div>
           <div class="px-5 py-2">
-            <a
-              href="javascript:;"
-              class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
-              {{ $t("navmenu.contact") }}
-            </a>
-          </div>
-          <div class="px-5 py-2">
             <nuxt-link
               to="/privacy-policy"
               class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
-              {{ $t("navmenu.terms") }}
+              {{ $t("navmenu.privacy") }}
             </nuxt-link>
+          </div>
+          <div class="px-5 py-2">
+            <a
+              href="javascript:;"
+              class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
+            >
+              {{ $t("navmenu.terms") }}
+            </a>
           </div>
           <div class="px-5 py-2">
             <nuxt-link
