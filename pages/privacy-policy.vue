@@ -464,13 +464,6 @@ export default {
       ],
     };
   },
-  async asyncData({ $content }) {
-    const content = await $content("privacy-policy").fetch();
-
-    return {
-      content,
-    };
-  },
 };
 </script>
 <style lang="css" scoped>
