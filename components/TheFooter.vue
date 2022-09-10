@@ -47,12 +47,12 @@
             </a>
           </div>
           <div class="px-5 py-2">
-            <a
-              href="javascript:;"
+            <nuxt-link
+              to="/privacy-policy"
               class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
-              {{ $t("navmenu.contact") }}
-            </a>
+              {{ $t("navmenu.privacy") }}
+            </nuxt-link>
           </div>
           <div class="px-5 py-2">
             <a
@@ -158,14 +158,19 @@
   </div>
 </template>
 <script>
-  (function(h,o,t,j,a,r){
-      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-      h._hjSettings={hjid:3128683,hjsv:6};
-      a=o.getElementsByTagName('head')[0];
-      r=o.createElement('script');r.async=1;
-      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-      a.appendChild(r);
-  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+(function (h, o, t, j, a, r) {
+  h.hj =
+    h.hj ||
+    function () {
+      (h.hj.q = h.hj.q || []).push(arguments);
+    };
+  h._hjSettings = { hjid: 3128683, hjsv: 6 };
+  a = o.getElementsByTagName("head")[0];
+  r = o.createElement("script");
+  r.async = 1;
+  r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
 
 window.onscroll = function () {
   document.body.scrollTop > 20 || document.documentElement.scrollTop > 20

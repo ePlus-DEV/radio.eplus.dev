@@ -6,6 +6,7 @@ export default async (context, locale) => {
       blog: "Blog",
       group: "Nhóm",
       terms: "Điều Khoản",
+      privacy: "Chính sách quyền riêng tư",
       contact: "Liên Hệ",
       language: "Ngôn ngữ:",
       old_version: "#phienbancu",

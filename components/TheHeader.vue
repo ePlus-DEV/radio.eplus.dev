@@ -135,7 +135,7 @@
                 <nuxt-img
                   loading="lazy"
                   class="rounded h-10 w-10 object-cover"
-                  :src="locale.flag"
+                  :src="$config.Base_URL + locale.flag"
                   :alt="locale.name"
                   @click.prevent.stop="
                     $i18n.setLocale(locale.code), $moment.locale(locale.code)

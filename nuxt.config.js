@@ -207,6 +207,10 @@ export default {
     },
     provider: 'cloudinary'
   },
+  content: {
+    // Disable for security reason on CodeSandBox
+    liveEdit: false
+  },
   i18n: {
     locales: [
       {
