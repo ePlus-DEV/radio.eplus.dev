@@ -55,12 +55,12 @@
             </nuxt-link>
           </div>
           <div class="px-5 py-2">
-            <a
-              href="javascript:;"
+            <nuxt-link
+              to="/terms-of-use"
               class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               {{ $t("navmenu.terms") }}
-            </a>
+            </nuxt-link>
           </div>
           <div class="px-5 py-2">
             <nuxt-link

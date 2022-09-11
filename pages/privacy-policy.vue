@@ -459,7 +459,7 @@ export default {
           hid: "description",
           name: "description",
           content:
-            "Radio Online Việt Nam, Singapore, Indonesia, Malaysia, Philippines, Pakistan, Hong Kong, ประเทศไทย, 中国, 台灣, Australia, New Zealand, Sri Lankā, Nepāla, United Kingdom, .v.v",
+            "Chính sách bảo mật thông tin khi sửa dụng dịch vụ tại Radio.ePlus.DEV",
         },
       ],
     };
