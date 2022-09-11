@@ -55,13 +55,13 @@ export default {
     API_ZING_GET_LYRIC: process.env.API_ZING_GET_LYRIC,
     NETLIFY_BASE_URL: process.env.NETLIFY_BASE_URL,
     NETLIFY_TOKEN: process.env.NETLIFY_TOKEN,
-    NETLIFY_SITE_ID: process.env.NETLIFY_SITE_ID
+    NETLIFY_SITE_ID: process.env.NETLIFY_SITE_ID,
   },
   /*
    ** Headers of the page
    */
   metaInfo: {
-    noscript: [{ innerHTML: "This website requires JavaScript." }]
+    noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
   head: {
     titleTemplate: "%s - Radio Internet | " + process.env.Site_Name,
@@ -71,48 +71,48 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: process.env.Description || ""
+        content: process.env.Description || "",
       },
       { name: "msapplication-TileColor", content: "#603cba" },
       {
         property: "article:author",
-        content: process.env.FanPage
+        content: process.env.FanPage,
       },
       {
         property: "article:publisher",
-        content: process.env.FanPage
+        content: process.env.FanPage,
       },
       { property: "fb:pages", content: "179495025583990" },
-      { property: "fb:app_id", content: "363745774395676" }
+      { property: "fb:app_id", content: "363745774395676" },
     ],
     link: [
       {
         type: "apple-touch-icon",
         size: "180x180",
-        href: "/brand/apple-touch-icon.png"
+        href: "/brand/apple-touch-icon.png",
       },
       {
         rel: "icon",
         type: "image/x-icon",
         size: "32x32",
-        href: "/brand/favicon-32x32.png"
+        href: "/brand/favicon-32x32.png",
       },
       {
         rel: "icon",
         type: "image/x-icon",
         size: "16x16",
-        href: "/brand/favicon-16x16.png"
+        href: "/brand/favicon-16x16.png",
       },
       {
         rel: "manifest",
-        href: "/brand/site.webmanifest"
+        href: "/brand/site.webmanifest",
       },
       {
         rel: "mask-icon",
         color: "#5bbad5",
-        href: "/brand/safari-pinned-tab.svg"
-      }
-    ]
+        href: "/brand/safari-pinned-tab.svg",
+      },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -130,7 +130,7 @@ export default {
     { src: "~plugins/scrollmagic.js", ssr: false },
     { src: "~/plugins/vue-toastification.js", ssr: false },
     { src: "~/plugins/vue-instantsearch.js", ssr: false },
-    { src: "~/plugins/moment.js" }
+    { src: "~/plugins/moment.js" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -143,20 +143,20 @@ export default {
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics"
+    "@nuxtjs/google-analytics",
   ],
   // GA
   googleAnalytics: {
     id: "UA-129271342-9",
     debug: {
-      enabled: process.env.NODE_ENV === "production"
-    }
+      enabled: process.env.NODE_ENV === "production",
+    },
   },
   // momentjs
   moment: {
     timezone: true,
     defaultLocale: "en",
-    locales: ["vi"]
+    locales: ["vi"],
   },
   /*
    ** Nuxt.js modules
@@ -174,9 +174,9 @@ export default {
         autoTrack: process.env.NODE_ENV === "production",
         doNotTrack: process.env.NODE_ENV !== "production",
         websiteId: "1ab44e9f-eb50-408c-a262-41f4595a916a",
-        scriptUrl: "https://analytics.eplus.dev/umami.js"
-      }
-    ]
+        scriptUrl: "https://analytics.eplus.dev/umami.js",
+      },
+    ],
   ],
   /*
    ** Build configuration
@@ -185,7 +185,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
   },
   /*
    ** axios configuration
@@ -194,7 +194,7 @@ export default {
     baseURL: process.env.BASE_URL,
     proxyHeaders: false,
     credentials: false,
-    proxy: true
+    proxy: true,
   },
   cloudinary: {
     cloudName: process.env.CLOUDINARY_NAME,
@@ -203,13 +203,16 @@ export default {
   },
   image: {
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/'+ process.env.CLOUDINARY_NAME +'/image/fetch/'
+      baseURL:
+        "https://res.cloudinary.com/" +
+        process.env.CLOUDINARY_NAME +
+        "/image/fetch/",
     },
-    provider: 'cloudinary'
+    provider: "cloudinary",
   },
   content: {
     // Disable for security reason on CodeSandBox
-    liveEdit: false
+    liveEdit: false,
   },
   i18n: {
     locales: [
@@ -218,27 +221,34 @@ export default {
         file: "en-US.js",
         iso: "en-US",
         name: "English",
-        flag: "/img/europe/flags/united-kingdom.png"
+        flag: "/img/europe/flags/united-kingdom.png",
       },
       {
         code: "vi",
         file: "vi-VN.js",
         iso: "vi-VN",
         name: "Tiếng Việt",
-        flag: "/img/asia/flags/viet-nam.png"
-      }
+        flag: "/img/asia/flags/viet-nam.png",
+      },
+      {
+        code: "ja",
+        file: "ja-JP.js",
+        iso: "ja-JP",
+        name: "日本語",
+        flag: "/img/asia/flags/japan.png",
+      },
     ],
     strategy: "no_prefix",
     lazy: true,
     langDir: "lang/",
-    defaultLocale: "en"
+    defaultLocale: "en",
   },
   proxy: {
     "/assets/": {
       target: process.env.BASE_URL,
       pathRewrite: { "^/assets/": "" },
-      changeOrigin: true
-    }
+      changeOrigin: true,
+    },
   },
   generate: {
     routes() {
@@ -257,7 +267,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.vietnam",
           url: "/viet-nam/" + key,
-          objectID: "viet-nam-" + key
+          objectID: "viet-nam-" + key,
         });
       }
       for (const [key, value] of Object.entries(korea)) {
@@ -267,7 +277,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.korea",
           url: "/korea/" + key,
-          objectID: "korea-" + key
+          objectID: "korea-" + key,
         });
       }
       for (const [key, value] of Object.entries(singapore)) {
@@ -277,7 +287,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.singapore",
           url: "/singapore/" + key,
-          objectID: "singapore-" + key
+          objectID: "singapore-" + key,
         });
       }
       for (const [key, value] of Object.entries(china)) {
@@ -287,7 +297,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.china",
           url: "/china/" + key,
-          objectID: "china-" + key
+          objectID: "china-" + key,
         });
       }
       for (const [key, value] of Object.entries(hong_kong)) {
@@ -297,7 +307,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.hong_kong",
           url: "/hong-kong/" + key,
-          objectID: "hong-kong-" + key
+          objectID: "hong-kong-" + key,
         });
       }
       for (const [key, value] of Object.entries(japan)) {
@@ -307,7 +317,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.japan",
           url: "/japan/" + key,
-          objectID: "japan-" + key
+          objectID: "japan-" + key,
         });
       }
       for (const [key, value] of Object.entries(malaysia)) {
@@ -317,7 +327,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.malaysia",
           url: "/malaysia/" + key,
-          objectID: "malaysia-" + key
+          objectID: "malaysia-" + key,
         });
       }
       for (const [key, value] of Object.entries(philippines)) {
@@ -327,7 +337,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.philippines",
           url: "/philippines/" + key,
-          objectID: "philippines-" + key
+          objectID: "philippines-" + key,
         });
       }
       for (const [key, value] of Object.entries(indonesia)) {
@@ -337,7 +347,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.indonesia",
           url: "/indonesia/" + key,
-          objectID: "indonesia-" + key
+          objectID: "indonesia-" + key,
         });
       }
       for (const [key, value] of Object.entries(thailand)) {
@@ -347,7 +357,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.asia.thailand",
           url: "/thailand/" + key,
-          objectID: "thailand-" + key
+          objectID: "thailand-" + key,
         });
       }
       // END - Asia
@@ -359,7 +369,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.central_america.costa_rica",
           url: "/costa-rica/" + key,
-          objectID: "costa-rica-" + key
+          objectID: "costa-rica-" + key,
         });
       }
       for (const [key, value] of Object.entries(el_salvador)) {
@@ -369,7 +379,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.central_america.el_salvador",
           url: "/el-salvador/" + key,
-          objectID: "el-salvador-" + key
+          objectID: "el-salvador-" + key,
         });
       }
       for (const [key, value] of Object.entries(guatemala)) {
@@ -379,7 +389,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.central_america.guatemala",
           url: "/guatemala/" + key,
-          objectID: "guatemala-" + key
+          objectID: "guatemala-" + key,
         });
       }
       // END - Central America
@@ -391,7 +401,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.europe.united_kingdom",
           url: "/united-kingdom/" + key,
-          objectID: "united-kingdom-" + key
+          objectID: "united-kingdom-" + key,
         });
       }
       for (const [key, value] of Object.entries(ukraine)) {
@@ -401,7 +411,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.europe.ukraine",
           url: "/ukraine/" + key,
-          objectID: "ukraine-" + key
+          objectID: "ukraine-" + key,
         });
       }
       for (const [key, value] of Object.entries(russia)) {
@@ -411,7 +421,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.europe.russia",
           url: "/russia/" + key,
-          objectID: "russia-" + key
+          objectID: "russia-" + key,
         });
       }
       // END - Europe
@@ -423,7 +433,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.cuba",
           url: "/cuba/" + key,
-          objectID: "cuba-" + key
+          objectID: "cuba-" + key,
         });
       }
       for (const [key, value] of Object.entries(haiti)) {
@@ -433,7 +443,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.haiti",
           url: "/haiti/" + key,
-          objectID: "haiti-" + key
+          objectID: "haiti-" + key,
         });
       }
       for (const [key, value] of Object.entries(jamaica)) {
@@ -443,7 +453,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.jamaica",
           url: "/jamaica/" + key,
-          objectID: "jamaica-" + key
+          objectID: "jamaica-" + key,
         });
       }
       for (const [key, value] of Object.entries(mexico)) {
@@ -453,7 +463,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.mexico",
           url: "/mexico/" + key,
-          objectID: "mexico-" + key
+          objectID: "mexico-" + key,
         });
       }
       for (const [key, value] of Object.entries(puerto_rico)) {
@@ -463,7 +473,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.puerto_rico",
           url: "/puerto-rico/" + key,
-          objectID: "puerto-rico-" + key
+          objectID: "puerto-rico-" + key,
         });
       }
       for (const [key, value] of Object.entries(dominican_republic)) {
@@ -473,7 +483,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.dominican_republic",
           url: "/dominican-republic/" + key,
-          objectID: "dominican-republic-" + key
+          objectID: "dominican-republic-" + key,
         });
       }
       for (const [key, value] of Object.entries(trinidad_and_tobago)) {
@@ -483,7 +493,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.north_america.trinidad_and_tobago",
           url: "/trinidad-and-tobago/" + key,
-          objectID: "trinidad-and-tobago-" + key
+          objectID: "trinidad-and-tobago-" + key,
         });
       }
       // END - North America
@@ -495,7 +505,7 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.oceania.australia",
           url: "/australia/" + key,
-          objectID: "australia-" + key
+          objectID: "australia-" + key,
         });
       }
       for (const [key, value] of Object.entries(new_zealand)) {
@@ -505,13 +515,13 @@ export default {
           station_image: process.env.BASE_URL + value.features,
           station_country: "world.oceania.new_zealand",
           url: "/new-zealand/" + key,
-          objectID: "new-zealand-" + key
+          objectID: "new-zealand-" + key,
         });
       }
       // END - Oceania
       index.saveObjects(data_algolia).then(({ objectIDs }) => {});
       return routesToGenerate;
-    }
+    },
   },
   /* SiteMap */
   sitemap: {
@@ -523,12 +533,12 @@ export default {
       changefreq: "daily",
       priority: 1,
       lastmod: new Date(),
-      lastmodrealtime: true
-    }
+      lastmodrealtime: true,
+    },
   },
   // Darkmode
   colorMode: {
     classPrefix: "",
-    classSuffix: ""
-  }
+    classSuffix: "",
+  },
 };
