@@ -115,44 +115,64 @@
                 </svg>
               </button>
             </div>
-            <div class="flex items-center pl-8 relative cursor-pointer">
-              <ul
-                class="p-2 w-40 border-r bg-white absolute rounded left-0 shadow mt-16 top-0 hidden"
-              >
-                <li
-                  class="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-                  v-for="locale in availableLocales"
-                  :key="locale.code"
-                  @click.prevent.stop="
-                    $i18n.setLocale(locale.code), $moment.locale(locale.code)
-                  "
+            <!-- BEGIN - Language - Desktop -->
+            <div class="flex items-center pl-8 relative">
+              <div class="dropdown dropdown-end">
+                <label tabindex="0" class="flex flex-row items-center gap-1 normal-case">
+                  <svg
+                    class="inline-block h-8 w-8 fill-current text-white cursor-pointer"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 512 512"
+                  >
+                    <path
+                      d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"
+                    ></path>
+                    <path
+                      d="M272,320c-.25-.19-20.59-15.77-45.42-42.67,39.58-53.64,62-114.61,71.15-143.33H352V90H214V48H170V90H32v44H251.25c-9.52,26.95-27.05,69.5-53.79,108.36-32.68-43.44-47.14-75.88-47.33-76.22L143,152l-38,22,6.87,13.86c.89,1.56,17.19,37.9,54.71,86.57.92,1.21,1.85,2.39,2.78,3.57-49.72,56.86-89.15,79.09-89.66,79.47L64,368l23,36,19.3-11.47c2.2-1.67,41.33-24,92-80.78,24.52,26.28,43.22,40.83,44.3,41.67L255,362Z"
+                    ></path>
+                  </svg>
+                  <svg
+                    width="12px"
+                    height="12px"
+                    class="ml-1 h-3 w-3 fill-current text-white cursor-pointer"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 2048 2048"
+                  >
+                    <path
+                      d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"
+                    ></path>
+                  </svg>
+                </label>
+                <ul
+                  tabindex="0"
+                  class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-2 gap-1"
                 >
-                  {{ $t("navmenu.language") }} {{ locale.name }}
-                </li>
-              </ul>
-
-              <template v-for="(locale, index) in availableLocales">
-                <nuxt-img
-                  loading="lazy"
-                  class="rounded h-10 w-10 object-cover"
-                  :src="$config.Base_URL + locale.flag"
-                  :alt="locale.name"
-                  @click.prevent.stop="
-                    $i18n.setLocale(locale.code), $moment.locale(locale.code)
-                  "
-                  :key="index"
-                />
-                <p
-                  class="text-white text-sm ml-2"
-                  @click.prevent.stop="
-                    $i18n.setLocale(locale.code), $moment.locale(locale.code)
-                  "
-                  :key="index"
-                >
-                  {{ locale.name }}
-                </p>
-              </template>
+                  <li
+                    class="flex flex-row items-center dropdown-hover"
+                    :class="
+                      $i18n.locale === locale.code
+                        ? 'bg-blue-600 text-white p-1 rounded'
+                        : 'cursor-pointer'
+                    "
+                    v-for="locale in $i18n.locales"
+                    :key="locale.code"
+                    @click="changeLanguage(locale.code)"
+                  >
+                    <nuxt-img
+                      loading="lazy"
+                      class="rounded h-8 w-12 object-cover pr-1"
+                      :src="$config.Base_URL + locale.flag"
+                      :alt="locale.name"
+                      @click="changeLanguage(locale.code)"
+                    />
+                    {{ locale.name }}
+                  </li>
+                </ul>
+              </div>
             </div>
+            <!-- END - Language - Desktop -->
           </div>
         </div>
         <div class="flex items-center xl:hidden">
@@ -186,18 +206,60 @@
             </li>
           </ul>
           <!-- BEGIN - Toggle Language - Mobile -->
-          <template v-for="(locale, index) in availableLocales">
-            <nuxt-img
-              loading="lazy"
-              class="rounded h-8 w-12 object-cover"
-              :src="$config.Base_URL + locale.flag"
-              :alt="locale.name"
-              @click.prevent.stop="
-                $i18n.setLocale(locale.code), $moment.locale(locale.code)
-              "
-              :key="index"
-            />
-          </template>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="flex flex-row items-center gap-1 normal-case">
+              <svg
+                class="inline-block h-8 w-8 fill-current text-white cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"
+                ></path>
+                <path
+                  d="M272,320c-.25-.19-20.59-15.77-45.42-42.67,39.58-53.64,62-114.61,71.15-143.33H352V90H214V48H170V90H32v44H251.25c-9.52,26.95-27.05,69.5-53.79,108.36-32.68-43.44-47.14-75.88-47.33-76.22L143,152l-38,22,6.87,13.86c.89,1.56,17.19,37.9,54.71,86.57.92,1.21,1.85,2.39,2.78,3.57-49.72,56.86-89.15,79.09-89.66,79.47L64,368l23,36,19.3-11.47c2.2-1.67,41.33-24,92-80.78,24.52,26.28,43.22,40.83,44.3,41.67L255,362Z"
+                ></path>
+              </svg>
+              <svg
+                width="12px"
+                height="12px"
+                class="ml-1 h-3 w-3 fill-current text-white cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 2048 2048"
+              >
+                <path
+                  d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"
+                ></path>
+              </svg>
+            </label>
+            <ul
+              tabindex="0"
+              class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-2 gap-1"
+            >
+              <li
+                class="flex flex-row items-center dropdown-hover"
+                :class="
+                  $i18n.locale === locale.code
+                    ? 'bg-blue-600 text-white p-1 rounded'
+                    : 'cursor-pointer'
+                "
+                v-for="locale in $i18n.locales"
+                :key="locale.code"
+                @click="changeLanguage(locale.code)"
+              >
+                <nuxt-img
+                  loading="lazy"
+                  class="rounded h-8 w-12 object-cover pr-1"
+                  :src="$config.Base_URL + locale.flag"
+                  :alt="locale.name"
+                  @click="changeLanguage(locale.code)"
+                />
+                {{ locale.name }}
+              </li>
+            </ul>
+          </div>
           <!-- BEGIN - Toggle Language - Mobile -->
           <!-- BEGIN - Search - Mobile -->
           <button
@@ -468,12 +530,13 @@ export default {
       this.$colorMode.value = localStorage.theme;
     },
   },
-  computed: {
-    availableLocales() {
-      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale);
-    },
-  },
   methods: {
+    changeLanguage(code) {
+      if (this.$i18n.locale !== code) {
+        this.$i18n.setLocale(code);
+        this.$moment.locale(code);
+      }
+    },
     darkmode() {
       if (this.$colorMode.value === "light") {
         this.$colorMode.value = "dark";
