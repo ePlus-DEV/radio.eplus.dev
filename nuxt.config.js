@@ -1,4 +1,6 @@
 import algoliasearch from "algoliasearch";
+// Africa
+import nigeria from "./static/assets/radio/africa/nigeria.json";
 // Asia
 import vietnam from "./static/assets/radio/asia/viet-nam.json";
 import korea from "./static/assets/radio/asia/korea.json";
@@ -263,6 +265,18 @@ export default {
       const index = client.initIndex("radio.eplus.dev");
       const routesToGenerate = [],
         data_algolia = [];
+      // BEGIN - Africa
+      for (const [key, value] of Object.entries(nigeria)) {
+        routesToGenerate.push("/nigeria/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.africa.nigeria",
+          url: "/nigeria/" + key,
+          objectID: "nigeria-" + key,
+        });
+      }
+      // BEGIN - Africa
       // BEGIN - Asia
       for (const [key, value] of Object.entries(vietnam)) {
         routesToGenerate.push("/viet-nam/" + key);
