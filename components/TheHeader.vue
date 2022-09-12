@@ -147,13 +147,13 @@
                 </label>
                 <ul
                   tabindex="0"
-                  class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-2 gap-1"
+                  class="menu dropdown-content p-2 shadow bg-base-100 dark:bg-gray-800 dark:text-white rounded-box w-52 mt-2 gap-1"
                 >
                   <li
                     class="flex flex-row items-center dropdown-hover"
                     :class="
                       $i18n.locale === locale.code
-                        ? 'bg-blue-600 text-white p-1 rounded'
+                        ? 'bg-red-600 opacity-75 text-white p-1 rounded'
                         : 'cursor-pointer'
                     "
                     v-for="locale in $i18n.locales"
@@ -242,7 +242,7 @@
                 class="flex flex-row items-center dropdown-hover"
                 :class="
                   $i18n.locale === locale.code
-                    ? 'bg-blue-600 text-white p-1 rounded'
+                    ? 'bg-red-600 opacity-75 text-white p-1 rounded'
                     : 'cursor-pointer'
                 "
                 v-for="locale in $i18n.locales"

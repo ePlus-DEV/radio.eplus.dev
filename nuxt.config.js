@@ -14,6 +14,7 @@ import thailand from "./static/assets/radio/asia/thailand.json";
 import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
 import guatemala from "./static/assets/radio/central-america/guatemala.json";
+import honduras from "./static/assets/radio/central-america/honduras.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 import ukraine from "./static/assets/radio/europe/ukraine.json";
@@ -39,7 +40,10 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   publicRuntimeConfig: {
-    Base_URL: process.env.BASE_URL || "https://radio.eplus.dev",
+    Base_URL:
+      process.env.NODE_ENV === "production"
+        ? process.env.BASE_URL
+        : "http://localhost:3000",
     Site_Name: process.env.Site_Name || "Radio.ePlus.DEV",
     Facebook: process.env.Facebook,
     Instagram: process.env.Instagram,
@@ -208,7 +212,7 @@ export default {
         process.env.CLOUDINARY_NAME +
         "/image/fetch/",
     },
-    provider: "cloudinary",
+    provider: process.env.NODE_ENV === "production" ? "cloudinary" : "netlify",
   },
   content: {
     // Disable for security reason on CodeSandBox
@@ -390,6 +394,16 @@ export default {
           station_country: "world.central_america.guatemala",
           url: "/guatemala/" + key,
           objectID: "guatemala-" + key,
+        });
+      }
+      for (const [key, value] of Object.entries(honduras)) {
+        routesToGenerate.push("/honduras/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.central_america.honduras",
+          url: "/honduras/" + key,
+          objectID: "honduras-" + key,
         });
       }
       // END - Central America

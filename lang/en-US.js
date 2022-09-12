@@ -22,7 +22,10 @@ export default async (context, locale) => {
         "We always appreciate any comments or contributions to stream links to diversify Radio channels on the website. For any contributions, please contact the contact below. Thank you.",
     },
     world: {
-      africa: {},
+      africa: {
+        name: "Africa",
+        nigeria: "Nigeria",
+      },
       asia: {
         name: "Asia",
         vietnam: "Vietnam",
@@ -41,6 +44,7 @@ export default async (context, locale) => {
         costa_rica: "Costa Rica",
         el_salvador: "El Salvador",
         guatemala: "Guatemala",
+        honduras: "Honduras",
       },
       europe: {
         name: "Europe",
