@@ -147,7 +147,7 @@
                 </label>
                 <ul
                   tabindex="0"
-                  class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-2 gap-1"
+                  class="menu dropdown-content p-2 shadow bg-base-100 dark:bg-gray-800 dark:text-white rounded-box w-52 mt-2 gap-1"
                 >
                   <li
                     class="flex flex-row items-center dropdown-hover"
