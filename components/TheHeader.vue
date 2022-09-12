@@ -153,7 +153,7 @@
                     class="flex flex-row items-center dropdown-hover"
                     :class="
                       $i18n.locale === locale.code
-                        ? 'bg-blue-600 text-white p-1 rounded'
+                        ? 'bg-red-600 opacity-75 text-white p-1 rounded'
                         : 'cursor-pointer'
                     "
                     v-for="locale in $i18n.locales"
@@ -242,7 +242,7 @@
                 class="flex flex-row items-center dropdown-hover"
                 :class="
                   $i18n.locale === locale.code
-                    ? 'bg-blue-600 text-white p-1 rounded'
+                    ? 'bg-red-600 opacity-75 text-white p-1 rounded'
                     : 'cursor-pointer'
                 "
                 v-for="locale in $i18n.locales"

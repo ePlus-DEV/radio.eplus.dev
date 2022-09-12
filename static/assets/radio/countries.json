@@ -92,6 +92,13 @@
       "data": "/assets/radio/central-america/guatemala.json",
       "timezone": "America/Guatemala",
       "station": 0
+    },
+    "honduras": {
+      "name": "world.central_america.honduras",
+      "flag": "/img/central-america/flags/honduras.png",
+      "data": "/assets/radio/central-america/honduras.json",
+      "timezone": "America/Tegucigalpa",
+      "station": 0
     }
   },
   "europe": {

@@ -41,6 +41,7 @@ export default async (context, locale) => {
         costa_rica: "Costa Rica",
         el_salvador: "El Salvador",
         guatemala: "Guatemala",
+        honduras: "Honduras",
       },
       europe: {
         name: "Europe",
