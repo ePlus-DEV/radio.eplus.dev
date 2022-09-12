@@ -12,11 +12,11 @@
   "vov2": {
     "title": "VOV 2",
     "description": "Hệ văn hóa - đời sống - khoa học VOV2 trực thuộc Đài tiếng nói Việt Nam, là kênh phát thanh quốc gia quốc gia, phát sóng 19 giờ/ ngày, tập trung vào các chương trình liên quan đến văn hóa, giáo dục và xã hội.",
-    "type": "application/x-mpegURL",
+    "type": "audio/aac",
     "category": "Văn Hóa - Xã Hội",
     "url": "https://vov.vn",
     "cros": true,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov2.stream_aac/playlist.m3u8",
+    "stream": "http://media.kythuatvov.vn:7003/;stream/",
     "features": "/img/asia/viet-nam/vov2.png"
   },
   "vov3": {
@@ -26,17 +26,47 @@
     "category": "Âm nhạc",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://str.vov.gov.vn/vovlive/vov3.sdp_aac/media_w1423277935_269140.aac",
+    "stream": "http://media.kythuatvov.vn:7005/;stream/",
     "features": "/img/asia/viet-nam/vov3.png"
   },
   "vov4": {
-    "title": "VOV 4",
+    "title": "VOV 4 - Hồ Chí Minh",
     "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
-    "type": "application/x-mpegURL",
+    "type": "audio/mpeg",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "cros": false,
-    "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vovTTTB.stream_aac/playlist.m3u8",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7033/;stream/",
+    "features": "/img/asia/viet-nam/vov4.png"
+  },
+  "vov4-tay-bac": {
+    "title": "VOV 4 - Tây Bắc",
+    "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
+    "type": "audio/mpeg",
+    "category": "Ban Dân Tộc",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7037/;stream/",
+    "features": "/img/asia/viet-nam/vov4.png"
+  },
+  "vov4-tay-nguyen": {
+    "title": "VOV 4 - Tây Nguyên",
+    "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
+    "type": "audio/mpeg",
+    "category": "Ban Dân Tộc",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7039/;stream/",
+    "features": "/img/asia/viet-nam/vov4.png"
+  },
+  "vov4-dong-bang-song-cuu-long": {
+    "title": "VOV 4 - Đồng bằng sông Cửu Long",
+    "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
+    "type": "audio/mpeg",
+    "category": "Ban Dân Tộc",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7031/;stream/",
     "features": "/img/asia/viet-nam/vov4.png"
   },
   "vov5": {
@@ -58,6 +88,96 @@
     "cros": false,
     "stream": "https://streaming1.vov.vn:8443/audio/vovvn1_vov247.stream_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov-english.png"
+  },
+  "vov5-chinese": {
+    "title": "VOV 5 - Chinese",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7029/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-french": {
+    "title": "VOV 5 - French",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7011/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-german": {
+    "title": "VOV 5 - German",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7011/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-indonesian": {
+    "title": "VOV 5 - Indonesian",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7015/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-japanese": {
+    "title": "VOV 5 - Japanese",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7015/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-khmer": {
+    "title": "VOV 5 - Khmer",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7019/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-laotian": {
+    "title": "VOV 5 - Laotian",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7019/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-russian": {
+    "title": "VOV 5 - Russian",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7029/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov5-spanish": {
+    "title": "VOV 5 - Spanish",
+    "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
+    "type": "audio/aac",
+    "category": "Ban Đối Ngoại",
+    "url": "https://vov.vn",
+    "cros": true,
+    "stream": "http://media.kythuatvov.vn:7011/;stream/",
+    "features": "/img/asia/viet-nam/vov5.png"
   },
   "vov-gt-hcm": {
     "title": "VOV Giao Thông TP.HCM",
@@ -92,10 +212,10 @@
   "vov-suc-khoe": {
     "title": "VOV Sức Khỏe",
     "description": "VOV FM89 là kênh phát thanh chuyên biệt với thông tin tin cậy, liên tục cập nhật, mới mẻ và hấp dẫn về các vấn đề liên quan đến sức khỏe, môi trường và an toàn vệ sinh thực phẩm.",
-    "type": "application/x-mpegURL",
+    "type": "audio/aac",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "cros": false,
+    "cros": true,
     "stream": "http://media.kythuatvov.vn:7021/;stream/",
     "features": "/img/asia/viet-nam/vov-suc-khoe.png"
   },
