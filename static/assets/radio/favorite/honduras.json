@@ -1,8 +1,8 @@
 {
-  "title": "Bésame (San José)",
+  "title": "Radio Musiquera",
   "type": "audio/mpeg",
   "frequency": "Stream",
-  "countries": "Costa Rica",
-  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/BESAME_CR_SC",
-  "cros": false
+  "countries": "Honduras",
+  "stream": "https://stream.zeno.fm/zeu4mw9u8rquv",
+  "cros": true
 }

@@ -22,7 +22,10 @@ export default async (context, locale) => {
         "Chúng tôi luôn ghi nhận mọi đóng góp ý kiến hoặc đóng góp thêm link stream nhằm đa dạng hoá các kênh Radio trên website. Mọi đóng góp vui lòng liên hệ contact bên dưới. Cảm ơn các bạn.",
     },
     world: {
-      africa: {},
+      africa: {
+        name: "Châu Phi",
+        nigeria: "Nigeria",
+      },
       asia: {
         name: "Châu Á",
         vietnam: "Việt Nam",

@@ -1,4 +1,13 @@
 {
+  "africa": {
+    "nigeria": {
+      "name": "world.africa.nigeria",
+      "flag": "/img/africa/flags/nigeria.png",
+      "data": "/assets/radio/africa/nigeria.json",
+      "timezone": "Africa/Lagos",
+      "station": 0
+    }
+  },
   "asia": {
     "viet-nam": {
       "name": "world.asia.vietnam",
