@@ -276,7 +276,7 @@ export default {
           objectID: "nigeria-" + key,
         });
       }
-      // BEGIN - Africa
+      // END - Africa
       // BEGIN - Asia
       for (const [key, value] of Object.entries(vietnam)) {
         routesToGenerate.push("/viet-nam/" + key);
