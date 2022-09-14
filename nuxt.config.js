@@ -1,5 +1,6 @@
 import algoliasearch from "algoliasearch";
 // Africa
+import algeria from "./static/assets/radio/africa/algeria.json";
 import nigeria from "./static/assets/radio/africa/nigeria.json";
 // Asia
 import vietnam from "./static/assets/radio/asia/viet-nam.json";
@@ -12,6 +13,7 @@ import malaysia from "./static/assets/radio/asia/malaysia.json";
 import philippines from "./static/assets/radio/asia/philippines.json";
 import indonesia from "./static/assets/radio/asia/indonesia.json";
 import thailand from "./static/assets/radio/asia/thailand.json";
+import bangladesh from "./static/assets/radio/asia/bangladesh.json";
 // Central America
 import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
@@ -266,6 +268,16 @@ export default {
       const routesToGenerate = [],
         data_algolia = [];
       // BEGIN - Africa
+      for (const [key, value] of Object.entries(algeria)) {
+        routesToGenerate.push("/algeria/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.africa.algeria",
+          url: "/algeria/" + key,
+          objectID: "algeria-" + key,
+        });
+      }
       for (const [key, value] of Object.entries(nigeria)) {
         routesToGenerate.push("/nigeria/" + key);
         data_algolia.push({
@@ -376,6 +388,16 @@ export default {
           station_country: "world.asia.thailand",
           url: "/thailand/" + key,
           objectID: "thailand-" + key,
+        });
+      }
+      for (const [key, value] of Object.entries(bangladesh)) {
+        routesToGenerate.push("/bangladesh/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.bangladesh",
+          url: "/bangladesh/" + key,
+          objectID: "bangladesh-" + key,
         });
       }
       // END - Asia

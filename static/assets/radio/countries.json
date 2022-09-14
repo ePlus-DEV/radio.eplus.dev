@@ -1,5 +1,12 @@
 {
   "africa": {
+    "algeria": {
+      "name": "world.africa.algeria",
+      "flag": "/img/africa/flags/algeria.png",
+      "data": "/assets/radio/africa/algeria.json",
+      "timezone": "Africa/Algiers",
+      "station": 0
+    },
     "nigeria": {
       "name": "world.africa.nigeria",
       "flag": "/img/africa/flags/nigeria.png",
@@ -77,6 +84,13 @@
       "flag": "/img/asia/flags/thailand.png",
       "data": "/assets/radio/asia/thailand.json",
       "timezone": "Asia/Bangkok",
+      "station": 0
+    },
+    "bangladesh": {
+      "name": "world.asia.bangladesh",
+      "flag": "/img/asia/flags/bangladesh.png",
+      "data": "/assets/radio/asia/bangladesh.json",
+      "timezone": "Asia/Dhaka",
       "station": 0
     }
   },
