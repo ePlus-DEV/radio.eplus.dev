@@ -28,61 +28,46 @@
       <div
         class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-10 px-2 md:mx-12 overflow-x-auto"
       >
-        <template v-for="(item, index) in data_list_sort">
+        <div
+          :data-tip="
+            $t('statistics_tooltip.text', {
+              num: item.apdex_results_count_frustrated,
+              time: $moment
+                .duration(item.duration_seconds_total_downtime, 'seconds')
+                .minutes(),
+            })
+          "
+          class="tooltip"
+          :class="item.outages_count_total > 0 ? 'tooltip-error' : 'tooltip-success'"
+          v-for="(item, index) in data_list_sort"
+          :key="index"
+        >
           <div
-            :data-tip="
-              $t('statistics_tooltip.text', {
-                num: item.apdex_results_count_frustrated,
-                time: $moment
-                  .duration(item.duration_seconds_total_downtime, 'seconds')
-                  .minutes(),
-              })
-            "
-            class="tooltip"
-            :class="
-              item.apdex_results_count_frustrated === 1
-                ? 'tooltip-error'
-                : 'tooltip-success'
-            "
-            :key="index"
+            class="flex group shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
+            :class="item.outages_count_total > 0 ? 'bg-red-600' : 'bg-green-600'"
           >
-            <div
-              class="flex group shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
-              :class="
-                item.apdex_results_count_frustrated === 1 ? 'bg-red-600' : 'bg-green-600'
-              "
-            >
-              <span class="flex h-3 w-3 absolute -top-1 -right-1">
-                <span
-                  class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full"
-                  :class="
-                    item.apdex_results_count_frustrated === 1
-                      ? 'bg-red-400'
-                      : 'bg-green-400'
-                  "
-                ></span>
-                <span
-                  class="relative inline-flex rounded-full h-3 w-3"
-                  :class="
-                    item.apdex_results_count_frustrated === 1
-                      ? 'bg-red-100'
-                      : 'bg-green-100'
-                  "
-                ></span>
-              </span>
-              <div class="flex items-center px-4 py-4">
-                <div class="text-center">
-                  <p class="text-gray-100 text-sm">
-                    {{ $moment(last7days[index]).format("ddd") }}
-                  </p>
-                  <p class="text-gray-100 mt-3 font-bold">
-                    {{ $moment(last7days[index]).format("DD/MM") }}
-                  </p>
-                </div>
+            <span class="flex h-3 w-3 absolute -top-1 -right-1">
+              <span
+                class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full"
+                :class="item.outages_count_total > 0 ? 'bg-red-400' : 'bg-green-400'"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3"
+                :class="item.outages_count_total > 0 ? 'bg-red-100' : 'bg-green-100'"
+              ></span>
+            </span>
+            <div class="flex items-center px-4 py-4">
+              <div class="text-center">
+                <p class="text-gray-100 text-sm">
+                  {{ $moment(last7days[index]).format("ddd") }}
+                </p>
+                <p class="text-gray-100 mt-3 font-bold">
+                  {{ $moment(last7days[index]).format("DD/MM") }}
+                </p>
               </div>
             </div>
           </div>
-        </template>
+        </div>
       </div>
 
       <!-- END - Calendar -->
@@ -250,7 +235,7 @@ export default {
         });
     },
     async fetchLast7days() {
-      let startDate = this.$moment().subtract(14, "days");
+      let startDate = this.$moment().subtract(30, "days");
       let endDate = this.$moment();
       let date = [];
 
