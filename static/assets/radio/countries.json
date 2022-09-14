@@ -85,6 +85,13 @@
       "data": "/assets/radio/asia/thailand.json",
       "timezone": "Asia/Bangkok",
       "station": 0
+    },
+    "bangladesh": {
+      "name": "world.asia.bangladesh",
+      "flag": "/img/asia/flags/bangladesh.png",
+      "data": "/assets/radio/asia/bangladesh.json",
+      "timezone": "Asia/Dhaka",
+      "station": 0
     }
   },
   "central_america": {
