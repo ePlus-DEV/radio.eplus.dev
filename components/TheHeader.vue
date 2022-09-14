@@ -204,6 +204,18 @@
                 <span class="ml-2 font-bold">{{ $t("navmenu.homepage") }}</span>
               </div>
             </li>
+            <li
+              class="flex md:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
+            >
+              <span class="mr-2"> </span>
+              <a
+                class="ml-2 font-bold"
+                href="https://old-radio.eplus.dev"
+                target="_blank"
+              >
+                {{ $t("navmenu.old_version") }}
+              </a>
+            </li>
           </ul>
           <!-- BEGIN - Toggle Language - Mobile -->
           <div class="dropdown dropdown-end">
@@ -236,7 +248,7 @@
             </label>
             <ul
               tabindex="0"
-              class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-2 gap-1"
+              class="menu dropdown-content p-2 shadow bg-base-100 dark:bg-gray-800 dark:text-white rounded-box w-52 mt-2 gap-1"
             >
               <li
                 class="flex flex-row items-center dropdown-hover"
