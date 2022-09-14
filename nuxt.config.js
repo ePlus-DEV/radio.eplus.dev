@@ -1,5 +1,6 @@
 import algoliasearch from "algoliasearch";
 // Africa
+import algeria from "./static/assets/radio/africa/algeria.json";
 import nigeria from "./static/assets/radio/africa/nigeria.json";
 // Asia
 import vietnam from "./static/assets/radio/asia/viet-nam.json";
@@ -266,6 +267,16 @@ export default {
       const routesToGenerate = [],
         data_algolia = [];
       // BEGIN - Africa
+      for (const [key, value] of Object.entries(algeria)) {
+        routesToGenerate.push("/algeria/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.africa.algeria",
+          url: "/algeria/" + key,
+          objectID: "algeria-" + key,
+        });
+      }
       for (const [key, value] of Object.entries(nigeria)) {
         routesToGenerate.push("/nigeria/" + key);
         data_algolia.push({

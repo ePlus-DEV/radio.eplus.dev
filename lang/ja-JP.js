@@ -24,6 +24,7 @@ export default async (context, locale) => {
     world: {
       africa: {
         name: "アフリカ",
+        algeria: "アルジェリア",
         nigeria: "ナイジェリア",
       },
       asia: {
