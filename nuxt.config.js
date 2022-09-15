@@ -139,6 +139,7 @@ export default {
     { src: "~/plugins/vue-toastification.js", ssr: false },
     { src: "~/plugins/vue-instantsearch.js", ssr: false },
     { src: "~/plugins/moment.js" },
+    { src: "~/plugins/v-calendar.js" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

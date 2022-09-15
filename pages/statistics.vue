@@ -25,51 +25,20 @@
       <!-- Chart -->
 
       <!-- BEGIN - Calendar -->
-      <div
-        class="flex bg-white shadow-md justify-start md:justify-center rounded-lg mx-auto py-10 px-2 md:mx-12 overflow-x-auto"
-      >
-        <div
-          :data-tip="
-            $t('statistics_tooltip.text', {
-              num: item.apdex_results_count_frustrated,
-              time: $moment
-                .duration(item.duration_seconds_total_downtime, 'seconds')
-                .minutes(),
-            })
-          "
-          class="tooltip"
-          :class="item.outages_count_total > 0 ? 'tooltip-error' : 'tooltip-success'"
-          v-for="(item, index) in data_list_sort"
-          :key="index"
-        >
-          <div
-            class="flex group shadow-lg dark-shadow rounded-lg mx-1 cursor-pointer justify-center relative w-16"
-            :class="item.outages_count_total > 0 ? 'bg-red-600' : 'bg-green-600'"
-          >
-            <span class="flex h-3 w-3 absolute -top-1 -right-1">
-              <span
-                class="animate-ping absolute group-hover:opacity-75 opacity-0 inline-flex h-full w-full rounded-full"
-                :class="item.outages_count_total > 0 ? 'bg-red-400' : 'bg-green-400'"
-              ></span>
-              <span
-                class="relative inline-flex rounded-full h-3 w-3"
-                :class="item.outages_count_total > 0 ? 'bg-red-100' : 'bg-green-100'"
-              ></span>
-            </span>
-            <div class="flex items-center px-4 py-4">
-              <div class="text-center">
-                <p class="text-gray-100 text-sm">
-                  {{ $moment(last7days[index]).format("ddd") }}
-                </p>
-                <p class="text-gray-100 mt-3 font-bold">
-                  {{ $moment(last7days[index]).format("DD/MM") }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <vc-calendar
+        ref="calendar"
+        id="calendar"
+        :first-day-of-week="2"
+        :attributes="attrs"
+        color="red"
+        :locale="this.$i18n.locale"
+        transition="slide-h"
+        is-expanded
+        :is-dark="this.$colorMode.value == 'dark' ? true : false"
+        :min-date="$moment().subtract(90, 'days').format('YYYY-MM-DD')"
+        :max-date='new Date()'
+        @transition-start="pageChange()"
+      />
       <!-- END - Calendar -->
     </div>
   </div>
@@ -97,6 +66,17 @@ export default {
   },
   data() {
     return {
+      attrs: [{
+        highlight: { color: "orange", fillMode: "outline" },
+        dot: {
+          style: { "background-color": "indigo" }
+        },
+        dates: new Date(),
+        popover: {
+          label: "🎂 ❤❤ 🎂",
+        },
+        order: 0
+      }],
       chart: {
         series: [
           {
@@ -234,8 +214,12 @@ export default {
           });
         });
     },
+    pageChange() {
+      // Get reference to the calendar component
+      const calendar = this.$refs.calendar;
+    },
     async fetchLast7days() {
-      let startDate = this.$moment().subtract(30, "days");
+      let startDate = this.$moment().subtract(90, "days");
       let endDate = this.$moment();
       let date = [];
 
@@ -260,6 +244,22 @@ export default {
           const data = res.data;
           data.date = date;
 
+          this.attrs.push({
+            highlight: { color: data.outages_count_total > 0 ? "red": "green", fillMode: "outline" },
+            dot: {
+              style: { "background-color": "indigo" }
+            },
+            dates: date,
+            popover: {
+              label: this.$t('statistics_tooltip.text', {
+              num: data.apdex_results_count_frustrated,
+              time: this.$moment
+                .duration(data.duration_seconds_total_downtime, 'seconds')
+                .minutes(),
+            }),
+            },
+          });
+
           this.data_list.push(data);
         });
     },
@@ -269,3 +269,18 @@ export default {
   },
 };
 </script>
+<style lang="css">
+.weekday-7.in-month {
+    background: rgba(40,199,111, 0.3) !important;
+     color: white;
+}
+
+.weekday-1.in-month {
+  background: rgba(234,84,85, 0.3) !important;
+  color: white;
+}
+
+.vc-weeks .vc-weekday {
+  color: #ed8322;
+}
+</style>
