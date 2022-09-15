@@ -29,6 +29,7 @@
     "nuxt-umami-module": "^1.0.0",
     "plyr": "^3.6.9",
     "underscore": "^1.13.1",
+    "v-calendar": "^2.4.1",
     "video.js": "^7.10.1",
     "videojs-contrib-hls": "^5.15.0",
     "vue-apexcharts": "^1.6.2",
