@@ -104,7 +104,7 @@ export default async (context, locale) => {
       error_content: "Unable to play radio: {radio}",
     },
     statistics_tooltip: {
-      text: "Incidents: {num} | Downtime: {time} mins",
+      text: "Incidents: {num} | Downtime: {time} mins | {response}ms",
     },
     404: {
       content:
@@ -124,6 +124,7 @@ export default async (context, locale) => {
     },
     text: {
       guide: "Guide",
+      the_last_90_days: "The last 90 days",
     },
   });
 };

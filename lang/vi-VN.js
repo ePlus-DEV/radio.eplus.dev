@@ -104,7 +104,7 @@ export default async (context, locale) => {
       error_content: "Không thể phát radio: {radio}",
     },
     statistics_tooltip: {
-      text: "Sự cố: {num} | Ngừng hoạt động: {time} phút",
+      text: "Sự cố: {num} | Ngừng hoạt động: {time} phút | {response}ms",
     },
     404: {
       content: "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!",
@@ -123,6 +123,7 @@ export default async (context, locale) => {
     },
     text: {
       guide: "Hướng dẫn",
+      the_last_90_days: "90 ngày qua",
     },
   });
 };

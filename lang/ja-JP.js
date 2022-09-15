@@ -104,7 +104,7 @@ export default async (context, locale) => {
       error_content: "ラジオを再生できません: {radio}",
     },
     statistics_tooltip: {
-      text: "インシデント: {num} | ダウンタイム: {time} 分",
+      text: "インシデント: {num} | ダウンタイム: {time} 分 | response}ミリ秒",
     },
     404: {
       content:
@@ -124,6 +124,7 @@ export default async (context, locale) => {
     },
     text: {
       guide: "ガイド",
+      the_last_90_days: "過去 90 日間",
     },
   });
 };

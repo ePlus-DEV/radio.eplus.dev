@@ -6,11 +6,55 @@
     </div>
     <div class="flex justify-center mt-8 space-x-6">
       <!-- website monitoring -->
-      <img
+      <!-- <img
         src="https://statuspage.freshping.io/badge/31630134-99cc-447d-9789-e89d57071666?0.4862714836619788"
         class="border-dashed border-2 border-indigo-600 dark:border-indigo-300 rounded-full"
         alt="website monitoring pass 100 days"
-      />
+      /> -->
+      <div class="stats shadow">
+        <div class="stat place-items-center">
+          <div class="stat-title">UP</div>
+          <div class="stat-value">
+            {{
+              parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2) +
+              "%"
+            }}
+          </div>
+          <div class="stat-desc">{{ $t("text.the_last_90_days") }}</div>
+        </div>
+
+        <div class="stat place-items-center">
+          <div class="stat-title">DOWNTIME</div>
+          <div class="stat-value text-secondary">
+            {{
+              $moment
+                .utc(
+                  $moment
+                    .duration(
+                      AvailabilitynPerformance.average_response_time_milliseconds_reporting_error,
+                      "seconds"
+                    )
+                    .asMilliseconds()
+                )
+                .format("HH:mm:SS")
+            }}
+          </div>
+          <div class="stat-desc text-secondary">
+            ({{
+              (
+                100 -
+                parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2)
+              ).toFixed(2) + "%"
+            }})
+          </div>
+        </div>
+
+        <!-- <div class="stat place-items-center">
+          <div class="stat-title">New Registers</div>
+          <div class="stat-value">1,200</div>
+          <div class="stat-desc">↘︎ 90 (14%)</div>
+        </div> -->
+      </div>
       <!-- website monitoring -->
     </div>
     <div>
@@ -36,7 +80,8 @@
         is-expanded
         :is-dark="this.$colorMode.value == 'dark' ? true : false"
         :min-date="$moment().subtract(90, 'days').format('YYYY-MM-DD')"
-        :max-date='new Date()'
+        :max-date="new Date()"
+        :columns="$screens({ default: 1, lg: 2 })"
         @transition-start="pageChange()"
       />
       <!-- END - Calendar -->
@@ -66,17 +111,19 @@ export default {
   },
   data() {
     return {
-      attrs: [{
-        highlight: { color: "orange", fillMode: "outline" },
-        dot: {
-          style: { "background-color": "indigo" }
+      attrs: [
+        {
+          highlight: { color: "orange", fillMode: "outline" },
+          dot: {
+            style: { "background-color": "indigo" },
+          },
+          dates: new Date(),
+          popover: {
+            label: "🎂 ❤❤ 🎂",
+          },
+          order: 0,
         },
-        dates: new Date(),
-        popover: {
-          label: "🎂 ❤❤ 🎂",
-        },
-        order: 0
-      }],
+      ],
       chart: {
         series: [
           {
@@ -171,6 +218,30 @@ export default {
       },
       last7days: [],
       data_list: [],
+      AvailabilitynPerformance: {
+        check_id: 690040,
+        duration_seconds_available: 7765951,
+        duration_seconds_reporting_error: 275,
+        duration_seconds_not_responding: 9772,
+        outages_count_reporting_error: 4,
+        outages_count_not_responding: 64,
+        average_response_time_milliseconds_available: 41,
+        average_response_time_milliseconds_reporting_error: 8604,
+        minimum_response_time_milliseconds_available: 6,
+        minimum_response_time_milliseconds_reporting_error: 5007,
+        maximum_response_time_milliseconds_available: 17087,
+        maximum_response_time_milliseconds_reporting_error: 19304,
+        duration_seconds_performance_good: 7741889,
+        duration_seconds_performance_degraded: 34110,
+        count_performance_degradations: 2,
+        apdex_results_count_satisfied: 7681,
+        apdex_results_count_tolerating: 20,
+        apdex_results_count_frustrated: 84,
+        availability_percentage: "99.87",
+        duration_seconds_total_downtime: 10047,
+        outages_count_total: 68,
+        apdex_score: "0.99",
+      },
     };
   },
   components: {
@@ -245,38 +316,58 @@ export default {
           data.date = date;
 
           this.attrs.push({
-            highlight: { color: data.outages_count_total > 0 ? "red": "green", fillMode: "outline" },
+            highlight: {
+              color: data.outages_count_total > 0 ? "red" : "green",
+              fillMode: this.$colorMode.value == "dark" ? "light" : "outline",
+            },
             dot: {
-              style: { "background-color": "indigo" }
+              style: {
+                "background-color": data.outages_count_total > 0 ? "red" : "green",
+              },
             },
             dates: date,
             popover: {
-              label: this.$t('statistics_tooltip.text', {
-              num: data.apdex_results_count_frustrated,
-              time: this.$moment
-                .duration(data.duration_seconds_total_downtime, 'seconds')
-                .minutes(),
-            }),
+              label: this.$t("statistics_tooltip.text", {
+                num: data.apdex_results_count_frustrated,
+                time: this.$moment
+                  .duration(data.duration_seconds_total_downtime, "seconds")
+                  .minutes(),
+                response: data.average_response_time_milliseconds_available,
+              }),
             },
           });
 
           this.data_list.push(data);
         });
     },
+    async fetchAvailabilitynPerformance() {
+      this.$axios
+        .get(
+          process.env.API_FRESHPING +
+            "public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days"
+        )
+        .then((res) => {
+          this.AvailabilitynPerformance = res.data;
+        });
+    },
   },
   created() {
-    Promise.all([this.fetchResponseTimesReports(), this.fetchLast7days()]).then(() => {});
+    Promise.all([
+      this.fetchResponseTimesReports(),
+      this.fetchLast7days(),
+      this.fetchAvailabilitynPerformance(),
+    ]).then(() => {});
   },
 };
 </script>
 <style lang="css">
 .weekday-7.in-month {
-    background: rgba(40,199,111, 0.3) !important;
-     color: white;
+  background: rgba(40, 199, 111, 0.3) !important;
+  color: white;
 }
 
 .weekday-1.in-month {
-  background: rgba(234,84,85, 0.3) !important;
+  background: rgba(234, 84, 85, 0.3) !important;
   color: white;
 }
 
