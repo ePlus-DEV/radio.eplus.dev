@@ -15,6 +15,7 @@ import indonesia from "./static/assets/radio/asia/indonesia.json";
 import thailand from "./static/assets/radio/asia/thailand.json";
 import bangladesh from "./static/assets/radio/asia/bangladesh.json";
 import pakistan from "./static/assets/radio/asia/pakistan.json";
+import india from "./static/assets/radio/asia/india.json";
 // Central America
 import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
@@ -410,6 +411,16 @@ export default {
           station_country: "world.asia.pakistan",
           url: "/pakistan/" + key,
           objectID: "pakistan-" + key,
+        });
+      }
+      for (const [key, value] of Object.entries(india)) {
+        routesToGenerate.push("/india/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.india",
+          url: "/india/" + key,
+          objectID: "india-" + key,
         });
       }
       // END - Asia
