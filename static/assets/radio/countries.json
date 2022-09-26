@@ -92,6 +92,13 @@
       "data": "/assets/radio/asia/bangladesh.json",
       "timezone": "Asia/Dhaka",
       "station": 0
+    },
+    "pakistan": {
+      "name": "world.asia.pakistan",
+      "flag": "/img/asia/flags/pakistan.png",
+      "data": "/assets/radio/asia/pakistan.json",
+      "timezone": "Asia/Karachi",
+      "station": 0
     }
   },
   "central_america": {
