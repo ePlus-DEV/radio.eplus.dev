@@ -8,28 +8,27 @@
       <div
         class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
       >
-        <template v-for="(data, index) in results">
-          <nuxt-link
-            :to="'/' + slug + '/' + index"
-            v-bind:key="index"
-            class="border tooltip tooltip-left"
-            active-class="active border-red-700"
-            :title="data.title"
-            :data-tip="data.title"
-            :class="[
-              isRouteActive(index)
-                ? 'border-red-700'
-                : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
-            ]"
-          >
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + data.features"
-              :alt="data.title"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
-          </nuxt-link>
-        </template>
+        <nuxt-link
+          :to="'/' + slug + '/' + index"
+          v-for="(data, index) in results"
+          v-bind:key="index"
+          class="border tooltip tooltip-left"
+          active-class="active border-red-700"
+          :title="data.title"
+          :data-tip="data.title"
+          :class="[
+            isRouteActive(index)
+              ? 'border-red-700'
+              : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
+          ]"
+        >
+          <nuxt-img
+            loading="lazy"
+            :src="$config.Base_URL + data.features"
+            :alt="data.title"
+            class="p-0 sm:p-1 md:p-5 lg:p-10"
+          />
+        </nuxt-link>
       </div>
     </div>
   </div>
