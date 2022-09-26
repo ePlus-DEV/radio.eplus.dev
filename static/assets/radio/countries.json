@@ -99,6 +99,13 @@
       "data": "/assets/radio/asia/pakistan.json",
       "timezone": "Asia/Karachi",
       "station": 0
+    },
+    "india": {
+      "name": "world.asia.india",
+      "flag": "/img/asia/flags/india.png",
+      "data": "/assets/radio/asia/india.json",
+      "timezone": "Asia/Kolkata",
+      "station": 0
     }
   },
   "central_america": {
