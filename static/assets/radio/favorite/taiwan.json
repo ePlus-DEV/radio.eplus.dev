@@ -1,0 +1,8 @@
+{
+  "title": "ICRT",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Taiwan",
+  "stream": "https://live.leanstream.co/ICRTFM-MP3",
+  "cros": false
+}
