@@ -125,7 +125,14 @@
       "name": "world.asia.sri_lanka",
       "flag": "/img/asia/flags/sri-lanka.png",
       "data": "/assets/radio/asia/sri-lanka.json",
-      "timezone": "Asia/Asia/Colombo",
+      "timezone": "Asia/Colombo",
+      "station": 0
+    },
+    "nepal": {
+      "name": "world.asia.nepal",
+      "flag": "/img/asia/flags/nepal.png",
+      "data": "/assets/radio/asia/nepal.json",
+      "timezone": "Asia/Kathmandu",
       "station": 0
     }
   },

@@ -19,6 +19,7 @@ import india from "./static/assets/radio/asia/india.json";
 import taiwan from "./static/assets/radio/asia/taiwan.json";
 import israel from "./static/assets/radio/asia/israel.json";
 import sri_lanka from "./static/assets/radio/asia/sri-lanka.json";
+import nepal from "./static/assets/radio/asia/nepal.json";
 // Central America
 import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
@@ -454,6 +455,16 @@ export default {
           station_country: "world.asia.sri_lanka",
           url: "/sri-lanka/" + key,
           objectID: "sri-lanka-" + key,
+        });
+      }
+      for (const [key, value] of Object.entries(nepal)) {
+        routesToGenerate.push("/nepal/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.asia.nepal",
+          url: "/nepal/" + key,
+          objectID: "nepal-" + key,
         });
       }
       // END - Asia
