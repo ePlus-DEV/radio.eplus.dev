@@ -106,6 +106,13 @@
       "data": "/assets/radio/asia/india.json",
       "timezone": "Asia/Kolkata",
       "station": 0
+    },
+    "taiwan": {
+      "name": "world.asia.taiwan",
+      "flag": "/img/asia/flags/taiwan.png",
+      "data": "/assets/radio/asia/taiwan.json",
+      "timezone": "Asia/Taipei",
+      "station": 0
     }
   },
   "central_america": {

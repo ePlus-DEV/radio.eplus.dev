@@ -42,6 +42,7 @@ export default async (context, locale) => {
         bangladesh: "Băng-la-đét",
         pakistan: "Pa-ki-xtan",
         india: "Ấn Độ",
+        taiwan: "Đài Loan",
       },
       central_america: {
         name: "Trung Mỹ",
