@@ -113,6 +113,13 @@
       "data": "/assets/radio/asia/taiwan.json",
       "timezone": "Asia/Taipei",
       "station": 0
+    },
+    "israel": {
+      "name": "world.asia.israel",
+      "flag": "/img/asia/flags/israel.png",
+      "data": "/assets/radio/asia/israel.json",
+      "timezone": "Asia/Jerusalem",
+      "station": 0
     }
   },
   "central_america": {
