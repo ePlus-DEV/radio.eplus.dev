@@ -1,9 +1,9 @@
 {
   "title": "VOV Giao Thông TP.HCM",
-  "type": "application/x-mpegURL",
+  "type": "audio/aacp",
   "frequency": "FM 91 MHz",
   "countries": "Việt Nam",
-  "stream": "https://str.vov.gov.vn/vovlive/vovGTHCM.sdp_aac/chunklist_w1213978008.m3u8",
+  "stream": "http://media.kythuatvov.vn:7023/;stream/",
   "schedule": "https://vovlive.vn/api/appGetvovschedule",
-  "cros": false
+  "cros": true
 }
