@@ -1,0 +1,8 @@
+{
+  "title": "Radio Audio",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Nepal",
+  "stream": "https://stream.zeno.fm/fvrx47wpg0quv",
+  "cros": true
+}

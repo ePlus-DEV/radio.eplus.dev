@@ -106,6 +106,34 @@
       "data": "/assets/radio/asia/india.json",
       "timezone": "Asia/Kolkata",
       "station": 0
+    },
+    "taiwan": {
+      "name": "world.asia.taiwan",
+      "flag": "/img/asia/flags/taiwan.png",
+      "data": "/assets/radio/asia/taiwan.json",
+      "timezone": "Asia/Taipei",
+      "station": 0
+    },
+    "israel": {
+      "name": "world.asia.israel",
+      "flag": "/img/asia/flags/israel.png",
+      "data": "/assets/radio/asia/israel.json",
+      "timezone": "Asia/Jerusalem",
+      "station": 0
+    },
+    "sri-lanka": {
+      "name": "world.asia.sri_lanka",
+      "flag": "/img/asia/flags/sri-lanka.png",
+      "data": "/assets/radio/asia/sri-lanka.json",
+      "timezone": "Asia/Colombo",
+      "station": 0
+    },
+    "nepal": {
+      "name": "world.asia.nepal",
+      "flag": "/img/asia/flags/nepal.png",
+      "data": "/assets/radio/asia/nepal.json",
+      "timezone": "Asia/Kathmandu",
+      "station": 0
     }
   },
   "central_america": {
