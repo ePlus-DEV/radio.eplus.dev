@@ -1,1 +1,6 @@
 TZ='Asia/Ho_Chi_Minh'
+
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
