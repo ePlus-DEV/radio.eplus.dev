@@ -2,5 +2,5 @@ TZ='Asia/Ho_Chi_Minh'
 
 [[redirects]]
   from = "/*"
-  to = "/"
+  to = "/index.html"
   status = 200
