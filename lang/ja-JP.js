@@ -53,6 +53,7 @@ export default async (context, locale) => {
         el_salvador: "エルサルバドル",
         guatemala: "グアテマラ",
         honduras: "ホンジュラス",
+        nicaragua: "ニカラグア",
       },
       europe: {
         name: "ヨーロッパ",

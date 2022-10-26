@@ -25,6 +25,7 @@ import costa_rica from "./static/assets/radio/central-america/costa-rica.json";
 import el_salvador from "./static/assets/radio/central-america/el-salvador.json";
 import guatemala from "./static/assets/radio/central-america/guatemala.json";
 import honduras from "./static/assets/radio/central-america/honduras.json";
+import nicaragua from "./static/assets/radio/central-america/nicaragua.json";
 // Europe
 import uk from "./static/assets/radio/europe/united-kingdom.json";
 import ukraine from "./static/assets/radio/europe/ukraine.json";
@@ -507,6 +508,16 @@ export default {
           station_country: "world.central_america.honduras",
           url: "/honduras/" + key,
           objectID: "honduras-" + key,
+        });
+      }
+      for (const [key, value] of Object.entries(nicaragua)) {
+        routesToGenerate.push("/nicaragua/" + key);
+        data_algolia.push({
+          station_name: value.title,
+          station_image: process.env.BASE_URL + value.features,
+          station_country: "world.central_america.nicaragua",
+          url: "/nicaragua/" + key,
+          objectID: "nicaragua-" + key,
         });
       }
       // END - Central America

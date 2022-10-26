@@ -1,0 +1,8 @@
+{
+  "title": "Radio Corporación",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Nicaragua",
+  "stream": "https://stream.zeno.fm/gwkd66k0a7duv",
+  "cros": true
+}
