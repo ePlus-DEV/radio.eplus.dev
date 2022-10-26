@@ -164,6 +164,13 @@
       "data": "/assets/radio/central-america/honduras.json",
       "timezone": "America/Tegucigalpa",
       "station": 0
+    },
+    "nicaragua": {
+      "name": "world.central_america.nicaragua",
+      "flag": "/img/central-america/flags/nicaragua.png",
+      "data": "/assets/radio/central-america/nicaragua.json",
+      "timezone": "America/Managua",
+      "station": 0
     }
   },
   "europe": {
