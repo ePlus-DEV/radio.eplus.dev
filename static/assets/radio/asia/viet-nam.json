@@ -185,8 +185,8 @@
     "type": "audio/aacp",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "http://media.kythuatvov.vn:7023/;stream/",
+    "cros": false,
+    "stream": "https://str.vov.gov.vn/vovlive/vovGTHCM.sdp_aac/chunklist_w1213978008.m3u8",
     "features": "/img/asia/viet-nam/vov-giao-thong.png"
   },
   "vov-giao-thong": {
@@ -195,8 +195,8 @@
     "type": "audio/aacp",
     "category": "Giao Thông",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "http://media.kythuatvov.vn:7025/;stream/",
+    "cros": false,
+    "stream": "https://str.vov.gov.vn/vovlive/vovGTHN.sdp_aac/chunklist_w601606653.m3u8",
     "features": "/img/asia/viet-nam/vov-giao-thong-ha-noi.png"
   },
   "vov-mekong": {
