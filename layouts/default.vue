@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- START HEADER -->
-
+    <LetItSnow />
     <TheHeader />
 
     <!-- END HEADER -->

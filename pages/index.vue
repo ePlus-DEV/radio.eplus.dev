@@ -77,8 +77,8 @@ export default {
         });
     },
     fetchRemote(url, options = {}) {
-      return this.$cloudinary.image.fetchRemote(url, options)
-    }
+      return this.$cloudinary.image.fetchRemote(url, options);
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});

@@ -35,6 +35,7 @@
     "vue-apexcharts": "^1.6.2",
     "vue-head": "^2.2.0",
     "vue-instantsearch": "^4.1.1",
+    "vue-let-it-snow": "^1.0.0",
     "vue-plyr": "^7.0.0",
     "vue-scrollmagic": "^1.2.0",
     "vue-toastification": "^1.7.14"
