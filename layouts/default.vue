@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- START HEADER -->
-    <LetItSnow />
-    <TheHeader />
 
+    <TheHeader />
+    <LetItSnow />
     <!-- END HEADER -->
 
     <div class="container mx-auto px-4 mt-20" scroll-container>
