@@ -3,7 +3,7 @@
     <!-- START HEADER -->
 
     <TheHeader />
-    <LetItSnow />
+    <!-- <LetItSnow /> -->
     <!-- END HEADER -->
 
     <div class="container mx-auto px-4 mt-20" scroll-container>
