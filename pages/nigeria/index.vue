@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -47,6 +48,7 @@ export default {
       area: "africa",
       i18n: "world.africa.nigeria",
       thumb: "/img/africa/flags/nigeria.png",
+      timezone: "Africa/Lagos",
     };
   },
   methods: {

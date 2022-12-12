@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -47,6 +48,7 @@ export default {
       area: "central-america",
       i18n: "world.central_america.guatemala",
       thumb: "/img/central-america/flags/guatemala.png",
+      timezone: "America/Guatemala",
     };
   },
   methods: {

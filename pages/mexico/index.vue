@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -49,6 +50,7 @@ export default {
       i18n: "world.north_america.mexico",
       thumb: "/img/north-america/flags/mexico.png",
       schedule_data: [],
+      timezone: "America/Mexico_City",
     };
   },
   methods: {

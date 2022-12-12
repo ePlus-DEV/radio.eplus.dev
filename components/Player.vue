@@ -37,7 +37,8 @@
               {{ home !== undefined ? player_home.title : player.title }}
             </span>
             <span class="text-xs text-gray-500 uppercase font-medium">
-              {{ $t(country) }}
+              {{ $t(country) }} - {{ currentTime }}
+              <!-- {{ home !== undefined ? player_home.title : player.title }} -->
             </span>
           </div>
           <div class="flex">
@@ -114,6 +115,49 @@
         </div>
 
         <!-- END - Zing - Only -->
+
+        <!-- BEGIN - Singapore - Only -->
+
+        <div
+          class="flex flex-col items-center p-5 border-b dark:border-gray-600"
+          v-if="current !== undefined"
+        >
+          <figure
+            class="shadow-lg rounded-xl flex-none w-auto md:w-xl"
+            style="transform: rotate(1deg) translateZ(0px)"
+          >
+            <figcaption
+              class="flex items-center space-x-4 p-6 md:px-10 md:py-6 bg-gradient-to-r from-green-400 to-blue-500 rounded-t-xl leading-6 font-semibold text-white"
+            >
+              <div
+                class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
+              >
+                <img
+                  loading="lazy"
+                  :src="current.cover_art"
+                  :alt="current.title"
+                  class="w-20 h-20 rounded-full bg-orange-100"
+                />
+              </div>
+              <div class="flex-auto">
+                {{ current.title }}<br /><span class="text-orange-100">
+                  {{ current.artist_name }}
+                </span>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="md:flex bg-gray-700 rounded-xl p-8 md:p-0 dark:bg-gray-500">
+            <img
+              loading="lazy"
+              class="md:rounded-none rounded-full mx-auto"
+              :src="current.image"
+              alt=""
+            />
+          </figure>
+        </div>
+
+        <!-- END - Singapore - Only -->
 
         <div class="flex flex-col sm:flex-row items-center p-5">
           <div class="flex items-center">
@@ -315,7 +359,7 @@
             <div
               class="flex items-center border-b dark:border-gray-600 py-3 hover:shadow-md px-2 rounded"
               :class="index === 0 ? 'bg-gray-800 dark:bg-black' : ''"
-                v-for="(item, index) in playlist"
+              v-for="(item, index) in playlist"
               :key="index"
             >
               <img
@@ -364,12 +408,23 @@
 import Hls from "hls.js";
 
 export default {
-  props: ["country", "home", "info", "playlist", "song", "program", "thumb"],
+  props: [
+    "country",
+    "home",
+    "info",
+    "playlist",
+    "song",
+    "program",
+    "thumb",
+    "current",
+    "timezone",
+  ],
   data() {
     return {
       now: null,
       button: false,
       waiting: false,
+      currentTime: "N/A",
     };
   },
   mounted() {
@@ -537,8 +592,17 @@ export default {
         return "#e0dee9";
       }
     },
+    updateCurrentTime() {
+      this.currentTime = this.$moment
+        .tz(
+          this.$moment(),
+          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh"
+        )
+        .format("LTS");
+    },
   },
   created() {
+    setInterval(() => this.updateCurrentTime(), 1000);
     setInterval(() => {
       this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
     }, 1000);

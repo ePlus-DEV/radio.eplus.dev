@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -47,6 +48,7 @@ export default {
       area: "north-america",
       i18n: "world.north_america.jamaica",
       thumb: "/img/north-america/flags/jamaica.png",
+      timezone: "America/Jamaica",
     };
   },
   methods: {

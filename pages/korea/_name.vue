@@ -5,7 +5,12 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n"></Player>
+    <Player
+      ref="player"
+      :stream="stream_name"
+      :country="i18n"
+      :timezone="timezone"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -78,6 +83,7 @@ export default {
       data: [],
       polling_schedule: null,
       polling_song: null,
+      timezone: "Asia/Seoul",
     };
   },
   beforeDestroy() {
@@ -134,7 +140,7 @@ export default {
         });
     },
     async fetchSchedule(url) {
-      this.$axios.get(url + this.$moment().tz("Asia/Seoul").unix()).then((res) => {
+      this.$axios.get(url + this.$moment().tz(this.timezone).unix()).then((res) => {
         if (res.data.success) {
           this.data = res.data.result;
         }

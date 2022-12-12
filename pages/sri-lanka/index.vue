@@ -5,7 +5,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :country="i18n" :home="true" :thumb="thumb" />
+    <Player
+      ref="player"
+      :country="i18n"
+      :home="true"
+      :thumb="thumb"
+      :timezone="timezone"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -38,6 +44,7 @@ export default {
       area: "asia",
       i18n: "world.asia.sri_lanka",
       thumb: "/img/asia/flags/sri-lanka.png",
+      timezone: "Asia/Colombo",
     };
   },
   methods: {

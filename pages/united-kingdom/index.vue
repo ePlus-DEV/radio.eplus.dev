@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -34,11 +35,9 @@ export default {
           hid: "description",
           name: "description",
           content:
-            "Radio Online được phát từ " +
-            this.title_slug +
-            " - Heart UK, Heart London"
-        }
-      ]
+            "Radio Online được phát từ " + this.title_slug + " - Heart UK, Heart London",
+        },
+      ],
     };
   },
   data() {
@@ -49,25 +48,24 @@ export default {
       slug: "united-kingdom",
       area: "europe",
       i18n: "world.europe.united_kingdom",
-      thumb: "/img/europe/flags/united-kingdom.png"
+      thumb: "/img/europe/flags/united-kingdom.png",
+      timezone: "Europe/London",
     };
   },
   methods: {
     async fetchData() {
-      this.$axios
-        .get("/assets/radio/favorite/" + this.slug + ".json")
-        .then(res => {
-          const data = res.data;
+      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+        const data = res.data;
 
-          // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
+        // Vuex
+        this.$store.dispatch("storePLAYERHOME", data);
 
-          this.$refs.player.init(true);
-        });
-    }
+        this.$refs.player.init(true);
+      });
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});
-  }
+  },
 };
 </script>

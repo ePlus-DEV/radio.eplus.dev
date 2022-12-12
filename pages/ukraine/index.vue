@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -49,6 +50,7 @@ export default {
       i18n: "world.europe.ukraine",
       thumb: "/img/europe/flags/ukraine.png",
       schedule_data: [],
+      timezone: "Europe/Kiev",
     };
   },
   methods: {

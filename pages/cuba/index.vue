@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -33,9 +34,9 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: "Radio Online được phát từ " + this.title_slug + " - Habana"
-        }
-      ]
+          content: "Radio Online được phát từ " + this.title_slug + " - Habana",
+        },
+      ],
     };
   },
   data() {
@@ -46,24 +47,23 @@ export default {
       slug: "cuba",
       area: "north-america",
       i18n: "world.north_america.cuba",
-      thumb: "/img/north-america/flags/cuba.png"
+      thumb: "/img/north-america/flags/cuba.png",
+      timezone: "America/Havana",
     };
   },
   methods: {
     async fetchData() {
-      this.$axios
-        .get("/assets/radio/favorite/" + this.slug + ".json")
-        .then(res => {
-          const data = res.data;
-          // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
+      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+        const data = res.data;
+        // Vuex
+        this.$store.dispatch("storePLAYERHOME", data);
 
-          this.$refs.player.init(true);
-        });
-    }
+        this.$refs.player.init(true);
+      });
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});
-  }
+  },
 };
 </script>

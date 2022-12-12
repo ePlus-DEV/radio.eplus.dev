@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -25,17 +26,14 @@ export default {
   head() {
     return {
       title:
-        this.$t("navmenu.homepage") +
-        " -  Radio " +
-        this.$t("world.asia.china") +
-        " - ",
+        this.$t("navmenu.homepage") + " -  Radio " + this.$t("world.asia.china") + " - ",
       meta: [
         {
           hid: "description",
           name: "description",
-          content: "Radio Online được phát từ " + this.title_slug + " - Habana"
-        }
-      ]
+          content: "Radio Online được phát từ " + this.title_slug + " - Habana",
+        },
+      ],
     };
   },
   data() {
@@ -46,24 +44,23 @@ export default {
       slug: "china",
       area: "asia",
       i18n: "world.asia.china",
-      thumb: "/img/asia/flags/china.png"
+      thumb: "/img/asia/flags/china.png",
+      timezone: "Asia/Shanghai",
     };
   },
   methods: {
     async fetchData() {
-      this.$axios
-        .get("/assets/radio/favorite/" + this.slug + ".json")
-        .then(res => {
-          const data = res.data;
-          // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
+      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+        const data = res.data;
+        // Vuex
+        this.$store.dispatch("storePLAYERHOME", data);
 
-          this.$refs.player.init(true);
-        });
-    }
+        this.$refs.player.init(true);
+      });
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});
-  }
+  },
 };
 </script>

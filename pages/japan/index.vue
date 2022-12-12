@@ -5,7 +5,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :country="i18n" :home="true" :thumb="thumb" />
+    <Player
+      ref="player"
+      :country="i18n"
+      :home="true"
+      :thumb="thumb"
+      :timezone="timezone"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -35,6 +41,7 @@ export default {
       area: "asia",
       i18n: "world.asia.japan",
       thumb: "/img/asia/flags/japan.png",
+      timezone: "Asia/Tokyo",
     };
   },
   methods: {

@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -49,6 +50,7 @@ export default {
       i18n: "world.europe.russia",
       thumb: "/img/europe/flags/russia.png",
       schedule_data: [],
+      timezone: "Europe/Moscow",
     };
   },
   methods: {

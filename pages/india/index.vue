@@ -5,7 +5,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :country="i18n" :home="true" :thumb="thumb" />
+    <Player
+      ref="player"
+      :country="i18n"
+      :home="true"
+      :thumb="thumb"
+      :timezone="timezone"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -19,10 +25,7 @@ export default {
   head() {
     return {
       title:
-        this.$t("navmenu.homepage") +
-        " - Radio " +
-        this.$t("world.asia.india") +
-        " - ",
+        this.$t("navmenu.homepage") + " - Radio " + this.$t("world.asia.india") + " - ",
       meta: [
         {
           hid: "description",
@@ -38,6 +41,7 @@ export default {
       area: "asia",
       i18n: "world.asia.india",
       thumb: "/img/asia/flags/india.png",
+      timezone: "Asia/Kolkata",
     };
   },
   methods: {

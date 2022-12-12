@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -49,6 +50,7 @@ export default {
       i18n: "world.north_america.dominican_republic",
       thumb: "/img/north-america/flags/dominican-republic.png",
       schedule_data: [],
+      timezone: "America/Santo_Domingo",
     };
   },
   methods: {

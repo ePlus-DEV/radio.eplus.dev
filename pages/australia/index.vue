@@ -11,6 +11,7 @@
       :schedule="schedule_data"
       :home="true"
       :thumb="thumb"
+      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -24,15 +25,14 @@
 export default {
   head() {
     return {
-      title:
-        this.$t("navmenu.homepage") + " -  Radio " + this.title_slug + " - ",
+      title: this.$t("navmenu.homepage") + " -  Radio " + this.title_slug + " - ",
       meta: [
         {
           hid: "description",
           name: "description",
-          content: "Radio Online at " + this.title_slug
-        }
-      ]
+          content: "Radio Online at " + this.title_slug,
+        },
+      ],
     };
   },
   data() {
@@ -42,25 +42,24 @@ export default {
       area: "oceania",
       i18n: "world.oceania.australia",
       thumb: "/img/oceania/flags/australia.png",
-      schedule_data: []
+      schedule_data: [],
+      timezone: "Australia/Sydney",
     };
   },
   methods: {
     async fetchData() {
-      this.$axios
-        .get("/assets/radio/favorite/" + this.slug + ".json")
-        .then(res => {
-          const data = res.data;
+      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+        const data = res.data;
 
-          // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
+        // Vuex
+        this.$store.dispatch("storePLAYERHOME", data);
 
-          this.$refs.player.init(true);
-        });
-    }
+        this.$refs.player.init(true);
+      });
+    },
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {});
-  }
+  },
 };
 </script>
