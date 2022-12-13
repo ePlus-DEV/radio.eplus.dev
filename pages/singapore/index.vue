@@ -45,7 +45,7 @@ export default {
       area: "asia",
       i18n: "world.asia.singapore",
       thumb: "/img/asia/flags/singapore.png",
-      current: null,
+      current: {},
       polling_song: null,
       timezone: "Asia/Singapore",
     };
@@ -66,7 +66,7 @@ export default {
     },
     async currentSong() {
       this.$axios
-        .get("https://cors-anywhere.eplus.dev/https://cms.camokakis.sg/api/response-get-channel/POWER98_LOVESONGS")
+        .get("https://cms.camokakis.sg/api/response-get-channel/POWER98_LOVESONGS")
         .then((res) => {
           this.current = res.data;
           // Loop
