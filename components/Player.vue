@@ -37,8 +37,7 @@
               {{ home !== undefined ? player_home.title : player.title }}
             </span>
             <span class="text-xs text-gray-500 uppercase font-medium">
-              {{ $t(country) }} - {{ currentTime }}
-              <!-- {{ home !== undefined ? player_home.title : player.title }} -->
+              {{ $t(country) }} - <span :data-tip="currentDate" class="tooltip">{{ currentTime }}</span>
             </span>
           </div>
           <div class="flex">
@@ -120,7 +119,7 @@
 
         <div
           class="flex flex-col items-center p-5 border-b dark:border-gray-600"
-          v-if="current !== undefined"
+          v-if="current !== undefined && current.title !== undefined"
         >
           <figure
             class="shadow-lg rounded-xl flex-none w-auto md:w-xl"
@@ -145,15 +144,6 @@
                 </span>
               </div>
             </figcaption>
-          </figure>
-
-          <figure class="md:flex bg-gray-700 rounded-xl p-8 md:p-0 dark:bg-gray-500">
-            <img
-              loading="lazy"
-              class="md:rounded-none rounded-full mx-auto"
-              :src="current.image"
-              alt=""
-            />
           </figure>
         </div>
 
@@ -425,6 +415,7 @@ export default {
       button: false,
       waiting: false,
       currentTime: "N/A",
+      currentDate: "N/A"
     };
   },
   mounted() {
@@ -599,13 +590,16 @@ export default {
           this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh"
         )
         .format("LTS");
+      this.currentDate = this.$moment
+        .tz(
+          this.$moment(),
+          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh"
+        )
+        .format("LLLL");
     },
   },
   created() {
     setInterval(() => this.updateCurrentTime(), 1000);
-    setInterval(() => {
-      this.now = this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss ZZ");
-    }, 1000);
   },
 };
 </script>

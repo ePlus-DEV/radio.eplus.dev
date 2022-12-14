@@ -75,6 +75,12 @@ export default {
           this.polling_song = setInterval(function () {
             self.currentSong();
           }, 60000);
+        }).catch(function (error) {
+          if (error.response) {
+            if (error.response.status == 502) {
+              location.reload();
+            }
+          }
         });
     },
   },

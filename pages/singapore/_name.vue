@@ -10,6 +10,7 @@
       :stream="stream_name"
       :country="i18n"
       :playlist="data"
+      :current="current"
       :timezone="timezone"
     ></Player>
     <!-- END - Player -->
@@ -85,6 +86,8 @@ export default {
       thumb: null,
       polling_schedule: null,
       polling_song: null,
+      polling_current_song: null,
+      current: {},
       timezone: "Asia/Singapore",
     };
   },
@@ -164,9 +167,30 @@ export default {
         }, 60000);
       });
     },
+    async currentSong() {
+      this.$axios
+        .get("https://cms.camokakis.sg/api/response-get-channel/POWER98_LOVESONGS")
+        .then((res) => {
+          this.current = res.data;
+          // Loop
+          var self = this;
+          window.clearTimeout(this.polling_current_song);
+          this.polling_current_song = setInterval(function () {
+            self.currentSong();
+          }, 60000);
+        }).catch(function (error) {
+          if (error.response) {
+            if (error.response.status == 502) {
+              location.reload();
+            }
+          }
+        });
+    },
   },
   created() {
-    Promise.all([this.fetchData()]).then(() => {});
+    Promise.all([this.fetchData()]).then(() => {
+      this.currentSong()
+    });
   },
 };
 </script>
