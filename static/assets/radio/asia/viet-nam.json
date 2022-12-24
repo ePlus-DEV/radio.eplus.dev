@@ -712,6 +712,84 @@
     "stream": "https://multi-playlist-zmp3.zadn.vn/94rxZ-Dfzro/zhls/playback-realtime/ff294ded71a898f6c1b9/index.m3u8",
     "features": "/img/asia/viet-nam/kpop-radio-zing-mp3.png"
   },
+  "c-pop-zing-mp3": {
+    "title": "C-Pop Radio - Zing MP3",
+    "description": "Âm nhạc Trung Hoa từ xưa đến nay, từ cổ phong cho đến C-Pop.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ9798C.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ9798C&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ9798C&time=",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/n3057ldzl7E/zhls/playback-realtime/ac19a6de9a9b73c52a8a/index.m3u8",
+    "features": "/img/asia/viet-nam/c-pop-zing-mp3.png"
+  },
+    "pladio-zing-mp3": {
+    "title": "Pladio - Zing MP3",
+    "description": "Live 247 - Nghe ngày nghe đêm",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ97CWB.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ97CWB&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ97CWB&time=",
+    "stream": "https://mplaylist-zmp3.zmdcdn.me/8uNEocw6tdc/zhls/live/50efc937f5721c2c4563/index.m3u8",
+    "features": "/img/asia/viet-nam/pladio-zing-mp3.png"
+  },
+  "nhac-khong-loi-zing-mp3": {
+    "title": "Radio nhạc không lời - Zing MP3",
+    "description": "Radio nhạc không lời",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ97B9E.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ97B9E&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ97B9E&time=",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/5x3hFti6aTY/zhls/playback-realtime/51d7680d5448bd16e459/index.m3u8",
+    "features": "/img/asia/viet-nam/nhac-khong-loi-zing-mp3.png"
+  },
+  "indie-zing-mp3": {
+    "title": "Radio Indie - Zing MP3",
+    "description": "Đây là trạm sạc Indie. Cùng Zing MP3 mang đến những ca khúc giúp bạn sạc pin cho trái tim.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979BC.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979BC&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979BC&time=",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/IQgDniEgTQs/zhls/playback-realtime/7fa39264ae21477f1e30/index.m3u8",
+    "features": "/img/asia/viet-nam/indie-zing-mp3.png"
+  },
+  "nhac-buon-zing-mp3": {
+    "title": "Nhạc Buồn - Zing MP3",
+    "description": "Nhạc Buồn",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ97BCA.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ97BCA&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ97BCA&time=",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/j5nGEkZnzhI/zhls/playback-realtime/ed3a51e16da484faddb5/index.m3u8",
+    "features": "/img/asia/viet-nam/nhac-buon-zing-mp3.png"
+  },
+  "chill-zing-mp3": {
+    "title": "Chill - Zing MP3",
+    "description": "Không ồn ã, không vội vàng, thả mình vào những bản nhạc nhẹ nhàng có ở đây.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979CB.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979D9&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979CB&time=",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/M-uqetyzV0g/zhls/playback-realtime/8c6190a6ace345bd1cf2/index.m3u8",
+    "features": "/img/asia/viet-nam/chill-zing-mp3.png"
+  },
   "acoustic-radio-zing-mp3": {
     "title": "Acoustic Radio - Zing MP3",
     "description": "Nếu đang tìm chút mộc mạc, hãy nghe Acoustic playlist mà Zing MP3 đã chuẩn bị cho bạn.",
@@ -750,5 +828,18 @@
     "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979DW&time=",
     "stream": "https://mplaylist-zmp3.zadn.vn/qm_zvfUgxa8/zhls/live/5c0872cf4e8aa7d4fe9b/index.m3u8",
     "features": "/img/asia/viet-nam/the-one-radio-zing-mp3.png"
+  },
+  "nhac-thieu-nhi-zing-mp3": {
+    "title": "Nhạc Thiếu Nhi - Zing MP3",
+    "description": "Không chỉ là giai điệu tạo nên niềm vui cho trẻ nhỏ. Đây còn là mảnh ghép tuổi thơ của người lớn.",
+    "type": "application/x-mpegURL",
+    "category": "Âm nhạc",
+    "url": "https://zingmp3.vn/liveradio/IWZ979D9.html",
+    "cros": false,
+    "time": "24/7",
+    "info": "https://api-zing-mp3.vercel.app/api/live-stream-info?id=IWZ979D9&time=",
+    "schedule": "https://api-zing-mp3.vercel.app/api/live-stream-program-list?id=IWZ979D9&time=",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/-dpu6v2MDL0/zhls/playback-realtime/7f635fa463e18abfd3f0/index.m3u8",
+    "features": "/img/asia/viet-nam/nhac-thieu-nhi-zing-mp3.png"
   }
 }
