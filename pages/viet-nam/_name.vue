@@ -6,14 +6,22 @@
 
     <!-- BEGIN - Lyric -->
     <button
-      class="fixed left-4 bottom-2 uppercase text-sm px-4 py-3 bg-gray-900 text-white rounded-full"
+      class="fixed left-4 bottom-2 uppercase text-sm px-4 py-3 bg-gray-900 text-white rounded-full dark:bg-red-700 z-50"
       @click="lyric_popup = !lyric_popup"
     >
-      🎼
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        class="text-white fill-current h-5 w-5"
+      >
+        <path
+          d="M24 95.97h240c13.25 0 24-10.75 24-24s-10.75-24-24-24h-240c-13.25 0-24 10.75-24 24S10.75 95.97 24 95.97zM498.8 6.162c-8.25-6.125-18.69-7.699-28.44-4.699l-112 35.38C345.1 41.09 336 53.34 336 67.34v299.1c-18.12-9.125-40.13-14.5-64-14.5c-61.88 0-112 35.88-112 80C160 476.1 210.1 512 272 512s112-35.88 112-80V195.4l105.6-33.38C503 157.7 512 145.5 512 131.5V31.96C512 21.71 507.1 12.16 498.8 6.162zM272 463.1c-39.75 0-64-20.75-64-31.1c0-11.25 24.25-32 64-32s64 20.75 64 32C336 443.2 311.8 463.1 272 463.1zM464 119.7L384 144.1V79.09l80-25.25V119.7zM24 223.1h240c13.25 0 24-10.75 24-24s-10.75-24-24-24h-240c-13.25 0-24 10.74-24 24S10.75 223.1 24 223.1zM136 303.1h-112c-13.25 0-24 10.75-24 24s10.75 24 24 24h112c13.25 0 24-10.75 24-24S149.3 303.1 136 303.1z"
+        />
+      </svg>
     </button>
     <div class="fixed left-0 bottom-2 z-40" :class="lyric_popup ? '' : 'hidden'">
       <div
-        class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden"
+        class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden dark:bg-gray-700 dark:text-white"
       >
         <!-- Text -->
         <div class="">
@@ -42,7 +50,7 @@
               <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
             </div>
             <div class="pb-4 overflow-y-auto h-64" id="lyric">
-              {{ $t("panel.updating") }}
+              <span v-html="lyric"> </span>
             </div>
           </div>
         </div>
@@ -136,6 +144,7 @@ export default {
       polling_song: null,
       polling_title: null,
       lyric_popup: false,
+      lyric: this.$t("panel.updating"),
     };
   },
   beforeDestroy() {
@@ -233,7 +242,7 @@ export default {
         if (this.song.currentMedia.hasLyric) {
           this.fetchLyric(this.song.currentMedia.encodeId);
         } else {
-          $("#lyric").html(this.$t("panel.no_lyric"));
+          this.lyric = this.$t("panel.no_lyric");
         }
         // END - Lyric
         // Loop
@@ -268,22 +277,26 @@ export default {
         )
         .then((res) => {
           if (res.data.err === 0) {
-            var lyric = "";
-            for (let i = 0; i < res.data.data.sentences.length; i++) {
-              const words = res.data.data.sentences[i].words;
+            if (res.data.data.sentences === undefined) {
+              this.lyric = this.$t("panel.no_lyric");
+            } else {
+              var lyric = "";
+              for (let i = 0; i < res.data.data.sentences.length; i++) {
+                const words = res.data.data.sentences[i].words;
 
-              const line = "";
-              for (let x = 0; x < words.length; x++) {
-                if (x === 0) {
-                  line += words[x].data;
-                } else {
-                  line += " " + words[x].data;
+                const line = "";
+                for (let x = 0; x < words.length; x++) {
+                  if (x === 0) {
+                    line += words[x].data;
+                  } else {
+                    line += " " + words[x].data;
+                  }
                 }
-              }
 
-              lyric += '<p class="pb-1">' + line + "</p>";
+                lyric += '<p class="pb-1">' + line + "</p>";
+              }
+              this.lyric = lyric;
             }
-            $("#lyric").html(lyric);
           }
         });
     },
