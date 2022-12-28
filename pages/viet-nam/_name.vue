@@ -276,8 +276,6 @@ export default {
             this.$moment().tz("Asia/Ho_Chi_Minh").unix()
         )
         .then((res) => {
-          // const data = JSON.parse(res.data);
-
           if (res.data.err === 0) {
             if (res.data.data.sentences) {
               var lyric = "";
