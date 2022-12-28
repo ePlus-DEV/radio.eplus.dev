@@ -212,7 +212,11 @@ export default {
   data() {
     return {
       data: [],
+      polling: null,
     };
+  },
+  beforeDestroy() {
+    window.clearTimeout(this.polling);
   },
   methods: {
     async fetchData() {
@@ -231,6 +235,11 @@ export default {
       this.$axios(config)
         .then(function (response) {
           self.data = response.data;
+          // Loop
+          window.clearTimeout(this.polling);
+          this.polling = setTimeout(function () {
+            self.fetchData(url);
+          }, 60000);
         })
         .catch(function (error) {
           console.log(error);
