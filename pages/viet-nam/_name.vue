@@ -276,6 +276,7 @@ export default {
             this.$moment().tz("Asia/Ho_Chi_Minh").unix()
         )
         .then((res) => {
+          console.log(res.data);
           if (res.data.err === 0) {
             if (res.data.data.sentences === undefined) {
               this.lyric = this.$t("panel.no_lyric");
