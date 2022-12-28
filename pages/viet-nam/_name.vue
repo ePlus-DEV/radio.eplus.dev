@@ -278,7 +278,7 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res.data.err === 0) {
-            if (res.data.data.sentences === undefined) {
+            if (typeof res.data.data.sentences === undefined) {
               this.lyric = this.$t("panel.no_lyric");
             } else {
               var lyric = "";
