@@ -235,15 +235,16 @@ export default {
       this.$axios(config)
         .then(function (response) {
           self.data = response.data;
-          // Loop
-          window.clearTimeout(self.polling);
-          self.polling = setTimeout(function () {
-            self.fetchData(url);
-          }, 60000);
         })
         .catch(function (error) {
           console.log(error);
         });
+
+      // Loop
+      window.clearTimeout(self.polling);
+      self.polling = setTimeout(function () {
+        self.fetchData(url);
+      }, 30000);
     },
   },
   created() {

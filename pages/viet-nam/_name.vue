@@ -279,9 +279,7 @@ export default {
           // const data = JSON.parse(res.data);
           console.log(res.data.data.sentences);
           if (res.data.err === 0) {
-            if (typeof res.data.data.sentences === undefined) {
-              this.lyric = this.$t("panel.no_lyric");
-            } else {
+            if (res.data.data.sentences) {
               var lyric = "";
               for (let i = 0; i < res.data.data.sentences.length; i++) {
                 const words = res.data.data.sentences[i].words;
@@ -298,7 +296,11 @@ export default {
                 lyric += '<p class="pb-1">' + line + "</p>";
               }
               this.lyric = lyric;
+            } else {
+              this.lyric = this.$t("panel.no_lyric");
             }
+          } else {
+            this.lyric = this.$t("panel.no_lyric");
           }
         });
     },
