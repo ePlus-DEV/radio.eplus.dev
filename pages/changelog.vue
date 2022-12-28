@@ -243,7 +243,7 @@ export default {
       // Loop
       window.clearTimeout(self.polling);
       self.polling = setTimeout(function () {
-        self.fetchData(url);
+        self.fetchData();
       }, 30000);
     },
   },
