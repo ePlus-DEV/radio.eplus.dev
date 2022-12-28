@@ -277,23 +277,23 @@ export default {
         )
         .then((res) => {
           // const data = JSON.parse(res.data);
-          console.log(res.data.data.sentences);
+
           if (res.data.err === 0) {
             if (res.data.data.sentences) {
               var lyric = "";
               for (let i = 0; i < res.data.data.sentences.length; i++) {
                 const words = res.data.data.sentences[i].words;
 
-                const line = "";
+                var lyric_line = "";
                 for (let x = 0; x < words.length; x++) {
                   if (x === 0) {
-                    line += words[x].data;
+                    lyric_line += words[x].data;
                   } else {
-                    line += " " + words[x].data;
+                    lyric_line += " " + words[x].data;
                   }
                 }
 
-                lyric += '<p class="pb-1">' + line + "</p>";
+                lyric += '<p class="pb-1">' + lyric_line + "</p>";
               }
               this.lyric = lyric;
             } else {
