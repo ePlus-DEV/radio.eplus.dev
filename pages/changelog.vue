@@ -236,8 +236,8 @@ export default {
         .then(function (response) {
           self.data = response.data;
           // Loop
-          window.clearTimeout(this.polling);
-          this.polling = setTimeout(function () {
+          window.clearTimeout(self.polling);
+          self.polling = setTimeout(function () {
             self.fetchData(url);
           }, 60000);
         })
