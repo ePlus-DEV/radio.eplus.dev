@@ -131,7 +131,7 @@ export default {
   ],
   // GA
   googleAnalytics: {
-    id: "UA-129271342-9",
+    id: "G-ETDY41KBBJ",
     debug: {
       enabled: process.env.NODE_ENV === "production",
     },
