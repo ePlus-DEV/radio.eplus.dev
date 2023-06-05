@@ -126,16 +126,8 @@ export default {
   buildModules: [
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
-    "@nuxtjs/google-analytics",
+    "@nuxtjs/color-mode"
   ],
-  // GA
-  googleAnalytics: {
-    id: "G-ETDY41KBBJ",
-    debug: {
-      enabled: process.env.NODE_ENV === "production",
-    },
-  },
   // momentjs
   moment: {
     timezone: true,
