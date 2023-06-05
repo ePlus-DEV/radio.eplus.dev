@@ -147,7 +147,7 @@
             :href="$config.Copyright"
             target="_blank"
             ><img
-              src="https://cdn.eplus.dev/img/brand/logo.svg"
+              src="https://cdn.jsdelivr.net/gh/ePlus-DEV/cdn.eplus.dev/img/brand/logo.svg"
               alt="logo eplus.dev"
               class="w-7 h-7 inline-block cursor-pointer"
             />Plus.DEV</a
