@@ -616,9 +616,9 @@
     "url": "https://xonefm.com",
     "cros": true,
     "time": "Chưa rõ",
-    "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979CW&time=",
-    "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979CW&time=",
-    "stream": "https://vnso-zn-2-tf-mplaylist-zmp3.zadn.vn/99YFw722aFg/zhls/live/855a669d5ad8b386eac9/index.m3u8",
+    "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97CZZ&time=",
+    "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97CZZ&time=",
+    "stream": "https://vnno-pt-2-tf-multi-playlist-zmp3.zmdcdn.me/Ce5_Z5JFx2c/zhls/playback-realtime/f9a40e7c3239db678228/index.m3u8",
     "features": "/img/asia/viet-nam/xone.png"
   },
   "zing-mp3-on-air": {
