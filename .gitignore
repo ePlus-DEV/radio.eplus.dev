@@ -95,3 +95,6 @@ package-lock.json
 
 #vscode
 .vscode/*
+
+#env
+.env
