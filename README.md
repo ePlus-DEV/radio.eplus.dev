@@ -21,8 +21,6 @@ $ npm run generate
 
 ### Documentation
 
-http://localhost:3000/documentation or http://radio.eplus.dev/documentation
-
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 ```plantext
