@@ -130,6 +130,11 @@
             </svg>
           </a>
         </div>
+        <div class="flex justify-center mt-8 space-x-6">
+          <div data-tip="Hosted on DigitalOcean" class="tooltip">
+             <a target="_blank" href="https://www.digitalocean.com/?refcode=bfa0034e378d&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%202.svg" alt="DigitalOcean Referral Badge" /></a>
+          </div>
+        </div>
         <p class="mt-8 text-center text-gray-400">
           Copyright © {{ new Date().getFullYear() }}
           <a
