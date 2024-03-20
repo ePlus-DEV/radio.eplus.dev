@@ -130,16 +130,6 @@
             </svg>
           </a>
         </div>
-        <div class="flex justify-center mt-8 space-x-6">
-          <div :data-tip="$t('navmenu.changelog')" class="tooltip">
-            <nuxt-link to="/changelog">
-              <img
-                src="https://api.netlify.com/api/v1/badges/ee253008-a579-4a15-99c2-7a0f28413cee/deploy-status"
-                alt="Serverless by Netlify"
-              />
-            </nuxt-link>
-          </div>
-        </div>
         <p class="mt-8 text-center text-gray-400">
           Copyright © {{ new Date().getFullYear() }}
           <a
