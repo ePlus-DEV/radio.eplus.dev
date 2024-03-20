@@ -134,7 +134,7 @@
           <div :data-tip="$t('navmenu.changelog')" class="tooltip">
             <nuxt-link to="/changelog">
               <img
-                src="https://api.netlify.com/api/v1/badges/5dece2ab-a118-4a62-8178-646ac69a9b2c/deploy-status"
+                src="https://api.netlify.com/api/v1/badges/ee253008-a579-4a15-99c2-7a0f28413cee/deploy-status"
                 alt="Serverless by Netlify"
               />
             </nuxt-link>
