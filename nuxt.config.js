@@ -48,23 +48,23 @@ export default {
     noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
   head: {
-    titleTemplate: "%s - Radio Internet | " + process.env.Site_Name,
+    titleTemplate: "%s - Radio Internet | " + process.env.WEBSITE_NAME,
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         hid: "description",
         name: "description",
-        content: process.env.Description || "",
+        content: process.env.DESCRIPTION || "",
       },
       { name: "msapplication-TileColor", content: "#603cba" },
       {
         property: "article:author",
-        content: process.env.FanPage,
+        content: process.env.FANPAGE,
       },
       {
         property: "article:publisher",
-        content: process.env.FanPage,
+        content: process.env.FANPAGE,
       },
       { property: "fb:pages", content: "179495025583990" },
       { property: "fb:app_id", content: "363745774395676" },

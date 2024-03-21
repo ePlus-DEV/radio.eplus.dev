@@ -35,7 +35,7 @@ export default {
         {
           property: "og:title",
           content:
-            this.get_head("title") + " - Radio Internet | " + process.env.Site_Name,
+            this.get_head("title") + " - Radio Internet | " + process.env.WEBSITE_NAME,
         },
         {
           property: "og:image",
@@ -43,7 +43,7 @@ export default {
         },
         {
           property: "og:description",
-          content: process.env.Description || "",
+          content: process.env.DESCRIPTION || "",
         },
         { property: "og:type", content: "music.radio_station" },
         {
@@ -52,22 +52,22 @@ export default {
         },
         {
           property: "og:image:alt",
-          content: "Radio Internet | " + process.env.Site_Name,
+          content: "Radio Internet | " + process.env.WEBSITE_NAME,
         },
         {
           property: "og:site_name",
-          content: "Radio Internet | " + process.env.Site_Name,
+          content: "Radio Internet | " + process.env.WEBSITE_NAME,
         },
         {
           property: "music:creator",
-          content: process.env.FanPage,
+          content: process.env.FANPAGE,
         },
         {
           property: "og:audio",
           content: this.get_head("stream"),
         },
         { property: "og:audio:type", content: this.get_head("type") },
-        { property: "application-name", content: process.env.Site_Name },
+        { property: "application-name", content: process.env.WEBSITE_NAME },
       ],
     };
   },
@@ -77,7 +77,7 @@ export default {
       title: "Radio in " + this.title_slug,
       title_slug: "Korea",
       slug: "korea",
-      stream_name: process.env.Site_Name,
+      stream_name: process.env.WEBSITE_NAME,
       area: "asia",
       i18n: "world.asia.korea",
       data: [],
