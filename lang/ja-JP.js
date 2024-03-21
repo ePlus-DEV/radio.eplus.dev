@@ -132,6 +132,7 @@ export default async (context, locale) => {
     text: {
       guide: "ガイド",
       the_last_90_days: "過去 90 日間",
+      hosted: "{name}でホスト - 最終更新{time}"
     },
   });
 };

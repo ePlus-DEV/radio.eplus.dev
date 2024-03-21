@@ -38,6 +38,8 @@ export default {
     NETLIFY_BASE_URL: process.env.NETLIFY_BASE_URL,
     NETLIFY_TOKEN: process.env.NETLIFY_TOKEN,
     NETLIFY_SITE_ID: process.env.NETLIFY_SITE_ID,
+    DIGITALOCEAN_ENDPOINT: process.env.DIGITALOCEAN_ENDPOINT,
+    DIGITALOCEAN_API_KEY: process.env.DIGITALOCEAN_API_KEY,
   },
   /*
    ** Headers of the page

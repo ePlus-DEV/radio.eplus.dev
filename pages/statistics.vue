@@ -6,11 +6,6 @@
     </div>
     <div class="flex justify-center mt-8 space-x-6">
       <!-- website monitoring -->
-      <!-- <img
-        src="https://statuspage.freshping.io/badge/31630134-99cc-447d-9789-e89d57071666?0.4862714836619788"
-        class="border-dashed border-2 border-indigo-600 dark:border-indigo-300 rounded-full"
-        alt="website monitoring pass 100 days"
-      /> -->
       <div class="stats shadow">
         <div class="stat place-items-center">
           <div class="stat-title">UP</div>

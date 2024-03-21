@@ -131,6 +131,7 @@ export default async (context, locale) => {
     text: {
       guide: "Hướng dẫn",
       the_last_90_days: "90 ngày qua",
+      hosted: "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}"
     },
   });
 };

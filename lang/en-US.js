@@ -132,6 +132,7 @@ export default async (context, locale) => {
     text: {
       guide: "Guide",
       the_last_90_days: "The last 90 days",
+      hosted: "Hosted on {name} - Last update {time}"
     },
   });
 };
