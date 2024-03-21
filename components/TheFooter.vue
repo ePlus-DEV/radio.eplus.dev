@@ -1,7 +1,6 @@
 <template>
   <div>
-    <button @click="scrollToTop" id="topButton"
-      class="fixed z-10 p-3 hidden bg-gray-100 rounded-full shadow-md bottom-10 right-10 animate-bounce">
+    <button @click="scrollToTop" id="topButton" class="fixed z-10 p-3 hidden bg-gray-100 rounded-full shadow-md bottom-10 right-10 animate-bounce">
       <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
       </svg>
@@ -98,7 +97,7 @@ export default {
       this.$axios(config)
         .then((response) => {
           var data = response.data;
-          this.lastUpdate = this.$moment(data.deployments[0].phase_last_updated_at).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY HH:mm:ss")
+          this.lastUpdate = this.$moment(data.deployments[0].phase_last_updated_at).format('LLLL');
         })
         .catch((error) => {
           console.log(error);
