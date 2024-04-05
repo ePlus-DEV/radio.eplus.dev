@@ -622,19 +622,6 @@
     "stream": "https://vnno-pt-2-tf-multi-playlist-zmp3.zmdcdn.me/Ce5_Z5JFx2c/zhls/playback-realtime/f9a40e7c3239db678228/index.m3u8",
     "features": "/img/asia/viet-nam/xone.png"
   },
-  "zing-mp3-on-air": {
-    "title": "Zing MP3 On Air",
-    "description": "Kênh âm nhạc dành cho giới trẻ của Zing MP3, với âm nhạc đến từ khắp nơi trên thế giới.",
-    "type": "application/x-mpegURL",
-    "category": "Âm nhạc",
-    "url": "https://zingmp3.vn/liveradio/IWZ97AIO.html",
-    "cros": false,
-    "time": "24/7",
-    "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97AIO&time=",
-    "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97AIO&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/9tPzLPYORS8/zhls/playback-realtime/a07d79b945fcaca2f5ed/index.m3u8",
-    "features": "/img/asia/viet-nam/zing-mp3-on-air.png"
-  },
   "edm-radio-zing-mp3": {
     "title": "EDM Radio - Zing MP3",
     "description": "Đây là 'sàn' EDM. Các bạn đã sẵn sàng chưa? Nhạc lên rồi, cùng nhảy thôi!",
