@@ -645,7 +645,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979C8&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979C8&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/62YE6lXdY4w/zhls/playback-realtime/db68d4afe8ea01b458fb/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/uZKmUgeVWGU/zhls/playback-realtime/9f4a21e61da3f4fdadb2/index.m3u8",
     "features": "/img/asia/viet-nam/cham-radio-zing-mp3.png"
   },
   "vpop-radio-zing-mp3": {
