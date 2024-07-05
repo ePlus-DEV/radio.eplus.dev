@@ -128,8 +128,24 @@ export default {
   buildModules: [
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode"
+    "@nuxtjs/color-mode",
+    "@nuxtjs/fontawesome",
   ],
+  fontawesome: {
+     component: 'Fa',
+     suffix: false,
+     icons: {
+       solid: true,
+       brands: true,
+    },
+    proIcons: {
+      solid: true,
+      regular: true,
+      light: true,
+      thin: true,
+      duotone: true,
+    },
+ },
   // momentjs
   moment: {
     timezone: true,

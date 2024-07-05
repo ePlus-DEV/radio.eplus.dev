@@ -5,13 +5,8 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player
-      ref="player"
-      country="world.asia.vietnam"
-      :schedule="schedule_data"
-      :home="true"
-      thumb="/img/asia/flags/viet-nam.png"
-    ></Player>
+    <Player ref="player" country="world.asia.vietnam" :schedule="schedule_data" :home="true"
+      thumb="/img/asia/flags/viet-nam.png"></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
