@@ -186,7 +186,7 @@
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://pull.vovgiaothong.vn/live/209caa25018d10006ee73f7b00000000/playlist.m3u8",
+    "stream": "https://play.vovgiaothong.vn/live/gthcm/playlist.m3u8",
     "stream_alternative": "https://stream.vovmedia.vn/vovgthcm",
     "features": "/img/asia/viet-nam/vov-giao-thong.png"
   },
@@ -197,7 +197,7 @@
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://pull.vovgiaothong.vn/live/204fb0f7018d10006a62119c00000000/playlist.m3u8",
+    "stream": "https://play.vovgiaothong.vn/live/gthn/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov-giao-thong-ha-noi.png"
   },
   "vov-mekong": {
@@ -207,7 +207,7 @@
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://pull.vovgiaothong.vn/live/209d65c1018d1000f5e703b400000000/playlist.m3u8",
+    "stream": "https://play.vovgiaothong.vn/live/mekong/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov-mekong.png"
   },
   "vov-suc-khoe": {
@@ -619,7 +619,7 @@
     "time": "Chưa rõ",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97CZZ&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97CZZ&time=",
-    "stream": "https://vnno-pt-2-tf-multi-playlist-zmp3.zmdcdn.me/Ce5_Z5JFx2c/zhls/playback-realtime/f9a40e7c3239db678228/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/TgLpe29pVg0/zhls/playback-realtime/e75e51f26db784e9dda6/index.m3u8",
     "features": "/img/asia/viet-nam/xone.png"
   },
   "edm-radio-zing-mp3": {
@@ -632,7 +632,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ9799A&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ9799A&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/AYtg9UVhc4c/zhls/playback-realtime/7ad38814b4515d0f0440/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/lupi_x8-Su4/zhls/playback-realtime/7386bb2a876f6e31377e/index.m3u8",
     "features": "/img/asia/viet-nam/edm-radio-zing-mp3.png"
   },
   "cham-radio-zing-mp3": {
@@ -645,7 +645,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979C8&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979C8&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/uZKmUgeVWGU/zhls/playback-realtime/9f4a21e61da3f4fdadb2/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/eHjZAdAk-sk/zhls/playback-realtime/59a2ee0ed24b3b15625a/index.m3u8",
     "features": "/img/asia/viet-nam/cham-radio-zing-mp3.png"
   },
   "vpop-radio-zing-mp3": {
@@ -658,7 +658,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979UB&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979UB&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/wTSwRIGOON0/zhls/playback-realtime/6eeb692c5569bc37e578/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/odi6UBatld4/zhls/playback-realtime/6ddadf76e3330a6d5322/index.m3u8",
     "features": "/img/asia/viet-nam/vpop-radio-zing-mp3.png"
   },
   "bolero-zing-mp3": {
@@ -671,7 +671,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979ZI&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979ZI&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/BtRvAOtW5jk/zhls/playback-realtime/e3b9f87ec43b2d65742a/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/ioZs7yhxUxk/zhls/playback-realtime/5bace800d4453d1b6454/index.m3u8",
     "features": "/img/asia/viet-nam/bolero-zing-mp3.png"
   },
   "us-uk-radio-zing-mp3": {
@@ -684,7 +684,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97A0W&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97A0W&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/RckDo1XPsU4/zhls/playback-realtime/111c87d8bb9d52c30b8c/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/-XosZVJX9XA/zhls/playback-realtime/f49e38320477ed29b466/index.m3u8",
     "features": "/img/asia/viet-nam/us-uk-radio-zing-mp3.png"
   },
   "kpop-radio-zing-mp3": {
@@ -697,7 +697,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979UC&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979UC&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/94rxZ-Dfzro/zhls/playback-realtime/ff294ded71a898f6c1b9/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/GCLGhc52LhE/zhls/playback-realtime/d01d1db121f4c8aa91e5/index.m3u8",
     "features": "/img/asia/viet-nam/kpop-radio-zing-mp3.png"
   },
   "c-pop-zing-mp3": {
@@ -710,7 +710,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ9798C&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ9798C&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/n3057ldzl7E/zhls/playback-realtime/ac19a6de9a9b73c52a8a/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/_TAVBRh_ce4/zhls/playback-realtime/97b35e1f625a8b04d24b/index.m3u8",
     "features": "/img/asia/viet-nam/c-pop-zing-mp3.png"
   },
     "pladio-zing-mp3": {
@@ -736,7 +736,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97B9E&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97B9E&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/5x3hFti6aTY/zhls/playback-realtime/51d7680d5448bd16e459/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/4WEUr_3aq8I/zhls/playback-realtime/1f36d59ae9df008159ce/index.m3u8",
     "features": "/img/asia/viet-nam/nhac-khong-loi-zing-mp3.png"
   },
   "indie-zing-mp3": {
@@ -749,7 +749,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979BC&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979BC&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/IQgDniEgTQs/zhls/playback-realtime/7fa39264ae21477f1e30/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/VV55kkJD6Qo/zhls/playback-realtime/eeff2a531616ff48a607/index.m3u8",
     "features": "/img/asia/viet-nam/indie-zing-mp3.png"
   },
   "nhac-buon-zing-mp3": {
@@ -775,7 +775,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979D9&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979CB&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/M-uqetyzV0g/zhls/playback-realtime/8c6190a6ace345bd1cf2/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/UKk_cQEl314/zhls/playback-realtime/ef512afd16b8ffe6a6a9/index.m3u8",
     "features": "/img/asia/viet-nam/chill-zing-mp3.png"
   },
   "acoustic-radio-zing-mp3": {
@@ -788,7 +788,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979C0&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979C0&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/ktkT8IgzcQQ/zhls/playback-realtime/08aae96dd5283c766539/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/AiekixzmitQ/zhls/playback-realtime/9b7b55d7699280ccd983/index.m3u8",
     "features": "/img/asia/viet-nam/acoustic-radio-zing-mp3.png"
   },
   "rap-viet-radio-zing-mp3": {
@@ -801,7 +801,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97996&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97996&time=",
-    "stream": "https://multi-playlist-zmp3.zadn.vn/Itsn5VCb5Uo/zhls/playback-realtime/4f2980eebcab55f50cba/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/XHOosOJ-f8g/zhls/playback-realtime/cef1015d3d18d4468d09/index.m3u8",
     "features": "/img/asia/viet-nam/rap-viet-radio-zing-mp3.png"
   },
   "the-one-radio-zing-mp3": {
@@ -827,7 +827,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ979D9&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979D9&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/-dpu6v2MDL0/zhls/playback-realtime/7f635fa463e18abfd3f0/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/UKk_cQEl314/zhls/playback-realtime/ef512afd16b8ffe6a6a9/index.m3u8",
     "features": "/img/asia/viet-nam/nhac-thieu-nhi-zing-mp3.png"
   }
 }
