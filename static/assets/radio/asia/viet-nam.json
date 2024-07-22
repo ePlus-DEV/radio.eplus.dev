@@ -182,7 +182,7 @@
   "vov-gt-hcm": {
     "title": "VOV Giao Thông TP.HCM",
     "description": "VOV Giao thông TPHCM ra đời vào năm 2010, cùng với VOV Giao thông Hà Nội đã trở thành một người bạn đường tin cậy của các tài xế. Kênh tập trung vào việc tuyên truyền giao thông, thông tin cảnh báo nhằm giảm thiểu ùn tắc giao thông cũng như các chương trình giải trí khác.",
-    "type": "application/x-mpegURL",
+    "type": "audio/aac",
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "cros": false,
@@ -193,7 +193,7 @@
   "vov-giao-thong": {
     "title": "VOV Giao Thông Hà Nội",
     "description": "Kênh VOV Giao Thông FM 91 MHz là kênh phát thanh thực tế đầu tiên tại Việt Nam, ra đời năm 2010, trực thuộc Đài tiếng nói Việt Nam. Kênh cung cấp các diễn biến giao thông đang xảy ra trên thực tế giúp các thính giả có cái nhìn toàn cảnh và chính xác nhất về giao thông.",
-    "type": "application/x-mpegURL",
+    "type": "audio/aac",
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "cros": false,

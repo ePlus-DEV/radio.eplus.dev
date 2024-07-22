@@ -1,6 +1,6 @@
 {
   "title": "VOV Giao Thông TP.HCM",
-  "type": "application/x-mpegURL",
+  "type": "audio/aac",
   "frequency": "FM 91 MHz",
   "countries": "Việt Nam",
   "stream": "https://stream.vovmedia.vn/vovgthcm",
