@@ -5,8 +5,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" country="world.asia.vietnam" :schedule="schedule_data" :home="true"
-      thumb="/img/asia/flags/viet-nam.png"></Player>
+    <Player
+      ref="player"
+      country="world.asia.vietnam"
+      :schedule="schedule_data"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
@@ -40,7 +45,9 @@ export default {
   methods: {
     async fetchData() {
       this.$axios
-        .get(`/assets/radio/favorite/${this.$config.Pin_Channel_Favorites}.json`)
+        .get(
+          `/assets/radio/favorite/${this.$config.Pin_Channel_Favorites}.json`,
+        )
         .then((res) => {
           const data = res.data;
           this.stream_name = data.title;
@@ -53,7 +60,10 @@ export default {
           // Get Schedule
           var form = new FormData();
           form.append("vov", "vovgthn");
-          form.append("date", this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"));
+          form.append(
+            "date",
+            this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"),
+          );
           var self = this;
 
           var settings = {
