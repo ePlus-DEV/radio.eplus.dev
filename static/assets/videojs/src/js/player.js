@@ -338,7 +338,7 @@ class Player extends Component {
         let element = tag;
 
         while (element && element.nodeType === 1) {
-          if (Dom.getAttributes(element).hasOwnProperty('lang')) {
+          if (Object.prototype.hasOwnProperty.call(Dom.getAttributes(element), 'lang')) {
             options.language = element.getAttribute('lang');
             break;
           }
@@ -3251,7 +3251,7 @@ class Player extends Component {
       // so older techs won't support it
       // We need to check the direct prototype for the case where subclasses
       // of the tech do not support source handlers
-      if (this.tech_.constructor.prototype.hasOwnProperty('setSource')) {
+      if (Object.prototype.hasOwnProperty.call(this.tech_.constructor.prototype, 'setSource')) {
         this.techCall_('setSource', source);
       } else {
         this.techCall_('src', source.src);

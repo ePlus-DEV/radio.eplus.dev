@@ -527,7 +527,7 @@ class TextTrackSettings extends ModalDialog {
    */
   setDefaults() {
     Obj.each(selectConfigs, (config) => {
-      const index = config.hasOwnProperty('default') ? config.default : 0;
+      const index = Object.prototype.hasOwnProperty.call(config, 'default') ? config.default : 0;
 
       this.$(config.selector).selectedIndex = index;
     });

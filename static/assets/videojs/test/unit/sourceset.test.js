@@ -39,7 +39,7 @@ const validateSource = function(player, expectedSources, event, srcOverrides = {
 
   Object.keys(srcOverrides).forEach((k) => {
     // only override known properties
-    if (!expected.hasOwnProperty(k)) {
+    if (!Object.prototype.hasOwnProperty.call(expected, k)) {
       return;
     }
 

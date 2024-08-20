@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     get_head(params) {
-      if (nepal.hasOwnProperty(this.$route.params.name)) {
+      if (Object.prototype.hasOwnProperty.call(nepal, this.$route.params.name)) {
         return nepal[this.$route.params.name][params];
       }
     },
@@ -103,7 +103,7 @@ export default {
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
         .then((res) => {
           const $t = this.$t.bind(this);
-          if (res.data.hasOwnProperty(this.$route.params.name)) {
+          if (Object.prototype.hasOwnProperty.call(res.data, this.$route.params.name)) {
             const data = res.data[this.$route.params.name];
             // Set variable
             this.name = data.title;

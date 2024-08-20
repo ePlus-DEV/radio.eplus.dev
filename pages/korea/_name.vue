@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     get_head(params) {
-      if (korea.hasOwnProperty(this.$route.params.name)) {
+      if (Object.prototype.hasOwnProperty.call(korea, this.$route.params.name)) {
         return korea[this.$route.params.name][params];
       }
     },
@@ -101,7 +101,7 @@ export default {
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
         .then((res) => {
           const $t = this.$t.bind(this);
-          if (res.data.hasOwnProperty(this.$route.params.name)) {
+          if (Object.prototype.hasOwnProperty.call(res.data, this.$route.params.name)) {
             const data = res.data[this.$route.params.name];
 
             // Set variable

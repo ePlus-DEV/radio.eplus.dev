@@ -159,7 +159,7 @@ export default function createLogger(name) {
    */
   log.level = (lvl) => {
     if (typeof lvl === 'string') {
-      if (!log.levels.hasOwnProperty(lvl)) {
+      if (!Object.prototype.hasOwnProperty.call(log.levels, lvl)) {
         throw new Error(`"${lvl}" in not a valid log level`);
       }
       level = lvl;

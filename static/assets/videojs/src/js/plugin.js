@@ -44,7 +44,7 @@ const pluginStorage = {};
  * @return {boolean}
  *          Whether or not the plugin has been registered.
  */
-const pluginExists = (name) => pluginStorage.hasOwnProperty(name);
+const pluginExists = (name) => Object.prototype.hasOwnProperty.call(pluginStorage, name);
 
 /**
  * Get a single registered plugin by name.
@@ -322,7 +322,7 @@ class Plugin {
   static isBasic(plugin) {
     const p = (typeof plugin === 'string') ? getPlugin(plugin) : plugin;
 
-    return typeof p === 'function' && !Plugin.prototype.isPrototypeOf(p.prototype);
+    return typeof p === 'function' && !Object.prototype.isPrototypeOf.call(Plugin.prototype, p.prototype);
   }
 
   /**
@@ -347,7 +347,7 @@ class Plugin {
 
     if (pluginExists(name)) {
       log.warn(`A plugin named "${name}" already exists. You may want to avoid re-registering plugins!`);
-    } else if (Player.prototype.hasOwnProperty(name)) {
+    } else if (Object.prototype.hasOwnProperty.call(Player.prototype, name)) {
       throw new Error(`Illegal plugin name, "${name}", cannot share a name with an existing player method!`);
     }
 
