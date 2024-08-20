@@ -40,7 +40,7 @@ export default {
   methods: {
     async fetchData() {
       this.$axios
-        .get("/assets/radio/favorite/" + this.$config.Pin_Channel_Favorites + ".json")
+        .get(`/assets/radio/favorite/${this.$config.Pin_Channel_Favorites}.json`)
         .then((res) => {
           const data = res.data;
           this.stream_name = data.title;
@@ -57,7 +57,7 @@ export default {
           var self = this;
 
           var settings = {
-            url: data["schedule"],
+            url: data.schedule,
             method: "POST",
             timeout: 0,
             processData: false,

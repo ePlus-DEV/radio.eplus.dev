@@ -53,7 +53,7 @@ export default {
     };
   },
   mounted() {
-    this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+    this.$axios.get(`/assets/radio/favorite/${this.slug}.json`).then((res) => {
       const data = res.data;
 
       // Vuex
@@ -68,7 +68,7 @@ export default {
       var self = this;
 
       var settings = {
-        url: data["schedule"],
+        url: data.schedule,
         method: "POST",
         timeout: 0,
         processData: false,
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      this.$axios.get("/assets/radio/favorite/" + this.slug + ".json").then((res) => {
+      this.$axios.get(`/assets/radio/favorite/${this.slug}.json`).then((res) => {
         const data = res.data;
         // Vuex
         this.$store.dispatch("storePLAYERHOME", data);
@@ -97,7 +97,7 @@ export default {
         var self = this;
 
         var settings = {
-          url: data["schedule"],
+          url: data.schedule,
           method: "POST",
           timeout: 0,
           processData: false,
