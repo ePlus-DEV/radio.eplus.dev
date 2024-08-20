@@ -19,7 +19,10 @@
         />
       </svg>
     </button>
-    <div class="fixed left-0 bottom-2 z-40" :class="lyric_popup ? '' : 'hidden'">
+    <div
+      class="fixed left-0 bottom-2 z-40"
+      :class="lyric_popup ? '' : 'hidden'"
+    >
       <div
         class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden dark:bg-gray-700 dark:text-white"
       >
@@ -50,7 +53,7 @@
               <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
             </div>
             <div class="pb-4 overflow-y-auto h-64" id="lyric">
-                <span>{{ lyric }}</span>
+              <span>{{ lyric }}</span>
             </div>
           </div>
         </div>
@@ -91,7 +94,9 @@ export default {
         {
           property: "og:title",
           content:
-            this.get_head("title") + " - Radio Internet | " + process.env.WEBSITE_NAME,
+            this.get_head("title") +
+            " - Radio Internet | " +
+            process.env.WEBSITE_NAME,
         },
         {
           property: "og:image",
@@ -153,7 +158,9 @@ export default {
   },
   methods: {
     get_head(params) {
-      if (Object.prototype.hasOwnProperty.call(vietnam, this.$route.params.name)) {
+      if (
+        Object.prototype.hasOwnProperty.call(vietnam, this.$route.params.name)
+      ) {
         return vietnam[this.$route.params.name][params];
       }
     },
@@ -162,7 +169,12 @@ export default {
         .get("/assets/radio/" + this.area + "/" + this.slug + ".json")
         .then((res) => {
           const $t = this.$t.bind(this);
-          if (Object.prototype.hasOwnProperty.call(res.data, this.$route.params.name)) {
+          if (
+            Object.prototype.hasOwnProperty.call(
+              res.data,
+              this.$route.params.name,
+            )
+          ) {
             const data = res.data[this.$route.params.name];
 
             // Set variable
@@ -201,71 +213,79 @@ export default {
         });
     },
     async fetchSchedule(url) {
-      this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
-        if (res.data.err === 0) {
-          this.program = res.data.data.items;
+      this.$axios
+        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .then((res) => {
+          if (res.data.err === 0) {
+            this.program = res.data.data.items;
 
-          this.fetchSong(
-            process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL +
-              res.data.data.items[0].encodeId +
-              "&time="
-          );
-        }
-        // Loop
-        var self = this;
-        window.clearTimeout(this.polling_schedule);
-        this.polling_schedule = setInterval(function () {
-          self.fetchSchedule(url);
-        }, 60000);
-      });
+            this.fetchSong(
+              process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL +
+                res.data.data.items[0].encodeId +
+                "&time=",
+            );
+          }
+          // Loop
+          var self = this;
+          window.clearTimeout(this.polling_schedule);
+          this.polling_schedule = setInterval(function () {
+            self.fetchSchedule(url);
+          }, 60000);
+        });
     },
     async fetchSong(url) {
-      this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
-        if (res.data.err === 0) {
-          this.song = res.data.data;
-        }
-        // BEGIN - Browser title
-        document.title = this.get_head("title");
-        if (this.song !== undefined && this.song.currentMedia !== undefined) {
-          document.title =
+      this.$axios
+        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .then((res) => {
+          if (res.data.err === 0) {
+            this.song = res.data.data;
+          }
+          // BEGIN - Browser title
+          document.title = this.get_head("title");
+          if (this.song !== undefined && this.song.currentMedia !== undefined) {
+            document.title =
+              this.song.currentMedia.title +
+              " - " +
+              this.song.currentMedia.artists +
+              " | " +
+              this.get_head("title");
+          }
+          // END - Browser title
+          // BEGIN - Lyric
+          $("#song").text(
             this.song.currentMedia.title +
-            " - " +
-            this.song.currentMedia.artists +
-            " | " +
-            this.get_head("title");
-        }
-        // END - Browser title
-        // BEGIN - Lyric
-        $("#song").text(
-          this.song.currentMedia.title + " - " + this.song.currentMedia.artists
-        );
-        if (this.song.currentMedia.hasLyric) {
-          this.fetchLyric(this.song.currentMedia.encodeId);
-        } else {
-          this.lyric = this.$t("panel.no_lyric");
-        }
-        // END - Lyric
-        // Loop
-        var self = this;
-        window.clearTimeout(this.polling_song);
-        this.polling_song = setInterval(function () {
-          self.fetchSong(url);
-        }, 60000);
-      });
+              " - " +
+              this.song.currentMedia.artists,
+          );
+          if (this.song.currentMedia.hasLyric) {
+            this.fetchLyric(this.song.currentMedia.encodeId);
+          } else {
+            this.lyric = this.$t("panel.no_lyric");
+          }
+          // END - Lyric
+          // Loop
+          var self = this;
+          window.clearTimeout(this.polling_song);
+          this.polling_song = setInterval(function () {
+            self.fetchSong(url);
+          }, 60000);
+        });
     },
     async fetchInfo(url) {
       var fetch;
-      this.$axios.get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix()).then((res) => {
-        if (res.data.success) {
-          this.info = res.data;
-        }
-        // Loop
-        var self = this;
-        // clearTimeout(fetch);
-        fetch = setInterval(function () {
-          self.fetchInfo(url);
-        }, 60000);
-      });
+      this.$axios
+        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .then((res) => {
+          if (res.data.success) {
+            this.info = res.data;
+          }
+          // Loop
+          var self = this;
+          // clearTimeout(fetch);
+          fetch = setInterval(function () {
+            self.fetchInfo(url);
+          }, 60000);
+        });
     },
     async fetchLyric(id) {
       this.$axios
@@ -273,7 +293,7 @@ export default {
           process.env.API_ZING_GET_LYRIC +
             id +
             "&time=" +
-            this.$moment().tz("Asia/Ho_Chi_Minh").unix()
+            this.$moment().tz("Asia/Ho_Chi_Minh").unix(),
         )
         .then((res) => {
           if (res.data.err === 0) {
