@@ -696,7 +696,7 @@ function VideoProvider(_playerId, _playerConfig, mediaElement) {
             seekToTime += seekRange.end;
         }
         if (!_canSeek) {
-            _canSeek = !!_getSeekableEnd();
+            _canSeek = Boolean(_getSeekableEnd());
         }
         if (_canSeek) {
             _delayedSeek = 0;
@@ -746,7 +746,7 @@ function VideoProvider(_playerId, _playerConfig, mediaElement) {
     }
 
     this.setVisibility = function(state) {
-        state = !!state;
+        state = Boolean(state);
         if (state || OS.android) {
             // Changing visibility to hidden on Android < 4.2 causes
             // the pause event to be fired. This causes audio files to
@@ -765,7 +765,7 @@ function VideoProvider(_playerId, _playerConfig, mediaElement) {
     };
 
     this.setFullscreen = function(state) {
-        state = !!state;
+        state = Boolean(state);
 
         // This implementation is for iOS and Android WebKit only
         // This won't get called if the player container can go fullscreen
@@ -796,7 +796,7 @@ function VideoProvider(_playerId, _playerConfig, mediaElement) {
     };
 
     _this.getFullScreen = function() {
-        return _iosFullscreenState || !!_videotag.webkitDisplayingFullscreen;
+        return _iosFullscreenState || Boolean(_videotag.webkitDisplayingFullscreen);
     };
 
     this.setCurrentQuality = function(quality) {

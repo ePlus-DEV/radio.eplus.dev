@@ -21,7 +21,7 @@ const Source = function(config) {
     }, config);
 
     // normalize for odd strings
-    source.file = trim('' + source.file);
+    source.file = trim(String(source.file));
 
     // regex to check if mimetype is given
     const mimetypeRegEx = /^[^/]+\/(?:x-)?([^/]+)$/;

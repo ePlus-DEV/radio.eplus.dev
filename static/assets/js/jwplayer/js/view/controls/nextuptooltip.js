@@ -87,7 +87,7 @@ export default class NextUpTooltip {
         if (!this.enabled) {
             return;
         }
-        toggleClass(this.container, 'jw-nextup-sticky', !!this.nextUpSticky);
+        toggleClass(this.container, 'jw-nextup-sticky', Boolean(this.nextUpSticky));
         if (this.shown !== show) {
             this.shown = show;
             toggleClass(this.container, 'jw-nextup-container-visible', show);
@@ -114,7 +114,7 @@ export default class NextUpTooltip {
         setTimeout(() => {
             // Set thumbnail
             this.thumbnail = this.content.querySelector('.jw-nextup-thumbnail');
-            toggleClass(this.content, 'jw-nextup-thumbnail-visible', !!nextUpItem.image);
+            toggleClass(this.content, 'jw-nextup-thumbnail-visible', Boolean(nextUpItem.image));
             if (nextUpItem.image) {
                 const thumbnailStyle = this.loadThumbnail(nextUpItem.image);
                 style(this.thumbnail, thumbnailStyle);
@@ -147,7 +147,7 @@ export default class NextUpTooltip {
             };
         }
 
-        this.enabled = !!(nextUp.title || nextUp.image);
+        this.enabled = Boolean(nextUp.title || nextUp.image);
 
         if (this.enabled) {
             if (!nextUp.showNextUp) {

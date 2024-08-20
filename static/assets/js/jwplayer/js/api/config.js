@@ -80,7 +80,7 @@ const Config = function(options, persisted) {
     config.height = normalizeSize(config.height);
     config.aspectratio = normalizeAspectRatio(config.aspectratio, config.width);
     config.volume = isValidNumber(config.volume) ? Math.min(Math.max(0, config.volume), 100) : Defaults.volume;
-    config.mute = !!config.mute;
+    config.mute = Boolean(config.mute);
     config.language = language;
     config.intl = intl;
 
@@ -88,7 +88,7 @@ const Config = function(options, persisted) {
     // default autoPause.viewability to true.
     let autoPause = allOptions.autoPause;
     if (autoPause) {
-        config.autoPause.viewability = ('viewability' in autoPause) ? !!autoPause.viewability : true;
+        config.autoPause.viewability = ('viewability' in autoPause) ? Boolean(autoPause.viewability) : true;
     }
 
     let rateControls = config.playbackRateControls;

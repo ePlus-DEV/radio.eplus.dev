@@ -116,7 +116,7 @@ export function assign(target, ...sources) {
  * @return {boolean}
  */
 export function isObject(value) {
-  return !!value && typeof value === 'object';
+  return Boolean(value) && typeof value === 'object';
 }
 
 /**

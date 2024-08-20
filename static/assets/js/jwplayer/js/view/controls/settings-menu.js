@@ -123,7 +123,7 @@ export function setupSubmenuListeners(settingsMenu, controlbar, viewModel, api) 
             cc,
             off
         );
-        controlbar.toggleCaptionsButtonState(!!model.get('captionsIndex'));
+        controlbar.toggleCaptionsButtonState(Boolean(model.get('captionsIndex')));
         controlbarButton.show();
     };
 
@@ -195,7 +195,7 @@ export function setupSubmenuListeners(settingsMenu, controlbar, viewModel, api) 
         const captionsSubmenu = settingsMenu.getSubmenu('captions');
         if (captionsSubmenu) {
             captionsSubmenu.activateItem(index);
-            controlbar.toggleCaptionsButtonState(!!index);
+            controlbar.toggleCaptionsButtonState(Boolean(index));
         }
     }, settingsMenu);
 

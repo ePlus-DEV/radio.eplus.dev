@@ -34,7 +34,7 @@ Object.assign(Title.prototype, {
         const logo = model.get('logo');
         if (logo) {
             // Only use Numeric or pixel ("Npx") margin values
-            const margin = 1 * ('' + logo.margin).replace('px', '');
+            const margin = Number((String(logo.margin)).replace('px', ''));
             const padding = model.get('logoWidth') + (isNaN(margin) ? 0 : margin + 10);
             if (logo.position === 'top-left') {
                 titleStyle.paddingLeft = padding;

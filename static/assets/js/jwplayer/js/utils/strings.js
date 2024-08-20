@@ -7,7 +7,7 @@ export function trim(inputString) {
 }
 
 export function pad(str, length, padder) {
-    str = '' + str;
+    str = String(str);
     padder = padder || '0';
     while (str.length < length) {
         str = padder + str;

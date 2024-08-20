@@ -85,7 +85,7 @@ function _styleValue(property, value) {
     if (value === 0 ||
         property === 'z-index' ||
         property === 'opacity') {
-        return '' + value;
+        return String(value);
     }
     if ((/color/i).test(property)) {
         return '#' + pad(value.toString(16).replace(/^0x/i, ''), 6);

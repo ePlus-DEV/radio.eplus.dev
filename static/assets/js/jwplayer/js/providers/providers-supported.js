@@ -63,7 +63,7 @@ export function supportsType(source) {
 
         // Last, but not least, we ask the browser
         // (But only if it's a video with an extension known to work in HTML5)
-        return !!video.canPlayType(mimeType);
+        return Boolean(video.canPlayType(mimeType));
     }
 }
 

@@ -51,7 +51,7 @@ class TrackList extends EventTarget {
   addTrack(track) {
     const index = this.tracks_.length;
 
-    if (!('' + index in this)) {
+    if (!(String(index) in this)) {
       Object.defineProperty(this, index, {
         get() {
           return this.tracks_[index];

@@ -67,7 +67,7 @@ const Item = function(config) {
         playlistItem.sources[i] = Source(playlistItem.sources[i]);
     }
 
-    playlistItem.sources = playlistItem.sources.filter(source => !!source);
+    playlistItem.sources = playlistItem.sources.filter(source => Boolean(source));
 
 
     if (!isArray(playlistItem.tracks)) {
@@ -79,7 +79,7 @@ const Item = function(config) {
         delete playlistItem.captions;
     }
 
-    playlistItem.tracks = playlistItem.tracks.map(Track).filter(track => !!track);
+    playlistItem.tracks = playlistItem.tracks.map(Track).filter(track => Boolean(track));
 
     return playlistItem;
 };

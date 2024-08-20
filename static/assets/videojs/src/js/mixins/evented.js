@@ -20,7 +20,7 @@ import EventTarget from '../event-target';
  */
 const isEvented = (object) =>
   object instanceof EventTarget ||
-  !!object.eventBusEl_ &&
+  Boolean(object.eventBusEl_) &&
   ['on', 'one', 'off', 'trigger'].every(k => typeof object[k] === 'function');
 
 /**
@@ -56,7 +56,7 @@ const isValidEventType = (type) =>
   // The regex here verifies that the `type` contains at least one non-
   // whitespace character.
   (typeof type === 'string' && (/\S/).test(type)) ||
-  (Array.isArray(type) && !!type.length);
+  (Array.isArray(type) && Boolean(type.length));
 
 /**
  * Validates a value to determine if it is a valid event target. Throws if not.

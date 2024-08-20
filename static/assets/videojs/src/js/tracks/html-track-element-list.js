@@ -44,7 +44,7 @@ class HtmlTrackElementList {
   addTrackElement_(trackElement) {
     const index = this.trackElements_.length;
 
-    if (!('' + index in this)) {
+    if (!(String(index) in this)) {
       Object.defineProperty(this, index, {
         get() {
           return this.trackElements_[index];

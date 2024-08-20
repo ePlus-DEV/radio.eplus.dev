@@ -49,7 +49,7 @@ export default class TooltipIcon {
     }
 
     hasContent() {
-        return !!this.content;
+        return Boolean(this.content);
     }
 
     element() {

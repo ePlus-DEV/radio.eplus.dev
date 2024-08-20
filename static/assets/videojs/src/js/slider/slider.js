@@ -32,7 +32,7 @@ class Slider extends Component {
     this.bar = this.getChild(this.options_.barName);
 
     // Set a horizontal or vertical class on the slider depending on the slider type
-    this.vertical(!!this.options_.vertical);
+    this.vertical(Boolean(this.options_.vertical));
 
     this.enable();
   }
@@ -349,7 +349,7 @@ class Slider extends Component {
       return this.vertical_ || false;
     }
 
-    this.vertical_ = !!bool;
+    this.vertical_ = Boolean(bool);
 
     if (this.vertical_) {
       this.addClass('vjs-slider-vertical');

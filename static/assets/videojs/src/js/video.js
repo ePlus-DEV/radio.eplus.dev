@@ -480,7 +480,7 @@ videojs.getPluginVersion = Plugin.getPluginVersion;
  *         The resulting language dictionary object
  */
 videojs.addLanguage = function(code, data) {
-  code = ('' + code).toLowerCase();
+  code = (String(code)).toLowerCase();
 
   videojs.options.languages = mergeOptions(
     videojs.options.languages,

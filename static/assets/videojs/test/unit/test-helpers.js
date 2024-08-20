@@ -115,8 +115,8 @@ const TestHelpers = {
 
     // Include the number of assertions to run, so it can be used to set
     // expectations (via `assert.expect()`).
-    run.count = Number(!!tagName) +
-      Number(!!innerHTML) +
+    run.count = Number(Boolean(tagName)) +
+      Number(Boolean(innerHTML)) +
       classes.length +
       attrs.length +
       props.length;

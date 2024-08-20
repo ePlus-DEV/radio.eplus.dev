@@ -47,7 +47,7 @@ const InstreamAdapter = function(_controller, _model, _view, _mediaPool) {
             return;
         }
         evt = evt || {};
-        evt.hasControls = !!_model.get('controls');
+        evt.hasControls = Boolean(_model.get('controls'));
 
         this.trigger(INSTREAM_CLICK, evt);
 
@@ -152,7 +152,7 @@ const InstreamAdapter = function(_controller, _model, _view, _mediaPool) {
                     return;
                 }
                 evt = evt || {};
-                evt.hasControls = !!_model.get('controls');
+                evt.hasControls = Boolean(_model.get('controls'));
                 _this.trigger(INSTREAM_CLICK, evt);
                 if (clickThroughUrl) {
                     if (_model.get('state') === STATE_PAUSED) {

@@ -12,7 +12,7 @@ function lazyUserAgentMatch(regex) {
 
 export function isFlashSupported() {
     const version = flashVersion();
-    return !!(version && version >= __FLASH_VERSION__);
+    return Boolean(version && version >= __FLASH_VERSION__);
 }
 
 export const isFF = lazyUserAgentMatch(/gecko\//i);

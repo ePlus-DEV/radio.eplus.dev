@@ -18,7 +18,7 @@ export default function(elementContext, documentContext, changeCallback) {
         documentContext.mozCancelFullScreen ||
         documentContext.msExitFullscreen;
 
-    const supportsDomFullscreen = !!(requestFullscreen && exitFullscreen);
+    const supportsDomFullscreen = Boolean(requestFullscreen && exitFullscreen);
 
     for (let i = DOCUMENT_FULLSCREEN_EVENTS.length; i--;) {
         documentContext.addEventListener(DOCUMENT_FULLSCREEN_EVENTS[i], changeCallback);

@@ -29,7 +29,7 @@ export default class UI extends Events {
         options = options || {};
         const passive = !options.preventScrolling;
 
-        this.directSelect = !!options.directSelect;
+        this.directSelect = Boolean(options.directSelect);
         this.dragged = false;
         this.enableDoubleTap = false;
         this.el = element;

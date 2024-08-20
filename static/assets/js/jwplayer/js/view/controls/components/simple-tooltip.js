@@ -12,7 +12,7 @@ export function SimpleTooltip(attachToElement, name, text, openCallback, closeCa
     attachToElement.appendChild(tooltipElement);
 
     const instance = {
-        dirty: !!text,
+        dirty: Boolean(text),
         opened: false,
         text,
         open() {

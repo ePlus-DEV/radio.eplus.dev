@@ -532,7 +532,7 @@ function View(_api, _model) {
     }
 
     function onAspectRatioChange(model, aspectratio) {
-        toggleClass(_playerElement, 'jw-flag-aspect-mode', !!aspectratio);
+        toggleClass(_playerElement, 'jw-flag-aspect-mode', Boolean(aspectratio));
         const aspectRatioContainer = _playerElement.querySelectorAll('.jw-aspect');
         style(aspectRatioContainer, {
             paddingTop: aspectratio || null
@@ -650,13 +650,13 @@ function View(_api, _model) {
     }
 
     function _resizeMedia(containerWidth, containerHeight) {
-        if (!containerWidth || isNaN(1 * containerWidth)) {
+        if (!containerWidth || isNaN(Number(containerWidth))) {
             containerWidth = _model.get('containerWidth');
             if (!containerWidth) {
                 return;
             }
         }
-        if (!containerHeight || isNaN(1 * containerHeight)) {
+        if (!containerHeight || isNaN(Number(containerHeight))) {
             containerHeight = _model.get('containerHeight');
             if (!containerHeight) {
                 return;
@@ -695,7 +695,7 @@ function View(_api, _model) {
         // Return whether or not we're in native fullscreen
         if (fullscreenHelpers.supportsDomFullscreen()) {
             const fsElement = fullscreenHelpers.fullscreenElement();
-            return !!(fsElement && fsElement === _playerElement);
+            return Boolean(fsElement && fsElement === _playerElement);
         }
         // If native fullscreen is not available, return video fullscreen state
         const provider = _model.getVideo();
@@ -764,7 +764,7 @@ function View(_api, _model) {
         }
         _title.hide();
         _playerElement.appendChild(errorContainer.firstChild);
-        toggleClass(_playerElement, 'jw-flag-audio-player', !!model.get('audioMode'));
+        toggleClass(_playerElement, 'jw-flag-audio-player', Boolean(model.get('audioMode')));
     }
 
     function _stateHandler(model, newState, oldState) {
@@ -841,12 +841,12 @@ function View(_api, _model) {
 
     const settingsMenuVisible = () => {
         const settingsMenu = _controls?.settingsMenu;
-        return !!(settingsMenu?.visible);
+        return Boolean(settingsMenu?.visible);
     };
 
     const infoOverlayVisible = () => {
         const info = _controls?.infoOverlay;
-        return !!(info?.visible);
+        return Boolean(info?.visible);
     };
 
     const setupInstream = function() {

@@ -123,7 +123,7 @@ export default class ViewModel extends PlayerViewModel {
 
         this._instreamModel = instreamModel;
 
-        this.trigger('instreamMode', !!instreamModel);
+        this.trigger('instreamMode', Boolean(instreamModel));
 
         if (instreamModel) {
             instreamModel.on('all', (type, objectOrEvent, value, previousValue) => {
