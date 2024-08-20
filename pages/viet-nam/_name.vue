@@ -50,7 +50,7 @@
               <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
             </div>
             <div class="pb-4 overflow-y-auto h-64" id="lyric">
-              <span v-html="lyric"> </span>
+                <span>{{ lyric }}</span>
             </div>
           </div>
         </div>
