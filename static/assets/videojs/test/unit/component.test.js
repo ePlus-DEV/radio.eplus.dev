@@ -132,7 +132,7 @@ QUnit.test('should add a child component to an index', function(assert) {
   assert.ok(comp.children().length === 3);
   assert.ok(comp.children()[2] === child1);
 
-  const child2 = comp.addChild('component', {}, undefined);
+  const child2 = comp.addChild('component', {});
 
   assert.ok(comp.children().length === 4);
   assert.ok(comp.children()[3] === child2);
@@ -682,7 +682,7 @@ QUnit.test('dimension() should treat NaN and null as zero', function(assert) {
   assert.equal(comp.height(), 0, 'the new height is zero');
 
   comp.width(width);
-  newWidth = comp.dimension('width', undefined);
+  newWidth = comp.dimension('width');
 
   assert.equal(newWidth, width, 'we did not set the width with undefined');
 

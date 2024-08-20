@@ -64,7 +64,7 @@ QUnit.test('should get the file extension of the passed path', function(assert) 
   assert.equal(Url.getFileExtension('foo/.bar/testvideo'), '');
   assert.equal(Url.getFileExtension(''), '');
   assert.equal(Url.getFileExtension(null), '');
-  assert.equal(Url.getFileExtension(undefined), '');
+  assert.equal(Url.getFileExtension(), '');
 
   // with capital letters
   assert.equal(Url.getFileExtension('test.video.MP4'), 'mp4');

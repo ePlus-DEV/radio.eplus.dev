@@ -241,7 +241,7 @@ class TimeSlider extends Slider {
                     return cue;
                 }
                 return closeCue;
-            }, undefined);
+            });
         }
 
         if (this.activeCue) {
