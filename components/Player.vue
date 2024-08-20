@@ -22,13 +22,17 @@
                 <span
                   class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
                 ></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                <span
+                  class="relative inline-flex rounded-full h-3 w-3 bg-red-500"
+                ></span>
               </span>
             </span>
           </div>
 
           <div class="flex flex-col px-2 w-full">
-            <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
+            <span
+              class="text-xs text-gray-700 dark:text-white uppercase font-medium"
+            >
               {{ $t("panel.play_from_radio") }}
             </span>
             <span
@@ -37,7 +41,10 @@
               {{ home !== undefined ? player_home.title : player.title }}
             </span>
             <span class="text-xs text-gray-500 uppercase font-medium">
-              {{ $t(country) }} - <span :data-tip="currentDate" class="tooltip">{{ currentTime }}</span>
+              {{ $t(country) }} -
+              <span :data-tip="currentDate" class="tooltip">{{
+                currentTime
+              }}</span>
             </span>
           </div>
           <div class="flex">
@@ -79,7 +86,9 @@
                 />
               </div>
               <div class="flex-auto">
-                {{ song.currentMedia.title }}<br /><span class="text-orange-100">
+                {{ song.currentMedia.title }}<br /><span
+                  class="text-orange-100"
+                >
                   {{ song.currentMedia.artists }}
                 </span>
               </div>
@@ -252,7 +261,13 @@
           </div>
           <div class="relative w-full ml-2">
             <vue-plyr ref="plyr" @player="setPlayer">
-              <audio controls crossorigin playsinline id="player" class="hidden"></audio>
+              <audio
+                controls
+                crossorigin
+                playsinline
+                id="player"
+                class="hidden"
+              ></audio>
             </vue-plyr>
           </div>
         </div>
@@ -307,7 +322,11 @@
                 >
                   <td class="pl-5 pr-3 whitespace-no-wrap">
                     <div class="text-gray-400">
-                      {{ $moment.unix(item.startTime).format("dddd - DD/MM//YYYY") }}
+                      {{
+                        $moment
+                          .unix(item.startTime)
+                          .format("dddd - DD/MM//YYYY")
+                      }}
                     </div>
                     <div class="dark:text-white">
                       {{
@@ -341,7 +360,9 @@
           <div
             class="border-b dark:border-gray-600 pb-1 flex justify-between items-center mb-2"
           >
-            <span class="text-base dark:text-white font-semibold uppercase text-gray-700">
+            <span
+              class="text-base dark:text-white font-semibold uppercase text-gray-700"
+            >
               {{ $t("panel.playlist") }}
             </span>
           </div>
@@ -360,8 +381,8 @@
                   item.track_image !== ''
                     ? item.track_image
                     : home !== undefined
-                    ? thumb
-                    : player.features
+                      ? thumb
+                      : player.features
                 "
               />
               <div class="flex flex-col px-2 w-4/5">
@@ -377,7 +398,10 @@
                 </span>
               </div>
               <div class="w-1/5 text-right">
-                <p class="text-xs text-grey-dark dark:text-white" v-if="index !== 0">
+                <p
+                  class="text-xs text-grey-dark dark:text-white"
+                  v-if="index !== 0"
+                >
                   {{ $moment.unix(item.track_played).fromNow() }}
                 </p>
                 <div class="relative inline-flex" v-else>
@@ -415,35 +439,27 @@ export default {
       button: false,
       waiting: false,
       currentTime: "N/A",
-      currentDate: "N/A"
+      currentDate: "N/A",
     };
   },
   mounted() {
     this.$refs.plyr.player.on("event", () => {});
-    this.$refs.plyr.player.on("ready", (event) => {
-
-    });
-    this.$refs.plyr.player.on("canplay", (event) => {
-
-    });
+    this.$refs.plyr.player.on("ready", (event) => {});
+    this.$refs.plyr.player.on("canplay", (event) => {});
     this.$refs.plyr.player.on("waiting", (event) => {
       // const instance = event.detail.plyr;
 
       this.waiting = true;
     });
     this.$refs.plyr.player.on("playing", (event) => {
-
       this.button = true;
       this.waiting = false;
     });
     this.$refs.plyr.player.on("pause", (event) => {
-
       this.button = false;
       this.waiting = false;
     });
-    this.$refs.plyr.player.on("stopped", (event) => {
-
-    });
+    this.$refs.plyr.player.on("stopped", (event) => {});
   },
   computed: {
     player() {
@@ -454,9 +470,9 @@ export default {
     },
   },
   methods: {
-init(state = false) {
+    init(state = false) {
       const audio = document.querySelector("#player");
-      let stream_url = '';
+      let stream_url = "";
       let hls = null;
 
       if (state) {
@@ -498,7 +514,8 @@ init(state = false) {
       } else {
         // Check Cros
         if (this.$store.state.player.cros) {
-          stream_url = process.env.CORS_SERVER_1 + this.$store.state.player.stream;
+          stream_url =
+            process.env.CORS_SERVER_1 + this.$store.state.player.stream;
         } else {
           stream_url = this.$store.state.player.stream;
         }
@@ -561,11 +578,11 @@ init(state = false) {
         .format("HH:mm");
 
       var beforeTime = this.$moment(arr[0].replace("h", ":"), format).tz(
-        "Asia/Ho_Chi_Minh"
+        "Asia/Ho_Chi_Minh",
       );
 
       var afterTime = this.$moment(arr[1].replace("h", ":"), format).tz(
-        "Asia/Ho_Chi_Minh"
+        "Asia/Ho_Chi_Minh",
       );
 
       var afterTimeformat = this.$moment(arr[1].replace("h", ":"), "HH:mm")
@@ -589,13 +606,13 @@ init(state = false) {
       this.currentTime = this.$moment
         .tz(
           this.$moment(),
-          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh"
+          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh",
         )
         .format("LTS");
       this.currentDate = this.$moment
         .tz(
           this.$moment(),
-          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh"
+          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh",
         )
         .format("LLLL");
     },
