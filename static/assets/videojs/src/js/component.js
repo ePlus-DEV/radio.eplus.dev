@@ -1549,7 +1549,7 @@ class Component {
     // We need to make sure this check is only done if Tech has been registered.
     const isTech = Tech && Tech.isTech(ComponentToRegister);
     const isComp = Component === ComponentToRegister ||
-      Component.prototype.isPrototypeOf(ComponentToRegister.prototype);
+      Object.prototype.isPrototypeOf.call(Component.prototype, ComponentToRegister.prototype);
 
     if (isTech || !isComp) {
       let reason;

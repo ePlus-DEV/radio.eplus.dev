@@ -98,7 +98,7 @@ const mediaparser = function (obj, item) {
         }
     }
 
-    if (!item.hasOwnProperty(tracks)) {
+    if (!Object.prototype.hasOwnProperty.call(item, tracks)) {
         item[tracks] = [];
     }
 
