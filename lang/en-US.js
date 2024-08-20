@@ -1,4 +1,4 @@
-export default (context, locale) => Promise.resolve({
+export default () => Promise.resolve({
     navmenu: {
       homepage: "Homepage",
       about: "About",
