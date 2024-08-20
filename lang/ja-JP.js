@@ -1,4 +1,5 @@
-export default (context, locale) => Promise.resolve({
+export default (context, locale) =>
+  Promise.resolve({
     navmenu: {
       homepage: "ホームページ",
       about: "約",
@@ -131,6 +132,6 @@ export default (context, locale) => Promise.resolve({
     text: {
       guide: "ガイド",
       the_last_90_days: "過去 90 日間",
-      hosted: "{name}でホスト - 最終更新{time}"
+      hosted: "{name}でホスト - 最終更新{time}",
     },
-});
+  });

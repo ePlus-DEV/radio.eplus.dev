@@ -1,4 +1,5 @@
-export default (context, locale) => Promise.resolve({
+export default (context, locale) =>
+  Promise.resolve({
     navmenu: {
       homepage: "Trang Chủ",
       about: "Giới Thiệu",
@@ -130,6 +131,6 @@ export default (context, locale) => Promise.resolve({
     text: {
       guide: "Hướng dẫn",
       the_last_90_days: "90 ngày qua",
-      hosted: "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}"
+      hosted: "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}",
     },
-});
+  });
