@@ -414,7 +414,7 @@ class Player extends Component {
     this.poster_ = options.poster || '';
 
     // Set controls
-    this.controls_ = !!options.controls;
+    this.controls_ = Boolean(options.controls);
 
     // Original tag settings stored in options
     // now remove immediately so native controls don't flash.
@@ -850,10 +850,10 @@ class Player extends Component {
    */
   fluid(bool) {
     if (bool === undefined) {
-      return !!this.fluid_;
+      return Boolean(this.fluid_);
     }
 
-    this.fluid_ = !!bool;
+    this.fluid_ = Boolean(bool);
 
     if (isEvented(this)) {
       this.off('playerreset', this.updateStyleEl_);
@@ -887,10 +887,10 @@ class Player extends Component {
    */
   fill(bool) {
     if (bool === undefined) {
-      return !!this.fill_;
+      return Boolean(this.fill_);
     }
 
-    this.fill_ = !!bool;
+    this.fill_ = Boolean(bool);
 
     if (bool) {
       this.addClass('vjs-fill');
@@ -1077,7 +1077,7 @@ class Player extends Component {
       'language': this.language(),
       'playerElIngest': this.playerElIngest_ || false,
       'vtt.js': this.options_['vtt.js'],
-      'canOverridePoster': !!this.options_.techCanOverridePoster,
+      'canOverridePoster': Boolean(this.options_.techCanOverridePoster),
       'enableSourceset': this.options_.enableSourceset,
       'Promise': this.options_.Promise
     };
@@ -2391,7 +2391,7 @@ class Player extends Component {
     if (typeof isScrubbing === 'undefined') {
       return this.scrubbing_;
     }
-    this.scrubbing_ = !!isScrubbing;
+    this.scrubbing_ = Boolean(isScrubbing);
 
     if (isScrubbing) {
       this.addClass('vjs-scrubbing');
@@ -2694,11 +2694,11 @@ class Player extends Component {
    */
   isFullscreen(isFS) {
     if (isFS !== undefined) {
-      this.isFullscreen_ = !!isFS;
+      this.isFullscreen_ = Boolean(isFS);
       this.toggleFullscreenClass_();
       return;
     }
-    return !!this.isFullscreen_;
+    return Boolean(this.isFullscreen_);
   }
 
   /**
@@ -2861,11 +2861,11 @@ class Player extends Component {
    */
   isInPictureInPicture(isPiP) {
     if (isPiP !== undefined) {
-      this.isInPictureInPicture_ = !!isPiP;
+      this.isInPictureInPicture_ = Boolean(isPiP);
       this.togglePictureInPictureClass_();
       return;
     }
-    return !!this.isInPictureInPicture_;
+    return Boolean(this.isInPictureInPicture_);
   }
 
   /**
@@ -3593,10 +3593,10 @@ class Player extends Component {
    */
   controls(bool) {
     if (bool === undefined) {
-      return !!this.controls_;
+      return Boolean(this.controls_);
     }
 
-    bool = !!bool;
+    bool = Boolean(bool);
 
     // Don't trigger a change event unless it actually changed
     if (this.controls_ === bool) {
@@ -3653,10 +3653,10 @@ class Player extends Component {
    */
   usingNativeControls(bool) {
     if (bool === undefined) {
-      return !!this.usingNativeControls_;
+      return Boolean(this.usingNativeControls_);
     }
 
-    bool = !!bool;
+    bool = Boolean(bool);
 
     // Don't trigger a change event unless it actually changed
     if (this.usingNativeControls_ === bool) {
@@ -3778,7 +3778,7 @@ class Player extends Component {
       return this.userActive_;
     }
 
-    bool = !!bool;
+    bool = Boolean(bool);
 
     if (bool === this.userActive_) {
       return;
@@ -3996,11 +3996,11 @@ class Player extends Component {
    */
   isAudio(bool) {
     if (bool !== undefined) {
-      this.isAudio_ = !!bool;
+      this.isAudio_ = Boolean(bool);
       return;
     }
 
-    return !!this.isAudio_;
+    return Boolean(this.isAudio_);
   }
 
   /**

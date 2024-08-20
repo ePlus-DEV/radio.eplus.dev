@@ -67,8 +67,8 @@ class TextTrackCueList {
     this.length_ = cues.length;
 
     const defineProp = function(index) {
-      if (!('' + index in this)) {
-        Object.defineProperty(this, '' + index, {
+      if (!(String(index) in this)) {
+        Object.defineProperty(this, String(index), {
           get() {
             return this.cues_[index];
           }

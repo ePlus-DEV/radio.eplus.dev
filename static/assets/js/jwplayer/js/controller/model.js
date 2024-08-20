@@ -33,7 +33,7 @@ class Model extends SimpleModel {
         Object.keys(INITIAL_MEDIA_STATE).forEach(key => {
             config[key] = mediaModelAttributes[key];
         });
-        config.instreamMode = !!config.instream;
+        config.instreamMode = Boolean(config.instream);
         delete config.instream;
         delete config.mediaModel;
         return config;
@@ -82,7 +82,7 @@ class Model extends SimpleModel {
     }
 
     setFullscreen(state) {
-        state = !!state;
+        state = Boolean(state);
         if (state !== this.get('fullscreen')) {
             this.set('fullscreen', state);
         }
@@ -112,7 +112,7 @@ class Model extends SimpleModel {
         if (mute === undefined) {
             mute = !(this.getMute());
         }
-        this.set('mute', !!mute);
+        this.set('mute', Boolean(mute));
         if (!mute) {
             const volume = Math.max(10, this.get('volume'));
             this.set('autostartMuted', false);
@@ -216,7 +216,7 @@ class Model extends SimpleModel {
     _normalizeConfig(cfg) {
         const floating = cfg.floating;
 
-        if (floating && !!floating.disabled) {
+        if (floating && Boolean(floating.disabled)) {
             delete cfg.floating;
         }
     }

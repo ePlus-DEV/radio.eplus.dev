@@ -276,7 +276,7 @@ class ModalDialog extends Component {
    */
   closeable(value) {
     if (typeof value === 'boolean') {
-      const closeable = this.closeable_ = !!value;
+      const closeable = this.closeable_ = Boolean(value);
       let close = this.getChild('closeButton');
 
       // If this is being made closeable and has no close button, add one.

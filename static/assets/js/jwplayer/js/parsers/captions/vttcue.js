@@ -85,7 +85,7 @@ if (!VTTCue) {
                 return _id;
             },
             set: function (value) {
-                _id = '' + value;
+                _id = String(value);
             }
         });
 
@@ -95,7 +95,7 @@ if (!VTTCue) {
                 return _pauseOnExit;
             },
             set: function (value) {
-                _pauseOnExit = !!value;
+                _pauseOnExit = Boolean(value);
             }
         });
 
@@ -133,7 +133,7 @@ if (!VTTCue) {
                 return _text;
             },
             set: function (value) {
-                _text = '' + value;
+                _text = String(value);
                 this.hasBeenReset = true;
             }
         });
@@ -171,7 +171,7 @@ if (!VTTCue) {
                 return _snapToLines;
             },
             set: function (value) {
-                _snapToLines = !!value;
+                _snapToLines = Boolean(value);
                 this.hasBeenReset = true;
             }
         });

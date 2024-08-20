@@ -314,7 +314,7 @@ export default class Controlbar {
                 tipText += (`: ${nextUp.title}`);
             }
             nextUpTip.setText(tipText);
-            elements.next.toggle(!!nextUp);
+            elements.next.toggle(Boolean(nextUp));
         }, this);
         _model.change('audioMode', this.onAudioMode, this);
         if (elements.cast) {

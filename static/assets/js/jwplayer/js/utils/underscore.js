@@ -59,7 +59,7 @@ export const each = function (obj, iterator, context) {
     }
     if (nativeForEach && obj.forEach === nativeForEach) {
         obj.forEach(iterator, context);
-    } else if (obj.length === +obj.length) {
+    } else if (obj.length === Number(obj.length)) {
         for (i = 0, length = obj.length; i < length; i++) {
             if (iterator.call(context, obj[i], i, obj) === breaker) {
                 return;
@@ -189,7 +189,7 @@ export const all = function (obj, predicate, context) {
             return breaker;
         }
     });
-    return !!result;
+    return Boolean(result);
 };
 const every = all;
 
@@ -210,7 +210,7 @@ export const any = function (obj, predicate, context) {
             return breaker;
         }
     });
-    return !!result;
+    return Boolean(result);
 };
 export const some = any;
 
@@ -219,7 +219,7 @@ export const size = function (obj) {
     if (obj == null) {
         return 0;
     }
-    return obj.length === +obj.length ? obj.length : keys(obj).length;
+    return obj.length === Number(obj.length) ? obj.length : keys(obj).length;
 };
 
 
@@ -319,7 +319,7 @@ export const contains = function (obj, target) {
     if (obj == null) {
         return false;
     }
-    if (obj.length !== +obj.length) {
+    if (obj.length !== Number(obj.length)) {
         obj = values(obj);
     }
     return indexOf(obj, target) >= 0;
@@ -347,7 +347,7 @@ export const findWhere = function(obj, attrs) {
 // Can't optimize arrays of integers longer than 65,535 elements.
 // See [WebKit Bug 80797](https://bugs.webkit.org/show_bug.cgi?id=80797)
 const max = function(obj, iterator, context) {
-    if (!iterator && isArray(obj) && obj[0] === +obj[0] && obj.length < 65535) {
+    if (!iterator && isArray(obj) && obj[0] === Number(obj[0]) && obj.length < 65535) {
         return Math.max.apply(Math, obj);
     }
     let result = -Infinity;
@@ -675,7 +675,7 @@ export const isFinite = function (obj) {
 
 // Is the given value `NaN`? (NaN is the only number which does not equal itself).
 export const isNaN = function (obj) {
-    return isNumber(obj) && obj != +obj;
+    return isNumber(obj) && obj != Number(obj);
 };
 
 // Is a given value a boolean?

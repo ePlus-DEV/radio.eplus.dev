@@ -14,7 +14,7 @@ export function filterPlaylist(playlist, model, feedData) {
     const itemFeedData = Object.assign({}, feedData);
     delete itemFeedData.playlist;
 
-    return playlist.map((item) => normalizePlaylistItem(model, item, itemFeedData)).filter((item) => !!item);
+    return playlist.map((item) => normalizePlaylistItem(model, item, itemFeedData)).filter((item) => Boolean(item));
 
 }
 
@@ -83,7 +83,7 @@ function formatSources(item, model) {
         }
 
         return Source(originalSource);
-    }).filter(source => !!source);
+    }).filter(source => Boolean(source));
 }
 
 // A playlist item may have multiple different sources, but we want to stick with one.

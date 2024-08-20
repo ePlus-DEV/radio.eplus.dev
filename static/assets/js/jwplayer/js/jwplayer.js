@@ -81,7 +81,7 @@ export function assignLibraryProperties(jwplayerLib) {
                 return ApiSettings.debug;
             },
             set(value) {
-                ApiSettings.debug = !!value;
+                ApiSettings.debug = Boolean(value);
             }
         }
     });

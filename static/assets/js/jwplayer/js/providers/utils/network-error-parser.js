@@ -10,7 +10,7 @@ export default function parseNetworkError(baseCode, statusCode, url) {
             key = MSG_PROTECTED_CONTENT;
         }
         code += clampStatus(statusCode);
-    } else if (('' + url).substring(0, 5) === 'http:' && document.location.protocol === 'https:') {
+    } else if ((String(url)).substring(0, 5) === 'http:' && document.location.protocol === 'https:') {
         code += 12;
     } else if (statusCode === 0) {
         code += 11;

@@ -773,7 +773,7 @@ class Html5 extends Tech {
    *        Value to set the controls attribute to
    */
   setControls(val) {
-    this.el_.controls = !!val;
+    this.el_.controls = Boolean(val);
   }
 
   /**
@@ -972,7 +972,7 @@ Html5.isSupported = function() {
     return false;
   }
 
-  return !!(Html5.TEST_VID?.canPlayType);
+  return Boolean(Html5.TEST_VID?.canPlayType);
 };
 
 /**
@@ -1115,7 +1115,7 @@ Html5.supportsNativeTextTracks = function() {
  *        - False otherwise
  */
 Html5.supportsNativeVideoTracks = function() {
-  return !!(Html5.TEST_VID?.videoTracks);
+  return Boolean(Html5.TEST_VID?.videoTracks);
 };
 
 /**
@@ -1126,7 +1126,7 @@ Html5.supportsNativeVideoTracks = function() {
  *        - False otherwise
  */
 Html5.supportsNativeAudioTracks = function() {
-  return !!(Html5.TEST_VID?.audioTracks);
+  return Boolean(Html5.TEST_VID?.audioTracks);
 };
 
 /**

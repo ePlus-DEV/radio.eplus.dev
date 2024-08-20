@@ -949,7 +949,7 @@ class Component {
       }
 
       // Check if using css width/height (% or px) and adjust
-      if (('' + num).indexOf('%') !== -1 || ('' + num).indexOf('px') !== -1) {
+      if ((String(num)).indexOf('%') !== -1 || (String(num)).indexOf('px') !== -1) {
         this.el_.style[widthOrHeight] = num;
       } else if (num === 'auto') {
         this.el_.style[widthOrHeight] = '';

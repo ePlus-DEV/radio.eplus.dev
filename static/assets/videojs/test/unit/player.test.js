@@ -426,7 +426,7 @@ QUnit.test('should set the width, height, and aspect ratio via a css class', fun
     // Lowercase string for IE8
     styleText = styleText.toLowerCase();
 
-    return !!re.test(styleText);
+    return Boolean(re.test(styleText));
   };
 
   // Initial state

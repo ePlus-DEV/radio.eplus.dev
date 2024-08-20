@@ -10,7 +10,7 @@ export const isAudioMode = function(model) {
     }
 
     // Coerce into Number (don't parse out CSS units)
-    let verticalPixels = (playerHeight * 1) || NaN;
+    let verticalPixels = (Number(playerHeight)) || NaN;
     verticalPixels = (!isNaN(verticalPixels) ? verticalPixels : model.get('containerHeight'));
     if (!verticalPixels) {
         return false;

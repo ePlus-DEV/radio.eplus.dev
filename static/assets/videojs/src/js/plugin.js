@@ -461,7 +461,7 @@ Plugin.registerPlugin(BASE_PLUGIN_NAME, Plugin);
  * @ignore
  */
 Player.prototype.usingPlugin = function(name) {
-  return !!this[PLUGIN_CACHE_KEY] && this[PLUGIN_CACHE_KEY][name] === true;
+  return Boolean(this[PLUGIN_CACHE_KEY]) && this[PLUGIN_CACHE_KEY][name] === true;
 };
 
 /**
@@ -470,7 +470,7 @@ Player.prototype.usingPlugin = function(name) {
  * @ignore
  */
 Player.prototype.hasPlugin = function(name) {
-  return !!pluginExists(name);
+  return Boolean(pluginExists(name));
 };
 
 export default Plugin;

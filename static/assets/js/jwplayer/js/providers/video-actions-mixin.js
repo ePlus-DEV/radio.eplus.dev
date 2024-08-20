@@ -10,7 +10,7 @@ const VideoActionsMixin = {
     },
 
     mute(state) {
-        this.video.muted = !!state;
+        this.video.muted = Boolean(state);
         if (!this.video.muted) {
             // Remove muted attribute once user unmutes so the video element doesn't get
             // muted by the browser when the src changes or on replay

@@ -61,7 +61,7 @@ const ThumbnailsMixin = {
                 url = matched[1];
                 style.backgroundPosition = (matched[2] * -1) + 'px ' + (matched[3] * -1) + 'px';
                 style.width = matched[4];
-                this.timeTip.setWidth(+style.width);
+                this.timeTip.setWidth(Number(style.width));
                 style.height = matched[5];
             } catch (e) {
                 // this.vttFailed('Could not parse thumbnail');
