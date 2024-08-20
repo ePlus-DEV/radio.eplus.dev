@@ -2,8 +2,8 @@
  * @file url.js
  * @module url
  */
-import document from 'global/document';
-import window from 'global/window';
+import document from "global/document";
+import window from "global/window";
 
 /**
  * @typedef {Object} url:URLObject
@@ -40,26 +40,34 @@ import window from 'global/window';
  * @return   {url:URLObject}
  *           An object of url details
  */
-export const parseUrl = function(url) {
-  const props = ['protocol', 'hostname', 'port', 'pathname', 'search', 'hash', 'host'];
+export const parseUrl = function (url) {
+  const props = [
+    "protocol",
+    "hostname",
+    "port",
+    "pathname",
+    "search",
+    "hash",
+    "host",
+  ];
 
   // add the url to an anchor and let the browser parse the URL
-  let a = document.createElement('a');
+  let a = document.createElement("a");
 
   a.href = url;
 
   // IE8 (and 9?) Fix
   // ie8 doesn't parse the URL correctly until the anchor is actually
   // added to the body, and an innerHTML is needed to trigger the parsing
-  const addToBody = (a.host === '' && a.protocol !== 'file:');
+  const addToBody = a.host === "" && a.protocol !== "file:";
   let div;
 
   if (addToBody) {
-    div = document.createElement('div');
+    div = document.createElement("div");
     div.innerHTML = `<a href="${url}"></a>`;
     a = div.firstChild;
     // prevent the div from affecting layout
-    div.setAttribute('style', 'display:none; position:absolute;');
+    div.setAttribute("style", "display:none; position:absolute;");
     document.body.appendChild(div);
   }
 
@@ -74,12 +82,12 @@ export const parseUrl = function(url) {
 
   // IE9 adds the port to the host property unlike everyone else. If
   // a port identifier is added for standard ports, strip it.
-  if (details.protocol === 'http:') {
-    details.host = details.host.replace(/:80$/, '');
+  if (details.protocol === "http:") {
+    details.host = details.host.replace(/:80$/, "");
   }
 
-  if (details.protocol === 'https:') {
-    details.host = details.host.replace(/:443$/, '');
+  if (details.protocol === "https:") {
+    details.host = details.host.replace(/:443$/, "");
   }
 
   if (!details.protocol) {
@@ -105,11 +113,11 @@ export const parseUrl = function(url) {
  *
  * @see      http://stackoverflow.com/questions/470832/getting-an-absolute-url-from-a-relative-one-ie6-issue
  */
-export const getAbsoluteURL = function(url) {
+export const getAbsoluteURL = function (url) {
   // Check if absolute URL
   if (!/^https?:\/\//.test(url)) {
     // Convert to absolute URL. Flash hosted off-site needs an absolute URL.
-    const div = document.createElement('div');
+    const div = document.createElement("div");
 
     div.innerHTML = `<a href="${url}">x</a>`;
     url = div.firstChild.href;
@@ -130,9 +138,10 @@ export const getAbsoluteURL = function(url) {
  *           The extension in lower case or an empty string if no
  *           extension could be found.
  */
-export const getFileExtension = function(path) {
-  if (typeof path === 'string') {
-    const splitPathRe = /^(\/?)([\s\S]*?)((?:\.{1,2}|[^\/]+?)(\.([^\.\/\?]+)))(?:[\/]*|[\?].*)$/;
+export const getFileExtension = function (path) {
+  if (typeof path === "string") {
+    const splitPathRe =
+      /^(\/?)([\s\S]*?)((?:\.{1,2}|[^\/]+?)(\.([^\.\/\?]+)))(?:[\/]*|[\?].*)$/;
     const pathParts = splitPathRe.exec(path);
 
     if (pathParts) {
@@ -140,7 +149,7 @@ export const getFileExtension = function(path) {
     }
   }
 
-  return '';
+  return "";
 };
 
 /**
@@ -162,15 +171,17 @@ export const getFileExtension = function(path) {
  * @return   {boolean}
  *           Whether it is a cross domain request or not.
  */
-export const isCrossOrigin = function(url, winLoc = window.location) {
+export const isCrossOrigin = function (url, winLoc = window.location) {
   const urlInfo = parseUrl(url);
 
   // IE8 protocol relative urls will return ':' for protocol
-  const srcProtocol = urlInfo.protocol === ':' ? winLoc.protocol : urlInfo.protocol;
+  const srcProtocol =
+    urlInfo.protocol === ":" ? winLoc.protocol : urlInfo.protocol;
 
   // Check if url is for another domain/origin
   // IE8 doesn't know location.origin, so we won't rely on it here
-  const crossOrigin = (srcProtocol + urlInfo.host) !== (winLoc.protocol + winLoc.host);
+  const crossOrigin =
+    srcProtocol + urlInfo.host !== winLoc.protocol + winLoc.host;
 
   return crossOrigin;
 };
