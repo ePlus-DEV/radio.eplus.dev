@@ -2,7 +2,7 @@
 
 ![Homepage-Radio-Internet-Radio-ePlus-DEV-Nền-tảng-truyền-dẫn-phát-thanh-trên-internet](https://github.com/user-attachments/assets/3a914f2f-74b7-4fd8-b81d-304a06b25d45)
 
-[![DeepSource](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev.svg/?label=code+coverage&show_trend=true&token=Dc798fReZYneDHX5pfTc6t_x)](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev/) 
+[![DeepSource](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev.svg/?label=code+coverage&show_trend=true&token=Dc798fReZYneDHX5pfTc6t_x)](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev/)
 [![DeepSource](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev.svg/?label=active+issues&show_trend=true&token=Dc798fReZYneDHX5pfTc6t_x)](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev/)
 [![DeepSource](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev.svg/?label=resolved+issues&show_trend=true&token=Dc798fReZYneDHX5pfTc6t_x)](https://app.deepsource.com/gh/ePlus-DEV/radio.eplus.dev/)
 
