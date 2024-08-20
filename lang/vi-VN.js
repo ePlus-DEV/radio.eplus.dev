@@ -1,5 +1,4 @@
-export default async (context, locale) => {
-  return await Promise.resolve({
+export default (context, locale) => Promise.resolve({
     navmenu: {
       homepage: "Trang Chủ",
       about: "Giới Thiệu",
@@ -133,5 +132,4 @@ export default async (context, locale) => {
       the_last_90_days: "90 ngày qua",
       hosted: "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}"
     },
-  });
-};
+});

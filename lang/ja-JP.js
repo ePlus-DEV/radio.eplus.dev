@@ -1,5 +1,4 @@
-export default async (context, locale) => {
-  return await Promise.resolve({
+export default (context, locale) => Promise.resolve({
     navmenu: {
       homepage: "ホームページ",
       about: "約",
@@ -134,5 +133,4 @@ export default async (context, locale) => {
       the_last_90_days: "過去 90 日間",
       hosted: "{name}でホスト - 最終更新{time}"
     },
-  });
-};
+});
