@@ -52,11 +52,7 @@ export default {
   },
   methods: {
     isRouteActive(path) {
-      if (this.$route.params.name === path) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.$route.params.name === path;
     },
   },
 };

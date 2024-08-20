@@ -421,28 +421,28 @@ export default {
   mounted() {
     this.$refs.plyr.player.on("event", () => {});
     this.$refs.plyr.player.on("ready", (event) => {
-      
+
     });
     this.$refs.plyr.player.on("canplay", (event) => {
-      
+
     });
     this.$refs.plyr.player.on("waiting", (event) => {
       // const instance = event.detail.plyr;
-      
+
       this.waiting = true;
     });
     this.$refs.plyr.player.on("playing", (event) => {
-      
+
       this.button = true;
       this.waiting = false;
     });
     this.$refs.plyr.player.on("pause", (event) => {
-      
+
       this.button = false;
       this.waiting = false;
     });
     this.$refs.plyr.player.on("stopped", (event) => {
-      
+
     });
   },
   computed: {
@@ -454,16 +454,18 @@ export default {
     },
   },
   methods: {
-    init(state = false) {
-      var audio = document.querySelector("#player");
+init(state = false) {
+      const audio = document.querySelector("#player");
+      let stream_url = '';
+      let hls = null;
 
       if (state) {
         // Check Cros
         if (this.$store.state.player_home.cros) {
-          var stream_url =
+          stream_url =
             process.env.CORS_SERVER_1 + this.$store.state.player_home.stream;
         } else {
-          var stream_url = this.$store.state.player_home.stream;
+          stream_url = this.$store.state.player_home.stream;
         }
         // Check Type
         if (
@@ -471,7 +473,7 @@ export default {
           this.$store.state.player_home.type === "audio/x-mpegurl"
         ) {
           if (Hls.isSupported()) {
-            var hls = new Hls();
+            hls = new Hls();
             hls.loadSource(stream_url);
             hls.attachMedia(audio);
           }
@@ -496,9 +498,9 @@ export default {
       } else {
         // Check Cros
         if (this.$store.state.player.cros) {
-          var stream_url = process.env.CORS_SERVER_1 + this.$store.state.player.stream;
+          stream_url = process.env.CORS_SERVER_1 + this.$store.state.player.stream;
         } else {
-          var stream_url = this.$store.state.player.stream;
+          stream_url = this.$store.state.player.stream;
         }
         // Check Type
         if (
@@ -506,7 +508,7 @@ export default {
           this.$store.state.player.type === "audio/x-mpegurl"
         ) {
           if (Hls.isSupported()) {
-            var hls = new Hls();
+            hls = new Hls();
             hls.loadSource(stream_url);
             hls.attachMedia(audio);
           }

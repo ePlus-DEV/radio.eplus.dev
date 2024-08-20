@@ -42,16 +42,16 @@ export default {
       show_new_year: false,
     };
   },
-  mounted() {
+mounted() {
     const month = this.$moment(new Date()).format("M");
     const day = this.$moment(new Date()).format("D");
 
     const startOfMonth = this.$moment("12", "MM").startOf("month").format("YYYY-MM-DD");
     const endOfMonth = this.$moment("12", "MM").endOf("month").format("YYYY-MM-DD");
 
-    var today = this.$moment(this.$moment().format("YYYY-MM-DD"));
-    var startDate_noel = this.$moment(startOfMonth);
-    var endDate_noel = this.$moment(endOfMonth);
+    const today = this.$moment(this.$moment().format("YYYY-MM-DD"));
+    const startDate_noel = this.$moment(startOfMonth);
+    const endDate_noel = this.$moment(endOfMonth);
 
     if (today.isBetween(startDate_noel, endDate_noel)) {
       this.show_noel = true;
