@@ -153,7 +153,7 @@ class TextTrackMenuItem extends MenuItem {
       const selectedLanguage = this.player_.cache_.selectedLanguage;
 
       // Don't replace the kind of track across the same language
-      if (selectedLanguage && selectedLanguage.enabled &&
+      if (selectedLanguage?.enabled &&
         selectedLanguage.language === this.track.language &&
         selectedLanguage.kind !== this.track.kind) {
         return;

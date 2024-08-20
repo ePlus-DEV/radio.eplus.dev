@@ -13,7 +13,7 @@ export default function Dfxp(xmlDoc) {
     // Default frameRate is 30
     let frameRate = 30;
     const tt = xmlDoc.getElementsByTagName('tt');
-    if (tt && tt[0]) {
+    if (tt?.[0]) {
         const parsedFrameRate = parseFloat(tt[0].getAttribute('ttp:frameRate'));
         if (!isNaN(parsedFrameRate)) {
             frameRate = parsedFrameRate;

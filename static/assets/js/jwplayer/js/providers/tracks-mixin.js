@@ -230,7 +230,7 @@ function addCaptionsCue(cueData) {
         return;
     }
     const trackId = cueData.trackid.toString();
-    let track = this._tracksById && this._tracksById[trackId];
+    let track = this._tracksById?.[trackId];
     if (!track) {
         track = {
             kind: 'captions',
@@ -364,7 +364,7 @@ function removeTracksListener(tracks, eventType, handler) {
 }
 
 function clearMetaCues() {
-    const metadataTrack = this._tracksById && this._tracksById.nativemetadata;
+    const metadataTrack = this._tracksById?.nativemetadata;
     if (metadataTrack) {
         _removeCues(this.renderNatively, [metadataTrack]);
         metadataTrack.mode = 'hidden';
@@ -375,7 +375,7 @@ function clearMetaCues() {
 
 function clearTracks() {
     cancelXhr(this._itemTracks);
-    const metadataTrack = this._tracksById && this._tracksById.nativemetadata;
+    const metadataTrack = this._tracksById?.nativemetadata;
     if (this.renderNatively || metadataTrack) {
         _removeCues(this.renderNatively, this.video.textTracks);
         if (metadataTrack) {
@@ -401,7 +401,7 @@ function clearTracks() {
 // Clear track cues to prevent duplicates
 function clearCueData(trackId) {
     const cachedVTTCues = this._cachedVTTCues;
-    if (cachedVTTCues && cachedVTTCues[trackId]) {
+    if (cachedVTTCues?.[trackId]) {
         cachedVTTCues[trackId] = {};
         if (this._tracksById) {
             this._tracksById[trackId].data = [];
@@ -489,7 +489,7 @@ function addTextTracks(tracksArray) {
         }
     });
 
-    if (this._textTracks && this._textTracks.length) {
+    if (this._textTracks?.length) {
         this.trigger('subtitlesTracks', { tracks: this._textTracks });
     }
 }
@@ -510,7 +510,7 @@ function addVTTCuesToTrack(track, vttCues) {
         return;
     }
     // Cues already added
-    if (this._cuesByTrackId[track._id] && this._cuesByTrackId[track._id].loaded) {
+    if (this._cuesByTrackId[track._id]?.loaded) {
         return;
     }
 
@@ -571,7 +571,7 @@ function insertCueInOrder(track, vttCue) {
 }
 
 function _removeCues(renderNatively, tracks) {
-    if (tracks && tracks.length) {
+    if (tracks?.length) {
         each(tracks, function(track) {
             // Let IE & Edge handle cleanup of non-sideloaded text tracks for native rendering
             if (Browser.ie && renderNatively && /^(native|subtitle|cc)/.test(track._id)) {

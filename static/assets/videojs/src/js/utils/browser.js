@@ -5,7 +5,7 @@
 import * as Dom from './dom';
 import window from 'global/window';
 
-const USER_AGENT = window.navigator && window.navigator.userAgent || '';
+const USER_AGENT = window.navigator?.userAgent || '';
 const webkitVersionMap = (/AppleWebKit\/([\d.]+)/i).exec(USER_AGENT);
 const appleWebkitVersion = webkitVersionMap ? parseFloat(webkitVersionMap.pop()) : null;
 
@@ -58,7 +58,7 @@ export const IS_IOS = IS_IPHONE || IS_IPAD || IS_IPOD;
 export const IOS_VERSION = (function() {
   const match = USER_AGENT.match(/OS (\d+)_/i);
 
-  if (match && match[1]) {
+  if (match?.[1]) {
     return match[1];
   }
   return null;
@@ -149,7 +149,7 @@ export const IS_CHROME = !IS_EDGE && ((/Chrome/i).test(USER_AGENT) || (/CriOS/i)
 export const CHROME_VERSION = (function() {
   const match = USER_AGENT.match(/(Chrome|CriOS)\/(\d+)/);
 
-  if (match && match[2]) {
+  if (match?.[2]) {
     return parseFloat(match[2]);
   }
   return null;

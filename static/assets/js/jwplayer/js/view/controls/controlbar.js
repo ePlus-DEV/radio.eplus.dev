@@ -310,7 +310,7 @@ export default class Controlbar {
         _model.change('nextUp', (model, nextUp) => {
             feedShownId = genId(FEED_SHOWN_ID_LENGTH);
             let tipText = localization.nextUp;
-            if (nextUp && nextUp.title) {
+            if (nextUp?.title) {
                 tipText += (`: ${nextUp.title}`);
             }
             nextUpTip.setText(tipText);
@@ -337,7 +337,7 @@ export default class Controlbar {
             }, this);
         }
 
-        if (elements.cast && elements.cast.button) {
+        if (elements.cast?.button) {
             const castUi = new UI(elements.cast.element()).on('click tap enter', function(evt) {
                 // controlbar cast button needs to manually trigger a click
                 // on the native cast button for taps and enter key

@@ -110,7 +110,7 @@ class TextTrackDisplay extends Component {
     // Should probably be moved to an external track loader when we support
     // tracks that don't need a display.
     player.ready(Fn.bind(this, function() {
-      if (player.tech_ && player.tech_.featuresNativeTextTracks) {
+      if (player.tech_?.featuresNativeTextTracks) {
         this.hide();
         return;
       }
@@ -152,7 +152,7 @@ class TextTrackDisplay extends Component {
       const track = trackList[i];
 
       if (
-        userPref && userPref.enabled &&
+        userPref?.enabled &&
         userPref.language && userPref.language === track.language &&
         track.kind in modes
       ) {
@@ -201,7 +201,7 @@ class TextTrackDisplay extends Component {
    * @listens Player#loadstart
    */
   toggleDisplay() {
-    if (this.player_.tech_ && this.player_.tech_.featuresNativeTextTracks) {
+    if (this.player_.tech_?.featuresNativeTextTracks) {
       this.hide();
     } else {
       this.show();

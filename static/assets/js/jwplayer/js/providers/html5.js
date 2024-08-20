@@ -204,7 +204,7 @@ function VideoProvider(_playerId, _playerConfig, mediaElement) {
         error() {
             const { video } = _this;
             const error = video.error;
-            const errorCode = (error && error.code) || -1;
+            const errorCode = (error?.code) || -1;
 
             if ((errorCode === 3 || errorCode === 4) && _this.retries < _this.maxRetries) {
                 // Workaround Safari bug https://bugs.webkit.org/show_bug.cgi?id=195452
@@ -883,7 +883,7 @@ function VideoProvider(_playerId, _playerConfig, mediaElement) {
     }
 
     function _setCurrentAudioTrack(index) {
-        if (_videotag && _videotag.audioTracks && _audioTracks &&
+        if (_videotag?.audioTracks && _audioTracks &&
             index > -1 && index < _videotag.audioTracks.length && index !== _currentAudioTrackIndex) {
             _videotag.audioTracks[_currentAudioTrackIndex].enabled = false;
             _currentAudioTrackIndex = index;

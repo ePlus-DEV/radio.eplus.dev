@@ -164,7 +164,7 @@ class Menu extends Component {
     })) {
       const btn = this.menuButton_;
 
-      if (btn && btn.buttonPressed_ && relatedTarget !== btn.el().firstChild) {
+      if (btn?.buttonPressed_ && relatedTarget !== btn.el().firstChild) {
         btn.unpressButton();
       }
     }

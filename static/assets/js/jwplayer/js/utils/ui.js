@@ -424,7 +424,7 @@ function normalizeUIEvent(type, sourceEvent, currentTarget) {
     let source;
 
     if (touches || changedTouches) {
-        source = (touches && touches.length) ? touches[0] : changedTouches[0];
+        source = (touches?.length) ? touches[0] : changedTouches[0];
         pointerType = pointerType || 'touch';
     } else {
         source = sourceEvent;

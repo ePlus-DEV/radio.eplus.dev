@@ -130,7 +130,7 @@ class ChaptersButton extends TextTrackButton {
    *         The tracks current label or the localized track kind.
    */
   getMenuCaption() {
-    if (this.track_ && this.track_.label) {
+    if (this.track_?.label) {
       return this.track_.label;
     }
     return this.localize(toTitleCase(this.kind_));

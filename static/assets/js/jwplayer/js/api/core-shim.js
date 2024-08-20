@@ -79,7 +79,7 @@ Object.assign(CoreShim.prototype, {
             'qualityLabel',
             'enableShortcuts'
         ]);
-        const persisted = storage && storage.getAllItems();
+        const persisted = storage?.getAllItems();
         model.attributes = model.attributes || {};
 
         Object.assign(this.mediaShim, INITIAL_MEDIA_STATE);

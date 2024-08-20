@@ -47,11 +47,11 @@ const parseCues = function(srcContent, track) {
 
   parser.parse(srcContent);
   if (errors.length > 0) {
-    if (window.console && window.console.groupCollapsed) {
+    if (window.console?.groupCollapsed) {
       window.console.groupCollapsed(`Text Track parsing errors for ${track.src}`);
     }
     errors.forEach((error) => log.error(error));
-    if (window.console && window.console.groupEnd) {
+    if (window.console?.groupEnd) {
       window.console.groupEnd();
     }
   }

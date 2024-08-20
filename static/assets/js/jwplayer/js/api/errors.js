@@ -194,7 +194,7 @@ export function convertToPlayerError(key, code, error) {
 
 export function composePlayerError(error, superCode) {
     const playerError = convertToPlayerError(MSG_TECHNICAL_ERROR, superCode, error);
-    playerError.code = (error && error.code || 0) + superCode;
+    playerError.code = (error?.code || 0) + superCode;
     return playerError;
 }
 

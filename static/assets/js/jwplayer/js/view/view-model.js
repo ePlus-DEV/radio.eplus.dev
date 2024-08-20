@@ -162,7 +162,7 @@ export default class ViewModel extends PlayerViewModel {
 
     getVideo() {
         const instreamModel = this._instreamModel;
-        if (instreamModel && instreamModel.getVideo()) {
+        if (instreamModel?.getVideo()) {
             return instreamModel.getVideo();
         }
         return super.getVideo();

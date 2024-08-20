@@ -428,7 +428,7 @@ class Plugin {
   static getPluginVersion(name) {
     const plugin = getPlugin(name);
 
-    return plugin && plugin.VERSION || '';
+    return plugin?.VERSION || '';
   }
 }
 

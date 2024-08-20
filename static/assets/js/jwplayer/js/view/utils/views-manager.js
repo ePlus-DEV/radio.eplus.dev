@@ -17,7 +17,7 @@ function lazyInitIntersectionObserver() {
     if (!intersectionObserver) {
         // Fire the callback every time 25% of the player comes in/out of view
         intersectionObserver = new IntersectionObserver((entries) => {
-            if (entries && entries.length) {
+            if (entries?.length) {
                 for (let i = entries.length; i--;) {
                     const entry = entries[i];
                     matchIntersection(entry, views);

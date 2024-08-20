@@ -218,7 +218,7 @@ QUnit.test('original cue can be used to remove cue from cues list', function(ass
     tech: this.tech
   });
   const Cue = window.VTTCue ||
-              window.vttjs && window.vttjs.VTTCue ||
+              window.vttjs?.VTTCue ||
               window.TextTrackCue;
 
   const cue1 = new Cue(0, 1, 'some-cue');
@@ -236,7 +236,7 @@ QUnit.test('can only remove one cue at a time', function(assert) {
     tech: this.tech
   });
   const Cue = window.VTTCue ||
-              window.vttjs && window.vttjs.VTTCue ||
+              window.vttjs?.VTTCue ||
               window.TextTrackCue;
 
   const cue1 = new Cue(0, 1, 'some-cue');

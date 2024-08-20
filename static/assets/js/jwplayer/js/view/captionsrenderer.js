@@ -220,7 +220,7 @@ const CaptionsRenderer = function (viewModel) {
     function getScaledFontSize(fontSize) {
         const video = _model.get('mediaElement');
 
-        if (video && video.videoHeight) {
+        if (video?.videoHeight) {
             const { videoWidth, videoHeight } = video;
             const aspectVideo = videoWidth / videoHeight;
 

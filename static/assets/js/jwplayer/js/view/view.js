@@ -82,7 +82,7 @@ function View(_api, _model) {
 
     let _floatingConfig = _model.get('floating');
 
-    this.dismissible = _floatingConfig && _floatingConfig.dismissible;
+    this.dismissible = _floatingConfig?.dismissible;
     let _canFloat = false;
     let playerBounds = {};
 
@@ -522,7 +522,7 @@ function View(_api, _model) {
     function outHandler(event) {
         // If controls are showing and mouse moves out to relatedTarget not within playerElement, call userActive().
         // Also call userActive() if event does not contain relatedTarget if player is in iFrame. (relatedTarget = null)
-        if (_controls && _controls.showing && ((event.relatedTarget && !_playerElement.contains(event.relatedTarget)) || (!event.relatedTarget && Features.iframe))) {
+        if (_controls?.showing && ((event.relatedTarget && !_playerElement.contains(event.relatedTarget)) || (!event.relatedTarget && Features.iframe))) {
             _controls.userActive();
         }
     }
@@ -621,7 +621,7 @@ function View(_api, _model) {
             const instream = model.get('instream');
             const instreamProvider = instream ? instream.provider : null;
             const provider = model.getVideo() || instreamProvider;
-            if (provider && provider.setFullscreen) {
+            if (provider?.setFullscreen) {
                 provider.setFullscreen(state);
             }
         }
@@ -828,7 +828,7 @@ function View(_api, _model) {
     }
 
     this.setPosterImage = function(item, preview) {
-        preview.setImage(item && item.image);
+        preview.setImage(item?.image);
     };
 
     const onPlaylistItem = (model, item) => {
@@ -840,13 +840,13 @@ function View(_api, _model) {
     };
 
     const settingsMenuVisible = () => {
-        const settingsMenu = _controls && _controls.settingsMenu;
-        return !!(settingsMenu && settingsMenu.visible);
+        const settingsMenu = _controls?.settingsMenu;
+        return !!(settingsMenu?.visible);
     };
 
     const infoOverlayVisible = () => {
-        const info = _controls && _controls.infoOverlay;
-        return !!(info && info.visible);
+        const info = _controls?.infoOverlay;
+        return !!(info?.visible);
     };
 
     const setupInstream = function() {

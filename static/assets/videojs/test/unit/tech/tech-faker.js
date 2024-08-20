@@ -15,7 +15,7 @@ class TechFaker extends Tech {
     this.playbackRate_ = 1;
     this.currentTime_ = 0;
 
-    if (this.options_ && this.options_.sourceset) {
+    if (this.options_?.sourceset) {
       this.fakeSourceset();
     }
     if (!options || options.autoReady !== false) {

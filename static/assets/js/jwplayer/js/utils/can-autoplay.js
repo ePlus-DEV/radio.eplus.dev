@@ -25,7 +25,7 @@
 import createPlayPromise from '../providers/utils/play-promise';
 
 // Use webkitURL or mozURL as a backup if URL was overwritten
-const URL = (global => global.URL && global.URL.createObjectURL ?
+const URL = (global => global.URL?.createObjectURL ?
     global.URL : global.webkitURL || global.mozURL)(window);
 
 let videoBlob;

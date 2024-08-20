@@ -591,8 +591,8 @@ class TextTrackSettings extends ModalDialog {
     this.previouslyActiveEl_ = null;
 
     const cb = this.player_.controlBar;
-    const subsCapsBtn = cb && cb.subsCapsButton;
-    const ccBtn = cb && cb.captionsButton;
+    const subsCapsBtn = cb?.subsCapsButton;
+    const ccBtn = cb?.captionsButton;
 
     if (subsCapsBtn) {
       subsCapsBtn.focus();

@@ -331,7 +331,7 @@ class Player extends Component {
       if (typeof tag.closest === 'function') {
         const closest = tag.closest('[lang]');
 
-        if (closest && closest.getAttribute) {
+        if (closest?.getAttribute) {
           options.language = closest.getAttribute('lang');
         }
       } else {
@@ -564,7 +564,7 @@ class Player extends Component {
     Events.off(document, this.fsApi_.fullscreenchange, this.boundDocumentFullscreenChange_);
     Events.off(document, 'keydown', this.boundFullWindowOnEscKey_);
 
-    if (this.styleEl_ && this.styleEl_.parentNode) {
+    if (this.styleEl_?.parentNode) {
       this.styleEl_.parentNode.removeChild(this.styleEl_);
       this.styleEl_ = null;
     }
@@ -572,11 +572,11 @@ class Player extends Component {
     // Kill reference to this player
     Player.players[this.id_] = null;
 
-    if (this.tag && this.tag.player) {
+    if (this.tag?.player) {
       this.tag.player = null;
     }
 
-    if (this.el_ && this.el_.player) {
+    if (this.el_?.player) {
       this.el_.player = null;
     }
 
@@ -605,7 +605,7 @@ class Player extends Component {
 
       // if it is not a native list
       // we have to manually remove event listeners
-      if (list && list.off) {
+      if (list?.off) {
         list.off();
       }
     });
@@ -623,7 +623,7 @@ class Player extends Component {
   createEl() {
     let tag = this.tag;
     let el;
-    let playerElIngest = this.playerElIngest_ = tag.parentNode && tag.parentNode.hasAttribute && tag.parentNode.hasAttribute('data-vjs-player');
+    let playerElIngest = this.playerElIngest_ = tag.parentNode?.hasAttribute && tag.parentNode.hasAttribute('data-vjs-player');
     const divEmbed = this.tag.tagName.toLowerCase() === 'video-js';
 
     if (playerElIngest) {
@@ -948,7 +948,7 @@ class Player extends Component {
     if (window.VIDEOJS_NO_DYNAMIC_STYLE === true) {
       const width = typeof this.width_ === 'number' ? this.width_ : this.options_.width;
       const height = typeof this.height_ === 'number' ? this.height_ : this.options_.height;
-      const techEl = this.tech_ && this.tech_.el();
+      const techEl = this.tech_?.el();
 
       if (techEl) {
         if (width >= 0) {
@@ -2733,7 +2733,7 @@ class Player extends Component {
 
       // only pass FullscreenOptions to requestFullscreen if it isn't prefixed
       if (!this.fsApi_.prefixed) {
-        fsOptions = this.options_.fullscreen && this.options_.fullscreen.options || {};
+        fsOptions = this.options_.fullscreen?.options || {};
         if (fullscreenOptions !== undefined) {
           fsOptions = fullscreenOptions;
         }
@@ -3952,7 +3952,7 @@ class Player extends Component {
       return;
     }
 
-    if (this.tech_ && this.tech_.featuresPlaybackRate) {
+    if (this.tech_?.featuresPlaybackRate) {
       return this.cache_.lastPlaybackRate || this.techGet_('playbackRate');
     }
     return 1.0;
@@ -3978,7 +3978,7 @@ class Player extends Component {
       return this.techCall_('setDefaultPlaybackRate', rate);
     }
 
-    if (this.tech_ && this.tech_.featuresPlaybackRate) {
+    if (this.tech_?.featuresPlaybackRate) {
       return this.techGet_('defaultPlaybackRate');
     }
     return 1.0;
@@ -4101,7 +4101,7 @@ class Player extends Component {
    *         current video width
    */
   videoWidth() {
-    return this.tech_ && this.tech_.videoWidth && this.tech_.videoWidth() || 0;
+    return this.tech_?.videoWidth && this.tech_.videoWidth() || 0;
   }
 
   /**
@@ -4111,7 +4111,7 @@ class Player extends Component {
    *         current video height
    */
   videoHeight() {
-    return this.tech_ && this.tech_.videoHeight && this.tech_.videoHeight() || 0;
+    return this.tech_?.videoHeight && this.tech_.videoHeight() || 0;
   }
 
   /**
@@ -4694,7 +4694,7 @@ Player.prototype.options_ = {
     'resizeManager'
   ],
 
-  language: navigator && (navigator.languages && navigator.languages[0] || navigator.userLanguage || navigator.language) || 'en',
+  language: navigator && (navigator.languages?.[0] || navigator.userLanguage || navigator.language) || 'en',
 
   // locales and their language translations
   languages: {},
