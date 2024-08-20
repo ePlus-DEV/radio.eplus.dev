@@ -34,7 +34,7 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.asia" v-bind:key="index">
+            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.asia" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
@@ -60,7 +60,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.central_america"
-            v-bind:key="index">
+            :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
@@ -84,7 +84,7 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.europe" v-bind:key="index">
+            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.europe" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
@@ -110,7 +110,7 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.north_america" v-bind:key="index">
+            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.north_america" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
@@ -136,7 +136,7 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.oceania" v-bind:key="index">
+            :data-tip="$t(country.name)" :to="index" v-for="(country, index) in world.oceania" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
@@ -172,49 +172,49 @@ export default {
         this.world = res.data;
         var self = this;
         // BEGIN - Africa
-        $.each(res.data.africa, function (key, country) {
+        Object.entries(res.data.africa).forEach(([key, country]) => {
           self.$axios.get(country.data).then((res) => {
-            self.world.africa[key]["station"] = Object.keys(res.data).length;
+            self.world.africa[key].station = Object.keys(res.data).length;
           });
         });
         // END - Africa
 
         // BEGIN - Asia
-        $.each(res.data.asia, function (key, country) {
+        Object.entries(res.data.asia).forEach(([key, country]) => {
           self.$axios.get(country.data).then((res) => {
-            self.world.asia[key]["station"] = Object.keys(res.data).length;
+            self.world.asia[key].station = Object.keys(res.data).length;
           });
         });
         // END - Asia
 
         // BEGIN - Central America
-        $.each(res.data.central_america, function (key, country) {
+        Object.entries(res.data.central_america).forEach(([key, country]) => {
           self.$axios.get(country.data).then((res) => {
-            self.world.central_america[key]["station"] = Object.keys(res.data).length;
+            self.world.central_america[key].station = Object.keys(res.data).length;
           });
         });
         // END - Central America
 
         // BEGIN - Europe
-        $.each(res.data.europe, function (key, country) {
+        Object.entries(res.data.europe).forEach(([key, country]) => {
           self.$axios.get(country.data).then((res) => {
-            self.world.europe[key]["station"] = Object.keys(res.data).length;
+            self.world.europe[key].station = Object.keys(res.data).length;
           });
         });
         // END - Europe
 
         // BEGIN - North America
-        $.each(res.data.north_america, function (key, country) {
+        Object.entries(res.data.north_america).forEach(([key, country]) => {
           self.$axios.get(country.data).then((res) => {
-            self.world.north_america[key]["station"] = Object.keys(res.data).length;
+            self.world.north_america[key].station = Object.keys(res.data).length;
           });
         });
         // END - North America
 
         // BEGIN - Oceania
-        $.each(res.data.oceania, function (key, country) {
+        Object.entries(res.data.oceania).forEach(([key, country]) => {
           self.$axios.get(country.data).then((res) => {
-            self.world.oceania[key]["station"] = Object.keys(res.data).length;
+            self.world.oceania[key].station = Object.keys(res.data).length;
           });
         });
         // END - Oceania
