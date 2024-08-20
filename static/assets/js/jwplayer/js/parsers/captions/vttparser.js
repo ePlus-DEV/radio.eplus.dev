@@ -451,7 +451,7 @@ VTTParser.prototype = {
         // Immediately process some cues
         processBuffer();
     },
-    flush: function () {
+    flush() {
         const self = this;
         try {
             // Finish decoding the stream.
