@@ -92,7 +92,7 @@ export function isRtl(message) {
     // http://jrgraphix.net/research/unicode.php
     // Recognized RTL Langs: 'ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'.
 
-    const rtlRegex = /^[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/;
+    const rtlRegex = /^[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/u;
     // Char code 8207 is the RTL mark (\u200f)
     return message.charCodeAt(0) === 8207 || rtlRegex.test(message);
 }
