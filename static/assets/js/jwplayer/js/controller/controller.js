@@ -166,7 +166,7 @@ Object.assign(Controller.prototype, {
         });
 
         _model.on('change:mediaModel', function(model, mediaModel) {
-            model.set('errorEvent', undefined);
+            model.set('errorEvent');
             mediaModel.change('mediaState', function (changedMediaModel, state) {
                 if (!model.get('errorEvent')) {
                     model.set(PLAYER_STATE, normalizeState(state));
@@ -626,7 +626,7 @@ Object.assign(Controller.prototype, {
                 _interruptPlay = true;
             }
 
-            _model.set('errorEvent', undefined);
+            _model.set('errorEvent');
             _programController.stopVideo();
         }
 
@@ -1122,7 +1122,7 @@ Object.assign(Controller.prototype, {
         model.set('errorEvent', evt);
         model.set('state', STATE_ERROR);
         model.once('change:state', function() {
-            this.set('errorEvent', undefined);
+            this.set('errorEvent');
         }, model);
 
         this.trigger(ERROR, evt);

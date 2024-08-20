@@ -134,7 +134,7 @@ class Model extends SimpleModel {
 
     resetProvider() {
         this._provider = null;
-        this.set('provider', undefined);
+        this.set('provider');
     }
 
     setPlaybackRate(playbackRate) {
@@ -229,7 +229,7 @@ const syncProviderProperties = (model, provider) => {
     }
 
     if (provider.getName().name.indexOf('flash') === -1) {
-        model.set('flashThrottle', undefined);
+        model.set('flashThrottle');
         model.set('flashBlocked', false);
     }
 

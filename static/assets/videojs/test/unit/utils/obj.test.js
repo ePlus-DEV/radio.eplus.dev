@@ -206,7 +206,7 @@ QUnit.module('utils/obj.assign', function() {
     QUnit.test('negative tests', function(assert) {
       const expected = {foo: 11};
 
-      assert.deepEqual(Obj.assign({}, expected, undefined), expected, 'assign should undefined');
+      assert.deepEqual(Obj.assign({}, expected), expected, 'assign should undefined');
       assert.deepEqual(Obj.assign({}, expected, null), expected, 'assign should ignore null');
       assert.deepEqual(Obj.assign({}, expected, []), expected, 'assign should ignore Array');
       assert.deepEqual(Obj.assign({}, expected, ''), expected, 'assign should ignore string');

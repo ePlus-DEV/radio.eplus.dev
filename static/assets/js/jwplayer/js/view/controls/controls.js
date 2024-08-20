@@ -527,8 +527,8 @@ export default class Controls extends Events {
             model.off('change:autostartFailed', this.unmuteCallback);
             this.unmuteCallback = null;
         }
-        model.set('autostartFailed', undefined);
-        model.set('autostartMuted', undefined);
+        model.set('autostartFailed');
+        model.set('autostartMuted');
         api.setMute(mute);
         // the model's mute value may not have changed. ensure the controlbar's mute button is in the right state
         this.controlbar.renderVolume(mute, model.get('volume'));

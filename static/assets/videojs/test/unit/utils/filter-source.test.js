@@ -5,7 +5,7 @@ QUnit.module('utils/filter-source');
 
 QUnit.test('invalid sources', function(assert) {
   assert.deepEqual(filterSource(null), [], 'null source is filtered to []');
-  assert.deepEqual(filterSource(undefined), [], 'undefined source is filtered to []');
+  assert.deepEqual(filterSource(), [], 'undefined source is filtered to []');
   assert.deepEqual(filterSource(''), [], 'empty string source is filtered to []');
   assert.deepEqual(filterSource(' '), [], 'bad string source is filtered to []');
   assert.deepEqual(filterSource(1), [], 'number source is filtered to []');
