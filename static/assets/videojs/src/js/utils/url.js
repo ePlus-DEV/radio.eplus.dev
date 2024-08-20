@@ -107,7 +107,7 @@ export const parseUrl = function(url) {
  */
 export const getAbsoluteURL = function(url) {
   // Check if absolute URL
-  if (!url.match(/^https?:\/\//)) {
+  if (!/^https?:\/\//.test(url)) {
     // Convert to absolute URL. Flash hosted off-site needs an absolute URL.
     const div = document.createElement('div');
 

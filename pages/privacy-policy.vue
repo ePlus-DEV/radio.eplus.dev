@@ -175,7 +175,7 @@
         <a
           class="text-blue-800 hover:text-green-700"
           href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_Cookies_And_Tracking"
-          rel="external nofollow noopener"
+          rel="external nofollow noopener noreferrer"
           target="_blank"
           >Free Privacy Policy website</a
         >
@@ -438,7 +438,7 @@
             <a
               class="text-blue-800 hover:text-green-700"
               href="https://www.facebook.com/hoangsvit"
-              rel="external nofollow noopener"
+              rel="external nofollow noopener noreferrer"
               target="_blank"
               >https://www.facebook.com/hoangsvit</a
             >
@@ -451,6 +451,7 @@
 
 <script>
 export default {
+  name: 'Privacy',
   head() {
     return {
       title: this.$t("navmenu.privacy"),
