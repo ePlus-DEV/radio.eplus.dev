@@ -52,7 +52,11 @@
               class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
             >
               <span class="mr-2"> </span>
-              <a href="https://old-radio.eplus.dev" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://old-radio.eplus.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {{ $t("navmenu.old_version") }}
               </a>
             </li>
@@ -91,7 +95,9 @@
               >
                 <svg
                   class="w-6 h-6"
-                  :class="[this.$colorMode.value == 'light' ? 'block' : 'hidden']"
+                  :class="[
+                    this.$colorMode.value == 'light' ? 'block' : 'hidden',
+                  ]"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +111,9 @@
                 <svg
                   class="w-6 h-6"
                   fill="currentColor"
-                  :class="[this.$colorMode.value == 'dark' ? 'block' : 'hidden']"
+                  :class="[
+                    this.$colorMode.value == 'dark' ? 'block' : 'hidden',
+                  ]"
                 >
                   <path
                     fill-rule="evenodd"
@@ -118,7 +126,10 @@
             <!-- BEGIN - Language - Desktop -->
             <div class="flex items-center pl-8 relative">
               <div class="dropdown dropdown-end">
-                <label tabindex="0" class="flex flex-row items-center gap-1 normal-case">
+                <label
+                  tabindex="0"
+                  class="flex flex-row items-center gap-1 normal-case"
+                >
                   <svg
                     class="inline-block h-8 w-8 fill-current text-white cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +231,10 @@
           </ul>
           <!-- BEGIN - Toggle Language - Mobile -->
           <div class="dropdown dropdown-end">
-            <label tabindex="0" class="flex flex-row items-center gap-1 normal-case">
+            <label
+              tabindex="0"
+              class="flex flex-row items-center gap-1 normal-case"
+            >
               <svg
                 class="inline-block h-8 w-8 fill-current text-white cursor-pointer"
                 xmlns="http://www.w3.org/2000/svg"
@@ -379,7 +393,10 @@
       <div class="modal-box">
         <p>
           <!-- BEGIN - ais-instant-search -->
-          <ais-instant-search :search-client="searchClient" index-name="radio.eplus.dev">
+          <ais-instant-search
+            :search-client="searchClient"
+            index-name="radio.eplus.dev"
+          >
             <ais-search-box>
               <template v-slot="{ currentRefinement, isSearchStalled, refine }">
                 <div class="form-control">
@@ -394,7 +411,9 @@
                   </div>
                 </div>
                 <ais-stats>
-                  <template v-slot="{ nbPages, nbHits, page, processingTimeMS }">
+                  <template
+                    v-slot="{ nbPages, nbHits, page, processingTimeMS }"
+                  >
                     {{
                       $t("popup.search.stats", {
                         page: page + 1,
@@ -520,7 +539,10 @@
           <!-- END - ais-instant-search -->
         </p>
         <div class="modal-action">
-          <label for="search-modal" class="btn btn-sm bg-red-500 hover:bg-red-700">
+          <label
+            for="search-modal"
+            class="btn btn-sm bg-red-500 hover:bg-red-700"
+          >
             {{ $t("button.close") }}
           </label>
         </div>
@@ -535,7 +557,10 @@ import algoliasearch from "algoliasearch";
 export default {
   data() {
     return {
-      searchClient: algoliasearch("N87NFQVY0Z", "73e93ee2ef3aa6919b7c6495767c7f9d"),
+      searchClient: algoliasearch(
+        "N87NFQVY0Z",
+        "73e93ee2ef3aa6919b7c6495767c7f9d",
+      ),
     };
   },
   watch: {
@@ -567,13 +592,14 @@ export default {
       single.classList.toggle("hidden");
     },
     MenuHandler(el, val) {
-      let MainList = el.currentTarget.parentElement.getElementsByTagName("ul")[0];
-      let closeIcon = el.currentTarget.parentElement.getElementsByClassName(
-        "close-m-menu"
-      )[0];
-      let showIcon = el.currentTarget.parentElement.getElementsByClassName(
-        "show-m-menu"
-      )[0];
+      let MainList =
+        el.currentTarget.parentElement.getElementsByTagName("ul")[0];
+      let closeIcon =
+        el.currentTarget.parentElement.getElementsByClassName(
+          "close-m-menu",
+        )[0];
+      let showIcon =
+        el.currentTarget.parentElement.getElementsByClassName("show-m-menu")[0];
       if (val) {
         MainList.classList.remove("hidden");
         el.currentTarget.classList.add("hidden");

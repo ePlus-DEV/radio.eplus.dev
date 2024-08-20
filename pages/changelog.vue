@@ -3,11 +3,21 @@
     <table class="table w-full">
       <thead>
         <tr>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.status") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.commit") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.created") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.updated") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.published") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.status") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.commit") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.created") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.updated") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.published") }}
+          </th>
           <th class="dark:bg-gray-500 dark:text-gray-200"></th>
         </tr>
       </thead>
@@ -15,7 +25,11 @@
         <tr v-for="(item, index) in data" :key="index">
           <th class="flex justify-center dark:bg-gray-700 dark:text-gray-200">
             <label>
-              <div v-if="item.state === 'ready'" :data-tip="item.state" class="tooltip">
+              <div
+                v-if="item.state === 'ready'"
+                :data-tip="item.state"
+                class="tooltip"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -130,7 +144,11 @@
             </label>
           </th>
           <td class="dark:bg-gray-700 dark:text-gray-200">
-            <a :href="item.commit_url" target="_blank" rel="noopener noreferrer">
+            <a
+              :href="item.commit_url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {{ item.state === "error" ? item.error_message : item.title }}
             </a>
           </td>
@@ -184,11 +202,21 @@
       </tbody>
       <tfoot>
         <tr>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.status") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.commit") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.created") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.updated") }}</th>
-          <th class="dark:bg-gray-500 dark:text-gray-200">{{ $t("table.published") }}</th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.status") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.commit") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.created") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.updated") }}
+          </th>
+          <th class="dark:bg-gray-500 dark:text-gray-200">
+            {{ $t("table.published") }}
+          </th>
           <th class="dark:bg-gray-500 dark:text-gray-200"></th>
         </tr>
       </tfoot>
