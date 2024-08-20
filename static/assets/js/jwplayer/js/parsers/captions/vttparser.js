@@ -137,7 +137,7 @@ Settings.prototype = {
 // interprete each group as a key/value pair separated by 'keyValueDelim'.
 function parseOptions(input, callback, keyValueDelim, groupDelim) {
     const groups = groupDelim ? input.split(groupDelim) : [input];
-    for (let i = 0; i <= groups.length; i += 1) {
+    for (let i = 0; i < groups.length; i += 1) {
         if (typeof groups[i] !== 'string') {
             continue;
         }
