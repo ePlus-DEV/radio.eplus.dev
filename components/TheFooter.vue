@@ -17,7 +17,7 @@
         </nav>
 
         <div class="flex justify-center mt-8 space-x-6">
-          <a v-for="socialLink in socialLinks" :key="socialLink.id" target="_blank" :href="socialLink.href"
+          <a v-for="socialLink in socialLinks" :key="socialLink.id" target="_blank" rel="external nofollow noopener noreferrer" :href="socialLink.href"
             class="text-gray-400 hover:text-gray-500">
             <span class="sr-only">{{ socialLink.name }}</span>
             <fa :icon="['fab', socialLink.icon]" class="w-6 h-6" />
@@ -26,7 +26,7 @@
 
         <div class="flex justify-center">
           <div :data-tip="$t('text.hosted', { name: 'DigitalOcean', time: lastUpdate })" class="tooltip">
-            <a target="_blank"
+            <a target="_blank" rel="external nofollow noopener noreferrer"
               href="https://www.digitalocean.com/?refcode=bfa0034e378d&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge">
               <img
                 src="https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white"
@@ -37,7 +37,7 @@
 
         <p class="mt-4 text-center text-gray-400">
           Copyright © {{ new Date().getFullYear() }}
-          <a class="hover:text-gray-900 dark:hover:text-white cursor-pointer" :href="$config.Copyright" target="_blank">
+          <a class="hover:text-gray-900 dark:hover:text-white cursor-pointer" :href="$config.Copyright" target="_blank" rel="external nofollow noopener noreferrer">
             <img src="https://cdn.jsdelivr.net/gh/ePlus-DEV/cdn.eplus.dev/img/brand/logo.svg" alt="logo eplus.dev"
               class="w-7 h-7 inline-block cursor-pointer" />Plus.DEV
           </a>

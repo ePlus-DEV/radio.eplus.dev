@@ -83,8 +83,8 @@
             <a
               class="text-blue-800 hover:text-green-700"
               href="https://radio.eplus.dev"
-              rel="external nofollow noopener"
               target="_blank"
+              rel="external nofollow noopener noreferrer"
               >https://radio.eplus.dev</a
             >
           </p>
@@ -175,6 +175,7 @@
         <a
           class="text-blue-800 hover:text-green-700"
           href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_Cookies_And_Tracking"
+          rel="external nofollow noopener"
           target="_blank"
           >Free Privacy Policy website</a
         >

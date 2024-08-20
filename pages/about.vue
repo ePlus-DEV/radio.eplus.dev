@@ -29,7 +29,7 @@
               <div class="text-gray-600">
                 Thay đổi giao diện mới, bộ nhận diện thương hiệu, vẫn duy trì phiên bản cũ
                 tại địa chỉ
-                <a class="font-medium" target="_blank" href="https://old-radio.eplus.dev"
+                <a class="font-medium" target="_blank" rel="external nofollow noopener" href="https://old-radio.eplus.dev"
                   >https://old-radio.eplus.dev</a
                 >.
               </div>

@@ -173,6 +173,7 @@
           <th class="dark:bg-gray-700 dark:text-gray-200">
             <a
               target="_blank"
+              rel="external nofollow noopener"
               :href="item.links.permalink"
               class="text-blue-600 dark:text-blue-200 hover:underline"
             >

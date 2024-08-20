@@ -52,7 +52,7 @@
               class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
             >
               <span class="mr-2"> </span>
-              <a href="https://old-radio.eplus.dev" target="_blank">
+              <a href="https://old-radio.eplus.dev" target="_blank" rel="noopener noreferrer">
                 {{ $t("navmenu.old_version") }}
               </a>
             </li>
@@ -212,6 +212,7 @@
                 class="ml-2 font-bold"
                 href="https://old-radio.eplus.dev"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 {{ $t("navmenu.old_version") }}
               </a>
