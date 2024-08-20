@@ -414,7 +414,7 @@ QUnit.test('should cancel a suppressed error message on loadstart', function(ass
 QUnit.test('should set the width, height, and aspect ratio via a css class', function(assert) {
   const player = TestHelpers.makePlayer();
   const getStyleText = function(styleEl) {
-    return (styleEl.styleSheet && styleEl.styleSheet.cssText) || styleEl.innerHTML;
+    return (styleEl.styleSheet?.cssText) || styleEl.innerHTML;
   };
 
   // NOTE: was using npm/css to parse the actual CSS ast
@@ -533,7 +533,7 @@ QUnit.test('should use an class name that begins with an alpha character', funct
   const numericPlayer = TestHelpers.makePlayer({ id: '1numeric' });
 
   const getStyleText = function(styleEl) {
-    return (styleEl.styleSheet && styleEl.styleSheet.cssText) || styleEl.innerHTML;
+    return (styleEl.styleSheet?.cssText) || styleEl.innerHTML;
   };
 
   alphaPlayer.width(100);

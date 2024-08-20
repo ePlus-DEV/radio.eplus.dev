@@ -81,7 +81,7 @@ export function flashVersion() {
 
     if (plugins) {
         flash = plugins['Shockwave Flash'];
-        if (flash && flash.description) {
+        if (flash?.description) {
             return parseFloat(flash.description.replace(/\D+(\d+\.?\d*).*/, '$1'));
         }
     }

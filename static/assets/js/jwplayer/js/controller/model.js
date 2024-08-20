@@ -151,7 +151,7 @@ class Model extends SimpleModel {
 
         this.set('defaultPlaybackRate', playbackRate);
 
-        if (this._provider && this._provider.setPlaybackRate) {
+        if (this._provider?.setPlaybackRate) {
             this._provider.setPlaybackRate(playbackRate);
         }
     }

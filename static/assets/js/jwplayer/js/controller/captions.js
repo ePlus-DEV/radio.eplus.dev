@@ -29,7 +29,7 @@ const Captions = function(_model) {
         // Sideload tracks when not rendering natively
         const item = _model.get('playlistItem');
         const tracks = item.tracks;
-        const len = tracks && tracks.length;
+        const len = tracks?.length;
         if (len && !_model.get('renderCaptionsNatively')) {
             for (let i = 0; i < len; i++) {
                 /* eslint-disable no-loop-func */

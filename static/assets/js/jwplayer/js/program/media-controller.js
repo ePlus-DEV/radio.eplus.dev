@@ -137,7 +137,7 @@ export default class MediaController extends Events {
         }).catch(error => {
             if (this.item && mediaModel === model.mediaModel) {
                 model.set('playRejected', true);
-                const videoTagPaused = video && video.paused;
+                const videoTagPaused = video?.paused;
                 if (videoTagPaused) {
                     // Check if the video.src was set to empty, resolving to location.href and loaded.
                     // This can be caused by 3rd party ads libraries after an ad break.

@@ -38,7 +38,7 @@ export function ajax(url, completeCallback, errorCallback, args) {
         onerror: errorCallback || noop,
         mimeType: (args && !args.responseType) ? 'text/xml' : '',
         requireValidXML: false, /* Require responseXML */
-        responseType: (args && args.plainText) ? 'text' : '', /* xhr.responseType ex: "json" or "text" */
+        responseType: (args?.plainText) ? 'text' : '', /* xhr.responseType ex: "json" or "text" */
         useDomParser: false,
         requestFilter: null
     }, args);
@@ -202,7 +202,7 @@ function _ajaxComplete(options) {
             }
             if (options.useDomParser && xhr.responseText && !xml) {
                 xml = parseXML(xhr.responseText);
-                if (xml && xml.firstChild) {
+                if (xml?.firstChild) {
                     return _xmlResponse(xhr, xml, options);
                 }
             }

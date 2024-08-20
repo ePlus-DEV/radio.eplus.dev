@@ -127,7 +127,7 @@
             var play = basePlayer.play;
             var pause = basePlayer.pause;
             playerInstance.play = function(state, meta) {
-                if (state && state.reason) {
+                if (state?.reason) {
                     meta = state;
                 }
 

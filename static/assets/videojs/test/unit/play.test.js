@@ -82,7 +82,7 @@ const mainModule = function(playReturnValue, middlewareTermination, subhooks) {
       if (this.player.playTerminatedQueue_ !== this.playTerminatedQueue) {
         this.player.runPlayTerminatedQueue_ = this.playTerminatedQueue;
       }
-      if (this.player && this.player.tech_ && this.player.tech_.play !== this.techPlay) {
+      if (this.player?.tech_ && this.player.tech_.play !== this.techPlay) {
         this.player.tech_.play = this.techPlay;
       }
       this.playTests.push({assertName, playRetval: this.player.play()});

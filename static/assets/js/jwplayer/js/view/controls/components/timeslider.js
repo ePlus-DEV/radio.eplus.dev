@@ -185,9 +185,9 @@ class TimeSlider extends Slider {
 
         const tracks = playlistItem.tracks;
         each(tracks, function (track) {
-            if (track && track.kind && track.kind.toLowerCase() === 'thumbnails') {
+            if (track?.kind && track.kind.toLowerCase() === 'thumbnails') {
                 this.loadThumbnails(track.file);
-            } else if (track && track.kind && track.kind.toLowerCase() === 'chapters') {
+            } else if (track?.kind && track.kind.toLowerCase() === 'chapters') {
                 this.loadChapters(track.file);
             }
         }, this);
@@ -285,7 +285,7 @@ class TimeSlider extends Slider {
 
     updateCues(model, cues) {
         this.resetCues();
-        if (cues && cues.length) {
+        if (cues?.length) {
             cues.forEach((ele) => {
                 this.addCue(ele);
             });

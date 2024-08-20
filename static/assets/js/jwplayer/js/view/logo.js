@@ -89,7 +89,7 @@ export default function Logo(_model) {
         }
 
         this.ui = new UI(_logo).on('click tap enter', function (evt) {
-            if (evt && evt.stopPropagation) {
+            if (evt?.stopPropagation) {
                 evt.stopPropagation();
             }
 

@@ -34,7 +34,7 @@ const autoSetup = function() {
       const mediaEl = mediaEls[i];
 
       // Check if element exists, has getAttribute func.
-      if (mediaEl && mediaEl.getAttribute) {
+      if (mediaEl?.getAttribute) {
 
         // Make sure this player hasn't already been set up.
         if (mediaEl.player === undefined) {

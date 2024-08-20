@@ -82,7 +82,7 @@ Object.assign(Controller.prototype, {
 
         _view = this._view = new View(_api, viewModel);
         _view.on('all', (type, event) => {
-            if (event && event.doNotForward) {
+            if (event?.doNotForward) {
                 return;
             }
             _trigger(type, event);
@@ -509,7 +509,7 @@ Object.assign(Controller.prototype, {
                 _beforePlay = true;
                 _this.trigger(MEDIA_BEFOREPLAY, {
                     playReason,
-                    startTime: meta && meta.startTime ? meta.startTime : _model.get('playlistItem').starttime
+                    startTime: meta?.startTime ? meta.startTime : _model.get('playlistItem').starttime
                 });
                 _beforePlay = false;
 
@@ -540,7 +540,7 @@ Object.assign(Controller.prototype, {
         }
 
         function _getReason(meta) {
-            if (meta && meta.reason) {
+            if (meta?.reason) {
                 return meta.reason;
             }
             return 'unknown';
@@ -837,7 +837,7 @@ Object.assign(Controller.prototype, {
             }
 
             _model.set('fullscreen', state);
-            if (_this._instreamAdapter && _this._instreamAdapter._adModel) {
+            if (_this._instreamAdapter?._adModel) {
                 _this._instreamAdapter._adModel.set('fullscreen', state);
             }
         }

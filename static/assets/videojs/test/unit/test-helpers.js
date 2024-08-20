@@ -25,7 +25,7 @@ const TestHelpers = {
   },
 
   getComputedStyle(el, rule) {
-    if (document.defaultView && document.defaultView.getComputedStyle) {
+    if (document.defaultView?.getComputedStyle) {
       return document.defaultView.getComputedStyle(el, null).getPropertyValue(rule);
     }
 

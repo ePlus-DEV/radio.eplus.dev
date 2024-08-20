@@ -134,7 +134,7 @@ class PlaybackRateMenuButton extends MenuButton {
    *         All possible playback rates
    */
   playbackRates() {
-    return this.options_.playbackRates || (this.options_.playerOptions && this.options_.playerOptions.playbackRates);
+    return this.options_.playbackRates || (this.options_.playerOptions?.playbackRates);
   }
 
   /**

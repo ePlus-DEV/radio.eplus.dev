@@ -70,12 +70,12 @@ class Component {
     options = this.options_ = mergeOptions(this.options_, options);
 
     // Get ID from options or options element if one is supplied
-    this.id_ = options.id || (options.el && options.el.id);
+    this.id_ = options.id || (options.el?.id);
 
     // If there was no ID from the options, generate one
     if (!this.id_) {
       // Don't require the player ID function in the case of mock players
-      const id = player && player.id && player.id() || 'no_player';
+      const id = player?.id && player.id() || 'no_player';
 
       this.id_ = `${id}_component_${Guid.newGUID()}`;
     }
@@ -287,15 +287,15 @@ class Component {
   localize(string, tokens, defaultValue = string) {
     const code = this.player_.language && this.player_.language();
     const languages = this.player_.languages && this.player_.languages();
-    const language = languages && languages[code];
+    const language = languages?.[code];
     const primaryCode = code && code.split('-')[0];
-    const primaryLang = languages && languages[primaryCode];
+    const primaryLang = languages?.[primaryCode];
 
     let localizedString = defaultValue;
 
-    if (language && language[string]) {
+    if (language?.[string]) {
       localizedString = language[string];
-    } else if (primaryLang && primaryLang[string]) {
+    } else if (primaryLang?.[string]) {
       localizedString = primaryLang[string];
     }
 
@@ -1547,7 +1547,7 @@ class Component {
     const Tech = Component.getComponent('Tech');
 
     // We need to make sure this check is only done if Tech has been registered.
-    const isTech = Tech && Tech.isTech(ComponentToRegister);
+    const isTech = Tech?.isTech(ComponentToRegister);
     const isComp = Component === ComponentToRegister ||
       Object.prototype.isPrototypeOf.call(Component.prototype, ComponentToRegister.prototype);
 

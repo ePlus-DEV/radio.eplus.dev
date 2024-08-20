@@ -88,7 +88,7 @@ export function ProviderListener(mediaController) {
             case MEDIA_SEEKED: {
                 // After seeking, if the video tag is in a paused state, update the player state to "paused"
                 const { mediaElement } = mediaController;
-                if (mediaElement && mediaElement.paused) {
+                if (mediaElement?.paused) {
                     mediaModel.set('mediaState', 'paused');
                 }
                 break;

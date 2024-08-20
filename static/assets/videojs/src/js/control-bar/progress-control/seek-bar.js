@@ -94,7 +94,7 @@ class SeekBar extends Slider {
   }
 
   disableInterval_(e) {
-    if (this.player_.liveTracker && this.player_.liveTracker.isLive() && e.type !== 'ended') {
+    if (this.player_.liveTracker?.isLive() && e.type !== 'ended') {
       return;
     }
 
@@ -141,7 +141,7 @@ class SeekBar extends Slider {
       const liveTracker = this.player_.liveTracker;
       let duration = this.player_.duration();
 
-      if (liveTracker && liveTracker.isLive()) {
+      if (liveTracker?.isLive()) {
         duration = this.player_.liveTracker.liveCurrentTime();
       }
 
@@ -197,7 +197,7 @@ class SeekBar extends Slider {
     let percent;
     const liveTracker = this.player_.liveTracker;
 
-    if (liveTracker && liveTracker.isLive()) {
+    if (liveTracker?.isLive()) {
       percent = (currentTime - liveTracker.seekableStart()) / liveTracker.liveWindow();
 
       // prevent the percent from changing at the live edge

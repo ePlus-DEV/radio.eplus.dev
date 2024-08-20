@@ -183,7 +183,7 @@ export default class Controls extends Events {
         const visibilityChangeHandler = (visible, evt) => {
             const state = model.get('state');
             const settingsInteraction = { reason: 'settingsInteraction' };
-            const isKeyEvent = (evt && evt.sourceEvent || evt || {}).type === 'keydown';
+            const isKeyEvent = (evt?.sourceEvent || evt || {}).type === 'keydown';
 
             toggleClass(this.div, 'jw-settings-open', visible);
             if (getBreakpoint(model.get('containerWidth')) < 2) {
@@ -544,7 +544,7 @@ export default class Controls extends Events {
         const insideControlbar = this.controlbar.element().contains(event.target);
         const insideNextUp = this.controlbar.nextUpToolTip &&
             this.controlbar.nextUpToolTip.element().contains(event.target);
-        const insideLogo = this.logo && this.logo.contains(event.target);
+        const insideLogo = this.logo?.contains(event.target);
         const activeTimeout = (insideControlbar || insideNextUp || insideLogo) ? 0 : ACTIVE_TIMEOUT;
 
         this.userActive(activeTimeout);

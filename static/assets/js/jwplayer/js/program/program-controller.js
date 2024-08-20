@@ -728,7 +728,7 @@ function forwardEvents(mediaController, target) {
 }
 
 function getSource(item) {
-    return item && item.sources && item.sources[0];
+    return item?.sources && item.sources[0];
 }
 
 export default ProgramController;

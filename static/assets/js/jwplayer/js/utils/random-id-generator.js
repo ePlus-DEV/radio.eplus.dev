@@ -4,7 +4,7 @@ export const FEED_SHOWN_ID_LENGTH = 12;
 function randomAlphaNumericString() {
     try {
         const crypto = window.crypto || window.msCrypto;
-        if (crypto && crypto.getRandomValues) {
+        if (crypto?.getRandomValues) {
             return crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
         }
     } catch (e) {/* ignore */}

@@ -57,7 +57,7 @@ export function supportsType(source) {
         // source.mediaTypes is an Array of media types that MediaSource must support for the stream to play
         // Ex: ['video/webm; codecs="vp9"', 'audio/webm; codecs="vorbis"']
         const mediaTypes = source.mediaTypes;
-        if (mediaTypes && mediaTypes.length) {
+        if (mediaTypes?.length) {
             mimeType = [mimeType].concat(mediaTypes.slice()).join('; ');
         }
 
