@@ -1,4 +1,5 @@
-export default () => Promise.resolve({
+export default () =>
+  Promise.resolve({
     navmenu: {
       homepage: "Homepage",
       about: "About",
@@ -131,6 +132,6 @@ export default () => Promise.resolve({
     text: {
       guide: "Guide",
       the_last_90_days: "The last 90 days",
-      hosted: "Hosted on {name} - Last update {time}"
+      hosted: "Hosted on {name} - Last update {time}",
     },
-});
+  });
