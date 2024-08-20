@@ -419,30 +419,30 @@ export default {
     };
   },
   mounted() {
-    this.$refs.plyr.player.on("event", () => console.log("event fired"));
+    this.$refs.plyr.player.on("event", () => {});
     this.$refs.plyr.player.on("ready", (event) => {
-      console.log(event);
+      
     });
     this.$refs.plyr.player.on("canplay", (event) => {
-      console.log(event.detail.plyr);
+      
     });
     this.$refs.plyr.player.on("waiting", (event) => {
       // const instance = event.detail.plyr;
-      console.log("waiting");
+      
       this.waiting = true;
     });
     this.$refs.plyr.player.on("playing", (event) => {
-      console.log("playing");
+      
       this.button = true;
       this.waiting = false;
     });
     this.$refs.plyr.player.on("pause", (event) => {
-      console.log("pause");
+      
       this.button = false;
       this.waiting = false;
     });
     this.$refs.plyr.player.on("stopped", (event) => {
-      console.log("stopped");
+      
     });
   },
   computed: {
