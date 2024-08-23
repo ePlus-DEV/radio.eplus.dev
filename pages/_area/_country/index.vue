@@ -80,9 +80,9 @@ export default {
   },
   created() {
     Promise.all([this.fetchData()]).then(() => {
-      if (this.slug === 'singapore') {
-        this.currentSong();
-      }
+      // if (this.slug === 'singapore') {
+      //   this.currentSong();
+      // }
     });
   },
 };
