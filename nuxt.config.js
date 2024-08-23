@@ -254,7 +254,7 @@ export default {
       regions.forEach(({ region, files }) => {
         files.forEach((file) => {
           const jsonData = require(`./static/assets/radio/${region}/${file}.json`);
-          const countryCode = file.replace("-", ".");
+          const countryCode = file.replace("-", "_");
 
           for (const [key, value] of Object.entries(jsonData)) {
             routesToGenerate.push(`/${file}/${key}`);
@@ -262,7 +262,7 @@ export default {
               station_name: value.title,
               station_image: process.env.BASE_URL + value.features,
               station_country: `world.${region}.${countryCode}`,
-              url: `/${file}/${key}`,
+              url: `/${region}/${file}/${key}`,
               objectID: `${file}-${key}`,
             });
           }
