@@ -52,7 +52,7 @@ export default {
       thumb: `/img/${this.area}/flags/${this.slug}.png`,
       current: {},
       polling_song: null,
-      timezone: "Asia/Singapore",
+      timezone: "Asia/Ho_Chi_Minh",
     };
   },
   beforeDestroy() {
