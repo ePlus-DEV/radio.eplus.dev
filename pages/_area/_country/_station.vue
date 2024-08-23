@@ -259,11 +259,12 @@ export default {
         .then((res) => {
           if (res.data.err === 0) {
             if (res.data.data.sentences) {
-              var lyric = "";
+              let lyric = "";
+              let lyric_line = "";
               for (let i = 0; i < res.data.data.sentences.length; i++) {
                 const words = res.data.data.sentences[i].words;
 
-                var lyric_line = "";
+                lyric_line = "";
                 for (let x = 0; x < words.length; x++) {
                   if (x === 0) {
                     lyric_line += words[x].data;
@@ -285,7 +286,7 @@ export default {
     },
   },
   created() {
-    Promise.all([this.fetchData()]).then(() => { });
+    Promise.all([this.fetchData()]);
   },
 };
 </script>
