@@ -18,7 +18,7 @@
 export default {
   name: "Country",
   head() {
-    const pageTitle = `${this.$t("navmenu.homepage")} - Radio ${this.$t(this.i18n)} - `;
+    const pageTitle = `${this.$t("navmenu.homepage")} - Radio ${this.$t(this.i18n)}`;
     const pageDescription = `Radio Online at ${this.$t(this.i18n)}`;
 
     return {
@@ -66,6 +66,7 @@ export default {
         .then((res) => {
           this.current = res.data;
           // Loop
+          const self = this;
           window.clearTimeout(this.polling_song);
           this.polling_song = setInterval(() => {
             self.currentSong();
