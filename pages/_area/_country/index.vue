@@ -60,20 +60,18 @@ export default {
         this.$refs.player.init(true);
       });
     },
-    async currentSong() {
+    currentSong() {
       this.$axios
         .get("https://cms.camokakis.sg/api/response-get-channel/POWER98_LOVESONGS")
         .then((res) => {
           this.current = res.data;
           // Loop
-          var self = this;
           window.clearTimeout(this.polling_song);
-          this.polling_song = setInterval(function () {
+          this.polling_song = setInterval(() => {
             self.currentSong();
           }, 60000);
-        }).catch(function (error) {
           if (error.response) {
-            if (error.response.status == 502) {
+            if (error.response.status === 502) {
               location.reload();
             }
           }
