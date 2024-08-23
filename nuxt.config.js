@@ -2,11 +2,46 @@ import algoliasearch from "algoliasearch";
 // Define the regions and their corresponding JSON files
 const regions = [
   { region: "africa", files: ["algeria", "nigeria"] },
-  { region: "asia", files: ["viet-nam", "korea", "china", "singapore", "hong-kong", "japan", "malaysia", "philippines", "indonesia", "thailand", "bangladesh", "pakistan", "india", "taiwan", "israel", "sri-lanka", "nepal"] },
-  { region: "central-america", files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"] },
+  {
+    region: "asia",
+    files: [
+      "viet-nam",
+      "korea",
+      "china",
+      "singapore",
+      "hong-kong",
+      "japan",
+      "malaysia",
+      "philippines",
+      "indonesia",
+      "thailand",
+      "bangladesh",
+      "pakistan",
+      "india",
+      "taiwan",
+      "israel",
+      "sri-lanka",
+      "nepal",
+    ],
+  },
+  {
+    region: "central-america",
+    files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
+  },
   { region: "europe", files: ["united-kingdom", "ukraine", "russia"] },
-  { region: "north-america", files: ["cuba", "haiti", "jamaica", "mexico", "puerto-rico", "dominican-republic", "trinidad-and-tobago"] },
-  { region: "oceania", files: ["australia", "new-zealand"] }
+  {
+    region: "north-america",
+    files: [
+      "cuba",
+      "haiti",
+      "jamaica",
+      "mexico",
+      "puerto-rico",
+      "dominican-republic",
+      "trinidad-and-tobago",
+    ],
+  },
+  { region: "oceania", files: ["australia", "new-zealand"] },
 ];
 
 export default {
@@ -132,11 +167,11 @@ export default {
     "@nuxtjs/fontawesome",
   ],
   fontawesome: {
-     component: 'Fa',
-     suffix: false,
-     icons: {
-       solid: true,
-       brands: true,
+    component: "Fa",
+    suffix: false,
+    icons: {
+      solid: true,
+      brands: true,
     },
     proIcons: {
       solid: true,
@@ -145,7 +180,7 @@ export default {
       thin: true,
       duotone: true,
     },
- },
+  },
   // momentjs
   moment: {
     timezone: true,
@@ -246,14 +281,19 @@ export default {
   },
   generate: {
     routes() {
-      const client = algoliasearch("N87NFQVY0Z", "73e93ee2ef3aa6919b7c6495767c7f9d");
+      const client = algoliasearch(
+        "N87NFQVY0Z",
+        "73e93ee2ef3aa6919b7c6495767c7f9d",
+      );
       const index = client.initIndex("radio.eplus.dev");
       const routesToGenerate = [];
       const data_algolia = [];
 
       regions.forEach(({ region, files }) => {
         files.forEach((file) => {
-          const jsonData = require(`./static/assets/radio/${region}/${file}.json`);
+          const jsonData = require(
+            `./static/assets/radio/${region}/${file}.json`,
+          );
           const countryCode = file.replace("-", "_");
 
           for (const [key, value] of Object.entries(jsonData)) {

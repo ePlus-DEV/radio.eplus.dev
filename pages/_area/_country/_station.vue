@@ -1,26 +1,52 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" :level_1="i18n" :level_1_slug="slug" :level_2="name" />
+    <Breadcrumbs
+      :area="area"
+      :level_1="i18n"
+      :level_1_slug="slug"
+      :level_2="name"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Lyric -->
     <button
       class="fixed left-4 bottom-2 uppercase text-sm px-4 py-3 bg-gray-900 text-white rounded-full dark:bg-red-700 z-50"
-      @click="lyric_popup = !lyric_popup" v-show="slug == 'viet-nam'">
-      <fa :icon="['far', 'list-music']" class="text-white fill-current h-5 w-5" />
+      @click="lyric_popup = !lyric_popup"
+      v-show="slug == 'viet-nam'"
+    >
+      <fa
+        :icon="['far', 'list-music']"
+        class="text-white fill-current h-5 w-5"
+      />
     </button>
-    <div class="fixed left-0 bottom-2 z-40" :class="lyric_popup ? '' : 'hidden'">
+    <div
+      class="fixed left-0 bottom-2 z-40"
+      :class="lyric_popup ? '' : 'hidden'"
+    >
       <div
-        class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden dark:bg-gray-700 dark:text-white">
+        class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden dark:bg-gray-700 dark:text-white"
+      >
         <!-- Text -->
         <div class="">
           <div class="relative overflow-hidden px-8 pt-8">
-            <div width="80" height="77" class="absolute -top-10 -right-10 text-yellow-500">
-              <svg width="120" height="119" viewBox="0 0 120 119" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path opacity="0.3"
+            <div
+              width="80"
+              height="77"
+              class="absolute -top-10 -right-10 text-yellow-500"
+            >
+              <svg
+                width="120"
+                height="119"
+                viewBox="0 0 120 119"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  opacity="0.3"
                   d="M6.38128 49.1539C3.20326 32.893 13.809 17.1346 30.0699 13.9566L70.3846 6.07751C86.6455 2.89948 102.404 13.5052 105.582 29.7661L113.461 70.0808C116.639 86.3417 106.033 102.1 89.7724 105.278L49.4577 113.157C33.1968 116.335 17.4384 105.729 14.2604 89.4686L6.38128 49.1539Z"
-                  fill="currentColor" />
+                  fill="currentColor"
+                />
               </svg>
             </div>
             <div class="text-2xl flex flex-col pb-4">
@@ -37,7 +63,14 @@
     <!-- END - Lyric -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n" :song="song" :program="program" :info="info"></Player>
+    <Player
+      ref="player"
+      :stream="stream_name"
+      :country="i18n"
+      :song="song"
+      :program="program"
+      :info="info"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -132,7 +165,7 @@ export default {
     //   return null;
     // },
     fetchData() {
-      this.i18n = `world.${this.area.replace('-', '_')}.${this.slug.replace('-', '_')}`;
+      this.i18n = `world.${this.area.replace("-", "_")}.${this.slug.replace("-", "_")}`;
       this.thumb = `/img/${this.area}/flags/${this.slug}.png`;
       this.title = `${this.name} - ${this.$t("navmenu.homepage")} - Radio ${this.$t(this.i18n)}`;
 
@@ -146,7 +179,6 @@ export default {
               this.$route.params.station,
             )
           ) {
-
             const data = res.data[this.$route.params.station];
 
             // Set variable
@@ -213,8 +245,7 @@ export default {
           // BEGIN - Browser title
           document.title = this.title;
           if (this.song !== undefined && this.song.currentMedia !== undefined) {
-            document.title =
-              `${this.song.currentMedia.title} - ${this.song.currentMedia.artists} | ${this.title}`;
+            document.title = `${this.song.currentMedia.title} - ${this.song.currentMedia.artists} | ${this.title}`;
           }
           // END - Browser title
           // BEGIN - Lyric
@@ -285,7 +316,7 @@ export default {
     },
   },
   created() {
-    Promise.all([this.fetchData()]).then(() => { });
+    Promise.all([this.fetchData()]).then(() => {});
   },
 };
 </script>

@@ -1,11 +1,23 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
+    <Breadcrumbs
+      :area="area"
+      :level_1="i18n"
+      :level_1_slug="slug"
+      :thumb="thumb"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :country="i18n" :home="true" :thumb="thumb" :current="current" :timezone="timezone" />
+    <Player
+      ref="player"
+      :country="i18n"
+      :home="true"
+      :thumb="thumb"
+      :current="current"
+      :timezone="timezone"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -48,21 +60,25 @@ export default {
   },
   methods: {
     fetchData() {
-      this.i18n = `world.${this.area.replace('-', '_')}.${this.slug.replace('-', '_')}`;
+      this.i18n = `world.${this.area.replace("-", "_")}.${this.slug.replace("-", "_")}`;
       this.thumb = `/img/${this.area}/flags/${this.slug}.png`;
 
-      this.$axios.get(`/assets/radio/favorite/${this.slug}.json`).then((res) => {
-        const data = res.data;
+      this.$axios
+        .get(`/assets/radio/favorite/${this.slug}.json`)
+        .then((res) => {
+          const data = res.data;
 
-        // Vuex
-        this.$store.dispatch("storePLAYERHOME", data);
+          // Vuex
+          this.$store.dispatch("storePLAYERHOME", data);
 
-        this.$refs.player.init(true);
-      });
+          this.$refs.player.init(true);
+        });
     },
     currentSong() {
       this.$axios
-        .get("https://cms.camokakis.sg/api/response-get-channel/POWER98_LOVESONGS")
+        .get(
+          "https://cms.camokakis.sg/api/response-get-channel/POWER98_LOVESONGS",
+        )
         .then((res) => {
           this.current = res.data;
           // Loop
