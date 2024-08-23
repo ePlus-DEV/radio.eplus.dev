@@ -267,7 +267,6 @@ export default {
         });
     },
     fetchInfo(url) {
-      var fetch;
       this.$axios
         .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
         .then((res) => {
@@ -276,8 +275,7 @@ export default {
           }
           // Loop
           const self = this;
-          // clearTimeout(fetch);
-          fetch = setInterval(() => {
+          setInterval(() => {
             self.fetchInfo(url);
           }, 60000);
         });
