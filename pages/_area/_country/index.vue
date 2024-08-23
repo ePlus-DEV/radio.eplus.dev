@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
+    <Breadcrumbs :area="area" :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
