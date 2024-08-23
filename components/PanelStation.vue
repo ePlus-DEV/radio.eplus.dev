@@ -11,7 +11,7 @@
         class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
       >
         <nuxt-link
-          :to="'/' + slug + '/' + index"
+            :to="`/${area}/${slug}/${index}`"
           v-for="(data, index) in results"
           v-bind:key="index"
           class="border tooltip tooltip-left"

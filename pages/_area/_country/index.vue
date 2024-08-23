@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     fetchData() {
-      this.i18n = `world.${this.area}.${this.slug}`;
+      this.i18n = `world.${this.area.replace('-', '_')}.${this.slug.replace('-', '_')}`;
       this.thumb = `/img/${this.area}/flags/${this.slug}.png`;
 
       this.$axios.get(`/assets/radio/favorite/${this.slug}.json`).then((res) => {

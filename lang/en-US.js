@@ -29,7 +29,7 @@ export default () =>
       },
       asia: {
         name: "Asia",
-        vietnam: "Vietnam",
+        viet_nam: "Vietnam",
         singapore: "Singapore",
         korea: "Korea",
         china: "China",
