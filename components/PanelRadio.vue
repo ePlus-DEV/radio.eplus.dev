@@ -2,9 +2,7 @@
   <div>
     <!-- BEGIN - Asia -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">{{ $t("world.africa.name") }}</h2>
       </div>
       <div class="flex items-center justify-center">
@@ -12,21 +10,14 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)"
-            :to="index"
-            v-for="(country, index) in world.africa"
-            :key="country.name"
-          >
+            :data-tip="$t(country.name)" :to="`africa/${index}`" v-for="(country, index) in world.africa"
+            :key="country.name">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
 
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + country.flag"
-              :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
+            <nuxt-img loading="lazy" :src="$config.Base_URL + country.flag" :alt="$t(country.name)"
+              class="p-0 sm:p-1 md:p-5 lg:p-10" />
           </nuxt-link>
           <!-- END - Country -->
         </div>
@@ -36,9 +27,7 @@
 
     <!-- BEGIN - Asia -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">{{ $t("world.asia.name") }}</h2>
       </div>
       <div class="flex items-center justify-center">
@@ -46,20 +35,12 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)"
-            :to="index"
-            v-for="(country, index) in world.asia"
-            :key="index"
-          >
+            :data-tip="$t(country.name)" :to="`asia/${index}`" v-for="(country, index) in world.asia" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + country.flag"
-              :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
+            <nuxt-img loading="lazy" :src="$config.Base_URL + country.flag" :alt="$t(country.name)"
+              class="p-0 sm:p-1 md:p-5 lg:p-10" />
           </nuxt-link>
           <!-- END - Country -->
         </div>
@@ -69,9 +50,7 @@
 
     <!-- BEGIN - Central America -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">
           {{ $t("world.central_america.name") }}
         </h2>
@@ -81,21 +60,14 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)"
-            :to="index"
-            v-for="(country, index) in world.central_america"
-            :key="index"
-          >
+            :data-tip="$t(country.name)" :to="`central-america/${index}`"
+            v-for="(country, index) in world.central_america" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
 
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + country.flag"
-              :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
+            <nuxt-img loading="lazy" :src="$config.Base_URL + country.flag" :alt="$t(country.name)"
+              class="p-0 sm:p-1 md:p-5 lg:p-10" />
           </nuxt-link>
           <!-- END - Country -->
         </div>
@@ -105,9 +77,7 @@
 
     <!-- BEGIN - Europe -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">{{ $t("world.europe.name") }}</h2>
       </div>
       <div class="flex items-center justify-center">
@@ -115,21 +85,13 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)"
-            :to="index"
-            v-for="(country, index) in world.europe"
-            :key="index"
-          >
+            :data-tip="$t(country.name)" :to="`europe/${index}`" v-for="(country, index) in world.europe" :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
 
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + country.flag"
-              :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
+            <nuxt-img loading="lazy" :src="$config.Base_URL + country.flag" :alt="$t(country.name)"
+              class="p-0 sm:p-1 md:p-5 lg:p-10" />
           </nuxt-link>
           <!-- END - Country -->
         </div>
@@ -139,9 +101,7 @@
 
     <!-- BEGIN - North America -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">
           {{ $t("world.north_america.name") }}
         </h2>
@@ -151,21 +111,14 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)"
-            :to="index"
-            v-for="(country, index) in world.north_america"
-            :key="index"
-          >
+            :data-tip="$t(country.name)" :to="`north-america/${index}`" v-for="(country, index) in world.north_america"
+            :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
 
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + country.flag"
-              :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
+            <nuxt-img loading="lazy" :src="$config.Base_URL + country.flag" :alt="$t(country.name)"
+              class="p-0 sm:p-1 md:p-5 lg:p-10" />
           </nuxt-link>
           <!-- END - Country -->
         </div>
@@ -175,9 +128,7 @@
 
     <!-- BEGIN - Oceania -->
     <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-      <div
-        class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-      >
+      <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
         <h2 class="text-2xl dark:text-white">
           {{ $t("world.oceania.name") }}
         </h2>
@@ -187,21 +138,14 @@
           <!-- BEGIN - Country -->
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-            :data-tip="$t(country.name)"
-            :to="index"
-            v-for="(country, index) in world.oceania"
-            :key="index"
-          >
+            :data-tip="$t(country.name)" :to="`oceania/${index}`" v-for="(country, index) in world.oceania"
+            :key="index">
             <div class="indicator-item badge badge-accent">
               {{ country.station }}
             </div>
 
-            <nuxt-img
-              loading="lazy"
-              :src="$config.Base_URL + country.flag"
-              :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-10"
-            />
+            <nuxt-img loading="lazy" :src="$config.Base_URL + country.flag" :alt="$t(country.name)"
+              class="p-0 sm:p-1 md:p-5 lg:p-10" />
           </nuxt-link>
           <!-- END - Country -->
         </div>
