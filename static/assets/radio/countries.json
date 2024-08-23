@@ -17,7 +17,7 @@
   },
   "asia": {
     "viet-nam": {
-      "name": "world.asia.vietnam",
+      "name": "world.asia.viet_nam",
       "flag": "/img/asia/flags/viet-nam.png",
       "data": "/assets/radio/asia/viet-nam.json",
       "timezone": "Asia/Ho_Chi_Minh",
