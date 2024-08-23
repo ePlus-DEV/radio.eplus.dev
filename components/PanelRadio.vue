@@ -13,7 +13,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)"
-            :to="index"
+            :to="`africa/${index}`"
             v-for="(country, index) in world.africa"
             :key="country.name"
           >
@@ -47,7 +47,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)"
-            :to="index"
+            :to="`asia/${index}`"
             v-for="(country, index) in world.asia"
             :key="index"
           >
@@ -82,7 +82,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)"
-            :to="index"
+            :to="`central-america/${index}`"
             v-for="(country, index) in world.central_america"
             :key="index"
           >
@@ -116,7 +116,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)"
-            :to="index"
+            :to="`europe/${index}`"
             v-for="(country, index) in world.europe"
             :key="index"
           >
@@ -152,7 +152,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)"
-            :to="index"
+            :to="`north-america/${index}`"
             v-for="(country, index) in world.north_america"
             :key="index"
           >
@@ -188,7 +188,7 @@
           <nuxt-link
             class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
             :data-tip="$t(country.name)"
-            :to="index"
+            :to="`oceania/${index}`"
             v-for="(country, index) in world.oceania"
             :key="index"
           >
@@ -226,66 +226,65 @@ export default {
   },
   methods: {
     async fetchData() {
-      // Countries
-      this.$axios.get("/assets/radio/countries.json").then((res) => {
+      try {
+        const res = await this.$axios.get("/assets/radio/countries.json");
         this.world = res.data;
-        var self = this;
+        const self = this;
+
         // BEGIN - Africa
-        Object.entries(res.data.africa).forEach(([key, country]) => {
-          self.$axios.get(country.data).then((res) => {
-            self.world.africa[key].station = Object.keys(res.data).length;
-          });
-        });
+        for (const [key, country] of Object.entries(res.data.africa)) {
+          const countryData = await self.$axios.get(country.data);
+          self.world.africa[key].station = Object.keys(countryData.data).length;
+        }
         // END - Africa
 
         // BEGIN - Asia
-        Object.entries(res.data.asia).forEach(([key, country]) => {
-          self.$axios.get(country.data).then((res) => {
-            self.world.asia[key].station = Object.keys(res.data).length;
-          });
-        });
+        for (const [key, country] of Object.entries(res.data.asia)) {
+          const countryData = await self.$axios.get(country.data);
+          self.world.asia[key].station = Object.keys(countryData.data).length;
+        }
         // END - Asia
 
         // BEGIN - Central America
-        Object.entries(res.data.central_america).forEach(([key, country]) => {
-          self.$axios.get(country.data).then((res) => {
-            self.world.central_america[key].station = Object.keys(
-              res.data,
-            ).length;
-          });
-        });
+        for (const [key, country] of Object.entries(res.data.central_america)) {
+          const countryData = await self.$axios.get(country.data);
+          self.world.central_america[key].station = Object.keys(
+            countryData.data,
+          ).length;
+        }
         // END - Central America
 
         // BEGIN - Europe
-        Object.entries(res.data.europe).forEach(([key, country]) => {
-          self.$axios.get(country.data).then((res) => {
-            self.world.europe[key].station = Object.keys(res.data).length;
-          });
-        });
+        for (const [key, country] of Object.entries(res.data.europe)) {
+          const countryData = await self.$axios.get(country.data);
+          self.world.europe[key].station = Object.keys(countryData.data).length;
+        }
         // END - Europe
 
         // BEGIN - North America
-        Object.entries(res.data.north_america).forEach(([key, country]) => {
-          self.$axios.get(country.data).then((res) => {
-            self.world.north_america[key].station = Object.keys(
-              res.data,
-            ).length;
-          });
-        });
+        for (const [key, country] of Object.entries(res.data.north_america)) {
+          const countryData = await self.$axios.get(country.data);
+          self.world.north_america[key].station = Object.keys(
+            countryData.data,
+          ).length;
+        }
         // END - North America
 
         // BEGIN - Oceania
-        Object.entries(res.data.oceania).forEach(([key, country]) => {
-          self.$axios.get(country.data).then((res) => {
-            self.world.oceania[key].station = Object.keys(res.data).length;
-          });
-        });
+        for (const [key, country] of Object.entries(res.data.oceania)) {
+          const countryData = await self.$axios.get(country.data);
+          self.world.oceania[key].station = Object.keys(
+            countryData.data,
+          ).length;
+        }
         // END - Oceania
-      });
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   created() {
-    Promise.all([this.fetchData()]).then(() => {});
+    this.fetchData();
   },
 };
 </script>
