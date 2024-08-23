@@ -213,6 +213,7 @@
 
 <script>
 export default {
+  name: "PanelRadio",
   data() {
     return {
       world: {

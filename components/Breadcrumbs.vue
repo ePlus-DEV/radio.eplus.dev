@@ -30,6 +30,7 @@
 </template>
 <script>
 export default {
+  name: "Breadcrumbs",
   props: {
     area: {
       type: String,
