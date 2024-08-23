@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs level_1="world.asia.vietnam" />
+    <Breadcrumbs level_1="world.asia.viet_nam" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
     <Player
       ref="player"
-      country="world.asia.vietnam"
+      country="world.asia.viet_nam"
       :schedule="schedule_data"
       :home="true"
       thumb="/img/asia/flags/viet-nam.png"
