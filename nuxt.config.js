@@ -248,9 +248,7 @@ export default {
   },
   image: {
     cloudinary: {
-      baseURL: `https://res.cloudinary.com/${
-        process.env.CLOUDINARY_NAME
-      }/image/fetch/`,
+      baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "netlify",
   },
