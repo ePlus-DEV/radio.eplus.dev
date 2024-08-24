@@ -60,6 +60,7 @@ export default () =>
         united_kingdom: "イギリス",
         ukraine: "ウクライナ",
         russia: "ロシア",
+        france: "フランス",
       },
       north_america: {
         name: "北米",
@@ -76,7 +77,11 @@ export default () =>
         australia: "オーストラリア",
         new_zealand: "ニュージーランド",
       },
-      south_america: {},
+      south_america: {
+        name: "南米",
+        argentina: "アルゼンチン",
+        bolivia: "ボリビア",
+      },
     },
     panel: {
       most_popular: "{name} で最も人気のある",

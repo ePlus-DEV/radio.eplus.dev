@@ -136,6 +136,22 @@
       "station": 0
     }
   },
+  "south_america": {
+    "argentina": {
+      "name": "world.south_america.argentina",
+      "flag": "/img/south-america/flags/argentina.png",
+      "data": "/assets/radio/south-america/argentina.json",
+      "timezone": "America/Argentina/Buenos_Aires",
+      "station": 0
+    },
+    "bolivia": {
+      "name": "world.south_america.bolivia",
+      "flag": "/img/south-america/flags/bolivia.png",
+      "data": "/assets/radio/south-america/bolivia.json",
+      "timezone": "America/La_Paz",
+      "station": 0
+    }
+  },
   "central_america": {
     "costa-rica": {
       "name": "world.central_america.costa_rica",
@@ -193,6 +209,13 @@
       "flag": "/img/europe/flags/russia.png",
       "data": "/assets/radio/europe/russia.json",
       "timezone": "Europe/Moscow",
+      "station": 0
+    },
+    "france": {
+      "name": "world.europe.france",
+      "flag": "/img/europe/flags/france.png",
+      "data": "/assets/radio/europe/france.json",
+      "timezone": "Europe/Paris",
       "station": 0
     }
   },

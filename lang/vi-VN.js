@@ -60,6 +60,7 @@ export default () =>
         united_kingdom: "Vương quốc Anh",
         ukraine: "U-cà-rai-na",
         russia: "Nga",
+        france: "Pháp",
       },
       north_america: {
         name: "Bắc Mỹ",
@@ -76,7 +77,11 @@ export default () =>
         australia: "Châu Úc",
         new_zealand: "New Zealand",
       },
-      south_america: {},
+      south_america: {
+        name: "Nam Mỹ",
+        argentina: "Argentina",
+        bolivia: "Bolivia",
+      },
     },
     panel: {
       most_popular: "Thịnh hành tại {name}",

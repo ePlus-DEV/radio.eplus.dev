@@ -70,6 +70,8 @@
       :song="song"
       :program="program"
       :info="info"
+      :playlist="data"
+      :current="current"
     ></Player>
     <!-- END - Player -->
 
@@ -144,11 +146,14 @@ export default {
       program: [],
       song: {},
       info: [],
+      current: {},
+      data: [],
       polling_schedule: null,
       polling_song: null,
       polling_title: null,
       lyric_popup: false,
       lyric: this.$t("panel.updating"),
+      timezone: this.$store.state.timezone,
     };
   },
   beforeDestroy() {
@@ -210,14 +215,23 @@ export default {
     },
     fetchSchedule(url) {
       this.$axios
-        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .get(url + this.$moment().tz(this.timezone).unix())
         .then((res) => {
-          if (res.data.err === 0) {
+          if (res.data.err === 0 && this.slug === "viet-nam") {
             this.program = res.data.data.items;
 
             this.fetchSong(
               `${process.env.API_ZING_LIVE_STREAM_PROGRAM_DETAIL}${res.data.data.items[0].encodeId}&time=`,
             );
+          } else {
+            if (res.data.success) {
+              this.data = res.data.result;
+            }
+            // BEGIN - Browser title
+            document.title = this.title;
+            if (this.data !== undefined && this.data.length > 0) {
+              document.title = `${this.data[0].track_title} - ${this.data[0].track_artist} | ${this.title}`;
+            }
           }
           // Loop
           const self = this;
@@ -229,7 +243,7 @@ export default {
     },
     fetchSong(url) {
       this.$axios
-        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .get(url + this.$moment().tz(this.timezone).unix())
         .then((res) => {
           if (res.data.err === 0) {
             this.song = res.data.data;
@@ -260,7 +274,7 @@ export default {
     },
     fetchInfo(url) {
       this.$axios
-        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .get(url + this.$moment().tz(this.timezone).unix())
         .then((res) => {
           if (res.data.success) {
             this.info = res.data;
@@ -308,7 +322,7 @@ export default {
   },
   created() {
     this.$store.dispatch("storeTIMEZONE", {
-      area: this.area,
+      area: this.area.replace("-", "_"),
       country: this.slug,
     });
     Promise.all([this.fetchData()]);

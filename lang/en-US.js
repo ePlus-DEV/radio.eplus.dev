@@ -60,6 +60,7 @@ export default () =>
         united_kingdom: "United Kingdom",
         ukraine: "Ukraine",
         russia: "Russia",
+        france: "France",
       },
       north_america: {
         name: "North America",
@@ -76,7 +77,11 @@ export default () =>
         australia: "Australia",
         new_zealand: "New Zealand",
       },
-      south_america: {},
+      south_america: {
+        name: "South America",
+        argentina: "Argentina",
+        bolivia: "Bolivia",
+      },
     },
     panel: {
       most_popular: "Most popular in {name}",

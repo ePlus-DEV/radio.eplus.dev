@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" level_1="" :level_2="$t(`world.${area}.name`)" />
+    <Breadcrumbs
+      :area="area"
+      level_1=""
+      :level_2="$t(`world.${area.replace('-', '_')}.name`)"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
@@ -15,7 +19,7 @@
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
-    <PanelRadio :chooseTheArea="area"></PanelRadio>
+    <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio>
     <!-- BEGIN - PanelRadio -->
   </div>
 </template>
