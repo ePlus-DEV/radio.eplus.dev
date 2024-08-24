@@ -28,7 +28,10 @@ const regions = [
     region: "central-america",
     files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
   },
-  { region: "europe", files: ["united-kingdom", "ukraine", "russia", "france"] },
+  {
+    region: "europe",
+    files: ["united-kingdom", "ukraine", "russia", "france"],
+  },
   {
     region: "north-america",
     files: [
@@ -42,7 +45,19 @@ const regions = [
     ],
   },
   { region: "oceania", files: ["australia", "new-zealand"] },
-  { region: "south-america", files: ["argentina", "bolivia", "brazil", "chile", "colombia", "ecuador"] },
+  {
+    region: "south-america",
+    files: [
+      "argentina",
+      "bolivia",
+      "brazil",
+      "chile",
+      "colombia",
+      "ecuador",
+      "paraguay",
+      "peru",
+    ],
+  },
 ];
 
 export default {
@@ -84,7 +99,7 @@ export default {
     noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
   head: {
-    titleTemplate: "%s - Radio Internet | " + process.env.WEBSITE_NAME,
+    titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -233,10 +248,7 @@ export default {
   },
   image: {
     cloudinary: {
-      baseURL:
-        "https://res.cloudinary.com/" +
-        process.env.CLOUDINARY_NAME +
-        "/image/fetch/",
+      baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "netlify",
   },
@@ -266,6 +278,20 @@ export default {
         iso: "ja-JP",
         name: "日本語",
         flag: "/img/asia/flags/japan.png",
+      },
+      {
+        code: "cn",
+        file: "zh-CN.js",
+        iso: "zh-CN",
+        name: "简体中文",
+        flag: "/img/asia/flags/china.png",
+      },
+      {
+        code: "tw",
+        file: "zh-TW.js",
+        iso: "zh-TW",
+        name: "繁體中文",
+        flag: "/img/asia/flags/taiwan.png",
       },
     ],
     strategy: "no_prefix",

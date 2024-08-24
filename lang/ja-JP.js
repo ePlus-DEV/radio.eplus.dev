@@ -85,6 +85,8 @@ export default () =>
         chile: "チリ",
         colombia: "コロンビア",
         ecuador: "エクアドル",
+        paraguay: "パラグアイ",
+        peru: "ペルー",
       },
     },
     panel: {

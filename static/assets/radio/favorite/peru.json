@@ -1,0 +1,8 @@
+{
+  "title": "Ritmo Romántica",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Peru",
+  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CRP_RIT_SC?csegid=20001&dist=20001&ttag=20001",
+  "cros": false
+}
