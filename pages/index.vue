@@ -22,6 +22,7 @@
 
 <script>
 export default {
+  name: "Home",
   head() {
     return {
       title: this.$t("navmenu.homepage"),
