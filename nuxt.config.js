@@ -84,7 +84,7 @@ export default {
     noscript: [{ innerHTML: "This website requires JavaScript." }],
   },
   head: {
-    titleTemplate: "%s - Radio Internet | " + process.env.WEBSITE_NAME,
+    titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -234,9 +234,7 @@ export default {
   image: {
     cloudinary: {
       baseURL:
-        "https://res.cloudinary.com/" +
-        process.env.CLOUDINARY_NAME +
-        "/image/fetch/",
+        `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "netlify",
   },
