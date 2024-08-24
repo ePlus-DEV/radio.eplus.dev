@@ -5,8 +5,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" country="world.asia.viet_nam" :schedule="schedule_data" :home="true"
-      thumb="/img/asia/flags/viet-nam.png"></Player>
+    <Player
+      ref="player"
+      country="world.asia.viet_nam"
+      :schedule="schedule_data"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
@@ -86,7 +91,7 @@ export default {
       area: "asia",
       country: "viet-nam",
     });
-    Promise.all([this.fetchData()]).then(() => { });
+    Promise.all([this.fetchData()]).then(() => {});
   },
 };
 </script>
