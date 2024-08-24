@@ -297,7 +297,7 @@ export default {
           const countryCode = file.replace("-", "_");
 
           for (const [key, value] of Object.entries(jsonData)) {
-            routesToGenerate.push(`/${file}/${key}`);
+            routesToGenerate.push(`/${region}/${file}/${key}`);
             data_algolia.push({
               station_name: value.title,
               station_image: process.env.BASE_URL + value.features,
