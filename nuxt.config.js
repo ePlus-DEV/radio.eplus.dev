@@ -301,7 +301,7 @@ export default {
             data_algolia.push({
               station_name: value.title,
               station_image: process.env.BASE_URL + value.features,
-              station_country: `world.${region}.${countryCode}`,
+              station_country: `world.${region.replace("-", "_")}.${countryCode}`,
               url: `/${region}/${file}/${key}`,
               objectID: `${file}-${key}`,
             });
