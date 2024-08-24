@@ -81,6 +81,9 @@ export default () =>
         name: "南米",
         argentina: "アルゼンチン",
         bolivia: "ボリビア",
+        brazil: "ブラジル",
+        chile: "チリ",
+        colombia: "コロンビア",
       },
     },
     panel: {

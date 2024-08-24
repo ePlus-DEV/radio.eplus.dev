@@ -150,6 +150,27 @@
       "data": "/assets/radio/south-america/bolivia.json",
       "timezone": "America/La_Paz",
       "station": 0
+    },
+    "brazil": {
+      "name": "world.south_america.brazil",
+      "flag": "/img/south-america/flags/brazil.png",
+      "data": "/assets/radio/south-america/brazil.json",
+      "timezone": "America/Sao_Paulo",
+      "station": 0
+    },
+    "chile": {
+      "name": "world.south_america.chile",
+      "flag": "/img/south-america/flags/chile.png",
+      "data": "/assets/radio/south-america/chile.json",
+      "timezone": "America/Santiago",
+      "station": 0
+    },
+    "colombia": {
+      "name": "world.south_america.colombia",
+      "flag": "/img/south-america/flags/colombia.png",
+      "data": "/assets/radio/south-america/colombia.json",
+      "timezone": "America/Bogota",
+      "station": 0
     }
   },
   "central_america": {
