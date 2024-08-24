@@ -155,7 +155,7 @@
       "name": "world.south_america.brazil",
       "flag": "/img/south-america/flags/brazil.png",
       "data": "/assets/radio/south-america/brazil.json",
-      "timezone": "America/La_Paz",
+      "timezone": "America/Sao_Paulo",
       "station": 0
     }
   },
