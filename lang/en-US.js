@@ -83,6 +83,7 @@ export default () =>
         bolivia: "Bolivia",
         brazil: "Brazil",
         chile: "Chile",
+        colombia: "Colombia",
       },
     },
     panel: {
