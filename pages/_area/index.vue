@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs level_1="world.asia.viet_nam" />
+    <Breadcrumbs :area="area" level_1="" :level_2="$t(`world.${area}.name`)" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
@@ -10,14 +10,14 @@
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
-    <PanelRadio />
+    <PanelRadio :chooseTheArea="area"></PanelRadio>
     <!-- BEGIN - PanelRadio -->
   </div>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  name: "HomeArea",
   head() {
     return {
       title: this.$t("navmenu.homepage"),
@@ -34,6 +34,7 @@ export default {
   },
   data() {
     return {
+      area: this.$route.params.area,
       schedule_data: [],
       stream_name: null,
     };

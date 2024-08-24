@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  name: "PanelStation",
   props: ["area", "slug", "i18n"],
   data() {
     return {

@@ -11,7 +11,7 @@
           <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-4 m-4">
             <nuxt-link
               class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-              :data-tip="$t(country.name)" :to="`${continent.slug}/${index}`" v-for="(country, index) in continent"
+              :data-tip="$t(country.name)" :to="`${continentIndex}/${index}`" v-for="(country, index) in continent"
               :key="index">
               <div class="indicator-item badge badge-accent">
                 {{ country.station }}
@@ -32,7 +32,7 @@ export default {
   props: {
     chooseTheArea: {
       type: String,
-      default: 'asia'
+      default: ''
     }
   },
   data() {
@@ -41,42 +41,17 @@ export default {
     };
   },
   methods: {
-    // async fetchData() {
-    //   try {
-    //     const res = await this.$axios.get("/assets/radio/countries.json");
-    //     this.world = res.data;
-    //     const self = this;
-    //     for (const [continentKey, continent] of Object.entries(res.data)) {
-    //       for (const [countryKey, country] of Object.entries(continent)) {
-    //         const countryData = await self.$axios.get(country.data);
-    //         self.world[continentKey][countryKey].station = Object.keys(
-    //           countryData.data,
-    //         ).length;
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
     async fetchData() {
       try {
         const res = await this.$axios.get("/assets/radio/countries.json");
-        this.world = res.data;
-        const self = this;
-        for (const [continentKey, continent] of Object.entries(res.data)) {
+        this.world = this.chooseTheArea ? { [this.chooseTheArea]: res.data[this.chooseTheArea] } : res.data;
+        for (const [continentKey, continent] of Object.entries(this.world)) {
           for (const [countryKey, country] of Object.entries(continent)) {
-            const countryData = await self.$axios.get(country.data);
-            self.world[continentKey][countryKey].station = Object.keys(
+            const countryData = await this.$axios.get(country.data);
+            this.world[continentKey][countryKey].station = Object.keys(
               countryData.data,
             ).length;
           }
-        }
-
-        // Check if chooseTheArea prop exists
-        if (this.chooseTheArea) {
-          this.world = {
-            [this.chooseTheArea]: this.world[this.chooseTheArea]
-          };
         }
       } catch (error) {
         console.error(error);
