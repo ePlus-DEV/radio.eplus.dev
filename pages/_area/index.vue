@@ -45,7 +45,7 @@ export default {
     };
   },
   methods: {
-    async fetchData() {
+    fetchData() {
       this.$axios
         .get(
           `/assets/radio/favorite/${this.$config.Pin_Channel_Favorites}.json`,
@@ -60,15 +60,15 @@ export default {
           this.$refs.player.init(true);
 
           // Get Schedule
-          var form = new FormData();
+          const form = new FormData();
           form.append("vov", "vovgthn");
           form.append(
             "date",
             this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"),
           );
-          var self = this;
+          const self = this;
 
-          var settings = {
+          const settings = {
             url: data.schedule,
             method: "POST",
             timeout: 0,
@@ -78,13 +78,13 @@ export default {
             data: form,
           };
 
-          $.ajax(settings).done(function (response) {
+          $.ajax(settings).done(response => {
             self.schedule_data = JSON.parse(response).result_detail;
           });
         });
     },
     fetchRemote(url, options = {}) {
-      return this.$cloudinary.image.fetchRemote(url, options);
+      return Promise.resolve(this.$cloudinary.image.fetchRemote(url, options));
     },
   },
   created() {
@@ -92,7 +92,7 @@ export default {
       area: "asia",
       country: "viet-nam",
     });
-    Promise.all([this.fetchData()]).then(() => {});
+    Promise.all([this.fetchData()]);
   },
 };
 </script>
