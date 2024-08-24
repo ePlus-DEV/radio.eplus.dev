@@ -431,14 +431,13 @@ export default {
     "program",
     "thumb",
     "current",
-    "timezone",
   ],
   data() {
     return {
       now: null,
       button: false,
       waiting: false,
-      currentTime: "N/A",
+      currentTime: "00:00:00",
       currentDate: "N/A",
     };
   },
@@ -603,18 +602,8 @@ export default {
       }
     },
     updateCurrentTime() {
-      this.currentTime = this.$moment
-        .tz(
-          this.$moment(),
-          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh",
-        )
-        .format("LTS");
-      this.currentDate = this.$moment
-        .tz(
-          this.$moment(),
-          this.timezone !== undefined ? this.timezone : "Asia/Ho_Chi_Minh",
-        )
-        .format("LLLL");
+      this.currentTime = this.$moment.tz( this.$moment(), this.$store.state.timezone, ).format("LTS");
+      this.currentDate = this.$moment.tz( this.$moment(), this.$store.state.timezone, ).format("LLLL");
     },
   },
   created() {
