@@ -78,7 +78,7 @@ export default {
             data: form,
           };
 
-          $.ajax(settings).done(response => {
+          $.ajax(settings).done((response) => {
             self.schedule_data = JSON.parse(response).result_detail;
           });
         });
