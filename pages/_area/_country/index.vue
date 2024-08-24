@@ -95,7 +95,7 @@ export default {
   },
   created() {
     this.$store.dispatch("storeTIMEZONE", {
-      area: this.area,
+      area: this.area.replace('-', '_'),
       country: this.slug,
     });
     Promise.all([this.fetchData()]);

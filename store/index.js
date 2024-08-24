@@ -31,7 +31,8 @@ export const actions = {
   },
 
   storeTIMEZONE({ commit }, { area, country }) {
-    commit("STORE_TIMEZONE", countries[area][country].timezone);
+    const timezone = countries[area]?.[country]?.timezone || "Asia/Ho_Chi_Minh";
+    commit("STORE_TIMEZONE", timezone);
   },
 };
 

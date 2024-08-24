@@ -77,7 +77,10 @@ export default () =>
         australia: "Australia",
         new_zealand: "New Zealand",
       },
-      south_america: {},
+      south_america: {
+        name: "South America",
+        argentina: "Argentina",
+      },
     },
     panel: {
       most_popular: "Most popular in {name}",

@@ -197,8 +197,7 @@ export default {
             document.title = this.title;
             if (this.data !== undefined && this.data.length > 0) {
               document.title =
-              `${this.data[0].track_title} - ${this.data[0].track_artist} | ${this.get_head("title")}`;
-
+              `${this.data[0].track_title} - ${this.data[0].track_artist} | ${this.title}`;
             }
           }
           // Loop
@@ -290,7 +289,7 @@ export default {
   },
   created() {
     this.$store.dispatch("storeTIMEZONE", {
-      area: this.area,
+      area: this.area.replace('-', '_'),
       country: this.slug,
     });
     Promise.all([this.fetchData()]);

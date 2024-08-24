@@ -1,0 +1,8 @@
+{
+  "title": "Los 40 Principales",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "Argentina",
+  "stream": "https://frontend.radiohdvivo.com/los40/live",
+  "cros": false
+}

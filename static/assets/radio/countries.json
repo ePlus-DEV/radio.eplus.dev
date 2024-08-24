@@ -136,6 +136,15 @@
       "station": 0
     }
   },
+  "south_america": {
+    "argentina": {
+      "name": "world.south_america.argentina",
+      "flag": "/img/south-america/flags/argentina.png",
+      "data": "/assets/radio/south-america/argentina.json",
+      "timezone": "America/Argentina/Buenos_Aires",
+      "station": 0
+    }
+  },
   "central_america": {
     "costa-rica": {
       "name": "world.central_america.costa_rica",
