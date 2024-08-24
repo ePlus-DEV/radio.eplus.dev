@@ -16,7 +16,10 @@
         </li>
         <template v-if="level_2 !== undefined">
           <li class="font-medium">
-            <nuxt-link :to="`/${area}/${level_1_slug}`" class="hover:no-underline">
+            <nuxt-link
+              :to="`/${area}/${level_1_slug}`"
+              class="hover:no-underline"
+            >
               {{ $t(level_1) }}
             </nuxt-link>
           </li>
