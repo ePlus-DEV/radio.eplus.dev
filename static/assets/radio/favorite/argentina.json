@@ -1,8 +1,8 @@
 {
-  "title": "Los 40 Principales",
+  "title": "Radio Disney (Argentina)",
   "type": "audio/mpeg",
   "frequency": "Stream",
   "countries": "Argentina",
-  "stream": "https://frontend.radiohdvivo.com/los40/live",
+  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA_SC",
   "cros": false
 }
