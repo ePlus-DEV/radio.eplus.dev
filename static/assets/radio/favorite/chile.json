@@ -1,0 +1,8 @@
+{
+  "title": "Radio Bío Bío",
+  "type": "audio/aac",
+  "frequency": "Stream",
+  "countries": "China",
+  "stream": "https://redirector.dps.live/biobiosantiago/aac/icecast.audio",
+  "cros": false
+}

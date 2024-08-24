@@ -157,6 +157,13 @@
       "data": "/assets/radio/south-america/brazil.json",
       "timezone": "America/Sao_Paulo",
       "station": 0
+    },
+    "chile": {
+      "name": "world.south_america.chile",
+      "flag": "/img/south-america/flags/chile.png",
+      "data": "/assets/radio/south-america/chile.json",
+      "timezone": "America/Santiago",
+      "station": 0
     }
   },
   "central_america": {
