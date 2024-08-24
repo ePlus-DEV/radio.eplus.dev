@@ -28,7 +28,7 @@ const regions = [
     region: "central-america",
     files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
   },
-  { region: "europe", files: ["united-kingdom", "ukraine", "russia"] },
+  { region: "europe", files: ["united-kingdom", "ukraine", "russia", "france"] },
   {
     region: "north-america",
     files: [
