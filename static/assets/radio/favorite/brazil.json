@@ -1,0 +1,8 @@
+{
+  "title": "Rádio Metropolitana FM (São Paulo)",
+  "type": "audio/aac",
+  "frequency": "Stream",
+  "countries": "China",
+  "stream": "https://ice.fabricahost.com.br/metropolitana985sp",
+  "cros": false
+}

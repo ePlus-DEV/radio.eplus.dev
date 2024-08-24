@@ -81,6 +81,7 @@ export default () =>
         name: "Nam Mỹ",
         argentina: "Argentina",
         bolivia: "Bolivia",
+        brazil: "Brazil",
       },
     },
     panel: {
