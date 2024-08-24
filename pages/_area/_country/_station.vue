@@ -149,6 +149,7 @@ export default {
       polling_title: null,
       lyric_popup: false,
       lyric: this.$t("panel.updating"),
+      timezone: this.$store.state.timezone,
     };
   },
   beforeDestroy() {
@@ -210,7 +211,7 @@ export default {
     },
     fetchSchedule(url) {
       this.$axios
-        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .get(url + this.$moment().tz(this.timezone).unix())
         .then((res) => {
           if (res.data.err === 0) {
             this.program = res.data.data.items;
@@ -229,7 +230,7 @@ export default {
     },
     fetchSong(url) {
       this.$axios
-        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .get(url + this.$moment().tz(this.timezone).unix())
         .then((res) => {
           if (res.data.err === 0) {
             this.song = res.data.data;
@@ -260,7 +261,7 @@ export default {
     },
     fetchInfo(url) {
       this.$axios
-        .get(url + this.$moment().tz("Asia/Ho_Chi_Minh").unix())
+        .get(url + this.$moment().tz(this.timezone).unix())
         .then((res) => {
           if (res.data.success) {
             this.info = res.data;
