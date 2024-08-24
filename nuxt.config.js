@@ -28,7 +28,10 @@ const regions = [
     region: "central-america",
     files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
   },
-  { region: "europe", files: ["united-kingdom", "ukraine", "russia", "france"] },
+  {
+    region: "europe",
+    files: ["united-kingdom", "ukraine", "russia", "france"],
+  },
   {
     region: "north-america",
     files: [
@@ -42,7 +45,18 @@ const regions = [
     ],
   },
   { region: "oceania", files: ["australia", "new-zealand"] },
-  { region: "south-america", files: ["argentina", "bolivia", "brazil", "chile", "colombia", "ecuador", "paraguay"] },
+  {
+    region: "south-america",
+    files: [
+      "argentina",
+      "bolivia",
+      "brazil",
+      "chile",
+      "colombia",
+      "ecuador",
+      "paraguay",
+    ],
+  },
 ];
 
 export default {
@@ -233,8 +247,7 @@ export default {
   },
   image: {
     cloudinary: {
-      baseURL:
-        `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
+      baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "netlify",
   },
