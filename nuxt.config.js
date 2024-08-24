@@ -10,7 +10,10 @@ const regions = [
     region: "central-america",
     files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
   },
-  { region: "europe", files: ["united-kingdom", "ukraine", "russia", "france"] },
+  {
+    region: "europe",
+    files: ["united-kingdom", "ukraine", "russia", "france"],
+  },
   {
     region: "north-america",
     files: [ "cuba", "haiti", "jamaica", "mexico", "puerto-rico", "dominican-republic", "trinidad-and-tobago", ],
@@ -207,8 +210,7 @@ export default {
   },
   image: {
     cloudinary: {
-      baseURL:
-        `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
+      baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "netlify",
   },

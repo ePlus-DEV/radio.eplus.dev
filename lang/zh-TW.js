@@ -136,8 +136,7 @@ export default () =>
       view: "查看",
     },
     alert: {
-      play_button:
-        "根據瀏覽器的默認設置，您需要按下 ▶ 按鈕開始收聽廣播。",
+      play_button: "根據瀏覽器的默認設置，您需要按下 ▶ 按鈕開始收聽廣播。",
     },
     text: {
       guide: "指南",
