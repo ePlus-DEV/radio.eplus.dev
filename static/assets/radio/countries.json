@@ -171,6 +171,13 @@
       "data": "/assets/radio/south-america/colombia.json",
       "timezone": "America/Bogota",
       "station": 0
+    },
+    "ecuador": {
+      "name": "world.south_america.ecuador",
+      "flag": "/img/south-america/flags/ecuador.png",
+      "data": "/assets/radio/south-america/ecuador.json",
+      "timezone": "America/Guayaquil",
+      "station": 0
     }
   },
   "central_america": {
