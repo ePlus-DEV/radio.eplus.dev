@@ -143,6 +143,13 @@
       "data": "/assets/radio/south-america/argentina.json",
       "timezone": "America/Argentina/Buenos_Aires",
       "station": 0
+    },
+    "bolivia": {
+      "name": "world.south_america.bolivia",
+      "flag": "/img/south-america/flags/bolivia.png",
+      "data": "/assets/radio/south-america/bolivia.json",
+      "timezone": "America/La_Paz",
+      "station": 0
     }
   },
   "central_america": {

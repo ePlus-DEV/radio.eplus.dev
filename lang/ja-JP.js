@@ -80,6 +80,7 @@ export default () =>
       south_america: {
         name: "南米",
         argentina: "アルゼンチン",
+        bolivia: "ボリビア",
       },
     },
     panel: {
