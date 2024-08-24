@@ -1,0 +1,8 @@
+{
+  "title": "NRJ",
+  "type": "audio/mpeg",
+  "frequency": "Stream",
+  "countries": "France",
+  "stream": "https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3?origine=ecouterradioenligne",
+  "cros": false
+}

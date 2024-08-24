@@ -60,6 +60,7 @@ export default () =>
         united_kingdom: "イギリス",
         ukraine: "ウクライナ",
         russia: "ロシア",
+        france: "フランス",
       },
       north_america: {
         name: "北米",

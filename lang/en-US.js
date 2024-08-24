@@ -60,6 +60,7 @@ export default () =>
         united_kingdom: "United Kingdom",
         ukraine: "Ukraine",
         russia: "Russia",
+        france: "France",
       },
       north_america: {
         name: "North America",

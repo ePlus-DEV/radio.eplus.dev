@@ -194,6 +194,13 @@
       "data": "/assets/radio/europe/russia.json",
       "timezone": "Europe/Moscow",
       "station": 0
+    },
+    "france": {
+      "name": "world.europe.france",
+      "flag": "/img/europe/flags/france.png",
+      "data": "/assets/radio/europe/france.json",
+      "timezone": "Europe/Paris",
+      "station": 0
     }
   },
   "north_america": {

@@ -60,6 +60,7 @@ export default () =>
         united_kingdom: "Vương quốc Anh",
         ukraine: "U-cà-rai-na",
         russia: "Nga",
+        france: "Pháp",
       },
       north_america: {
         name: "Bắc Mỹ",
