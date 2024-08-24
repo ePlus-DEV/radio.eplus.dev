@@ -8,16 +8,16 @@ export const state = () => ({
 });
 
 export const mutations = {
-  STORE_PLAYER(state, data) {
-    state.player = data;
+  STORE_PLAYER(appState, data) {
+    appState.player = data;
   },
 
-  STORE_PLAYER_HOME(state, data) {
-    state.player_home = data;
+  STORE_PLAYER_HOME(appState, data) {
+    appState.player_home = data;
   },
 
-  STORE_TIMEZONE(state, timezone) {
-    state.timezone = timezone;
+  STORE_TIMEZONE(appState, timezone) {
+    appState.timezone = timezone;
   },
 };
 
@@ -36,15 +36,15 @@ export const actions = {
 };
 
 export const getters = {
-  getPLAYER(state) {
-    return state.player;
+  getPLAYER(appState) {
+    return appState.player;
   },
 
-  getPLAYERHOME(state) {
-    return state.player_home;
+  getPLAYERHOME(appState) {
+    return appState.player_home;
   },
 
-  getTIMEZONE(state) {
-    return state.timezone;
+  getTIMEZONE(appState) {
+    return appState.timezone;
   },
 };
