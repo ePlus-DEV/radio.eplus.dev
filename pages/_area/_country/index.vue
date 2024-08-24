@@ -16,7 +16,6 @@
       :home="true"
       :thumb="thumb"
       :current="current"
-      :timezone="timezone"
     />
     <!-- END - Player -->
 
@@ -52,7 +51,6 @@ export default {
       thumb: `/img/${this.area}/flags/${this.slug}.png`,
       current: {},
       polling_song: null,
-      timezone: "Asia/Singapore",
     };
   },
   beforeDestroy() {
@@ -96,11 +94,11 @@ export default {
     },
   },
   created() {
-    Promise.all([this.fetchData()]).then(() => {
-      // if (this.slug === 'singapore') {
-      //   this.currentSong();
-      // }
+    this.$store.dispatch("storeTIMEZONE", {
+      area: this.area,
+      country: this.slug,
     });
+    Promise.all([this.fetchData()]);
   },
 };
 </script>

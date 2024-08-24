@@ -22,6 +22,7 @@
 
 <script>
 export default {
+  name: "Home",
   head() {
     return {
       title: this.$t("navmenu.homepage"),
@@ -86,6 +87,10 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch("storeTIMEZONE", {
+      area: "asia",
+      country: "viet-nam",
+    });
     Promise.all([this.fetchData()]).then(() => {});
   },
 };

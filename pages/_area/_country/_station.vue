@@ -156,14 +156,6 @@ export default {
     window.clearTimeout(this.polling_song);
   },
   methods: {
-    // get_head(params) {
-    //   if (
-    //     Object.prototype.hasOwnProperty.call(vietnam, this.$route.params.station)
-    //   ) {
-    //     return vietnam[this.$route.params.station][params];
-    //   }
-    //   return null;
-    // },
     fetchData() {
       this.i18n = `world.${this.area.replace("-", "_")}.${this.slug.replace("-", "_")}`;
       this.thumb = `/img/${this.area}/flags/${this.slug}.png`;
@@ -315,6 +307,10 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch("storeTIMEZONE", {
+      area: this.area,
+      country: this.slug,
+    });
     Promise.all([this.fetchData()]);
   },
 };
