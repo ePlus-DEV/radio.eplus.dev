@@ -1,11 +1,22 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
+    <Breadcrumbs
+      :area="area"
+      :level_1="i18n"
+      :level_1_slug="slug"
+      :thumb="thumb"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :country="i18n" :home="true" :thumb="thumb" :current="current" />
+    <Player
+      ref="player"
+      :country="i18n"
+      :home="true"
+      :thumb="thumb"
+      :current="current"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -39,7 +50,7 @@ export default {
       i18n: `world.${this.area}.${this.slug}`,
       thumb: `/img/${this.area}/flags/${this.slug}.png`,
       current: {},
-      polling_song: null
+      polling_song: null,
     };
   },
   beforeDestroy() {
@@ -83,7 +94,10 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("storeTIMEZONE", { area: this.area, country: this.slug });
+    this.$store.dispatch("storeTIMEZONE", {
+      area: this.area,
+      country: this.slug,
+    });
     Promise.all([this.fetchData()]);
   },
 };

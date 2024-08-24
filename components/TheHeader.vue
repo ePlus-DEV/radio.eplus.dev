@@ -7,7 +7,12 @@
         <div class="flex items-center">
           <div class="mr-10 flex items-center">
             <nuxt-link to="/">
-              <img loading="lazy" src="/brand/logo-white.svg" width="43" alt="Radio.ePlus.DEV" />
+              <img
+                loading="lazy"
+                src="/brand/logo-white.svg"
+                width="43"
+                alt="Radio.ePlus.DEV"
+              />
             </nuxt-link>
             <h3
               class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"

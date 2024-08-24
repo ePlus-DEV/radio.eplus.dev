@@ -1,10 +1,10 @@
-import countries from '~/static/assets/radio/countries.json';
+import countries from "~/static/assets/radio/countries.json";
 
 // Enable store for auth module
 export const state = () => ({
   player: {},
   player_home: {},
-  timezone: "Asia/Ho_Chi_Minh"
+  timezone: "Asia/Ho_Chi_Minh",
 });
 
 export const mutations = {
@@ -18,7 +18,7 @@ export const mutations = {
 
   STORE_TIMEZONE(state, timezone) {
     state.timezone = timezone;
-  }
+  },
 };
 
 export const actions = {
@@ -32,7 +32,7 @@ export const actions = {
 
   storeTIMEZONE({ commit }, { area, country }) {
     commit("STORE_TIMEZONE", countries[area][country].timezone);
-  }
+  },
 };
 
 export const getters = {
@@ -46,5 +46,5 @@ export const getters = {
 
   getTIMEZONE(state) {
     return state.timezone;
-  }
+  },
 };

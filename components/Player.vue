@@ -602,8 +602,12 @@ export default {
       }
     },
     updateCurrentTime() {
-      this.currentTime = this.$moment.tz( this.$moment(), this.$store.state.timezone, ).format("LTS");
-      this.currentDate = this.$moment.tz( this.$moment(), this.$store.state.timezone, ).format("LLLL");
+      this.currentTime = this.$moment
+        .tz(this.$moment(), this.$store.state.timezone)
+        .format("LTS");
+      this.currentDate = this.$moment
+        .tz(this.$moment(), this.$store.state.timezone)
+        .format("LLLL");
     },
   },
   created() {

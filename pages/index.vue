@@ -86,7 +86,10 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("storeTIMEZONE", { area: 'asia', country: 'viet-nam' });
+    this.$store.dispatch("storeTIMEZONE", {
+      area: "asia",
+      country: "viet-nam",
+    });
     Promise.all([this.fetchData()]).then(() => {});
   },
 };
