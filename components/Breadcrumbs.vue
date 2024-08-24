@@ -9,7 +9,11 @@
       </li>
 
       <template v-if="level_1 !== undefined && level_1_slug !== undefined">
-        <li class="font-medium">{{ $t(`world.${area}.name`) }}</li>
+        <li class="font-medium">
+          <nuxt-link :to="`/${area}`" class="hover:no-underline">
+            {{ $t(`world.${area}.name`) }}
+          </nuxt-link>
+        </li>
         <template v-if="level_2 !== undefined">
           <li class="font-medium">
             <nuxt-link :to="`/${area}/${level_1_slug}`" class="hover:no-underline">
