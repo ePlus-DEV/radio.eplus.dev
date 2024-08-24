@@ -185,6 +185,13 @@
       "data": "/assets/radio/south-america/paraguay.json",
       "timezone": "America/Asuncion",
       "station": 0
+    },
+    "peru": {
+      "name": "world.south_america.peru",
+      "flag": "/img/south-america/flags/peru.png",
+      "data": "/assets/radio/south-america/peru.json",
+      "timezone": "America/Lima",
+      "station": 0
     }
   },
   "central_america": {
