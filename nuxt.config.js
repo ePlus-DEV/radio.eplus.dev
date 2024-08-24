@@ -42,7 +42,7 @@ const regions = [
     ],
   },
   { region: "oceania", files: ["australia", "new-zealand"] },
-  { region: "south-america", files: ["argentina", "bolivia", "brazil", "chile", "colombia", "ecuador"] },
+  { region: "south-america", files: ["argentina", "bolivia", "brazil", "chile", "colombia", "ecuador", "paraguay"] },
 ];
 
 export default {

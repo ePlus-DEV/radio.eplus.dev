@@ -178,6 +178,13 @@
       "data": "/assets/radio/south-america/ecuador.json",
       "timezone": "America/Guayaquil",
       "station": 0
+    },
+    "paraguay": {
+      "name": "world.south_america.paraguay",
+      "flag": "/img/south-america/flags/paraguay.png",
+      "data": "/assets/radio/south-america/paraguay.json",
+      "timezone": "America/Asuncion",
+      "station": 0
     }
   },
   "central_america": {
