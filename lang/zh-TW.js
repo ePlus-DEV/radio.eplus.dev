@@ -86,6 +86,7 @@ export default () =>
         colombia: "哥倫比亞",
         ecuador: "厄瓜多爾",
         paraguay: "巴拉圭",
+        peru: "秘魯",
       },
     },
     panel: {
