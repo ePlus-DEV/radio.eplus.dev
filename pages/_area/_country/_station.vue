@@ -230,8 +230,7 @@ export default {
             // BEGIN - Browser title
             document.title = this.title;
             if (this.data !== undefined && this.data.length > 0) {
-              document.title =
-              `${this.data[0].track_title} - ${this.data[0].track_artist} | ${this.title}`;
+              document.title = `${this.data[0].track_title} - ${this.data[0].track_artist} | ${this.title}`;
             }
           }
           // Loop
@@ -323,7 +322,7 @@ export default {
   },
   created() {
     this.$store.dispatch("storeTIMEZONE", {
-      area: this.area.replace('-', '_'),
+      area: this.area.replace("-", "_"),
       country: this.slug,
     });
     Promise.all([this.fetchData()]);

@@ -11,12 +11,15 @@
       <template v-if="level_1 !== undefined && level_1_slug !== undefined">
         <li class="font-medium">
           <nuxt-link :to="`/${area}`" class="hover:no-underline">
-            {{ $t(`world.${area.replace('-', '_') }.name`) }}
+            {{ $t(`world.${area.replace("-", "_")}.name`) }}
           </nuxt-link>
         </li>
         <template v-if="level_2 !== undefined">
           <li class="font-medium">
-            <nuxt-link :to="`/${area}/${level_1_slug}`" class="hover:no-underline">
+            <nuxt-link
+              :to="`/${area}/${level_1_slug}`"
+              class="hover:no-underline"
+            >
               {{ $t(level_1) }}
             </nuxt-link>
           </li>

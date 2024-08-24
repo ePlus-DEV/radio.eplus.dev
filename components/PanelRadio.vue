@@ -14,7 +14,7 @@
             <nuxt-link
               class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
               :data-tip="$t(country.name)"
-                :to="`${continentIndex.replace('_', '-')}/${index}`"
+              :to="`${continentIndex.replace('_', '-')}/${index}`"
               v-for="(country, index) in continent"
               :key="index"
             >

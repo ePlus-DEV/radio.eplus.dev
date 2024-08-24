@@ -1,12 +1,21 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" level_1="" :level_2="$t(`world.${area.replace('-', '_') }.name`)" />
+    <Breadcrumbs
+      :area="area"
+      level_1=""
+      :level_2="$t(`world.${area.replace('-', '_')}.name`)"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" country="world.asia.viet_nam" :schedule="schedule_data" :home="true"
-      thumb="/img/asia/flags/viet-nam.png"></Player>
+    <Player
+      ref="player"
+      country="world.asia.viet_nam"
+      :schedule="schedule_data"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
