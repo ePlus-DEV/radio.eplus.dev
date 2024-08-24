@@ -4,7 +4,25 @@ const regions = [
   { region: "africa", files: ["algeria", "nigeria"] },
   {
     region: "asia",
-    files: [ "viet-nam", "korea", "china", "singapore", "hong-kong", "japan", "malaysia", "philippines", "indonesia", "thailand", "bangladesh", "pakistan", "india", "taiwan", "israel", "sri-lanka", "nepal", ],
+    files: [
+      "viet-nam",
+      "korea",
+      "china",
+      "singapore",
+      "hong-kong",
+      "japan",
+      "malaysia",
+      "philippines",
+      "indonesia",
+      "thailand",
+      "bangladesh",
+      "pakistan",
+      "india",
+      "taiwan",
+      "israel",
+      "sri-lanka",
+      "nepal",
+    ],
   },
   {
     region: "central-america",
@@ -16,10 +34,30 @@ const regions = [
   },
   {
     region: "north-america",
-    files: [ "cuba", "haiti", "jamaica", "mexico", "puerto-rico", "dominican-republic", "trinidad-and-tobago", ],
+    files: [
+      "cuba",
+      "haiti",
+      "jamaica",
+      "mexico",
+      "puerto-rico",
+      "dominican-republic",
+      "trinidad-and-tobago",
+    ],
   },
   { region: "oceania", files: ["australia", "new-zealand"] },
-  { region: "south-america", files: ["argentina", "bolivia", "brazil", "chile", "colombia", "ecuador", "paraguay", "peru"] },
+  {
+    region: "south-america",
+    files: [
+      "argentina",
+      "bolivia",
+      "brazil",
+      "chile",
+      "colombia",
+      "ecuador",
+      "paraguay",
+      "peru",
+    ],
+  },
 ];
 
 export default {
