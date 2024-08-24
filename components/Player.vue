@@ -422,6 +422,7 @@
 import Hls from "hls.js";
 
 export default {
+  name: "Player",
   props: [
     "country",
     "home",
