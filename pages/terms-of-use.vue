@@ -1,31 +1,39 @@
 <template>
   <div class="mockup-window border bg-base-300 dark:bg-gray-600 mb-2">
     <div class="px-4 py-16 bg-base-200 dark:bg-gray-200">
-      <h1>{{ $t('navmenu.terms') }}</h1>
+      <h1>{{ $t("navmenu.terms") }}</h1>
       <p class="mb-2">
-        {{ $t('terms.content') }}
+        {{ $t("terms.content") }}
       </p>
-      <div tabindex="0" class="collapse collapse-open collapse-arrow border border-base-300 bg-gray-100 rounded-box">
-        <div class="collapse-title text-xl font-medium">{{ $t('terms.article_1.title') }}</div>
+      <div
+        tabindex="0"
+        class="collapse collapse-open collapse-arrow border border-base-300 bg-gray-100 rounded-box"
+      >
+        <div class="collapse-title text-xl font-medium">
+          {{ $t("terms.article_1.title") }}
+        </div>
         <div class="collapse-content">
           <p>
-            <strong>{{ $t('terms.article_1.line_1') }}</strong>
+            <strong>{{ $t("terms.article_1.line_1") }}</strong>
           </p>
           <p>
-            {{ $t('terms.article_1.line_2') }}
+            {{ $t("terms.article_1.line_2") }}
           </p>
         </div>
       </div>
-      <div tabindex="1" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+      <div
+        tabindex="1"
+        class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"
+      >
         <div class="collapse-title text-xl font-medium">
-          {{ $t('terms.article_2.title') }}
+          {{ $t("terms.article_2.title") }}
         </div>
         <div class="collapse-content">
           <p>
-            {{ $t('terms.article_2.line_1') }}
+            {{ $t("terms.article_2.line_1") }}
           </p>
           <p>
-            {{ $t('terms.article_2.line_2') }}
+            {{ $t("terms.article_2.line_2") }}
           </p>
         </div>
       </div>
