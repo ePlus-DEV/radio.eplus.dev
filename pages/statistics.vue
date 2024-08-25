@@ -166,7 +166,7 @@ export default {
             },
           },
           legend: {
-            tooltipHoverFormatter: function (val, opts) {
+            tooltipHoverFormatter(val, opts) {
               return `${val} - ${opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]}`;
             },
           },
@@ -252,7 +252,7 @@ export default {
     },
   },
   methods: {
-    async fetchResponseTimesReports() {
+    fetchResponseTimesReports() {
       this.$axios
         .get(
           `${process.env.API_FRESHPING}public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours`,
@@ -287,24 +287,24 @@ export default {
       // Get reference to the calendar component
       const calendar = this.$refs.calendar;
     },
-    async fetchLast7days() {
-      let m;
+    fetchLast7days() {
+      let momentInstance = this.$moment();
       let startDate = this.$moment().subtract(90, "days");
       let endDate = this.$moment();
       let date = [];
 
       for (
-        m = this.$moment(startDate);
-        m.isSameOrBefore(endDate);
-        m.add(1, "days")
+        momentInstance = this.$moment(startDate);
+        momentInstance.isSameOrBefore(endDate);
+        momentInstance.add(1, "days")
       ) {
-        date.push(m.format("YYYY-MM-DD"));
-        this.fetchData(m.format("YYYY-MM-DD"));
+        date.push(momentInstance.format("YYYY-MM-DD"));
+        this.fetchData(momentInstance.format("YYYY-MM-DD"));
       }
 
       this.last7days = date;
     },
-    async fetchData(date) {
+    fetchData(date) {
       this.$axios
         .get(
           `${process.env.API_FRESHPING}public-check-stats-reports/690040/?start_time=${date}T00:00:00.000Z&end_time=${date}T23:59:59.999Z`,
@@ -339,7 +339,7 @@ export default {
           this.data_list.push(data);
         });
     },
-    async fetchAvailabilitynPerformance() {
+    fetchAvailabilitynPerformance() {
       this.$axios
         .get(
           `${process.env.API_FRESHPING}public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days`,
@@ -354,7 +354,7 @@ export default {
       this.fetchResponseTimesReports(),
       this.fetchLast7days(),
       this.fetchAvailabilitynPerformance(),
-    ]).then(() => {});
+    ]);
   },
 };
 </script>

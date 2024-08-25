@@ -124,11 +124,11 @@ export default {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
     getLastUpdate() {
-      let config = {
+      const config = {
         method: "get",
         url: this.$config.DIGITALOCEAN_ENDPOINT,
         headers: {
-          Authorization: "Bearer " + this.$config.DIGITALOCEAN_API_KEY,
+          Authorization: `Bearer ${this.$config.DIGITALOCEAN_API_KEY}`,
         },
       };
 
