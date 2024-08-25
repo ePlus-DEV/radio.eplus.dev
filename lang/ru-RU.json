@@ -137,12 +137,10 @@
   "text": {
     "guide": "Гид",
     "the_last_90_days": "Последние 90 дней",
-    "hosted": "Размещено на {name} - Последнее обновление {time}"
-  },
-  "Downtime": {
-    "text. downtime": "время простоя"
+    "hosted": "Размещено на {name} - Последнее обновление {time}",
+    "downtime": ""
   },
   "Uptime": {
-    "text.uptime": "время безотказной работы"
+    "text.uptime": ""
   }
 }
