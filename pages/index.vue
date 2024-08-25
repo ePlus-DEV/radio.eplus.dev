@@ -46,11 +46,11 @@ export default {
   methods: {
     fetchData() {
       this.$axios
-        .get(
-          `/assets/radio/asia/${this.$config.Pin_Channel_Favorites}.json`,
-        )
+        .get(`/assets/radio/asia/${this.$config.Pin_Channel_Favorites}.json`)
         .then((res) => {
-          const favoriteChannel = Object.values(res.data).find(channel => channel.favorite);
+          const favoriteChannel = Object.values(res.data).find(
+            (channel) => channel.favorite,
+          );
           this.stream_name = favoriteChannel.title;
 
           // Vuex

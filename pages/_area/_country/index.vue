@@ -1,12 +1,27 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" :level_1="i18n" :level_1_slug="slug" :thumb="thumb" />
+    <Breadcrumbs
+      :area="area"
+      :level_1="i18n"
+      :level_1_slug="slug"
+      :thumb="thumb"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" :stream="stream_name" :country="i18n" :song="song" :program="program" :info="info"
-      :playlist="data" :current="current" :home="true" :thumb="thumb" />
+    <Player
+      ref="player"
+      :stream="stream_name"
+      :country="i18n"
+      :song="song"
+      :program="program"
+      :info="info"
+      :playlist="data"
+      :current="current"
+      :home="true"
+      :thumb="thumb"
+    />
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
@@ -65,7 +80,9 @@ export default {
       this.$axios
         .get(`/assets/radio/${this.area}/${this.slug}.json`)
         .then((res) => {
-          const favoriteChannel = Object.values(res.data).find(channel => channel.favorite);
+          const favoriteChannel = Object.values(res.data).find(
+            (channel) => channel.favorite,
+          );
           this.stream_name = favoriteChannel.title;
 
           // Vuex

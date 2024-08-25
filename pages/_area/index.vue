@@ -1,11 +1,20 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="area" level_1="" :level_2="$t(`world.${area.replace('-', '_')}.name`)" />
+    <Breadcrumbs
+      :area="area"
+      level_1=""
+      :level_2="$t(`world.${area.replace('-', '_')}.name`)"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" country="world.asia.viet_nam" :home="true" thumb="/img/asia/flags/viet-nam.png"></Player>
+    <Player
+      ref="player"
+      country="world.asia.viet_nam"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
@@ -41,11 +50,11 @@ export default {
   methods: {
     fetchData() {
       this.$axios
-        .get(
-          `/assets/radio/asia/${this.$config.Pin_Channel_Favorites}.json`,
-        )
+        .get(`/assets/radio/asia/${this.$config.Pin_Channel_Favorites}.json`)
         .then((res) => {
-          const favoriteChannel = Object.values(res.data).find(channel => channel.favorite);
+          const favoriteChannel = Object.values(res.data).find(
+            (channel) => channel.favorite,
+          );
           this.stream_name = favoriteChannel.title;
 
           // Vuex
