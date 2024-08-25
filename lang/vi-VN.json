@@ -13,7 +13,17 @@
     "changelog": "Nhật ký thay đổi"
   },
   "terms": {
-    "content": "Các kênh Radio đều dẫn nguồn từ các nhà đài trên khắp thế giới, chúng tôi không chịu trách nhiệm nội dung của các kênh Radio. Vui lòng cân nhắc trước khi dự định làm theo một điều gì đó. Website cam kết hoàn toàn miễn phí, không thu phí hoặc kiếm tiền bất cứ hình thức nào trên website."
+    "content": "Chào mừng bạn đến với trang web https://radio.eplus.dev (\"Radio ePlus\") - một sản phẩm của ePlus.DEV. Vui lòng đọc kỹ Thỏa thuận về cung cấp và sử dụng dịch vụ trên trang web https://radio.eplus.dev trước khi bạn sử dụng các tính năng trên trang web \"Radio\" của ePlus. Sau khi đăng ký, bạn đã đọc, hiểu, chấp nhận và tuân thủ các điều khoản dưới đây:",
+    "article_1": {
+      "title": "Bài viết 1: Phi lợi nhuận",
+      "line_1": "Chúng tôi cam kết miễn phí vĩnh viễn, không có bất kỳ phí nào.",
+      "line_2": "Chúng tôi công nhận việc sử dụng nội dung miễn phí từ khắp các đài, các nhà phát triển nội dung từ khắp nơi trên thế giới, vì vậy tôi muốn lan truyền nội dung này đến tất cả mọi người."
+    },
+    "article_2": {
+      "title": "Bài viết 2: Đạo luật Bản quyền Thiên niên kỷ Kỹ thuật số",
+      "line_1": "Radio ePlus coi trọng vấn đề Sở hữu Trí tuệ và cam kết đáp ứng nhu cầu của chủ sở hữu nội dung trong việc quản lý xuất bản nội dung của họ trực tuyến. Cần lưu ý rằng Radio ePlus là một cổng đài phát thanh liên kết đến các trang web bên thứ ba qua cửa sổ pop-up.",
+      "line_2": "Bất kỳ nội dung nào trên các trang web bên thứ ba đều là trách nhiệm của những trang web đó và không phải của Radio ePlus. Chúng tôi không biết liệu nội dung trên các trang web bên thứ ba có được chủ sở hữu nội dung ủy quyền hay không, vì đó là một vấn đề giữa trang web chứa nội dung âm thanh và chủ sở hữu nội dung. Radio ePlus không lưu trữ bất kỳ nội dung âm thanh nào trên máy chủ hoặc mạng của mình."
+    }
   },
   "contact": {
     "content": "Chúng tôi luôn ghi nhận mọi đóng góp ý kiến hoặc đóng góp thêm link stream nhằm đa dạng hoá các kênh Radio trên website. Mọi đóng góp vui lòng liên hệ contact bên dưới. Cảm ơn các bạn."

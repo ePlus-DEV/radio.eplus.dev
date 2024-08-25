@@ -13,7 +13,17 @@
     "changelog": "変更ログ"
   },
   "terms": {
-    "content": "Radio channels are sourced from stations around the world, we are not responsible for the content of Radio channels. Please think before you plan to follow something. The website is completely free, does not charge or make money in any way on the website."
+    "content": "ウェブサイトhttps://radio.eplus.dev（「Radio ePlus」）へようこそ。これはePlus.DEVの製品です。ウェブサイトhttps://radio.eplus.devのサービス提供および利用に関する契約をよくお読みの上、以下の利用規約に同意していただき、ご利用ください。",
+    "article_1": {
+      "title": "第1条：非営利",
+      "line_1": "私たちは、いかなる種類の料金もなく、永久に無料で提供することをお約束します。",
+      "line_2": "私たちは、世界中のコンテンツ開発者からの無料コンテンツの使用を認識し、このコンテンツを皆さんに広めたいと考えています。"
+    },
+    "article_2": {
+      "title": "第2条：デジタル千年著作権法",
+      "line_1": "Radio ePlusは知的財産権に関する問題を非常に重視し、コンテンツオーナーのニーズに応えながら、オンラインでのコンテンツの公開を支援することに取り組んでいます。なお、Radio ePlusはポップアップによってサードパーティのウェブサイトにリンクするラジオ局ポータルです。",
+      "line_2": "これらのサードパーティのウェブサイト上のコンテンツは、それらのサイトの責任であり、Radio ePlusの責任ではありません。コンテンツがサードパーティのウェブサイトでコンテンツオーナーによって許可されているかどうかについては、オーディオコンテンツをホストするサイトとコンテンツオーナーの間の問題です。Radio ePlusは自身のサーバーやネットワーク上でオーディオコンテンツをホストしていません。"
+    }
   },
   "contact": {
     "content": "We always appreciate any comments or contributions to stream links to diversify Radio channels on the website. For any contributions, please contact the contact below. Thank you."
