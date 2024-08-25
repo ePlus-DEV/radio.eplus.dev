@@ -569,39 +569,6 @@ export default {
     onPause() {
       $(".plyr__controls__item ").click();
     },
-    check(key, time) {
-      var arr = time.split("-");
-      var format = "HH:mm";
-      var hours = this.$moment().tz("Asia/Ho_Chi_Minh").format(format);
-      var beforeTimeformat = this.$moment(arr[0].replace("h", ":"), "HH:mm")
-        .tz("Asia/Ho_Chi_Minh")
-        .format("HH:mm");
-
-      var beforeTime = this.$moment(arr[0].replace("h", ":"), format).tz(
-        "Asia/Ho_Chi_Minh",
-      );
-
-      var afterTime = this.$moment(arr[1].replace("h", ":"), format).tz(
-        "Asia/Ho_Chi_Minh",
-      );
-
-      var afterTimeformat = this.$moment(arr[1].replace("h", ":"), "HH:mm")
-        .tz("Asia/Ho_Chi_Minh")
-        .format("HH:mm");
-
-      if (
-        this.$moment(hours, "HH:mm").isSameOrAfter(beforeTime) &&
-        this.$moment(hours, "HH:mm").isSameOrAfter(afterTime)
-      ) {
-        return "#F56C6C";
-      }
-      // Check Live
-      if (this.$moment(hours, "HH:mm").isBetween(beforeTime, afterTime)) {
-        return "#0bbd87";
-      } else {
-        return "#e0dee9";
-      }
-    },
     updateCurrentTime() {
       this.currentTime = this.$moment
         .tz(this.$moment(), this.$store.state.timezone)
