@@ -1,45 +1,50 @@
 <template>
   <!-- BEGIN - Statistics -->
   <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-    <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
+    <div
+      class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
+    >
       <h2 class="text-2xl dark:text-white">{{ $t("navmenu.statistics") }}</h2>
     </div>
     <div class="flex justify-center mt-8 space-x-6">
       <!-- website monitoring -->
       <div class="stats shadow">
         <div class="stat place-items-center">
-          <div class="stat-title">{{ $t('text.uptime') }}</div>
+          <div class="stat-title">{{ $t("text.uptime") }}</div>
           <div class="stat-value">
             {{
-            parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2) +
-            "%"
+              parseFloat(
+                AvailabilitynPerformance.availability_percentage,
+              ).toFixed(2) + "%"
             }}
           </div>
           <div class="stat-desc">{{ $t("text.the_last_90_days") }}</div>
         </div>
 
         <div class="stat place-items-center">
-          <div class="stat-title">{{ $t('text.downtime') }}</div>
+          <div class="stat-title">{{ $t("text.downtime") }}</div>
           <div class="stat-value text-secondary">
             {{
-            $moment
-            .utc(
-            $moment
-            .duration(
-            AvailabilitynPerformance.average_response_time_milliseconds_reporting_error,
-            "seconds"
-            )
-            .asMilliseconds()
-            )
-            .format("HH:mm:SS")
+              $moment
+                .utc(
+                  $moment
+                    .duration(
+                      AvailabilitynPerformance.average_response_time_milliseconds_reporting_error,
+                      "seconds",
+                    )
+                    .asMilliseconds(),
+                )
+                .format("HH:mm:SS")
             }}
           </div>
           <div class="stat-desc text-secondary">
             ({{
-            (
-            100 -
-            parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2)
-            ).toFixed(2) + "%"
+              (
+                100 -
+                parseFloat(
+                  AvailabilitynPerformance.availability_percentage,
+                ).toFixed(2)
+              ).toFixed(2) + "%"
             }})
           </div>
         </div>
@@ -54,15 +59,31 @@
     </div>
     <div>
       <!-- Chart -->
-      <apexchart ref="chart" type="area" height="350" :options="chart.chartOptions" :series="chart.series"></apexchart>
+      <apexchart
+        ref="chart"
+        type="area"
+        height="350"
+        :options="chart.chartOptions"
+        :series="chart.series"
+      ></apexchart>
       <!-- Chart -->
 
       <!-- BEGIN - Calendar -->
-      <vc-calendar ref="calendar" id="calendar" :first-day-of-week="2" :attributes="attrs" color="red"
-        :locale="this.$i18n.locale" transition="slide-h" is-expanded
+      <vc-calendar
+        ref="calendar"
+        id="calendar"
+        :first-day-of-week="2"
+        :attributes="attrs"
+        color="red"
+        :locale="this.$i18n.locale"
+        transition="slide-h"
+        is-expanded
         :is-dark="this.$colorMode.value == 'dark' ? true : false"
-        :min-date="$moment().subtract(90, 'days').format('YYYY-MM-DD')" :max-date="new Date()"
-        :columns="$screens({ default: 1, lg: 2 })" @transition-start="pageChange()" />
+        :min-date="$moment().subtract(90, 'days').format('YYYY-MM-DD')"
+        :max-date="new Date()"
+        :columns="$screens({ default: 1, lg: 2 })"
+        @transition-start="pageChange()"
+      />
       <!-- END - Calendar -->
     </div>
   </div>
@@ -146,7 +167,9 @@ export default {
           legend: {
             tooltipHoverFormatter: function (val, opts) {
               return (
-                val + " - " + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
+                val +
+                " - " +
+                opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
               );
             },
           },
@@ -236,13 +259,13 @@ export default {
       this.$axios
         .get(
           process.env.API_FRESHPING +
-            "public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours"
+            "public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours",
         )
         .then((res) => {
           const data = res.data.response_times;
 
           const response_time = Object.keys(data).map(
-            (k) => data[k].average_response_time_milliseconds_available
+            (k) => data[k].average_response_time_milliseconds_available,
           );
           // updateSeries chart
           this.$refs.chart.updateSeries(
@@ -253,7 +276,7 @@ export default {
               },
             ],
             false,
-            true
+            true,
           );
 
           const date = Object.keys(data).map((k) => data[k].start);
@@ -273,7 +296,11 @@ export default {
       let endDate = this.$moment();
       let date = [];
 
-      for (var m = this.$moment(startDate); m.isSameOrBefore(endDate); m.add(1, "days")) {
+      for (
+        var m = this.$moment(startDate);
+        m.isSameOrBefore(endDate);
+        m.add(1, "days")
+      ) {
         date.push(m.format("YYYY-MM-DD"));
         this.fetchData(m.format("YYYY-MM-DD"));
       }
@@ -288,7 +315,7 @@ export default {
             date +
             "T00:00:00.000Z&end_time=" +
             date +
-            "T23:59:59.999Z"
+            "T23:59:59.999Z",
         )
         .then((res) => {
           const data = res.data;
@@ -301,7 +328,8 @@ export default {
             },
             dot: {
               style: {
-                "background-color": data.outages_count_total > 0 ? "red" : "green",
+                "background-color":
+                  data.outages_count_total > 0 ? "red" : "green",
               },
             },
             dates: date,
@@ -323,7 +351,7 @@ export default {
       this.$axios
         .get(
           process.env.API_FRESHPING +
-            "public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days"
+            "public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days",
         )
         .then((res) => {
           this.AvailabilitynPerformance = res.data;

@@ -306,7 +306,7 @@ export default {
         iso: "ru-RU",
         name: "Русский",
         flag: "/img/europe/flags/russia.png",
-      }
+      },
     ],
     strategy: "no_prefix",
     lazy: true,
