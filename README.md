@@ -33,3 +33,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 - https://grab.alwaysdata.net
 - https://www.mwyniki.pl/wietnam//druzyny/wietnam_1/
 - https://www.ibm.com/docs/en/datacap/9.1.8?topic=support-supported-language-codes
+- https://poeditor.com/projects/view?id=723518
