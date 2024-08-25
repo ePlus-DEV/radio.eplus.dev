@@ -62,13 +62,13 @@ export default {
       this.thumb = `/img/${this.area}/flags/${this.slug}.png`;
 
       this.$axios
-        .get(`/assets/radio/favorite/${this.slug}.json`)
+        .get(`/assets/radio/${this.area}/${this.slug}.json`)
         .then((res) => {
-          const data = res.data;
+          const favoriteChannel = Object.values(res.data).find(channel => channel.favorite);
+          this.stream_name = favoriteChannel.title;
 
           // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
-
+          this.$store.dispatch("storePLAYERHOME", favoriteChannel);
           this.$refs.player.init(true);
         });
     },
