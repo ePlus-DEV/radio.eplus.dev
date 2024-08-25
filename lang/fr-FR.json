@@ -137,12 +137,10 @@
   "text": {
     "guide": "Guide",
     "the_last_90_days": "Les 90 derniers jours",
-    "hosted": "Hébergé sur {name} - Dernière mise à jour {time}"
-  },
-  "Downtime": {
-    "text. downtime": "Temps d'arrêt"
+    "hosted": "Hébergé sur {name} - Dernière mise à jour {time}",
+    "downtime": ""
   },
   "Uptime": {
-    "text.uptime": "Uptime"
+    "text.uptime": ""
   }
 }
