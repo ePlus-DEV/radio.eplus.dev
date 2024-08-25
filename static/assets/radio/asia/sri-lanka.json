@@ -5,7 +5,8 @@
     "url": "https://www.hirufm.lk/",
     "cros": true,
     "stream": "http://209.133.216.3:7018/stream/1/",
-    "features": "/img/asia/sri-lanka/abc-hiru-fm.png"
+    "features": "/img/asia/sri-lanka/abc-hiru-fm.png",
+    "favorite": true
   },
   "abc-shaa-fm": {
     "title": "ABC Shaa FM",

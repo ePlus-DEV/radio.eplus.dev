@@ -1,8 +1,0 @@
-{
-  "title": "Dhaka FM",
-  "type": "audio/mpeg",
-  "frequency": "Stream",
-  "countries": "Bangladesh",
-  "stream": "https://stream.zeno.fm/u9mphfk604zuv.aac",
-  "cros": true
-}

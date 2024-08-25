@@ -6,7 +6,8 @@
     "url": "https://www.cbs.co.kr/radio/",
     "cros": false,
     "stream": "https://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8",
-    "features": "/img/asia/korea/cbs-eum-agfm-seuteuliming.png"
+    "features": "/img/asia/korea/cbs-eum-agfm-seuteuliming.png",
+    "favorite": true
   },
   "kbs-keullaesig-ladio": {
     "title": "KBS 클래식FM",

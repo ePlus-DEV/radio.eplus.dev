@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://samaapew107-itelservices.radioca.st/stream/1/",
     "features": "/img/asia/pakistan/mera.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/mera?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/mera?time=",
+    "favorite": true
   },
   "fm-101-live": {
     "title": "Radio FM",

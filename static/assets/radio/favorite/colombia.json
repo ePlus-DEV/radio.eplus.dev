@@ -1,8 +1,0 @@
-{
-  "title": "Caracol Radio",
-  "type": "audio/aac",
-  "frequency": "Stream",
-  "countries": "China",
-  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CARACOL_RADIOAAC_SC",
-  "cros": false
-}

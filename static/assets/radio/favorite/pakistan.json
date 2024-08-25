@@ -1,8 +1,0 @@
-{
-  "title": "Radio Mera FM",
-  "type": "audio/mpeg",
-  "frequency": "Stream",
-  "countries": "Pakistan",
-  "stream": "https://samaapew107-itelservices.radioca.st/stream/1/",
-  "cros": false
-}

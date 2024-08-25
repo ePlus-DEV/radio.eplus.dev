@@ -6,7 +6,8 @@
     "url": "https://www.radiorodja.com/",
     "cros": false,
     "stream": "https://radioislamindonesia.com/rodja-low.mp3",
-    "features": "/img/asia/indonesia/rodja.png"
+    "features": "/img/asia/indonesia/rodja.png",
+    "favorite": true
   },
   "suara-surabaya": {
     "title": "Suara Surabaya",

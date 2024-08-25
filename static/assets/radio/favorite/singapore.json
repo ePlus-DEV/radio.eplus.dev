@@ -1,8 +1,0 @@
-{
-  "title": "Power 98 Love Songs",
-  "type": "audio/aac",
-  "frequency": "98.0 FM",
-  "countries": "Singapore",
-  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/POWER98_LOVESONGS_SC",
-  "cros": false
-}

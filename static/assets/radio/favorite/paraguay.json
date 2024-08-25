@@ -1,8 +1,0 @@
-{
-  "title": "ABC Cardinal",
-  "type": "audio/mpeg",
-  "frequency": "90.7 FM",
-  "countries": "Paraguay",
-  "stream": "https://media.streambrothers.com:8342/stream",
-  "cros": false
-}

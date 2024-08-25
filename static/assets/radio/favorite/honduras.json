@@ -1,8 +1,0 @@
-{
-  "title": "Radio Musiquera",
-  "type": "audio/mpeg",
-  "frequency": "Stream",
-  "countries": "Honduras",
-  "stream": "https://stream.zeno.fm/zeu4mw9u8rquv",
-  "cros": true
-}

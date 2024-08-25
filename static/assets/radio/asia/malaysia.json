@@ -7,7 +7,8 @@
     "cros": false,
     "stream": "https://astro2.rastream.com/era",
     "features": "/img/asia/malaysia/era.png",
-    "schedule": "https://api.webrad.io/data/playlist/65/era?time="
+    "schedule": "https://api.webrad.io/data/playlist/65/era?time=",
+    "favorite": true
   },
   "hitz": {
     "title": "Hitz FM (Kuala Lumpur)",

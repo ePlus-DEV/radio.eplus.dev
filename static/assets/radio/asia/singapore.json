@@ -176,7 +176,8 @@
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/POWER98_LOVESONGS_SC",
     "features": "/img/asia/singapore/power.png",
-    "schedule": "https://api.webrad.io/data/playlist/66/power?time="
+    "schedule": "https://api.webrad.io/data/playlist/66/power?time=",
+    "favorite": true
   },
   "power-98-raw": {
     "title": "Power 98 Raw",

@@ -1,8 +1,0 @@
-{
-  "title": "Love Radio",
-  "type": "audio/mpeg",
-  "frequency": "90.7 FM",
-  "countries": "Philippines",
-  "stream": "https://s3.radio.co/sd43d6cc6d/listen",
-  "cros": false
-}
