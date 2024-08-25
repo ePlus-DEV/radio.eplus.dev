@@ -1,16 +1,16 @@
 {
   "navmenu": {
-    "homepage": "Homepage",
-    "about": "About",
-    "blog": "Blog",
-    "group": "Group",
-    "terms": "Terms of Use",
-    "privacy": "Privacy Policy",
-    "contact": "Contact",
-    "language": "Language:",
+    "homepage": "ホームページ",
+    "about": "約",
+    "blog": "ブログ",
+    "group": "グループ",
+    "terms": "利用規約",
+    "privacy": "プライバシーポリシー",
+    "contact": "コンタクト",
+    "language": "言語：",
     "old_version": "#oldversion",
-    "statistics": "Statistics",
-    "changelog": "Changelog"
+    "statistics": "統計学",
+    "changelog": "変更ログ"
   },
   "terms": {
     "content": "Radio channels are sourced from stations around the world, we are not responsible for the content of Radio channels. Please think before you plan to follow something. The website is completely free, does not charge or make money in any way on the website."
@@ -20,129 +20,129 @@
   },
   "world": {
     "africa": {
-      "name": "Africa",
-      "algeria": "Algeria",
-      "nigeria": "Nigeria"
+      "name": "アフリカ",
+      "algeria": "アルジェリア",
+      "nigeria": "ナイジェリア"
     },
     "asia": {
-      "name": "Asia",
-      "viet_nam": "Vietnam",
-      "singapore": "Singapore",
-      "korea": "Korea",
-      "china": "China",
-      "hong_kong": "Hong Kong",
-      "japan": "Japan",
-      "malaysia": "Malaysia",
-      "philippines": "Philippines",
-      "indonesia": "Indonesia",
-      "thailand": "Thailand",
-      "bangladesh": "Bangladesh",
-      "pakistan": "Pakistan",
-      "india": "India",
-      "taiwan": "Taiwan",
-      "israel": "Israel",
-      "sri_lanka": "Sri Lanka",
-      "nepal": "Nepal"
+      "name": "アジア",
+      "viet_nam": "ベトナム",
+      "singapore": "シンガポール",
+      "korea": "韓国",
+      "china": "中国",
+      "hong_kong": "香港",
+      "japan": "日本",
+      "malaysia": "マレーシア",
+      "philippines": "フィリピン",
+      "indonesia": "インドネシア",
+      "thailand": "タイ",
+      "bangladesh": "バングラデシュ",
+      "pakistan": "パキスタン",
+      "india": "インド",
+      "taiwan": "台湾",
+      "israel": "イスラエル",
+      "sri_lanka": "スリランカ",
+      "nepal": "ネパール"
     },
     "central_america": {
-      "name": "Central America",
-      "costa_rica": "Costa Rica",
-      "el_salvador": "El Salvador",
-      "guatemala": "Guatemala",
-      "honduras": "Honduras",
-      "nicaragua": "Nicaragua"
+      "name": "中米",
+      "costa_rica": "コスタリカ",
+      "el_salvador": "エルサルバドル",
+      "guatemala": "グアテマラ",
+      "honduras": "ホンジュラス",
+      "nicaragua": "ニカラグア"
     },
     "europe": {
-      "name": "Europe",
-      "united_kingdom": "United Kingdom",
-      "ukraine": "Ukraine",
-      "russia": "Russia",
-      "france": "France"
+      "name": "ヨーロッパ",
+      "united_kingdom": "イギリス",
+      "ukraine": "ウクライナ",
+      "russia": "ロシア",
+      "france": "フランス"
     },
     "north_america": {
-      "name": "North America",
-      "cuba": "Cuba",
-      "haiti": "Haiti",
-      "jamaica": "Jamaica",
-      "mexico": "Mexico",
-      "puerto_rico": "Puerto Rico",
-      "dominican_republic": "Dominican Republic",
-      "trinidad_and_tobago": "Trinidad and Tobago"
+      "name": "北米",
+      "cuba": "キューバ",
+      "haiti": "ハイチ",
+      "jamaica": "ジャマイカ",
+      "mexico": "メキシコ",
+      "puerto_rico": "プエルトリコ",
+      "dominican_republic": "ドミニカ共和国",
+      "trinidad_and_tobago": "トリニダード・トバゴ"
     },
     "oceania": {
-      "name": "Oceania",
-      "australia": "Australia",
-      "new_zealand": "New Zealand"
+      "name": "オセアニア",
+      "australia": "オーストラリア",
+      "new_zealand": "ニュージーランド"
     },
     "south_america": {
-      "name": "South America",
-      "argentina": "Argentina",
-      "bolivia": "Bolivia",
-      "brazil": "Brazil",
-      "chile": "Chile",
-      "colombia": "Colombia",
-      "ecuador": "Ecuador",
-      "paraguay": "Paraguay",
-      "peru": "Peru"
+      "name": "南米",
+      "argentina": "アルゼンチン",
+      "bolivia": "ボリビア",
+      "brazil": "ブラジル",
+      "chile": "チリ",
+      "colombia": "コロンビア",
+      "ecuador": "エクアドル",
+      "paraguay": "パラグアイ",
+      "peru": "ペルー"
     }
   },
   "panel": {
-    "most_popular": "Most popular in {name}",
-    "frequency": "Frequency",
-    "play_from_radio": "Play from Radio",
-    "country": "Country",
-    "radio_in": "Radio in {name}",
-    "description": "Description",
-    "category": "Category",
-    "schedule": "Schedule",
-    "playlist": "Playlist",
-    "next": "Next",
-    "lyric": "Lyric",
-    "no_lyric": "No lyric",
-    "updating": "Updating..."
+    "most_popular": "{name} で最も人気のある",
+    "frequency": "周波数",
+    "play_from_radio": "ラジオから再生",
+    "country": "国",
+    "radio_in": "{name}のラジオ",
+    "description": "説明",
+    "category": "カテゴリー",
+    "schedule": "スケジュール",
+    "playlist": "プレイリスト",
+    "next": "次",
+    "lyric": "歌詞",
+    "no_lyric": "歌詞なし",
+    "updating": "更新中..."
   },
   "button": {
-    "back": "Back",
-    "close": "Close"
+    "back": "戻る",
+    "close": "近い"
   },
   "popup": {
     "search": {
-      "text": "Search...",
-      "stats": "Page {page} of {nbPages} - {nbHits} hits retrieved in {processingTimeMS} ms"
+      "text": "探す...",
+      "stats": "{nbPages} のページ {page} - {processingTimeMS} ミリ秒で取得された {nbHits} ヒット"
     }
   },
   "notify": {
-    "success": "Success",
-    "success_content": "Can play radio: {radio}",
-    "error": "Error",
-    "error_content": "Unable to play radio: {radio}"
+    "success": "成功",
+    "success_content": "ラジオを再生できます: {radio}",
+    "error": "エラー",
+    "error_content": "ラジオを再生できません: {radio}"
   },
   "statistics_tooltip": {
-    "text": "Incidents: {num} | Downtime: {time} mins | {response}ms"
+    "text": "インシデント: {num} | ダウンタイム: {time} 分 | {response} ミリ秒"
   },
   "404": {
-    "content": "We would like to inform that the page you are looking for, does not exist!"
+    "content": "We would like to inform you that the page you are looking for, does not exist!"
   },
   "table": {
-    "status": "Status",
-    "commit": "Commit",
-    "created": "Created",
-    "updated": "Updated",
-    "published": "Published",
-    "view": "View"
+    "status": "状態",
+    "commit": "専念",
+    "created": "作成した",
+    "updated": "更新しました",
+    "published": "公開済み",
+    "view": "意見"
   },
   "alert": {
-    "play_button": "By default of the browser, you need to press the ▶ button to start listening to the Radio."
+    "play_button": "ブラウザのデフォルトでは、ラジオを聞くには ▶ ボタンを押す必要があります。"
   },
   "text": {
-    "guide": "Guide",
-    "the_last_90_days": "The last 90 days",
-    "hosted": "Hosted on {name} - Last update {time}"
+    "guide": "ガイド",
+    "the_last_90_days": "過去 90 日間",
+    "hosted": "{name}でホスト - 最終更新{time}"
   },
   "Downtime": {
-    "text. downtime": "Downtime"
+    "text. downtime": "ダウンタイム"
   },
   "Uptime": {
-    "text.uptime": "Uptime"
+    "text.uptime": "アップタイム"
   }
 }
