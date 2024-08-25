@@ -8,38 +8,38 @@
       <!-- website monitoring -->
       <div class="stats shadow">
         <div class="stat place-items-center">
-          <div class="stat-title">UP</div>
+          <div class="stat-title">{{ $t('text.uptime') }}</div>
           <div class="stat-value">
             {{
-              parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2) +
-              "%"
+            parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2) +
+            "%"
             }}
           </div>
           <div class="stat-desc">{{ $t("text.the_last_90_days") }}</div>
         </div>
 
         <div class="stat place-items-center">
-          <div class="stat-title">DOWNTIME</div>
+          <div class="stat-title">{{ $t('text.downtime') }}</div>
           <div class="stat-value text-secondary">
             {{
-              $moment
-                .utc(
-                  $moment
-                    .duration(
-                      AvailabilitynPerformance.average_response_time_milliseconds_reporting_error,
-                      "seconds"
-                    )
-                    .asMilliseconds()
-                )
-                .format("HH:mm:SS")
+            $moment
+            .utc(
+            $moment
+            .duration(
+            AvailabilitynPerformance.average_response_time_milliseconds_reporting_error,
+            "seconds"
+            )
+            .asMilliseconds()
+            )
+            .format("HH:mm:SS")
             }}
           </div>
           <div class="stat-desc text-secondary">
             ({{
-              (
-                100 -
-                parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2)
-              ).toFixed(2) + "%"
+            (
+            100 -
+            parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2)
+            ).toFixed(2) + "%"
             }})
           </div>
         </div>
@@ -54,31 +54,15 @@
     </div>
     <div>
       <!-- Chart -->
-      <apexchart
-        ref="chart"
-        type="area"
-        height="350"
-        :options="chart.chartOptions"
-        :series="chart.series"
-      ></apexchart>
+      <apexchart ref="chart" type="area" height="350" :options="chart.chartOptions" :series="chart.series"></apexchart>
       <!-- Chart -->
 
       <!-- BEGIN - Calendar -->
-      <vc-calendar
-        ref="calendar"
-        id="calendar"
-        :first-day-of-week="2"
-        :attributes="attrs"
-        color="red"
-        :locale="this.$i18n.locale"
-        transition="slide-h"
-        is-expanded
+      <vc-calendar ref="calendar" id="calendar" :first-day-of-week="2" :attributes="attrs" color="red"
+        :locale="this.$i18n.locale" transition="slide-h" is-expanded
         :is-dark="this.$colorMode.value == 'dark' ? true : false"
-        :min-date="$moment().subtract(90, 'days').format('YYYY-MM-DD')"
-        :max-date="new Date()"
-        :columns="$screens({ default: 1, lg: 2 })"
-        @transition-start="pageChange()"
-      />
+        :min-date="$moment().subtract(90, 'days').format('YYYY-MM-DD')" :max-date="new Date()"
+        :columns="$screens({ default: 1, lg: 2 })" @transition-start="pageChange()" />
       <!-- END - Calendar -->
     </div>
   </div>
