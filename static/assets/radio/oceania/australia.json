@@ -3,7 +3,7 @@
         "title": "ABC News Radio",
         "type": "audio/aac",
         "url": "https://www.abc.net.au/news/newsradio/",
-        "cros": false,
+        "cros": true,
         "stream": "https://live-radio01.mediahubaustralia.com/PBW/aac/",
         "features": "/img/oceania/australia/abc-newsradio.png",
         "favorite": true
