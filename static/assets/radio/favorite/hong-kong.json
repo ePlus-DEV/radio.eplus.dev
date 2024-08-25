@@ -1,8 +1,0 @@
-{
-  "title": "香港電台第二台",
-  "type": "application/x-mpegURL",
-  "frequency": "94.8 FM",
-  "countries": "Hong Kong",
-  "stream": "https://rthkaudio2-lh.akamaihd.net/i/radio2_1@355865/master.m3u8",
-  "cros": false
-}

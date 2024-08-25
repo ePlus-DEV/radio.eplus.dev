@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://live.leanstream.co/ICRTFM-MP3",
     "features": "/img/asia/taiwan/icrt.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/icrt?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/icrt?time=",
+    "favorite": true
   },
   "i-bcc-music-network": {
     "title": "中廣音樂網",

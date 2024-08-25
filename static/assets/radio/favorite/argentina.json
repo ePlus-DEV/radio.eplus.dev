@@ -1,8 +1,0 @@
-{
-  "title": "Radio Disney (Argentina)",
-  "type": "audio/mpeg",
-  "frequency": "Stream",
-  "countries": "Argentina",
-  "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA_SC",
-  "cros": false
-}

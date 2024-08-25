@@ -7,7 +7,8 @@
     "cros": false,
     "stream": "https://s3.radio.co/sd43d6cc6d/listen",
     "features": "/img/asia/philippines/love.png",
-    "schedule": "https://api.webrad.io/data/playlist/61/love?time="
+    "schedule": "https://api.webrad.io/data/playlist/61/love?time=",
+    "favorite": true
   },
   "yes": {
     "title": "Yes",

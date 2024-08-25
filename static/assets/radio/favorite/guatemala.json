@@ -1,8 +1,0 @@
-{
-  "title": "949 Radio (Ciudad de Guatemala) ",
-  "type": "audio/aac",
-  "frequency": "Stream",
-  "countries": "Guatemala",
-  "stream": "https://ais-sa2.cdnstream1.com/2528_32.aac?v=223434",
-  "cros": false
-}

@@ -7,7 +7,8 @@
     "cros": false,
     "stream": "https://atimeonline3.smartclick.co.th/green",
     "features": "/img/asia/thailand/green.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/green?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/green?time=",
+    "favorite": true
   },
   "cool": {
     "title": "COOLfahrenheit (Bangkok)",

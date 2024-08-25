@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://air.pc.cdn.bitgravity.com/air/live/pbaudio001/playlist.m3u8",
     "features": "/img/asia/india/air-vividh.png",
-    "schedule": "https://api.webrad.io/data/playlist/3/air-vividh?time="
+    "schedule": "https://api.webrad.io/data/playlist/3/air-vividh?time=",
+    "favorite": true
   },
   "live-kirtan-sri-harmandir-sahi": {
     "title": "Live Kirtan Sri Harmandir Sahib, Sri Amritsar",

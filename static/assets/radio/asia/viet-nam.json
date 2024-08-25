@@ -188,7 +188,8 @@
     "cros": false,
     "stream": "https://play.vovgiaothong.vn/live/gthcm/playlist.m3u8",
     "stream_alternative": "https://stream.vovmedia.vn/vovgthcm",
-    "features": "/img/asia/viet-nam/vov-giao-thong.png"
+    "features": "/img/asia/viet-nam/vov-giao-thong.png",
+    "favorite": true
   },
   "vov-giao-thong": {
     "title": "VOV Giao Thông Hà Nội",

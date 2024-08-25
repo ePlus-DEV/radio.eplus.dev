@@ -1,8 +1,0 @@
-{
-  "title": "Radio Fides",
-  "type": "audio/mpeg",
-  "frequency": "Stream",
-  "countries": "Bolivia",
-  "stream": "https://usa7.fastcast4u.com/proxy/grflores?mp=/stream/1/",
-  "cros": false
-}

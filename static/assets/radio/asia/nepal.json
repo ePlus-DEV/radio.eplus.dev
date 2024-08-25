@@ -5,7 +5,8 @@
     "url": "https://aradioaudio.com/",
     "cros": true,
     "stream": "https://stream.zeno.fm/fvrx47wpg0quv",
-    "features": "/img/asia/nepal/audio.png"
+    "features": "/img/asia/nepal/audio.png",
+    "favorite": true
   },
   "hits-fm": {
     "title": "Hits FM",

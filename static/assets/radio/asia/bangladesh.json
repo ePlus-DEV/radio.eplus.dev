@@ -6,7 +6,8 @@
     "cros": true,
     "stream": "https://stream.zeno.fm/u9mphfk604zuv.aac",
     "features": "/img/asia/bangladesh/dhaka.png",
-    "schedule": "https://api.webrad.io/data/playlist/64/dhaka?time="
+    "schedule": "https://api.webrad.io/data/playlist/64/dhaka?time=",
+    "favorite": true
   },
   "abc": {
     "title": "ABC Radio",

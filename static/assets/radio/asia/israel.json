@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://glzwizzlv.bynetcdn.com/glglz_mp3",
     "features": "/img/asia/israel/galgalatz.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/galgalatz?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/galgalatz?time=",
+    "favorite": true
   },
   "kol-israel-reshet-gimel": {
     "title": "כאן גימל",

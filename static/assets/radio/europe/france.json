@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://scdn.nrjaudio.fm/adwz2/fr/30001/mp3_128.mp3?origine=ecouterradioenligne",
     "features": "/img/europe/france/nrj-france.png",
-    "schedule": "https://api.webrad.io/data/playlist/37/nrj-france?time="
+    "schedule": "https://api.webrad.io/data/playlist/37/nrj-france?time=",
+    "favorite": true
   },
   "skyrock": {
     "title": "Skyrock FM",

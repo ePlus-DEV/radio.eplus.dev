@@ -350,7 +350,7 @@ export default {
         });
       });
       // END - Oceania
-      index.saveObjects(data_algolia).then(({ objectIDs }) => {});
+      index.saveObjects(data_algolia);
       return routesToGenerate;
     },
   },

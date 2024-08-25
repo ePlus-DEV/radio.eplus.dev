@@ -1,8 +1,0 @@
-{
-  "title": "Radio Metro",
-  "type": "audio/mpeg",
-  "frequency": "FM 105.7 MHz",
-  "countries": "Australia",
-  "stream": "http://s1.voscast.com:10152/metro1057",
-  "cros": true
-}

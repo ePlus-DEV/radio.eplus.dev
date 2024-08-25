@@ -1,8 +1,0 @@
-{
-  "title": "Radio Era FM",
-  "type": "audio/aac",
-  "frequency": "103.3 FM",
-  "countries": "Malaysia",
-  "stream": "https://astro2.rastream.com/era",
-  "cros": false
-}

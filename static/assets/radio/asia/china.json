@@ -6,7 +6,8 @@
     "url": "https://www.rthk.hk/radio/radio1",
     "cros": false,
     "stream": "https://rthkaudio1-lh.akamaihd.net/i/radio1_1@355864/master.m3u8",
-    "features": "/img/asia/china/xiang-gang1tai.png"
+    "features": "/img/asia/china/xiang-gang1tai.png",
+    "favorite": true
   },
   "fu-shan883": {
     "title": "佛山电台FM883",

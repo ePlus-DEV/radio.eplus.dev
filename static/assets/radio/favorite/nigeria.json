@@ -1,8 +1,0 @@
-{
-  "title": "Max",
-  "type": "audio/mpeg",
-  "frequency": "Stream",
-  "countries": "Nigeria",
-  "stream": "https://audiostreamer.gridpapaservers.com:2000/stream/MAXLAGOS",
-  "cros": false
-}
