@@ -138,9 +138,6 @@
     "guide": "Guide",
     "the_last_90_days": "Les 90 derniers jours",
     "hosted": "Hébergé sur {name} - Dernière mise à jour {time}",
-    "downtime": ""
-  },
-  "Uptime": {
-    "text.uptime": ""
+    "downtime": "Temps d'arrêt"
   }
 }

@@ -138,9 +138,7 @@
     "guide": "指南",
     "the_last_90_days": "過去90天",
     "hosted": "托管在 {name} - 最後更新時間 {time}",
-    "downtime": ""
-  },
-  "Uptime": {
-    "text.uptime": ""
+    "downtime": "停機時間",
+    "uptime": "正常運行時間"
   }
 }
