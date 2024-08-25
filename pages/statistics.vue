@@ -95,6 +95,7 @@ import VueApexCharts from "vue-apexcharts";
 import _, { map } from "underscore";
 
 export default {
+  name: "Statistics",
   head() {
     return {
       title: this.$t("navmenu.statistics"),
@@ -167,9 +168,7 @@ export default {
           legend: {
             tooltipHoverFormatter: function (val, opts) {
               return (
-                val +
-                " - " +
-                opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
+                `${val} - ${opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]}`
               );
             },
           },
@@ -258,8 +257,7 @@ export default {
     async fetchResponseTimesReports() {
       this.$axios
         .get(
-          process.env.API_FRESHPING +
-            "public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours",
+          `${process.env.API_FRESHPING}public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours`,
         )
         .then((res) => {
           const data = res.data.response_times;
@@ -292,12 +290,13 @@ export default {
       const calendar = this.$refs.calendar;
     },
     async fetchLast7days() {
+      let m;
       let startDate = this.$moment().subtract(90, "days");
       let endDate = this.$moment();
       let date = [];
 
       for (
-        var m = this.$moment(startDate);
+        m = this.$moment(startDate);
         m.isSameOrBefore(endDate);
         m.add(1, "days")
       ) {
@@ -310,12 +309,7 @@ export default {
     async fetchData(date) {
       this.$axios
         .get(
-          process.env.API_FRESHPING +
-            "public-check-stats-reports/690040/?start_time=" +
-            date +
-            "T00:00:00.000Z&end_time=" +
-            date +
-            "T23:59:59.999Z",
+          `${process.env.API_FRESHPING}public-check-stats-reports/690040/?start_time=${date}T00:00:00.000Z&end_time=${date}T23:59:59.999Z`,
         )
         .then((res) => {
           const data = res.data;
@@ -350,8 +344,7 @@ export default {
     async fetchAvailabilitynPerformance() {
       this.$axios
         .get(
-          process.env.API_FRESHPING +
-            "public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days",
+          `${process.env.API_FRESHPING}public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days`,
         )
         .then((res) => {
           this.AvailabilitynPerformance = res.data;

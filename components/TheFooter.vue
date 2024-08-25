@@ -79,6 +79,7 @@
 
 <script>
 export default {
+  name: "TheFooter",
   data() {
     return {
       lastUpdate: "",
@@ -133,7 +134,7 @@ export default {
 
       this.$axios(config)
         .then((response) => {
-          var data = response.data;
+          const data = response.data;
           this.lastUpdate = this.$moment(
             data.deployments[0].phase_last_updated_at,
           ).format("LLLL");
