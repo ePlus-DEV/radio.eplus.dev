@@ -293,6 +293,20 @@ export default {
         name: "繁體中文",
         flag: "/img/asia/flags/taiwan.png",
       },
+      {
+        code: "fr",
+        file: "fr-FR.json",
+        iso: "fr-FR",
+        name: "Français",
+        flag: "/img/europe/flags/france.png",
+      },
+      {
+        code: "ru",
+        file: "ru-RU.json",
+        iso: "ru-RU",
+        name: "Русский",
+        flag: "/img/europe/flags/russia.png",
+      }
     ],
     strategy: "no_prefix",
     lazy: true,
