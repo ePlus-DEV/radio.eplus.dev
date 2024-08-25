@@ -1,25 +1,28 @@
 <template>
   <!-- BEGIN - Statistics -->
   <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-    <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
+    <div
+      class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
+    >
       <h2 class="text-2xl dark:text-white">{{ $t("navmenu.statistics") }}</h2>
     </div>
     <div class="flex justify-center mt-8 space-x-6">
       <!-- website monitoring -->
       <div class="stats shadow">
         <div class="stat place-items-center">
-          <div class="stat-title">UP</div>
+          <div class="stat-title">{{ $t("text.uptime") }}</div>
           <div class="stat-value">
             {{
-              parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2) +
-              "%"
+              parseFloat(
+                AvailabilitynPerformance.availability_percentage,
+              ).toFixed(2) + "%"
             }}
           </div>
           <div class="stat-desc">{{ $t("text.the_last_90_days") }}</div>
         </div>
 
         <div class="stat place-items-center">
-          <div class="stat-title">DOWNTIME</div>
+          <div class="stat-title">{{ $t("text.downtime") }}</div>
           <div class="stat-value text-secondary">
             {{
               $moment
@@ -27,9 +30,9 @@
                   $moment
                     .duration(
                       AvailabilitynPerformance.average_response_time_milliseconds_reporting_error,
-                      "seconds"
+                      "seconds",
                     )
-                    .asMilliseconds()
+                    .asMilliseconds(),
                 )
                 .format("HH:mm:SS")
             }}
@@ -38,7 +41,9 @@
             ({{
               (
                 100 -
-                parseFloat(AvailabilitynPerformance.availability_percentage).toFixed(2)
+                parseFloat(
+                  AvailabilitynPerformance.availability_percentage,
+                ).toFixed(2)
               ).toFixed(2) + "%"
             }})
           </div>
@@ -90,6 +95,7 @@ import VueApexCharts from "vue-apexcharts";
 import _, { map } from "underscore";
 
 export default {
+  name: "Statistics",
   head() {
     return {
       title: this.$t("navmenu.statistics"),
@@ -160,10 +166,8 @@ export default {
             },
           },
           legend: {
-            tooltipHoverFormatter: function (val, opts) {
-              return (
-                val + " - " + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]
-              );
+            tooltipHoverFormatter(val, opts) {
+              return `${val} - ${opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex]}`;
             },
           },
           markers: {
@@ -248,17 +252,16 @@ export default {
     },
   },
   methods: {
-    async fetchResponseTimesReports() {
+    fetchResponseTimesReports() {
       this.$axios
         .get(
-          process.env.API_FRESHPING +
-            "public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours"
+          `${process.env.API_FRESHPING}public-check-response-times-reports/690040/?for_hours=48&aggregate_by=hours`,
         )
         .then((res) => {
           const data = res.data.response_times;
 
           const response_time = Object.keys(data).map(
-            (k) => data[k].average_response_time_milliseconds_available
+            (k) => data[k].average_response_time_milliseconds_available,
           );
           // updateSeries chart
           this.$refs.chart.updateSeries(
@@ -269,7 +272,7 @@ export default {
               },
             ],
             false,
-            true
+            true,
           );
 
           const date = Object.keys(data).map((k) => data[k].start);
@@ -284,27 +287,27 @@ export default {
       // Get reference to the calendar component
       const calendar = this.$refs.calendar;
     },
-    async fetchLast7days() {
+    fetchLast7days() {
+      let momentInstance = this.$moment();
       let startDate = this.$moment().subtract(90, "days");
       let endDate = this.$moment();
       let date = [];
 
-      for (var m = this.$moment(startDate); m.isSameOrBefore(endDate); m.add(1, "days")) {
-        date.push(m.format("YYYY-MM-DD"));
-        this.fetchData(m.format("YYYY-MM-DD"));
+      for (
+        momentInstance = this.$moment(startDate);
+        momentInstance.isSameOrBefore(endDate);
+        momentInstance.add(1, "days")
+      ) {
+        date.push(momentInstance.format("YYYY-MM-DD"));
+        this.fetchData(momentInstance.format("YYYY-MM-DD"));
       }
 
       this.last7days = date;
     },
-    async fetchData(date) {
+    fetchData(date) {
       this.$axios
         .get(
-          process.env.API_FRESHPING +
-            "public-check-stats-reports/690040/?start_time=" +
-            date +
-            "T00:00:00.000Z&end_time=" +
-            date +
-            "T23:59:59.999Z"
+          `${process.env.API_FRESHPING}public-check-stats-reports/690040/?start_time=${date}T00:00:00.000Z&end_time=${date}T23:59:59.999Z`,
         )
         .then((res) => {
           const data = res.data;
@@ -317,7 +320,8 @@ export default {
             },
             dot: {
               style: {
-                "background-color": data.outages_count_total > 0 ? "red" : "green",
+                "background-color":
+                  data.outages_count_total > 0 ? "red" : "green",
               },
             },
             dates: date,
@@ -335,11 +339,10 @@ export default {
           this.data_list.push(data);
         });
     },
-    async fetchAvailabilitynPerformance() {
+    fetchAvailabilitynPerformance() {
       this.$axios
         .get(
-          process.env.API_FRESHPING +
-            "public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days"
+          `${process.env.API_FRESHPING}public-check-stats-reports/690040/?for_hours=2160&aggregate_by=days`,
         )
         .then((res) => {
           this.AvailabilitynPerformance = res.data;
@@ -351,7 +354,7 @@ export default {
       this.fetchResponseTimesReports(),
       this.fetchLast7days(),
       this.fetchAvailabilitynPerformance(),
-    ]).then(() => {});
+    ]);
   },
 };
 </script>

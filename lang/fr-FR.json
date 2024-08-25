@@ -1,0 +1,150 @@
+{
+  "navmenu": {
+    "homepage": "Page d'accueil",
+    "about": "À propos",
+    "blog": "Blog",
+    "group": "Groupe",
+    "terms": "Conditions d'utilisation",
+    "privacy": "politique de confidentialité",
+    "contact": "Contact",
+    "language": "Langue:",
+    "old_version": "#ancienneversion",
+    "statistics": "Statistiques",
+    "changelog": "Journal des modifications"
+  },
+  "terms": {
+    "content": "Bienvenue sur le site Web https://radio.eplus.dev (« Radio ePlus »), un produit de ePlus.DEV. Veuillez lire attentivement l'Accord sur la fourniture et l'utilisation des services sur le site Web https://radio.eplus.dev avant d'utiliser les fonctionnalités du site Web « Radio » ePlus. Une fois inscrit, vous avez lu, compris, accepté et respecté les termes ci-dessous :",
+    "article_1": {
+      "title": "Article 1 : À but non lucratif",
+      "line_1": "Nous nous engageons à être gratuits pour toujours, sans frais d'aucune sorte.",
+      "line_2": "Nous reconnaissons l'utilisation de contenus gratuits provenant de toutes les stations, de développeurs de contenu du monde entier, afin de diffuser ce contenu à tous."
+    },
+    "article_2": {
+      "title": "Article 2 : Loi sur le droit d'auteur du millénaire numérique",
+      "line_1": "Radio ePlus prend très au sérieux les questions de propriété intellectuelle et s'engage à répondre aux besoins des propriétaires de contenu tout en les aidant à gérer la publication de leur contenu en ligne. Il convient de noter que Radio ePlus est un portail de station de radio qui relie à des sites Web tiers par des fenêtres contextuelles.",
+      "line_2": "Tout contenu sur ces sites Web tiers relève de la responsabilité de ces sites et non de Radio ePlus. Nous n'avons aucune connaissance de la légalité du contenu sur les sites Web tiers, car il s'agit d'une question entre le site qui héberge le contenu audio et le propriétaire du contenu. Radio ePlus n'héberge aucun contenu audio sur ses serveurs ou son réseau."
+    }
+  },
+  "world": {
+    "africa": {
+      "name": "Afrique",
+      "algeria": "Algérie",
+      "nigeria": "Nigeria"
+    },
+    "asia": {
+      "name": "Asie",
+      "viet_nam": "Vietnam",
+      "singapore": "Singapour",
+      "korea": "Corée",
+      "china": "Chine",
+      "hong_kong": "Hong Kong",
+      "japan": "Japon",
+      "malaysia": "Malaisie",
+      "philippines": "Philippines",
+      "indonesia": "Indonésie",
+      "thailand": "Thaïlande",
+      "bangladesh": "Bangladesh",
+      "pakistan": "Pakistan",
+      "india": "Inde",
+      "taiwan": "Taïwan",
+      "israel": "Israël",
+      "sri_lanka": "Sri Lanka",
+      "nepal": "Népal"
+    },
+    "central_america": {
+      "name": "Amérique centrale",
+      "costa_rica": "Costa Rica",
+      "el_salvador": "Le Salvador",
+      "guatemala": "Guatemala",
+      "honduras": "Honduras",
+      "nicaragua": "Nicaragua"
+    },
+    "europe": {
+      "name": "Europe",
+      "united_kingdom": "Royaume-Uni",
+      "ukraine": "Ukraine",
+      "russia": "Russie",
+      "france": "France"
+    },
+    "north_america": {
+      "name": "Amérique du Nord",
+      "cuba": "Cuba",
+      "haiti": "Haïti",
+      "jamaica": "Jamaïque",
+      "mexico": "Mexique",
+      "puerto_rico": "Porto Rico",
+      "dominican_republic": "République dominicaine",
+      "trinidad_and_tobago": "Trinité-et-Tobago"
+    },
+    "oceania": {
+      "name": "Océanie",
+      "australia": "Australie",
+      "new_zealand": "Nouvelle-Zélande"
+    },
+    "south_america": {
+      "name": "Amérique du Sud",
+      "argentina": "Argentine",
+      "bolivia": "Bolivie",
+      "brazil": "Brésil",
+      "chile": "Chili",
+      "colombia": "Colombie",
+      "ecuador": "Équateur",
+      "paraguay": "Paraguay",
+      "peru": "Pérou"
+    }
+  },
+  "panel": {
+    "most_popular": "Le plus populaire à {name}",
+    "frequency": "Fréquence",
+    "play_from_radio": "Écouter à la radio",
+    "country": "Pays",
+    "radio_in": "Radio à {nom}",
+    "description": "Description",
+    "category": "Catégorie",
+    "schedule": "Calendrier",
+    "playlist": "Liste de lecture",
+    "next": "Suivant",
+    "lyric": "Lyrique",
+    "no_lyric": "Pas de paroles",
+    "updating": "Mise à jour..."
+  },
+  "button": {
+    "back": "Dos",
+    "close": "Fermer"
+  },
+  "popup": {
+    "search": {
+      "text": "Recherche...",
+      "stats": "Page {page} sur {nbPages} - {nbHits} hits récupérés en {processingTimeMS} ms"
+    }
+  },
+  "notify": {
+    "success": "Succès",
+    "success_content": "Peut écouter la radio : {radio}",
+    "error": "Erreur",
+    "error_content": "Impossible d'écouter la radio : {radio}"
+  },
+  "statistics_tooltip": {
+    "text": "Incidents : {num} | Temps d'arrêt : {time} min | {response} ms"
+  },
+  "404": {
+    "content": "Nous tenons à vous informer que la page que vous recherchez n'existe pas !"
+  },
+  "table": {
+    "status": "Statut",
+    "commit": "Commettre",
+    "created": "Créé",
+    "updated": "Mis à jour",
+    "published": "Publié",
+    "view": "Voir"
+  },
+  "alert": {
+    "play_button": "Par défaut du navigateur, vous devez appuyer sur le bouton ▶ pour commencer à écouter la radio."
+  },
+  "text": {
+    "guide": "Guide",
+    "the_last_90_days": "Les 90 derniers jours",
+    "hosted": "Hébergé sur {name} - Dernière mise à jour {time}",
+    "downtime": "Temps d'arrêt"
+  }
+}

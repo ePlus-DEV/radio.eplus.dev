@@ -18,7 +18,7 @@
               :to="link.to"
               class="text-base leading-6 text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
-              {{ link.text }}
+              {{ $t(link.text) }}
             </nuxt-link>
           </div>
         </nav>
@@ -79,15 +79,16 @@
 
 <script>
 export default {
+  name: "TheFooter",
   data() {
     return {
       lastUpdate: "",
       links: [
-        { id: 1, to: "/about", text: this.$t("navmenu.about") },
-        { id: 2, to: this.$config.Blog, text: this.$t("navmenu.blog") },
-        { id: 3, to: "/privacy-policy", text: this.$t("navmenu.privacy") },
-        { id: 4, to: "/terms-of-use", text: this.$t("navmenu.terms") },
-        { id: 5, to: "/statistics", text: this.$t("navmenu.statistics") },
+        { id: 1, to: "/about", text: "navmenu.about" },
+        { id: 2, to: this.$config.Blog, text: "navmenu.blog" },
+        { id: 3, to: "/privacy-policy", text: "navmenu.privacy" },
+        { id: 4, to: "/terms-of-use", text: "navmenu.terms" },
+        { id: 5, to: "/statistics", text: "navmenu.statistics" },
       ],
       socialLinks: [
         {
@@ -123,17 +124,17 @@ export default {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
     getLastUpdate() {
-      let config = {
+      const config = {
         method: "get",
         url: this.$config.DIGITALOCEAN_ENDPOINT,
         headers: {
-          Authorization: "Bearer " + this.$config.DIGITALOCEAN_API_KEY,
+          Authorization: `Bearer ${this.$config.DIGITALOCEAN_API_KEY}`,
         },
       };
 
       this.$axios(config)
         .then((response) => {
-          var data = response.data;
+          const data = response.data;
           this.lastUpdate = this.$moment(
             data.deployments[0].phase_last_updated_at,
           ).format("LLLL");

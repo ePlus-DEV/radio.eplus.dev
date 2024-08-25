@@ -1,0 +1,151 @@
+{
+  "navmenu": {
+    "homepage": "主页",
+    "about": "关于",
+    "blog": "博客",
+    "group": "群组",
+    "terms": "使用条款",
+    "privacy": "隐私政策",
+    "contact": "联系我们",
+    "language": "语言：",
+    "old_version": "#旧版本",
+    "statistics": "统计",
+    "changelog": "更新日志"
+  },
+  "terms": {
+    "content": "欢迎访问网站 https://radio.eplus.dev（“Radio ePlus”），这是ePlus.DEV的产品。在使用“Radio”网站ePlus上的功能之前，请仔细阅读网站 https://radio.eplus.dev 上的服务提供和使用协议。一旦注册，您已经阅读、理解、接受并遵守以下条款：",
+    "article_1": {
+      "title": "第一条：非盈利",
+      "line_1": "我们承诺永久免费，不收取任何费用。",
+      "line_2": "我们承认来自世界各地的电台自由内容的使用，来自世界各地的内容开发者，所以我希望将这些内容传播给每个人。"
+    },
+    "article_2": {
+      "title": "第二条：数字千年版权法",
+      "line_1": "Radio ePlus非常重视知识产权问题，并致力于满足内容所有者的需求，同时帮助他们管理其在线内容的发布。需要注意的是，Radio ePlus是通过弹出窗口链接到第三方网站的广播电台门户。",
+      "line_2": "这些第三方网站上的任何内容都由这些网站负责，而不是Radio ePlus。我们不知道第三方网站上的内容是否经过内容所有者的授权，因为这是托管音频内容的网站和内容所有者之间的事情。Radio ePlus不在其服务器或网络上托管任何音频内容。"
+    }
+  },
+  "world": {
+    "africa": {
+      "name": "非洲",
+      "algeria": "阿尔及利亚",
+      "nigeria": "尼日利亚"
+    },
+    "asia": {
+      "name": "亚洲",
+      "viet_nam": "越南",
+      "singapore": "新加坡",
+      "korea": "韩国",
+      "china": "中国",
+      "hong_kong": "香港",
+      "japan": "日本",
+      "malaysia": "马来西亚",
+      "philippines": "菲律宾",
+      "indonesia": "印度尼西亚",
+      "thailand": "泰国",
+      "bangladesh": "孟加拉国",
+      "pakistan": "巴基斯坦",
+      "india": "印度",
+      "taiwan": "台湾",
+      "israel": "以色列",
+      "sri_lanka": "斯里兰卡",
+      "nepal": "尼泊尔"
+    },
+    "central_america": {
+      "name": "中美洲",
+      "costa_rica": "哥斯达黎加",
+      "el_salvador": "萨尔瓦多",
+      "guatemala": "危地马拉",
+      "honduras": "洪都拉斯",
+      "nicaragua": "尼加拉瓜"
+    },
+    "europe": {
+      "name": "欧洲",
+      "united_kingdom": "英国",
+      "ukraine": "乌克兰",
+      "russia": "俄罗斯",
+      "france": "法国"
+    },
+    "north_america": {
+      "name": "北美洲",
+      "cuba": "古巴",
+      "haiti": "海地",
+      "jamaica": "牙买加",
+      "mexico": "墨西哥",
+      "puerto_rico": "波多黎各",
+      "dominican_republic": "多米尼加共和国",
+      "trinidad_and_tobago": "特立尼达和多巴哥"
+    },
+    "oceania": {
+      "name": "大洋洲",
+      "australia": "澳大利亚",
+      "new_zealand": "新西兰"
+    },
+    "south_america": {
+      "name": "南美洲",
+      "argentina": "阿根廷",
+      "bolivia": "玻利维亚",
+      "brazil": "巴西",
+      "chile": "智利",
+      "colombia": "哥伦比亚",
+      "ecuador": "厄瓜多尔",
+      "paraguay": "巴拉圭",
+      "peru": "秘鲁"
+    }
+  },
+  "panel": {
+    "most_popular": "最受欢迎的 {name}",
+    "frequency": "频率",
+    "play_from_radio": "从广播播放",
+    "country": "国家",
+    "radio_in": "{name} 的广播",
+    "description": "描述",
+    "category": "分类",
+    "schedule": "时间表",
+    "playlist": "播放列表",
+    "next": "下一个",
+    "lyric": "歌词",
+    "no_lyric": "无歌词",
+    "updating": "更新中..."
+  },
+  "button": {
+    "back": "返回",
+    "close": "关闭"
+  },
+  "popup": {
+    "search": {
+      "text": "搜索...",
+      "stats": "第 {page} 页，共 {nbPages} 页 - 检索到 {nbHits} 条结果，耗时 {processingTimeMS} 毫秒"
+    }
+  },
+  "notify": {
+    "success": "成功",
+    "success_content": "可以播放广播：{radio}",
+    "error": "错误",
+    "error_content": "无法播放广播：{radio}"
+  },
+  "statistics_tooltip": {
+    "text": "事件：{num} | 停机时间：{time} 分钟 | {response}ms"
+  },
+  "404": {
+    "content": "我们想告诉您，您正在寻找的页面不存在！"
+  },
+  "table": {
+    "status": "状态",
+    "commit": "提交",
+    "created": "创建时间",
+    "updated": "更新时间",
+    "published": "发布时间",
+    "view": "查看"
+  },
+  "alert": {
+    "play_button": "根据浏览器的默认设置，您需要按 ▶ 按钮开始收听广播。"
+  },
+  "text": {
+    "guide": "指南",
+    "the_last_90_days": "过去90天",
+    "hosted": "托管在{name}上 - 上次更新时间 {time}",
+    "downtime": "停机时间",
+    "uptime": "正常运行时间"
+  }
+}
