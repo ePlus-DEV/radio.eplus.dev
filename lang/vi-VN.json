@@ -137,12 +137,10 @@
   "text": {
     "guide": "Hướng dẫn",
     "the_last_90_days": "90 ngày qua",
-    "hosted": "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}"
-  },
-  "Downtime": {
-    "text. downtime": "Thời gian ngừng hoạt động"
+    "hosted": "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}",
+    "downtime": "Thời gian ngừng hoạt động"
   },
   "Uptime": {
-    "text.uptime": "Thời gian hoạt động"
+    "text.uptime": ""
   }
 }
