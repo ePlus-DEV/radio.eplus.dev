@@ -1,22 +1,14 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs
-      :area="area"
-      level_1=""
-      :level_2="$t(`world.${area.replace('-', '_')}.name`)"
-    />
+    <Breadcrumbs :area="area" level_1="" :level_2="$t(`world.${area.replace('-', '_')}.name`)" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player
-      ref="player"
-      country="world.asia.viet_nam"
-      :schedule="schedule_data"
-      :home="true"
-      thumb="/img/asia/flags/viet-nam.png"
-    ></Player>
+    <Player ref="player" country="world.asia.viet_nam" :home="true" thumb="/img/asia/flags/viet-nam.png"></Player>
     <!-- END - Player -->
+
+    {{ this.$store.state.player_home }}
 
     <!-- BEGIN - PanelRadio -->
     <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio>
@@ -52,39 +44,15 @@ export default {
     fetchData() {
       this.$axios
         .get(
-          `/assets/radio/favorite/${this.$config.Pin_Channel_Favorites}.json`,
+          `/assets/radio/asia/${this.$config.Pin_Channel_Favorites}.json`,
         )
         .then((res) => {
-          const data = res.data;
-          this.stream_name = data.title;
+          const favoriteChannel = Object.values(res.data).find(channel => channel.favorite);
+          this.stream_name = favoriteChannel.title;
 
           // Vuex
-          this.$store.dispatch("storePLAYERHOME", data);
-
+          this.$store.dispatch("storePLAYERHOME", favoriteChannel);
           this.$refs.player.init(true);
-
-          // Get Schedule
-          const form = new FormData();
-          form.append("vov", "vovgthn");
-          form.append(
-            "date",
-            this.$moment().tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY"),
-          );
-          const self = this;
-
-          const settings = {
-            url: data.schedule,
-            method: "POST",
-            timeout: 0,
-            processData: false,
-            mimeType: "multipart/form-data",
-            contentType: false,
-            data: form,
-          };
-
-          $.ajax(settings).done((response) => {
-            self.schedule_data = JSON.parse(response).result_detail;
-          });
         });
     },
     fetchRemote(url, options = {}) {
