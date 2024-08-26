@@ -336,12 +336,18 @@ export default {
             `./static/assets/radio/${region}/${file}.json`,
           );
           const countryCode = file.replace("-", "_");
-
+          routesToGenerate.push(`/${region}/${file}`);
           for (const [key, value] of Object.entries(jsonData)) {
             routesToGenerate.push(`/${region}/${file}/${key}`);
             data_algolia.push({
               station_name: value.title,
+              station_signal: value.signal,
               station_image: process.env.BASE_URL + value.features,
+              station_stream: value.stream,
+              type: value.type,
+              cros: value.cros,
+              favorite: value.favorite || false,
+              station_schedule: value.schedule,
               station_country: `world.${region.replace("-", "_")}.${countryCode}`,
               url: `/${region}/${file}/${key}`,
               objectID: `${file}-${key}`,
