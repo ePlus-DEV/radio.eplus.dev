@@ -67,6 +67,10 @@ export default {
     },
   },
   created() {
+    // Kiểm tra area phải nằm trong các khu vực được phép
+    if (!this.$config.Area.includes(this.area)) {
+      this.$router.push("/");
+    }
     this.$store.dispatch("storeTIMEZONE", {
       area: "asia",
       country: "viet-nam",

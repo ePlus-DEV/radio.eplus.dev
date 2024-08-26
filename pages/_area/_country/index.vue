@@ -93,7 +93,9 @@ export default {
           if (favoriteChannel.schedule !== undefined) {
             this.fetchSchedule(favoriteChannel.schedule);
           }
-        });
+        }).catch(() => {
+          this.$router.push(`/${this.area}`);
+        });;
     },
     fetchSchedule(url) {
       this.$axios
@@ -203,6 +205,10 @@ export default {
     },
   },
   created() {
+    // Kiểm tra area phải nằm trong các khu vực được phép
+    if (!this.$config.Area.includes(this.area)) {
+      this.$router.push("/");
+    }
     this.$store.dispatch("storeTIMEZONE", {
       area: this.area.replace("-", "_"),
       country: this.slug,

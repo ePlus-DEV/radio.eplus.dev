@@ -211,6 +211,8 @@ export default {
                 });
               });
           }
+        }).catch(() => {
+          this.$router.push(`/${this.area}/${this.slug}`);
         });
     },
     fetchSchedule(url) {
@@ -321,6 +323,10 @@ export default {
     },
   },
   created() {
+    // Kiểm tra area phải nằm trong các khu vực được phép
+    if (!this.$config.Area.includes(this.area)) {
+      this.$router.push("/");
+    }
     this.$store.dispatch("storeTIMEZONE", {
       area: this.area.replace("-", "_"),
       country: this.slug,
