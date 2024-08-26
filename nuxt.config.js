@@ -361,7 +361,7 @@ export default {
       index.saveObjects(data_algolia);
       return routesToGenerate;
     },
-    fallback: '404.html'
+    fallback: "404.html",
   },
   /* SiteMap */
   sitemap: {
