@@ -211,7 +211,8 @@ export default {
                 });
               });
           }
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$router.push(`/${this.area}/${this.slug}`);
         });
     },

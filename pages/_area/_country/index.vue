@@ -93,9 +93,10 @@ export default {
           if (favoriteChannel.schedule !== undefined) {
             this.fetchSchedule(favoriteChannel.schedule);
           }
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$router.push(`/${this.area}`);
-        });;
+        });
     },
     fetchSchedule(url) {
       this.$axios
