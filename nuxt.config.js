@@ -331,6 +331,7 @@ export default {
       const data_algolia = [];
 
       regions.forEach(({ region, files }) => {
+        routesToGenerate.push(`/${region}`);
         files.forEach((file) => {
           const jsonData = require(
             `./static/assets/radio/${region}/${file}.json`,
