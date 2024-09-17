@@ -308,6 +308,13 @@
       "data": "/assets/radio/europe/netherlands.json",
       "timezone": "Europe/Amsterdam",
       "station": 0
+    },
+    "norway": {
+      "name": "world.europe.norway",
+      "flag": "/img/europe/flags/norway.png",
+      "data": "/assets/radio/europe/norway.json",
+      "timezone": "Europe/Oslo",
+      "station": 0
     }
   },
   "north_america": {
