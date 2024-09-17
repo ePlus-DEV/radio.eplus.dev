@@ -301,6 +301,13 @@
       "data": "/assets/radio/europe/hungary.json",
       "timezone": "Europe/Budapest",
       "station": 0
+    },
+    "netherlands": {
+      "name": "world.europe.netherlands",
+      "flag": "/img/europe/flags/netherlands.png",
+      "data": "/assets/radio/europe/netherlands.json",
+      "timezone": "Europe/Amsterdam",
+      "station": 0
     }
   },
   "north_america": {
