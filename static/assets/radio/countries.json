@@ -294,6 +294,13 @@
       "data": "/assets/radio/europe/luxembourg.json",
       "timezone": "Europe/Luxembourg",
       "station": 0
+    },
+    "hungary": {
+      "name": "world.europe.hungary",
+      "flag": "/img/europe/flags/hungary.png",
+      "data": "/assets/radio/europe/hungary.json",
+      "timezone": "Europe/Budapest",
+      "station": 0
     }
   },
   "north_america": {
