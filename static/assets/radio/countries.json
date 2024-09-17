@@ -259,6 +259,13 @@
       "data": "/assets/radio/europe/france.json",
       "timezone": "Europe/Paris",
       "station": 0
+    },
+    "greece": {
+      "name": "world.europe.greece",
+      "flag": "/img/europe/flags/greece.png",
+      "data": "/assets/radio/europe/greece.json",
+      "timezone": "Europe/Athens",
+      "station": 0
     }
   },
   "north_america": {
