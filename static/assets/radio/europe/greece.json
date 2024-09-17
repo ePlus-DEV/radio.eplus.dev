@@ -6,7 +6,8 @@
         "cros": false,
         "stream": "https://sfera.live24.gr/sfera4132",
         "features": "/img/europe/greece/sfera.png",
-        "schedule": "https://api.webrad.io/data/playlist/148/sfera?time="
+        "schedule": "https://api.webrad.io/data/playlist/148/sfera?time=",
+        "favorite": true
     },
     "derti-fm": {
         "title": "Derti",

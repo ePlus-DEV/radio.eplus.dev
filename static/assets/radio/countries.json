@@ -266,6 +266,13 @@
       "data": "/assets/radio/europe/greece.json",
       "timezone": "Europe/Athens",
       "station": 0
+    },
+    "croatia": {
+      "name": "world.europe.croatia",
+      "flag": "/img/europe/flags/croatia.png",
+      "data": "/assets/radio/europe/croatia.json",
+      "timezone": "Europe/Zagreb",
+      "station": 0
     }
   },
   "north_america": {
