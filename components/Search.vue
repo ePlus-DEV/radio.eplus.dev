@@ -1,5 +1,5 @@
 <template>
-  <ais-instant-search :search-client="searchClient" :index-name="'radio.eplus.dev'"></ais-instant-search>
+  <ais-instant-search :search-client="searchClient" :index-name="'radio.eplus.dev'">
     <ais-search-box>
       <template v-slot="{ currentRefinement, isSearchStalled, refine }">
         <div class="form-control">
@@ -70,20 +70,20 @@
       }">
         <div class="btn-group">
           <button class="btn btn-sm" v-if="!isFirstPage" @click.prevent="refine(0)">
-            ‹‹
+            <fa :icon="['fasl', 'chevrons-left']" />
           </button>
           <button class="btn btn-sm" v-if="!isFirstPage" @click.prevent="refine(currentRefinement - 1)">
-            ‹
+            <fa :icon="['fasr', 'angle-left']" />
           </button>
           <button class="btn btn-sm" :class="page === currentRefinement ? 'btn-active' : ''" v-for="page in pages"
             :key="page" @click.prevent="refine(page)">
             {{ page + 1 }}
           </button>
           <button class="btn btn-sm" v-if="!isLastPage" @click.prevent="refine(currentRefinement + 1)">
-            ›
+            <fa :icon="['fasr', 'angle-right']" />
           </button>
           <button class="btn btn-sm" v-if="!isLastPage" @click.prevent="refine(nbPages)">
-            ››
+            <fa :icon="['fasl', 'chevrons-right']" />
           </button>
         </div>
       </template>
@@ -103,11 +103,6 @@ export default {
         "73e93ee2ef3aa6919b7c6495767c7f9d",
       ),
     };
-  },
-  methods: {
-    showorhide() {
-      this.$store.commit("setShowSearch", false);
-    },
-  },
+  }
 };
 </script>
