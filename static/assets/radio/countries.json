@@ -287,6 +287,13 @@
       "data": "/assets/radio/europe/italy.json",
       "timezone": "Europe/Rome",
       "station": 0
+    },
+    "luxembourg": {
+      "name": "world.europe.luxembourg",
+      "flag": "/img/europe/flags/luxembourg.png",
+      "data": "/assets/radio/europe/luxembourg.json",
+      "timezone": "Europe/Luxembourg",
+      "station": 0
     }
   },
   "north_america": {
