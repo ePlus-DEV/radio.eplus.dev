@@ -55,7 +55,7 @@
       "ukraine": "ウクライナ",
       "russia": "ロシア",
       "france": "フランス",
-      "greece": "Greece"
+      "greece": ""
     },
     "north_america": {
       "name": "北米",
@@ -136,6 +136,6 @@
     "guide": "ガイド",
     "the_last_90_days": "過去 90 日間",
     "hosted": "{name}でホスト - 最終更新{time}",
-    "downtime": "Downtime"
+    "downtime": "ダウンタイム"
   }
 }
