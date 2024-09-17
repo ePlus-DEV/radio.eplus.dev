@@ -13,17 +13,7 @@
     "changelog": "更新日志"
   },
   "terms": {
-    "content": "欢迎访问网站 https://radio.eplus.dev（“Radio ePlus”），这是ePlus.DEV的产品。在使用“Radio”网站ePlus上的功能之前，请仔细阅读网站 https://radio.eplus.dev 上的服务提供和使用协议。一旦注册，您已经阅读、理解、接受并遵守以下条款：",
-    "article_1": {
-      "title": "第一条：非盈利",
-      "line_1": "我们承诺永久免费，不收取任何费用。",
-      "line_2": "我们承认来自世界各地的电台自由内容的使用，来自世界各地的内容开发者，所以我希望将这些内容传播给每个人。"
-    },
-    "article_2": {
-      "title": "第二条：数字千年版权法",
-      "line_1": "Radio ePlus非常重视知识产权问题，并致力于满足内容所有者的需求，同时帮助他们管理其在线内容的发布。需要注意的是，Radio ePlus是通过弹出窗口链接到第三方网站的广播电台门户。",
-      "line_2": "这些第三方网站上的任何内容都由这些网站负责，而不是Radio ePlus。我们不知道第三方网站上的内容是否经过内容所有者的授权，因为这是托管音频内容的网站和内容所有者之间的事情。Radio ePlus不在其服务器或网络上托管任何音频内容。"
-    }
+    "content": "欢迎访问网站 https://radio.eplus.dev（“Radio ePlus”），这是ePlus.DEV的产品。在使用“Radio”网站ePlus上的功能之前，请仔细阅读网站 https://radio.eplus.dev 上的服务提供和使用协议。一旦注册，您已经阅读、理解、接受并遵守以下条款："
   },
   "world": {
     "africa": {
@@ -64,7 +54,8 @@
       "united_kingdom": "英国",
       "ukraine": "乌克兰",
       "russia": "俄罗斯",
-      "france": "法国"
+      "france": "法国",
+      "greece": ""
     },
     "north_america": {
       "name": "北美洲",
@@ -145,7 +136,6 @@
     "guide": "指南",
     "the_last_90_days": "过去90天",
     "hosted": "托管在{name}上 - 上次更新时间 {time}",
-    "downtime": "停机时间",
-    "uptime": "正常运行时间"
+    "downtime": "停机时间"
   }
 }
