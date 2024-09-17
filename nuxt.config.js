@@ -91,7 +91,7 @@ export default {
     NETLIFY_SITE_ID: process.env.NETLIFY_SITE_ID,
     DIGITALOCEAN_ENDPOINT: process.env.DIGITALOCEAN_ENDPOINT,
     DIGITALOCEAN_API_KEY: process.env.DIGITALOCEAN_API_KEY,
-    Area: ["asia", "europe", "north-america", "oceania"],
+    Area: ["africa", "asia", "europe", "north-america", "oceania"],
   },
   /*
    ** Headers of the page
