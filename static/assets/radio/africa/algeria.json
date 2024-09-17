@@ -5,7 +5,8 @@
     "url": "https://www.radioalgerie.dz/",
     "cros": false,
     "stream": "https://webradio.tda.dz/ElBayedh_64K.mp3",
-    "features": "/img/africa/algeria/el-bahdja.png"
+    "features": "/img/africa/algeria/el-bahdja.png",
+    "favorite": true
   },
   "jil-fm": {
     "title": "جيل أف أم",

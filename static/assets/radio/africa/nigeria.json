@@ -5,7 +5,8 @@
     "url": "https://www.max1023.fm/",
     "cros": false,
     "stream": "https://audiostreamer.gridpapaservers.com:2000/stream/MAXLAGOS",
-    "features": "/img/africa/nigeria/max.png"
+    "features": "/img/africa/nigeria/max.png",
+    "favorite": true
   },
   "smooth": {
     "title": "Smooth",
