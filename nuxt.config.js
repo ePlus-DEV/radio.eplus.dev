@@ -30,7 +30,20 @@ const regions = [
   },
   {
     region: "europe",
-    files: ["united-kingdom", "ukraine", "russia", "france", "greece", "croatia", "ireland", "italy", "luxembourg", "hungary", "netherlands", "norway"],
+    files: [
+      "united-kingdom",
+      "ukraine",
+      "russia",
+      "france",
+      "greece",
+      "croatia",
+      "ireland",
+      "italy",
+      "luxembourg",
+      "hungary",
+      "netherlands",
+      "norway",
+    ],
   },
   {
     region: "north-america",
