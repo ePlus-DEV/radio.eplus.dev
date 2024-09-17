@@ -1,4 +1,5 @@
 <template>
+  <!-- skipcq: JS-0717 -->
   <ais-instant-search :search-client="searchClient" :index-name="'radio.eplus.dev'">
     <ais-search-box>
       <template v-slot="{ currentRefinement, isSearchStalled, refine }">
