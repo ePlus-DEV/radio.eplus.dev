@@ -273,6 +273,20 @@
       "data": "/assets/radio/europe/croatia.json",
       "timezone": "Europe/Zagreb",
       "station": 0
+    },
+    "ireland": {
+      "name": "world.europe.ireland",
+      "flag": "/img/europe/flags/ireland.png",
+      "data": "/assets/radio/europe/ireland.json",
+      "timezone": "Europe/Dublin",
+      "station": 0
+    },
+    "italy": {
+      "name": "world.europe.italy",
+      "flag": "/img/europe/flags/italy.png",
+      "data": "/assets/radio/europe/italy.json",
+      "timezone": "Europe/Rome",
+      "station": 0
     }
   },
   "north_america": {
