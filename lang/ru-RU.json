@@ -64,7 +64,15 @@
       "united_kingdom": "Великобритания",
       "ukraine": "Украина",
       "russia": "Россия",
-      "france": "Франция"
+      "france": "Франция",
+      "greece": "Греция",
+      "croatia": "Хорватия",
+      "ireland": "Ирландия",
+      "italy": "Италия",
+      "luxembourg": "Люксембург",
+      "hungary": "Венгрия",
+      "netherlands": "Нидерланды",
+      "norway": "Норвегия"
     },
     "north_america": {
       "name": "Северная Америка",
@@ -145,7 +153,6 @@
     "guide": "Гид",
     "the_last_90_days": "Последние 90 дней",
     "hosted": "Размещено на {name} - Последнее обновление {time}",
-    "downtime": "Время простоя",
-    "uptime": "Время работы"
+    "downtime": "время простоя"
   }
 }

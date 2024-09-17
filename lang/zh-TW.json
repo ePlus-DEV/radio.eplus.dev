@@ -64,7 +64,15 @@
       "united_kingdom": "英國",
       "ukraine": "烏克蘭",
       "russia": "俄羅斯",
-      "france": "法國"
+      "france": "法國",
+      "greece": "希臘",
+      "croatia": "克羅地亞",
+      "ireland": "愛爾蘭",
+      "italy": "意大利",
+      "luxembourg": "盧森堡",
+      "hungary": "匈牙利",
+      "netherlands": "荷蘭",
+      "norway": "挪威"
     },
     "north_america": {
       "name": "北美洲",
@@ -145,7 +153,6 @@
     "guide": "指南",
     "the_last_90_days": "過去90天",
     "hosted": "托管在 {name} - 最後更新時間 {time}",
-    "downtime": "停機時間",
-    "uptime": "正常運行時間"
+    "downtime": "停机时间"
   }
 }

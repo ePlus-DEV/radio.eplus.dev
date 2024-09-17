@@ -1,0 +1,378 @@
+{
+    "retro": {
+        "title": "Retro Rádió",
+        "type": "audio/mpeg",
+        "url": "https://www.retroradio.hu/",
+        "cros": false,
+        "stream": "https://icast.connectmedia.hu/5001/live.mp3",
+        "features": "/img/europe/hungary/retro.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/retro?time=",
+        "favorite": true
+    },
+    "klub": {
+        "title": "Klubrádió",
+        "type": "audio/mpeg",
+        "url": "https://www.klubradio.hu/",
+        "cros": true,
+        "stream": "http://stream.klubradio.hu:8080/bpstream",
+        "features": "/img/europe/hungary/klub.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/klub?time="
+    },
+    "slager-fm": {
+        "title": "Sláger FM",
+        "type": "audio/mpeg",
+        "url": "https://slagerfm.hu/",
+        "cros": true,
+        "stream": "http://92.61.114.159:7812/slagerfm256.mp3",
+        "features": "/img/europe/hungary/slager-fm.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/slager-fm?time="
+    },
+    "1-budapest": {
+        "title": "Rádió 1 (Budapest)",
+        "type": "audio/mpeg",
+        "url": "https://radio1.hu/",
+        "cros": false,
+        "stream": "https://icast.connectmedia.hu/5201/live.mp3",
+        "features": "/img/europe/hungary/1-budapest.png"
+    },
+    "mr1-kossuth": {
+        "title": "MR1-Kossuth Rádió",
+        "type": "audio/aac",
+        "url": "https://mediaklikk.hu/kossuth",
+        "cros": false,
+        "stream": "https://icast.connectmedia.hu/4734/mr1.aac",
+        "features": "/img/europe/hungary/mr1-kossuth.png"
+    },
+    "laza-mulatos": {
+        "title": "Laza Rádió : Mulatós",
+        "type": "audio/mpeg",
+        "url": "https://lazaradio.com/index.php?p=1",
+        "cros": false,
+        "stream": "https://stream.lazaradio.com/mulatos64.mp3",
+        "features": "/img/europe/hungary/laza-mulatos.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/laza-mulatos?time="
+    },
+    "gyor-plus": {
+        "title": "Győr Plusz",
+        "type": "audio/mpeg",
+        "url": "https://www.gyorplusz.hu/",
+        "cros": false,
+        "stream": "https://stream.42netmedia.com:8443/sc_gyor1",
+        "features": "/img/europe/hungary/gyor-plus.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/gyor-plus?time="
+    },
+    "balaton": {
+        "title": "Balaton Rádió",
+        "type": "audio/mpeg",
+        "url": "https://www.balatonfm.hu/",
+        "cros": true,
+        "stream": "http://91.82.85.41:8200/;",
+        "features": "/img/europe/hungary/balaton.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/balaton?time="
+    },
+    "mr2-petofi": {
+        "title": "MR2 Petőfi",
+        "type": "audio/mpeg",
+        "url": "https://mediaklikk.hu/petofi/",
+        "cros": false,
+        "stream": "https://icast.connectmedia.hu/4738/mr2.mp3",
+        "features": "/img/europe/hungary/mr2-petofi.png"
+    },
+    "90-9-jazzy": {
+        "title": "90.9 Jazzy FM",
+        "type": "audio/mpeg",
+        "url": "https://jazzy.hu/",
+        "cros": false,
+        "stream": "https://radio.musorok.org/listen/jazzy/jazzy.mp3",
+        "features": "/img/europe/hungary/90-9-jazzy.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/90-9-jazzy?time="
+    },
+    "inforadio": {
+        "title": "InfoRádió",
+        "type": "audio/mpeg",
+        "url": "https://infostart.hu/",
+        "cros": true,
+        "stream": "http://87.229.65.212:8400/stream/1/",
+        "features": "/img/europe/hungary/inforadio.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/inforadio?time="
+    },
+    "88": {
+        "title": "Rádió 88",
+        "type": "audio/mpeg",
+        "url": "https://www.radio88.hu/",
+        "cros": true,
+        "stream": "http://stream.radio88.hu:8000/;",
+        "features": "/img/europe/hungary/88.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/88?time="
+    },
+    "klasszik": {
+        "title": "Klasstik Rádió",
+        "type": "audio/mpeg",
+        "url": "https://klasszikradio.hu/",
+        "cros": false,
+        "stream": "https://s04.diazol.hu:9600/live.mp3",
+        "features": "/img/europe/hungary/klasszik.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/klasszik?time="
+    },
+    "m": {
+        "title": "Rádió M",
+        "type": "audio/mpeg",
+        "url": "",
+        "cros": true,
+        "stream": "http://hosting2.42netmedia.com:10060/stream/1/",
+        "features": "/img/europe/hungary/m.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/m?time="
+    },
+    "bartok": {
+        "title": "Bartók Rádió",
+        "type": "audio/aac",
+        "url": "https://mediaklikk.hu/bartok/",
+        "cros": false,
+        "stream": "https://icast.connectmedia.hu/4739/mr3.aac",
+        "features": "/img/europe/hungary/bartok.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/bartok?time="
+    },
+    "tilos": {
+        "title": "Tilos Rádió",
+        "type": "audio/mpeg",
+        "url": "https://tilos.hu/",
+        "cros": false,
+        "stream": "https://stream.tilos.hu/tilos_128.mp3",
+        "features": "/img/europe/hungary/tilos.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/tilos?time="
+    },
+    "danko": {
+        "title": "Dankó Rádió",
+        "type": "audio/mpeg",
+        "url": "https://mediaklikk.hu/danko/",
+        "cros": false,
+        "stream": "https://icast.connectmedia.hu/4748/mr7.mp3",
+        "features": "/img/europe/hungary/danko.png"
+    },
+    "aktiv": {
+        "title": "Aktív Rádió",
+        "type": "audio/aac",
+        "url": "https://www.aktivradio.hu/",
+        "cros": true,
+        "stream": "http://aktivradio.hu:8000/radio.aac",
+        "features": "/img/europe/hungary/aktiv.png"
+    },
+    "magyar-katolikus": {
+        "title": "Magyar Katolikus Rádió",
+        "type": "audio/mpeg",
+        "url": "https://www.katolikusradio.hu/",
+        "cros": true,
+        "stream": "http://katolikusradio.hu:9000/live_hi.mp3",
+        "features": "/img/europe/hungary/magyar-katolikus.png"
+    },
+    "szent-istvan": {
+        "title": "Szent István Rádió",
+        "type": "audio/mpeg",
+        "url": "https://szentistvanradio.hu/",
+        "cros": true,
+        "stream": "http://online.szentistvanradio.hu:7000/adas",
+        "features": "/img/europe/hungary/szent-istvan.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/szent-istvan?time="
+    },
+    "inside": {
+        "title": "Radio Inside",
+        "type": "audio/mpeg",
+        "url": "https://radioinside.eu/",
+        "cros": false,
+        "stream": "https://radioinside.eu/high.mp3/",
+        "features": "/img/europe/hungary/inside.png"
+    },
+    "best-fm": {
+        "title": "Best FM",
+        "type": "audio/mpeg",
+        "url": "https://bestfmdebrecen.hu/",
+        "cros": true,
+        "stream": "http://stream.webthings.hu:8000/fm95-x-128.mp3",
+        "features": "/img/europe/hungary/best-fm.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/best-fm?time="
+    },
+    "mega-dance": {
+        "title": "MegaDance Rádió",
+        "type": "audio/mpeg",
+        "url": "https://megadanceradio.hu/",
+        "cros": false,
+        "stream": "https://gamershouse.hu:8080/livemega.mp3",
+        "features": "/img/europe/hungary/mega-dance.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/mega-dance?time="
+    },
+    "gong": {
+        "title": "Gong Rádió",
+        "type": "audio/mpeg",
+        "url": "https://radio1gong.hu/",
+        "cros": true,
+        "stream": "http://85.90.162.35:8000/gong-fm.mp3",
+        "features": "/img/europe/hungary/gong.png"
+    },
+    "88-retro-88": {
+        "title": "Radio 88 Szeged FM Retro 88",
+        "type": "audio/mpeg",
+        "url": "https://www.radio88.hu/",
+        "cros": true,
+        "stream": "http://stream1.radio88.hu:8300/;",
+        "features": "/img/europe/hungary/88-retro-88.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/88-retro-88?time="
+    },
+    "callisto": {
+        "title": "Callisto Rádió",
+        "type": "audio/mpeg",
+        "url": "https://callistoradio.eu/",
+        "cros": true,
+        "stream": "http://188.165.11.30:4500/live.mp3",
+        "features": "/img/europe/hungary/callisto.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/callisto?time="
+    },
+    "dabas": {
+        "title": "Rádió Dabas",
+        "type": "audio/mpeg",
+        "url": "http://www.radiodabas.hu/",
+        "cros": true,
+        "stream": "http://stream3.virtualisan.net:7040/;",
+        "features": "/img/europe/hungary/dabas.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/dabas?time="
+    },
+    "hit": {
+        "title": "Hit Rádió",
+        "type": "audio/mpeg",
+        "url": "https://hitradio.hu/",
+        "cros": false,
+        "stream": "https://streamer.radio.co/s47952d7c4/listen",
+        "features": "/img/europe/hungary/hit.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/hit?time="
+    },
+    "folk": {
+        "title": "Folkrádió",
+        "type": "audio/mpeg",
+        "url": "https://folkradio.hu/",
+        "cros": false,
+        "stream": "https://stream.folkradio.hu/folkradio.mp3",
+        "features": "/img/europe/hungary/folk.png"
+    },
+    "forras": {
+        "title": "Forrás Rádió",
+        "type": "audio/mpeg",
+        "url": "https://forrasradio.hu/",
+        "cros": true,
+        "stream": "http://91.82.85.44:9000/;",
+        "features": "/img/europe/hungary/forras.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/forras?time="
+    },
+    "mix-1": {
+        "title": "Mix Rádió",
+        "type": "audio/mpeg",
+        "url": "https://www.mixradio.hu/",
+        "cros": false,
+        "stream": "https://stream.phost.hu:8006/live",
+        "features": "/img/europe/hungary/mix-1.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/mix-1?time="
+    },
+    "maria": {
+        "title": "Mária Rádió",
+        "type": "audio/mpeg",
+        "url": "https://www.mariaradio.hu/",
+        "cros": true,
+        "stream": "http://regi.mariaradio.hu:8000/mr",
+        "features": "/img/europe/hungary/maria.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/maria?time="
+    },
+    "88-top-88": {
+        "title": "Rádió 88 Szeged FM Top 88",
+        "type": "audio/mpeg",
+        "url": "https://www.radio88.hu/",
+        "cros": true,
+        "stream": "http://stream3.radio88.hu:8500/;",
+        "features": "/img/europe/hungary/88-top-88.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/88-top-88?time="
+    },
+    "civil": {
+        "title": "Civil Rádió",
+        "type": "audio/mpeg",
+        "url": "https://kronika.civilradio.hu",
+        "cros": true,
+        "stream": "http://civilradio.hu:8000/stream/1/",
+        "features": "/img/europe/hungary/civil.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/civil?time="
+    },
+    "trend-fm": {
+        "title": "Trend FM",
+        "type": "audio/mpeg",
+        "url": "https://trendfm.hu/",
+        "cros": false,
+        "stream": "https://radio.trendfm.hu/trendfm_192k",
+        "features": "/img/europe/hungary/trend-fm.png"
+    },
+    "top": {
+        "title": "Rádió Top",
+        "type": "audio/mpeg",
+        "url": "https://topfm.hu/",
+        "cros": true,
+        "stream": "http://live.topfm.hu:8000/radio.mp3",
+        "features": "/img/europe/hungary/top.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/top?time="
+    },
+    "cool-fm": {
+        "title": "Cool FM",
+        "type": "audio/mpeg",
+        "url": "https://coolfm.hu/radio/",
+        "cros": false,
+        "stream": "https://mediagw.e-tiger.net/stream/cfmhq",
+        "features": "/img/europe/hungary/cool-fm.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/cool-fm?time="
+    },
+    "24": {
+        "title": "Rádió 24",
+        "type": "audio/mpeg",
+        "url": "https://r24.hu/",
+        "cros": false,
+        "stream": "https://s01.diazol.hu:10102/live.mp3",
+        "features": "/img/europe/hungary/24.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/24?time="
+    },
+    "lakihegy": {
+        "title": "Lakihegy Rádió",
+        "type": "audio/aac",
+        "url": "https://lakihegyradio.hu/",
+        "cros": true,
+        "stream": "http://stream.composeit.hu:8300/stream/1/",
+        "features": "/img/europe/hungary/lakihegy.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/lakihegy?time="
+    },
+    "luxfunk": {
+        "title": "Luxfunk Rádió",
+        "type": "audio/mpeg",
+        "url": "https://www.luxfunkradio.com/",
+        "cros": true,
+        "stream": "http://188.165.11.30:5000/luxfunkradio.mp3",
+        "features": "/img/europe/hungary/luxfunk.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/luxfunk?time="
+    },
+    "sunshine-fm": {
+        "title": "Sunshine FM",
+        "type": "audio/aac",
+        "url": "https://sunshine.hu/",
+        "cros": true,
+        "stream": "http://dozer.composeit.hu:8100/stream/1/",
+        "features": "/img/europe/hungary/sunshine-fm.png"
+    },
+    "88-szeged-club88": {
+        "title": "Radio 88 Szeged FM Club 88",
+        "type": "audio/mpeg",
+        "url": "https://www.radio88.hu/",
+        "cros": true,
+        "stream": "http://stream2.radio88.hu:8400/;",
+        "features": "/img/europe/hungary/88-szeged-club88.png",
+        "schedule": "https://api.webrad.io/data/playlist/139/88-szeged-club88?time="
+    },
+    "eger": {
+        "title": "Rádió Eger",
+        "type": "audio/mpeg",
+        "url": "https://www.radio1eger.hu/mx_player_e.php",
+        "cros": false,
+        "stream": "https://dc2.dcsolutions.hu:8445/radio1eger",
+        "features": "/img/europe/hungary/eger.png"
+    }
+}

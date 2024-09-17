@@ -26,24 +26,7 @@
                 class="cursor-pointer h-full flex items-center text-sm text-red-500 tracking-normal transition duration-150 ease-in-out"
               >
                 <span class="mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-grid"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <rect x="4" y="4" width="6" height="6" rx="1" />
-                    <rect x="14" y="4" width="6" height="6" rx="1" />
-                    <rect x="4" y="14" width="6" height="6" rx="1" />
-                    <rect x="14" y="14" width="6" height="6" rx="1" />
-                  </svg>
+                  <fa :icon="['fas', 'signal-stream']" />
                 </span>
                 {{ $t("navmenu.homepage") }}
               </li>
@@ -69,23 +52,13 @@
             <div
               class="px-6 h-full justify-center border-l border-gray-700 text-gray-400 flex items-center"
             >
-              <svg
+              <!-- BEGIN - Button Search -->
+              <fa
                 @click="showorhide()"
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-search cursor-pointer"
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <circle cx="10" cy="10" r="7" />
-                <line x1="21" y1="21" x2="15" y2="15" />
-              </svg>
+                :icon="['far', 'magnifying-glass-music']"
+                class="icon icon-tabler icon-tabler-search cursor-pointer text-white w-6 h-6"
+              />
+              <!-- END - Button Search -->
             </div>
             <div
               class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
@@ -95,34 +68,20 @@
                 class="h-10 w-10 flex justify-center items-center focus:outline-none text-yellow-500"
                 @click="darkmode()"
               >
-                <svg
+                <fa
+                  :icon="['fass', 'sun-bright']"
                   class="w-6 h-6"
                   :class="[
                     this.$colorMode.value == 'light' ? 'block' : 'hidden',
                   ]"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <svg
+                />
+                <fa
+                  :icon="['fass', 'moon']"
                   class="w-6 h-6"
-                  fill="currentColor"
                   :class="[
                     this.$colorMode.value == 'dark' ? 'block' : 'hidden',
                   ]"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M9.353 2.939a1 1 0 01.22 1.08 8 8 0 0010.408 10.408 1 1 0 011.301 1.3A10.003 10.003 0 0112 22C6.477 22 2 17.523 2 12c0-4.207 2.598-7.805 6.273-9.282a1 1 0 011.08.22z"
-                  ></path>
-                </svg>
+                />
               </button>
             </div>
             <!-- BEGIN - Language - Desktop -->
@@ -293,27 +252,17 @@
           <!-- BEGIN - Search - Mobile -->
           <button
             id="switchTheme"
-            class="h-10 w-10 flex justify-center items-center"
+            class="h-10 w-10 flex justify-center items-center text-yellow-500"
             @click="showorhide()"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-search cursor-pointer"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="#fff"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" />
-              <circle cx="10" cy="10" r="7" />
-              <line x1="21" y1="21" x2="15" y2="15" />
-            </svg>
+            <!-- BEGIN - Button Search -->
+            <fa
+              :icon="['far', 'magnifying-glass-music']"
+              class="icon icon-tabler icon-tabler-search cursor-pointer text-white w-6 h-6"
+            />
+            <!-- END - Button Search -->
           </button>
-          <!-- BEGIN - Search - Mobile -->
+          <!-- END - Search - Mobile -->
           <!-- BEGIN - Dark Mode - Mobile -->
           <button
             id="switchTheme"
@@ -395,149 +344,7 @@
       <div class="modal-box">
         <p>
           <!-- BEGIN - ais-instant-search -->
-          <ais-instant-search
-            :search-client="searchClient"
-            index-name="radio.eplus.dev"
-          >
-            <ais-search-box>
-              <template v-slot="{ currentRefinement, isSearchStalled, refine }">
-                <div class="form-control">
-                  <div class="relative">
-                    <input
-                      type="search"
-                      :value="currentRefinement"
-                      @input="refine($event.currentTarget.value)"
-                      :placeholder="$t('popup.search.text')"
-                      class="w-full input input-primary input-bordered"
-                    />
-                  </div>
-                </div>
-                <ais-stats>
-                  <template
-                    v-slot="{ nbPages, nbHits, page, processingTimeMS }"
-                  >
-                    {{
-                      $t("popup.search.stats", {
-                        page: page + 1,
-                        nbPages: nbPages,
-                        nbHits: nbHits,
-                        processingTimeMS: processingTimeMS,
-                      })
-                    }}
-                  </template>
-                </ais-stats>
-                <span :hidden="!isSearchStalled">Loading...</span>
-              </template>
-            </ais-search-box>
-            <ais-configure :hits-per-page.camel="5" />
-            <ais-hits>
-              <template v-slot="{ items }">
-                <div class="flex flex-col items-center">
-                  <div class="w-full flex flex-col items-center h-64">
-                    <div class="w-full px-4">
-                      <div class="flex flex-col items-center relative">
-                        <div
-                          class="absolute shadow bg-white top-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj"
-                        >
-                          <div class="flex flex-col w-full">
-                            <!-- item -->
-                            <nuxt-link
-                              :to="item.url"
-                              class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100"
-                              v-for="item in items"
-                              :key="item.objectID"
-                              @click.native="showorhide"
-                            >
-                              <div
-                                class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
-                              >
-                                <div class="w-8 flex flex-col items-center">
-                                  <div
-                                    class="flex relative bg-orange-500 justify-center items-center m-1 mr-2 w-10 h-6 mt-1 rounded-full"
-                                  >
-                                    <nuxt-img
-                                      loading="lazy"
-                                      :alt="item.station_name"
-                                      :src="item.station_image"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="w-full items-center flex">
-                                  <div class="mx-2 -mt-1 truncate">
-                                    {{ item.station_name }}
-                                    <div
-                                      class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500"
-                                    >
-                                      {{ $t(item.station_country) }}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </nuxt-link>
-                            <!-- item  -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </ais-hits>
-            <!-- pagination -->
-            <ais-pagination>
-              <template
-                v-slot="{
-                  currentRefinement,
-                  nbPages,
-                  pages,
-                  isFirstPage,
-                  isLastPage,
-                  refine,
-                }"
-              >
-                <div class="btn-group">
-                  <button
-                    class="btn btn-sm"
-                    v-if="!isFirstPage"
-                    @click.prevent="refine(0)"
-                  >
-                    ‹‹
-                  </button>
-                  <button
-                    class="btn btn-sm"
-                    v-if="!isFirstPage"
-                    @click.prevent="refine(currentRefinement - 1)"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    class="btn btn-sm"
-                    :class="page === currentRefinement ? 'btn-active' : ''"
-                    v-for="page in pages"
-                    :key="page"
-                    @click.prevent="refine(page)"
-                  >
-                    {{ page + 1 }}
-                  </button>
-                  <button
-                    class="btn btn-sm"
-                    v-if="!isLastPage"
-                    @click.prevent="refine(currentRefinement + 1)"
-                  >
-                    ›
-                  </button>
-                  <button
-                    class="btn btn-sm"
-                    v-if="!isLastPage"
-                    @click.prevent="refine(nbPages)"
-                  >
-                    ››
-                  </button>
-                </div>
-              </template>
-            </ais-pagination>
-            <!-- pagination -->
-          </ais-instant-search>
+          <Search />
           <!-- END - ais-instant-search -->
         </p>
         <div class="modal-action">
@@ -545,6 +352,7 @@
             for="search-modal"
             class="btn btn-sm bg-red-500 hover:bg-red-700"
           >
+            <fa :icon="['fas', 'xmark-large']" class="mr-2" />
             {{ $t("button.close") }}
           </label>
         </div>
@@ -554,17 +362,8 @@
 </template>
 
 <script>
-import algoliasearch from "algoliasearch";
-
 export default {
-  data() {
-    return {
-      searchClient: algoliasearch(
-        "N87NFQVY0Z",
-        "73e93ee2ef3aa6919b7c6495767c7f9d",
-      ),
-    };
-  },
+  name: "TheHeader",
   watch: {
     $route() {
       this.$colorMode.value = localStorage.theme;

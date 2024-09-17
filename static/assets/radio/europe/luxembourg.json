@@ -1,0 +1,233 @@
+{
+    "rtl": {
+        "title": "RTL Radio",
+        "type": "audio/mpeg",
+        "url": "https://www.rtlradio.de/",
+        "cros": false,
+        "stream": "https://rtlberlin.streamabc.net/rtlb-rtldenational-mp3-128-2770113",
+        "features": "/img/europe/luxembourg/rtl.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/rtl?time=",
+        "favorite": true
+    },
+    "rtl-letzebuerg": {
+        "title": "RTL Radio (Lëtzebuerg)",
+        "type": "audio/mpeg",
+        "url": "https://www.rtl.lu/",
+        "cros": false,
+        "stream": "https://sc.rtl.lu/rtl",
+        "features": "/img/europe/luxembourg/rtl-letzebuerg.png"
+    },
+    "latina": {
+        "title": "Radio Latina",
+        "type": "audio/mpeg",
+        "url": "https://latina.lu/",
+        "cros": false,
+        "stream": "https://ice.creacast.com/radio-latina-lu-mp3",
+        "features": "/img/europe/luxembourg/latina.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/latina?time="
+    },
+    "eldoradio": {
+        "title": "Eldoradio",
+        "type": "application/x-mpegURL",
+        "url": "https://www.eldo.lu",
+        "cros": false,
+        "stream": "https://stream.rtl.lu/live/hls/radio/eldo",
+        "features": "/img/europe/luxembourg/eldoradio.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/eldoradio?time="
+    },
+    "100-7": {
+        "title": "Radio 100,7 FM",
+        "type": "audio/mpeg",
+        "url": "https://www.100komma7.lu/",
+        "cros": false,
+        "stream": "https://100komma7.cast.addradio.de/100komma7/live/mp3/128/stream.mp3",
+        "features": "/img/europe/luxembourg/100-7.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/100-7?time="
+    },
+    "rtl-1440": {
+        "title": "RTL",
+        "type": "audio/mpeg",
+        "url": "https://www.rtlradio.de/",
+        "cros": false,
+        "stream": "https://rtlberlin.streamabc.net/rtlb-rtldebestehits-mp3-128-7346216",
+        "features": "/img/europe/luxembourg/rtl-1440.png"
+    },
+    "puls": {
+        "title": "Radio Puls",
+        "type": "audio/mpeg",
+        "url": "https://radiopuls.lu/",
+        "cros": false,
+        "stream": "https://cmr-hosting.com/8312/stream/1/",
+        "features": "/img/europe/luxembourg/puls.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/puls?time="
+    },
+    "ara": {
+        "title": "Radio Ara",
+        "type": "audio/aac",
+        "url": "https://www.ara.lu/",
+        "cros": true,
+        "stream": "http://s1.voscast.com:11186/RadioARA.mp3",
+        "features": "/img/europe/luxembourg/ara.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/ara?time="
+    },
+    "rbv": {
+        "title": "Radio RBV",
+        "type": "audio/mpeg",
+        "url": "https://rbv.lu/",
+        "cros": false,
+        "stream": "https://shoutcast.datateam.center:8000/radio/rbv/;",
+        "features": "/img/europe/luxembourg/rbv.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/rbv?time="
+    },
+    "lrb": {
+        "title": "Radio LRB",
+        "type": "audio/mpeg",
+        "url": "",
+        "cros": true,
+        "stream": "http://zeus.lrb.lu:8000/lrb.live",
+        "features": "/img/europe/luxembourg/lrb.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/lrb?time="
+    },
+    "dudelange": {
+        "title": "Radio Dudelange",
+        "type": "audio/mpeg",
+        "url": "http://www.dudelangefm.lu",
+        "cros": false,
+        "stream": "https://radiodudelange.ice.infomaniak.ch/radiodudelange-128.mp3",
+        "features": "/img/europe/luxembourg/dudelange.png"
+    },
+    "aktiv": {
+        "title": "Radio Aktiv",
+        "type": "audio/mpeg",
+        "url": "https://www.radioaktiv106-5.org/",
+        "cros": true,
+        "stream": "http://zeus.lrb.lu:8000/stream",
+        "features": "/img/europe/luxembourg/aktiv.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/aktiv?time="
+    },
+    "gutt-laun": {
+        "title": "Radio Gutt Laun",
+        "type": "audio/mpeg",
+        "url": "https://www.rgl.lu/",
+        "cros": false,
+        "stream": "https://streams.radio.co/sa631ff66a/listen",
+        "features": "/img/europe/luxembourg/gutt-laun.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/gutt-laun?time="
+    },
+    "joke-fm": {
+        "title": "Joke FM",
+        "type": "audio/mpeg",
+        "url": "https://www.jokefm.de/",
+        "cros": false,
+        "stream": "https://rs33.stream24.net/joke-fm.mp3",
+        "features": "/img/europe/luxembourg/joke-fm.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/joke-fm?time="
+    },
+    "helix": {
+        "title": "Helix Radio",
+        "type": "audio/mpeg",
+        "url": "http://www.helixradio.com/",
+        "cros": true,
+        "stream": "http://51.255.235.165:5164/stream/1/",
+        "features": "/img/europe/luxembourg/helix.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/helix?time="
+    },
+    "rom-101-5-fm": {
+        "title": "ROM",
+        "type": "audio/mpeg",
+        "url": "https://www.rom.lu/",
+        "cros": true,
+        "stream": "http://rs1.radiostreamer.com:8270/;",
+        "features": "/img/europe/luxembourg/rom-101-5-fm.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/rom-101-5-fm?time="
+    },
+    "diddeleng": {
+        "title": "Radio Diddeleng",
+        "type": "audio/mpeg",
+        "url": "https://www.radiodiddeleng.lu/",
+        "cros": false,
+        "stream": "https://radiodudelange.ice.infomaniak.ch/radiodudelange-128.mp3",
+        "features": "/img/europe/luxembourg/diddeleng.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/diddeleng?time="
+    },
+    "crazy-poisons-international": {
+        "title": "Crazy Poisons Radio",
+        "type": "audio/mpeg",
+        "url": "https://www.crazypoisonsradio.biz/",
+        "cros": true,
+        "stream": "http://server4.streamserver24.com:26607/stream/1/",
+        "features": "/img/europe/luxembourg/crazy-poisons-international.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/crazy-poisons-international?time="
+    },
+    "mess-la-vallee": {
+        "title": "Radio Mess",
+        "type": "audio/mpeg",
+        "url": "https://radiomess.lu/",
+        "cros": false,
+        "stream": "https://listen.radioking.com/radio/25747/stream/58471",
+        "features": "/img/europe/luxembourg/mess-la-vallee.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/mess-la-vallee?time="
+    },
+    "f-r-l": {
+        "title": "F.R.L. Free Radio",
+        "type": "audio/mpeg",
+        "url": "https://www.frl.lu/",
+        "cros": false,
+        "stream": "https://www.radioking.com/play/rfm-luxembourg/137599",
+        "features": "/img/europe/luxembourg/f-r-l.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/f-r-l?time="
+    },
+    "peiting": {
+        "title": "Péiting on Air",
+        "type": "audio/mpeg",
+        "url": "https://www.peitengonair.lu/",
+        "cros": true,
+        "stream": "http://stream.petangeonair.lu:9000/live",
+        "features": "/img/europe/luxembourg/peiting.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/peiting?time="
+    },
+    "antena-mais": {
+        "title": "Antena Mais",
+        "type": "audio/mpeg",
+        "url": "",
+        "cros": true,
+        "stream": "http://sp0.redeaudio.com:8084/stream/1/",
+        "features": "/img/europe/luxembourg/antena-mais.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/antena-mais?time="
+    },
+    "larochete": {
+        "title": "Radio Larochete",
+        "type": "audio/mpeg",
+        "url": "https://radiolarochette.com/",
+        "cros": false,
+        "stream": "https://servidor14.brlogic.com:8150/live",
+        "features": "/img/europe/luxembourg/larochete.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/larochete?time="
+    },
+    "cents": {
+        "title": "Radio Cents",
+        "type": "audio/mpeg",
+        "url": "https://www.radiocents.lu/",
+        "cros": true,
+        "stream": "http://onairradio.dyndns.org:8000/stream/1/",
+        "features": "/img/europe/luxembourg/cents.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/cents?time="
+    },
+    "country-gilsdorf": {
+        "title": "Country Radio Gilsdorf",
+        "type": "audio/mpeg",
+        "url": "http://www.countryradio.lu/",
+        "cros": true,
+        "stream": "http://streaming.aoip.international:8000/cr-gilsdorf",
+        "features": "/img/europe/luxembourg/country-gilsdorf.png"
+    },
+    "fce-continuo": {
+        "title": "FCE Continuo",
+        "type": "audio/mpeg",
+        "url": "https://fce-lu.com/fce-continuo",
+        "cros": false,
+        "stream": "https://www.radioking.com/play/fce-continuo",
+        "features": "/img/europe/luxembourg/fce-continuo.png",
+        "schedule": "https://api.webrad.io/data/playlist/150/fce-continuo?time="
+    }
+}

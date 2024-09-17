@@ -64,7 +64,15 @@
       "united_kingdom": "United Kingdom",
       "ukraine": "Ukraine",
       "russia": "Russia",
-      "france": "France"
+      "france": "France",
+      "greece": "Greece",
+      "croatia": "Croatia",
+      "ireland": "Ireland",
+      "italy": "Italy",
+      "luxembourg": "Luxembourg",
+      "hungary": "Hungary",
+      "netherlands": "Netherlands",
+      "norway": "Norway"
     },
     "north_america": {
       "name": "North America",

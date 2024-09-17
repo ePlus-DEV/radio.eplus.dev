@@ -25,9 +25,6 @@
       "line_2": "Bất kỳ nội dung nào trên các trang web bên thứ ba đều là trách nhiệm của những trang web đó và không phải của Radio ePlus. Chúng tôi không biết liệu nội dung trên các trang web bên thứ ba có được chủ sở hữu nội dung ủy quyền hay không, vì đó là một vấn đề giữa trang web chứa nội dung âm thanh và chủ sở hữu nội dung. Radio ePlus không lưu trữ bất kỳ nội dung âm thanh nào trên máy chủ hoặc mạng của mình."
     }
   },
-  "contact": {
-    "content": "Chúng tôi luôn ghi nhận mọi đóng góp ý kiến hoặc đóng góp thêm link stream nhằm đa dạng hoá các kênh Radio trên website. Mọi đóng góp vui lòng liên hệ contact bên dưới. Cảm ơn các bạn."
-  },
   "world": {
     "africa": {
       "name": "Châu Phi",
@@ -67,7 +64,15 @@
       "united_kingdom": "Vương quốc Anh",
       "ukraine": "U-cà-rai-na",
       "russia": "Nga",
-      "france": "Pháp"
+      "france": "Pháp",
+      "greece": "Hy Lạp",
+      "croatia": "Croatia",
+      "ireland": "Ai-len",
+      "italy": "Ý",
+      "luxembourg": "Luxembourg",
+      "hungary": "Hung-ga-ri",
+      "netherlands": "Hà Lan",
+      "norway": "Na Uy"
     },
     "north_america": {
       "name": "Bắc Mỹ",
@@ -148,7 +153,6 @@
     "guide": "Hướng dẫn",
     "the_last_90_days": "90 ngày qua",
     "hosted": "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}",
-    "downtime": "Thời gian ngừng hoạt động",
-    "uptime": "Thời gian hoạt động"
+    "downtime": "Thời gian ngừng hoạt động"
   }
 }
