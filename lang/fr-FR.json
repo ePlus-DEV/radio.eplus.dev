@@ -13,7 +13,17 @@
     "changelog": "Journal des modifications"
   },
   "terms": {
-    "content": "Bienvenue sur le site Web https://radio.eplus.dev (« Radio ePlus »), un produit de ePlus.DEV. Veuillez lire attentivement l'Accord sur la fourniture et l'utilisation des services sur le site Web https://radio.eplus.dev avant d'utiliser les fonctionnalités du site Web « Radio » ePlus. Une fois inscrit, vous avez lu, compris, accepté et respecté les termes ci-dessous :"
+    "content": "Bienvenue sur le site Web https://radio.eplus.dev (« Radio ePlus »), un produit de ePlus.DEV. Veuillez lire attentivement l'Accord sur la fourniture et l'utilisation des services sur le site Web https://radio.eplus.dev avant d'utiliser les fonctionnalités du site Web « Radio » ePlus. Une fois inscrit, vous avez lu, compris, accepté et respecté les termes ci-dessous :",
+    "article_1": {
+      "title": "Article 1 : À but non lucratif",
+      "line_1": "Nous nous engageons à être gratuits pour toujours, sans frais d'aucune sorte.",
+      "line_2": "Nous reconnaissons l'utilisation de contenus gratuits provenant de toutes les stations, de développeurs de contenu du monde entier, afin de diffuser ce contenu à tous."
+    },
+    "article_2": {
+      "title": "Article 2 : Loi sur le droit d'auteur du millénaire numérique",
+      "line_1": "Radio ePlus prend très au sérieux les questions de propriété intellectuelle et s'engage à répondre aux besoins des propriétaires de contenu tout en les aidant à gérer la publication de leur contenu en ligne. Il convient de noter que Radio ePlus est un portail de station de radio qui relie à des sites Web tiers par des fenêtres contextuelles.",
+      "line_2": "Tout contenu sur ces sites Web tiers relève de la responsabilité de ces sites et non de Radio ePlus. Nous n'avons aucune connaissance de la légalité du contenu sur les sites Web tiers, car il s'agit d'une question entre le site qui héberge le contenu audio et le propriétaire du contenu. Radio ePlus n'héberge aucun contenu audio sur ses serveurs ou son réseau."
+    }
   },
   "world": {
     "africa": {
