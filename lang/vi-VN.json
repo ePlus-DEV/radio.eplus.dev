@@ -123,7 +123,8 @@
   "popup": {
     "search": {
       "text": "Tìm kiếm...",
-      "stats": "Trang {page}/{nbPages} - {nbHits} kết quả trong {processingTimeMS} mili giây"
+      "stats": "Trang {page}/{nbPages} - {nbHits} kết quả trong {processingTimeMS} mili giây",
+      "category": "Lọc theo quốc gia"
     }
   },
   "notify": {

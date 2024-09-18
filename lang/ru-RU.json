@@ -123,7 +123,8 @@
   "popup": {
     "search": {
       "text": "Поиск...",
-      "stats": "Страница {page} из {nbPages} — {nbHits} хитов получено за {processingTimeMS} мс"
+      "stats": "Страница {page} из {nbPages} — {nbHits} хитов получено за {processingTimeMS} мс",
+      "category": "Фильтр по стране"
     }
   },
   "notify": {

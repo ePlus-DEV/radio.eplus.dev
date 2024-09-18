@@ -123,7 +123,8 @@
   "popup": {
     "search": {
       "text": "搜索...",
-      "stats": "第 {page} 页，共 {nbPages} 页 - 检索到 {nbHits} 条结果，耗时 {processingTimeMS} 毫秒"
+      "stats": "第 {page} 页，共 {nbPages} 页 - 检索到 {nbHits} 条结果，耗时 {processingTimeMS} 毫秒",
+      "category": "按国家筛选"
     }
   },
   "notify": {

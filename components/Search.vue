@@ -36,7 +36,29 @@
               </template>
             </ais-voice-search>
           </div>
+
+          <!-- BEGIN - Category -->
+          <ais-refinement-list attribute="station_country" :limit="1000">
+            <template v-slot="{ items, refine }">
+              <select
+                @change="refine(selected($event.target.value))"
+                class="select select-bordered select-warning w-full dark:bg-gray-700 dark:text-white mt-1"
+              >
+                <option value="">{{ $t("popup.search.category") }}</option>
+                <option
+                  v-for="item in items"
+                  :key="item.value"
+                  :value="item.value"
+                >
+                  {{ $t(item.label) }} ({{ item.count.toLocaleString() }})
+                </option>
+              </select>
+            </template>
+          </ais-refinement-list>
+
+          <!-- END - Category -->
         </div>
+
         <ais-stats class="dark:text-gray-400">
           <template v-slot="{ nbPages, nbHits, page, processingTimeMS }">
             {{
@@ -174,11 +196,22 @@ export default {
   name: "Search",
   data() {
     return {
+      // searchClient: algoliasearch(
+      //   "N87NFQVY0Z",
+      //   "73e93ee2ef3aa6919b7c6495767c7f9d",
+      // ),
       searchClient: algoliasearch(
-        "N87NFQVY0Z",
-        "73e93ee2ef3aa6919b7c6495767c7f9d",
+        this.$config.ALGOLIA_APP_ID,
+        this.$config.ALGOLIA_API_KEY,
       ),
+      selectedCategory: "",
     };
+  },
+  methods: {
+    selected(data) {
+      this.selectedCategory = data || this.selectedCategory;
+      return this.selectedCategory;
+    },
   },
 };
 </script>

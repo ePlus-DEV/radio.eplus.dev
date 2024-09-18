@@ -52,7 +52,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const res = await this.$axios.get("/assets/radio/countries.json");
+        const res = await this.$axios.get("/assets/radio/world.json");
         this.world = this.chooseTheArea
           ? { [this.chooseTheArea]: res.data[this.chooseTheArea] }
           : res.data;

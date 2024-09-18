@@ -123,7 +123,8 @@
   "popup": {
     "search": {
       "text": "探す...",
-      "stats": "{nbPages} のページ {page} - {processingTimeMS} ミリ秒で取得された {nbHits} ヒット"
+      "stats": "{nbPages} のページ {page} - {processingTimeMS} ミリ秒で取得された {nbHits} ヒット",
+      "category": "国でフィルタリング"
     }
   },
   "notify": {

@@ -1,77 +1,5 @@
 import algoliasearch from "algoliasearch";
-// Define the regions and their corresponding JSON files
-const regions = [
-  { region: "africa", files: ["algeria", "nigeria"] },
-  {
-    region: "asia",
-    files: [
-      "viet-nam",
-      "korea",
-      "china",
-      "singapore",
-      "hong-kong",
-      "japan",
-      "malaysia",
-      "philippines",
-      "indonesia",
-      "thailand",
-      "bangladesh",
-      "pakistan",
-      "india",
-      "taiwan",
-      "israel",
-      "sri-lanka",
-      "nepal",
-    ],
-  },
-  {
-    region: "central-america",
-    files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
-  },
-  {
-    region: "europe",
-    files: [
-      "united-kingdom",
-      "ukraine",
-      "russia",
-      "france",
-      "greece",
-      "croatia",
-      "ireland",
-      "italy",
-      "luxembourg",
-      "hungary",
-      "netherlands",
-      "norway",
-    ],
-  },
-  {
-    region: "north-america",
-    files: [
-      "cuba",
-      "haiti",
-      "jamaica",
-      "mexico",
-      "puerto-rico",
-      "dominican-republic",
-      "trinidad-and-tobago",
-    ],
-  },
-  { region: "oceania", files: ["australia", "new-zealand"] },
-  {
-    region: "south-america",
-    files: [
-      "argentina",
-      "bolivia",
-      "brazil",
-      "chile",
-      "colombia",
-      "ecuador",
-      "paraguay",
-      "peru",
-    ],
-  },
-];
+const world = require(`./static/assets/radio/world.json`);
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -105,6 +33,8 @@ export default {
     DIGITALOCEAN_ENDPOINT: process.env.DIGITALOCEAN_ENDPOINT,
     DIGITALOCEAN_API_KEY: process.env.DIGITALOCEAN_API_KEY,
     Area: ["africa", "asia", "europe", "north-america", "oceania"],
+    ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
+    ALGOLIA_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY,
   },
   /*
    ** Headers of the page
@@ -335,43 +265,64 @@ export default {
     },
   },
   generate: {
-    routes() {
+    async routes() {
       const client = algoliasearch(
-        "N87NFQVY0Z",
-        "73e93ee2ef3aa6919b7c6495767c7f9d",
+        process.env.ALGOLIA_APP_ID,
+        process.env.ALGOLIA_WRITE_API_KEY,
       );
-      const index = client.initIndex("radio.eplus.dev");
-      const routesToGenerate = [];
-      const data_algolia = [];
+      const station = client.initIndex("radio.eplus.dev");
+      const theWorld = client.initIndex("world");
 
-      regions.forEach(({ region, files }) => {
+      const routesToGenerate = [];
+      const dataStation = [];
+      const dataWorld = [];
+
+      await station.clearObjects();
+      await theWorld.clearObjects();
+
+      for (const [continentKey, continent] of Object.entries(world)) {
+        const region = continentKey.replace("_", "-");
         routesToGenerate.push(`/${region}`);
-        files.forEach((file) => {
-          const jsonData = require(
-            `./static/assets/radio/${region}/${file}.json`,
-          );
-          const countryCode = file.replace("-", "_");
-          routesToGenerate.push(`/${region}/${file}`);
-          for (const [key, value] of Object.entries(jsonData)) {
-            routesToGenerate.push(`/${region}/${file}/${key}`);
-            data_algolia.push({
+
+        for (const [countryKey, country] of Object.entries(continent)) {
+          const countryData = require(`./static${country.data}`);
+          const countryCode = countryKey.replace("-", "_");
+
+          routesToGenerate.push(`/${region}/${countryKey}`);
+
+          dataWorld.push({
+            name: country.name,
+            flag: `${process.env.BASE_URL}${country.flag}`,
+            data: country.data,
+            timezone: country.timezone,
+            station_count: Object.keys(countryData).length,
+            url: `/${region}/${countryKey}`,
+            objectID: `${region}-${countryKey}`,
+          });
+
+          for (const [key, value] of Object.entries(countryData)) {
+            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
+
+            dataStation.push({
               station_name: value.title,
               station_signal: value.signal,
-              station_image: process.env.BASE_URL + value.features,
+              station_image: `${process.env.BASE_URL}${value.features}`,
               station_stream: value.stream,
               type: value.type,
               cros: value.cros,
               favorite: value.favorite || false,
               station_schedule: value.schedule,
               station_country: `world.${region.replace("-", "_")}.${countryCode}`,
-              url: `/${region}/${file}/${key}`,
-              objectID: `${file}-${key}`,
+              url: `/${region}/${countryKey}/${key}`,
+              objectID: `${countryKey}-${key}`,
             });
           }
-        });
-      });
-      // END - Oceania
-      index.saveObjects(data_algolia);
+        }
+      }
+
+      await station.saveObjects(dataStation);
+      await theWorld.saveObjects(dataWorld);
+
       return routesToGenerate;
     },
     fallback: "404.html",
