@@ -8,6 +8,17 @@
             <input type="search" :value="currentRefinement" @input="refine($event.currentTarget.value)"
               :placeholder="$t('popup.search.text')"
               class="w-full input input-secondary input-bordered dark:bg-gray-700 dark:text-white" />
+                <ais-voice-search>
+                  <template v-slot="{
+                      isBrowserSupported,
+                      isListening,
+                      toggleListening
+                  }">
+                    <button :disabled="!isBrowserSupported" class="absolute top-0 right-0 rounded-l-none btn btn-secondary btn-outline" @click="toggleListening">
+                      <fa :icon="[isListening ? 'fass' : 'fass', isListening ? 'microphone-lines-slash' : 'microphone-lines']" />
+                    </button>
+                  </template>
+                </ais-voice-search>
           </div>
         </div>
         <ais-stats class="dark:text-gray-400">
@@ -43,7 +54,7 @@
                         </div>
                         <div class="w-full items-center flex">
                           <div class="mx-2 -mt-1 truncate dark:text-white">
-                            {{ item.station_name }}
+                            <span v-html="item._highlightResult?.station_name?.value || item.station_name"></span>
                             <div
                               class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500 dark:text-gray-400">
                               {{ $t(item.station_country) }}
