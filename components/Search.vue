@@ -1,16 +1,19 @@
 <template>
-  <ais-instant-search :search-client="searchClient" index-name="radio.eplus.dev" :future="{ preserveSharedStateOnUnmount: true, }">
+  <ais-instant-search :search-client="searchClient" index-name="radio.eplus.dev"
+    :future="{ preserveSharedStateOnUnmount: true, }">
     <ais-search-box>
       <template v-slot="{ currentRefinement, isSearchStalled, refine }">
         <div class="form-control">
           <div class="relative">
             <input type="search" :value="currentRefinement" @input="refine($event.currentTarget.value)"
-              :placeholder="$t('popup.search.text')" class="w-full input input-primary input-bordered" />
+              :placeholder="$t('popup.search.text')"
+              class="w-full input input-secondary input-bordered dark:bg-gray-700 dark:text-white" />
           </div>
         </div>
-        <ais-stats>
+        <ais-stats class="dark:text-gray-400">
           <template v-slot="{ nbPages, nbHits, page, processingTimeMS }">
-            {{ $t("popup.search.stats", { page: page + 1, nbPages: nbPages, nbHits: nbHits, processingTimeMS: processingTimeMS, }) }}
+            {{ $t("popup.search.stats", { page: page + 1, nbPages: nbPages, nbHits: nbHits, processingTimeMS:
+            processingTimeMS, }) }}
           </template>
         </ais-stats>
         <span :hidden="!isSearchStalled">Loading...</span>
@@ -24,11 +27,11 @@
             <div class="w-full px-4">
               <div class="flex flex-col items-center relative">
                 <div
-                  class="absolute shadow bg-white top-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
+                  class="absolute shadow bg-white dark:bg-gray-700 top-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
                   <div class="flex flex-col w-full">
                     <!-- item -->
                     <nuxt-link :to="item.url"
-                      class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100"
+                      class="cursor-pointer w-full border-gray-100 dark:border-gray-600 dark:hover:bg-base-content rounded-t border-b hover:bg-base-200"
                       v-for="item in items" :key="item.objectID" @click.native="showorhide">
                       <div
                         class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
@@ -39,9 +42,10 @@
                           </div>
                         </div>
                         <div class="w-full items-center flex">
-                          <div class="mx-2 -mt-1 truncate">
+                          <div class="mx-2 -mt-1 truncate dark:text-white">
                             {{ item.station_name }}
-                            <div class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">
+                            <div
+                              class="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500 dark:text-gray-400">
                               {{ $t(item.station_country) }}
                             </div>
                           </div>
@@ -105,3 +109,12 @@ export default {
   },
 };
 </script>
+<style>
+.btn-group>.btn-active,
+.btn-group>input[type=radio]:checked.btn{
+  background-color: #f3f4f6;
+  color: #1e293b;
+  border-color: #d1d5db;
+  box-shadow: none;
+}
+</style>
