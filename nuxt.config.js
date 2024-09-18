@@ -1,7 +1,5 @@
 import algoliasearch from "algoliasearch";
-const world = require(
-  `./static/assets/radio/world.json`,
-);
+const world = require(`./static/assets/radio/world.json`);
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -283,14 +281,12 @@ export default {
       theWorld.clearObjects().wait();
 
       for (const [continentKey, continent] of Object.entries(world)) {
-
         const region = continentKey.replace("_", "-");
 
         routesToGenerate.push(`/${region}`);
 
         for (const [countryKey, country] of Object.entries(continent)) {
-
-          const countryData = require( `./static${country.data}`, );
+          const countryData = require(`./static${country.data}`);
           const countryCode = countryKey.replace("-", "_");
 
           routesToGenerate.push(`/${region}/${countryKey}`);
@@ -321,8 +317,6 @@ export default {
               url: `/${region}/${countryKey}/${key}`,
               objectID: `${countryKey}-${key}`,
             });
-
-
           }
         }
       }
