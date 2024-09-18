@@ -267,7 +267,7 @@ export default {
     },
   },
   generate: {
-    routes() {
+    async routes() {
       const client = algoliasearch(
         process.env.ALGOLIA_APP_ID,
         process.env.ALGOLIA_WRITE_API_KEY,
@@ -279,56 +279,51 @@ export default {
       const dataStation = [];
       const dataWorld = [];
 
-      station.clearObjects().wait();
-      theWorld.clearObjects().wait();
+      await station.clearObjects();
+      await theWorld.clearObjects();
 
       for (const [continentKey, continent] of Object.entries(world)) {
+      const region = continentKey.replace("_", "-");
+      routesToGenerate.push(`/${region}`);
 
-        const region = continentKey.replace("_", "-");
+      for (const [countryKey, country] of Object.entries(continent)) {
+        const countryData = require(`./static${country.data}`);
+        const countryCode = countryKey.replace("-", "_");
 
-        routesToGenerate.push(`/${region}`);
+        routesToGenerate.push(`/${region}/${countryKey}`);
 
-        for (const [countryKey, country] of Object.entries(continent)) {
+        dataWorld.push({
+          name: country.name,
+          flag: `${process.env.BASE_URL}${country.flag}`,
+          data: country.data,
+          timezone: country.timezone,
+          station_count: Object.keys(countryData).length,
+          url: `/${region}/${countryKey}`,
+          objectID: `${region}-${countryKey}`,
+        });
 
-          const countryData = require( `./static${country.data}`, );
-          const countryCode = countryKey.replace("-", "_");
+        for (const [key, value] of Object.entries(countryData)) {
+          routesToGenerate.push(`/${region}/${countryKey}/${key}`);
 
-          routesToGenerate.push(`/${region}/${countryKey}`);
-
-          dataWorld.push({
-            name: country.name,
-            flag: process.env.BASE_URL + country.flag,
-            data: country.data,
-            timezone: country.timezone,
-            station_count: Object.keys(countryData).length,
-            url: `/${region}/${countryKey}`,
-            objectID: `${region}-${countryKey}`,
+          dataStation.push({
+            station_name: value.title,
+            station_signal: value.signal,
+            station_image: `${process.env.BASE_URL}${value.features}`,
+            station_stream: value.stream,
+            type: value.type,
+            cros: value.cros,
+            favorite: value.favorite || false,
+            station_schedule: value.schedule,
+            station_country: `world.${region.replace("-", "_")}.${countryCode}`,
+            url: `/${region}/${countryKey}/${key}`,
+            objectID: `${countryKey}-${key}`,
           });
-
-          for (const [key, value] of Object.entries(countryData)) {
-            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
-
-            dataStation.push({
-              station_name: value.title,
-              station_signal: value.signal,
-              station_image: process.env.BASE_URL + value.features,
-              station_stream: value.stream,
-              type: value.type,
-              cros: value.cros,
-              favorite: value.favorite || false,
-              station_schedule: value.schedule,
-              station_country: `world.${region.replace("-", "_")}.${countryCode}`,
-              url: `/${region}/${countryKey}/${key}`,
-              objectID: `${countryKey}-${key}`,
-            });
-
-
-          }
         }
       }
+      }
 
-      station.saveObjects(dataStation);
-      theWorld.saveObjects(dataWorld);
+      await station.saveObjects(dataStation);
+      await theWorld.saveObjects(dataWorld);
 
       return routesToGenerate;
     },
