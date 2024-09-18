@@ -1,78 +1,4 @@
 import algoliasearch from "algoliasearch";
-// Define the regions and their corresponding JSON files
-// const regions = [
-//   { region: "africa", files: ["algeria", "nigeria"] },
-//   {
-//     region: "asia",
-//     files: [
-//       "viet-nam",
-//       "korea",
-//       "china",
-//       "singapore",
-//       "hong-kong",
-//       "japan",
-//       "malaysia",
-//       "philippines",
-//       "indonesia",
-//       "thailand",
-//       "bangladesh",
-//       "pakistan",
-//       "india",
-//       "taiwan",
-//       "israel",
-//       "sri-lanka",
-//       "nepal",
-//     ],
-//   },
-//   {
-//     region: "central-america",
-//     files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
-//   },
-//   {
-//     region: "europe",
-//     files: [
-//       "united-kingdom",
-//       "ukraine",
-//       "russia",
-//       "france",
-//       "greece",
-//       "croatia",
-//       "ireland",
-//       "italy",
-//       "luxembourg",
-//       "hungary",
-//       "netherlands",
-//       "norway",
-//     ],
-//   },
-//   {
-//     region: "north-america",
-//     files: [
-//       "cuba",
-//       "haiti",
-//       "jamaica",
-//       "mexico",
-//       "puerto-rico",
-//       "dominican-republic",
-//       "trinidad-and-tobago",
-//     ],
-//   },
-//   { region: "oceania", files: ["australia", "new-zealand"] },
-//   {
-//     region: "south-america",
-//     files: [
-//       "argentina",
-//       "bolivia",
-//       "brazil",
-//       "chile",
-//       "colombia",
-//       "ecuador",
-//       "paraguay",
-//       "peru",
-//     ],
-//   },
-// ];
-
 const world = require(
   `./static/assets/radio/world.json`,
 );
@@ -347,15 +273,14 @@ export default {
         process.env.ALGOLIA_WRITE_API_KEY,
       );
       const station = client.initIndex("radio.eplus.dev");
-      const the_world = client.initIndex("world");
+      const theWorld = client.initIndex("world");
 
       const routesToGenerate = [];
-      const data_algolia = [];
-      const data_world = [];
+      const dataStation = [];
+      const dataWorld = [];
 
-      // Delete all objects in the station & the_world before creating new ones
       station.clearObjects().wait();
-      the_world.clearObjects().wait();
+      theWorld.clearObjects().wait();
 
       for (const [continentKey, continent] of Object.entries(world)) {
 
@@ -369,9 +294,21 @@ export default {
           const countryCode = countryKey.replace("-", "_");
 
           routesToGenerate.push(`/${region}/${countryKey}`);
+
+          dataWorld.push({
+            name: country.name,
+            flag: process.env.BASE_URL + country.flag,
+            data: country.data,
+            timezone: country.timezone,
+            station_count: Object.keys(countryData).length,
+            url: `/${region}/${countryKey}`,
+            objectID: `${region}-${countryKey}`,
+          });
+
           for (const [key, value] of Object.entries(countryData)) {
             routesToGenerate.push(`/${region}/${countryKey}/${key}`);
-            data_algolia.push({
+
+            dataStation.push({
               station_name: value.title,
               station_signal: value.signal,
               station_image: process.env.BASE_URL + value.features,
@@ -384,11 +321,14 @@ export default {
               url: `/${region}/${countryKey}/${key}`,
               objectID: `${countryKey}-${key}`,
             });
+
+
           }
         }
       }
-      // END - Oceania
-      station.saveObjects(data_algolia);
+
+      station.saveObjects(dataStation);
+      theWorld.saveObjects(dataWorld);
 
       return routesToGenerate;
     },

@@ -2,9 +2,7 @@
   <div>
     <div v-for="(continent, continentIndex) in world" :key="continentIndex">
       <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
-        <div
-          class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
-        >
+        <div class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg">
           <h2 class="text-2xl dark:text-white">
             {{ $t(`world.${continentIndex}.name`) }}
           </h2>
@@ -52,7 +50,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const res = await this.$axios.get("/assets/radio/countries.json");
+        const res = await this.$axios.get("/assets/radio/world.json");
         this.world = this.chooseTheArea
           ? { [this.chooseTheArea]: res.data[this.chooseTheArea] }
           : res.data;
@@ -60,7 +58,7 @@ export default {
           for (const [countryKey, country] of Object.entries(continent)) {
             const countryData = await this.$axios.get(country.data);
             this.world[continentKey][countryKey].station = Object.keys(
-              countryData.data,
+              countryData.data
             ).length;
           }
         }

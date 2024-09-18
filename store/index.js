@@ -1,4 +1,4 @@
-import countries from "~/static/assets/radio/countries.json";
+import world from "~/static/assets/radio/world.json";
 
 // Enable store for auth module
 export const state = () => ({
@@ -31,7 +31,7 @@ export const actions = {
   },
 
   storeTIMEZONE({ commit }, { area, country }) {
-    const timezone = countries[area]?.[country]?.timezone || "Asia/Ho_Chi_Minh";
+    const timezone = world[area]?.[country]?.timezone || "Asia/Ho_Chi_Minh";
     commit("STORE_TIMEZONE", timezone);
   },
 };
