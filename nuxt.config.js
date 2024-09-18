@@ -337,45 +337,48 @@ export default {
   generate: {
     routes() {
       const client = algoliasearch(
-        "N87NFQVY0Z",
-        "73e93ee2ef3aa6919b7c6495767c7f9d",
+      "N87NFQVY0Z",
+      "73e93ee2ef3aa6919b7c6495767c7f9d",
       );
       const index = client.initIndex("radio.eplus.dev");
       const routesToGenerate = [];
       const data_algolia = [];
 
+      // Delete all objects in the index before creating new ones
+      index.clearObjects().wait();
+
       regions.forEach(({ region, files }) => {
-        routesToGenerate.push(`/${region}`);
-        files.forEach((file) => {
-          const jsonData = require(
-            `./static/assets/radio/${region}/${file}.json`,
-          );
-          const countryCode = file.replace("-", "_");
-          routesToGenerate.push(`/${region}/${file}`);
-          for (const [key, value] of Object.entries(jsonData)) {
-            routesToGenerate.push(`/${region}/${file}/${key}`);
-            data_algolia.push({
-              station_name: value.title,
-              station_signal: value.signal,
-              station_image: process.env.BASE_URL + value.features,
-              station_stream: value.stream,
-              type: value.type,
-              cros: value.cros,
-              favorite: value.favorite || false,
-              station_schedule: value.schedule,
-              station_country: `world.${region.replace("-", "_")}.${countryCode}`,
-              url: `/${region}/${file}/${key}`,
-              objectID: `${file}-${key}`,
-            });
-          }
+      routesToGenerate.push(`/${region}`);
+      files.forEach((file) => {
+        const jsonData = require(
+        `./static/assets/radio/${region}/${file}.json`,
+        );
+        const countryCode = file.replace("-", "_");
+        routesToGenerate.push(`/${region}/${file}`);
+        for (const [key, value] of Object.entries(jsonData)) {
+        routesToGenerate.push(`/${region}/${file}/${key}`);
+        data_algolia.push({
+          station_name: value.title,
+          station_signal: value.signal,
+          station_image: process.env.BASE_URL + value.features,
+          station_stream: value.stream,
+          type: value.type,
+          cros: value.cros,
+          favorite: value.favorite || false,
+          station_schedule: value.schedule,
+          station_country: `world.${region.replace("-", "_")}.${countryCode}`,
+          url: `/${region}/${file}/${key}`,
+          objectID: `${file}-${key}`,
         });
+        }
+      });
       });
       // END - Oceania
       index.saveObjects(data_algolia);
       return routesToGenerate;
     },
     fallback: "404.html",
-  },
+    },
   /* SiteMap */
   sitemap: {
     path: "/sitemap.xml",

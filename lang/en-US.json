@@ -123,7 +123,8 @@
   "popup": {
     "search": {
       "text": "Search...",
-      "stats": "Page {page} of {nbPages} - {nbHits} hits retrieved in {processingTimeMS} ms"
+      "stats": "Page {page} of {nbPages} - {nbHits} hits retrieved in {processingTimeMS} ms",
+      "category": "Filter by country"
     }
   },
   "notify": {
