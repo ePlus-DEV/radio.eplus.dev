@@ -1,77 +1,81 @@
 import algoliasearch from "algoliasearch";
 // Define the regions and their corresponding JSON files
-const regions = [
-  { region: "africa", files: ["algeria", "nigeria"] },
-  {
-    region: "asia",
-    files: [
-      "viet-nam",
-      "korea",
-      "china",
-      "singapore",
-      "hong-kong",
-      "japan",
-      "malaysia",
-      "philippines",
-      "indonesia",
-      "thailand",
-      "bangladesh",
-      "pakistan",
-      "india",
-      "taiwan",
-      "israel",
-      "sri-lanka",
-      "nepal",
-    ],
-  },
-  {
-    region: "central-america",
-    files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
-  },
-  {
-    region: "europe",
-    files: [
-      "united-kingdom",
-      "ukraine",
-      "russia",
-      "france",
-      "greece",
-      "croatia",
-      "ireland",
-      "italy",
-      "luxembourg",
-      "hungary",
-      "netherlands",
-      "norway",
-    ],
-  },
-  {
-    region: "north-america",
-    files: [
-      "cuba",
-      "haiti",
-      "jamaica",
-      "mexico",
-      "puerto-rico",
-      "dominican-republic",
-      "trinidad-and-tobago",
-    ],
-  },
-  { region: "oceania", files: ["australia", "new-zealand"] },
-  {
-    region: "south-america",
-    files: [
-      "argentina",
-      "bolivia",
-      "brazil",
-      "chile",
-      "colombia",
-      "ecuador",
-      "paraguay",
-      "peru",
-    ],
-  },
-];
+// const regions = [
+//   { region: "africa", files: ["algeria", "nigeria"] },
+//   {
+//     region: "asia",
+//     files: [
+//       "viet-nam",
+//       "korea",
+//       "china",
+//       "singapore",
+//       "hong-kong",
+//       "japan",
+//       "malaysia",
+//       "philippines",
+//       "indonesia",
+//       "thailand",
+//       "bangladesh",
+//       "pakistan",
+//       "india",
+//       "taiwan",
+//       "israel",
+//       "sri-lanka",
+//       "nepal",
+//     ],
+//   },
+//   {
+//     region: "central-america",
+//     files: ["costa-rica", "el-salvador", "guatemala", "honduras", "nicaragua"],
+//   },
+//   {
+//     region: "europe",
+//     files: [
+//       "united-kingdom",
+//       "ukraine",
+//       "russia",
+//       "france",
+//       "greece",
+//       "croatia",
+//       "ireland",
+//       "italy",
+//       "luxembourg",
+//       "hungary",
+//       "netherlands",
+//       "norway",
+//     ],
+//   },
+//   {
+//     region: "north-america",
+//     files: [
+//       "cuba",
+//       "haiti",
+//       "jamaica",
+//       "mexico",
+//       "puerto-rico",
+//       "dominican-republic",
+//       "trinidad-and-tobago",
+//     ],
+//   },
+//   { region: "oceania", files: ["australia", "new-zealand"] },
+//   {
+//     region: "south-america",
+//     files: [
+//       "argentina",
+//       "bolivia",
+//       "brazil",
+//       "chile",
+//       "colombia",
+//       "ecuador",
+//       "paraguay",
+//       "peru",
+//     ],
+//   },
+// ];
+
+const world = require(
+  `./static/assets/radio/world.json`,
+);
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -105,6 +109,8 @@ export default {
     DIGITALOCEAN_ENDPOINT: process.env.DIGITALOCEAN_ENDPOINT,
     DIGITALOCEAN_API_KEY: process.env.DIGITALOCEAN_API_KEY,
     Area: ["africa", "asia", "europe", "north-america", "oceania"],
+    ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
+    ALGOLIA_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY,
   },
   /*
    ** Headers of the page
@@ -337,26 +343,34 @@ export default {
   generate: {
     routes() {
       const client = algoliasearch(
-        "N87NFQVY0Z",
-        "73e93ee2ef3aa6919b7c6495767c7f9d",
+        process.env.ALGOLIA_APP_ID,
+        process.env.ALGOLIA_WRITE_API_KEY,
       );
-      const index = client.initIndex("radio.eplus.dev");
+      const station = client.initIndex("radio.eplus.dev");
+      const the_world = client.initIndex("world");
+
       const routesToGenerate = [];
       const data_algolia = [];
+      const data_world = [];
 
-      // Delete all objects in the index before creating new ones
-      index.clearObjects().wait();
+      // Delete all objects in the station & the_world before creating new ones
+      station.clearObjects().wait();
+      the_world.clearObjects().wait();
 
-      regions.forEach(({ region, files }) => {
+      for (const [continentKey, continent] of Object.entries(world)) {
+
+        const region = continentKey.replace("_", "-");
+
         routesToGenerate.push(`/${region}`);
-        files.forEach((file) => {
-          const jsonData = require(
-            `./static/assets/radio/${region}/${file}.json`,
-          );
-          const countryCode = file.replace("-", "_");
-          routesToGenerate.push(`/${region}/${file}`);
-          for (const [key, value] of Object.entries(jsonData)) {
-            routesToGenerate.push(`/${region}/${file}/${key}`);
+
+        for (const [countryKey, country] of Object.entries(continent)) {
+
+          const countryData = require( `./static${country.data}`, );
+          const countryCode = countryKey.replace("-", "_");
+
+          routesToGenerate.push(`/${region}/${countryKey}`);
+          for (const [key, value] of Object.entries(countryData)) {
+            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
             data_algolia.push({
               station_name: value.title,
               station_signal: value.signal,
@@ -367,14 +381,15 @@ export default {
               favorite: value.favorite || false,
               station_schedule: value.schedule,
               station_country: `world.${region.replace("-", "_")}.${countryCode}`,
-              url: `/${region}/${file}/${key}`,
-              objectID: `${file}-${key}`,
+              url: `/${region}/${countryKey}/${key}`,
+              objectID: `${countryKey}-${key}`,
             });
           }
-        });
-      });
+        }
+      }
       // END - Oceania
-      index.saveObjects(data_algolia);
+      station.saveObjects(data_algolia);
+
       return routesToGenerate;
     },
     fallback: "404.html",
