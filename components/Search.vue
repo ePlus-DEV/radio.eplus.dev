@@ -16,7 +16,9 @@
               class="w-full input input-secondary input-bordered dark:bg-gray-700 dark:text-white"
             />
             <ais-voice-search>
-              <template v-slot="{ isBrowserSupported, isListening, toggleListening }">
+              <template
+                v-slot="{ isBrowserSupported, isListening, toggleListening }"
+              >
                 <button
                   :disabled="!isBrowserSupported"
                   class="absolute top-0 right-0 rounded-l-none btn btn-secondary btn-outline"
@@ -25,7 +27,9 @@
                   <fa
                     :icon="[
                       isListening ? 'fass' : 'fass',
-                      isListening ? 'microphone-lines-slash' : 'microphone-lines',
+                      isListening
+                        ? 'microphone-lines-slash'
+                        : 'microphone-lines',
                     ]"
                   />
                 </button>
@@ -41,7 +45,11 @@
                 class="select select-bordered select-warning w-full dark:bg-gray-700 dark:text-white mt-1"
               >
                 <option value="">{{ $t("popup.search.category") }}</option>
-                <option v-for="item in items" :key="item.value" :value="item.value">
+                <option
+                  v-for="item in items"
+                  :key="item.value"
+                  :value="item.value"
+                >
                   {{ $t(item.label) }} ({{ item.count.toLocaleString() }})
                 </option>
               </select>
@@ -128,10 +136,21 @@
     <!-- pagination -->
     <ais-pagination>
       <template
-        v-slot="{ currentRefinement, nbPages, pages, isFirstPage, isLastPage, refine }"
+        v-slot="{
+          currentRefinement,
+          nbPages,
+          pages,
+          isFirstPage,
+          isLastPage,
+          refine,
+        }"
       >
         <div class="btn-group">
-          <button class="btn btn-sm" v-if="!isFirstPage" @click.prevent="refine(0)">
+          <button
+            class="btn btn-sm"
+            v-if="!isFirstPage"
+            @click.prevent="refine(0)"
+          >
             <fa :icon="['fasl', 'chevrons-left']" />
           </button>
           <button
@@ -157,7 +176,11 @@
           >
             <fa :icon="['fasr', 'angle-right']" />
           </button>
-          <button class="btn btn-sm" v-if="!isLastPage" @click.prevent="refine(nbPages)">
+          <button
+            class="btn btn-sm"
+            v-if="!isLastPage"
+            @click.prevent="refine(nbPages)"
+          >
             <fa :icon="['fasl', 'chevrons-right']" />
           </button>
         </div>
@@ -173,7 +196,10 @@ export default {
   name: "Search",
   data() {
     return {
-      searchClient: algoliasearch("N87NFQVY0Z", "73e93ee2ef3aa6919b7c6495767c7f9d"),
+      searchClient: algoliasearch(
+        "N87NFQVY0Z",
+        "73e93ee2ef3aa6919b7c6495767c7f9d",
+      ),
       selectedCategory: "",
     };
   },
