@@ -196,9 +196,13 @@ export default {
   name: "Search",
   data() {
     return {
+      // searchClient: algoliasearch(
+      //   "N87NFQVY0Z",
+      //   "73e93ee2ef3aa6919b7c6495767c7f9d",
+      // ),
       searchClient: algoliasearch(
-        "N87NFQVY0Z",
-        "73e93ee2ef3aa6919b7c6495767c7f9d",
+        this.$config.ALGOLIA_APP_ID,
+        this.$config.ALGOLIA_API_KEY,
       ),
       selectedCategory: "",
     };
