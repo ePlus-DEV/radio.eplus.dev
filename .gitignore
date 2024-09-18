@@ -97,4 +97,4 @@ sw.*
 .vscode/*
 
 #env
-# .env
+.env
