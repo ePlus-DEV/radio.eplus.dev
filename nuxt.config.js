@@ -285,7 +285,6 @@ export default {
 
         for (const [countryKey, country] of Object.entries(continent)) {
           const countryData = require(`./static${country.data}`);
-          const countryCode = countryKey.replace("-", "_");
 
           routesToGenerate.push(`/${region}/${countryKey}`);
 
@@ -312,7 +311,7 @@ export default {
               cros: value.cros,
               favorite: value.favorite || false,
               station_schedule: value.schedule,
-              station_country: `world.${region.replace("-", "_")}.${countryCode}`,
+              station_country: country.name,
               url: `/${region}/${countryKey}/${key}`,
               objectID: `${countryKey}-${key}`,
             });
