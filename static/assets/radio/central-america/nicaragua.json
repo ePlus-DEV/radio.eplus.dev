@@ -5,7 +5,8 @@
     "url": "https://radio-corporacion.com/",
     "cros": true,
     "stream": "https://stream.zeno.fm/gwkd66k0a7duv",
-    "features": "/img/central-america/nicaragua/corporacion.png"
+    "features": "/img/central-america/nicaragua/corporacion.png",
+    "favorite": true
   },
   "nueva-ya": {
     "title": "La Nueva Radio Ya",

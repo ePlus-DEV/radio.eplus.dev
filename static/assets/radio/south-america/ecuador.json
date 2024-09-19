@@ -6,7 +6,8 @@
         "cros": false,
         "stream": "https://dattavolt.com/8150/stream/1/",
         "features": "/img/south-america/ecuador/la-suprema.png",
-        "schedule": "https://api.webrad.io/data/playlist/44/la-suprema?time="
+        "schedule": "https://api.webrad.io/data/playlist/44/la-suprema?time=",
+        "favorite": true
     },
     "alfa": {
         "title": "Alfa Radio (Guayaquil)",

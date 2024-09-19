@@ -39,6 +39,7 @@
 
           <!-- BEGIN - Category -->
           <ais-refinement-list attribute="station_country" :limit="1000">
+            <!-- skipcq: JS-0679 -->
             <template v-slot="{ items, refine }">
               <select
                 @change="refine(selected($event.target.value))"
@@ -196,10 +197,6 @@ export default {
   name: "Search",
   data() {
     return {
-      // searchClient: algoliasearch(
-      //   "N87NFQVY0Z",
-      //   "73e93ee2ef3aa6919b7c6495767c7f9d",
-      // ),
       searchClient: algoliasearch(
         this.$config.ALGOLIA_APP_ID,
         this.$config.ALGOLIA_API_KEY,

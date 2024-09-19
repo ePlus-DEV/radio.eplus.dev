@@ -6,7 +6,8 @@
     "cros": true,
     "stream": "https://stream.zenolive.com/8b0hqm93yceuv",
     "features": "/img/north-america/jamaica/zip.png",
-    "schedule": "https://api.webrad.io/data/playlist/59/zip?time="
+    "schedule": "https://api.webrad.io/data/playlist/59/zip?time=",
+    "favorite": true
   },
   "love-101": {
     "title": "Love 101 FM (Kingston)",

@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2528_32.aac?v=223434",
     "features": "/img/central-america/guatemala/949.png",
-    "schedule": "https://api.webrad.io/data/playlist/9/949?time="
+    "schedule": "https://api.webrad.io/data/playlist/9/949?time=",
+    "favorite": true
   },
   "emisoras-guatemala": {
     "title": "Emisoras Unidas (Ciudad de Guatemala)",

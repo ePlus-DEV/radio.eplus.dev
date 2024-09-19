@@ -277,8 +277,7 @@ export default {
       const dataStation = [];
       const dataWorld = [];
 
-      await station.clearObjects();
-      await theWorld.clearObjects();
+      await Promise.all([station.clearObjects(), theWorld.clearObjects()]);
 
       for (const [continentKey, continent] of Object.entries(world)) {
         const region = continentKey.replace("_", "-");
@@ -286,12 +285,12 @@ export default {
 
         for (const [countryKey, country] of Object.entries(continent)) {
           const countryData = require(`./static${country.data}`);
-          const countryCode = countryKey.replace("-", "_");
 
           routesToGenerate.push(`/${region}/${countryKey}`);
 
           dataWorld.push({
             name: country.name,
+            category: continentKey,
             flag: `${process.env.BASE_URL}${country.flag}`,
             data: country.data,
             timezone: country.timezone,
@@ -312,7 +311,7 @@ export default {
               cros: value.cros,
               favorite: value.favorite || false,
               station_schedule: value.schedule,
-              station_country: `world.${region.replace("-", "_")}.${countryCode}`,
+              station_country: country.name,
               url: `/${region}/${countryKey}/${key}`,
               objectID: `${countryKey}-${key}`,
             });
@@ -320,8 +319,10 @@ export default {
         }
       }
 
-      await station.saveObjects(dataStation);
-      await theWorld.saveObjects(dataWorld);
+      await Promise.all([
+        station.saveObjects(dataStation),
+        theWorld.saveObjects(dataWorld),
+      ]);
 
       return routesToGenerate;
     },

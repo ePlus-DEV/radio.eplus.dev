@@ -5,7 +5,8 @@
     "url": "https://103fm.tt/",
     "cros": false,
     "stream": "https://s4.myradiostream.com/14348/stream/1/",
-    "features": "/img/north-america/trinidad-and-tobago/103.png"
+    "features": "/img/north-america/trinidad-and-tobago/103.png",
+    "favorite": true
   },
   "107": {
     "title": "107.7 FM Music For Life (Port of Spain)",

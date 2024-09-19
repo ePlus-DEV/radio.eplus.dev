@@ -5,7 +5,8 @@
     "url": "https://z101digital.com/",
     "cros": false,
     "stream": "https://23043.live.streamtheworld.com/Z101FM_SC",
-    "features": "/img/north-america/dominican-republic/la-z.png"
+    "features": "/img/north-america/dominican-republic/la-z.png",
+    "favorite": true
   },
   "disco": {
     "title": "Radio Disco",
