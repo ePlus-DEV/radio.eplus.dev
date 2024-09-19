@@ -44,7 +44,7 @@ export default {
     ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
     ALGOLIA_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY,
     placeholder: "https://s3.eplus.dev/i/radio-on-air.png",
-    placeholderStation: "https://s3.eplus.dev/i/station-on-air.png"
+    placeholderStation: "https://s3.eplus.dev/i/station-on-air.png",
   },
   /*
    ** Headers of the page
@@ -131,7 +131,7 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    '@nuxt/image',
+    "@nuxt/image",
     "@nuxtjs/moment",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
@@ -290,7 +290,7 @@ export default {
       await Promise.all([station.clearObjects(), theWorld.clearObjects()]);
 
       for (const [continentKey, continent] of Object.entries(world)) {
-        const region = continentKey.replace(/_/g, '-');
+        const region = continentKey.replace(/_/g, "-");
         routesToGenerate.push(`/${region}`);
 
         for (const [countryKey, country] of Object.entries(continent)) {
