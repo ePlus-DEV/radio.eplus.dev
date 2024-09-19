@@ -39,6 +39,7 @@
 
           <!-- BEGIN - Category -->
           <ais-refinement-list attribute="station_country" :limit="1000">
+            <!-- skipcq: JS-0679 -->
             <template v-slot="{ items, refine }">
               <select
                 @change="refine(selected($event.target.value))"
