@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     fetchData() {
-      this.i18n = `world.${this.area.replace(/-/g, '_')}.${this.slug.replace(/-/g, '_')}`;
+      this.i18n = `world.${this.area.replace(/-/g, "_")}.${this.slug.replace(/-/g, "_")}`;
       this.thumb = `/img/${this.area}/flags/${this.slug}.png`;
       this.title = `${this.name} - ${this.$t("navmenu.homepage")} - Radio ${this.$t(this.i18n)}`;
 
@@ -329,7 +329,7 @@ export default {
       this.$router.push("/");
     }
     this.$store.dispatch("storeTIMEZONE", {
-      area: this.area.replace(/-/g, '_'),
+      area: this.area.replace(/-/g, "_"),
       country: this.slug,
     });
     Promise.all([this.fetchData()]);
