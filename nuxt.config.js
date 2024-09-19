@@ -199,32 +199,77 @@ export default {
   content: {
     // Disable for security reason on CodeSandBox
     liveEdit: false,
-    },
-    i18n: {
+  },
+  i18n: {
     locales: [
-      { code: "en", file: "en-US.json", iso: "en-US", name: "English", flag: "/img/europe/flags/united-kingdom.png" },
-      { code: "vi", file: "vi-VN.json", iso: "vi-VN", name: "Tiếng Việt", flag: "/img/asia/flags/viet-nam.png" },
-      { code: "ja", file: "ja-JP.json", iso: "ja-JP", name: "日本語", flag: "/img/asia/flags/japan.png" },
-      { code: "cn", file: "zh-CN.json", iso: "zh-CN", name: "简体中文", flag: "/img/asia/flags/china.png" },
-      { code: "tw", file: "zh-TW.json", iso: "zh-TW", name: "繁體中文", flag: "/img/asia/flags/taiwan.png" },
-      { code: "fr", file: "fr-FR.json", iso: "fr-FR", name: "Français", flag: "/img/europe/flags/france.png" },
-      { code: "ru", file: "ru-RU.json", iso: "ru-RU", name: "Русский", flag: "/img/europe/flags/russia.png" },
+      {
+        code: "en",
+        file: "en-US.json",
+        iso: "en-US",
+        name: "English",
+        flag: "/img/europe/flags/united-kingdom.png",
+      },
+      {
+        code: "vi",
+        file: "vi-VN.json",
+        iso: "vi-VN",
+        name: "Tiếng Việt",
+        flag: "/img/asia/flags/viet-nam.png",
+      },
+      {
+        code: "ja",
+        file: "ja-JP.json",
+        iso: "ja-JP",
+        name: "日本語",
+        flag: "/img/asia/flags/japan.png",
+      },
+      {
+        code: "cn",
+        file: "zh-CN.json",
+        iso: "zh-CN",
+        name: "简体中文",
+        flag: "/img/asia/flags/china.png",
+      },
+      {
+        code: "tw",
+        file: "zh-TW.json",
+        iso: "zh-TW",
+        name: "繁體中文",
+        flag: "/img/asia/flags/taiwan.png",
+      },
+      {
+        code: "fr",
+        file: "fr-FR.json",
+        iso: "fr-FR",
+        name: "Français",
+        flag: "/img/europe/flags/france.png",
+      },
+      {
+        code: "ru",
+        file: "ru-RU.json",
+        iso: "ru-RU",
+        name: "Русский",
+        flag: "/img/europe/flags/russia.png",
+      },
     ],
     strategy: "no_prefix",
     lazy: true,
     langDir: "lang/",
     defaultLocale: "en",
-    },
-    proxy: {
+  },
+  proxy: {
     "/assets/": {
       target: process.env.BASE_URL,
       pathRewrite: { "^/assets/": "" },
       changeOrigin: true,
     },
-    },
-    generate: {
+  },
+  generate: {
     async routes() {
-      const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_WRITE_API_KEY);
+      const client = algoliasearch(
+        process.env.ALGOLIA_APP_ID,
+        process.env.ALGOLIA_WRITE_API_KEY,
+      );
       const station = client.initIndex("radio.eplus.dev");
       const theWorld = client.initIndex("world");
 
@@ -235,52 +280,55 @@ export default {
       await Promise.all([station.clearObjects(), theWorld.clearObjects()]);
 
       for (const [continentKey, continent] of Object.entries(world)) {
-      const region = continentKey.replace("_", "-");
-      routesToGenerate.push(`/${region}`);
+        const region = continentKey.replace("_", "-");
+        routesToGenerate.push(`/${region}`);
 
-      for (const [countryKey, country] of Object.entries(continent)) {
-        const countryData = require(`./static${country.data}`);
-        const countryCode = countryKey.replace("-", "_");
+        for (const [countryKey, country] of Object.entries(continent)) {
+          const countryData = require(`./static${country.data}`);
+          const countryCode = countryKey.replace("-", "_");
 
-        routesToGenerate.push(`/${region}/${countryKey}`);
+          routesToGenerate.push(`/${region}/${countryKey}`);
 
-        dataWorld.push({
-        name: country.name,
-        category: continentKey,
-        flag: `${process.env.BASE_URL}${country.flag}`,
-        data: country.data,
-        timezone: country.timezone,
-        station_count: Object.keys(countryData).length,
-        url: `/${region}/${countryKey}`,
-        objectID: `${region}-${countryKey}`,
-        });
+          dataWorld.push({
+            name: country.name,
+            category: continentKey,
+            flag: `${process.env.BASE_URL}${country.flag}`,
+            data: country.data,
+            timezone: country.timezone,
+            station_count: Object.keys(countryData).length,
+            url: `/${region}/${countryKey}`,
+            objectID: `${region}-${countryKey}`,
+          });
 
-        for (const [key, value] of Object.entries(countryData)) {
-        routesToGenerate.push(`/${region}/${countryKey}/${key}`);
+          for (const [key, value] of Object.entries(countryData)) {
+            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
 
-        dataStation.push({
-          station_name: value.title,
-          station_signal: value.signal,
-          station_image: `${process.env.BASE_URL}${value.features}`,
-          station_stream: value.stream,
-          type: value.type,
-          cros: value.cros,
-          favorite: value.favorite || false,
-          station_schedule: value.schedule,
-          station_country: `world.${region.replace("-", "_")}.${countryCode}`,
-          url: `/${region}/${countryKey}/${key}`,
-          objectID: `${countryKey}-${key}`,
-        });
+            dataStation.push({
+              station_name: value.title,
+              station_signal: value.signal,
+              station_image: `${process.env.BASE_URL}${value.features}`,
+              station_stream: value.stream,
+              type: value.type,
+              cros: value.cros,
+              favorite: value.favorite || false,
+              station_schedule: value.schedule,
+              station_country: `world.${region.replace("-", "_")}.${countryCode}`,
+              url: `/${region}/${countryKey}/${key}`,
+              objectID: `${countryKey}-${key}`,
+            });
+          }
         }
       }
-      }
 
-      await Promise.all([station.saveObjects(dataStation), theWorld.saveObjects(dataWorld)]);
+      await Promise.all([
+        station.saveObjects(dataStation),
+        theWorld.saveObjects(dataWorld),
+      ]);
 
       return routesToGenerate;
     },
     fallback: "404.html",
-    },
+  },
   /* SiteMap */
   sitemap: {
     path: "/sitemap.xml",
