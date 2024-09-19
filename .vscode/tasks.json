@@ -46,7 +46,8 @@
         "reveal": "always",
         "panel": "new",
         "group": "one"
-      }
+      },
+      "problemMatcher": []
     }
   ]
 }
