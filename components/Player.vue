@@ -17,6 +17,7 @@
                     ? $config.Base_URL + thumb
                     : $config.Base_URL + player.features
                 "
+                :placeholder="$config.placeholderStation"
               />
               <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                 <span
@@ -74,7 +75,7 @@
               <div
                 class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
               >
-                <img
+                <nuxt-img
                   loading="lazy"
                   :src="
                     song.currentMedia.thumbnail !== undefined
@@ -83,6 +84,7 @@
                   "
                   :alt="song.currentMedia.title"
                   class="w-20 h-20 rounded-full bg-orange-100"
+                  :placeholder="$config.placeholderStation"
                 />
               </div>
               <div class="flex-auto">
@@ -99,7 +101,7 @@
             class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"
             v-if="song.nextMedia.title !== undefined"
           >
-            <img
+            <nuxt-img
               loading="lazy"
               class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
               :src="
@@ -107,7 +109,7 @@
                   ? song.nextMedia.thumbnail
                   : song.thumbnail
               "
-              alt=""
+              :placeholder="$config.placeholderStation"
             />
             <div class="md:p-2 text-center md:text-left space-y-4">
               <figcaption class="font-medium">
@@ -140,11 +142,12 @@
               <div
                 class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
               >
-                <img
+                <nuxt-img
                   loading="lazy"
                   :src="current.cover_art"
                   :alt="current.title"
                   class="w-20 h-20 rounded-full bg-orange-100"
+                  :placeholder="$config.placeholderStation"
                 />
               </div>
               <div class="flex-auto">
@@ -373,7 +376,7 @@
               v-for="(item, index) in playlist"
               :key="index"
             >
-              <img
+              <nuxt-img
                 loading="lazy"
                 class="w-10 h-10 object-cover rounded-lg"
                 alt="User avatar"
@@ -384,6 +387,7 @@
                       ? thumb
                       : player.features
                 "
+                :placeholder="$config.placeholderStation"
               />
               <div class="flex flex-col px-2 w-4/5">
                 <span
@@ -405,7 +409,12 @@
                   {{ $moment.unix(item.track_played).fromNow() }}
                 </p>
                 <div class="relative inline-flex" v-else>
-                  <img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
+                  <nuxt-img
+                    loading="lazy"
+                    src="/brand/favicon.ico"
+                    alt="Logo"
+                    :placeholder="$config.placeholder"
+                  />
                 </div>
               </div>
             </div>

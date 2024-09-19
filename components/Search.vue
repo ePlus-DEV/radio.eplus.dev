@@ -105,6 +105,7 @@
                               loading="lazy"
                               :alt="item.station_name"
                               :src="item.station_image"
+                              :placeholder="$config.placeholder"
                             />
                           </div>
                         </div>

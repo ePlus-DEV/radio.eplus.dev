@@ -138,6 +138,7 @@
                       :src="$config.Base_URL + locale.flag"
                       :alt="locale.name"
                       @click="changeLanguage(locale.code)"
+                      :placeholder="$config.placeholder"
                     />
                     {{ locale.name }}
                   </li>
@@ -243,6 +244,7 @@
                   :src="$config.Base_URL + locale.flag"
                   :alt="locale.name"
                   @click="changeLanguage(locale.code)"
+                  :placeholder="$config.placeholder"
                 />
                 {{ locale.name }}
               </li>
