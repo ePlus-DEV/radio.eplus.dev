@@ -5,7 +5,8 @@
     "url": "https://los40.com.mx/",
     "cros": false,
     "stream": "https://25103.live.streamtheworld.com/LOS40_MEXICOAAC_SC",
-    "features": "/img/north-america/mexico/los-40.png"
+    "features": "/img/north-america/mexico/los-40.png",
+    "favorite": true
   },
   "amor-cdmx": {
     "title": "Radio Amor (Ciudad de México)",

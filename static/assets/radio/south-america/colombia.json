@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CARACOL_RADIOAAC_SC",
     "features": "/img/south-america/colombia/caracol-en-vivo.png",
-    "schedule": "https://api.webrad.io/data/playlist/11/caracol-en-vivo?time="
+    "schedule": "https://api.webrad.io/data/playlist/11/caracol-en-vivo?time=",
+    "favorite": true
   },
   "radioactiva": {
     "title": "Radio Acktiva",

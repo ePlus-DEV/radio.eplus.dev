@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://frontend.radiohdvivo.com/los40/live",
     "features": "/img/south-america/argentina/los-40-principales.png",
-    "schedule": "https://api.webrad.io/data/playlist/18/los-40-principales?time="
+    "schedule": "https://api.webrad.io/data/playlist/18/los-40-principales?time=",
+    "favorite": true
   },
   "radio-disney": {
     "title": "Radio Disney (Argentina)",

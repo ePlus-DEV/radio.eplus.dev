@@ -5,7 +5,8 @@
     "url": "https://www.notiuno.com/",
     "cros": true,
     "stream": "https://server20.servistreaming.com:9022/stream",
-    "features": "/img/north-america/puerto-rico/noti-uno.png"
+    "features": "/img/north-america/puerto-rico/noti-uno.png",
+    "favorite": true
   },
   "mega": {
     "title": "La Mega",

@@ -6,7 +6,8 @@
     "cros": true,
     "stream": "http://node-14.zeno.fm:80/f3bysky14neuv",
     "features": "/img/north-america/haiti/tele-ginen.png",
-    "schedule": "https://api.webrad.io/data/playlist/112/tele-ginen?time="
+    "schedule": "https://api.webrad.io/data/playlist/112/tele-ginen?time=",
+    "favorite": true
   },
   "caraibes-fm": {
     "title": "Radio Caraibes FM",

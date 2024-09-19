@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CRP_RIT_SC?csegid=20001&dist=20001&ttag=20001",
     "features": "/img/south-america/peru/romantica.png",
-    "schedule": "https://api.webrad.io/data/playlist/13/romantica?time="
+    "schedule": "https://api.webrad.io/data/playlist/13/romantica?time=",
+    "favorite": true
   },
   "rpp": {
     "title": "Radio RPP Noticias",

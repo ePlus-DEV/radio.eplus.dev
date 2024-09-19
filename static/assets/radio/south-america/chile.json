@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://redirector.dps.live/biobiosantiago/aac/icecast.audio",
     "features": "/img/south-america/chile/bio-bio.png",
-    "schedule": "https://api.webrad.io/data/playlist/1/bio-bio?time="
+    "schedule": "https://api.webrad.io/data/playlist/1/bio-bio?time=",
+    "favorite": true
   },
   "radio-corazon": {
     "title": "Radio Corazón FM",

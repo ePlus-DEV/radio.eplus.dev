@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/BESAME_CR_SC",
     "features": "/img/central-america/costa-rica/besame-89-9.png",
-    "schedule": "https://api.webrad.io/data/playlist/27/besame-89-9?time="
+    "schedule": "https://api.webrad.io/data/playlist/27/besame-89-9?time=",
+    "favorite": true
   },
   "radio-musical-97-5-fm": {
     "title": "Radio Musical (San José)",

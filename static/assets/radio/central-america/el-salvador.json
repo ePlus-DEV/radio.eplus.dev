@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://s2.radio.co/s3a7dc3d82/listen",
     "features": "/img/central-america/el-salvador/bautista.png",
-    "schedule": "https://api.webrad.io/data/playlist/36/bautista?time="
+    "schedule": "https://api.webrad.io/data/playlist/36/bautista?time=",
+    "favorite": true
   },
   "yxy": {
     "title": "Radio YXY",

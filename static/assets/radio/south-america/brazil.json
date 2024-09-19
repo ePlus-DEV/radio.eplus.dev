@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://ice.fabricahost.com.br/metropolitana985sp",
     "features": "/img/south-america/brazil/metropolitana-online.png",
-    "schedule": "https://api.webrad.io/data/playlist/8/metropolitana-online?time="
+    "schedule": "https://api.webrad.io/data/playlist/8/metropolitana-online?time=",
+    "favorite": true
   },
   "89-a-rock": {
     "title": "A Rádio Rock (Sao Paulo)",

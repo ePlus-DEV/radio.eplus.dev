@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://media.streambrothers.com:8342/stream",
     "features": "/img/south-america/paraguay/abc-cardinal.png",
-    "schedule": "https://api.webrad.io/data/playlist/21/abc-cardinal?time="
+    "schedule": "https://api.webrad.io/data/playlist/21/abc-cardinal?time=",
+    "favorite": true
   },
   "rock-pop": {
     "title": "Rock and Pop",

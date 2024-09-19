@@ -6,7 +6,8 @@
     "cros": false,
     "stream": "https://usa7.fastcast4u.com/proxy/grflores?mp=/stream/1/",
     "features": "/img/south-america/bolivia/radio-fides.png",
-    "schedule": "https://api.webrad.io/data/playlist/43/radio-fides?time="
+    "schedule": "https://api.webrad.io/data/playlist/43/radio-fides?time=",
+    "favorite": true
   },
   "radio-chacaltaya": {
     "title": "Radio Chacaltaya (La Paz)",

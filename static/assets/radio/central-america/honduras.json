@@ -6,7 +6,8 @@
     "cros": true,
     "stream": "https://stream.zeno.fm/zeu4mw9u8rquv",
     "features": "/img/central-america/honduras/musiquera.png",
-    "schedule": "https://api.webrad.io/data/playlist/10/musiquera?time="
+    "schedule": "https://api.webrad.io/data/playlist/10/musiquera?time=",
+    "favorite": true
   },
   "xy-905": {
     "title": "Radio XY (Tegucigalpa)",
