@@ -4,7 +4,7 @@
     <Breadcrumbs
       :area="area"
       level_1=""
-      :level_2="$t(`world.${area.replace('-', '_')}.name`)"
+      :level_2="$t(`world.${area.replace(/-/g, '_')}.name`)"
     />
     <!-- END - Breadcrumbs -->
 

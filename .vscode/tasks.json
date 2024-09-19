@@ -13,7 +13,8 @@
       },
       "runOptions": {
         "runOn": "folderOpen"
-      }
+      },
+      "problemMatcher": []
     },
     {
       "label": "run dev w/o install",
@@ -24,7 +25,8 @@
         "reveal": "always",
         "panel": "new",
         "group": "one"
-      }
+      },
+      "problemMatcher": []
     },
     {
       "label": "run build",
@@ -35,7 +37,8 @@
         "reveal": "always",
         "panel": "new",
         "group": "one"
-      }
+      },
+      "problemMatcher": []
     },
     {
       "label": "run generate",

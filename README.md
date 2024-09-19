@@ -28,6 +28,7 @@ $ npm run generate
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 - https://github.com/umpirsky/country-list/blob/master/data/vi/country.txt
+- https://www.flaticon.com/free-icon/on-air_4040575
 - https://www.textfixer.com/tutorials/country-dropdowns.php
 - https://www.zeitverschiebung.net/en/country/vn
 - https://grab.alwaysdata.net
