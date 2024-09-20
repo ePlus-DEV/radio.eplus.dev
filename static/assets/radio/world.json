@@ -378,6 +378,13 @@
       "data": "/assets/radio/europe/sweden.json",
       "timezone": "Europe/Stockholm",
       "station": 0
+    },
+    "bulgaria": {
+      "name": "world.europe.bulgaria",
+      "flag": "/img/europe/flags/bulgaria.png",
+      "data": "/assets/radio/europe/bulgaria.json",
+      "timezone": "Europe/Sofia",
+      "station": 0
     }
   },
   "north_america": {
