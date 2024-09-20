@@ -486,17 +486,18 @@ export default {
   methods: {
     init(state = false) {
       const audio = document.querySelector("#player");
-      let stream_url = "";
-      let hls = null;
       const playerState = state ? this.$store.state.player_home : this.$store.state.player;
+      const stream_url = playerState.cros ? process.env.CORS_SERVER_1 + playerState.stream : playerState.stream;
 
-      // Check Cros
-      stream_url = playerState.cros ? process.env.CORS_SERVER_1 + playerState.stream : playerState.stream;
-
-      // Check Type
       if (playerState.type === "application/x-mpegURL" || playerState.type === "audio/x-mpegurl") {
+        this.setupHlsPlayer(audio, stream_url);
+      } else {
+        this.setPlayer(stream_url, playerState.type);
+      }
+    },
+    setupHlsPlayer(audio, stream_url) {
       if (Hls.isSupported()) {
-        hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(stream_url);
         hls.attachMedia(audio);
       }
@@ -504,31 +505,28 @@ export default {
       const playPromise = audio.play();
 
       if (playPromise !== undefined) {
-        playPromise
+      playPromise
         .then(() => {
-          // Automatic playback started!
-          // Show playing UI.
+        // Automatic playback started!
+        // Show playing UI.
         })
         .catch((error) => {
-          // Auto-play was prevented
-          // Show paused UI.
-          console.log(error);
+        // Auto-play was prevented
+        // Show paused UI.
+        console.log(error);
         });
-      }
-      } else {
-      this.setPlayer(stream_url, playerState.type);
       }
     },
     setPlayer(stream_url, type) {
-      let player = this.$refs.plyr.player;
+      const player = this.$refs.plyr.player;
       player.source = {
-        type: "audio",
-        sources: [
-          {
-            src: stream_url,
-            type: type,
-          },
-        ],
+      type: "audio",
+      sources: [
+        {
+        src: stream_url,
+        type: type,
+        },
+      ],
       };
 
       player.play();
