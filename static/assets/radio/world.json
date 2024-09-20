@@ -336,6 +336,13 @@
       "data": "/assets/radio/europe/portugal.json",
       "timezone": "Europe/Lisbon",
       "station": 0
+    },
+    "romania": {
+      "name": "world.europe.romania",
+      "flag": "/img/europe/flags/romania.png",
+      "data": "/assets/radio/europe/romania.json",
+      "timezone": "Europe/Bucharest",
+      "station": 0
     }
   },
   "north_america": {
