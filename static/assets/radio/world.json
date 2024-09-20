@@ -371,6 +371,13 @@
       "data": "/assets/radio/europe/finland.json",
       "timezone": "Europe/Helsinki",
       "station": 0
+    },
+    "sweden": {
+      "name": "world.europe.sweden",
+      "flag": "/img/europe/flags/sweden.png",
+      "data": "/assets/radio/europe/sweden.json",
+      "timezone": "Europe/Stockholm",
+      "station": 0
     }
   },
   "north_america": {
