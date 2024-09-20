@@ -491,6 +491,10 @@ export default {
         ? process.env.CORS_SERVER_1 + playerState.stream
         : playerState.stream;
 
+      if (audio !== null) {
+        audio.pause();
+      }
+
       if (
         playerState.type === "application/x-mpegURL" ||
         playerState.type === "audio/x-mpegurl"
@@ -506,7 +510,6 @@ export default {
         hls.loadSource(stream_url);
         hls.attachMedia(audio);
       }
-
       const playPromise = audio.play();
 
       if (playPromise !== undefined) {
