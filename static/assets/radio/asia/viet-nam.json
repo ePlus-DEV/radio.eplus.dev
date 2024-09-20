@@ -32,41 +32,41 @@
   "vov4": {
     "title": "VOV 4 - Hồ Chí Minh",
     "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "http://media.kythuatvov.vn:7033/;stream/",
+    "cros": false,
+    "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
     "features": "/img/asia/viet-nam/vov4.png"
   },
   "vov4-tay-bac": {
     "title": "VOV 4 - Tây Bắc",
     "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "https://stream.vovmedia.vn/vov4tb",
+    "cros": false,
+    "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
     "features": "/img/asia/viet-nam/vov4.png"
   },
   "vov4-tay-nguyen": {
     "title": "VOV 4 - Tây Nguyên",
     "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "https://stream.vovmedia.vn/vov4tn",
+    "cros": false,
+    "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
     "features": "/img/asia/viet-nam/vov4.png"
   },
   "vov4-dong-bang-song-cuu-long": {
     "title": "VOV 4 - Đồng bằng sông Cửu Long",
     "description": "Hệ phát thanh dân tộc VOV4 trực thuộc Đài phát thanh Việt Nam, chương trình quốc gia được phát thanh bằng 12 thứ tiếng dân tộc thiểu số nhằm phục vụ các thính giả là đồng bảo Việt Nam dân tộc thiểu số.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "https://stream.vovmedia.vn/vov4dbscl",
+    "cros": false,
+    "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
     "features": "/img/asia/viet-nam/vov4.png"
   },
   "vov5": {
@@ -92,11 +92,11 @@
   "vov5-chinese": {
     "title": "VOV 5 - Chinese",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "application/x-mpegURL",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "http://media.kythuatvov.vn:7029/;stream/",
+    "cros": false,
+    "stream": "https://stream-cdn.vov.vn/live/vov5-audio_only.m3u8",
     "features": "/img/asia/viet-nam/vov5.png"
   },
   "vov5-french": {
@@ -178,6 +178,26 @@
     "cros": true,
     "stream": "http://media.kythuatvov.vn:7011/;stream/",
     "features": "/img/asia/viet-nam/vov5.png"
+  },
+  "vov6": {
+    "title": "VOV 6 - Ban Văn học Nghệ thuật",
+    "description": "VOV 6 là kênh phát thanh chuyên biệt về văn học nghệ thuật, trực thuộc Đài tiếng nói Việt Nam. Kênh cung cấp các chương trình về văn học, nghệ thuật, âm nhạc và các thông tin văn hóa khác.",
+    "type": "application/x-mpegURL",
+    "category": "Ban Văn học - Nghệ thuật",
+    "url": "https://vov6.vov.vn",
+    "cros": true,
+    "stream": "https://str.vov.gov.vn/vovlive/vov2.sdp_aac/playlist.m3u8",
+    "features": "/img/asia/viet-nam/vov6.png"
+  },
+  "vov-247": {
+    "title": "VOV - Kênh tiếng Anh 24/7",
+    "description": "VOV - Kênh tiếng Anh 24/7",
+    "type": "application/x-mpegURL",
+    "category": "Ban Văn học - Nghệ thuật",
+    "url": "https://vov6.vov.vn",
+    "cros": true,
+    "stream": "https://stream-cdn.vov.vn/live/vov24_7-audio_only.m3u8",
+    "features": "/img/asia/viet-nam/vov-247.png"
   },
   "vov-gt-hcm": {
     "title": "VOV Giao Thông TP.HCM",
