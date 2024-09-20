@@ -315,6 +315,13 @@
       "data": "/assets/radio/europe/norway.json",
       "timezone": "Europe/Oslo",
       "station": 0
+    },
+    "austria": {
+      "name": "world.europe.austria",
+      "flag": "/img/europe/flags/austria.png",
+      "data": "/assets/radio/europe/austria.json",
+      "timezone": "Europe/Vienna",
+      "station": 0
     }
   },
   "north_america": {
