@@ -452,12 +452,16 @@ export default {
     };
   },
   mounted() {
-    this.$refs.plyr.player.on("event", () => {});
-    this.$refs.plyr.player.on("ready", (event) => {});
-    this.$refs.plyr.player.on("canplay", (event) => {});
+    this.$refs.plyr.player.on("event", () => {
+      this.init();
+    });
+    this.$refs.plyr.player.on("ready", (event) => {
+      this.init();
+    });
+    this.$refs.plyr.player.on("canplay", (event) => {
+      this.waiting = false;
+    });
     this.$refs.plyr.player.on("waiting", (event) => {
-      // const instance = event.detail.plyr;
-
       this.waiting = true;
     });
     this.$refs.plyr.player.on("playing", (event) => {
@@ -468,7 +472,10 @@ export default {
       this.button = false;
       this.waiting = false;
     });
-    this.$refs.plyr.player.on("stopped", (event) => {});
+    this.$refs.plyr.player.on("stopped", (event) => {
+      this.button = false;
+      this.waiting = false;
+    });
   },
   computed: {
     player() {
