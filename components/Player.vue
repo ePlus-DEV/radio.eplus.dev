@@ -491,9 +491,8 @@ export default {
         ? process.env.CORS_SERVER_1 + playerState.stream
         : playerState.stream;
 
-      if (audio !== null) {
-        audio.pause();
-      }
+      // Pause the current audio
+      this.$refs.plyr.player.pause();
 
       if (
         playerState.type === "application/x-mpegURL" ||
