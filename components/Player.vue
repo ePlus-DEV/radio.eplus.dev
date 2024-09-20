@@ -452,10 +452,8 @@ export default {
     };
   },
   mounted() {
-    this.$refs.plyr.player.on("event", () => {
-    });
-    this.$refs.plyr.player.on("ready", (event) => {
-    });
+    this.$refs.plyr.player.on("event", () => {});
+    this.$refs.plyr.player.on("ready", (event) => {});
     this.$refs.plyr.player.on("canplay", (event) => {
       this.waiting = false;
     });
@@ -486,10 +484,17 @@ export default {
   methods: {
     init(state = false) {
       const audio = document.querySelector("#player");
-      const playerState = state ? this.$store.state.player_home : this.$store.state.player;
-      const stream_url = playerState.cros ? process.env.CORS_SERVER_1 + playerState.stream : playerState.stream;
+      const playerState = state
+        ? this.$store.state.player_home
+        : this.$store.state.player;
+      const stream_url = playerState.cros
+        ? process.env.CORS_SERVER_1 + playerState.stream
+        : playerState.stream;
 
-      if (playerState.type === "application/x-mpegURL" || playerState.type === "audio/x-mpegurl") {
+      if (
+        playerState.type === "application/x-mpegURL" ||
+        playerState.type === "audio/x-mpegurl"
+      ) {
         this.setupHlsPlayer(audio, stream_url);
       } else {
         this.setPlayer(stream_url, playerState.type);
@@ -505,28 +510,28 @@ export default {
       const playPromise = audio.play();
 
       if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-        // Automatic playback started!
-        // Show playing UI.
-        })
-        .catch((error) => {
-        // Auto-play was prevented
-        // Show paused UI.
-        console.log(error);
-        });
+        playPromise
+          .then(() => {
+            // Automatic playback started!
+            // Show playing UI.
+          })
+          .catch((error) => {
+            // Auto-play was prevented
+            // Show paused UI.
+            console.log(error);
+          });
       }
     },
     setPlayer(stream_url, type) {
       const player = this.$refs.plyr.player;
       player.source = {
-      type: "audio",
-      sources: [
-        {
-        src: stream_url,
-        type: type,
-        },
-      ],
+        type: "audio",
+        sources: [
+          {
+            src: stream_url,
+            type: type,
+          },
+        ],
       };
 
       player.play();
