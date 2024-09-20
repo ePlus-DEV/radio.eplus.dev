@@ -50,7 +50,7 @@
               href="https://www.digitalocean.com/?refcode=bfa0034e378d&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"
             >
               <img
-                src="https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white"
+                :src="`https://img.shields.io/badge/${status}-${color}.svg?style=for-the-badge&logo=digitalOcean&logoColor=white`"
                 alt="DigitalOcean Referral Badge"
               />
             </a>
@@ -82,6 +82,8 @@ export default {
   name: "TheFooter",
   data() {
     return {
+      status: "digitalocean",
+      color: "%230167ff",
       lastUpdate: "",
       links: [
         { id: 1, to: "/about", text: "navmenu.about" },
@@ -135,9 +137,21 @@ export default {
       this.$axios(config)
         .then((response) => {
           const data = response.data;
-          this.lastUpdate = this.$moment(
-            data.deployments[0].phase_last_updated_at,
-          ).format("LLLL");
+          const success_steps = data.deployments[0].progress.success_steps;
+          const total_steps = data.deployments[0].progress.total_steps;
+          if (success_steps === total_steps) {
+            this.lastUpdate = this.$moment(
+              data.deployments[0].phase_last_updated_at,
+            ).format("LLLL");
+            this.status = "digitalocean";
+            this.color = "%230167ff";
+          } else {
+            this.status = "Deployment";
+            this.color = "%23031b4e";
+            this.lastUpdate = this.$moment(
+              data.deployments[0].created_at,
+            ).format("LLLL");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -145,7 +159,7 @@ export default {
     },
   },
   created() {
-    this.getLastUpdate();
+    setInterval(this.getLastUpdate, 60000);
   },
 };
 </script>
