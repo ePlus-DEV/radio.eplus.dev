@@ -494,6 +494,12 @@ export default {
       // Pause the current audio
       this.$refs.plyr.player.pause();
 
+      // Hls pause
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.destroy();
+      }
+
       if (
         playerState.type === "application/x-mpegURL" ||
         playerState.type === "audio/x-mpegurl"
