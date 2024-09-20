@@ -343,6 +343,13 @@
       "data": "/assets/radio/europe/romania.json",
       "timezone": "Europe/Bucharest",
       "station": 0
+    },
+    "switzerland": {
+      "name": "world.europe.switzerland",
+      "flag": "/img/europe/flags/switzerland.png",
+      "data": "/assets/radio/europe/switzerland.json",
+      "timezone": "Europe/Zurich",
+      "station": 0
     }
   },
   "north_america": {
