@@ -537,10 +537,10 @@ export default {
       player.play();
     },
     onPlay() {
-      $(".plyr__controls__item ").click();
+      $(".plyr__controls__item").click();
     },
     onPause() {
-      $(".plyr__controls__item ").click();
+      $(".plyr__controls__item").click();
     },
     updateCurrentTime() {
       this.currentTime = this.$moment
