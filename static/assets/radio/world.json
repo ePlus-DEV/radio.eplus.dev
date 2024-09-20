@@ -357,6 +357,13 @@
       "data": "/assets/radio/europe/slovenia.json",
       "timezone": "Europe/Ljubljana",
       "station": 0
+    },
+    "serbia": {
+      "name": "world.europe.serbia",
+      "flag": "/img/europe/flags/serbia.png",
+      "data": "/assets/radio/europe/serbia.json",
+      "timezone": "Europe/Belgrade",
+      "station": 0
     }
   },
   "north_america": {
