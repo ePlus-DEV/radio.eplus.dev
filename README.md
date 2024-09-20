@@ -35,3 +35,6 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 - https://www.mwyniki.pl/wietnam//druzyny/wietnam_1/
 - https://www.ibm.com/docs/en/datacap/9.1.8?topic=support-supported-language-codes
 - https://poeditor.com/projects/view?id=723518
+- https://github.com/video-dev/hls.js
+- https://github.com/sampotts/plyr
+- https://github.com/vidstack/player

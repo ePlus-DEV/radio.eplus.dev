@@ -454,10 +454,10 @@ export default {
   mounted() {
     this.$refs.plyr.player.on("event", () => {});
     this.$refs.plyr.player.on("ready", (event) => {});
-    this.$refs.plyr.player.on("canplay", (event) => {});
+    this.$refs.plyr.player.on("canplay", (event) => {
+      this.waiting = false;
+    });
     this.$refs.plyr.player.on("waiting", (event) => {
-      // const instance = event.detail.plyr;
-
       this.waiting = true;
     });
     this.$refs.plyr.player.on("playing", (event) => {
@@ -468,7 +468,10 @@ export default {
       this.button = false;
       this.waiting = false;
     });
-    this.$refs.plyr.player.on("stopped", (event) => {});
+    this.$refs.plyr.player.on("stopped", (event) => {
+      this.button = false;
+      this.waiting = false;
+    });
   },
   computed: {
     player() {
@@ -481,85 +484,49 @@ export default {
   methods: {
     init(state = false) {
       const audio = document.querySelector("#player");
-      let stream_url = "";
-      let hls = null;
+      const playerState = state
+        ? this.$store.state.player_home
+        : this.$store.state.player;
+      const stream_url = playerState.cros
+        ? process.env.CORS_SERVER_1 + playerState.stream
+        : playerState.stream;
 
-      if (state) {
-        // Check Cros
-        if (this.$store.state.player_home.cros) {
-          stream_url =
-            process.env.CORS_SERVER_1 + this.$store.state.player_home.stream;
-        } else {
-          stream_url = this.$store.state.player_home.stream;
-        }
-        // Check Type
-        if (
-          this.$store.state.player_home.type === "application/x-mpegURL" ||
-          this.$store.state.player_home.type === "audio/x-mpegurl"
-        ) {
-          if (Hls.isSupported()) {
-            hls = new Hls();
-            hls.loadSource(stream_url);
-            hls.attachMedia(audio);
-          }
+      if (audio !== null) {
+        audio.pause();
+      }
 
-          const playPromise = audio.play();
-
-          if (playPromise !== undefined) {
-            playPromise
-              .then((_) => {
-                // Automatic playback started!
-                // Show playing UI.
-              })
-              .catch((error) => {
-                // Auto-play was prevented
-                // Show paused UI.
-                console.log(error);
-              });
-          }
-        } else {
-          this.setPlayer(stream_url, this.$store.state.player.type);
-        }
+      if (
+        playerState.type === "application/x-mpegURL" ||
+        playerState.type === "audio/x-mpegurl"
+      ) {
+        this.setupHlsPlayer(audio, stream_url);
       } else {
-        // Check Cros
-        if (this.$store.state.player.cros) {
-          stream_url =
-            process.env.CORS_SERVER_1 + this.$store.state.player.stream;
-        } else {
-          stream_url = this.$store.state.player.stream;
-        }
-        // Check Type
-        if (
-          this.$store.state.player.type === "application/x-mpegURL" ||
-          this.$store.state.player.type === "audio/x-mpegurl"
-        ) {
-          if (Hls.isSupported()) {
-            hls = new Hls();
-            hls.loadSource(stream_url);
-            hls.attachMedia(audio);
-          }
+        this.setPlayer(stream_url, playerState.type);
+      }
+    },
+    setupHlsPlayer(audio, stream_url) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(stream_url);
+        hls.attachMedia(audio);
+      }
+      const playPromise = audio.play();
 
-          const playPromise = audio.play();
-
-          if (playPromise !== undefined) {
-            playPromise
-              .then((_) => {
-                // Automatic playback started!
-                // Show playing UI.
-              })
-              .catch((error) => {
-                // Auto-play was prevented
-                // Show paused UI.
-                console.log(error);
-              });
-          }
-        } else {
-          this.setPlayer(stream_url, this.$store.state.player.type);
-        }
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Automatic playback started!
+            // Show playing UI.
+          })
+          .catch((error) => {
+            // Auto-play was prevented
+            // Show paused UI.
+            console.log(error);
+          });
       }
     },
     setPlayer(stream_url, type) {
-      let player = this.$refs.plyr.player;
+      const player = this.$refs.plyr.player;
       player.source = {
         type: "audio",
         sources: [
@@ -573,10 +540,10 @@ export default {
       player.play();
     },
     onPlay() {
-      $(".plyr__controls__item ").click();
+      $(".plyr__controls__item").click();
     },
     onPause() {
-      $(".plyr__controls__item ").click();
+      $(".plyr__controls__item").click();
     },
     updateCurrentTime() {
       this.currentTime = this.$moment

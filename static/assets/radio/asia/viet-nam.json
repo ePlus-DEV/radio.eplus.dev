@@ -267,8 +267,8 @@
     "type": "application/x-mpegURL",
     "category": "Bà Rịa-Vũng Tàu",
     "url": "http://brt.vn",
-    "cros": true,
-    "stream": "http://113.163.216.23:1935/live/radio1.sdp_audio/playlist.m3u8",
+    "cros": false,
+    "stream": "https://1288926866.pop.vnptcdn.com/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiYjA5MDg5LTQxOWQtNGI1Ny1hYTIzLTdlMTY2YjEyZDJhNyIsImV4cCI6MTcyNjgyMDgzMiwidXJpIjoiL3JhZGlvYnJ0IiwiaWF0IjoxNzI2Nzk5MjMyfQ.cQkFYM8n-cKIe4qs6eDdke4ZO0fhx4aaux1odKKtJoQ-/radiobrt/playlist.m3u8",
     "features": "/img/asia/viet-nam/ba-ria-vung-tau.png"
   },
   "binh-phuoc": {
@@ -277,7 +277,7 @@
     "type": "application/x-mpegURL",
     "category": "Bình Phước",
     "url": "http://bptv.vn",
-    "cros": true,
+    "cros": false,
     "stream": "https://live.baobinhphuoc.com.vn/bptvlive/radio.m3u8",
     "features": "/img/asia/viet-nam/binh-phuoc.png"
   },
@@ -287,8 +287,8 @@
     "type": "application/x-mpegURL",
     "category": "Bình Thuận",
     "url": "http://binhthuantv.vn",
-    "cros": true,
-    "stream": "http://202.43.109.142:1935/thbtradio/btradio/playlist.m3u8",
+    "cros": false,
+    "stream": "https://64d0d74b76158.streamlock.net/BTVTV/binhthuantv/playlist.m3u8",
     "features": "/img/asia/viet-nam/binh-thuan.png"
   },
   "ca-mau": {
@@ -308,7 +308,7 @@
     "category": "Cần Thơ",
     "url": "http://canthotv.vn",
     "cros": true,
-    "stream": "https://tv.canthotv.vn/live/radio/radio.m3u8",
+    "stream": "https://live.canthotv.vn/live/radio/playlist.m3u8",
     "features": "/img/asia/viet-nam/can-tho.png"
   },
   "da-nang": {
@@ -317,8 +317,8 @@
     "type": "application/x-mpegURL",
     "category": "Đà Nẵng",
     "url": "http://www.drt.danang.vn/",
-    "cros": true,
-    "stream": "http://drtdnglive.e49a7c38.cdnviet.com/liveradio/playlist.m3u8",
+    "cros": false,
+    "stream": "https://live.mediatech.vn/live/2858a998b1c7fbf4522accd5554588ceae3/playlist.m3u8",
     "features": "/img/asia/viet-nam/da-nang.png"
   },
   "ha-noi": {
@@ -328,8 +328,9 @@
     "category": "Hà Nội - FM96",
     "url": "http://hanoitv.vn",
     "cros": true,
-    "stream": "http://cdn.mediatech.vn/hntvRadio/fm96.sdp_aac/playlist.m3u8",
-    "features": "/img/asia/viet-nam/ha-noi.png"
+    "stream": "https://cloudstreamhntv.tek4tv.vn/audio/fm96/playlist.m3u8",
+    "features": "/img/asia/viet-nam/ha-noi.png",
+    "schedule": "https://hncaching.tek4tv.vn/api/Playlist/json/FM96_"
   },
   "ha-noi-joyfm": {
     "title": "Hà Nội - JOYFM",
@@ -348,8 +349,9 @@
     "category": "Hà Nội - FM90",
     "url": "http://hanoitv.vn",
     "cros": true,
-    "stream": "http://media.mediatech.vn:1935/hntvRadio/fm90live/playlist.m3u8",
-    "features": "/img/asia/viet-nam/fm90.png"
+    "stream": "https://cloudstreamhntv.tek4tv.vn/audio/thhnfm90/playlist.m3u8",
+    "features": "/img/asia/viet-nam/fm90.png",
+    "schedule": "https://hncaching.tek4tv.vn/api/Playlist/json/FM90_"
   },
   "hai-duong": {
     "title": "Hải Dương",
@@ -384,11 +386,11 @@
   "ninh-binh": {
     "title": "Ninh Bình",
     "description": "",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ninh Bình",
     "url": "http://nbtv.vn",
     "cros": false,
-    "stream": "https://nbtv.vncdn.vn/nbtvlive/radio.m3u8",
+    "stream": "https://live.mediatech.vn/live/285391a08f01f83458793b293c5e9517265/playlist.m3u8",
     "features": "/img/asia/viet-nam/ninh-binh.png"
   },
   "soc-trang": {
@@ -397,8 +399,8 @@
     "type": "application/x-mpegURL",
     "category": "Sóc Trăng",
     "url": "http://thst.vn",
-    "cros": true,
-    "stream": "http://113.163.189.104:8135/hls-live/livepkgr/_definst_/liveevent/livestreamf.m3u8",
+    "cros": false,
+    "stream": "https://pa.thst.vn/liveevent.m3u8",
     "features": "/img/asia/viet-nam/soc-trang.png"
   },
   "thua-thien-hue": {
@@ -419,8 +421,9 @@
     "url": "http://bacgiangtv.vn",
     "cros": false,
     "time": "Từ 5h - 22h",
-    "stream": "https://live.bacgiangtv.vn/bgtvlive/radio.m3u8",
-    "features": "/img/asia/viet-nam/bac-giang.png"
+    "stream": "https://1253668792.e.cdneverest.net/ATB_yL1dYV70aHVjkAIH8A/1726846140/live/28584e20827396945f5a4fd57fadd4be21a/playlist.m3u8 ",
+    "features": "/img/asia/viet-nam/bac-giang.png",
+    "schedule": "https://bacgiangtv.vn/schedule/audio/1726802940"
   },
   "ha-tinh": {
     "title": "Hà Tĩnh",
@@ -428,10 +431,11 @@
     "type": "application/x-mpegURL",
     "category": "Hà Tĩnh",
     "url": "http://hatinhtv.vn",
-    "cros": true,
+    "cros": false,
     "time": "Từ 6h - 18h",
-    "stream": "http://hatinhtv.vn/phatthanh/m3u8/audio.m3u8",
-    "features": "/img/asia/viet-nam/ha-tinh.png"
+    "stream": "https://wse.hatinhtv.net/radio/voht/playlist.m3u8",
+    "features": "/img/asia/viet-nam/ha-tinh.png",
+    "schedule": "https://hatinhtv.vn/api/schedule?type=radio&date_="
   },
   "phu-yen": {
     "title": "Phú Yên",
@@ -441,7 +445,7 @@
     "url": "http://ptpphuyen.vn",
     "cros": true,
     "time": "Chưa rõ",
-    "stream": "http://113.161.4.48:8080/phuyen/radio.m3u8",
+    "stream": "http://113.161.4.48:8080/phuyen/tv/index.m3u8",
     "features": "/img/asia/viet-nam/phu-yen.png"
   },
   "tien-giang": {
@@ -452,7 +456,7 @@
     "url": "http://thtg.vn",
     "cros": true,
     "time": "Chưa rõ",
-    "stream": "http://thtg.vn:8002/radiolive.m3u8",
+    "stream": "http://123.25.238.45:1935/vod/mp4:Huy%20ok%20PHAT%20TOI%2027-12-2023%20CAY%20LANH%20TRAI%20NGOT%20_%20KHO%20QUA.mp4/playlist.m3u8",
     "features": "/img/asia/viet-nam/tien-giang.png"
   },
   "ben-tre": {
@@ -461,9 +465,9 @@
     "type": "application/x-mpegURL",
     "category": "Bến Tre",
     "url": "http://thbt.vn",
-    "cros": true,
+    "cros": false,
     "time": "Từ 5h - 22h30",
-    "stream": "http://113.163.94.245/hls-live/livepkgr/_definst_/liveevent/audiostream.m3u8",
+    "stream": "https://1288865415.pop.vnptcdn.com/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhYWM0MWE2LWJhN2MtNGZiYS1hZWU2LWZjZWY2MzBlMWU4ZiIsImV4cCI6MTcyNjgyNzQ5NSwidXJpIjoiL2JlbnRyZS1GTS5hZG0uNDgwcC50bXMiLCJpYXQiOjE3MjY4MDU4OTV9.JIIAdH5MaKZTLpI402YirUV9VzOuyBN66m9TlH8sujk-/bentre-FM.adm.480p.tms/playlist.m3u8",
     "features": "/img/asia/viet-nam/ben-tre.png"
   },
   "dong-thap": {
@@ -474,9 +478,9 @@
     "url": "https://thdt.vn",
     "cros": true,
     "time": "Từ 5h - 20h",
-    "schedule": true,
-    "stream": "http://202.43.109.144:1935/thdtradio/thdtradio/playlist.m3u8",
-    "features": "/img/asia/viet-nam/dong-thap.png"
+    "stream": "https://64d0d74b76158.streamlock.net/THDTR/thdtradio/playlist.m3u8",
+    "features": "/img/asia/viet-nam/dong-thap.png",
+    "schedule": "https://quantri.thdt.vn/wp-json/wp/v2/get-schedule?date_start=20-09-2024&date_end=20-09-2024&type=1"
   },
   "gia-lai": {
     "title": "Gia Lai",
@@ -487,7 +491,7 @@
     "cros": true,
     "time": "Từ 5h30 - 23h",
     "schedule": false,
-    "stream": "http://113.161.25.3:8134/hls/radio/radio.m3u8",
+    "stream": "https://tv.gialaitv.vn/radio.m3u8",
     "features": "/img/asia/viet-nam/gia-lai.png"
   },
   "thai-binh": {
@@ -508,10 +512,10 @@
     "type": "application/x-mpegURL",
     "category": "Vĩnh Long",
     "url": "https://www.thvl.vn",
-    "cros": true,
+    "cros": false,
     "time": "Chưa rõ",
-    "schedule": false,
-    "stream": "https://live1.thvli.vn/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiIvdGh2bHJhZGlvIiwiZXhwIjoxNjMzODY0NzQ4fQ.i7liqgkqOCud8C3fgIqRj5WCPaXA0RI_vWqk2gdH1lk-/thvlradio/playlist.m3u8",
+    "schedule": "https://api-ott.admon.com.vn/api/tenant/thvli/epg/7bf43e25-e9e9-4aa6-8554-38de13c5263d/?play-date=2024-09-20",
+    "stream": "https://catchup.thvli.vn/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkzOGIyNmI1LWZiZTgtNDIwYy1iMWJiLTgwMzA0OTBmODE4ZCIsImV4cCI6MTcyNjgyNzkxNywidXJpIjoiL3JhZGlvIiwiaWF0IjoxNzI2ODA2MzE3fQ.8bSA03iwZCvTejPLhF558wATB6wxDIa2GC5eGr_aZWg-/radio/playlist.m3u8",
     "features": "/img/asia/viet-nam/vinh-long.png"
   },
   "dong-nai": {
@@ -531,11 +535,11 @@
     "description": "",
     "type": "application/x-mpegURL",
     "category": "Radio Quảng Ninh QNR1",
-    "url": "https://baoquangninh.com.vn/?c=radio1",
+    "url": "https://baoquangninh.vn/phat-thanh?c=radio1",
     "cros": false,
     "time": "Chưa rõ",
     "schedule": false,
-    "stream": "https://qtv.vncdn.vn/qtvlive/qnr1.m3u8",
+    "stream": "https://live.baoquangninh.vn/qtvlive/qnr1.m3u8",
     "features": "/img/asia/viet-nam/qnr1.png"
   },
   "qnr2": {
@@ -543,11 +547,11 @@
     "description": "",
     "type": "application/x-mpegURL",
     "category": "Radio Quảng Ninh QNR1",
-    "url": "https://baoquangninh.com.vn/?c=radio2",
+    "url": "https://baoquangninh.vn/phat-thanh?c=radio2",
     "cros": false,
     "time": "Chưa rõ",
     "schedule": false,
-    "stream": "https://qtv.vncdn.vn/qtvlive/qnr2.m3u8",
+    "stream": "https://live.baoquangninh.vn/qtvlive/qnr2.m3u8",
     "features": "/img/asia/viet-nam/qnr2.png"
   },
   "tay-ninh": {
