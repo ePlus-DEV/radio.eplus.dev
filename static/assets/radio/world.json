@@ -329,6 +329,13 @@
       "data": "/assets/radio/europe/poland.json",
       "timezone": "Europe/Warsaw",
       "station": 0
+    },
+    "portugal": {
+      "name": "world.europe.portugal",
+      "flag": "/img/europe/flags/portugal.png",
+      "data": "/assets/radio/europe/portugal.json",
+      "timezone": "Europe/Lisbon",
+      "station": 0
     }
   },
   "north_america": {
