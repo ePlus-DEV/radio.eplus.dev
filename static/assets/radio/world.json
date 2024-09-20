@@ -350,6 +350,13 @@
       "data": "/assets/radio/europe/switzerland.json",
       "timezone": "Europe/Zurich",
       "station": 0
+    },
+    "slovenia": {
+      "name": "world.europe.slovenia",
+      "flag": "/img/europe/flags/slovenia.png",
+      "data": "/assets/radio/europe/slovenia.json",
+      "timezone": "Europe/Ljubljana",
+      "station": 0
     }
   },
   "north_america": {
