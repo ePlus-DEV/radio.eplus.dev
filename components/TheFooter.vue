@@ -131,7 +131,7 @@ export default {
     },
   },
   created() {
-    this.getLastUpdate();
+    setInterval(this.getLastUpdate, 60000);
   },
 };
 </script>
