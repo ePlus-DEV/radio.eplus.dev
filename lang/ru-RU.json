@@ -72,7 +72,17 @@
       "luxembourg": "Люксембург",
       "hungary": "Венгрия",
       "netherlands": "Нидерланды",
-      "norway": "Норвегия"
+      "norway": "Норвегия",
+      "austria": "Австрия",
+      "poland": "Польша",
+      "portugal": "Португалия",
+      "romania": "Румыния",
+      "switzerland": "Швейцария",
+      "slovenia": "Словения",
+      "serbia": "Сербия",
+      "finland": "Финляндия",
+      "sweden": "Швеция",
+      "bulgaria": "Болгария"
     },
     "north_america": {
       "name": "Северная Америка",

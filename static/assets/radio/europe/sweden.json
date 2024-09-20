@@ -1,0 +1,421 @@
+{
+    "mix-stockholm": {
+        "title": "Mix Megapol (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://radioplay.se/mixmegapol/",
+        "cros": false,
+        "stream": "https://live-bauerse-fm.sharp-stream.com/mixmegapolgbg_instream_se_mp3",
+        "features": "/img/europe/sweden/mix-stockholm.png",
+        "favorite": true,
+        "schedule": "https://api.webrad.io/data/playlist/72/mix-stockholm?time="
+    },
+    "nrj-stockholm": {
+        "title": "NRJ (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://radioplay.se/nrj/",
+        "cros": false,
+        "stream": "https://live-bauerse-fm.sharp-stream.com/nrj_instreamtest_se_mp3",
+        "features": "/img/europe/sweden/nrj-stockholm.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/nrj-stockholm?time="
+    },
+    "lugna-favoriter": {
+        "title": "Lugna Favoriter (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.viaplayradio.se/lugnafavoriter/",
+        "cros": false,
+        "stream": "https://fm03-ice.stream.khz.se/fm03_mp3?listenerid=60235aa6fea937a70e5106412ed55010&awparams=companionAds%3Atrue&platform=web&aw_0_1st.playerid=mtgradio-web&aw_0_1st.skey=1562425501",
+        "features": "/img/europe/sweden/lugna-favoriter.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/lugna-favoriter?time="
+    },
+    "bandit-rock": {
+        "title": "Bandit Rock (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.viaplayradio.se/banditrock/",
+        "cros": false,
+        "stream": "https://fm02-ice.stream.khz.se/fm02_mp3?platform=web",
+        "features": "/img/europe/sweden/bandit-rock.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/bandit-rock?time="
+    },
+    "rix-fm": {
+        "title": "RIX FM (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.viaplayradio.se/rixfm/",
+        "cros": false,
+        "stream": "https://fm01-ice.stream.khz.se/fm01_mp3?platform=web",
+        "features": "/img/europe/sweden/rix-fm.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/rix-fm?time="
+    },
+    "vinyl-107": {
+        "title": "Vinyl 107 (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://radioplay.se/vinylfm/",
+        "cros": false,
+        "stream": "https://live-bauerse-fm.sharp-stream.com/vinylfm_instream_se_mp3",
+        "features": "/img/europe/sweden/vinyl-107.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/vinyl-107?time="
+    },
+    "sveriges-p4": {
+        "title": "Sveriges Radio P4",
+        "type": "audio/mpeg",
+        "url": "https://sverigesradio.se/stockholm",
+        "cros": false,
+        "stream": "https://http-live.sr.se/p4stockholm-mp3-192",
+        "features": "/img/europe/sweden/sveriges-p4.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/sveriges-p4?time="
+    },
+    "guldkanalen": {
+        "title": "Guldkanalen",
+        "type": "audio/aac",
+        "url": "https://guldkanalen.se/",
+        "cros": false,
+        "stream": "https://stream.dbmedia.se/gk96",
+        "features": "/img/europe/sweden/guldkanalen.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/guldkanalen?time="
+    },
+    "dnb-helsingborg": {
+        "title": "Dnb Radio (Helsingborg)",
+        "type": "audio/mpeg",
+        "url": "https://dnbradio.com/",
+        "cros": false,
+        "stream": "https://dnbradio.nl/dnbradio_main.mp3",
+        "features": "/img/europe/sweden/dnb-helsingborg.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/dnb-helsingborg?time="
+    },
+    "rock-klassiker": {
+        "title": "Rock Klassiker",
+        "type": "audio/mpeg",
+        "url": "https://radioplay.se/rockklassiker/",
+        "cros": false,
+        "stream": "https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_mp3",
+        "features": "/img/europe/sweden/rock-klassiker.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/rock-klassiker?time="
+    },
+    "hamsafar-stockholm": {
+        "title": "Hamsafar Radio (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.hamsafarradio.se/",
+        "cros": false,
+        "stream": "https://stream.radiojar.com/pyea7q9h5ehvv",
+        "features": "/img/europe/sweden/hamsafar-stockholm.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/hamsafar-stockholm?time="
+    },
+    "sveriges-p3": {
+        "title": "Sveriges Radio P3",
+        "type": "audio/mpeg",
+        "url": "https://sverigesradio.se/p3",
+        "cros": false,
+        "stream": "https://http-live.sr.se/p3-mp3-192",
+        "features": "/img/europe/sweden/sveriges-p3.png",
+        "favorite": false
+    },
+    "sveriges-p1": {
+        "title": "Sveriges Radio P1 FM (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://sverigesradio.se/p1",
+        "cros": false,
+        "stream": "https://http-live.sr.se/p1-mp3-192",
+        "features": "/img/europe/sweden/sveriges-p1.png",
+        "favorite": false
+    },
+    "gnf-103-1-goteborg": {
+        "title": "GNF NU (Göteborg)",
+        "type": "audio/mpeg",
+        "url": "http://gnf.nu/",
+        "cros": true,
+        "stream": "http://lyssna.fnf.nu:8080/gnf103.mp3",
+        "features": "/img/europe/sweden/gnf-103-1-goteborg.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/gnf-103-1-goteborg?time="
+    },
+    "vinyl-godis": {
+        "title": "Vinyl Godis",
+        "type": "audio/mpeg",
+        "url": "https://vinylgodis.se/",
+        "cros": false,
+        "stream": "https://443-1.autopo.st/182/stream",
+        "features": "/img/europe/sweden/vinyl-godis.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/vinyl-godis?time="
+    },
+    "guldkanalen-60-tal": {
+        "title": "Guldkanalen 60-tal",
+        "type": "audio/aac",
+        "url": "https://guldkanalen.se/",
+        "cros": false,
+        "stream": "https://stream.dbmedia.se/gk60tal96",
+        "features": "/img/europe/sweden/guldkanalen-60-tal.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/guldkanalen-60-tal?time="
+    },
+    "gata-malmo": {
+        "title": "P3 Din Gata (Malmo)",
+        "type": "audio/mpeg",
+        "url": "https://sverigesradio.se/dingata",
+        "cros": false,
+        "stream": "https://http-live.sr.se/dingata-mp3-192",
+        "features": "/img/europe/sweden/gata-malmo.png",
+        "favorite": false
+    },
+    "guldkanalen-80-tal": {
+        "title": "Guldkanalen 80-tal",
+        "type": "audio/aac",
+        "url": "https://guldkanalen.se/",
+        "cros": false,
+        "stream": "https://stream.dbmedia.se/gk80tal96",
+        "features": "/img/europe/sweden/guldkanalen-80-tal.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/guldkanalen-80-tal?time="
+    },
+    "gold-fm": {
+        "title": "Gold FM",
+        "type": "audio/aac",
+        "url": "http://www.goldfm.nu/",
+        "cros": false,
+        "stream": "https://live-bauerse-fm.sharp-stream.com/goldfm_web_se_aacp",
+        "features": "/img/europe/sweden/gold-fm.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/gold-fm?time="
+    },
+    "guldkanalen-70-tal": {
+        "title": "Guldkanalen 70-tal",
+        "type": "audio/aac",
+        "url": "https://guldkanalen.se/",
+        "cros": false,
+        "stream": "https://stream.dbmedia.se/gk70tal96",
+        "features": "/img/europe/sweden/guldkanalen-70-tal.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/guldkanalen-70-tal?time="
+    },
+    "sveriges-p2": {
+        "title": "Sveriges Radio P2 (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://sverigesradio.se/p2",
+        "cros": false,
+        "stream": "https://http-live.sr.se/p2-mp3-192",
+        "features": "/img/europe/sweden/sveriges-p2.png",
+        "favorite": false
+    },
+    "viking": {
+        "title": "Radio Viking (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.radioviking.se/",
+        "cros": false,
+        "stream": "https://n12a-eu.rcs.revma.com/qp6w2wzrruhvv",
+        "features": "/img/europe/sweden/viking.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/viking?time="
+    },
+    "guldkanalen-90-tal": {
+        "title": "Guldkanalen 90-tal",
+        "type": "audio/mpeg",
+        "url": "https://guldkanalen.se/",
+        "cros": false,
+        "stream": "https://stream.dbmedia.se/gk90talMP3",
+        "features": "/img/europe/sweden/guldkanalen-90-tal.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/guldkanalen-90-tal?time="
+    },
+    "active": {
+        "title": "Radio Active FM (Ystad)",
+        "type": "audio/aac",
+        "url": "https://radioactive.se/",
+        "cros": true,
+        "stream": "http://stream.nsp.se:8000/radioactive48",
+        "features": "/img/europe/sweden/active.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/active?time="
+    },
+    "galaxy-fm": {
+        "title": "Galaxy FM",
+        "type": "audio/mpeg",
+        "url": "https://galaxyfm.se/",
+        "cros": true,
+        "stream": "http://galaxyfm.radioca.st:8692/stream/1/",
+        "features": "/img/europe/sweden/galaxy-fm.png",
+        "favorite": false
+    },
+    "partille-savedalen": {
+        "title": "Radio 88 (Partille Savedalen)",
+        "type": "audio/aac",
+        "url": "https://radio88.se/",
+        "cros": false,
+        "stream": "https://streaming.943.se/radio88",
+        "features": "/img/europe/sweden/partille-savedalen.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/partille-savedalen?time="
+    },
+    "bastad": {
+        "title": "Radio Bastad",
+        "type": "audio/mpeg",
+        "url": "https://www.radiobastad.se/",
+        "cros": false,
+        "stream": "https://audio-edge-cmc51.fra.h.radiomast.io/0cf89221-143e-4e91-8c1a-3668a99404ac",
+        "features": "/img/europe/sweden/bastad.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/bastad?time="
+    },
+    "treby": {
+        "title": "Radio Treby (Vara)",
+        "type": "audio/mpeg",
+        "url": "https://www.radiotreby.se/",
+        "cros": false,
+        "stream": "https://streaming.943.se/treby878",
+        "features": "/img/europe/sweden/treby.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/treby?time="
+    },
+    "hitcity": {
+        "title": "Hitcity (Landskrona)",
+        "type": "audio/mpeg",
+        "url": "https://hitcity.se/",
+        "cros": true,
+        "stream": "http://hitcity.bredbandsson.se/hitcity392kbps",
+        "features": "/img/europe/sweden/hitcity.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/hitcity?time="
+    },
+    "radioapans-knattekanal": {
+        "title": "Radioapans knattekanal",
+        "type": "audio/aac",
+        "url": "https://sverigesradio.se/radioapansknattekanal",
+        "cros": false,
+        "stream": "https://http-live.sr.se/knattekanalen-aac-192",
+        "features": "/img/europe/sweden/radioapans-knattekanal.png",
+        "favorite": false
+    },
+    "pop-rock": {
+        "title": "Radio Pop and Rock",
+        "type": "audio/mpeg",
+        "url": "http://poporock.com/",
+        "cros": true,
+        "stream": "http://stream.ueteknik.se:8000/stream/10/",
+        "features": "/img/europe/sweden/pop-rock.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/pop-rock?time="
+    },
+    "trelleborg": {
+        "title": "Radio Trelleborg",
+        "type": "audio/aac",
+        "url": "https://www.radiotrelleborg.se/",
+        "cros": false,
+        "stream": "https://stream.nsp.se/RaTbg_AAC_Hi",
+        "features": "/img/europe/sweden/trelleborg.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/trelleborg?time="
+    },
+    "sydvast": {
+        "title": "Radio Sydväst (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://radiosydvast.se/",
+        "cros": false,
+        "stream": "https://radiosydvast.duckdns.org:12933/stream",
+        "features": "/img/europe/sweden/sydvast.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/sydvast?time="
+    },
+    "mrs-fm": {
+        "title": "MRS (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.mrs.se/",
+        "cros": true,
+        "stream": "http://radiostreamthree.mine.nu/MRS9050one",
+        "features": "/img/europe/sweden/mrs-fm.png",
+        "favorite": false
+    },
+    "malmokanalen": {
+        "title": "Malmokanalen (Malmo)",
+        "type": "audio/aac",
+        "url": "http://www.malmokanalen.dinstudio.se/",
+        "cros": true,
+        "stream": "http://stream.nsp.se:8000/MNR89_AAC_Hi",
+        "features": "/img/europe/sweden/malmokanalen.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/malmokanalen?time="
+    },
+    "siljan-stockholm": {
+        "title": "Radio Siljan (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://radiosiljan.com/",
+        "cros": true,
+        "stream": "http://stream.ueteknik.se:8000/stream/1/",
+        "features": "/img/europe/sweden/siljan-stockholm.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/siljan-stockholm?time="
+    },
+    "sr-international": {
+        "title": "Sveriges Radio P6",
+        "type": "audio/mpeg",
+        "url": "https://sverigesradio.se/p6",
+        "cros": false,
+        "stream": "https://http-live.sr.se/srinternational-mp3-192",
+        "features": "/img/europe/sweden/sr-international.png",
+        "favorite": false
+    },
+    "hambastegi": {
+        "title": "Radio Hambastegi",
+        "type": "audio/mpeg",
+        "url": "https://radiohambastegi.com/",
+        "cros": true,
+        "stream": "http://hambastegione.mine.nu:9600/;",
+        "features": "/img/europe/sweden/hambastegi.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/hambastegi?time="
+    },
+    "shahrvand": {
+        "title": "Radio Shahrvand (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://www.jvnf.org/",
+        "cros": true,
+        "stream": "http://radiostreamone.mine.nu:9100/;",
+        "features": "/img/europe/sweden/shahrvand.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/shahrvand?time="
+    },
+    "electro-lounge": {
+        "title": "Electro Lounge",
+        "type": "audio/mpeg",
+        "url": "https://www.viaplayradio.se/electrolounge/",
+        "cros": false,
+        "stream": "https://wr16-ice.stream.khz.se/wr16_mp3?listenerid=2329ba795f6517f0451e5e2469b9c1c0&awparams=companionAds%3Atrue&platform=web&aw_0_1st.playerid=mtgradio-web&aw_0_1st.skey=1570093000",
+        "features": "/img/europe/sweden/electro-lounge.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/72/electro-lounge?time="
+    },
+    "fun-radio": {
+        "title": "Fun Radio (Malmo)",
+        "type": "audio/mpeg",
+        "url": "https://www.funradio.se/",
+        "cros": true,
+        "stream": "http://stream.funradio.se:81/live192",
+        "features": "/img/europe/sweden/fun-radio.png",
+        "favorite": false
+    },
+    "nacka": {
+        "title": "Radio Nacka FM (Stockholm)",
+        "type": "audio/mpeg",
+        "url": "https://radionacka.se/",
+        "cros": true,
+        "stream": "http://radionacka.mine.nu:9990/;",
+        "features": "/img/europe/sweden/nacka.png",
+        "favorite": false
+    },
+    "lite-fm": {
+        "title": "Lite FM (Trollhättan)",
+        "type": "audio/mpeg",
+        "url": "https://www.litefm.se/",
+        "cros": false,
+        "stream": "https://stream.943.se/lite.mp3",
+        "features": "/img/europe/sweden/lite-fm.png",
+        "favorite": false
+    }
+}

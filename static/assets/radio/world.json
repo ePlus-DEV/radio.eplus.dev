@@ -315,6 +315,76 @@
       "data": "/assets/radio/europe/norway.json",
       "timezone": "Europe/Oslo",
       "station": 0
+    },
+    "austria": {
+      "name": "world.europe.austria",
+      "flag": "/img/europe/flags/austria.png",
+      "data": "/assets/radio/europe/austria.json",
+      "timezone": "Europe/Vienna",
+      "station": 0
+    },
+    "poland": {
+      "name": "world.europe.poland",
+      "flag": "/img/europe/flags/poland.png",
+      "data": "/assets/radio/europe/poland.json",
+      "timezone": "Europe/Warsaw",
+      "station": 0
+    },
+    "portugal": {
+      "name": "world.europe.portugal",
+      "flag": "/img/europe/flags/portugal.png",
+      "data": "/assets/radio/europe/portugal.json",
+      "timezone": "Europe/Lisbon",
+      "station": 0
+    },
+    "romania": {
+      "name": "world.europe.romania",
+      "flag": "/img/europe/flags/romania.png",
+      "data": "/assets/radio/europe/romania.json",
+      "timezone": "Europe/Bucharest",
+      "station": 0
+    },
+    "switzerland": {
+      "name": "world.europe.switzerland",
+      "flag": "/img/europe/flags/switzerland.png",
+      "data": "/assets/radio/europe/switzerland.json",
+      "timezone": "Europe/Zurich",
+      "station": 0
+    },
+    "slovenia": {
+      "name": "world.europe.slovenia",
+      "flag": "/img/europe/flags/slovenia.png",
+      "data": "/assets/radio/europe/slovenia.json",
+      "timezone": "Europe/Ljubljana",
+      "station": 0
+    },
+    "serbia": {
+      "name": "world.europe.serbia",
+      "flag": "/img/europe/flags/serbia.png",
+      "data": "/assets/radio/europe/serbia.json",
+      "timezone": "Europe/Belgrade",
+      "station": 0
+    },
+    "finland": {
+      "name": "world.europe.finland",
+      "flag": "/img/europe/flags/finland.png",
+      "data": "/assets/radio/europe/finland.json",
+      "timezone": "Europe/Helsinki",
+      "station": 0
+    },
+    "sweden": {
+      "name": "world.europe.sweden",
+      "flag": "/img/europe/flags/sweden.png",
+      "data": "/assets/radio/europe/sweden.json",
+      "timezone": "Europe/Stockholm",
+      "station": 0
+    },
+    "bulgaria": {
+      "name": "world.europe.bulgaria",
+      "flag": "/img/europe/flags/bulgaria.png",
+      "data": "/assets/radio/europe/bulgaria.json",
+      "timezone": "Europe/Sofia",
+      "station": 0
     }
   },
   "north_america": {

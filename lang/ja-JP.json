@@ -72,7 +72,17 @@
       "luxembourg": "ルクセンブルク",
       "hungary": "ハンガリー",
       "netherlands": "オランダ",
-      "norway": "ノルウェー"
+      "norway": "ノルウェー",
+      "austria": "オーストリア",
+      "poland": "ポーランド",
+      "portugal": "ポルトガル",
+      "romania": "ルーマニア",
+      "switzerland": "スイス",
+      "slovenia": "スロベニア",
+      "serbia": "セルビア",
+      "finland": "フィンランド",
+      "sweden": "スウェーデン",
+      "bulgaria": "ブルガリア"
     },
     "north_america": {
       "name": "北米",

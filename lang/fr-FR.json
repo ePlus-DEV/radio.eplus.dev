@@ -72,7 +72,17 @@
       "luxembourg": "Luxembourg",
       "hungary": "Hungary",
       "netherlands": "Pays-Bas",
-      "norway": "Norvège"
+      "norway": "Norvège",
+      "austria": "Autriche",
+      "poland": "Pologne",
+      "portugal": "Portugal",
+      "romania": "Roumanie",
+      "switzerland": "Suisse",
+      "slovenia": "Slovénie",
+      "serbia": "Serbie",
+      "finland": "Finlande",
+      "sweden": "Suède",
+      "bulgaria": "Bulgarie"
     },
     "north_america": {
       "name": "Amérique du Nord",
