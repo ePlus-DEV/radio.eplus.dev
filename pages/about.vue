@@ -2,16 +2,27 @@
   <div class="min-h-screen bg-gray-100">
     <div class="min-h-screen flex justify-center">
       <div class="w-full mx-auto">
-        <div v-for="(item, index) in items" :key="index" class="flex flex-row w-full">
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          class="flex flex-row w-full"
+        >
           <div :class="item.leftColClass" class="px-2 py-10">
-            <div v-if="item.leftContent" class="flex flex-col w-full rounded-lg shadow bg-white px-4 py-5">
+            <div
+              v-if="item.leftContent"
+              class="flex flex-col w-full rounded-lg shadow bg-white px-4 py-5"
+            >
               <div class="text-gray-600 mb-2 flex justify-between">
                 <div class="font-bold">{{ item.author }}</div>
                 <div v-if="item.showButtons" class="flex flex-row">
-                  <button class="text-blue-500 mr-2 hover:text-blue-300 transition duration-200">
+                  <button
+                    class="text-blue-500 mr-2 hover:text-blue-300 transition duration-200"
+                  >
                     <i class="far fa-edit"></i>
                   </button>
-                  <button class="text-red-500 hover:text-red-300 transition duration-200">
+                  <button
+                    class="text-red-500 hover:text-red-300 transition duration-200"
+                  >
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </div>
@@ -20,8 +31,12 @@
             </div>
           </div>
           <div class="w-1/5 flex justify-center">
-            <div class="relative flex h-full w-1 bg-green-300 items-center justify-center">
-              <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-green-300 leading-none text-center z-10 bg-white font-thin">
+            <div
+              class="relative flex h-full w-1 bg-green-300 items-center justify-center"
+            >
+              <div
+                class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-green-300 leading-none text-center z-10 bg-white font-thin"
+              >
                 <div :data-tip="item.date" class="tooltip">
                   {{ $moment(item.date, "YYYY-MM-DD").fromNow() }}
                 </div>
@@ -29,7 +44,10 @@
             </div>
           </div>
           <div :class="item.rightColClass" class="px-2 py-10">
-            <div v-if="item.rightContent" class="flex flex-col w-full rounded-lg shadow bg-white px-4 py-5">
+            <div
+              v-if="item.rightContent"
+              class="flex flex-col w-full rounded-lg shadow bg-white px-4 py-5"
+            >
               <div class="text-gray-600 mb-2 flex justify-between">
                 <div class="font-bold">{{ item.author }}</div>
               </div>
@@ -125,6 +143,6 @@ export default {
         },
       ],
     };
-  }
+  },
 };
 </script>
