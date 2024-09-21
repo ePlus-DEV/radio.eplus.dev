@@ -62,6 +62,7 @@
 
 <script>
 export default {
+  name: "About",
   head() {
     return {
       title: this.$t("navmenu.about"),
@@ -82,7 +83,7 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2024-09-21",
-          leftContent: `Cải thiện giao diện, bổ sung thanh tìm kiếm, thêm nhiều quốc gia và châu lục mới.`,
+          leftContent: "Cải thiện giao diện, bổ sung thanh tìm kiếm, thêm nhiều quốc gia và châu lục mới.",
           rightContent: "",
           showButtons: false,
         },
@@ -99,8 +100,7 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2021-07-04",
-          leftContent: `Thêm đa ngôn ngữ <kbd class="kbd">Tiếng Anh/Tiếng Việt</kbd>, tổng cộng thời điểm này có 84 kênh thuộc
-            <b>Việt Nam, Singapore, United Kingdom, Australia</b>.`,
+          leftContent: "Thêm đa ngôn ngữ <kbd class=\"kbd\">Tiếng Anh/Tiếng Việt</kbd>, tổng cộng thời điểm này có 84 kênh thuộc <b>Việt Nam, Singapore, United Kingdom, Australia</b>.",
           rightContent: "",
           showButtons: true,
         },
@@ -117,7 +117,7 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2020-02-10",
-          leftContent: `Thêm radio mới thuộc quốc gia <kbd class="kbd">Châu Úc</kbd> các kênh: <b>metro, abc-newsradio</b>.`,
+          leftContent: "Thêm radio mới thuộc quốc gia <kbd class=\"kbd\">Châu Úc</kbd> các kênh: <b>metro, abc-newsradio</b>.",
           rightContent: "",
           showButtons: true,
         },
