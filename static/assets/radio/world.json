@@ -13,6 +13,90 @@
       "data": "/assets/radio/africa/nigeria.json",
       "timezone": "Africa/Lagos",
       "station": 0
+    },
+    "cameroon": {
+      "name": "world.africa.cameroon",
+      "flag": "/img/africa/flags/cameroon.png",
+      "data": "/assets/radio/africa/cameroon.json",
+      "timezone": "Africa/Douala",
+      "station": 0
+    },
+    "congo": {
+      "name": "world.africa.congo",
+      "flag": "/img/africa/flags/congo.png",
+      "data": "/assets/radio/africa/congo.json",
+      "timezone": "Africa/Brazzaville",
+      "station": 0
+    },
+    "cote-d-ivoire": {
+      "name": "world.africa.cote_d_ivoire",
+      "flag": "/img/africa/flags/cote-d-ivoire.png",
+      "data": "/assets/radio/africa/cote-d-ivoire.json",
+      "timezone": "Africa/Abidjan",
+      "station": 0
+    },
+    "egypt": {
+      "name": "world.africa.egypt",
+      "flag": "/img/africa/flags/egypt.png",
+      "data": "/assets/radio/africa/egypt.json",
+      "timezone": "Africa/Cairo",
+      "station": 0
+    },
+    "ghana": {
+      "name": "world.africa.ghana",
+      "flag": "/img/africa/flags/ghana.png",
+      "data": "/assets/radio/africa/ghana.json",
+      "timezone": "Africa/Accra",
+      "station": 0
+    },
+    "kenya": {
+      "name": "world.africa.kenya",
+      "flag": "/img/africa/flags/kenya.png",
+      "data": "/assets/radio/africa/kenya.json",
+      "timezone": "Africa/Nairobi",
+      "station": 0
+    },
+    "madagascar": {
+      "name": "world.africa.madagascar",
+      "flag": "/img/africa/flags/madagascar.png",
+      "data": "/assets/radio/africa/madagascar.json",
+      "timezone": "Indian/Antananarivo",
+      "station": 0
+    },
+    "morocco": {
+      "name": "world.africa.morocco",
+      "flag": "/img/africa/flags/morocco.png",
+      "data": "/assets/radio/africa/morocco.json",
+      "timezone": "Africa/Casablanca",
+      "station": 0
+    },
+    "senegal": {
+      "name": "world.africa.senegal",
+      "flag": "/img/africa/flags/senegal.png",
+      "data": "/assets/radio/africa/senegal.json",
+      "timezone": "Africa/Dakar",
+      "station": 0
+    },
+    "south-africa": {
+      "name": "world.africa.south_africa",
+      "flag": "/img/africa/flags/south-africa.png",
+      "data": "/assets/radio/africa/south-africa.json",
+      "timezone": "Africa/Johannesburg",
+      "station": 0
+    },
+    "tunisia": {
+      "name": "world.africa.tunisia",
+      "flag": "/img/africa/flags/tunisia.png",
+      "data": "/assets/radio/africa/tunisia.json",
+      "timezone": "Africa/Tunis",
+      "station": 0
+    },
+    "uganda": {
+      "name": "world.africa.uganda",
+      "flag": "/img/africa/flags/uganda.png",
+      "data": "/assets/radio/africa/uganda.json",
+      "timezone": "Africa/Kampala",
+      "station": 0
     }
   },
   "asia": {
@@ -192,6 +276,27 @@
       "data": "/assets/radio/south-america/peru.json",
       "timezone": "America/Lima",
       "station": 0
+    },
+    "suriname": {
+      "name": "world.south_america.suriname",
+      "flag": "/img/south-america/flags/suriname.png",
+      "data": "/assets/radio/south-america/suriname.json",
+      "timezone": "America/Paramaribo",
+      "station": 0
+    },
+    "uruguay": {
+      "name": "world.south_america.uruguay",
+      "flag": "/img/south-america/flags/uruguay.png",
+      "data": "/assets/radio/south-america/uruguay.json",
+      "timezone": "America/Montevideo",
+      "station": 0
+    },
+    "venezuela": {
+      "name": "world.south_america.venezuela",
+      "flag": "/img/south-america/flags/venezuela.png",
+      "data": "/assets/radio/south-america/venezuela.json",
+      "timezone": "America/Caracas",
+      "station": 0
     }
   },
   "central_america": {
@@ -228,6 +333,13 @@
       "flag": "/img/central-america/flags/nicaragua.png",
       "data": "/assets/radio/central-america/nicaragua.json",
       "timezone": "America/Managua",
+      "station": 0
+    },
+    "panama": {
+      "name": "world.central_america.panama",
+      "flag": "/img/central-america/flags/panama.png",
+      "data": "/assets/radio/central-america/panama.json",
+      "timezone": "America/Panama",
       "station": 0
     }
   },
@@ -384,6 +496,48 @@
       "flag": "/img/europe/flags/bulgaria.png",
       "data": "/assets/radio/europe/bulgaria.json",
       "timezone": "Europe/Sofia",
+      "station": 0
+    },
+    "belgium": {
+      "name": "world.europe.belgium",
+      "flag": "/img/europe/flags/belgium.png",
+      "data": "/assets/radio/europe/belgium.json",
+      "timezone": "Europe/Brussels",
+      "station": 0
+    },
+    "czechia": {
+      "name": "world.europe.czechia",
+      "flag": "/img/europe/flags/czechia.png",
+      "data": "/assets/radio/europe/czechia.json",
+      "timezone": "Europe/Prague",
+      "station": 0
+    },
+    "denmark": {
+      "name": "world.europe.denmark",
+      "flag": "/img/europe/flags/denmark.png",
+      "data": "/assets/radio/europe/denmark.json",
+      "timezone": "Europe/Copenhagen",
+      "station": 0
+    },
+    "estonia": {
+      "name": "world.europe.estonia",
+      "flag": "/img/europe/flags/estonia.png",
+      "data": "/assets/radio/europe/estonia.json",
+      "timezone": "Europe/Tallinn",
+      "station": 0
+    },
+    "germany": {
+      "name": "world.europe.germany",
+      "flag": "/img/europe/flags/germany.png",
+      "data": "/assets/radio/europe/germany.json",
+      "timezone": "Europe/Berlin",
+      "station": 0
+    },
+    "spain": {
+      "name": "world.europe.spain",
+      "flag": "/img/europe/flags/spain.png",
+      "data": "/assets/radio/europe/spain.json",
+      "timezone": "Europe/Madrid",
       "station": 0
     }
   },

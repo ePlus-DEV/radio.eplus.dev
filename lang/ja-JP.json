@@ -29,7 +29,22 @@
     "africa": {
       "name": "アフリカ",
       "algeria": "アルジェリア",
-      "nigeria": "ナイジェリア"
+      "nigeria": "ナイジェリア",
+      "cameroon": "カメルーン",
+      "congo": "コンゴ",
+      "cote_d_ivoire": "コートジボワール",
+      "egypt": "エジプト",
+      "ghana": "ガーナ",
+      "kenya": "ケニア",
+      "madagascar": "マダガスカル",
+      "morocco": "モロッコ",
+      "senegal": "セネガル",
+      "south_africa": "南アフリカ",
+      "tunisia": "チュニジア",
+      "uganda": "ウガンダ",
+      "suriname": "スリナム",
+      "uruguay": "ウルグアイ",
+      "venezuela": "ベネズエラ"
     },
     "asia": {
       "name": "アジア",
@@ -57,7 +72,8 @@
       "el_salvador": "エルサルバドル",
       "guatemala": "グアテマラ",
       "honduras": "ホンジュラス",
-      "nicaragua": "ニカラグア"
+      "nicaragua": "ニカラグア",
+      "panama": "パナマ"
     },
     "europe": {
       "name": "ヨーロッパ",
@@ -82,7 +98,13 @@
       "serbia": "セルビア",
       "finland": "フィンランド",
       "sweden": "スウェーデン",
-      "bulgaria": "ブルガリア"
+      "bulgaria": "ブルガリア",
+      "belgium": "ベルギー",
+      "czechia": "チェコ",
+      "denmark": "デンマーク",
+      "estonia": "エストニア",
+      "germany": "ドイツ",
+      "spain": "スペイン"
     },
     "north_america": {
       "name": "北米",

@@ -29,7 +29,22 @@
     "africa": {
       "name": "Châu Phi",
       "algeria": "Algeria",
-      "nigeria": "Nigeria"
+      "nigeria": "Nigeria",
+      "cameroon": "Cameroon",
+      "congo": "Congo",
+      "cote_d_ivoire": "Bờ Biển Ngà",
+      "egypt": "Ai Cập",
+      "ghana": "Ghana",
+      "kenya": "Kenya",
+      "madagascar": "Madagascar",
+      "morocco": "Morocco",
+      "senegal": "Senegal",
+      "south_africa": "Nam Phi",
+      "tunisia": "Tunisia",
+      "uganda": "Uganda",
+      "suriname": "Suriname",
+      "uruguay": "Uruguay",
+      "venezuela": "Venezuela"
     },
     "asia": {
       "name": "Châu Á",
@@ -57,7 +72,8 @@
       "el_salvador": "El Salvador",
       "guatemala": "Guatemala",
       "honduras": "Honduras",
-      "nicaragua": "Nicaragua"
+      "nicaragua": "Nicaragua",
+      "panama": "Panama"
     },
     "europe": {
       "name": "Châu Âu",
@@ -82,7 +98,13 @@
       "serbia": "Xéc-bi",
       "finland": "Phần Lan",
       "sweden": "Thụy Điển",
-      "bulgaria": "Bun-ga-ri"
+      "bulgaria": "Bun-ga-ri",
+      "belgium": "Bỉ",
+      "czechia": "Cộng hòa Séc",
+      "denmark": "Đan Mạch",
+      "estonia": "E-xtô-ni-a",
+      "germany": "Đức",
+      "spain": "Tây Ban Nha"
     },
     "north_america": {
       "name": "Bắc Mỹ",

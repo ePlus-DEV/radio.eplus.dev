@@ -29,7 +29,22 @@
     "africa": {
       "name": "Африка",
       "algeria": "Алжир",
-      "nigeria": "Нигерия"
+      "nigeria": "Нигерия",
+      "cameroon": "Камерун",
+      "congo": "Конго",
+      "cote_d_ivoire": "Кот-д'Ивуар",
+      "egypt": "Египет",
+      "ghana": "Гана",
+      "kenya": "Кения",
+      "madagascar": "Мадагаскар",
+      "morocco": "Марокко",
+      "senegal": "Сенегал",
+      "south_africa": "Южная Африка",
+      "tunisia": "Тунис",
+      "uganda": "Уганда",
+      "suriname": "Суринам",
+      "uruguay": "Уругвай",
+      "venezuela": "Венесуэла"
     },
     "asia": {
       "name": "Азия",
@@ -57,7 +72,8 @@
       "el_salvador": "Сальвадор",
       "guatemala": "Гватемала",
       "honduras": "Гондурас",
-      "nicaragua": "Никарагуа"
+      "nicaragua": "Никарагуа",
+      "panama": "Панама"
     },
     "europe": {
       "name": "Европа",
@@ -82,7 +98,13 @@
       "serbia": "Сербия",
       "finland": "Финляндия",
       "sweden": "Швеция",
-      "bulgaria": "Болгария"
+      "bulgaria": "Болгария",
+      "belgium": "Бельгия",
+      "czechia": "Чехия",
+      "denmark": "Дания",
+      "estonia": "Эстония",
+      "germany": "Германия",
+      "spain": "Испания"
     },
     "north_america": {
       "name": "Северная Америка",
