@@ -154,7 +154,7 @@ export default {
               data.deployments[0].created_at,
             ).format("LLLL");
           }
-          setInterval(this.getLastUpdate, 60000);
+            setInterval(this.getLastUpdate, 900000); // 15 minutes
         })
         .catch((error) => {
           console.log(error);
