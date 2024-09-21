@@ -55,6 +55,13 @@
       "data": "/assets/radio/africa/kenya.json",
       "timezone": "Africa/Nairobi",
       "station": 0
+    },
+    "madagascar": {
+      "name": "world.africa.madagascar",
+      "flag": "/img/africa/flags/madagascar.png",
+      "data": "/assets/radio/africa/madagascar.json",
+      "timezone": "Indian/Antananarivo",
+      "station": 0
     }
   },
   "asia": {
