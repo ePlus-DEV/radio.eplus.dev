@@ -283,6 +283,13 @@
       "data": "/assets/radio/south-america/suriname.json",
       "timezone": "America/Paramaribo",
       "station": 0
+    },
+    "uruguay": {
+      "name": "world.south_america.uruguay",
+      "flag": "/img/south-america/flags/uruguay.png",
+      "data": "/assets/radio/south-america/uruguay.json",
+      "timezone": "America/Montevideo",
+      "station": 0
     }
   },
   "central_america": {
