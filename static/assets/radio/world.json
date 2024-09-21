@@ -34,6 +34,13 @@
       "data": "/assets/radio/africa/cote-d-ivoire.json",
       "timezone": "Africa/Abidjan",
       "station": 0
+    },
+    "egypt": {
+      "name": "world.africa.egypt",
+      "flag": "/img/africa/flags/egypt.png",
+      "data": "/assets/radio/africa/egypt.json",
+      "timezone": "Africa/Cairo",
+      "station": 0
     }
   },
   "asia": {
