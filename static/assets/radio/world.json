@@ -20,6 +20,13 @@
       "data": "/assets/radio/africa/cameroon.json",
       "timezone": "Africa/Douala",
       "station": 0
+    },
+    "congo": {
+      "name": "world.africa.congo",
+      "flag": "/img/africa/flags/congo.png",
+      "data": "/assets/radio/africa/congo.json",
+      "timezone": "Africa/Brazzaville",
+      "station": 0
     }
   },
   "asia": {
