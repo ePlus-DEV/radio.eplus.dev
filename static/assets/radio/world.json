@@ -41,6 +41,13 @@
       "data": "/assets/radio/africa/egypt.json",
       "timezone": "Africa/Cairo",
       "station": 0
+    },
+    "ghana": {
+      "name": "world.africa.ghana",
+      "flag": "/img/africa/flags/ghana.png",
+      "data": "/assets/radio/africa/ghana.json",
+      "timezone": "Africa/Accra",
+      "station": 0
     }
   },
   "asia": {
