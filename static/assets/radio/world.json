@@ -27,6 +27,13 @@
       "data": "/assets/radio/africa/congo.json",
       "timezone": "Africa/Brazzaville",
       "station": 0
+    },
+    "cote-d-ivoire": {
+      "name": "world.africa.cote_d_ivoire",
+      "flag": "/img/africa/flags/cote-d-ivoire.png",
+      "data": "/assets/radio/africa/cote-d-ivoire.json",
+      "timezone": "Africa/Abidjan",
+      "station": 0
     }
   },
   "asia": {
