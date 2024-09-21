@@ -276,6 +276,13 @@
       "data": "/assets/radio/south-america/peru.json",
       "timezone": "America/Lima",
       "station": 0
+    },
+    "suriname": {
+      "name": "world.south_america.suriname",
+      "flag": "/img/south-america/flags/suriname.png",
+      "data": "/assets/radio/south-america/suriname.json",
+      "timezone": "America/Paramaribo",
+      "station": 0
     }
   },
   "central_america": {
