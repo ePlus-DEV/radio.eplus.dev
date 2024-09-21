@@ -290,6 +290,13 @@
       "data": "/assets/radio/south-america/uruguay.json",
       "timezone": "America/Montevideo",
       "station": 0
+    },
+    "venezuela": {
+      "name": "world.south_america.venezuela",
+      "flag": "/img/south-america/flags/venezuela.png",
+      "data": "/assets/radio/south-america/venezuela.json",
+      "timezone": "America/Caracas",
+      "station": 0
     }
   },
   "central_america": {
