@@ -76,6 +76,13 @@
       "data": "/assets/radio/africa/senegal.json",
       "timezone": "Africa/Dakar",
       "station": 0
+    },
+    "south-africa": {
+      "name": "world.africa.south_africa",
+      "flag": "/img/africa/flags/south-africa.png",
+      "data": "/assets/radio/africa/south-africa.json",
+      "timezone": "Africa/Johannesburg",
+      "station": 0
     }
   },
   "asia": {
