@@ -6,7 +6,7 @@
           <div :class="item.leftColClass" class="px-2 py-10">
             <div v-if="item.leftContent" class="flex flex-col w-full rounded-lg shadow bg-white px-4 py-5">
               <div class="text-gray-600 mb-2 flex justify-between">
-                <div class="font-bold">{{ item.author }}</div>
+                <div class="font-bold">David Nguyen</div>
                 <div v-if="item.showButtons" class="flex flex-row">
                   <button class="text-blue-500 mr-2 hover:text-blue-300 transition duration-200">
                     <i class="far fa-edit"></i>
@@ -64,7 +64,6 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2021-10-25",
-          author: "David Nguyen",
           leftContent: "",
           rightContent: `Thay đổi giao diện mới, bộ nhận diện thương hiệu, vẫn duy trì phiên bản cũ tại địa chỉ
             <a class="font-medium" target="_blank" rel="external nofollow noopener" href="https://old-radio.eplus.dev">https://old-radio.eplus.dev</a>.`,
@@ -74,7 +73,6 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2021-07-04",
-          author: "David Nguyen",
           leftContent: `Thêm đa ngôn ngữ <kbd class="kbd">Tiếng Anh/Tiếng Việt</kbd>, tổng cộng thời điểm này có 84 kênh thuộc
             <b>Việt Nam, Singapore, United Kingdom, Australia</b>.`,
           rightContent: "",
@@ -84,7 +82,6 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2020-02-17",
-          author: "David Nguyen",
           leftContent: "",
           rightContent: `<p>* Thêm radio mới thuộc quốc gia <kbd class="kbd">Vương quốc Anh</kbd> kênh: <b>Heart UK</b>.</p>
             <p>* Thêm radio mới thuộc quốc gia <kbd class="kbd">Singapore</kbd> các kênh: <b>Love 972, class 95, 987FM</b>.</p>`,
@@ -94,7 +91,6 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2020-02-10",
-          author: "David Nguyen",
           leftContent: `Thêm radio mới thuộc quốc gia <kbd class="kbd">Châu Úc</kbd> các kênh: <b>metro, abc-newsradio</b>.`,
           rightContent: "",
           showButtons: true,
@@ -103,7 +99,6 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2019-10-22",
-          author: "David Nguyen",
           leftContent: "",
           rightContent: `Ra mắt trang web nghe radio online đầu tiên với 8 kênh:
             <b>VOV1, VOV2, VOV3, VOV4, VOV5, VOV English, VOV giao thông TP.HCM và VOV giao thông Hà Nội</b>.`,
@@ -113,7 +108,6 @@ export default {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
           date: "2019-10-19",
-          author: "David Nguyen",
           leftContent: `Sở thích nghe đài bắt đầu từ những ngày thuở nhỏ, tôi sinh ra giữ những nền khoa học mới bắt đầu phát triển. Thuở nhỏ chỉ có
             chiếc đài radio, về sau khi các phương tiên thông tin phát triển như tivi thì chiếc đài dần biết mất. Khoảng những năm 2010, bắt đầu có
             những anten chảo, có chức năng nghe đài, tình cờ nghe được những đài ngày đó như là <b>ZoneFM</b>. Một thời gian sau khi học tập tại TP.HCM,
