@@ -49,11 +49,10 @@
               rel="external nofollow noopener noreferrer"
               href="https://www.digitalocean.com/?refcode=bfa0034e378d&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"
             >
-              <nuxt-img
+              <img
                 loading="lazy"
                 :src="`https://img.shields.io/badge/${encodeURIComponent(status)}-${encodeURIComponent(color)}.svg?style=for-the-badge&logo=digitalOcean&logoColor=white`"
                 alt="DigitalOcean Referral Badge"
-                :placeholder="$config.placeholder"
               />
             </a>
           </div>
@@ -144,10 +143,10 @@ export default {
             this.lastUpdate = this.$moment(
               data.deployments[0].phase_last_updated_at,
             ).format("LLLL");
-            this.status = "digitalocean";
+            this.status = `digitalocean`;
             this.color = "#0167ff";
           } else {
-            this.status = `Deployment_${data.deployments[0].phase}`;
+            this.status = `Deployment_${total_steps}/${success_steps}`;
             this.color = "#031b4e";
             this.lastUpdate = this.$moment(
               data.deployments[0].created_at,
