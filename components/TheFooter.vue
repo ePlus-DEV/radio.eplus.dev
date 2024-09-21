@@ -86,7 +86,7 @@ export default {
     return {
       status: "digitalocean",
       color: "#0167ff",
-      lastUpdate: "",
+      lastUpdate: new Date().getFullYear(),
       links: [
         { id: 1, to: "/about", text: "navmenu.about" },
         { id: 2, to: this.$config.Blog, text: "navmenu.blog" },
@@ -148,7 +148,7 @@ export default {
             this.status = "digitalocean";
             this.color = "#0167ff";
           } else {
-            this.status = "Deployment_" + data.deployments[0].phase;
+            this.status = `Deployment_${data.deployments[0].phase}`;
             this.color = "#031b4e";
             this.lastUpdate = this.$moment(
               data.deployments[0].created_at,
