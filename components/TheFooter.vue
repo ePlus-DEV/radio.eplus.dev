@@ -143,7 +143,7 @@ export default {
             this.lastUpdate = this.$moment(
               data.deployments[0].phase_last_updated_at,
             ).format("LLLL");
-            this.status = `digitalocean`;
+            this.status = "digitalocean";
             this.color = "#0167ff";
           } else {
             this.status = `Deployment_(${total_steps}/${success_steps})`;
