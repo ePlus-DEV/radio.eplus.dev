@@ -229,6 +229,13 @@
       "data": "/assets/radio/central-america/nicaragua.json",
       "timezone": "America/Managua",
       "station": 0
+    },
+    "panama": {
+      "name": "world.central_america.panama",
+      "flag": "/img/central-america/flags/panama.png",
+      "data": "/assets/radio/central-america/panama.json",
+      "timezone": "America/Panama",
+      "station": 0
     }
   },
   "europe": {
