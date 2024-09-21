@@ -90,6 +90,13 @@
       "data": "/assets/radio/africa/tunisia.json",
       "timezone": "Africa/Tunis",
       "station": 0
+    },
+    "uganda": {
+      "name": "world.africa.uganda",
+      "flag": "/img/africa/flags/uganda.png",
+      "data": "/assets/radio/africa/uganda.json",
+      "timezone": "Africa/Kampala",
+      "station": 0
     }
   },
   "asia": {
