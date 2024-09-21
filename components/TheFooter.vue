@@ -146,7 +146,7 @@ export default {
             this.status = "digitalocean";
             this.color = "#0167ff";
           } else {
-            this.status = `Deployment_(${total_steps}/${success_steps})`;
+            this.status = `Deployment_(${success_steps}/${total_steps})`;
             this.color = "#031b4e";
             this.lastUpdate = this.$moment(
               data.deployments[0].created_at,
