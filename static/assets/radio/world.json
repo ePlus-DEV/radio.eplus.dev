@@ -83,6 +83,13 @@
       "data": "/assets/radio/africa/south-africa.json",
       "timezone": "Africa/Johannesburg",
       "station": 0
+    },
+    "tunisia": {
+      "name": "world.africa.tunisia",
+      "flag": "/img/africa/flags/tunisia.png",
+      "data": "/assets/radio/africa/tunisia.json",
+      "timezone": "Africa/Tunis",
+      "station": 0
     }
   },
   "asia": {
