@@ -81,6 +81,23 @@ export default {
         {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
+          date: "2024-09-21",
+          leftContent: `Cải thiện giao diện, bổ sung thanh tìm kiếm, thêm nhiều quốc gia và châu lục mới.`,
+          rightContent: "",
+          showButtons: false,
+        },
+        {
+          leftColClass: "w-2/5",
+          rightColClass: "w-2/5",
+          date: "2021-10-25",
+          leftContent: "",
+          rightContent: `Thay đổi giao diện mới, bộ nhận diện thương hiệu, vẫn duy trì phiên bản cũ tại địa chỉ
+            <a class="font-medium" target="_blank" rel="external nofollow noopener" href="https://old-radio.eplus.dev">https://old-radio.eplus.dev</a>.`,
+          showButtons: false,
+        },
+        {
+          leftColClass: "w-2/5",
+          rightColClass: "w-2/5",
           date: "2021-10-25",
           leftContent: "",
           rightContent: `Thay đổi giao diện mới, bộ nhận diện thương hiệu, vẫn duy trì phiên bản cũ tại địa chỉ
