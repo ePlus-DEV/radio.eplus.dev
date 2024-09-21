@@ -98,15 +98,6 @@ export default {
         {
           leftColClass: "w-2/5",
           rightColClass: "w-2/5",
-          date: "2021-10-25",
-          leftContent: "",
-          rightContent: `Thay đổi giao diện mới, bộ nhận diện thương hiệu, vẫn duy trì phiên bản cũ tại địa chỉ
-            <a class="font-medium" target="_blank" rel="external nofollow noopener" href="https://old-radio.eplus.dev">https://old-radio.eplus.dev</a>.`,
-          showButtons: false,
-        },
-        {
-          leftColClass: "w-2/5",
-          rightColClass: "w-2/5",
           date: "2021-07-04",
           leftContent: `Thêm đa ngôn ngữ <kbd class="kbd">Tiếng Anh/Tiếng Việt</kbd>, tổng cộng thời điểm này có 84 kênh thuộc
             <b>Việt Nam, Singapore, United Kingdom, Australia</b>.`,
