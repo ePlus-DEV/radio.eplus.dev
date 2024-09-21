@@ -50,7 +50,8 @@
               href="https://www.digitalocean.com/?refcode=bfa0034e378d&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"
             >
               <img
-                :src="`https://img.shields.io/badge/${status}-${color}.svg?style=for-the-badge&logo=digitalOcean&logoColor=white`"
+                loading="lazy"
+                :src="`https://img.shields.io/badge/${encodeURIComponent(status)}-${encodeURIComponent(color)}.svg?style=for-the-badge&logo=digitalOcean&logoColor=white`"
                 alt="DigitalOcean Referral Badge"
               />
             </a>
@@ -83,14 +84,13 @@ export default {
   data() {
     return {
       status: "digitalocean",
-      color: "%230167ff",
-      lastUpdate: "",
+      color: "#0167ff",
+      lastUpdate: new Date().getFullYear(),
       links: [
         { id: 1, to: "/about", text: "navmenu.about" },
-        { id: 2, to: this.$config.Blog, text: "navmenu.blog" },
-        { id: 3, to: "/privacy-policy", text: "navmenu.privacy" },
-        { id: 4, to: "/terms-of-use", text: "navmenu.terms" },
-        { id: 5, to: "/statistics", text: "navmenu.statistics" },
+        { id: 2, to: "/privacy-policy", text: "navmenu.privacy" },
+        { id: 3, to: "/terms-of-use", text: "navmenu.terms" },
+        { id: 4, to: "/statistics", text: "navmenu.statistics" },
       ],
       socialLinks: [
         {
@@ -144,14 +144,15 @@ export default {
               data.deployments[0].phase_last_updated_at,
             ).format("LLLL");
             this.status = "digitalocean";
-            this.color = "%230167ff";
+            this.color = "#0167ff";
           } else {
-            this.status = "Deployment";
-            this.color = "%23031b4e";
+            this.status = `Deployment_(${total_steps}/${success_steps})`;
+            this.color = "#031b4e";
             this.lastUpdate = this.$moment(
               data.deployments[0].created_at,
             ).format("LLLL");
           }
+          setInterval(this.getLastUpdate, 900000); // 15 minutes
         })
         .catch((error) => {
           console.log(error);
@@ -159,7 +160,7 @@ export default {
     },
   },
   created() {
-    setInterval(this.getLastUpdate, 60000);
+    this.getLastUpdate();
   },
 };
 </script>
