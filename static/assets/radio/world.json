@@ -392,6 +392,13 @@
       "data": "/assets/radio/europe/belgium.json",
       "timezone": "Europe/Brussels",
       "station": 0
+    },
+    "czechia": {
+      "name": "world.europe.czechia",
+      "flag": "/img/europe/flags/czechia.png",
+      "data": "/assets/radio/europe/czechia.json",
+      "timezone": "Europe/Prague",
+      "station": 0
     }
   },
   "north_america": {
