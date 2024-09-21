@@ -89,10 +89,9 @@ export default {
       lastUpdate: new Date().getFullYear(),
       links: [
         { id: 1, to: "/about", text: "navmenu.about" },
-        { id: 2, to: this.$config.Blog, text: "navmenu.blog" },
-        { id: 3, to: "/privacy-policy", text: "navmenu.privacy" },
-        { id: 4, to: "/terms-of-use", text: "navmenu.terms" },
-        { id: 5, to: "/statistics", text: "navmenu.statistics" },
+        { id: 2, to: "/privacy-policy", text: "navmenu.privacy" },
+        { id: 3, to: "/terms-of-use", text: "navmenu.terms" },
+        { id: 4, to: "/statistics", text: "navmenu.statistics" },
       ],
       socialLinks: [
         {
