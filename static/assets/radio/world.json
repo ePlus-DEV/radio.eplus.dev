@@ -399,6 +399,13 @@
       "data": "/assets/radio/europe/czechia.json",
       "timezone": "Europe/Prague",
       "station": 0
+    },
+    "denmark": {
+      "name": "world.europe.denmark",
+      "flag": "/img/europe/flags/denmark.png",
+      "data": "/assets/radio/europe/denmark.json",
+      "timezone": "Europe/Copenhagen",
+      "station": 0
     }
   },
   "north_america": {
