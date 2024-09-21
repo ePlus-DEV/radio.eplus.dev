@@ -69,6 +69,13 @@
       "data": "/assets/radio/africa/morocco.json",
       "timezone": "Africa/Casablanca",
       "station": 0
+    },
+    "senegal": {
+      "name": "world.africa.senegal",
+      "flag": "/img/africa/flags/senegal.png",
+      "data": "/assets/radio/africa/senegal.json",
+      "timezone": "Africa/Dakar",
+      "station": 0
     }
   },
   "asia": {
