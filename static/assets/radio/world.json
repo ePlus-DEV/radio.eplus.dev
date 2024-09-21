@@ -420,6 +420,13 @@
       "data": "/assets/radio/europe/germany.json",
       "timezone": "Europe/Berlin",
       "station": 0
+    },
+    "spain": {
+      "name": "world.europe.spain",
+      "flag": "/img/europe/flags/spain.png",
+      "data": "/assets/radio/europe/spain.json",
+      "timezone": "Europe/Madrid",
+      "station": 0
     }
   },
   "north_america": {
