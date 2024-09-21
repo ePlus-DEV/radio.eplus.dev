@@ -406,6 +406,13 @@
       "data": "/assets/radio/europe/denmark.json",
       "timezone": "Europe/Copenhagen",
       "station": 0
+    },
+    "estonia": {
+      "name": "world.europe.estonia",
+      "flag": "/img/europe/flags/estonia.png",
+      "data": "/assets/radio/europe/estonia.json",
+      "timezone": "Europe/Tallinn",
+      "station": 0
     }
   },
   "north_america": {
