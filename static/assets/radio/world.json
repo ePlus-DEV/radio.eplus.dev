@@ -13,6 +13,13 @@
       "data": "/assets/radio/africa/nigeria.json",
       "timezone": "Africa/Lagos",
       "station": 0
+    },
+    "cameroon": {
+      "name": "world.africa.cameroon",
+      "flag": "/img/africa/flags/cameroon.png",
+      "data": "/assets/radio/africa/cameroon.json",
+      "timezone": "Africa/Douala",
+      "station": 0
     }
   },
   "asia": {

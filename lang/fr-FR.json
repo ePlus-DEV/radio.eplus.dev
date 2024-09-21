@@ -29,7 +29,8 @@
     "africa": {
       "name": "Afrique",
       "algeria": "Algérie",
-      "nigeria": "Nigeria"
+      "nigeria": "Nigeria",
+      "cameroon": "Cameroun"
     },
     "asia": {
       "name": "Asie",
