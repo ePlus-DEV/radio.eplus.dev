@@ -48,6 +48,13 @@
       "data": "/assets/radio/africa/ghana.json",
       "timezone": "Africa/Accra",
       "station": 0
+    },
+    "kenya": {
+      "name": "world.africa.kenya",
+      "flag": "/img/africa/flags/kenya.png",
+      "data": "/assets/radio/africa/kenya.json",
+      "timezone": "Africa/Nairobi",
+      "station": 0
     }
   },
   "asia": {
