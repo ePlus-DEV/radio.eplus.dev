@@ -62,6 +62,13 @@
       "data": "/assets/radio/africa/madagascar.json",
       "timezone": "Indian/Antananarivo",
       "station": 0
+    },
+    "morocco": {
+      "name": "world.africa.morocco",
+      "flag": "/img/africa/flags/morocco.png",
+      "data": "/assets/radio/africa/morocco.json",
+      "timezone": "Africa/Casablanca",
+      "station": 0
     }
   },
   "asia": {
