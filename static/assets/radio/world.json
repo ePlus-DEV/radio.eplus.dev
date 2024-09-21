@@ -385,6 +385,13 @@
       "data": "/assets/radio/europe/bulgaria.json",
       "timezone": "Europe/Sofia",
       "station": 0
+    },
+    "belgium": {
+      "name": "world.europe.belgium",
+      "flag": "/img/europe/flags/belgium.png",
+      "data": "/assets/radio/europe/belgium.json",
+      "timezone": "Europe/Brussels",
+      "station": 0
     }
   },
   "north_america": {
