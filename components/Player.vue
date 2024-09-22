@@ -376,7 +376,7 @@
               v-for="(item, index) in playlist"
               :key="index"
             >
-              <nuxt-img
+              <img
                 loading="lazy"
                 class="w-10 h-10 object-cover rounded-lg"
                 alt="User avatar"
@@ -387,7 +387,6 @@
                       ? thumb
                       : player.features
                 "
-                :placeholder="$config.placeholderStation"
               />
               <div class="flex flex-col px-2 w-4/5">
                 <span
