@@ -1,21 +1,17 @@
 <template>
-    <header>
-        <nav>
-            <ul>
-                <li>
-                    <nuxt-link to="/">Home</nuxt-link>
-                </li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <nuxt-link to="/">Home</nuxt-link>
+        </li>
+      </ul>
+    </nav>
+  </header>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
