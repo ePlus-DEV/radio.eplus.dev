@@ -3,8 +3,8 @@
         <media-player class="player" title="Sprite Fight" :src="$src" crossOrigin playsInline
             @provider-change="onProviderChange" @can-play="onCanPlay" ref="$player" artist="David">
             <media-provider>
-                <!-- <media-poster class="vds-poster" src="https://files.vidstack.io/sprite-fight/poster.webp"
-                    alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!" /> -->
+                <media-poster class="vds-poster" src="https://files.vidstack.io/sprite-fight/poster.webp"
+                    alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!" />
             </media-provider>
             <!-- Layouts -->
             <media-audio-layout />
