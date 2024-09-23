@@ -32,5 +32,8 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "daisyui": "^4.12.10",
     "tailwindcss": "^3.4.12"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
