@@ -12,7 +12,9 @@
   "dependencies": {
     "@nuxtjs/color-mode": "^3.5.1",
     "@vesp/nuxt-fontawesome": "^1.1.0",
+    "media-icons": "^1.1.5",
     "nuxt": "^3.13.0",
+    "vidstack": "^1.12.11",
     "vue": "latest",
     "vue-router": "latest"
   },
