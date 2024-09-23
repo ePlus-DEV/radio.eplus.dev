@@ -1,10 +1,10 @@
 <template>
     <div>
         <media-player class="player" title="Sprite Fight" :src="$src" crossOrigin playsInline
-            @provider-change="onProviderChange" @can-play="onCanPlay" ref="$player">
+            @provider-change="onProviderChange" @can-play="onCanPlay" ref="$player" artist="David">
             <media-provider>
-                <media-poster class="vds-poster" src="https://files.vidstack.io/sprite-fight/poster.webp"
-                    alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!" />
+                <!-- <media-poster class="vds-poster" src="https://files.vidstack.io/sprite-fight/poster.webp"
+                    alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!" /> -->
             </media-provider>
             <!-- Layouts -->
             <media-audio-layout />
@@ -59,7 +59,7 @@ function onCanPlay(event: MediaCanPlayEvent) {
 function changeSource(type: string) {
     switch (type) {
         case 'audio':
-            $src.value = 'https://stream.zeno.fm/u9mphfk604zuv.aac';
+            $src.value = 'https://multi-playlist-zmp3.zmdcdn.me/TgLpe29pVg0/zhls/playback-realtime/e75e51f26db784e9dda6/index.m3u8';
             break;
         case 'video':
             $src.value = 'https://files.vidstack.io/sprite-fight/720p.mp4';
