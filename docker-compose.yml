@@ -1,10 +1,18 @@
-version: "3"
+version: "3.7"
+
 services:
-  app:
-    build: .
+  nuxt-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nuxt-app
+    image: eplus-radio/nuxt-app
+    restart: always
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: npm start
+    command: "npm run dev"
+    networks:
+      - nuxt-network
+networks:
+  nuxt-network:
+    driver: bridge
