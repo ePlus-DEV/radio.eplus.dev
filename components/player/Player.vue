@@ -234,6 +234,11 @@ const $player = ref<MediaPlayerElement>(),
   waiting = ref(false);
 const button = ref(true);
 
+/**
+ * Handles the play action for the player.
+ * If the player is not currently waiting, it will start playing and set a waiting state.
+ * The waiting state is reset after a simulated waiting time of 1 second.
+ */
 function onPlay() {
   if (!waiting.value) {
     $player.value?.play();
@@ -244,6 +249,13 @@ function onPlay() {
   }
 }
 
+/**
+ * Pauses the player if it is not already waiting.
+ * 
+ * This function checks if the player is currently not in a waiting state.
+ * If not, it pauses the player and sets the waiting state to true.
+ * After a simulated waiting time of 1 second, it resets the waiting state to false.
+ */
 function onPause() {
   if (!waiting.value) {
     $player.value?.pause();
@@ -271,12 +283,12 @@ onMounted(() => {
    */
   // for (const track of textTracks) $player.value!.textTracks.add(track);
 
-  // Subscribe to state updates - you can connect them to Vue refs if needed.
-  return $player.value!.subscribe(({ paused }: { paused: boolean }) => {
+// Subscribe to state updates - you can connect them to Vue refs if needed.
+return $player.value?.subscribe(({ paused }: { paused: boolean }) => {
     button.value = !paused;
     console.log("is paused?", "->", paused);
     // console.log('is audio view?', '->', viewType === 'audio');
-  });
+});
 });
 
 /**
