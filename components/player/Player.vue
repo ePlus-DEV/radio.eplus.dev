@@ -237,9 +237,9 @@ import type { MediaPlayerElement } from "vidstack/elements";
 
 const $player = ref<MediaPlayerElement>(),
   $src = ref(""),
-  waiting = ref(true);
-const button = ref(true);
-let streamError = ref(false);
+  waiting = ref(true),
+  streamError = ref(false),
+  button = ref(true);
 
 /**
  * Handles the play action for the player.
