@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
+    "@nuxt/image",
   ],
   app: {
     head: {
@@ -75,7 +76,7 @@ export default defineNuxtConfig({
         flag: "/img/europe/flags/united-kingdom.png",
       },
       {
-        code: "vi",
+        code: "vi-VN",
         file: "vi-VN.json",
         name: "Tiếng Việt",
         flag: "/img/asia/flags/viet-nam.png",
