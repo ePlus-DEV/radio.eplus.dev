@@ -5,7 +5,6 @@ import { vite as vidstack } from "vidstack/plugins";
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  ssr: false,
   pages: true,
   modules: [
     "@nuxtjs/tailwindcss",
