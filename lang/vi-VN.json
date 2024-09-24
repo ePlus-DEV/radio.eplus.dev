@@ -1,0 +1,195 @@
+{
+  "navmenu": {
+    "homepage": "Trang Chủ",
+    "about": "Giới Thiệu",
+    "blog": "Blog",
+    "group": "Nhóm",
+    "terms": "Điều Khoản",
+    "privacy": "Chính sách bảo mật",
+    "contact": "Liên Hệ",
+    "language": "Ngôn ngữ:",
+    "old_version": "#phienbancu",
+    "statistics": "Thống kê",
+    "changelog": "Nhật ký thay đổi"
+  },
+  "terms": {
+    "content": "Chào mừng bạn đến với trang web https://radio.eplus.dev (\"Radio ePlus\") - một sản phẩm của ePlus.DEV. Vui lòng đọc kỹ Thỏa thuận về cung cấp và sử dụng dịch vụ trên trang web https://radio.eplus.dev trước khi bạn sử dụng các tính năng trên trang web \"Radio\" của ePlus. Sau khi đăng ký, bạn đã đọc, hiểu, chấp nhận và tuân thủ các điều khoản dưới đây:",
+    "article_1": {
+      "title": "Bài viết 1: Phi lợi nhuận",
+      "line_1": "Chúng tôi cam kết miễn phí vĩnh viễn, không có bất kỳ phí nào.",
+      "line_2": "Chúng tôi công nhận việc sử dụng nội dung miễn phí từ khắp các đài, các nhà phát triển nội dung từ khắp nơi trên thế giới, vì vậy tôi muốn lan truyền nội dung này đến tất cả mọi người."
+    },
+    "article_2": {
+      "title": "Bài viết 2: Đạo luật Bản quyền Thiên niên kỷ Kỹ thuật số",
+      "line_1": "Radio ePlus coi trọng vấn đề Sở hữu Trí tuệ và cam kết đáp ứng nhu cầu của chủ sở hữu nội dung trong việc quản lý xuất bản nội dung của họ trực tuyến. Cần lưu ý rằng Radio ePlus là một cổng đài phát thanh liên kết đến các trang web bên thứ ba qua cửa sổ pop-up.",
+      "line_2": "Bất kỳ nội dung nào trên các trang web bên thứ ba đều là trách nhiệm của những trang web đó và không phải của Radio ePlus. Chúng tôi không biết liệu nội dung trên các trang web bên thứ ba có được chủ sở hữu nội dung ủy quyền hay không, vì đó là một vấn đề giữa trang web chứa nội dung âm thanh và chủ sở hữu nội dung. Radio ePlus không lưu trữ bất kỳ nội dung âm thanh nào trên máy chủ hoặc mạng của mình."
+    }
+  },
+  "world": {
+    "africa": {
+      "name": "Châu Phi",
+      "algeria": "Algeria",
+      "nigeria": "Nigeria",
+      "cameroon": "Cameroon",
+      "congo": "Congo",
+      "cote_d_ivoire": "Bờ Biển Ngà",
+      "egypt": "Ai Cập",
+      "ghana": "Ghana",
+      "kenya": "Kenya",
+      "madagascar": "Madagascar",
+      "morocco": "Morocco",
+      "senegal": "Senegal",
+      "south_africa": "Nam Phi",
+      "tunisia": "Tunisia",
+      "uganda": "Uganda",
+      "suriname": "Suriname",
+      "uruguay": "Uruguay",
+      "venezuela": "Venezuela"
+    },
+    "asia": {
+      "name": "Châu Á",
+      "viet_nam": "Việt Nam",
+      "singapore": "Singapore",
+      "korea": "Hàn Quốc",
+      "china": "Trung Quốc",
+      "hong_kong": "Hồng Kông",
+      "japan": "Nhật Bản",
+      "malaysia": "Ma-lai-xi-a",
+      "philippines": "Phi-líp-pin",
+      "indonesia": "In-đô-nê-xia",
+      "thailand": "Thái Lan",
+      "bangladesh": "Băng-la-đét",
+      "pakistan": "Pa-ki-xtan",
+      "india": "Ấn Độ",
+      "taiwan": "Đài Loan",
+      "israel": "I-xra-en",
+      "sri_lanka": "Xri Lan-ca",
+      "nepal": "Nê-pan"
+    },
+    "central_america": {
+      "name": "Trung Mỹ",
+      "costa_rica": "Costa Rica",
+      "el_salvador": "El Salvador",
+      "guatemala": "Guatemala",
+      "honduras": "Honduras",
+      "nicaragua": "Nicaragua",
+      "panama": "Panama"
+    },
+    "europe": {
+      "name": "Châu Âu",
+      "united_kingdom": "Vương quốc Anh",
+      "ukraine": "U-cà-rai-na",
+      "russia": "Nga",
+      "france": "Pháp",
+      "greece": "Hy Lạp",
+      "croatia": "Croatia",
+      "ireland": "Ai-len",
+      "italy": "Ý",
+      "luxembourg": "Luxembourg",
+      "hungary": "Hung-ga-ri",
+      "netherlands": "Hà Lan",
+      "norway": "Na Uy",
+      "austria": "Áo",
+      "poland": "Ba Lan",
+      "portugal": "Bồ Đào Nha",
+      "romania": "Ru-ma-ni",
+      "switzerland": "Thụy Sĩ",
+      "slovenia": "Xlô-ven-ni-a",
+      "serbia": "Xéc-bi",
+      "finland": "Phần Lan",
+      "sweden": "Thụy Điển",
+      "bulgaria": "Bun-ga-ri",
+      "belgium": "Bỉ",
+      "czechia": "Cộng hòa Séc",
+      "denmark": "Đan Mạch",
+      "estonia": "E-xtô-ni-a",
+      "germany": "Đức",
+      "spain": "Tây Ban Nha"
+    },
+    "north_america": {
+      "name": "Bắc Mỹ",
+      "cuba": "Cuba",
+      "haiti": "Haiti",
+      "jamaica": "Jamaica",
+      "mexico": "Mê-xi-cô",
+      "puerto_rico": "Puerto Rico",
+      "dominican_republic": "Dominican Republic",
+      "trinidad_and_tobago": "Trinidad và Tobago"
+    },
+    "oceania": {
+      "name": "Châu Đại Dương",
+      "australia": "Châu Úc",
+      "new_zealand": "New Zealand"
+    },
+    "south_america": {
+      "name": "Nam Mỹ",
+      "argentina": "Argentina",
+      "bolivia": "Bolivia",
+      "brazil": "Brazil",
+      "chile": "Chile",
+      "colombia": "Colombia",
+      "ecuador": "Ecuador",
+      "paraguay": "Paraguay",
+      "peru": "Peru",
+      "suriname": "Suriname",
+      "uruguay": "Uruguay",
+      "venezuela": "Venezuela"
+    }
+  },
+  "panel": {
+    "most_popular": "Thịnh hành tại {name}",
+    "frequency": "Tần số",
+    "play_from_radio": "Phát từ Radio",
+    "country": "Quốc gia",
+    "radio_in": "Radio tại {name}",
+    "description": "Mô tả",
+    "category": "Thể Loại",
+    "schedule": "Lịch phát sóng",
+    "playlist": "Danh sách phát",
+    "next": "Kế tiếp",
+    "lyric": "Lời bài hát",
+    "no_lyric": "Không có lời",
+    "updating": "Đang cập nhật..."
+  },
+  "button": {
+    "back": "Quay lại",
+    "close": "Đóng"
+  },
+  "popup": {
+    "search": {
+      "text": "Tìm kiếm...",
+      "stats": "Trang {page}/{nbPages} - {nbHits} kết quả trong {processingTimeMS} mili giây",
+      "category": "Lọc theo quốc gia"
+    }
+  },
+  "notify": {
+    "success": "Thành công",
+    "success_content": "Có thể phát radio: {radio}",
+    "error": "Thất bại",
+    "error_content": "Không thể phát radio: {radio}"
+  },
+  "statistics_tooltip": {
+    "text": "Sự cố: {num} | Ngừng hoạt động: {time} phút | {response}ms"
+  },
+  "404": {
+    "content": "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
+  },
+  "table": {
+    "status": "Trạng thái",
+    "commit": "Cam kết",
+    "created": "Khởi tạo",
+    "updated": "Cập nhật",
+    "published": "Phát hành",
+    "view": "Xem"
+  },
+  "alert": {
+    "play_button": "Theo mặc định của trình duyệt, bạn cần phải nhấn nút ▶ để bắt đầu nghe Radio."
+  },
+  "text": {
+    "guide": "Hướng dẫn",
+    "the_last_90_days": "90 ngày qua",
+    "hosted": "Máy chủ đặt tại {name} - Cập nhật lần cuối {time}",
+    "downtime": "Thời gian ngừng hoạt động",
+    "uptime": "Thời gian hoạt động"
+  }
+}
