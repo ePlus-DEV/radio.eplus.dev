@@ -8,6 +8,6 @@
 
 <script setup lang="ts">
 useSeoMeta({
-  ogImage: '/og-image.png'
-})
+  ogImage: "/og-image.png",
+});
 </script>

@@ -34,7 +34,7 @@ export default defineNuxtConfig({
           content: process.env.FANPAGE,
         },
         { property: "fb:pages", content: "179495025583990" },
-        { property: "fb:app_id", content: "363745774395676" }
+        { property: "fb:app_id", content: "363745774395676" },
       ],
       link: [
         {
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
           href: "/brand/safari-pinned-tab.svg",
         },
       ],
-    }
+    },
   },
   i18n: {
     locales: [
