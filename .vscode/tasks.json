@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run dev",
+      "type": "shell",
+      "command": "npm i; npm run dev",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "one"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "run dev w/o install",
+      "type": "shell",
+      "command": "npm run dev",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "one"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "run build",
+      "type": "shell",
+      "command": "npm run build",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "one"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "run generate",
+      "type": "shell",
+      "command": "npm run generate",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "one"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
