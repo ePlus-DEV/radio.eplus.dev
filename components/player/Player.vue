@@ -241,7 +241,6 @@ const $player = ref<MediaPlayerElement>(),
 const button = ref(true);
 let streamError = ref(false);
 
-
 /**
  * Handles the play action for the player.
  * If the player is not currently waiting, it will start playing and set a waiting state.
@@ -302,9 +301,9 @@ onMounted(() => {
     streamError.value = false;
     console.log("is paused?", "->", paused);
     if (error) {
-        console.error("Playback error occurred");
-        waiting.value = false;
-        streamError.value = true;
+      console.error("Playback error occurred");
+      waiting.value = false;
+      streamError.value = true;
     }
   });
 });
