@@ -273,11 +273,7 @@ changeSource("audio");
 
 onMounted(() => {
   // Select elements with the classes 'vds-play-button' and 'vds-button'
-  const playButtons = document.querySelectorAll(".vds-play-button");
-  const buttons = document.querySelectorAll(".vds-button");
-
-  // Add the 'hidden' class to each selected element
-  playButtons.forEach((button) => button.classList.add("hidden"));
+    document.querySelectorAll(".vds-play-button").forEach(button => button.classList.add("hidden"));
 
   /**
    * You can add these tracks using HTML as well.
