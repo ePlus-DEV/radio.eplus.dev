@@ -43,6 +43,11 @@ const $player = ref<MediaPlayerElement>(),
 changeSource('audio');
 
 
+/**
+ * Handles the change of media provider.
+ *
+ * @param {MediaProviderChangeEvent} event - The event triggered when the media provider changes.
+ */
 function onProviderChange(event: MediaProviderChangeEvent) {
     const provider = event.detail;
     // We can configure provider's here.
@@ -53,14 +58,16 @@ function onProviderChange(event: MediaProviderChangeEvent) {
 
 // We can listen for the `can-play` event to be notified when the player is ready.
 function onCanPlay(event: MediaCanPlayEvent) {
-    // ...
+    console.log('Can play', event.detail);
 }
 
+/**
+ * Changes the source of the player based on the provided type.
+ *
+ * @param {string} type - The type of source to switch to.
+ */
 function changeSource(type: string) {
     switch (type) {
-        case 'audio':
-            $src.value = 'https://multi-playlist-zmp3.zmdcdn.me/TgLpe29pVg0/zhls/playback-realtime/e75e51f26db784e9dda6/index.m3u8';
-            break;
         case 'video':
             $src.value = 'https://files.vidstack.io/sprite-fight/720p.mp4';
             break;
@@ -72,6 +79,9 @@ function changeSource(type: string) {
             break;
         case 'vimeo':
             $src.value = 'vimeo/640499893';
+            break;
+        default:
+            $src.value = 'https://multi-playlist-zmp3.zmdcdn.me/TgLpe29pVg0/zhls/playback-realtime/e75e51f26db784e9dda6/index.m3u8';
             break;
     }
 }
