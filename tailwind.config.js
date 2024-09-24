@@ -4,5 +4,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui"), require('vidstack/tailwind.cjs')],
+  plugins: [require("daisyui"), require("vidstack/tailwind.cjs")],
 };
