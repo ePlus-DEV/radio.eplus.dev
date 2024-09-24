@@ -138,7 +138,7 @@
     "frequency": "Частота",
     "play_from_radio": "Воспроизведение с радио",
     "country": "Страна",
-    "radio_in": "Радио в {имя}",
+    "radio_in": "Радио в {name}",
     "description": "Описание",
     "category": "Категория",
     "schedule": "Расписание",

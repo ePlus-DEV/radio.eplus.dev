@@ -138,7 +138,7 @@
     "frequency": "Fréquence",
     "play_from_radio": "Écouter à la radio",
     "country": "Pays",
-    "radio_in": "Radio à {nom}",
+    "radio_in": "Radio à {name}",
     "description": "Description",
     "category": "Catégorie",
     "schedule": "Calendrier",
