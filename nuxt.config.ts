@@ -13,54 +13,100 @@ export default defineNuxtConfig({
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
   ],
+  app: {
+    head: {
+      titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          hid: "description",
+          name: "description",
+          content: process.env.DESCRIPTION || "",
+        },
+        { name: "msapplication-TileColor", content: "#603cba" },
+        {
+          property: "article:author",
+          content: process.env.FANPAGE,
+        },
+        {
+          property: "article:publisher",
+          content: process.env.FANPAGE,
+        },
+        { property: "fb:pages", content: "179495025583990" },
+        { property: "fb:app_id", content: "363745774395676" }
+      ],
+      link: [
+        {
+          type: "apple-touch-icon",
+          sizes: "180x180",
+          href: "/brand/apple-touch-icon.png",
+        },
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          sizes: "32x32",
+          href: "/brand/favicon-32x32.png",
+        },
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          sizes: "16x16",
+          href: "/brand/favicon-16x16.png",
+        },
+        {
+          rel: "manifest",
+          href: "/brand/site.webmanifest",
+        },
+        {
+          rel: "mask-icon",
+          color: "#5bbad5",
+          href: "/brand/safari-pinned-tab.svg",
+        },
+      ],
+    }
+  },
   i18n: {
     locales: [
       {
         code: "en",
         file: "en-US.json",
-        iso: "en-US",
         name: "English",
         flag: "/img/europe/flags/united-kingdom.png",
       },
       {
         code: "vi",
         file: "vi-VN.json",
-        iso: "vi-VN",
         name: "Tiếng Việt",
         flag: "/img/asia/flags/viet-nam.png",
       },
       {
         code: "ja",
         file: "ja-JP.json",
-        iso: "ja-JP",
         name: "日本語",
         flag: "/img/asia/flags/japan.png",
       },
       {
         code: "cn",
         file: "zh-CN.json",
-        iso: "zh-CN",
         name: "简体中文",
         flag: "/img/asia/flags/china.png",
       },
       {
         code: "tw",
         file: "zh-TW.json",
-        iso: "zh-TW",
         name: "繁體中文",
         flag: "/img/asia/flags/taiwan.png",
       },
       {
         code: "fr",
         file: "fr-FR.json",
-        iso: "fr-FR",
         name: "Français",
         flag: "/img/europe/flags/france.png",
       },
       {
         code: "ru",
         file: "ru-RU.json",
-        iso: "ru-RU",
         name: "Русский",
         flag: "/img/europe/flags/russia.png",
       },
