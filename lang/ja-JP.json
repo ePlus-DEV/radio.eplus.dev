@@ -1,0 +1,192 @@
+{
+  "navmenu": {
+    "homepage": "ホームページ",
+    "about": "約",
+    "blog": "ブログ",
+    "group": "グループ",
+    "terms": "利用規約",
+    "privacy": "プライバシーポリシー",
+    "contact": "コンタクト",
+    "language": "言語：",
+    "old_version": "#oldversion",
+    "statistics": "統計学",
+    "changelog": "変更ログ"
+  },
+  "terms": {
+    "content": "ウェブサイト https://radio.eplus.dev (「Radio ePlus」) へようこそ。ePlus.DEV の製品です。ウェブサイト https://radio.eplus.dev のサービス提供および利用に関する契約を注意深くお読みください。「Radio」ウェブサイト ePlus の機能を使用する前に。登録すると、以下の条件を読み、理解し、受け入れ、遵守したことになります。",
+    "article_1": {
+      "title": "第1条: 非営利",
+      "line_1": "私たちは、いかなる種類の料金もなく、永遠に無料であることを約束します。",
+      "line_2": "私たちは、世界中のステーションやコンテンツ開発者からの無料コンテンツの利用を認識しているため、このコンテンツをすべての人に広めたいと考えています。"
+    },
+    "article_2": {
+      "title": "第2条: デジタルミレニアム著作権法",
+      "line_1": "Radio ePlus は知的財産の問題を非常に真剣に受け止めており、コンテンツ所有者のニーズに応えながら、オンラインでのコンテンツの公開を管理する手助けをすることに尽力しています。Radio ePlus はポップアップによってサードパーティのウェブサイトにリンクするラジオステーションポータルであることに注意してください。",
+      "line_2": "これらのサードパーティのウェブサイト上のコンテンツは、それらのサイトの責任であり、Radio ePlus の責任ではありません。サードパーティのウェブサイト上のコンテンツがコンテンツ所有者によって許可されているかどうかについては、オーディオコンテンツをホストするサイトとコンテンツ所有者の間の問題であるため、Radio ePlus はその知識を持っていません。Radio ePlus は、サーバーやネットワーク上にオーディオコンテンツをホストしていません。"
+    }
+  },
+  "world": {
+    "africa": {
+      "name": "アフリカ",
+      "algeria": "アルジェリア",
+      "nigeria": "ナイジェリア",
+      "cameroon": "カメルーン",
+      "congo": "コンゴ",
+      "cote_d_ivoire": "コートジボワール",
+      "egypt": "エジプト",
+      "ghana": "ガーナ",
+      "kenya": "ケニア",
+      "madagascar": "マダガスカル",
+      "morocco": "モロッコ",
+      "senegal": "セネガル",
+      "south_africa": "南アフリカ",
+      "tunisia": "チュニジア",
+      "uganda": "ウガンダ",
+      "suriname": "スリナム",
+      "uruguay": "ウルグアイ",
+      "venezuela": "ベネズエラ"
+    },
+    "asia": {
+      "name": "アジア",
+      "viet_nam": "ベトナム",
+      "singapore": "シンガポール",
+      "korea": "韓国",
+      "china": "中国",
+      "hong_kong": "香港",
+      "japan": "日本",
+      "malaysia": "マレーシア",
+      "philippines": "フィリピン",
+      "indonesia": "インドネシア",
+      "thailand": "タイ",
+      "bangladesh": "バングラデシュ",
+      "pakistan": "パキスタン",
+      "india": "インド",
+      "taiwan": "台湾",
+      "israel": "イスラエル",
+      "sri_lanka": "スリランカ",
+      "nepal": "ネパール"
+    },
+    "central_america": {
+      "name": "中米",
+      "costa_rica": "コスタリカ",
+      "el_salvador": "エルサルバドル",
+      "guatemala": "グアテマラ",
+      "honduras": "ホンジュラス",
+      "nicaragua": "ニカラグア",
+      "panama": "パナマ"
+    },
+    "europe": {
+      "name": "ヨーロッパ",
+      "united_kingdom": "イギリス",
+      "ukraine": "ウクライナ",
+      "russia": "ロシア",
+      "france": "フランス",
+      "greece": "ギリシャ",
+      "croatia": "クロアチア",
+      "ireland": "アイルランド",
+      "italy": "イタリア",
+      "luxembourg": "ルクセンブルク",
+      "hungary": "ハンガリー",
+      "netherlands": "オランダ",
+      "norway": "ノルウェー",
+      "austria": "オーストリア",
+      "poland": "ポーランド",
+      "portugal": "ポルトガル",
+      "romania": "ルーマニア",
+      "switzerland": "スイス",
+      "slovenia": "スロベニア",
+      "serbia": "セルビア",
+      "finland": "フィンランド",
+      "sweden": "スウェーデン",
+      "bulgaria": "ブルガリア",
+      "belgium": "ベルギー",
+      "czechia": "チェコ",
+      "denmark": "デンマーク",
+      "estonia": "エストニア",
+      "germany": "ドイツ",
+      "spain": "スペイン"
+    },
+    "north_america": {
+      "name": "北米",
+      "cuba": "キューバ",
+      "haiti": "ハイチ",
+      "jamaica": "ジャマイカ",
+      "mexico": "メキシコ",
+      "puerto_rico": "プエルトリコ",
+      "dominican_republic": "ドミニカ共和国",
+      "trinidad_and_tobago": "トリニダード・トバゴ"
+    },
+    "oceania": {
+      "name": "オセアニア",
+      "australia": "オーストラリア",
+      "new_zealand": "ニュージーランド"
+    },
+    "south_america": {
+      "name": "南米",
+      "argentina": "アルゼンチン",
+      "bolivia": "ボリビア",
+      "brazil": "ブラジル",
+      "chile": "チリ",
+      "colombia": "コロンビア",
+      "ecuador": "エクアドル",
+      "paraguay": "パラグアイ",
+      "peru": "ペルー"
+    }
+  },
+  "panel": {
+    "most_popular": "{name} で最も人気のある",
+    "frequency": "周波数",
+    "play_from_radio": "ラジオから再生",
+    "country": "国",
+    "radio_in": "{name}のラジオ",
+    "description": "説明",
+    "category": "カテゴリー",
+    "schedule": "スケジュール",
+    "playlist": "プレイリスト",
+    "next": "次",
+    "lyric": "歌詞",
+    "no_lyric": "歌詞なし",
+    "updating": "更新中..."
+  },
+  "button": {
+    "back": "戻る",
+    "close": "近い"
+  },
+  "popup": {
+    "search": {
+      "text": "探す...",
+      "stats": "{nbPages} のページ {page} - {processingTimeMS} ミリ秒で取得された {nbHits} ヒット",
+      "category": "国でフィルタリング"
+    }
+  },
+  "notify": {
+    "success": "成功",
+    "success_content": "ラジオを再生できます: {radio}",
+    "error": "エラー",
+    "error_content": "ラジオを再生できません: {radio}"
+  },
+  "statistics_tooltip": {
+    "text": "インシデント: {num} | ダウンタイム: {time} 分 | {response} ミリ秒"
+  },
+  "404": {
+    "content": "We would like to inform you that the page you are looking for, does not exist!"
+  },
+  "table": {
+    "status": "状態",
+    "commit": "専念",
+    "created": "作成した",
+    "updated": "更新しました",
+    "published": "公開済み",
+    "view": "意見"
+  },
+  "alert": {
+    "play_button": "ブラウザのデフォルトでは、ラジオを聞くには ▶ ボタンを押す必要があります。"
+  },
+  "text": {
+    "guide": "ガイド",
+    "the_last_90_days": "過去 90 日間",
+    "hosted": "{name}でホスト - 最終更新{time}",
+    "downtime": "ダウンタイム",
+    "uptime": "アップタイム"
+  }
+}
