@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
+    "@nuxtjs/i18n",
   ],
   fontawesome: {
     // component: "fa",
