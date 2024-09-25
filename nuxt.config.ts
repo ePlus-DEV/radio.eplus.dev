@@ -134,12 +134,7 @@ export default defineNuxtConfig({
       regular: [],
     },
     proIcons: {
-      solid: [
-        "signal-stream",
-        "xmark-large",
-        "sun-bright",
-        "moon",
-      ],
+      solid: ["signal-stream", "xmark-large", "sun-bright", "moon"],
       regular: ["magnifying-glass-music"],
       light: [],
       thin: [],
@@ -150,7 +145,8 @@ export default defineNuxtConfig({
     cloudinary: {
       baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
-    provider: process.env.NODE_ENV === "production" ? "cloudinary" : "cloudinary",
+    provider:
+      process.env.NODE_ENV === "production" ? "cloudinary" : "cloudinary",
   },
   vite: {
     plugins: [vidstack()],
