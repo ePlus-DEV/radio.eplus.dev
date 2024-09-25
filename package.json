@@ -10,7 +10,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@codecov/nuxt-plugin": "^1.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
@@ -29,6 +28,7 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@vesp/nuxt-fontawesome": "^1.1.0",
     "daisyui": "^4.12.10",
+    "dayjs-nuxt": "^2.1.11",
     "media-icons": "^1.1.5",
     "moment": "^2.30.1",
     "nuxt": "^3.13.0",

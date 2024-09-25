@@ -7,22 +7,18 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   pages: true,
-  builder: "vite",
+  runtimeConfig: {
+    public: {
+      cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
+    },
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
     "@nuxt/image",
-    [
-      "@codecov/nuxt-plugin",
-      {
-        enableBundleAnalysis: true,
-        bundleName: "bundle-analysis",
-        uploadToken: process.env.CODECOV_UPLOAD_TOKEN,
-        gitService: "github",
-      },
-    ],
+    "dayjs-nuxt",
   ],
   app: {
     head: {
@@ -86,7 +82,7 @@ export default defineNuxtConfig({
         flag: "/img/europe/flags/united-kingdom.png",
       },
       {
-        code: "vi-VN",
+        code: "vi",
         file: "vi-VN.json",
         name: "Tiếng Việt",
         flag: "/img/asia/flags/viet-nam.png",
@@ -98,13 +94,13 @@ export default defineNuxtConfig({
         flag: "/img/asia/flags/japan.png",
       },
       {
-        code: "cn",
+        code: "zh-CN",
         file: "zh-CN.json",
         name: "简体中文",
         flag: "/img/asia/flags/china.png",
       },
       {
-        code: "tw",
+        code: "zh-TW",
         file: "zh-TW.json",
         name: "繁體中文",
         flag: "/img/asia/flags/taiwan.png",
@@ -134,18 +130,18 @@ export default defineNuxtConfig({
       regular: [],
     },
     proIcons: {
-      solid: [
-        "signal-stream",
-        "music-magnifying-glass",
-        "xmark-large",
-        "sun-bright",
-        "moon",
-      ],
-      regular: [],
+      solid: ["signal-stream", "xmark-large", "sun-bright", "moon"],
+      regular: ["magnifying-glass-music"],
       light: [],
       thin: [],
       duotone: ["snooze"],
     },
+  },
+  dayjs: {
+    locales: ["vi", "ja", "zh-cn", "zh-tw", "fr", "ru"],
+    plugins: ["relativeTime", "utc", "timezone"],
+    defaultLocale: "en",
+    defaultTimezone: "America/New_York",
   },
   image: {
     cloudinary: {

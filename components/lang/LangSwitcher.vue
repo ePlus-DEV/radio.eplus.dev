@@ -45,7 +45,7 @@
         <nuxt-img
           loading="lazy"
           class="rounded h-8 w-12 object-cover pr-1"
-          :src="config.app.baseURL + localeItem.flag"
+          :src="config.public.cloudinaryBaseUrl + localeItem.flag"
           :alt="localeItem.name"
           @click.prevent.stop="setLocale(localeItem.code)"
         />
@@ -58,4 +58,13 @@
 <script lang="ts" setup>
 const config = useRuntimeConfig();
 const { locale, locales, setLocale } = useI18n();
+
+const dayjs = useDayjs();
+watch(
+  locale,
+  (newLocale: string) => {
+    dayjs.locale(newLocale);
+  },
+  { immediate: true },
+);
 </script>
