@@ -63,5 +63,4 @@ const dayjs = useDayjs()
 watch(locale, (newLocale: string) => {
   dayjs.locale(newLocale, )
 }, { immediate: true })
-
 </script>
