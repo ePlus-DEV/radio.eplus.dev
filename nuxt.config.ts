@@ -7,12 +7,22 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   pages: true,
+  builder: "vite",
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
     "@nuxt/image",
+    [
+      "@codecov/nuxt-plugin",
+      {
+        enableBundleAnalysis: true,
+        bundleName: "bundle-analysis",
+        uploadToken: process.env.CODECOV_UPLOAD_TOKEN,
+        gitService: "github",
+      },
+    ],
   ],
   app: {
     head: {
