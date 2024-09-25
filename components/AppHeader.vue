@@ -71,22 +71,18 @@
                 <fa
                   :icon="['fass', 'sun-bright']"
                   class="w-6 h-6"
-                  :class="[
-                    $colorMode.value == 'light' ? 'block' : 'hidden',
-                  ]"
+                  :class="[$colorMode.value == 'light' ? 'block' : 'hidden']"
                 />
                 <fa
                   :icon="['fass', 'moon']"
                   class="w-6 h-6"
-                  :class="[
-                    $colorMode.value == 'dark' ? 'block' : 'hidden',
-                  ]"
+                  :class="[$colorMode.value == 'dark' ? 'block' : 'hidden']"
                 />
               </button>
             </div>
             <!-- BEGIN - Language - Desktop -->
             <div class="flex items-center pl-8 relative">
-             <LangSwitcher />
+              <LangSwitcher />
             </div>
             <!-- END - Language - Desktop -->
           </div>
@@ -252,15 +248,14 @@
 <script lang="ts" setup>
 // import { ref, onMounted } from 'vue';
 // import moment from 'moment';
-const config = useRuntimeConfig()
-const { locale, locales, setLocale } = useI18n()
+const config = useRuntimeConfig();
+const { locale, locales, setLocale } = useI18n();
 
 // const availableLocales = computed(() => {
 //   return locales.value.filter(i => i.code !== locale.value)
 // })
 
 const showModal = ref(false);
-
 
 const toggleModal = () => {
   showModal.value = !showModal.value;
@@ -274,19 +269,19 @@ const toggleModal = () => {
 // };
 
 const darkmode = () => {
-  const currentTheme = localStorage.getItem('theme');
-  if (currentTheme === 'light') {
-    localStorage.setItem('theme', 'dark');
-    document.documentElement.classList.add('dark');
+  const currentTheme = localStorage.getItem("theme");
+  if (currentTheme === "light") {
+    localStorage.setItem("theme", "dark");
+    document.documentElement.classList.add("dark");
   } else {
-    localStorage.setItem('theme', 'light');
-    document.documentElement.classList.remove('dark');
+    localStorage.setItem("theme", "light");
+    document.documentElement.classList.remove("dark");
   }
 };
 
 onMounted(() => {
-  if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.classList.add('dark');
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
   }
 });
 </script>
