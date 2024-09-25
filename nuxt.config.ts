@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
+    "@nuxt/image",
   ],
   app: {
     head: {
@@ -75,7 +76,7 @@ export default defineNuxtConfig({
         flag: "/img/europe/flags/united-kingdom.png",
       },
       {
-        code: "vi",
+        code: "vi-VN",
         file: "vi-VN.json",
         name: "Tiếng Việt",
         flag: "/img/asia/flags/viet-nam.png",
@@ -117,19 +118,30 @@ export default defineNuxtConfig({
     defaultLocale: "en",
   },
   fontawesome: {
-    // component: "fa",
-    // suffix: true,
+    component: "fa",
     icons: {
-      solid: ["dollar-sign", "cog", "circle", "check", "calendar"],
-      regular: ["user"],
+      solid: [],
+      regular: [],
     },
     proIcons: {
-      solid: ["bell-plus", "music-magnifying-glass"],
+      solid: [
+        "signal-stream",
+        "music-magnifying-glass",
+        "xmark-large",
+        "sun-bright",
+        "moon",
+      ],
       regular: [],
       light: [],
       thin: [],
-      duotone: [],
+      duotone: ["snooze"],
     },
+  },
+  image: {
+    cloudinary: {
+      baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
+    },
+    provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   vite: {
     plugins: [vidstack()],
