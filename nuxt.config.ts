@@ -138,10 +138,10 @@ export default defineNuxtConfig({
     },
   },
   dayjs: {
-    locales: ['vi'],
-    plugins: ['relativeTime', 'utc', 'timezone'],
-    defaultLocale: 'en',
-    defaultTimezone: 'America/New_York',
+    locales: ["vi"],
+    plugins: ["relativeTime", "utc", "timezone"],
+    defaultLocale: "en",
+    defaultTimezone: "America/New_York",
   },
   image: {
     cloudinary: {
