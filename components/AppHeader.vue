@@ -54,7 +54,7 @@
             >
               <!-- BEGIN - Button Search -->
               <fa
-                @click="showorhide()"
+                @click="search()"
                 :icon="['far', 'magnifying-glass-music']"
                 class="icon icon-tabler icon-tabler-search cursor-pointer text-white w-6 h-6"
               />
@@ -63,22 +63,7 @@
             <div
               class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
             >
-              <button
-                id="switchTheme"
-                class="h-10 w-10 flex justify-center items-center focus:outline-none text-yellow-500"
-                @click="darkmode()"
-              >
-                <fa
-                  :icon="['fass', 'sun-bright']"
-                  class="w-6 h-6"
-                  :class="[$colorMode.value == 'light' ? 'block' : 'hidden']"
-                />
-                <fa
-                  :icon="['fass', 'moon']"
-                  class="w-6 h-6"
-                  :class="[$colorMode.value == 'dark' ? 'block' : 'hidden']"
-                />
-              </button>
+            <ThemeDarkMode/>
             </div>
             <!-- BEGIN - Language - Desktop -->
             <div class="flex items-center pl-8 relative">
@@ -135,9 +120,8 @@
           <!-- BEGIN - Toggle Language - Mobile -->
           <!-- BEGIN - Search - Mobile -->
           <button
-            id="switchTheme"
             class="h-10 w-10 flex justify-center items-center text-yellow-500"
-            @click="showorhide()"
+            @click="search()"
           >
             <!-- BEGIN - Button Search -->
             <fa
@@ -148,39 +132,10 @@
           </button>
           <!-- END - Search - Mobile -->
           <!-- BEGIN - Dark Mode - Mobile -->
-          <button
-            id="switchTheme"
-            class="h-10 w-10 flex justify-center items-center focus:outline-none text-yellow-500"
-            @click="darkmode()"
-          >
-            <svg
-              class="w-6 h-6"
-              :class="[$colorMode.value == 'light' ? 'block' : 'hidden']"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              :class="[$colorMode.value == 'dark' ? 'block' : 'hidden']"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M9.353 2.939a1 1 0 01.22 1.08 8 8 0 0010.408 10.408 1 1 0 011.301 1.3A10.003 10.003 0 0112 22C6.477 22 2 17.523 2 12c0-4.207 2.598-7.805 6.273-9.282a1 1 0 011.08.22z"
-              ></path>
-            </svg>
-          </button>
+          <ThemeDarkMode/>
           <!-- END - Dark Mode - Mobile -->
           <svg
-            @click="MenuHandler($event, true)"
+            @click="menuHandler($event, true)"
             aria-haspopup="true"
             aria-label="Main Menu"
             xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +154,7 @@
             <line x1="4" y1="16" x2="20" y2="16" />
           </svg>
           <div
-            @click="MenuHandler($event, false)"
+            @click="menuHandler($event, false)"
             class="hidden text-white close-m-menu p-1"
           >
             <svg
@@ -246,36 +201,27 @@
 </template>
 
 <script lang="ts" setup>
-const showModal = ref(false);
-
-const toggleModal = () => {
-  showModal.value = !showModal.value;
-};
-
-const darkmode = () => {
-  const currentTheme = localStorage.getItem("theme");
-  if (currentTheme === "light") {
-    localStorage.setItem("theme", "dark");
-    document.documentElement.classList.add("dark");
-  } else {
-    localStorage.setItem("theme", "light");
-    document.documentElement.classList.remove("dark");
-  }
-};
-
-const showorhide = () => {
+/**
+ * Toggles the visibility of the search modal.
+ */
+const search = () => {
   const modalButton = document.querySelector(".modal-button") as HTMLElement;
   if (modalButton) {
     modalButton.click();
   }
 };
 
-const MenuHandler = (el: Event, val: boolean) => {
+/**
+ * Handles the menu toggle functionality.
+ * @param {Event} el - The event object.
+ * @param {boolean} val - The value indicating whether to show or hide the menu.
+ */
+const menuHandler = (el: Event, val: boolean) => {
   const parentElement = (el.currentTarget as HTMLElement).parentElement;
   if (parentElement) {
-    let MainList = parentElement.getElementsByTagName("ul")[0];
-    let closeIcon = parentElement.getElementsByClassName("close-m-menu")[0];
-    let showIcon = parentElement.getElementsByClassName("show-m-menu")[0];
+    const MainList = parentElement.getElementsByTagName("ul")[0];
+    const closeIcon = parentElement.getElementsByClassName("close-m-menu")[0];
+    const showIcon = parentElement.getElementsByClassName("show-m-menu")[0];
     if (val) {
       MainList.classList.remove("hidden");
       (el.currentTarget as HTMLElement).classList.add("hidden");

@@ -119,17 +119,16 @@ export default defineNuxtConfig({
   },
   fontawesome: {
     component: "fa",
-    suffix: true,
     icons: {
       solid: [],
       regular: [],
     },
     proIcons: {
-      solid: [],
+      solid: ['signal-stream', "music-magnifying-glass", 'xmark-large', 'sun-bright', 'moon'],
       regular: [],
       light: [],
       thin: [],
-      duotone: [],
+      duotone: ['snooze'],
     },
   },
   image: {
