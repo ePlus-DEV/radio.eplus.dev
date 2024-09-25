@@ -45,7 +45,7 @@
         <nuxt-img
           loading="lazy"
           class="rounded h-8 w-12 object-cover pr-1"
-          :src="config.app.cdnURL + localeItem.flag"
+          :src="config.public.cloudinaryBaseUrl + localeItem.flag"
           :alt="localeItem.name"
           @click.prevent.stop="setLocale(localeItem.code)"
         />

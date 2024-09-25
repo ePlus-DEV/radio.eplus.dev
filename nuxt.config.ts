@@ -7,11 +7,17 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   pages: true,
+  runtimeConfig: {
+    public: {
+      cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL
+    }
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
-    "@nuxtjs/i18n"
+    "@nuxtjs/i18n",
+    "@nuxt/image",
   ],
   app: {
     head: {
@@ -135,7 +141,7 @@ export default defineNuxtConfig({
       baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider:
-      process.env.NODE_ENV === "production" ? "cloudinary" : "cloudinary",
+      process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   vite: {
     plugins: [vidstack()],
