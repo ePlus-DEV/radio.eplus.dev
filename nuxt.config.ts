@@ -82,7 +82,7 @@ export default defineNuxtConfig({
         flag: "/img/europe/flags/united-kingdom.png",
       },
       {
-        code: "vi-VN",
+        code: "vi",
         file: "vi-VN.json",
         name: "Tiếng Việt",
         flag: "/img/asia/flags/viet-nam.png",
@@ -94,13 +94,13 @@ export default defineNuxtConfig({
         flag: "/img/asia/flags/japan.png",
       },
       {
-        code: "cn",
+        code: "zh-CN",
         file: "zh-CN.json",
         name: "简体中文",
         flag: "/img/asia/flags/china.png",
       },
       {
-        code: "tw",
+        code: "zh-TW",
         file: "zh-TW.json",
         name: "繁體中文",
         flag: "/img/asia/flags/taiwan.png",
@@ -138,7 +138,7 @@ export default defineNuxtConfig({
     },
   },
   dayjs: {
-    locales: ["vi"],
+    locales: ["vi", "ja", "zh-cn", "zh-tw", "fr", "ru"],
     plugins: ["relativeTime", "utc", "timezone"],
     defaultLocale: "en",
     defaultTimezone: "America/New_York",
