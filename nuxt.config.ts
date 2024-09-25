@@ -9,8 +9,8 @@ export default defineNuxtConfig({
   pages: true,
   runtimeConfig: {
     public: {
-      cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL
-    }
+      cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
+    },
   },
   modules: [
     "@nuxtjs/tailwindcss",
@@ -140,8 +140,7 @@ export default defineNuxtConfig({
     cloudinary: {
       baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
-    provider:
-      process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
+    provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   vite: {
     plugins: [vidstack()],
