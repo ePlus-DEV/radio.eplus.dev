@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
     "@nuxt/image",
+    "dayjs-nuxt",
   ],
   app: {
     head: {
@@ -135,6 +136,12 @@ export default defineNuxtConfig({
       thin: [],
       duotone: ["snooze"],
     },
+  },
+  dayjs: {
+    locales: ['vi'],
+    plugins: ['relativeTime', 'utc', 'timezone'],
+    defaultLocale: 'en',
+    defaultTimezone: 'America/New_York',
   },
   image: {
     cloudinary: {
