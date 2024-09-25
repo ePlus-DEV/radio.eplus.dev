@@ -124,11 +124,17 @@ export default defineNuxtConfig({
       regular: [],
     },
     proIcons: {
-      solid: ['signal-stream', "music-magnifying-glass", 'xmark-large', 'sun-bright', 'moon'],
+      solid: [
+        "signal-stream",
+        "music-magnifying-glass",
+        "xmark-large",
+        "sun-bright",
+        "moon",
+      ],
       regular: [],
       light: [],
       thin: [],
-      duotone: ['snooze'],
+      duotone: ["snooze"],
     },
   },
   image: {

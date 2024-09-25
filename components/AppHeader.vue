@@ -63,7 +63,7 @@
             <div
               class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
             >
-            <ThemeDarkMode/>
+              <ThemeDarkMode />
             </div>
             <!-- BEGIN - Language - Desktop -->
             <div class="flex items-center pl-8 relative">
@@ -132,7 +132,7 @@
           </button>
           <!-- END - Search - Mobile -->
           <!-- BEGIN - Dark Mode - Mobile -->
-          <ThemeDarkMode/>
+          <ThemeDarkMode />
           <!-- END - Dark Mode - Mobile -->
           <svg
             @click="menuHandler($event, true)"
