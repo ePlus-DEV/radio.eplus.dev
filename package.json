@@ -38,8 +38,5 @@
   },
   "engines": {
     "node": "20.x"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0"
   }
 }
