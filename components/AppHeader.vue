@@ -246,27 +246,11 @@
 </template>
 
 <script lang="ts" setup>
-// import { ref, onMounted } from 'vue';
-// import moment from 'moment';
-const config = useRuntimeConfig();
-const { locale, locales, setLocale } = useI18n();
-
-// const availableLocales = computed(() => {
-//   return locales.value.filter(i => i.code !== locale.value)
-// })
-
 const showModal = ref(false);
 
 const toggleModal = () => {
   showModal.value = !showModal.value;
 };
-
-// const changeLanguage = (code: string) => {
-//   if (locale.value !== code) {
-//     locale.value = code;
-//     moment.locale(code);
-//   }
-// };
 
 const darkmode = () => {
   const currentTheme = localStorage.getItem("theme");
@@ -276,6 +260,31 @@ const darkmode = () => {
   } else {
     localStorage.setItem("theme", "light");
     document.documentElement.classList.remove("dark");
+  }
+};
+
+const showorhide = () => {
+  const modalButton = document.querySelector(".modal-button") as HTMLElement;
+  if (modalButton) {
+    modalButton.click();
+  }
+};
+
+const MenuHandler = (el: Event, val: boolean) => {
+  const parentElement = (el.currentTarget as HTMLElement).parentElement;
+  if (parentElement) {
+    let MainList = parentElement.getElementsByTagName("ul")[0];
+    let closeIcon = parentElement.getElementsByClassName("close-m-menu")[0];
+    let showIcon = parentElement.getElementsByClassName("show-m-menu")[0];
+    if (val) {
+      MainList.classList.remove("hidden");
+      (el.currentTarget as HTMLElement).classList.add("hidden");
+      closeIcon.classList.remove("hidden");
+    } else {
+      showIcon.classList.remove("hidden");
+      MainList.classList.add("hidden");
+      (el.currentTarget as HTMLElement).classList.add("hidden");
+    }
   }
 };
 
