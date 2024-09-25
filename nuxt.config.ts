@@ -118,14 +118,14 @@ export default defineNuxtConfig({
     defaultLocale: "en",
   },
   fontawesome: {
-    // component: "fa",
-    // suffix: true,
+    component: "fa",
+    suffix: true,
     icons: {
-      solid: ["dollar-sign", "cog", "circle", "check", "calendar"],
-      regular: ["user"],
+      solid: [],
+      regular: [],
     },
     proIcons: {
-      solid: ["bell-plus", "music-magnifying-glass"],
+      solid: [],
       regular: [],
       light: [],
       thin: [],
