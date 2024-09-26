@@ -35,7 +35,8 @@
     "tailwindcss": "^3.4.12",
     "vidstack": "^1.12.11",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "@gabortorma/nuxt-dayjs-i18n": "^5.2.17"
   },
   "engines": {
     "node": "20.x"
