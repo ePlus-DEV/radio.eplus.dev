@@ -187,6 +187,11 @@
     "the_last_90_days": "Les 90 derniers jours",
     "hosted": "Hébergé sur {name} - Dernière mise à jour {time}",
     "downtime": "Temps d'arrêt",
-    "uptime": "Temps de fonctionnement"
+    "uptime": "Temps de fonctionnement",
+    "darkmode": {
+      "dark": "Sombre",
+      "light": "Clair",
+      "system": "Système"
+    }
   }
 }
