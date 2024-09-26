@@ -23,3 +23,5 @@ Please delete options that are not relevant.
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] New and existing unit tests pass locally with my changes
 - [ ] Any dependent changes have been merged and published in downstream modules
+
+[![Build and deploy Nuxt SSR with PM2](https://github.com/ePlus-DEV/radio.eplus.dev/actions/workflows/build.yml/badge.svg?branch=new-version)](https://github.com/ePlus-DEV/radio.eplus.dev/actions/workflows/build.yml)
