@@ -9,11 +9,11 @@
           <div class="flex items-center p-5 border-b dark:border-gray-600">
             <div class="flex justify-around">
               <span class="relative inline-flex">
-                <!-- <nuxt-img loading="lazy" class="w-35 h-25 object-cover"
-                                    :key="home !== undefined ? player_home.title : player.title" :src="home !== undefined
-                                            ? $config.Base_URL + thumb
-                                            : $config.Base_URL + player.features
-                                        " :placeholder="$config.placeholderStation" /> -->
+                <nuxt-img
+                  loading="lazy"
+                  class="w-35 h-25 object-cover"
+                  src="https://radio.eplus.dev/img/europe/flags/united-kingdom.png"
+                />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
@@ -25,29 +25,26 @@
               </span>
             </div>
 
-            <!-- <div class="flex flex-col px-2 w-full">
-                            <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
-                                {{ $t("panel.play_from_radio") }}
-                            </span>
-                            <span class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1">
-                                {{ home !== undefined ? player_home.title : player.title }}
-                            </span>
-                            <span class="text-xs text-gray-500 uppercase font-medium">
-                                {{ $t(country) }} -
-                                <span :data-tip="currentDate" class="tooltip">{{
-                                    currentTime
-                                    }}</span>
-                            </span>
-                        </div> -->
+            <div class="flex flex-col px-2 w-full">
+              <span
+                class="text-xs text-gray-700 dark:text-white uppercase font-medium"
+              >
+                {{ $t("panel.play_from_radio") }}
+              </span>
+              <span
+                class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
+              >
+                C-Pop Radio - Zing MP3
+              </span>
+              <span class="text-xs text-gray-500 uppercase font-medium">
+                Việt Nam
+              </span>
+            </div>
             <div class="flex">
-              <svg width="24" height="24" fill="none">
-                <path
-                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                ></path>
-              </svg>
+              <fa
+                :icon="['fal', 'bookmark']"
+                class="text-black dark:text-slate-500"
+              />
             </div>
           </div>
 
