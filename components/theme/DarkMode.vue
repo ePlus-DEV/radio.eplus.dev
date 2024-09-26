@@ -46,7 +46,7 @@
                 : ''
             "
           />
-          Light
+          {{ $t('text.darkmode.light') }}
         </div>
         <div
           class="py-1 px-2 flex items-center"
@@ -67,7 +67,7 @@
                 : ''
             "
           />
-          Dark
+          {{ $t('text.darkmode.dark') }}
         </div>
         <div
           class="py-1 px-2 flex items-center"
@@ -88,7 +88,7 @@
                 : ''
             "
           />
-          System
+          {{ $t('text.darkmode.system') }}
         </div>
       </div>
     </div>
