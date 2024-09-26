@@ -1,8 +1,19 @@
 <template>
   <div>
     <div class="dropdown dropdown-end">
-      <label tabindex="0" class="h-10 w-10 flex justify-center items-center focus:outline-none">
-        <fa :icon="['fas', icon]" class="w-6 h-6" :class="$colorMode.preference !== 'system' ? 'text-yellow-500' : 'text-white'"/>
+      <label
+        tabindex="0"
+        class="h-10 w-10 flex justify-center items-center focus:outline-none"
+      >
+        <fa
+          :icon="['fas', icon]"
+          class="w-6 h-6"
+          :class="
+            $colorMode.preference !== 'system'
+              ? 'text-yellow-500'
+              : 'text-white'
+          "
+        />
       </label>
 
       <div
@@ -18,28 +29,66 @@
       >
         <div
           class="py-1 px-2 flex items-center cursor-pointer"
-          :class="$colorMode.preference === 'light' ? 'text-sky-500 cursor-not-allowed' : 'cursor-pointer'"
+          :class="
+            $colorMode.preference === 'light'
+              ? 'text-sky-500 cursor-not-allowed'
+              : 'cursor-pointer'
+          "
           role="option"
           @click.prevent.stop="$colorMode.preference = 'light'"
         >
-          <fa :icon="['fal', 'sun-bright']" class="w-6 h-6 mr-2" :class="$colorMode.preference !== 'light' ? 'text-slate-400 dark:text-slate-500' : ''" />
+          <fa
+            :icon="['fal', 'sun-bright']"
+            class="w-6 h-6 mr-2"
+            :class="
+              $colorMode.preference !== 'light'
+                ? 'text-slate-400 dark:text-slate-500'
+                : ''
+            "
+          />
           Light
         </div>
         <div
           class="py-1 px-2 flex items-center"
-          :class="$colorMode.preference === 'dark' ? 'text-sky-500 cursor-not-allowed' : 'cursor-pointer'"
+          :class="
+            $colorMode.preference === 'dark'
+              ? 'text-sky-500 cursor-not-allowed'
+              : 'cursor-pointer'
+          "
           role="option"
-           @click.prevent.stop="$colorMode.preference = 'dark'"
+          @click.prevent.stop="$colorMode.preference = 'dark'"
         >
-        <fa :icon="['fal', 'moon']" class="w-6 h-6 mr-2" :class="$colorMode.preference !== 'dark' ? 'text-slate-400 dark:text-slate-500' : ''" /> Dark
+          <fa
+            :icon="['fal', 'moon']"
+            class="w-6 h-6 mr-2"
+            :class="
+              $colorMode.preference !== 'dark'
+                ? 'text-slate-400 dark:text-slate-500'
+                : ''
+            "
+          />
+          Dark
         </div>
         <div
           class="py-1 px-2 flex items-center"
-          :class="$colorMode.preference === 'system' ? 'text-sky-500 cursor-not-allowed' : 'cursor-pointer'"
+          :class="
+            $colorMode.preference === 'system'
+              ? 'text-sky-500 cursor-not-allowed'
+              : 'cursor-pointer'
+          "
           role="option"
           @click.prevent.stop="$colorMode.preference = 'system'"
         >
-        <fa :icon="['fal', 'desktop']" class="w-6 h-6 mr-2" :class="$colorMode.preference !== 'system' ? 'text-slate-400 dark:text-slate-500' : ''" /> System
+          <fa
+            :icon="['fal', 'desktop']"
+            class="w-6 h-6 mr-2"
+            :class="
+              $colorMode.preference !== 'system'
+                ? 'text-slate-400 dark:text-slate-500'
+                : ''
+            "
+          />
+          System
         </div>
       </div>
     </div>
@@ -60,7 +109,7 @@ const icons = {
 
 const icon = ref(icons[colorMode.preference as keyof typeof icons]);
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   const storedTheme = localStorage.getItem("theme");
   if (storedTheme) {
     icon.value = icons[storedTheme as keyof typeof icons];
@@ -72,6 +121,6 @@ watch(
   (newVal: string) => {
     icon.value = icons[newVal as keyof typeof icons];
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

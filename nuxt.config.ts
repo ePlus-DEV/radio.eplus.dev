@@ -150,11 +150,11 @@ export default defineNuxtConfig({
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   colorMode: {
-    preference: 'system', // default value of $colorMode.preference
-    fallback: 'light', // fallback value if not system preference found
+    preference: "system", // default value of $colorMode.preference
+    fallback: "light", // fallback value if not system preference found
     classPrefix: "",
     classSuffix: "",
-    storageKey: 'theme'
+    storageKey: "theme",
   },
   vite: {
     plugins: [vidstack()],
