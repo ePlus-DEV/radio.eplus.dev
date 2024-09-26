@@ -9,11 +9,8 @@
           <div class="flex items-center p-5 border-b dark:border-gray-600">
             <div class="flex justify-around">
               <span class="relative inline-flex">
-                <!-- <nuxt-img loading="lazy" class="w-35 h-25 object-cover"
-                                    :key="home !== undefined ? player_home.title : player.title" :src="home !== undefined
-                                            ? $config.Base_URL + thumb
-                                            : $config.Base_URL + player.features
-                                        " :placeholder="$config.placeholderStation" /> -->
+                <nuxt-img loading="lazy" class="w-35 h-25 object-cover"
+                                    src="https://radio.eplus.dev/img/europe/flags/united-kingdom.png" />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
