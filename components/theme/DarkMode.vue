@@ -4,29 +4,15 @@
       class="h-10 w-10 flex justify-center items-center focus:outline-none"
       @click="toggleDarkMode"
     >
-    <fa
-        :icon="['fas', 'desktop']"
-        class="w-6 h-6 text-white"
-        :class="{
-          block: colorMode.value === 'system',
-          hidden: colorMode.value !== 'system',
-        }"
-      />
       <fa
-        :icon="['fas', 'sun-bright']"
-        class="w-6 h-6 text-yellow-500"
-        :class="{
-          block: colorMode.value === 'light',
-          hidden: colorMode.value !== 'light',
-        }"
-      />
-      <fa
-        :icon="['fas', 'moon']"
-        class="w-6 h-6 text-yellow-500"
-        :class="{
-          block: colorMode.value === 'dark',
-          hidden: colorMode.value !== 'dark',
-        }"
+        v-for="(icon, mode) in icons"
+        :key="mode"
+        :icon="['fas', icon]"
+        class="w-6 h-6"
+        :class="[
+          { block: colorMode.value === mode, hidden: colorMode.value !== mode },
+          mode !== 'system' ? 'text-yellow-500' : 'text-white'
+        ]"
       />
     </button>
   </div>
@@ -34,6 +20,7 @@
 
 <script lang="ts" setup>
 const colorMode = useColorMode();
+
 /**
  * Toggles the dark mode theme.
  */
@@ -45,5 +32,14 @@ const toggleDarkMode = () => {
   localStorage.setItem("theme", nextTheme);
   document.documentElement.classList.toggle("dark", nextTheme === "dark");
   colorMode.value = nextTheme;
+};
+
+/**
+ * Icon mapping for each color mode.
+ */
+const icons = {
+  system: 'desktop',
+  light: 'sun-bright',
+  dark: 'moon'
 };
 </script>
