@@ -60,5 +60,11 @@ const config = useRuntimeConfig();
 const { locale, locales, setLocale } = useI18n();
 
 const dayjs = useDayjs();
-watch( locale, (newLocale: string) => { dayjs.locale(newLocale); }, { immediate: true }, );
+watch(
+  locale,
+  (newLocale: string) => {
+    dayjs.locale(newLocale);
+  },
+  { immediate: true },
+);
 </script>

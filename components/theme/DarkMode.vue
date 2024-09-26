@@ -11,7 +11,7 @@
         class="w-6 h-6"
         :class="[
           { block: colorMode.value === mode, hidden: colorMode.value !== mode },
-          mode !== 'system' ? 'text-yellow-500' : 'text-white'
+          mode !== 'system' ? 'text-yellow-500' : 'text-white',
         ]"
       />
     </button>
@@ -38,8 +38,8 @@ const toggleDarkMode = () => {
  * Icon mapping for each color mode.
  */
 const icons = {
-  system: 'desktop',
-  light: 'sun-bright',
-  dark: 'moon'
+  system: "desktop",
+  light: "sun-bright",
+  dark: "moon",
 };
 </script>
