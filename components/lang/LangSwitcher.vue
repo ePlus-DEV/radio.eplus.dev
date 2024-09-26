@@ -53,12 +53,12 @@
           }"
         >
           <span
-            class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
+            class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50 uppercase"
             :class="{
               'text-white cursor-not-allowed': locale === localeItem.code,
             }"
           >
-            {{ localeItem.code.split("-").pop()?.toUpperCase() }}
+            {{ localeItem.code.split("-").pop() }}
           </span>
           <span
             class="ml-1"
@@ -75,7 +75,6 @@
 </template>
 
 <script lang="ts" setup>
-const config = useRuntimeConfig();
 const { locale, locales, setLocale } = useI18n();
 
 const dayjs = useDayjs();
