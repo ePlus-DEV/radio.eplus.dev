@@ -1,13 +1,9 @@
 <template>
   <div>
     <AppHeader />
-    <NuxtPage />
+    <div class="container mx-auto px-4 mt-20" scroll-container>
+      <NuxtPage />
+    </div>
     <AppFooter />
   </div>
 </template>
-
-<script setup lang="ts">
-useSeoMeta({
-  ogImage: "/og-image.png",
-});
-</script>
