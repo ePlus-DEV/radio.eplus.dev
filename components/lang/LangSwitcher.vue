@@ -32,35 +32,43 @@
       class="menu dropdown-content p-2 shadow bg-base-100 dark:bg-gray-800 dark:text-white rounded-box w-52 mt-2 gap-1"
     >
       <li
-      v-for="localeItem in locales"
-      :key="localeItem.code"
-      class="flex flex-row items-center dropdown-hover rounded"
-      :class="{
-        'bg-red-600 opacity-75 text-white p-1 cursor-not-allowed': locale === localeItem.code,
-        'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-400': locale !== localeItem.code
-      }"
-      @click.prevent.stop="setLocale(localeItem.code)"
-      >
-      <span
-        class="cursor-not-allowed w-full rounded"
+        v-for="localeItem in locales"
+        :key="localeItem.code"
+        class="flex flex-row items-center dropdown-hover rounded"
         :class="{
-        'bg-red-600 opacity-75 text-white hover:bg-red-600': locale === localeItem.code,
-        'hover:bg-slate-50 dark:hover:bg-slate-400': locale !== localeItem.code
+          'bg-red-600 opacity-75 text-white p-1 cursor-not-allowed':
+            locale === localeItem.code,
+          'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-400':
+            locale !== localeItem.code,
         }"
+        @click.prevent.stop="setLocale(localeItem.code)"
       >
         <span
-        class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
-        :class="{ 'text-white cursor-not-allowed': locale === localeItem.code }"
+          class="cursor-not-allowed w-full rounded"
+          :class="{
+            'bg-red-600 opacity-75 text-white hover:bg-red-600':
+              locale === localeItem.code,
+            'hover:bg-slate-50 dark:hover:bg-slate-400':
+              locale !== localeItem.code,
+          }"
         >
-        {{ localeItem.code.split('-').pop()?.toUpperCase() }}
+          <span
+            class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50"
+            :class="{
+              'text-white cursor-not-allowed': locale === localeItem.code,
+            }"
+          >
+            {{ localeItem.code.split("-").pop()?.toUpperCase() }}
+          </span>
+          <span
+            class="ml-1"
+            :class="{
+              'text-white cursor-not-allowed': locale === localeItem.code,
+            }"
+          >
+            {{ localeItem.name }}
+          </span>
         </span>
-        <span
-        class="ml-1"
-        :class="{ 'text-white cursor-not-allowed': locale === localeItem.code }"
-        >
-        {{ localeItem.name }}
-        </span>
-      </span>
       </li>
     </ul>
   </div>
