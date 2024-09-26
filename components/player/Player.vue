@@ -26,18 +26,25 @@
             </div>
 
             <div class="flex flex-col px-2 w-full">
-              <span class="text-xs text-gray-700 dark:text-white uppercase font-medium">
-                  {{ $t("panel.play_from_radio") }}
+              <span
+                class="text-xs text-gray-700 dark:text-white uppercase font-medium"
+              >
+                {{ $t("panel.play_from_radio") }}
               </span>
-              <span class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1">
+              <span
+                class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
+              >
                 C-Pop Radio - Zing MP3
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
                 Việt Nam
               </span>
-          </div>
+            </div>
             <div class="flex">
-              <fa :icon="['fal', 'bookmark']" class="text-black dark:text-slate-500"/>
+              <fa
+                :icon="['fal', 'bookmark']"
+                class="text-black dark:text-slate-500"
+              />
             </div>
           </div>
 
