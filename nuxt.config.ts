@@ -132,7 +132,7 @@ export default defineNuxtConfig({
     proIcons: {
       solid: ["signal-stream", "xmark-large", "sun-bright", "moon", "desktop"],
       regular: ["magnifying-glass-music"],
-      light: [],
+      light: ["sun-bright", "moon", "desktop"],
       thin: [],
       duotone: ["snooze"],
     },
@@ -148,6 +148,13 @@ export default defineNuxtConfig({
       baseURL: `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/image/fetch/`,
     },
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
+  },
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
+    classPrefix: "",
+    classSuffix: "",
+    storageKey: 'theme'
   },
   vite: {
     plugins: [vidstack()],
