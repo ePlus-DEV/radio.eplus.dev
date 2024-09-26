@@ -1,0 +1,376 @@
+{
+    "energy": {
+        "title": "Radio Energy (София)",
+        "type": "audio/aac",
+        "url": "https://www.radioenergy.bg/",
+        "cros": false,
+        "stream": "https://play.global.audio/nrj.aac",
+        "features": "/img/europe/bulgaria/energy.png",
+        "favorite": true,
+        "schedule": "https://api.webrad.io/data/playlist/76/energy?time="
+    },
+    "fresh": {
+        "title": "Радио Fresh (София)",
+        "type": "audio/mpeg",
+        "url": "http://radiofresh.bg",
+        "cros": true,
+        "stream": "http://streamer.atlantis.bg:8000/fresh",
+        "features": "/img/europe/bulgaria/fresh.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/fresh?time="
+    },
+    "siti": {
+        "title": "Pадио City",
+        "type": "audio/aac",
+        "url": "https://www.city.bg/",
+        "cros": false,
+        "stream": "https://play.global.audio/city.aac",
+        "features": "/img/europe/bulgaria/siti.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/siti?time="
+    },
+    "bg": {
+        "title": "БГ Радио (София)",
+        "type": "audio/aac",
+        "url": "https://www.bgradio.bg/",
+        "cros": false,
+        "stream": "https://play.global.audio/bgradio.aac",
+        "features": "/img/europe/bulgaria/bg.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/bg?time="
+    },
+    "veronika": {
+        "title": "Радио Вероника",
+        "type": "audio/aac",
+        "url": "https://www.radioveronika.bg/",
+        "cros": false,
+        "stream": "https://play.global.audio/veronika.aac",
+        "features": "/img/europe/bulgaria/veronika.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/veronika?time="
+    },
+    "veselina-99-1": {
+        "title": "Радио Веселина (София)",
+        "type": "application/x-mpegURL",
+        "url": "https://www.radioveselina.bg/",
+        "cros": false,
+        "stream": "https://bss1.neterra.tv/veselina/veselina.m3u8",
+        "features": "/img/europe/bulgaria/veselina-99-1.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/veselina-99-1?time="
+    },
+    "n-joy": {
+        "title": "Radio N Joy",
+        "type": "audio/mpeg",
+        "url": "https://njoy.bg/",
+        "cros": false,
+        "stream": "https://cdn.bweb.bg/radio/njoy.mp3",
+        "features": "/img/europe/bulgaria/n-joy.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/n-joy?time="
+    },
+    "1-106": {
+        "title": "Радио 1 (София)",
+        "type": "audio/aac",
+        "url": "https://www.radio1.bg/",
+        "cros": false,
+        "stream": "https://play.global.audio/radio1.aac",
+        "features": "/img/europe/bulgaria/1-106.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/1-106?time="
+    },
+    "vitosa": {
+        "title": "Радио Витоша",
+        "type": "application/x-mpegURL",
+        "url": "https://www.radiovitosha.com/",
+        "cros": false,
+        "stream": "https://bss1.neterra.tv/vitosha/vitosha.m3u8",
+        "features": "/img/europe/bulgaria/vitosa.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/vitosa?time="
+    },
+    "ultra": {
+        "title": "Радио Ултра",
+        "type": "audio/mpeg",
+        "url": "https://radioultra.bg/",
+        "cros": true,
+        "stream": "http://88.80.96.25:40070/ultra.mp3",
+        "features": "/img/europe/bulgaria/ultra.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/ultra?time="
+    },
+    "the-voice": {
+        "title": "Радио The Voice (София)",
+        "type": "application/x-mpegURL",
+        "url": "https://thevoice.bg/",
+        "cros": false,
+        "stream": "https://bss1.neterra.tv/thevoicefm/thevoicefm.m3u8",
+        "features": "/img/europe/bulgaria/the-voice.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/the-voice?time="
+    },
+    "z-rock": {
+        "title": "Радио Z Rock (София)",
+        "type": "audio/mpeg",
+        "url": "https://zrock.bg/",
+        "cros": false,
+        "stream": "https://web.static.btv.bg/radio/zrock-radio-proxy/index.php",
+        "features": "/img/europe/bulgaria/z-rock.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/z-rock?time="
+    },
+    "darik": {
+        "title": "Дарик радио (София)",
+        "type": "audio/mpeg",
+        "url": "https://darikradio.bg/",
+        "cros": false,
+        "stream": "https://darikradio.by.host.bg:8000/S2-128",
+        "features": "/img/europe/bulgaria/darik.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/darik?time="
+    },
+    "magic-fm": {
+        "title": "Magic FM (София)",
+        "type": "application/x-mpegURL",
+        "url": "https://www.magic.bg/",
+        "cros": false,
+        "stream": "https://bss1.neterra.tv/magicfm/magicfm.m3u8",
+        "features": "/img/europe/bulgaria/magic-fm.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/magic-fm?time="
+    },
+    "fm-plus": {
+        "title": "Радио FM Plus",
+        "type": "audio/mpeg",
+        "url": "http://fmplus.net/",
+        "cros": true,
+        "stream": "http://streamer.atlantis.bg:8000/fmplus",
+        "features": "/img/europe/bulgaria/fm-plus.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/fm-plus?time="
+    },
+    "btv": {
+        "title": "bTV Radio (София)",
+        "type": "audio/mpeg",
+        "url": "https://btvradio.bg/",
+        "cros": false,
+        "stream": "https://bravo.btv.bg/radioplayer/btvradio.mp3",
+        "features": "/img/europe/bulgaria/btv.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/btv?time="
+    },
+    "rock-1": {
+        "title": "Радио Rock 1 (София)",
+        "type": "audio/aac",
+        "url": "https://www.radio1rock.bg/",
+        "cros": false,
+        "stream": "https://play.global.audio/radio1rock.aac",
+        "features": "/img/europe/bulgaria/rock-1.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/rock-1?time="
+    },
+    "sumen": {
+        "title": "Радио Шумен",
+        "type": "audio/aac",
+        "url": "https://bnr.bg/shumen",
+        "cros": true,
+        "stream": "http://stream.bnr.bg:8033/radio-shumen.aac",
+        "features": "/img/europe/bulgaria/sumen.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/sumen?time="
+    },
+    "nazdrave": {
+        "title": "Радио Наздраве (София)",
+        "type": "audio/aac",
+        "url": "http://www.folkradionazdrave.com/",
+        "cros": true,
+        "stream": "http://powerdj.sf.ddns.bulsat.com:8020/;",
+        "features": "/img/europe/bulgaria/nazdrave.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/nazdrave?time="
+    },
+    "maa": {
+        "title": "Радио Мая",
+        "type": "audio/mpeg",
+        "url": "https://radiomaia.com/",
+        "cros": true,
+        "stream": "http://mail.rntel.com:9000/;",
+        "features": "/img/europe/bulgaria/maa.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/maa?time="
+    },
+    "zorana": {
+        "title": "Радио Зорана (София)",
+        "type": "audio/mpeg",
+        "url": "https://zorana.bg/radio/",
+        "cros": true,
+        "stream": "http://79.98.108.177:8000/live",
+        "features": "/img/europe/bulgaria/zorana.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/zorana?time="
+    },
+    "varna": {
+        "title": "Радио Варна",
+        "type": "audio/aac",
+        "url": "https://bnr.bg/varna",
+        "cros": true,
+        "stream": "http://stream.bnr.bg:8031/radio-varna.aac",
+        "features": "/img/europe/bulgaria/varna.png",
+        "favorite": false
+    },
+    "dzaz": {
+        "title": "Jazz FM",
+        "type": "audio/mpeg",
+        "url": "https://jazzfm.bg/",
+        "cros": false,
+        "stream": "https://web.static.btv.bg/radio/jazzfm-radio-proxy/index.php",
+        "features": "/img/europe/bulgaria/dzaz.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/dzaz?time="
+    },
+    "power": {
+        "title": "Power FM (Бургас)",
+        "type": "audio/mpeg",
+        "url": "https://www.powerfm.bg/",
+        "cros": true,
+        "stream": "http://a1.virtualradio.eu:8000/powerfm.mp3",
+        "features": "/img/europe/bulgaria/power.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/power?time="
+    },
+    "klasik": {
+        "title": "Classic FM  (София)",
+        "type": "audio/mpeg",
+        "url": "https://classicfm.bg/",
+        "cros": false,
+        "stream": "https://cdn.bweb.bg/radio/classic-fm.mp3",
+        "features": "/img/europe/bulgaria/klasik.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/klasik?time="
+    },
+    "trafik": {
+        "title": "Traffic Radio Station",
+        "type": "audio/mpeg",
+        "url": "https://trafficradio.org/",
+        "cros": true,
+        "stream": "http://radio.networx.bg:8000/TrafficRadio",
+        "features": "/img/europe/bulgaria/trafik.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/trafik?time="
+    },
+    "fokus": {
+        "title": "Радио Фокус",
+        "type": "audio/mpeg",
+        "url": "https://www.focus-news.net/",
+        "cros": false,
+        "stream": "https://focusradio.dataserv.cc/stream/1/",
+        "features": "/img/europe/bulgaria/fokus.png",
+        "favorite": false
+    },
+    "miks": {
+        "title": "Радио Микс",
+        "type": "audio/aac",
+        "url": "https://radiomixx.net/",
+        "cros": true,
+        "stream": "http://83.97.65.98:9000/stream/1/",
+        "features": "/img/europe/bulgaria/miks.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/miks?time="
+    },
+    "katra": {
+        "title": "Katra FM",
+        "type": "audio/aac",
+        "url": "http://www.katrafm.com/",
+        "cros": true,
+        "stream": "http://www.katrafm.net:9000/live",
+        "features": "/img/europe/bulgaria/katra.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/katra?time="
+    },
+    "folk-bg": {
+        "title": "Радио Фолк БГ",
+        "type": "audio/mpeg",
+        "url": "https://folkbg.net/",
+        "cros": true,
+        "stream": "http://listen.folkbg.net:8001/folkbg",
+        "features": "/img/europe/bulgaria/folk-bg.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/folk-bg?time="
+    },
+    "999": {
+        "title": "Радио 999",
+        "type": "audio/mpeg",
+        "url": "https://radio999bg.com",
+        "cros": true,
+        "stream": "http://62.204.158.5:8081/live",
+        "features": "/img/europe/bulgaria/999.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/999?time="
+    },
+    "sofia": {
+        "title": "Радио София",
+        "type": "audio/aac",
+        "url": "https://bnr.bg/sofia",
+        "cros": true,
+        "stream": "http://stream.bnr.bg:8030/radio-sofia.aac",
+        "features": "/img/europe/bulgaria/sofia.png",
+        "favorite": false
+    },
+    "lele-male": {
+        "title": "Радио Леле Мале (България)",
+        "type": "audio/mpeg",
+        "url": "",
+        "cros": true,
+        "stream": "http://meg.novahost.bg:8332/stream/1/",
+        "features": "/img/europe/bulgaria/lele-male.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/lele-male?time="
+    },
+    "bnr-horizont": {
+        "title": "БНР Хоризонт (София)",
+        "type": "audio/aac",
+        "url": "https://bnr.bg/horizont",
+        "cros": true,
+        "stream": "http://stream.bnr.bg:8011/horizont.aac",
+        "features": "/img/europe/bulgaria/bnr-horizont.png",
+        "favorite": false
+    },
+    "blagoevgrad": {
+        "title": "Радио Благоевград",
+        "type": "audio/mpeg",
+        "url": "https://bnr.bg/blagoevgrad",
+        "cros": false,
+        "stream": "https://sphera.fluidstream.eu/rpd_history.mp3",
+        "features": "/img/europe/bulgaria/blagoevgrad.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/blagoevgrad?time="
+    },
+    "dariknostalzi": {
+        "title": "Дарик Носталжи",
+        "type": "audio/mpeg",
+        "url": "https://dariknostalgie.bg/",
+        "cros": false,
+        "stream": "https://darikradio.by.host.bg:8000/Nostalgie",
+        "features": "/img/europe/bulgaria/dariknostalzi.png",
+        "favorite": false,
+        "schedule": "https://api.webrad.io/data/playlist/76/dariknostalzi?time="
+    },
+    "hristo-botev": {
+        "title": "Радио Христо Ботев",
+        "type": "audio/aac",
+        "url": "https://bnr.bg/hristobotev",
+        "cros": true,
+        "stream": "http://stream.bnr.bg:8012/hristo-botev.aac",
+        "features": "/img/europe/bulgaria/hristo-botev.png",
+        "favorite": false
+    },
+    "sevlievo-97-7": {
+        "title": "Радио Севлиево FM",
+        "type": "audio/mpeg",
+        "url": "https://www.radiosevlievo.net/",
+        "cros": true,
+        "stream": "http://195.68.214.130:8000/;",
+        "features": "/img/europe/bulgaria/sevlievo-97-7.png",
+        "favorite": false
+    }
+}

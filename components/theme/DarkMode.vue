@@ -109,17 +109,33 @@ const icons = {
 
 const icon = ref(icons[colorMode.preference as keyof typeof icons]);
 
+// Function to get the corresponding icon
+function getIcon(theme: string) {
+  return icons[theme as keyof typeof icons] || icons.system;
+}
+
+// Reusable function to set theme classes
+function updateThemeClasses(theme: string) {
+  if (typeof document !== "undefined") {
+    const htmlElement = document.documentElement;
+    htmlElement.classList.toggle("bg-gray-800", theme === "dark");
+    htmlElement.classList.toggle("bg-gray-200", theme !== "dark");
+  }
+}
+
 if (typeof window !== "undefined") {
   const storedTheme = localStorage.getItem("theme");
   if (storedTheme) {
-    icon.value = icons[storedTheme as keyof typeof icons];
+    updateThemeClasses(storedTheme);
+    getIcon(storedTheme);
   }
 }
 
 watch(
   () => colorMode.preference,
   (newVal: string) => {
-    icon.value = icons[newVal as keyof typeof icons];
+    updateThemeClasses(newVal);
+    getIcon(newVal);
   },
   { immediate: true },
 );
