@@ -118,8 +118,8 @@ function getIcon(theme: string) {
 function updateThemeClasses(theme: string) {
   if (typeof document !== "undefined") {
     const htmlElement = document.documentElement;
-    htmlElement.classList.toggle("bg-gray-800", theme === 'dark');
-    htmlElement.classList.toggle("bg-gray-200", theme !== 'dark');
+    htmlElement.classList.toggle("bg-gray-800", theme === "dark");
+    htmlElement.classList.toggle("bg-gray-200", theme !== "dark");
   }
 }
 
