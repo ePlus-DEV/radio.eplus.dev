@@ -1,5 +1,7 @@
 name: "Build and deploy Nuxt SSR with PM2"
-on: pull_request_target
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
