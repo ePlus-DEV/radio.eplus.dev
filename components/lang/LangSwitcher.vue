@@ -1,6 +1,10 @@
 <template>
   <div class="dropdown dropdown-end">
-    <label tabindex="0" role="button" class="flex flex-row items-center gap-1 normal-case">
+    <label
+      tabindex="0"
+      role="button"
+      class="flex flex-row items-center gap-1 normal-case"
+    >
       <svg
         class="inline-block h-8 w-8 fill-current text-white cursor-pointer"
         xmlns="http://www.w3.org/2000/svg"
