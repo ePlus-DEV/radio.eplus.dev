@@ -112,8 +112,8 @@
     "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.classicfm.com",
-    "cros": false,
-    "stream": "https://e-cros.herokuapp.com/http://vis.media-ice.musicradio.com/ClassicFMMP3",
+    "cros": true,
+    "stream": "http://vis.media-ice.musicradio.com/ClassicFMMP3",
     "features": "/img/europe/united-kingdom/classic-fm.png",
     "schedule": "https://api.webrad.io/data/playlist/42/classic-fm?time="
   },
@@ -122,8 +122,8 @@
     "type": "audio/aac",
     "category": "Âm nhạc",
     "url": "https://www.capitalfm.com",
-    "cros": false,
-    "stream": "https://e-cros.herokuapp.com/http://media-ice.musicradio.com/Capital",
+    "cros": true,
+    "stream": "http://media-ice.musicradio.com/Capital",
     "features": "/img/europe/united-kingdom/capital.png",
     "schedule": "https://api.webrad.io/data/playlist/42/capital?time="
   },
@@ -210,8 +210,8 @@
     "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.radiocaroline.co.uk/",
-    "cros": false,
-    "stream": "https://e-cros.herokuapp.com/http://sc6.radiocaroline.net:8040/stream/1/",
+    "cros": true,
+    "stream": "http://sc6.radiocaroline.net:8040/stream/1/",
     "features": "/img/europe/united-kingdom/caroline.png",
     "schedule": "https://api.webrad.io/data/playlist/42/caroline?time="
   },
