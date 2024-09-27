@@ -4,6 +4,7 @@
       <label
         tabindex="0"
         class="h-10 w-10 flex justify-center items-center focus:outline-none"
+        role="button"
       >
         <fa
           :icon="['fas', icon]"
@@ -19,13 +20,7 @@
       <div
         class="menu dropdown-content p-2 gap-1 absolute z-50 top-full right-0 bg-white rounded-lg ring-1 ring-slate-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm text-slate-700 font-semibold dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-300 mt-4"
         id="headlessui-listbox-options-:R7beilb6:"
-        aria-labelledby="headlessui-listbox-button-:R5beilb6:"
-        aria-orientation="vertical"
-        role="listbox"
         tabindex="0"
-        data-headlessui-state="open"
-        data-open=""
-        style="--button-width: 24px"
       >
         <div
           class="py-1 px-2 flex items-center cursor-pointer"
@@ -127,7 +122,7 @@ if (typeof window !== "undefined") {
   const storedTheme = localStorage.getItem("theme");
   if (storedTheme) {
     updateThemeClasses(storedTheme);
-    getIcon(storedTheme);
+    icon.value = getIcon(storedTheme);
   }
 }
 
@@ -135,7 +130,7 @@ watch(
   () => colorMode.preference,
   (newVal: string) => {
     updateThemeClasses(newVal);
-    getIcon(newVal);
+    icon.value = getIcon(newVal);
   },
   { immediate: true },
 );
