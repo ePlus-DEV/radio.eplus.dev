@@ -353,7 +353,7 @@ function changeSource(type: string) {
       $src.value = "vimeo/640499893";
       break;
     default:
-      $src.value = "https://stream.vovmedia.vn/vov1";
+      $src.value = "https://media-ssl.musicradio.com/HeartUK";
       break;
   }
 }
