@@ -243,7 +243,7 @@ import {
 import type { MediaPlayerElement } from "vidstack/elements";
 
 const $player = ref<MediaPlayerElement>(),
-  $src = ref(""),
+  $src = ref<MediaPlayerElement["src"]>(),
   waiting = ref(true),
   streamError = ref(false),
   button = ref(true);
@@ -302,16 +302,15 @@ onMounted(() => {
    */
 
   // Subscribe to state updates - you can connect them to Vue refs if needed.
-  return $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
+  $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
     const { paused, error } = state;
     button.value = !paused;
-    streamError.value = false;
+    streamError.value = Boolean(error);
     console.log("is paused?", "->", paused);
     if (error) {
       console.error("Playback error occurred");
-      waiting.value = false;
-      streamError.value = true;
     }
+    waiting.value = false;
   });
 });
 
@@ -339,6 +338,12 @@ function onCanPlay(event: MediaCanPlayEvent) {
  */
 function changeSource(type: string) {
   switch (type) {
+    case "audio":
+      $src.value = {
+        src: "https://media-ssl.musicradio.com/HeartUK",
+        type: "audio/mp3",
+      };
+      break;
     case "video":
       $src.value = "https://files.vidstack.io/sprite-fight/720p.mp4";
       break;
