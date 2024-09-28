@@ -51,7 +51,7 @@
           <div class="flex flex-col sm:flex-row items-center p-5">
             <div class="flex items-center">
               <div class="flex space-x-3 p-2">
-                <button class="focus:outline-none cursor-not-allowed">
+                <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
                     viewBox="0 0 24 24"
@@ -139,7 +139,7 @@
                   ></path>
                 </svg>
                 <!-- Waiting -->
-                <button class="focus:outline-none cursor-not-allowed">
+                <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
                     viewBox="0 0 24 24"
@@ -214,11 +214,11 @@
       </div>
 
       <div class="src-buttons">
-        <button @click="changeSource('audio')">Audio</button>
-        <button @click="changeSource('video')">Video</button>
-        <button @click="changeSource('hls')">HLS</button>
-        <button @click="changeSource('youtube')">YouTube</button>
-        <button @click="changeSource('vimeo')">Vimeo</button>
+        <button @click="changeSource('audio')" class="dark:text-white">Audio</button>
+        <button @click="changeSource('video')" class="dark:text-white">Video</button>
+        <button @click="changeSource('hls')" class="dark:text-white">HLS</button>
+        <button @click="changeSource('youtube')" class="dark:text-white">YouTube</button>
+        <button @click="changeSource('vimeo')" class="dark:text-white">Vimeo</button>
       </div>
     </div>
   </div>
@@ -414,6 +414,10 @@ function changeSource(type: string) {
   margin-top: 40px;
   margin-inline: auto;
   max-width: 300px;
+}
+
+.vds-audio-layout {
+  border: unset !important;
 }
 
 :where(.vds-audio-layout) {

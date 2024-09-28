@@ -43,13 +43,12 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const fetchData = async (): Promise<void> => {
   try {
     const response = await fetch(
-      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
+      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`
     );
     const data = await response.json();
 
     if (!data) {
-      console.error("No data returned from fetch");
-      return;
+      throw new Error("No data returned from fetch");
     }
 
     interface Channel {
@@ -61,18 +60,17 @@ const fetchData = async (): Promise<void> => {
     }
 
     const favoriteChannel = Object.values(data as Record<string, Channel>).find(
-      (channel: Channel) => channel.favorite,
+      (channel) => channel.favorite
     );
 
     if (!favoriteChannel) {
-      console.error("Favorite channel not found");
-      return;
+      throw new Error("Favorite channel not found");
     }
 
     streamName.value = favoriteChannel.title;
     streamUrl.value = {
       src: favoriteChannel.cros
-        ? runtimeConfig.app.CORS_SERVER_1 + favoriteChannel.stream
+        ? `${runtimeConfig.app.CORS_SERVER_1}${favoriteChannel.stream}`
         : favoriteChannel.stream,
       type: favoriteChannel.type as AudioMimeType,
     };
@@ -82,7 +80,6 @@ const fetchData = async (): Promise<void> => {
 };
 
 onMounted(() => {
-  console.log("Component created/mounted");
   fetchData();
 });
 </script>
