@@ -43,49 +43,39 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const fetchData = async (): Promise<void> => {
   try {
     const response = await fetch(
-      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
+      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`
     );
     const data = await response.json();
 
-    if (data) {
-      interface Channel {
-        favorite: boolean;
-        title: string;
-        stream: string;
-        type: string;
-        cros: boolean;
-      }
-
-      const favoriteChannel = Object.values(
-        data as Record<string, Channel>,
-      ).find((channel: Channel) => channel.favorite);
-      if (favoriteChannel) {
-        streamName.value = favoriteChannel.title;
-
-        streamUrl.value = {
-          src: favoriteChannel.cros
-            ? runtimeConfig.app.CORS_SERVER_1 + favoriteChannel.stream
-            : favoriteChannel.stream,
-          type: favoriteChannel.type as AudioMimeType,
-        };
-
-        //   if (
-        //   playerState.type === "application/x-mpegURL" ||
-        //   playerState.type === "audio/x-mpegurl"
-        // ) {
-        //   streamUrl.value = {
-        //     src: favoriteChannel.stream
-        //   };
-        // }lse{
-        //   streamUrl.value = {
-        //     src: favoriteChannel.stream, type: favoriteChannel.type
-        //   };
-      } else {
-        console.error("Favorite channel not found");
-      }
-    } else {
+    if (!data) {
       console.error("No data returned from fetch");
+      return;
     }
+
+    interface Channel {
+      favorite: boolean;
+      title: string;
+      stream: string;
+      type: string;
+      cros: boolean;
+    }
+
+    const favoriteChannel = Object.values(data as Record<string, Channel>).find(
+      (channel: Channel) => channel.favorite
+    );
+
+    if (!favoriteChannel) {
+      console.error("Favorite channel not found");
+      return;
+    }
+
+    streamName.value = favoriteChannel.title;
+    streamUrl.value = {
+      src: favoriteChannel.cros
+        ? runtimeConfig.app.CORS_SERVER_1 + favoriteChannel.stream
+        : favoriteChannel.stream,
+      type: favoriteChannel.type as AudioMimeType,
+    };
   } catch (error) {
     console.error("Error fetching data:", error);
   }
