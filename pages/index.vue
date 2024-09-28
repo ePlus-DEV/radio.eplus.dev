@@ -36,7 +36,7 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const fetchData = async (): Promise<void> => {
   try {
     const response = await fetch(
-      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`
+      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
     );
     const data = await response.json();
 
@@ -53,7 +53,7 @@ const fetchData = async (): Promise<void> => {
     }
 
     const favoriteChannel = Object.values(data as Record<string, Channel>).find(
-      (channel) => channel.favorite
+      (channel) => channel.favorite,
     );
 
     if (!favoriteChannel) {

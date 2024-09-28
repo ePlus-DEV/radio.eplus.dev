@@ -214,11 +214,21 @@
       </div>
 
       <div class="src-buttons">
-        <button @click="changeSource('audio')" class="dark:text-white">Audio</button>
-        <button @click="changeSource('video')" class="dark:text-white">Video</button>
-        <button @click="changeSource('hls')" class="dark:text-white">HLS</button>
-        <button @click="changeSource('youtube')" class="dark:text-white">YouTube</button>
-        <button @click="changeSource('vimeo')" class="dark:text-white">Vimeo</button>
+        <button @click="changeSource('audio')" class="dark:text-white">
+          Audio
+        </button>
+        <button @click="changeSource('video')" class="dark:text-white">
+          Video
+        </button>
+        <button @click="changeSource('hls')" class="dark:text-white">
+          HLS
+        </button>
+        <button @click="changeSource('youtube')" class="dark:text-white">
+          YouTube
+        </button>
+        <button @click="changeSource('vimeo')" class="dark:text-white">
+          Vimeo
+        </button>
       </div>
     </div>
   </div>
