@@ -12,7 +12,7 @@
                 <nuxt-img
                   loading="lazy"
                   class="w-35 h-25 object-cover"
-                  src="https://radio.eplus.dev/img/europe/flags/united-kingdom.png"
+                  :src="config.app.baseURL + thumb"
                 />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
@@ -34,7 +34,7 @@
               <span
                 class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
               >
-                C-Pop Radio - Zing MP3
+                {{ streamName }}
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
                 Việt Nam
@@ -158,7 +158,7 @@
             <div class="relative w-full ml-2">
               <media-player
                 class="player"
-                title="Sprite Fight"
+                :title="streamName"
                 :src="$src"
                 crossOrigin
                 playsInline
@@ -167,6 +167,7 @@
                 ref="$player"
                 autoplay
                 view-type="audio"
+                muted
               >
                 <media-provider>
                   <!-- <media-poster
@@ -242,22 +243,21 @@ import {
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
 
-const props = defineProps([
-  "country",
-  "home",
-  "info",
-  "playlist",
-  "song",
-  "program",
-  "thumb",
-  "current",
-]);
+import { defineProps, ref } from 'vue';
+const config = useRuntimeConfig()
 
 const $player = ref<MediaPlayerElement>(),
-  $src = ref<MediaPlayerElement["src"]>(),
   waiting = ref(true),
   streamError = ref(false),
   button = ref(true);
+
+const props = defineProps<{
+  thumb: string;
+  streamName: string;
+  streamUrl: MediaPlayerElement["src"];
+}>();
+
+const $src = ref(props.streamUrl);
 
 /**
  * Handles the play action for the player.
@@ -292,7 +292,15 @@ function onPause() {
 }
 
 // Initialize src.
-changeSource("audio");
+// changeSource("audio");
+
+// watch props
+watch(
+  () => props.streamUrl,
+  (newVal: MediaPlayerElement["src"]) => {
+    $src.value = newVal;
+  }
+);
 
 onMounted(() => {
   // Select elements with the classes 'vds-play-button' and 'vds-button'

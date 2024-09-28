@@ -1,39 +1,41 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <!-- <Breadcrumbs
+    <Breadcrumbs
       :area="area"
       level_1=""
       :level_2="$t(`world.${area.replace(/-/g, '_')}.name`)"
-    /> -->
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <!-- <Player
+    <Player
       ref="player"
       country="world.asia.viet_nam"
       :home="true"
       thumb="/img/asia/flags/viet-nam.png"
-    ></Player> -->
+      :streamName="streamName"
+      :streamUrl="streamUrl"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
     <!-- <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio> -->
     <!-- BEGIN - PanelRadio -->
-
-    {{ stream_name }}
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRoute, useRuntimeConfig, useAsyncData } from "#app";
+import { useRoute, useRuntimeConfig } from "#app";
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
 const area = ref(route.params.area as string);
-const schedule_data = ref<any[]>([]);
-const stream_name = ref<string | null>(null);
+const streamName = ref<string>("");
+import type { AudioSrc, AudioMimeType } from 'vidstack';
+
+const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
@@ -49,21 +51,38 @@ const fetchData = async (): Promise<void> => {
       interface Channel {
         favorite: boolean;
         title: string;
-        // Add other properties of the channel object if needed
+        stream: string;
+        type: string;
+        cros: boolean;
       }
 
       const favoriteChannel = Object.values(
         data as Record<string, Channel>,
       ).find((channel: Channel) => channel.favorite);
       if (favoriteChannel) {
-        stream_name.value = favoriteChannel.title;
+        streamName.value = favoriteChannel.title;
+
+        streamUrl.value = {
+          src: favoriteChannel.cros
+        ? runtimeConfig.app.CORS_SERVER_1 + favoriteChannel.stream
+        : favoriteChannel.stream, type: favoriteChannel.type as AudioMimeType
+        };
+     
+      //   if (
+      //   playerState.type === "application/x-mpegURL" ||
+      //   playerState.type === "audio/x-mpegurl"
+      // ) {
+      //   streamUrl.value = {
+      //     src: favoriteChannel.stream
+      //   };
+      // }lse{
+      //   streamUrl.value = {
+      //     src: favoriteChannel.stream, type: favoriteChannel.type
+      //   };
+
       } else {
         console.error("Favorite channel not found");
       }
-
-      // Vuex
-      // store.dispatch("storePLAYERHOME", favoriteChannel);
-      // (refs.player as any).init(true);
     } else {
       console.error("No data returned from fetch");
     }
