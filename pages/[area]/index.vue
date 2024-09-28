@@ -26,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute, useRuntimeConfig, useAsyncData } from '#app';
+import { ref, onMounted } from "vue";
+import { useRoute, useRuntimeConfig, useAsyncData } from "#app";
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
@@ -40,8 +40,9 @@ const stream_name = ref<string | null>(null);
  */
 const fetchData = async (): Promise<void> => {
   try {
-    
-    const response = await fetch(`/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`);
+    const response = await fetch(
+      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
+    );
     const data = await response.json();
 
     if (data) {
@@ -50,10 +51,10 @@ const fetchData = async (): Promise<void> => {
         title: string;
         // Add other properties of the channel object if needed
       }
-      
-      const favoriteChannel = Object.values(data as Record<string, Channel>).find(
-        (channel: Channel) => channel.favorite,
-      );
+
+      const favoriteChannel = Object.values(
+        data as Record<string, Channel>,
+      ).find((channel: Channel) => channel.favorite);
       if (favoriteChannel) {
         stream_name.value = favoriteChannel.title;
       } else {
@@ -67,13 +68,12 @@ const fetchData = async (): Promise<void> => {
       console.error("No data returned from fetch");
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   }
 };
 
-
 onMounted(() => {
-  console.log('Component created/mounted');
+  console.log("Component created/mounted");
   fetchData();
 });
 </script>
