@@ -12,7 +12,7 @@
                 <nuxt-img
                   loading="lazy"
                   class="w-[61px]"
-                  :src="`${config.app.baseURL}${thumb}`"
+                  :src="`${config.public.cloudinaryBaseUrl}${thumb}`"
                 />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
