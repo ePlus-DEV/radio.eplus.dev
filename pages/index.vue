@@ -20,11 +20,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRoute, useRuntimeConfig } from "#app";
-const route = useRoute();
+import { useRuntimeConfig } from "#app";
 const runtimeConfig = useRuntimeConfig();
 
-const area = ref(route.params.area as string);
 const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
 
