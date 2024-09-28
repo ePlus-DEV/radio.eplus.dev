@@ -20,7 +20,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRuntimeConfig } from "#app";
 const runtimeConfig = useRuntimeConfig();
 
 const streamName = ref<string>("");

@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRoute, useRuntimeConfig } from "#app";
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 

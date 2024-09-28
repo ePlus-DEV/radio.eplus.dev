@@ -11,8 +11,8 @@
               <span class="relative inline-flex">
                 <nuxt-img
                   loading="lazy"
-                  class="w-35 h-25 object-cover"
-                  :src="config.app.baseURL + thumb"
+                  class="w-[61px]"
+                  :src="`${config.app.baseURL}${thumb}`"
                 />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
