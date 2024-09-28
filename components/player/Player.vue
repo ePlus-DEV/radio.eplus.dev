@@ -242,6 +242,16 @@ import {
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
 
+const props = defineProps(["country",
+    "home",
+    "info",
+    "playlist",
+    "song",
+    "program",
+    "thumb",
+    "current"]
+  );
+
 const $player = ref<MediaPlayerElement>(),
   $src = ref<MediaPlayerElement["src"]>(),
   waiting = ref(true),
