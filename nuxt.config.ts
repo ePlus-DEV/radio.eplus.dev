@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
+      pinChannelFavorites: process.env.NUXT_PUBLIC_PIN_CHANNEL_FAVORITES,
     },
   },
   modules: [
@@ -131,7 +132,7 @@ export default defineNuxtConfig({
     },
     proIcons: {
       solid: ["signal-stream", "xmark-large", "sun-bright", "moon", "desktop"],
-      regular: ["magnifying-glass-music"],
+      regular: ["magnifying-glass-music", "house"],
       light: ["sun-bright", "moon", "desktop", "bookmark"],
       thin: [],
       duotone: ["snooze"],

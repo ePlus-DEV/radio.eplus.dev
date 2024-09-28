@@ -11,8 +11,8 @@
               <span class="relative inline-flex">
                 <nuxt-img
                   loading="lazy"
-                  class="w-35 h-25 object-cover"
-                  src="https://radio.eplus.dev/img/europe/flags/united-kingdom.png"
+                  class="w-[61px]"
+                  :src="`${config.app.baseURL}${thumb}`"
                 />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
@@ -34,7 +34,7 @@
               <span
                 class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
               >
-                C-Pop Radio - Zing MP3
+                {{ streamName }}
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
                 Việt Nam
@@ -51,7 +51,7 @@
           <div class="flex flex-col sm:flex-row items-center p-5">
             <div class="flex items-center">
               <div class="flex space-x-3 p-2">
-                <button class="focus:outline-none cursor-not-allowed">
+                <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
                     viewBox="0 0 24 24"
@@ -139,7 +139,7 @@
                   ></path>
                 </svg>
                 <!-- Waiting -->
-                <button class="focus:outline-none cursor-not-allowed">
+                <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
                     viewBox="0 0 24 24"
@@ -158,7 +158,7 @@
             <div class="relative w-full ml-2">
               <media-player
                 class="player"
-                title="Sprite Fight"
+                :title="streamName"
                 :src="$src"
                 crossOrigin
                 playsInline
@@ -167,6 +167,7 @@
                 ref="$player"
                 autoplay
                 view-type="audio"
+                muted
               >
                 <media-provider>
                   <!-- <media-poster
@@ -213,11 +214,21 @@
       </div>
 
       <div class="src-buttons">
-        <button @click="changeSource('audio')">Audio</button>
-        <button @click="changeSource('video')">Video</button>
-        <button @click="changeSource('hls')">HLS</button>
-        <button @click="changeSource('youtube')">YouTube</button>
-        <button @click="changeSource('vimeo')">Vimeo</button>
+        <button @click="changeSource('audio')" class="dark:text-white">
+          Audio
+        </button>
+        <button @click="changeSource('video')" class="dark:text-white">
+          Video
+        </button>
+        <button @click="changeSource('hls')" class="dark:text-white">
+          HLS
+        </button>
+        <button @click="changeSource('youtube')" class="dark:text-white">
+          YouTube
+        </button>
+        <button @click="changeSource('vimeo')" class="dark:text-white">
+          Vimeo
+        </button>
       </div>
     </div>
   </div>
@@ -242,11 +253,21 @@ import {
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
 
+import { defineProps, ref } from "vue";
+const config = useRuntimeConfig();
+
 const $player = ref<MediaPlayerElement>(),
-  $src = ref<MediaPlayerElement["src"]>(),
   waiting = ref(true),
   streamError = ref(false),
   button = ref(true);
+
+const props = defineProps<{
+  thumb: string;
+  streamName: string;
+  streamUrl: MediaPlayerElement["src"];
+}>();
+
+const $src = ref(props.streamUrl);
 
 /**
  * Handles the play action for the player.
@@ -281,7 +302,15 @@ function onPause() {
 }
 
 // Initialize src.
-changeSource("audio");
+// changeSource("audio");
+
+// watch props
+watch(
+  () => props.streamUrl,
+  (newVal: MediaPlayerElement["src"]) => {
+    $src.value = newVal;
+  },
+);
 
 onMounted(() => {
   // Select elements with the classes 'vds-play-button' and 'vds-button'
@@ -395,6 +424,10 @@ function changeSource(type: string) {
   margin-top: 40px;
   margin-inline: auto;
   max-width: 300px;
+}
+
+.vds-audio-layout {
+  border: unset !important;
 }
 
 :where(.vds-audio-layout) {
