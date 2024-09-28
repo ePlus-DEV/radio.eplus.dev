@@ -243,8 +243,8 @@ import {
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
 
-import { defineProps, ref } from 'vue';
-const config = useRuntimeConfig()
+import { defineProps, ref } from "vue";
+const config = useRuntimeConfig();
 
 const $player = ref<MediaPlayerElement>(),
   waiting = ref(true),
@@ -299,7 +299,7 @@ watch(
   () => props.streamUrl,
   (newVal: MediaPlayerElement["src"]) => {
     $src.value = newVal;
-  }
+  },
 );
 
 onMounted(() => {

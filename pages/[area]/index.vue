@@ -33,7 +33,7 @@ const runtimeConfig = useRuntimeConfig();
 
 const area = ref(route.params.area as string);
 const streamName = ref<string>("");
-import type { AudioSrc, AudioMimeType } from 'vidstack';
+import type { AudioSrc, AudioMimeType } from "vidstack";
 
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
@@ -64,22 +64,22 @@ const fetchData = async (): Promise<void> => {
 
         streamUrl.value = {
           src: favoriteChannel.cros
-        ? runtimeConfig.app.CORS_SERVER_1 + favoriteChannel.stream
-        : favoriteChannel.stream, type: favoriteChannel.type as AudioMimeType
+            ? runtimeConfig.app.CORS_SERVER_1 + favoriteChannel.stream
+            : favoriteChannel.stream,
+          type: favoriteChannel.type as AudioMimeType,
         };
-     
-      //   if (
-      //   playerState.type === "application/x-mpegURL" ||
-      //   playerState.type === "audio/x-mpegurl"
-      // ) {
-      //   streamUrl.value = {
-      //     src: favoriteChannel.stream
-      //   };
-      // }lse{
-      //   streamUrl.value = {
-      //     src: favoriteChannel.stream, type: favoriteChannel.type
-      //   };
 
+        //   if (
+        //   playerState.type === "application/x-mpegURL" ||
+        //   playerState.type === "audio/x-mpegurl"
+        // ) {
+        //   streamUrl.value = {
+        //     src: favoriteChannel.stream
+        //   };
+        // }lse{
+        //   streamUrl.value = {
+        //     src: favoriteChannel.stream, type: favoriteChannel.type
+        //   };
       } else {
         console.error("Favorite channel not found");
       }
