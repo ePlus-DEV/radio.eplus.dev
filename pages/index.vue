@@ -20,12 +20,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { defineRouteRules } from 'vue-router';
 const runtimeConfig = useRuntimeConfig();
-
 const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
-
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+
+defineRouteRules({
+  sitemap: {
+    changefreq: 'daily',
+    priority: 0.3
+  }
+})
+
+useSeoMeta({
+  // will be inferred as the lastmod value in the sitemap
+  articleModifiedTime: new Date().toISOString(),
+})
 
 /**
  * Fetches data from the server and initializes the player with the favorite channel.

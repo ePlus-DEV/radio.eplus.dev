@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/image",
     "dayjs-nuxt",
+    "@nuxtjs/sitemap"
   ],
   app: {
     head: {
