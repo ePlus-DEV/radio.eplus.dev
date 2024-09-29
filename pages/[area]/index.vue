@@ -32,6 +32,10 @@ const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
+// Define the area variable
+const route = useRoute(); // Use useRoute to get the route object
+const area = route.params.area as string;
+
 useSeoMeta({
   // will be inferred as the lastmod value in the sitemap
   articleModifiedTime: new Date().toISOString(),
