@@ -21,11 +21,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 const runtimeConfig = useRuntimeConfig();
-
 const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
-
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+
+useSeoMeta({
+  // will be inferred as the lastmod value in the sitemap
+  articleModifiedTime: new Date().toISOString(),
+});
 
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
@@ -60,7 +63,7 @@ const fetchData = async (): Promise<void> => {
     streamName.value = favoriteChannel.title;
     streamUrl.value = {
       src: favoriteChannel.cros
-        ? `${runtimeConfig.app.CORS_SERVER_1}${favoriteChannel.stream}`
+        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
         : favoriteChannel.stream,
       type: favoriteChannel.type as AudioMimeType,
     };

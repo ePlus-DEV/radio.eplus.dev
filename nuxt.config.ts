@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     public: {
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
       pinChannelFavorites: process.env.NUXT_PUBLIC_PIN_CHANNEL_FAVORITES,
+      corsServer: process.env.NUXT_PUBLIC_CORS_SERVER_1,
     },
   },
   modules: [
@@ -20,6 +21,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/image",
     "dayjs-nuxt",
+    "@nuxtjs/sitemap",
   ],
   app: {
     head: {
