@@ -69,7 +69,7 @@ const fetchData = async (): Promise<void> => {
     streamName.value = favoriteChannel.title;
     streamUrl.value = {
       src: favoriteChannel.cros
-        ? `${runtimeConfig.app.CORS_SERVER_1}${favoriteChannel.stream}`
+        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
         : favoriteChannel.stream,
       type: favoriteChannel.type as AudioMimeType,
     };
