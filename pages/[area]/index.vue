@@ -10,7 +10,6 @@
 
     <!-- BEGIN - Player -->
     <Player
-      ref="player"
       country="world.asia.viet_nam"
       :home="true"
       thumb="/img/asia/flags/viet-nam.png"

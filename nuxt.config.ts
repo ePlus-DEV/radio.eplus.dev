@@ -12,6 +12,10 @@ export default defineNuxtConfig({
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
       pinChannelFavorites: process.env.NUXT_PUBLIC_PIN_CHANNEL_FAVORITES,
       corsServer: process.env.NUXT_PUBLIC_CORS_SERVER_1,
+      placeholder: "https://s3.eplus.dev/i/radio-on-air.png",
+      placeholderStation: "https://s3.eplus.dev/i/station-on-air.png",
+      apiZingLiveStreamProgramDetail: process.env.NUXT_PUBLIC_API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
+      apiZingGetLyric: process.env.NUXT_PUBLIC_API_ZING_GET_LYRIC,
     },
   },
   modules: [
