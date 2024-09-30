@@ -77,16 +77,20 @@
     <!-- END - Lyric -->
 
     <!-- BEGIN - PanelStation -->
-    <PanelStation :area="Array.isArray(area) ? area[0] : area" :slug="Array.isArray(slug) ? slug[0] : slug" :i18n="i18n" />
+    <PanelStation
+      :area="Array.isArray(area) ? area[0] : area"
+      :slug="Array.isArray(slug) ? slug[0] : slug"
+      :i18n="i18n"
+    />
     <!-- END - PanelStation -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeUnmount, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import { useI18n } from 'vue-i18n';
+import { ref, onBeforeUnmount, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 
 const route = useRoute();
 const router = useRouter();
@@ -131,21 +135,22 @@ const fetchData = async () => {
   try {
     const res = await fetch(`/assets/radio/${area.value}/${slug.value}.json`);
     const responseData = await res.json();
-    if (typeof route.params.station === 'string' && Object.prototype.hasOwnProperty.call(responseData, route.params.station)) {
+    if (
+      typeof route.params.station === "string" &&
+      Object.prototype.hasOwnProperty.call(responseData, route.params.station)
+    ) {
       const data = responseData[route.params.station];
 
       name.value = data.title;
       description.value = data.description;
       streamName.value = data.title;
 
-
       streamUrl.value = {
-      src: data.cros
-        ? `${data.public.corsServer}${data.stream}`
-        : data.stream,
-      type: data.type as AudioMimeType,
-    };
-
+        src: data.cros
+          ? `${data.public.corsServer}${data.stream}`
+          : data.stream,
+        type: data.type as AudioMimeType,
+      };
 
       if (data.schedule !== undefined) {
         fetchSchedule(data.schedule);
@@ -164,7 +169,9 @@ const fetchSchedule = async (url: string) => {
     const resData = await res.json();
     if (resData.err === 0 && slug.value === "viet-nam") {
       program.value = resData.data.items;
-      fetchSong(`${config.public.apiZingLiveStreamProgramDetail}${resData.data.items[0].encodeId}&time=`);
+      fetchSong(
+        `${config.public.apiZingLiveStreamProgramDetail}${resData.data.items[0].encodeId}&time=`,
+      );
     } else {
       if (resData.success) {
         data.value = resData.result;
@@ -201,7 +208,11 @@ const fetchSong = async (url: string) => {
       document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
     }
 
-    if (song.value && (song.value as any).currentMedia && (song.value as any).currentMedia.hasLyric) {
+    if (
+      song.value &&
+      (song.value as any).currentMedia &&
+      (song.value as any).currentMedia.hasLyric
+    ) {
       fetchLyric((song.value as any).currentMedia.encodeId);
     } else {
       lyric.value = t("panel.no_lyric");
@@ -236,14 +247,16 @@ const fetchInfo = async (url: string) => {
 const fetchLyric = async (id: string) => {
   try {
     const res = await fetch(
-      `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`
+      `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`,
     );
     const resData = await res.json();
     if (resData.err === 0) {
       if (resData.data.sentences) {
         let lyricContent = "";
         resData.data.sentences.forEach((sentence: any) => {
-          let lyricLine = sentence.words.map((word: any) => word.data).join(" ");
+          let lyricLine = sentence.words
+            .map((word: any) => word.data)
+            .join(" ");
           lyricContent += `<p class="pb-1">${lyricLine}</p>`;
         });
         lyric.value = lyricContent;

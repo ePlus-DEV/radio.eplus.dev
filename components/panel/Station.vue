@@ -60,9 +60,7 @@ const props = defineProps<{
  */
 const fetchData = async (): Promise<void> => {
   try {
-    const response = await fetch(
-      `radio/${props.area}/${props.slug}.json`,
-    );
+    const response = await fetch(`radio/${props.area}/${props.slug}.json`);
     const data = await response.json();
 
     if (!data) {
@@ -70,7 +68,6 @@ const fetchData = async (): Promise<void> => {
     }
 
     results.value = data;
-
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -80,13 +77,12 @@ onMounted(() => {
   fetchData();
 });
 
-
 /**
  * Checks if the given path is the active route.
  * @param {string} path - The path to check.
  * @returns {boolean} - True if the path is the active route, false otherwise.
  */
 const isRouteActive = (path: string): boolean => {
- return route.params.name === path;
+  return route.params.name === path;
 };
 </script>
