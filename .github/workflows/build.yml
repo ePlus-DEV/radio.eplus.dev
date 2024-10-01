@@ -23,5 +23,5 @@ jobs:
     - name: "Install dependencies"
       run: pnpm install --shamefully-hoist
 
-    - name: "Run build task"
-      run: pnpm run build --if-present
+    - name: "Run generate task"
+      run: pnpm run generate --if-present
