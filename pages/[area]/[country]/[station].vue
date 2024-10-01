@@ -99,7 +99,7 @@ const name = ref<string | undefined>("");
 const title = ref("Radio in Internet");
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
-const i18n = ref(`world.${area.value}.${slug.value}`);
+const i18n = ref(`world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`);
 const description = ref("");
 const streamName = ref("");
 const program = ref([]);
@@ -126,11 +126,11 @@ const config = useRuntimeConfig();
  * Fetches data for the radio station based on the current route parameters.
  */
 const fetchData = async () => {
-  i18n.value = `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`;
   // const thumb = `/img/${area.value}/flags/${slug.value}.png`;
-  title.value = `${name.value} - ${t("navmenu.homepage")} - Radio ${t(i18n.value)}`;
+  // title.value = `${name.value} - ${t("navmenu.homepage")} - Radio ${t(i18n.value)}`;
 
   try {
+
     const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
     const responseData = await res.json();
     if (
