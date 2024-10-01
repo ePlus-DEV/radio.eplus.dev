@@ -49,9 +49,9 @@ interface Result {
 const results = ref<Result[]>([]);
 
 const props = defineProps<{
-  area: string,
-  slug: string,
-  i18n: string,
+  area: string;
+  slug: string;
+  i18n: string;
 }>();
 
 /**
