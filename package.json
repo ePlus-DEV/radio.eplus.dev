@@ -39,8 +39,5 @@
   },
   "engines": {
     "node": "20.x"
-  },
-  "devDependencies": {
-    "@types/moment-timezone": "^0.5.13"
   }
 }

@@ -27,7 +27,13 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
-    "@nuxtjs/algolia",
+    [
+      "@nuxtjs/algolia",
+      {
+        apiKey: "0fd1c4eba2f831788333e77c9d855f1d",
+        applicationId: "AGN9HUEKF3",
+      },
+    ],
   ],
   app: {
     head: {
