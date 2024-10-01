@@ -99,7 +99,9 @@ const name = ref<string | undefined>("");
 const title = ref("Radio in Internet");
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
-const i18n = ref(`world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`);
+const i18n = ref(
+  `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
+);
 const description = ref("");
 const streamName = ref("");
 const program = ref([]);
@@ -130,7 +132,6 @@ const fetchData = async () => {
   // title.value = `${name.value} - ${t("navmenu.homepage")} - Radio ${t(i18n.value)}`;
 
   try {
-
     const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
     const responseData = await res.json();
     if (
