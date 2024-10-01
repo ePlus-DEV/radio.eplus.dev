@@ -89,12 +89,10 @@
 <script setup lang="ts">
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 
 const route = useRoute();
 const router = useRouter();
-const store = useStore();
 const { t } = useI18n();
 
 const name = ref<string | undefined>("");
@@ -119,7 +117,7 @@ const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
-const timezone = ref(store.state.timezone);
+const timezone = ref('Asia/Ho_Chi_Minh');
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const config = useRuntimeConfig();
@@ -133,7 +131,7 @@ const fetchData = async () => {
   title.value = `${name.value} - ${t("navmenu.homepage")} - Radio ${t(i18n.value)}`;
 
   try {
-    const res = await fetch(`/assets/radio/${area.value}/${slug.value}.json`);
+    const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
     const responseData = await res.json();
     if (
       typeof route.params.station === "string" &&
