@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const { data } = await useAsyncAlgoliaSearch({ indexName: 'test_index', query: 'Samsung' })
+const { data } = await useAsyncAlgoliaSearch({
+  indexName: "test_index",
+  query: "Samsung",
+});
 </script>
 
 <template>
