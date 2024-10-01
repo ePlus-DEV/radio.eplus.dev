@@ -19,7 +19,7 @@
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
-    <!-- <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio> -->
+    <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio>
     <!-- BEGIN - PanelRadio -->
   </div>
 </template>

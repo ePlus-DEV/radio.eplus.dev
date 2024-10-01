@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
+    "@nuxtjs/algolia",
   ],
   app: {
     head: {
