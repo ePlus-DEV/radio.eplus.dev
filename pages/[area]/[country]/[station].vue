@@ -154,10 +154,10 @@ const fetchData = async () => {
         fetchSchedule(data.schedule);
       }
     } else {
-      await router.push("/");
+      // await router.push("/");
     }
   } catch (error) {
-    await router.push(`/${area.value}/${slug.value}`);
+    // await router.push(`/${area.value}/${slug.value}`);
   }
 };
 

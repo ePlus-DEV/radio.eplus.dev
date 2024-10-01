@@ -640,7 +640,7 @@
     "type": "application/x-mpegURL",
     "category": "Xone FM 96MHz",
     "url": "https://xonefm.com",
-    "cros": true,
+    "cros": false,
     "time": "Chưa rõ",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZ97CZZ&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ97CZZ&time=",

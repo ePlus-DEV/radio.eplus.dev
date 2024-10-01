@@ -49,9 +49,9 @@ interface Result {
 const results = ref<Result[]>([]);
 
 const props = defineProps<{
-  area: string;
-  slug: string;
-  i18n: string;
+  area: string,
+  slug: string,
+  i18n: string,
 }>();
 
 /**
@@ -60,7 +60,7 @@ const props = defineProps<{
  */
 const fetchData = async (): Promise<void> => {
   try {
-    const response = await fetch(`radio/${props.area}/${props.slug}.json`);
+    const response = await fetch(`/radio/${props.area}/${props.slug}.json`);
     const data = await response.json();
 
     if (!data) {
