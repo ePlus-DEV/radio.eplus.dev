@@ -1,11 +1,11 @@
 <template>
   <div>
-   {{ result }}
+    {{ result }}
   </div>
 </template>
 
 <script setup lang="ts">
-const { result, search } = useAlgoliaSearch('world')
+const { result, search } = useAlgoliaSearch("world");
 
 // interface Country {
 //   name: string;
@@ -46,8 +46,8 @@ const { result, search } = useAlgoliaSearch('world')
 // }
 
 onMounted(async () => {
-  await search({ query: 'Samsung' })
-})
+  await search({ query: "Samsung" });
+});
 </script>
 
 <style>
