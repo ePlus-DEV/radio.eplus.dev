@@ -1,5 +1,9 @@
 {
-  "name": "nuxt-app",
+  "name": "eplus-radio",
+  "version": "2.0.0",
+  "repository": "https://github.com/ePlus-DEV/radio.eplus.dev",
+  "description": "ePlus Radio",
+  "author": "David Nguyen",
   "private": true,
   "type": "module",
   "scripts": {
@@ -23,6 +27,7 @@
     "@fortawesome/sharp-solid-svg-icons": "^6.6.0",
     "@fortawesome/sharp-thin-svg-icons": "^6.6.0",
     "@nuxt/image": "^1.8.0",
+    "@nuxtjs/algolia": "^1.10.2",
     "@nuxtjs/color-mode": "^3.5.1",
     "@nuxtjs/i18n": "^8.5.5",
     "@nuxtjs/sitemap": "^6.1.1",

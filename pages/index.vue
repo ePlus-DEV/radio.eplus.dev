@@ -14,7 +14,9 @@
     ></Player>
     <!-- END - Player -->
 
-    <nuxt-link to="asia" class="dark:text-white">Asia</nuxt-link>
+    <!-- BEGIN - PanelRadio -->
+    <PanelRadio></PanelRadio>
+    <!-- BEGIN - PanelRadio -->
   </div>
 </template>
 

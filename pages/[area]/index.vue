@@ -10,7 +10,6 @@
 
     <!-- BEGIN - Player -->
     <Player
-      ref="player"
       country="world.asia.viet_nam"
       :home="true"
       thumb="/img/asia/flags/viet-nam.png"
@@ -20,7 +19,7 @@
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
-    <!-- <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio> -->
+    <PanelRadio :chooseTheArea="area.replace('-', '_')"></PanelRadio>
     <!-- BEGIN - PanelRadio -->
   </div>
 </template>

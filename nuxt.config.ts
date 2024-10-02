@@ -5,13 +5,18 @@ import { vite as vidstack } from "vidstack/plugins";
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  // ssr: false,
+  ssr: false,
   pages: true,
   runtimeConfig: {
     public: {
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
       pinChannelFavorites: process.env.NUXT_PUBLIC_PIN_CHANNEL_FAVORITES,
       corsServer: process.env.NUXT_PUBLIC_CORS_SERVER_1,
+      placeholder: "https://s3.eplus.dev/i/radio-on-air.png",
+      placeholderStation: "https://s3.eplus.dev/i/station-on-air.png",
+      apiZingLiveStreamProgramDetail:
+        process.env.NUXT_PUBLIC_API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
+      apiZingGetLyric: process.env.NUXT_PUBLIC_API_ZING_GET_LYRIC,
     },
   },
   modules: [
@@ -22,6 +27,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
+    "@nuxtjs/algolia",
   ],
   app: {
     head: {
@@ -76,6 +82,12 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // algolia: {
+  //   apiKey: process.env.ALGOLIA_API_KEY ?? "0fd1c4eba2f831788333e77c9d855f1d",
+  //   applicationId: process.env.ALGOLIA_APPLICATION_ID ?? "AGN9HUEKF3",
+  //   lite: false, // by default set to 'true'
+  //   useFetch: true,
+  // },
   i18n: {
     locales: [
       {
@@ -134,7 +146,7 @@ export default defineNuxtConfig({
     },
     proIcons: {
       solid: ["signal-stream", "xmark-large", "sun-bright", "moon", "desktop"],
-      regular: ["magnifying-glass-music", "house"],
+      regular: ["magnifying-glass-music", "house", "list-music"],
       light: ["sun-bright", "moon", "desktop", "bookmark"],
       thin: [],
       duotone: ["snooze"],
