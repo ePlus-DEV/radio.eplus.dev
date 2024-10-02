@@ -169,19 +169,7 @@
                 view-type="audio"
                 muted
               >
-                <media-provider>
-                  <!-- <media-poster
-                                class="vds-poster"
-                                src="https://files.vidstack.io/sprite-fight/poster.webp"
-                                alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!"
-                                /> -->
-                </media-provider>
-                <!-- Layouts -->
                 <media-audio-layout></media-audio-layout>
-
-                <!-- <VideoLayout thumbnails="https://files.vidstack.io/sprite-fight/thumbnails.vtt" /> -->
-
-                <!-- <media-video-layout thumbnails="https://files.vidstack.io/sprite-fight/thumbnails.vtt" /> -->
               </media-player>
             </div>
           </div>
