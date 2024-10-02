@@ -82,12 +82,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-  // algolia: {
-  //   apiKey: process.env.ALGOLIA_API_KEY ?? "0fd1c4eba2f831788333e77c9d855f1d",
-  //   applicationId: process.env.ALGOLIA_APPLICATION_ID ?? "AGN9HUEKF3",
-  //   lite: false, // by default set to 'true'
-  //   useFetch: true,
-  // },
   i18n: {
     locales: [
       {
