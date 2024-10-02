@@ -41,10 +41,7 @@
       "senegal": "塞內加爾",
       "south_africa": "南非",
       "tunisia": "突尼斯",
-      "uganda": "烏干達",
-      "suriname": "蘇里南",
-      "uruguay": "烏拉圭",
-      "venezuela": "委內瑞拉"
+      "uganda": "烏干達"
     },
     "asia": {
       "name": "亞洲",
@@ -130,7 +127,10 @@
       "colombia": "哥倫比亞",
       "ecuador": "厄瓜多爾",
       "paraguay": "巴拉圭",
-      "peru": "秘魯"
+      "peru": "秘魯",
+      "suriname": "蘇里南",
+      "uruguay": "烏拉圭",
+      "venezuela": "委內瑞拉"
     }
   },
   "panel": {
@@ -192,6 +192,7 @@
       "dark": "深色模式",
       "light": "淺色模式",
       "system": "系統默認"
-    }
+    },
+    "offline": "網絡連接失敗，請檢查您的網絡連接。"
   }
 }

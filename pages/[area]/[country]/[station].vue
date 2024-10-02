@@ -90,21 +90,25 @@
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-
-const route = useRoute();
 const router = useRouter();
+const route = useRoute();
 const { t } = useI18n();
-
+const config = useRuntimeConfig();
 const name = ref<string | undefined>("");
-const title = ref("Radio in Internet");
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
-const description = ref("");
+const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
-const program = ref([]);
+interface ProgramItem {
+  // Define the properties of ProgramItem based on the structure of resDataValue.data.items
+  encodeId: string;
+  // Add other properties as needed
+}
+
+const program = ref<ProgramItem[]>([]);
 const song = ref({});
 const info = ref([]);
 const current = ref({});
@@ -114,6 +118,10 @@ interface Track {
   // Add other properties as needed
 }
 
+useHead({
+  title: title.value as unknown as string,
+});
+
 const data = ref<Track[]>([]);
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
@@ -122,15 +130,11 @@ const lyric = ref(t("panel.updating"));
 const timezone = ref("Asia/Ho_Chi_Minh");
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
-const config = useRuntimeConfig();
 
 /**
  * Fetches data for the radio station based on the current route parameters.
  */
 const fetchData = async () => {
-  // const thumb = `/img/${area.value}/flags/${slug.value}.png`;
-  // title.value = `${name.value} - ${t("navmenu.homepage")} - Radio ${t(i18n.value)}`;
-
   try {
     const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
     const responseData = await res.json();
@@ -141,9 +145,7 @@ const fetchData = async () => {
       const data = responseData[route.params.station];
 
       name.value = data.title;
-      description.value = data.description;
       streamName.value = data.title;
-
       streamUrl.value = {
         src: data.cros
           ? `${data.public.corsServer}${data.stream}`
@@ -164,18 +166,25 @@ const fetchData = async () => {
 
 const fetchSchedule = async (url: string) => {
   try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
-    const resData = await res.json();
-    if (resData.err === 0 && slug.value === "viet-nam") {
-      program.value = resData.data.items;
+    const { data: resData } = await useFetch(
+      url + Math.floor(Date.now() / 1000),
+    );
+    const resDataValue = resData.value as {
+      err: number;
+      data: { items: any[] };
+    };
+
+    if (resDataValue.err === 0 && slug.value === "viet-nam") {
+      program.value = resDataValue.data.items as ProgramItem[];
+      // Fetch the current song data from the first program item
       fetchSong(
-        `${config.public.apiZingLiveStreamProgramDetail}${resData.data.items[0].encodeId}&time=`,
+        `${config.public.apiZingLiveStreamProgramDetail}${(resData.value as { data: { items: ProgramItem[] } }).data.items[0].encodeId}&time=`,
       );
     } else {
-      if (resData.success) {
-        data.value = resData.result;
+      if ((resData.value as { success: boolean }).success) {
+        data.value = (resData.value as { result: Track[] }).result;
       }
-      document.title = title.value;
+      document.title = title.value ?? "";
       if (data.value.length > 0) {
         document.title = `${data.value[0].track_title} - ${data.value[0].track_artist} | ${title.value}`;
       }
@@ -202,7 +211,7 @@ const fetchSong = async (url: string) => {
     if (resData.err === 0) {
       song.value = resData.data;
     }
-    document.title = title.value;
+    document.title = title.value ?? "";
     if ((song.value as any).currentMedia) {
       document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
     }

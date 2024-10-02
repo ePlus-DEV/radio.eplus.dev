@@ -37,7 +37,7 @@
                 {{ streamName }}
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
-                Việt Nam
+                {{ $t(country) }}
               </span>
             </div>
             <div class="flex">
@@ -169,19 +169,8 @@
                 view-type="audio"
                 muted
               >
-                <media-provider>
-                  <!-- <media-poster
-                                class="vds-poster"
-                                src="https://files.vidstack.io/sprite-fight/poster.webp"
-                                alt="Girl walks into campfire with gnomes surrounding her friend ready for their next meal!"
-                                /> -->
-                </media-provider>
-                <!-- Layouts -->
+                <media-provider></media-provider>
                 <media-audio-layout></media-audio-layout>
-
-                <!-- <VideoLayout thumbnails="https://files.vidstack.io/sprite-fight/thumbnails.vtt" /> -->
-
-                <!-- <media-video-layout thumbnails="https://files.vidstack.io/sprite-fight/thumbnails.vtt" /> -->
               </media-player>
             </div>
           </div>
@@ -210,8 +199,29 @@
             </div>
           </div>
           <!-- END: Guide -->
+
+          <!-- BEGIN: Internet -->
+          <div
+            v-if="!online"
+            class="flex items-center p-4 mb-4 text-sm text-gray-900 rounded-xl bg-gray-50 border border-gray-400 font-normal"
+            role="alert"
+          >
+            <fa :icon="['fas', 'wifi-slash']" class="w-5 h-5 inline mr-3" />
+            <div>
+              <span class="font-medium">{{ $t("text.guide") }}:</span>
+              {{ $t("text.offline") }}
+            </div>
+          </div>
+          <!-- END: Internet -->
         </div>
       </div>
+      <!-- END - Player -->
+
+      {{ $src }}
+
+      <!-- BEGIN - Program  -->
+      <PlayerProgram :program="program" />
+      <!-- END - Program  -->
 
       <div class="src-buttons">
         <button @click="changeSource('audio')" class="dark:text-white">
@@ -256,6 +266,8 @@ import type { MediaPlayerElement } from "vidstack/elements";
 import { defineProps, ref } from "vue";
 const config = useRuntimeConfig();
 
+const online = ref(navigator.onLine);
+
 const $player = ref<MediaPlayerElement>(),
   waiting = ref(true),
   streamError = ref(false),
@@ -264,10 +276,19 @@ const $player = ref<MediaPlayerElement>(),
 const props = defineProps<{
   thumb: string;
   streamName: string;
+  country: string;
+  program?: Array<object>;
   streamUrl: MediaPlayerElement["src"];
 }>();
 
 const $src = ref(props.streamUrl);
+
+/**
+ * Updates the online status.
+ */
+const updateOnlineStatus = () => {
+  online.value = navigator.onLine;
+};
 
 /**
  * Handles the play action for the player.
@@ -302,7 +323,7 @@ function onPause() {
 }
 
 // Initialize src.
-// changeSource("audio");
+changeSource("audio");
 
 // watch props
 watch(
@@ -341,6 +362,14 @@ onMounted(() => {
     }
     waiting.value = false;
   });
+
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("online", updateOnlineStatus);
+  window.removeEventListener("offline", updateOnlineStatus);
 });
 
 /**

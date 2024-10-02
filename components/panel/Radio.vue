@@ -54,12 +54,11 @@
             <div class="indicator-item text-white badge badge-accent">
               {{ country.station_count }}
             </div>
-            <nuxt-img
+            <NuxtImg
               loading="lazy"
               :src="country.flag"
               :alt="$t(country.name)"
               class="p-0 sm:p-1 md:p-5 lg:p-8"
-              :placeholder="config.public.placeholder"
             />
           </nuxt-link>
         </div>
@@ -75,7 +74,6 @@ const props = defineProps<{
 }>();
 
 const { result, search } = useAlgoliaSearch("world");
-const config = useRuntimeConfig();
 interface Country {
   name: string;
   url: string;
