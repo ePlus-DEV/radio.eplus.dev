@@ -81,7 +81,6 @@ onMounted(async () => {
     return acc;
   }, {});
 
-  // Nếu props.chooseTheArea có thì chỉ hiển thị khu vực đó
   if (props.chooseTheArea && groupedResults[props.chooseTheArea]) {
     world.value = { [props.chooseTheArea]: groupedResults[props.chooseTheArea] };
     return;
