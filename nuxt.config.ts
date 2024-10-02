@@ -5,7 +5,7 @@ import { vite as vidstack } from "vidstack/plugins";
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  // ssr: false,
+  ssr: false,
   pages: true,
   runtimeConfig: {
     public: {
@@ -29,12 +29,6 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@nuxtjs/algolia",
   ],
-  algolia: {
-    apiKey: process.env.ALGOLIA_API_KEY ?? "599cec31baffa4868cae4e79f180729b",
-    applicationId: process.env.ALGOLIA_APPLICATION_ID ?? "R2IYF7ETH7",
-    lite: false, // by default set to 'true'
-    useFetch: true,
-  },
   app: {
     head: {
       titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
@@ -88,6 +82,12 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // algolia: {
+  //   apiKey: process.env.ALGOLIA_API_KEY ?? "0fd1c4eba2f831788333e77c9d855f1d",
+  //   applicationId: process.env.ALGOLIA_APPLICATION_ID ?? "AGN9HUEKF3",
+  //   lite: false, // by default set to 'true'
+  //   useFetch: true,
+  // },
   i18n: {
     locales: [
       {
