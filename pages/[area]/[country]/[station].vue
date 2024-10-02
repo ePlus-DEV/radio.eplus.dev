@@ -90,7 +90,7 @@
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-
+const router = useRouter()
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -102,7 +102,13 @@ const i18n = ref(
 );
 const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
-const program = ref([]);
+interface ProgramItem {
+  // Define the properties of ProgramItem based on the structure of resDataValue.data.items
+  encodeId: string;
+  // Add other properties as needed
+}
+
+const program = ref<ProgramItem[]>([]);
 const song = ref({});
 const info = ref([]);
 const current = ref({});
@@ -129,8 +135,6 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
  * Fetches data for the radio station based on the current route parameters.
  */
 const fetchData = async () => {
-  // const thumb = `/img/${area.value}/flags/${slug.value}.png`;
-  // title.value = `${name.value} - ${t("navmenu.homepage")} - Radio ${t(i18n.value)}`;
 
   try {
     const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
@@ -155,27 +159,29 @@ const fetchData = async () => {
         fetchSchedule(data.schedule);
       }
     } else {
-      // await router.push("/");
+      await router.push("/");
     }
   } catch (error) {
-    // await router.push(`/${area.value}/${slug.value}`);
+    await router.push(`/${area.value}/${slug.value}`);
   }
 };
 
 const fetchSchedule = async (url: string) => {
   try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
-    const resData = await res.json();
-    if (resData.err === 0 && slug.value === "viet-nam") {
-      program.value = resData.data.items;
+    const { data: resData } = await useFetch(url + Math.floor(Date.now() / 1000));
+    const resDataValue = resData.value as { err: number, data: { items: any[] } };
+
+    if (resDataValue.err === 0 && slug.value === "viet-nam") {
+      program.value = resDataValue.data.items as ProgramItem[];
+      // Fetch the current song data from the first program item
       fetchSong(
-        `${config.public.apiZingLiveStreamProgramDetail}${resData.data.items[0].encodeId}&time=`,
+        `${config.public.apiZingLiveStreamProgramDetail}${(resData.value as { data: { items: ProgramItem[] } }).data.items[0].encodeId}&time=`,
       );
     } else {
-      if (resData.success) {
-        data.value = resData.result;
+      if ((resData.value as { success: boolean }).success) {
+        data.value = (resData.value as { result: Track[] }).result;
       }
-      document.title = title.value;
+      document.title = title.value ?? '';
       if (data.value.length > 0) {
         document.title = `${data.value[0].track_title} - ${data.value[0].track_artist} | ${title.value}`;
       }
@@ -202,7 +208,7 @@ const fetchSong = async (url: string) => {
     if (resData.err === 0) {
       song.value = resData.data;
     }
-    document.title = title.value;
+    document.title = title.value ?? '';
     if ((song.value as any).currentMedia) {
       document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
     }
