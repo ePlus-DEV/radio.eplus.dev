@@ -1,19 +1,31 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs :area="Array.isArray(area) ? area[0] : area" level_1="" :level_2="$t(`world.${areaI18n}.name`)" />
+    <Breadcrumbs
+      :area="Array.isArray(area) ? area[0] : area"
+      level_1=""
+      :level_2="$t(`world.${areaI18n}.name`)"
+    />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player country="world.asia.viet_nam" :home="true" thumb="/img/asia/flags/viet-nam.png" :streamName="streamName"
-      :streamUrl="streamUrl"></Player>
+    <Player
+      country="world.asia.viet_nam"
+      :home="true"
+      thumb="/img/asia/flags/viet-nam.png"
+      :streamName="streamName"
+      :streamUrl="streamUrl"
+    ></Player>
     <!-- END - Player -->
 
     {{ route.params }}
 
     <!-- BEGIN - PanelStation -->
-    <PanelStation :area="Array.isArray(area) ? area[0] : area" :slug="Array.isArray(slug) ? slug[0] : slug"
-      :i18n="i18n" />
+    <PanelStation
+      :area="Array.isArray(area) ? area[0] : area"
+      :slug="Array.isArray(slug) ? slug[0] : slug"
+      :i18n="i18n"
+    />
     <!-- END - PanelStation -->
   </div>
 </template>
@@ -27,7 +39,9 @@ const route = useRoute();
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
-const areaI18n = (Array.isArray(area.value) ? area.value[0] : area.value).replace(/-/g, "_");
+const areaI18n = (
+  Array.isArray(area.value) ? area.value[0] : area.value
+).replace(/-/g, "_");
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
