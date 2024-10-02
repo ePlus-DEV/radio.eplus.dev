@@ -192,6 +192,7 @@
       "dark": "Sombre",
       "light": "Clair",
       "system": "Système"
-    }
+    },
+    "offline": "La connexion réseau a échoué, veuillez vérifier votre connexion réseau."
   }
 }

@@ -93,15 +93,14 @@ import { useI18n } from "vue-i18n";
 
 const route = useRoute();
 const { t } = useI18n();
-
+const config = useRuntimeConfig();
 const name = ref<string | undefined>("");
-const title = ref("Radio in Internet");
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
-const description = ref("");
+const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
 const program = ref([]);
 const song = ref({});
@@ -113,6 +112,10 @@ interface Track {
   // Add other properties as needed
 }
 
+useHead({
+  title: title.value as unknown as string,
+})
+
 const data = ref<Track[]>([]);
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
@@ -121,7 +124,6 @@ const lyric = ref(t("panel.updating"));
 const timezone = ref("Asia/Ho_Chi_Minh");
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
-const config = useRuntimeConfig();
 
 /**
  * Fetches data for the radio station based on the current route parameters.
@@ -140,7 +142,6 @@ const fetchData = async () => {
       const data = responseData[route.params.station];
 
       name.value = data.title;
-      description.value = data.description;
       streamName.value = data.title;
 
       streamUrl.value = {

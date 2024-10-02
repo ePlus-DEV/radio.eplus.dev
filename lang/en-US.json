@@ -192,6 +192,7 @@
       "dark": "Dark",
       "light": "Light",
       "system": "System"
-    }
+    },
+    "offline": "Network connection failed, please check your network connection."
   }
 }

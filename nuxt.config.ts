@@ -139,7 +139,14 @@ export default defineNuxtConfig({
       regular: [],
     },
     proIcons: {
-      solid: ["signal-stream", "xmark-large", "sun-bright", "moon", "desktop"],
+      solid: [
+        "signal-stream",
+        "xmark-large",
+        "sun-bright",
+        "moon",
+        "desktop",
+        "wifi-slash",
+      ],
       regular: ["magnifying-glass-music", "house", "list-music"],
       light: ["sun-bright", "moon", "desktop", "bookmark"],
       thin: [],
