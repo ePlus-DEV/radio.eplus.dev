@@ -41,10 +41,7 @@
       "senegal": "塞内加尔",
       "south_africa": "南非",
       "tunisia": "突尼斯",
-      "uganda": "乌干达",
-      "suriname": "苏里南",
-      "uruguay": "乌拉圭",
-      "venezuela": "委内瑞拉"
+      "uganda": "乌干达"
     },
     "asia": {
       "name": "亚洲",
@@ -130,7 +127,10 @@
       "colombia": "哥伦比亚",
       "ecuador": "厄瓜多尔",
       "paraguay": "巴拉圭",
-      "peru": "秘鲁"
+      "peru": "秘鲁",
+      "suriname": "苏里南",
+      "uruguay": "乌拉圭",
+      "venezuela": "委内瑞拉"
     }
   },
   "panel": {

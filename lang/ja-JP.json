@@ -41,10 +41,7 @@
       "senegal": "セネガル",
       "south_africa": "南アフリカ",
       "tunisia": "チュニジア",
-      "uganda": "ウガンダ",
-      "suriname": "スリナム",
-      "uruguay": "ウルグアイ",
-      "venezuela": "ベネズエラ"
+      "uganda": "ウガンダ"
     },
     "asia": {
       "name": "アジア",
@@ -130,7 +127,10 @@
       "colombia": "コロンビア",
       "ecuador": "エクアドル",
       "paraguay": "パラグアイ",
-      "peru": "ペルー"
+      "peru": "ペルー",
+      "suriname": "スリナム",
+      "uruguay": "ウルグアイ",
+      "venezuela": "ベネズエラ"
     }
   },
   "panel": {
