@@ -146,22 +146,21 @@ const fetchData = async () => {
 
       name.value = data.title;
       streamName.value = data.title;
-
       streamUrl.value = {
         src: data.cros
           ? `${data.public.corsServer}${data.stream}`
           : data.stream,
         type: data.type as AudioMimeType,
-      };
+        };
 
       if (data.schedule !== undefined) {
         fetchSchedule(data.schedule);
       }
     } else {
-      await router.push("/");
+      // await router.push("/");
     }
   } catch (error) {
-    await router.push(`/${area.value}/${slug.value}`);
+    // await router.push(`/${area.value}/${slug.value}`);
   }
 };
 
