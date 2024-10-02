@@ -29,7 +29,6 @@
             :src="config.public.cloudinaryBaseUrl + data.features"
             :alt="data.title"
             class="p-0 sm:p-1 md:p-5 lg:p-10"
-            :placeholder="config.public.placeholderStation"
           />
         </nuxt-link>
       </div>

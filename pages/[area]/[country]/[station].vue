@@ -92,7 +92,6 @@ import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
 const route = useRoute();
-const router = useRouter();
 const { t } = useI18n();
 
 const name = ref<string | undefined>("");
