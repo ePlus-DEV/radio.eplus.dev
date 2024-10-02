@@ -90,7 +90,7 @@
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-const router = useRouter()
+const router = useRouter();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -135,7 +135,6 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
  * Fetches data for the radio station based on the current route parameters.
  */
 const fetchData = async () => {
-
   try {
     const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
     const responseData = await res.json();
@@ -168,8 +167,13 @@ const fetchData = async () => {
 
 const fetchSchedule = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(url + Math.floor(Date.now() / 1000));
-    const resDataValue = resData.value as { err: number, data: { items: any[] } };
+    const { data: resData } = await useFetch(
+      url + Math.floor(Date.now() / 1000),
+    );
+    const resDataValue = resData.value as {
+      err: number;
+      data: { items: any[] };
+    };
 
     if (resDataValue.err === 0 && slug.value === "viet-nam") {
       program.value = resDataValue.data.items as ProgramItem[];
@@ -181,7 +185,7 @@ const fetchSchedule = async (url: string) => {
       if ((resData.value as { success: boolean }).success) {
         data.value = (resData.value as { result: Track[] }).result;
       }
-      document.title = title.value ?? '';
+      document.title = title.value ?? "";
       if (data.value.length > 0) {
         document.title = `${data.value[0].track_title} - ${data.value[0].track_artist} | ${title.value}`;
       }
@@ -208,7 +212,7 @@ const fetchSong = async (url: string) => {
     if (resData.err === 0) {
       song.value = resData.data;
     }
-    document.title = title.value ?? '';
+    document.title = title.value ?? "";
     if ((song.value as any).currentMedia) {
       document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
     }
