@@ -274,7 +274,12 @@ const props = defineProps<{
   thumb: string;
   streamName: string;
   country: string;
-  program: any;
+  program: {
+    title: string;
+    description: string;
+    startTime: string;
+    endTime: string;
+  };
   streamUrl: MediaPlayerElement["src"];
 }>();
 
