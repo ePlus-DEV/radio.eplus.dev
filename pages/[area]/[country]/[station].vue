@@ -114,7 +114,7 @@ interface Track {
 
 useHead({
   title: title.value as unknown as string,
-})
+});
 
 const data = ref<Track[]>([]);
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
