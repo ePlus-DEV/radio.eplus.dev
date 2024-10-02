@@ -35,9 +35,7 @@
             <div class="indicator-item text-white badge badge-accent">
               {{ country.station_count }}
             </div>
-            <img loading="lazy" :src="country.flag" :alt="$t(country.name)"
-              class="p-0 sm:p-1 md:p-5 lg:p-8"
-              :placeholder="config.public.placeholder" />
+            <NuxtImg loading="lazy" :src="country.flag" :alt="$t(country.name)" class="p-0 sm:p-1 md:p-5 lg:p-8" />
           </nuxt-link>
         </div>
       </div>
