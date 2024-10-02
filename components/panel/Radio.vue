@@ -74,7 +74,6 @@ const props = defineProps<{
 }>();
 
 const { result, search } = useAlgoliaSearch("world");
-const config = useRuntimeConfig();
 interface Country {
   name: string;
   url: string;
