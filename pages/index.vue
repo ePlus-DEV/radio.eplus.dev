@@ -5,8 +5,13 @@
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
-    <Player ref="player" country="world.asia.viet_nam" thumb="/img/asia/flags/viet-nam.png" :streamName="streamName"
-      :streamUrl="streamUrl"></Player>
+    <Player
+      ref="player"
+      country="world.asia.viet_nam"
+      thumb="/img/asia/flags/viet-nam.png"
+      :streamName="streamName"
+      :streamUrl="streamUrl"
+    ></Player>
     <!-- END - Player -->
 
     <!-- BEGIN - PanelRadio -->
