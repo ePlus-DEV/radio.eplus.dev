@@ -70,6 +70,10 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+  chooseTheArea?: string;
+}>();
+
 const { result, search } = useAlgoliaSearch("world");
 const config = useRuntimeConfig();
 interface Country {
@@ -85,10 +89,6 @@ interface GroupedResults {
 }
 
 const world = ref<GroupedResults>({});
-
-const props = defineProps<{
-  chooseTheArea: string | null;
-}>();
 
 onMounted(async () => {
   await search({
