@@ -151,7 +151,7 @@ const fetchData = async () => {
           ? `${data.public.corsServer}${data.stream}`
           : data.stream,
         type: data.type as AudioMimeType,
-        };
+      };
 
       if (data.schedule !== undefined) {
         fetchSchedule(data.schedule);
