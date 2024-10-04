@@ -167,7 +167,6 @@
                 ref="$player"
                 autoplay
                 view-type="audio"
-                muted
               >
                 <media-provider></media-provider>
                 <media-audio-layout></media-audio-layout>
@@ -194,7 +193,6 @@
               ></path>
             </svg>
             <div>
-              <span class="font-medium">{{ $t("text.guide") }}:</span>
               {{ $t("alert.play_button") }}
             </div>
           </div>
@@ -354,9 +352,10 @@ onMounted(() => {
 
   // Subscribe to state updates - you can connect them to Vue refs if needed.
   $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
-    const { paused, error } = state;
+    const { paused, error, canPlay } = state;
     button.value = !paused;
-    streamError.value = Boolean(error);
+    streamError.value = !canPlay;
+    console.log("canPlay?", "->", canPlay);
     console.log("is paused?", "->", paused);
     if (error) {
       console.error("Playback error occurred");
@@ -380,6 +379,7 @@ onUnmounted(() => {
  */
 function onProviderChange(event: MediaProviderChangeEvent) {
   const provider = event.detail;
+  console.log("Provider changed", provider);
   // We can configure provider's here.
   if (isHLSProvider(provider)) {
     provider.config = {};
