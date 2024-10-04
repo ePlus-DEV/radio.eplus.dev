@@ -78,7 +78,7 @@
   },
   "eco-99-fm": {
     "title": "אקו FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://eco99fm.maariv.co.il/",
     "cros": false,
     "stream": "https://eco-live.mediacast.co.il/99fm_aac",
@@ -95,7 +95,7 @@
   },
   "tel-aviv": {
     "title": "רדיו תל אביב",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://102fm.co.il/",
     "cros": false,
     "stream": "https://102.livecdn.biz/102fm_aac",
@@ -193,7 +193,7 @@
   },
   "haifa": {
     "title": "רדיו חיפה",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.1075.fm/",
     "cros": false,
     "stream": "https://cp11.livecdn.biz/radiohaifa",
@@ -218,7 +218,7 @@
   },
   "radiodance-israel": {
     "title": "רדיו דאנס",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiodance.co.il/",
     "cros": true,
     "stream": "http://icecast.live:8007/radiodance",
@@ -261,7 +261,7 @@
   },
   "darom": {
     "title": "רדיו דרום",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiodarom.co.il/",
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio",
@@ -269,7 +269,7 @@
   },
   "hamesh-995": {
     "title": "רדיו חם אש",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.995.co.il/",
     "cros": false,
     "stream": "https://995.livecdn.biz/995fm",
@@ -294,7 +294,7 @@
   },
   "idc": {
     "title": "הרדיו הבינתחומי FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://1062fm.co.il/",
     "cros": false,
     "stream": "https://1062onair.idc.ac.il/idc123.mp3",

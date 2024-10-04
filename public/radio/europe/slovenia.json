@@ -41,7 +41,7 @@
     },
     "val202": {
         "title": "Radio Slovenija Val202 (Ljubljana)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://val202.rtvslo.si/",
         "cros": false,
         "stream": "https://mp3.rtvslo.si/val202",
@@ -101,7 +101,7 @@
     },
     "murski-val": {
         "title": "Radio Murski Val (Murska Sobota)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.murskival.si/",
         "cros": false,
         "stream": "https://stream.murskival.si",
@@ -190,7 +190,7 @@
     },
     "prvi": {
         "title": "Radio Prvi",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://prvi.rtvslo.si/",
         "cros": false,
         "stream": "https://mp3.rtvslo.si/ra1",
@@ -200,7 +200,7 @@
     },
     "koper": {
         "title": "Radio Koper",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiokoper.rtvslo.si/",
         "cros": false,
         "stream": "https://mp3.rtvslo.si/rakp",
@@ -230,7 +230,7 @@
     },
     "si": {
         "title": "Radio Si (Ljubljana)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rtvslo.si/radio-si",
         "cros": false,
         "stream": "https://mp3.rtvslo.si/rsi",
@@ -329,7 +329,7 @@
     },
     "maribor": {
         "title": "Radio Maribor",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rtvslo.si/radio-maribor/",
         "cros": false,
         "stream": "https://mp3.rtvslo.si/rmb",
@@ -359,7 +359,7 @@
     },
     "ars": {
         "title": "Radio Slovenija Ars (Ljubljana)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://ars.rtvslo.si/",
         "cros": false,
         "stream": "https://mp3.rtvslo.si/ars",

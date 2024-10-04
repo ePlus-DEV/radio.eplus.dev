@@ -21,11 +21,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+
+useHead({
+  title: t("navmenu.homepage"),
+});
 
 useSeoMeta({
   // will be inferred as the lastmod value in the sitemap

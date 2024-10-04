@@ -38,7 +38,7 @@
     },
     "maria": {
         "title": "Radio Maria",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiomaria.it/",
         "cros": false,
         "stream": "https://dreamsiteradiocp5.com/proxy/rmitalia?mp=/stream/1/",
@@ -47,7 +47,7 @@
     },
     "kiss-kiss": {
         "title": "Kiss Kiss",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://kisskiss.it/",
         "cros": false,
         "stream": "https://ice07.fluidstream.net/KissKiss.aac",
@@ -74,7 +74,7 @@
     },
     "ibiza-napoli": {
         "title": "Radio Ibiza (Napoli)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radioibiza.it/",
         "cros": false,
         "stream": "https://kisskiss.fluidstream.eu/ibiza.aac",
@@ -82,7 +82,7 @@
     },
     "monte-carlo": {
         "title": "Radio Monte Carlo",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomontecarlo.net/",
         "cros": false,
         "stream": "https://icy.unitedradio.it/RMC.aac",
@@ -91,7 +91,7 @@
     },
     "latte-miele": {
         "title": "Latte Miele",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lattemiele.com/",
         "cros": false,
         "stream": "https://ice02.fluidstream.net/fluid016.aac",
@@ -126,7 +126,7 @@
     },
     "radio-24": {
         "title": "Radio 24",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio24.ilsole24ore.com/",
         "cros": true,
         "stream": "http://shoutcast.radio24.it:8000/;",
@@ -135,7 +135,7 @@
     },
     "sei-roma": {
         "title": "Radio Sei (Roma)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiosei.it/",
         "cros": true,
         "stream": "http://icecast.ithost.it:8000/radiosei.ogg",
@@ -162,7 +162,7 @@
     },
     "norba": {
         "title": "Radio Norba",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radionorba.it/",
         "cros": false,
         "stream": "https://stream9.xdevel.com/audio0s975885-461/stream/icecast.audio",
@@ -180,7 +180,7 @@
     },
     "antenna-1-roma": {
         "title": "Antenna 1 (Roma)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antenna1.fm/",
         "cros": false,
         "stream": "https://a1-it.newradio.it/stream2",
@@ -224,7 +224,7 @@
     },
     "company": {
         "title": "Radio Company",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiocompany.com",
         "cros": false,
         "stream": "https://sphera.fluidstream.eu/company.aac",
@@ -233,7 +233,7 @@
     },
     "piu-brescia": {
         "title": "Radio Studio Piu (Brescia)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.studiopiu.net/tvwebapp/",
         "cros": false,
         "stream": "https://ice.studiopiu.net/brescia.aac",
@@ -259,7 +259,7 @@
     },
     "rock-roma": {
         "title": "Radio Rock (Roma)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiorock.it/",
         "cros": false,
         "stream": "https://rrock.fluidstream.eu/radiorock.aac?FLID=E",
@@ -312,7 +312,7 @@
     },
     "rete-sport": {
         "title": "Rete Sport",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.retesport.it/",
         "cros": false,
         "stream": "https://icecast.ithost.it/retesport.ogg",
@@ -338,7 +338,7 @@
     },
     "peterpan-verona": {
         "title": "Radio Peterpan (Verona)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.piterpan.it/",
         "cros": false,
         "stream": "https://ice01.fluidstream.net/piterpan",
@@ -347,7 +347,7 @@
     },
     "bruno-pesaro": {
         "title": "Radio Bruno (Pesaro)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiobruno.it/",
         "cros": false,
         "stream": "https://stream7.xdevel.com/audio4s975355-396/stream/icecast.audio",

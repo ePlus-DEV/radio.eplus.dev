@@ -71,7 +71,7 @@
     },
     "guldkanalen": {
         "title": "Guldkanalen",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://guldkanalen.se/",
         "cros": false,
         "stream": "https://stream.dbmedia.se/gk96",
@@ -149,7 +149,7 @@
     },
     "guldkanalen-60-tal": {
         "title": "Guldkanalen 60-tal",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://guldkanalen.se/",
         "cros": false,
         "stream": "https://stream.dbmedia.se/gk60tal96",
@@ -168,7 +168,7 @@
     },
     "guldkanalen-80-tal": {
         "title": "Guldkanalen 80-tal",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://guldkanalen.se/",
         "cros": false,
         "stream": "https://stream.dbmedia.se/gk80tal96",
@@ -178,7 +178,7 @@
     },
     "gold-fm": {
         "title": "Gold FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.goldfm.nu/",
         "cros": false,
         "stream": "https://live-bauerse-fm.sharp-stream.com/goldfm_web_se_aacp",
@@ -188,7 +188,7 @@
     },
     "guldkanalen-70-tal": {
         "title": "Guldkanalen 70-tal",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://guldkanalen.se/",
         "cros": false,
         "stream": "https://stream.dbmedia.se/gk70tal96",
@@ -227,7 +227,7 @@
     },
     "active": {
         "title": "Radio Active FM (Ystad)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radioactive.se/",
         "cros": true,
         "stream": "http://stream.nsp.se:8000/radioactive48",
@@ -246,7 +246,7 @@
     },
     "partille-savedalen": {
         "title": "Radio 88 (Partille Savedalen)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio88.se/",
         "cros": false,
         "stream": "https://streaming.943.se/radio88",
@@ -286,7 +286,7 @@
     },
     "radioapans-knattekanal": {
         "title": "Radioapans knattekanal",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sverigesradio.se/radioapansknattekanal",
         "cros": false,
         "stream": "https://http-live.sr.se/knattekanalen-aac-192",
@@ -305,7 +305,7 @@
     },
     "trelleborg": {
         "title": "Radio Trelleborg",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiotrelleborg.se/",
         "cros": false,
         "stream": "https://stream.nsp.se/RaTbg_AAC_Hi",
@@ -334,7 +334,7 @@
     },
     "malmokanalen": {
         "title": "Malmokanalen (Malmo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.malmokanalen.dinstudio.se/",
         "cros": true,
         "stream": "http://stream.nsp.se:8000/MNR89_AAC_Hi",

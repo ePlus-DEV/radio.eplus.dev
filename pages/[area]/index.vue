@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs
-      :area="area"
-      level_1=""
-      :level_2="$t(`world.${area.replace(/-/g, '_')}.name`)"
-    />
+    <Breadcrumbs :area="area" level_1="" :level_2="$t(i18n)" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
@@ -25,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
@@ -34,6 +30,11 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 // Define the area variable
 const route = useRoute(); // Use useRoute to get the route object
 const area = route.params.area as string;
+const i18n = `world.${area.replace(/-/g, "_")}.name`;
+
+useHead({
+  title: t(i18n),
+});
 
 useSeoMeta({
   // will be inferred as the lastmod value in the sitemap

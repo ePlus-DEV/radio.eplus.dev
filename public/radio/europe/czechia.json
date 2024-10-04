@@ -1,7 +1,7 @@
 {
     "kiss-98-fm": {
         "title": "Kiss",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.kiss.cz/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/asn0cmvb938uv",
@@ -11,7 +11,7 @@
     },
     "evropa-2": {
         "title": "Evropa 2",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.evropa2.cz/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2AAC_SC",
@@ -31,7 +31,7 @@
     },
     "cesky-rozhlaszurnal": {
         "title": "Český rozhlas Radiožurnál",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiozurnal.rozhlas.cz/",
         "cros": false,
         "stream": "https://icecast1.play.cz/cro1128aac",
@@ -127,7 +127,7 @@
     },
     "1": {
         "title": "Rádio 1",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio1.cz/",
         "cros": false,
         "stream": "https://icecast2.play.cz/radio1-128aac",
@@ -224,7 +224,7 @@
     },
     "cro-plus": {
         "title": "ČRo Plus",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://plus.rozhlas.cz/",
         "cros": false,
         "stream": "https://rozhlas.stream/plus_high.aac",

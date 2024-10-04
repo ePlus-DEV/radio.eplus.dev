@@ -1,7 +1,7 @@
 {
   "yes-933": {
     "title": "Radio Y.E.S.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.melisten.sg/radio/yes-933/",
     "cros": false,
     "stream": "https://22903.live.streamtheworld.com/YES933_SC?dist=radiosingapor",
@@ -10,7 +10,7 @@
   },
   "love-972": {
     "title": "LOVE 97.2FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "97.2FM",
     "url": "https://www.meradio.sg",
     "cros": false,
@@ -20,7 +20,7 @@
   },
   "class-95": {
     "title": "Radio Class 95",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "95.0 FM",
     "url": "https://www.meradio.sg/radio/class-95",
     "cros": false,
@@ -30,7 +30,7 @@
   },
   "987fm": {
     "title": "Radio 987 FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "98.7 FM",
     "url": "https://www.meradio.sg/radio/987",
     "cros": false,
@@ -40,7 +40,7 @@
   },
   "capital-958": {
     "title": "Radio Capital",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "95.8 FM",
     "url": "https://www.meradio.sg/radio/capital-958",
     "cros": false,
@@ -50,7 +50,7 @@
   },
   "gold-90-5-fm": {
     "title": "Radio Gold",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "90.5 FM",
     "url": "https://www.melisten.sg/radio/gold-905",
     "cros": false,
@@ -70,7 +70,7 @@
   },
   "oli": {
     "title": "Radio Oli",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "96.8 FM",
     "url": "https://www.melisten.sg/radio/oli968?c=968fm",
     "cros": false,
@@ -80,7 +80,7 @@
   },
   "ria": {
     "title": "Radio Ria",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "89.7 FM",
     "url": "https://www.melisten.sg/radio/oli968?c=968fm",
     "cros": false,
@@ -90,7 +90,7 @@
   },
   "kiss92": {
     "title": "Radio Kiss92",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "89.7 FM",
     "url": "https://www.kiss92.sg/",
     "cros": false,
@@ -110,7 +110,7 @@
   },
   "warna": {
     "title": "Radio Warna",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "94.2 FM",
     "url": "https://www.melisten.sg/radio/warna-942fm",
     "cros": false,
@@ -120,7 +120,7 @@
   },
   "883-jia": {
     "title": "Radio 88.3JIA",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "88.3 FM",
     "url": "https://www.camokakis.sg/",
     "cros": false,
@@ -130,7 +130,7 @@
   },
   "883-jia-web-hits": {
     "title": "Radio 88.3JIA",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "88.3 FM",
     "url": "https://www.camokakis.sg/",
     "cros": false,
@@ -140,7 +140,7 @@
   },
   "883-jia-k-pop": {
     "title": "Radio 88.3JIA",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "88.3 FM",
     "url": "https://www.camokakis.sg/",
     "cros": false,
@@ -150,7 +150,7 @@
   },
   "symphony": {
     "title": "Radio Symphony",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "92.4 FM",
     "url": "https://www.melisten.sg/radio/symphony924",
     "cros": false,
@@ -160,7 +160,7 @@
   },
   "cna938": {
     "title": "Radio CNA938",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "93.8 FM",
     "url": "https://www.channelnewsasia.com/news/cna938",
     "cros": false,
@@ -230,7 +230,7 @@
   },
   "973fm": {
     "title": "Radio 973 FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "97.3 FM",
     "url": "http://973fm.weebly.com/",
     "cros": false,
@@ -240,7 +240,7 @@
   },
   "bible-witness-web": {
     "title": "Bible Witness Web Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://biblewitness.com/webradio/",
     "cros": false,
@@ -260,7 +260,7 @@
   },
   "ccn-cyprus-chinese": {
     "title": "CCN Cyprus Chinese Radio Tv",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://ccnnetwork.cn",
     "cros": false,
@@ -280,7 +280,7 @@
   },
   "orion-station": {
     "title": "Orion Station",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "http://www.orionstation.net",
     "cros": true,
@@ -290,7 +290,7 @@
   },
   "96-3hao": {
     "title": "96.3好FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "96.3 FM",
     "url": "https://www.963haofm.sg",
     "cros": false,
@@ -300,7 +300,7 @@
   },
   "predication": {
     "title": "Radio Prédication",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://radiopredication.blogspot.com",
     "cros": false,
@@ -320,7 +320,7 @@
   },
   "chutney": {
     "title": "Radio Chutney",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.radiochutney.com/",
     "cros": false,
@@ -330,7 +330,7 @@
   },
   "18-9-rsfm": {
     "title": "18.9 RSFM Singapore",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://18.9rsfmsingapore.com/",
     "cros": false,
@@ -339,7 +339,7 @@
   },
   "kast-kast": {
     "title": "卡卡思  Radio (Kast Kast)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.kastkast.com/",
     "cros": false,
@@ -348,7 +348,7 @@
   },
   "axr": {
     "title": "AXR",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.axr.online/",
     "cros": false,
     "stream": "https://23743.live.streamtheworld.com/AXRAAC_SC",

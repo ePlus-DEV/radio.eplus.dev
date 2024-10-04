@@ -28,7 +28,7 @@
     },
     "hit-fm-107-4": {
         "title": "Хит FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://hitfm.ru/",
         "cros": false,
         "stream": "https://hitfm.hostingradio.ru/hitfm96.aacp",
@@ -55,7 +55,7 @@
     },
     "radio-megapolis-89-5-fm": {
         "title": "Радио Мегаполис",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://megapolisfm.ru/",
         "cros": false,
         "stream": "https://megapolisfm.hostingradio.ru/megapolisfm96.aacp",
@@ -82,7 +82,7 @@
     },
     "russkoe-radio105-7-fm": {
         "title": "Русское Радио ФМ",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://rusradio.ru/",
         "cros": false,
         "stream": "https://rusradio.hostingradio.ru/rusradio96.aacp",
@@ -91,7 +91,7 @@
     },
     "radio-relax-90-8-fm": {
         "title": "Радио Relax",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://relax-fm.ru/",
         "cros": false,
         "stream": "https://srv21.gpmradio.ru:8443/stream/air/aac/64/200",
@@ -100,7 +100,7 @@
     },
     "doroznoe-radio-96-fm": {
         "title": "Дорожне радио",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://dorognoe.ru/",
         "cros": false,
         "stream": "https://dorognoe.hostingradio.ru:8000/dorognoe_acc",
@@ -109,7 +109,7 @@
     },
     "radio-umor-fm-88-7": {
         "title": "Радио Юмор FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.veseloeradio.ru/",
         "cros": false,
         "stream": "https://pub0101.101.ru:8000/stream/air/aac/64/102",
@@ -126,7 +126,7 @@
     },
     "comedy-radio-102-5-fm-moskva": {
         "title": "Comedy Радио ФМ (Москва)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://comedy-radio.ru/",
         "cros": false,
         "stream": "https://srv21.gpmradio.ru:8443/stream/air/aac/64/202",
@@ -143,7 +143,7 @@
     },
     "radio-difm-101-2": {
         "title": "Радио DFM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://dfm.ru/",
         "cros": false,
         "stream": "https://dfm.hostingradio.ru/dfm96.aacp",
@@ -152,7 +152,7 @@
     },
     "radio-energy-104-2-fm": {
         "title": "Радио Energy",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.energyfm.ru/",
         "cros": false,
         "stream": "https://srv12.gpmradio.ru:8443/stream/air/aac/64/99",
@@ -178,7 +178,7 @@
     },
     "radio-maximum-103-7-fm-moskva": {
         "title": "Радио Maximum ФМ (Москва)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://maximum.ru/",
         "cros": false,
         "stream": "https://maximum.hostingradio.ru/maximum96.aacp",
@@ -196,7 +196,7 @@
     },
     "detskoe-radio-96-8-fm": {
         "title": "Детское радио",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://detifm.ru/",
         "cros": false,
         "stream": "https://ic4.101.ru:8000/stream/air/aac/64/199",
@@ -222,7 +222,7 @@
     },
     "like-fm-87-9": {
         "title": "Like FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.likefm.ru/",
         "cros": false,
         "stream": "https://ic6.101.ru:8000/stream/air/aac/64/219",
@@ -248,7 +248,7 @@
     },
     "radio-uniton-100-7-fm": {
         "title": "Радио Юнитон",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://uniton.ru/",
         "cros": false,
         "stream": "https://online.uniton.ru/uniton",
@@ -257,7 +257,7 @@
     },
     "vana-st-petersburg": {
         "title": "Радио ВАНЯ ФМ (Санкт Петербург)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiovanya.ru/",
         "cros": false,
         "stream": "https://icecast-radiovanya.cdnvideo.ru/radiovanya",
@@ -281,7 +281,7 @@
     },
     "abtoradio-90-3-fm": {
         "title": "Abtoрадио",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.avtoradio.ru/",
         "cros": false,
         "stream": "https://pub0101.101.ru:8000/stream/air/aac/64/100",
@@ -289,7 +289,7 @@
     },
     "radio-romantika-98-8-fm": {
         "title": "Радио Романтика",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioromantika.ru/",
         "cros": false,
         "stream": "https://srv21.gpmradio.ru:8443/stream/air/aac/64/101",
@@ -297,7 +297,7 @@
     },
     "studio-93-2-fm": {
         "title": "STUDIO 21 (Москва)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://studio21.ru/",
         "cros": false,
         "stream": "https://stream.studio21.ru/studio2196.aacp",

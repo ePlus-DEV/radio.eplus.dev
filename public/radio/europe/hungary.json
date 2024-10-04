@@ -37,7 +37,7 @@
     },
     "mr1-kossuth": {
         "title": "MR1-Kossuth Rádió",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://mediaklikk.hu/kossuth",
         "cros": false,
         "stream": "https://icast.connectmedia.hu/4734/mr1.aac",
@@ -125,7 +125,7 @@
     },
     "bartok": {
         "title": "Bartók Rádió",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://mediaklikk.hu/bartok/",
         "cros": false,
         "stream": "https://icast.connectmedia.hu/4739/mr3.aac",
@@ -151,7 +151,7 @@
     },
     "aktiv": {
         "title": "Aktív Rádió",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.aktivradio.hu/",
         "cros": true,
         "stream": "http://aktivradio.hu:8000/radio.aac",
@@ -334,7 +334,7 @@
     },
     "lakihegy": {
         "title": "Lakihegy Rádió",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://lakihegyradio.hu/",
         "cros": true,
         "stream": "http://stream.composeit.hu:8300/stream/1/",
@@ -352,7 +352,7 @@
     },
     "sunshine-fm": {
         "title": "Sunshine FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sunshine.hu/",
         "cros": true,
         "stream": "http://dozer.composeit.hu:8100/stream/1/",

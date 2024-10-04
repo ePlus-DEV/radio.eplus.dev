@@ -11,7 +11,7 @@
     },
     "kiss-fm": {
         "title": "Kiss FM (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.kissfm.ro/",
         "cros": false,
         "stream": "https://live.kissfm.ro/kissfm.aacp",
@@ -21,7 +21,7 @@
     },
     "europa-fm": {
         "title": "Radio Europa FM (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.europafm.ro/",
         "cros": false,
         "stream": "https://astreaming.edi.ro:8443/EuropaFM_aac",
@@ -31,7 +31,7 @@
     },
     "magic-fm": {
         "title": "Magic FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.magicfm.ro/",
         "cros": true,
         "stream": "http://live.magicfm.ro:9128/magicfm.aacp",
@@ -51,7 +51,7 @@
     },
     "virgin": {
         "title": "Virgin Radio (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://virginradio.ro/",
         "cros": false,
         "stream": "https://astreaming.edi.ro:8443/VirginRadio_aac",
@@ -61,7 +61,7 @@
     },
     "rock-fm": {
         "title": "Rock FM (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rockfm.ro/",
         "cros": true,
         "stream": "http://live.rockfm.ro:9128/rockfm.aacp",
@@ -71,7 +71,7 @@
     },
     "guerrilla-bucuresti": {
         "title": "Radio Guerrilla (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.guerrillaradio.ro/",
         "cros": true,
         "stream": "http://live.guerrillaradio.ro:8010/guerrilla.aac",
@@ -101,7 +101,7 @@
     },
     "romania-antena-satelor": {
         "title": "Radio Romania Antena Satelor",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antenasatelor.ro/",
         "cros": false,
         "stream": "https://stream.zeno.fm/smm1h8ds0y5tv.aac",
@@ -121,7 +121,7 @@
     },
     "tananana": {
         "title": "Tananana",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": true,
         "stream": "http://live.tananana.ro:8010/stream-48.aac",
@@ -131,7 +131,7 @@
     },
     "one-fm": {
         "title": "One FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.onefm.ro/",
         "cros": true,
         "stream": "http://live.onefm.ro/onefm.aacp",
@@ -141,7 +141,7 @@
     },
     "gold-fm": {
         "title": "Radio Gold FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiogoldfm.ro/",
         "cros": true,
         "stream": "http://80.86.106.110:8020/radiogoldfm-32.aac",
@@ -169,7 +169,7 @@
     },
     "one-world-radio": {
         "title": "One World Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP_SC",
@@ -189,7 +189,7 @@
     },
     "focus-fm": {
         "title": "Radio Focus FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.focusfm.ro/",
         "cros": true,
         "stream": "http://live.focusfm.ro:8000/stream/1/",
@@ -218,7 +218,7 @@
     },
     "smart": {
         "title": "Smart Radio (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.smartradio.ro/",
         "cros": true,
         "stream": "http://live.smartradio.ro:9128/live",
@@ -278,7 +278,7 @@
     },
     "romania-iasi": {
         "title": "Radio Iaşi",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioiasi.ro/",
         "cros": true,
         "stream": "http://streams.euroweb.ro:8202/;",
@@ -318,7 +318,7 @@
     },
     "national-bucuresti": {
         "title": "National FM (București)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.nationalfm.ro/",
         "cros": true,
         "stream": "http://live3.nationalfm.ro:8001/;",
@@ -347,7 +347,7 @@
     },
     "rfi": {
         "title": "Rfi FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rfi.fr/en/",
         "cros": false,
         "stream": "https://asculta.radiorfi.ro/live.aac",
@@ -413,7 +413,7 @@
     },
     "favorit-fm": {
         "title": "Favorit FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.radiofavoritfm.ro/",
         "cros": true,
         "stream": "http://91.250.252.251:8001/;",

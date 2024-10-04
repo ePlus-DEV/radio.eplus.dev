@@ -21,7 +21,7 @@
     },
     "star-fm": {
         "title": "Star FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://starfm.tv3.ee/",
         "cros": false,
         "stream": "https://ice.leviracloud.eu/star96-aac",
@@ -61,7 +61,7 @@
     },
     "elmar": {
         "title": "Raadio Elmar",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://elmar.postimees.ee/",
         "cros": false,
         "stream": "https://router.euddn.net/8103046e16b71d15d692b57c187875c7/elmar.aac",
@@ -90,7 +90,7 @@
     },
     "power-hit": {
         "title": "Power Hit Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://power.tv3.ee/",
         "cros": false,
         "stream": "https://ice.leviracloud.eu/phr128-aac",
@@ -100,7 +100,7 @@
     },
     "d-fm-90-2": {
         "title": "DFM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.dfm.ee/",
         "cros": false,
         "stream": "https://router.euddn.net/8103046e16b71d15d692b57c187875c7/dfm.aac",
@@ -309,7 +309,7 @@
     },
     "raadio-relax": {
         "title": "Relax FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sky.ee/relaxfm",
         "cros": false,
         "stream": "https://stream.relaxfm.ee/relax",
@@ -328,7 +328,7 @@
     },
     "vomba": {
         "title": "Võmba FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://xn--vmbafm-pxa.fi/fi/",
         "cros": false,
         "stream": "https://c4.radioboss.fm:8123/stream",
@@ -347,7 +347,7 @@
     },
     "relax-cafe": {
         "title": "Relax Cafe",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sky.ee/relaxfm",
         "cros": false,
         "stream": "https://edge04.cdn.bitflip.ee:8888/cafe",
@@ -357,7 +357,7 @@
     },
     "relax-instrumental": {
         "title": "Relax Instrumental",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sky.ee/relaxfm",
         "cros": false,
         "stream": "https://edge04.cdn.bitflip.ee:8888/instrumental",
@@ -367,7 +367,7 @@
     },
     "relax-international": {
         "title": "Relax International",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sky.ee/relaxfm",
         "cros": false,
         "stream": "https://edge01.cdn.bitflip.ee:8888/international",
@@ -396,7 +396,7 @@
     },
     "estonian-party": {
         "title": "Estonian Party Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://maggie.torontocast.com:2020/public/estonian-party-radio",
         "cros": false,
         "stream": "https://maggie.torontocast.com:8110/stream",

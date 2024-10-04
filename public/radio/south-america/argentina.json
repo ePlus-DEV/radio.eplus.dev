@@ -46,7 +46,7 @@
   },
   "rock-and-pop": {
     "title": "FM Rock and Pop 95.9",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmrockandpop.com/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ROCKANDPOPAAC_SC",
@@ -55,7 +55,7 @@
   },
   "vorterix": {
     "title": "Vorterix",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.vorterix.com/",
     "cros": false,
     "stream": "https://ice2.edge-apps.net/radio1_high-20057.audio",
@@ -108,7 +108,7 @@
   },
   "vida-rosario": {
     "title": "Radio Vida FM (Rosario)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.fmvida.com.ar/",
     "cros": false,
     "stream": "https://streaming450tb.locucionar.com/proxy/fmvida979?mp=/stream",
@@ -125,7 +125,7 @@
   },
   "la-red": {
     "title": "La Red",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lared.am/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LA_RED_AM910AAC_SC",
@@ -142,7 +142,7 @@
   },
   "rivadavia": {
     "title": "Radio Rivadavia AM630",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://rivadavia.com.ar/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RIVADAVIAAAC_SC",
@@ -168,7 +168,7 @@
   },
   "radio-am-750-buenos-aires": {
     "title": "Radio AM 750 (Buenos Aires)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.pagina12.com.ar/am750/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/AM750AAC_SC",
@@ -177,7 +177,7 @@
   },
   "sucesos-cordoba": {
     "title": "Radio Sucesos (Córdoba)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://server1.dainusradio.com:2341/;",
@@ -186,7 +186,7 @@
   },
   "sol-mendoza": {
     "title": "Estación del Sol (Mendoza)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://estaciondelsol.elsol.com.ar/",
     "cros": false,
     "stream": "https://streamserver-2.xyz/listen/estacion_del_sol/radio.aac",
@@ -204,7 +204,7 @@
   },
   "rosario-3": {
     "title": "Radio Rosario 3",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.rosario3.com/",
     "cros": false,
     "stream": "https://streaming320tb.locucionar.com/proxy/radio2?mp=/stream/1/",
@@ -212,7 +212,7 @@
   },
   "blue-100-7-fm": {
     "title": "Blue 100.7",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://bluefm.com.ar/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/BLUE_FM_100_7AAC_SC",
@@ -221,7 +221,7 @@
   },
   "delta-capital-federal": {
     "title": "Delta FM (Capital Federal)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmdelta903.com/",
     "cros": false,
     "stream": "https://cdn.instream.audio/:9069/stream",
@@ -247,7 +247,7 @@
   },
   "suquia-cordoba": {
     "title": "Radio Suquía (Córdoba)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://suquia.ar/",
     "cros": false,
     "stream": "https://streaming01.shockmedia.com.ar:10945/stream/1/",
@@ -256,7 +256,7 @@
   },
   "la-2x4": {
     "title": "La 2x4",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://buenosaires.gob.ar/medios/la-2x4",
     "cros": false,
     "stream": "https://media.radios.ar:9270/stream",
@@ -300,7 +300,7 @@
   },
   "milenium": {
     "title": "Milenium (Buenos Aires)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmmilenium.com.ar/",
     "cros": false,
     "stream": "https://sonicpanel.hostradios.com/8002/stream",
@@ -309,7 +309,7 @@
   },
   "mucha-radio-fm": {
     "title": "Mucha Radio FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mucharadio.com.ar/",
     "cros": false,
     "stream": "https://us-b4-p-e-zs14-audio.cdn.mdstrm.com/live-audio-aw-bkp/60a2765c40105808346c569f",
@@ -334,7 +334,7 @@
   },
   "el-mundo": {
     "title": "Radio El Mundo (Capital Federal)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radioelmundoam1070.com/",
     "cros": true,
     "stream": "http://streaming.escuchanosonline.com:8236/stream/1/",
@@ -350,7 +350,7 @@
   },
   "nuestra-cordoba": {
     "title": "102.3 Más Que Música",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.cba24n.com.ar/",
     "cros": false,
     "stream": "https://radios.solumedia.com:6276/stream/1/",

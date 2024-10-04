@@ -71,7 +71,7 @@
     },
     "retro": {
         "title": "Retro Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://retro-radio.dk/",
         "cros": false,
         "stream": "https://stream128.retro-radio.dk/retro",
@@ -254,7 +254,7 @@
     },
     "sydhavsoerne": {
         "title": "Radio Sydhavsoerne",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.sydhavsradio.dk/",
         "cros": false,
         "stream": "https://stream.probroadcast.dk/sydhavsradioaac",

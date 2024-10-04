@@ -11,7 +11,7 @@
     },
     "mnm": {
         "title": "MNM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.vrt.be/vrtmax/kanalen/mnm/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/mnm.aac",
@@ -21,7 +21,7 @@
     },
     "nostalgie-vlaanderen": {
         "title": "Nostalgie (Vlaanderen)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.nostalgie.be/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/5gd04cwptg0uv",
@@ -31,7 +31,7 @@
     },
     "vrt-1": {
         "title": "VRT Radio 1",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio1.be/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/radio1.aac",
@@ -40,7 +40,7 @@
     },
     "joefm": {
         "title": "JOE",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://joe.be/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/JOEAAC_SC",
@@ -70,7 +70,7 @@
     },
     "klara": {
         "title": "VRT Klara",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.vrt.be/vrtmax/kanalen/klara/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/klara.aac",
@@ -90,7 +90,7 @@
     },
     "nostalgie": {
         "title": "Nostalgie Belgique",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.nostalgie.be/",
         "cros": false,
         "stream": "https://n01a-eu.rcs.revma.com/5gd04cwptg0uv",
@@ -130,7 +130,7 @@
     },
     "mnm-hits": {
         "title": "MNM Hits",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.vrt.be/vrtmax/kanalen/mnm/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/mnm_hits.aac",
@@ -140,7 +140,7 @@
     },
     "crooze-fm": {
         "title": "Crooze.FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://crooze.eu/nl/",
         "cros": true,
         "stream": "http://streams.crooze.fm:8000/stream/2/",
@@ -160,7 +160,7 @@
     },
     "nrj": {
         "title": "NRJ Belgique",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.nrj.be/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/xh00fwuptg0uv",
@@ -170,7 +170,7 @@
     },
     "stad": {
         "title": "Radio Stad",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiostad.com/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/rn6ppyyfs18uv",
@@ -238,7 +238,7 @@
     },
     "2-west-vlaanderen": {
         "title": "Radio 2 (West Vlaanderen)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio2.be/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/ra2wvl.aac",
@@ -248,7 +248,7 @@
     },
     "2-oost-vlaanderen": {
         "title": "Radio 2 (Oost Vlaanderen)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio2.be/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/ra2ovl.aac",
@@ -267,7 +267,7 @@
     },
     "2-limburg": {
         "title": "Radio 2 (Limburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio2.be/",
         "cros": false,
         "stream": "https://icecast.vrtcdn.be/ra2lim.aac",
@@ -326,7 +326,7 @@
     },
     "nostalgie-60": {
         "title": "Nostalgie 60",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.nostalgie.be/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/q04c62u3ehuvv",
@@ -336,7 +336,7 @@
     },
     "bruzz": {
         "title": "Bruzz Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.bruzz.be/radioprogramma",
         "cros": false,
         "stream": "https://rrr.sz.xlcdn.com/?account=fmbrussel&file=BRUZZ_HQ&type=live&service=icecast&port=8000&output=pls",

@@ -11,7 +11,7 @@
   },
   "skyrock": {
     "title": "Skyrock FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://skyrock.fm/",
     "cros": false,
     "stream": "https://www.skyrock.fm/stream.php/ecouterradioenligne_64aac.aac",
@@ -28,7 +28,7 @@
   },
   "rfm": {
     "title": "RFM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.rfm.fr/",
     "cros": false,
     "stream": "https://stream.rfm.fr/rfm.aac?aw_0_1st.playerid=lgrdrnwsEcouterRadioEnLigne",
@@ -55,7 +55,7 @@
   },
   "europe-2": {
     "title": "Europe 2",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.europe2.fr/",
     "cros": false,
     "stream": "https://europe2.lmn.fm/europe2.aac?aw_0_1st.playerid=lgrdnwsEcouterRadioEnLigne",
@@ -99,7 +99,7 @@
   },
   "europe": {
     "title": "Europe 1",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.europe1.fr/",
     "cros": false,
     "stream": "https://stream.europe1.fr/europe1.aac?aw_0_1st.playerid=lgrdrnwsEcouterRadioEnLigne",
@@ -141,7 +141,7 @@
   },
   "mfm": {
     "title": "M Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mradio.fr/",
     "cros": false,
     "stream": "https://mfm.ice.infomaniak.ch/mfm-64.aac",
@@ -176,7 +176,7 @@
   },
   "jazz": {
     "title": "Jazz Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.jazzradio.fr/",
     "cros": false,
     "stream": "https://jazzradio.ice.infomaniak.ch/jazzradio-high.aac",
@@ -193,7 +193,7 @@
   },
   "chante-france": {
     "title": "Chante France",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.chantefrance.com/",
     "cros": false,
     "stream": "https://chantefrance.ice.infomaniak.ch/chantefrance-96.aac",
@@ -246,7 +246,7 @@
   },
   "classique": {
     "title": "Radio Classique",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radioclassique.fr/",
     "cros": false,
     "stream": "https://radioclassique.ice.infomaniak.ch/radioclassique-high.aac",
@@ -255,7 +255,7 @@
   },
   "voltage": {
     "title": "Voltage",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.voltage.fr/",
     "cros": false,
     "stream": "https://start-voltage.ice.infomaniak.ch/start-voltage-high.aac",
@@ -273,7 +273,7 @@
   },
   "alouette": {
     "title": "Alouette",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.alouette.fr/",
     "cros": false,
     "stream": "https://alouette.ice.infomaniak.ch/alouette-high.aac",
@@ -333,7 +333,7 @@
   },
   "hit-west": {
     "title": "Hit West",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://hitwest.ouest-france.fr/",
     "cros": false,
     "stream": "https://hitwest-angers.ice.infomaniak.ch/hitwest-angers-128.aac",

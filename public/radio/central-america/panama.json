@@ -10,7 +10,7 @@
     },
     "hola": {
         "title": "Hola Panamá",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://www.streaming507.net:8124/stream",
@@ -19,7 +19,7 @@
     },
     "ky": {
         "title": "La Ky",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://laky925.com/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LAKY_PANAMAAAC_SC",
@@ -38,7 +38,7 @@
     },
     "fabulosa": {
         "title": "Fabulosa Estéreo FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://fabulosaestereo.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8130/stream",
@@ -58,7 +58,7 @@
     },
     "omega": {
         "title": "Omega Stereo",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.omegastereo.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8048/stream",
@@ -67,7 +67,7 @@
     },
     "mega-panama": {
         "title": "La Mega",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://lamegapanama.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8152/stream",
@@ -116,7 +116,7 @@
     },
     "ultra-stereo": {
         "title": "Ultra Stereo",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://fmultrastereo.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8134/stream",
@@ -125,7 +125,7 @@
     },
     "tropi": {
         "title": "TropiQ FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://tropiq.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8140/stream",
@@ -144,7 +144,7 @@
     },
     "maria": {
         "title": "Radio María",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiomaria.pa/",
         "cros": false,
         "stream": "https://dreamsiteradiocp2.com/proxy/rmpanama2?mp=/stream/1/",
@@ -154,7 +154,7 @@
     },
     "crisol-panama": {
         "title": "Radio Crisol FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sertv.gob.pa/",
         "cros": false,
         "stream": "https://pcbrothers.net/8002/stream/1/",
@@ -181,7 +181,7 @@
     },
     "reforma-panama": {
         "title": "Radio Reforma",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radioreformaseoye.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8072/stream",
@@ -191,7 +191,7 @@
     },
     "marbella": {
         "title": "Marbella Stereo (Colón)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.marbellastereo.net/",
         "cros": false,
         "stream": "https://sonic.dattalive.com/8318/stream",
@@ -201,7 +201,7 @@
     },
     "lo-nuestro": {
         "title": "Lo Nuestro",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://fmlonuestro.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8136/stream",
@@ -211,7 +211,7 @@
     },
     "hot": {
         "title": "Hot Stereo",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://hotstereofm.com/",
         "cros": false,
         "stream": "https://acp2.lorini.net:30515/stream",
@@ -238,7 +238,7 @@
     },
     "estereo-azul": {
         "title": "Estéreo Azul",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.estereoazul.com/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ESTEREOAZULAAC_SC",
@@ -248,7 +248,7 @@
     },
     "panama": {
         "title": "Radio Panamá",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiopanama.com.pa/",
         "cros": false,
         "stream": "https://streaming.radiopanama.com.pa/stream",
@@ -268,7 +268,7 @@
     },
     "hit-panama": {
         "title": "Panamá Hit Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://www.streaming507.net:8024/stream",
@@ -278,7 +278,7 @@
     },
     "ancon": {
         "title": "Radio Ancón",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radioancon.com/",
         "cros": false,
         "stream": "https://www.streaming507.net:8144/stream",
@@ -287,7 +287,7 @@
     },
     "portobelo-stereo": {
         "title": "Portobelo Stereo (Colón)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.portobelostereo.tv/",
         "cros": false,
         "stream": "https://radios.solumedia.com:6084/stream/1/",
@@ -306,7 +306,7 @@
     },
     "presidente": {
         "title": "Stereo Presidente",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://www.streaming507.net:8126/stream",
@@ -315,7 +315,7 @@
     },
     "nacional-fm": {
         "title": "Nacional FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sertv.gob.pa/nacionalfm/",
         "cros": true,
         "stream": "http://pcbrothers.net:8008/stream/1/",
@@ -334,7 +334,7 @@
     },
     "mia-panama": {
         "title": "Radio Mía (Ciudad de Panamá)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": true,
         "stream": "http://185.105.4.53:8104/stream/1/",
@@ -362,7 +362,7 @@
     },
     "la-buena-panama": {
         "title": "La Buena Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.labuenaradiopanama.com/",
         "cros": false,
         "stream": "https://s3.voscast.com:8607/live",

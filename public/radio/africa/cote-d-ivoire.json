@@ -74,7 +74,7 @@
     },
     "maria": {
         "title": "Radio Maria",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomaria.ci/",
         "cros": false,
         "stream": "https://dreamsiteradiocp6.com/proxy/rmcosta?mp=/stream/1/",
@@ -169,7 +169,7 @@
     },
     "trace-fm-cote-d-ivoire": {
         "title": "Trace FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://trace.ci/",
         "cros": false,
         "stream": "https://stream.trace.tv/trace_fm_ci-midfi.aac?type=.flv",
@@ -178,7 +178,7 @@
     },
     "skyrock-abidjan": {
         "title": "Skyrock Abidjan",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://skyrock.fm/",
         "cros": false,
         "stream": "https://icecast.skyrock.net/s/abidjan_aac_64k",
@@ -206,7 +206,7 @@
     },
     "maria-cote-d-ivoire": {
         "title": "Radio Maria Côte d'Ivoire-Man",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomaria.ci/",
         "cros": true,
         "stream": "http://dreamsiteradiocp5.com:8139/stream/1/",

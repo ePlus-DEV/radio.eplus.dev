@@ -1,7 +1,7 @@
 {
   "era": {
     "title": "Radio Era FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "103.3 FM",
     "url": "https://era.je/",
     "cros": false,
@@ -12,7 +12,7 @@
   },
   "hitz": {
     "title": "Hitz FM (Kuala Lumpur)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "92.9 FM",
     "url": "https://hitz.com.my/",
     "cros": false,
@@ -22,7 +22,7 @@
   },
   "sinar": {
     "title": "Radio Sinar FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "96.7 FM",
     "url": "https://sinar.my/",
     "cros": false,
@@ -51,7 +51,7 @@
   },
   "one-fm": {
     "title": "One FM (Kuala Lumpur)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "88.1 FM",
     "url": "https://www.8fm.audio/",
     "cros": false,
@@ -61,7 +61,7 @@
   },
   "thr-kuala-lumpur": {
     "title": "Gegar (Kuala Lumpur)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://gegar.my/",
     "cros": false,
@@ -71,7 +71,7 @@
   },
   "fly": {
     "title": "Fly",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "95.8 FM",
     "url": "https://www.flyfm.audio/",
     "cros": false,
@@ -81,7 +81,7 @@
   },
   "lite": {
     "title": "Lite FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "105.7 FM",
     "url": "https://lite.my/",
     "cros": true,
@@ -90,7 +90,7 @@
   },
   "thr-raaga": {
     "title": "Fly",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "103.7 FM",
     "url": "https://raaga.my/",
     "cros": false,
@@ -100,7 +100,7 @@
   },
   "mix-fm": {
     "title": "Mix FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "91.1 FM",
     "url": "https://mix.my/",
     "cros": true,
@@ -110,7 +110,7 @@
   },
   "my-fm": {
     "title": "My FM (Kuala Lumpur)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "101.8 FM",
     "url": "https://my.com.my/",
     "cros": false,
@@ -120,7 +120,7 @@
   },
   "cats-fm": {
     "title": "Cats FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "99.3 FM",
     "url": "http://www.catsfm.my/",
     "cros": true,
@@ -130,7 +130,7 @@
   },
   "bapakku-fm": {
     "title": "Bapakku FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": false,
     "cros": true,
@@ -150,7 +150,7 @@
   },
   "melody": {
     "title": "Melody FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "103.0 FM",
     "url": "https://melody.my/",
     "cros": false,
@@ -160,7 +160,7 @@
   },
   "bfm": {
     "title": "BFM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "89.9 FM",
     "url": "https://www.bfm.my/",
     "cros": false,
@@ -289,7 +289,7 @@
   },
   "buletin": {
     "title": "Buletin FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.buletinfm.audio/",
     "cros": false,
@@ -299,7 +299,7 @@
   },
   "hijau": {
     "title": "Hijau FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.hijau.fm/",
     "cros": false,
@@ -318,7 +318,7 @@
   },
   "manis": {
     "title": "Manis FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "90.6 FM",
     "url": "https://www.manis.fm/",
     "cros": false,
@@ -348,7 +348,7 @@
   },
   "durian-fm": {
     "title": "Durian FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://durianfm.com/",
     "cros": true,
@@ -358,7 +358,7 @@
   },
   "osai": {
     "title": "Osai FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": false,
     "cros": false,
@@ -416,7 +416,7 @@
   },
   "suria-fm": {
     "title": "Suria FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "105.3 FM",
     "url": "https://www.suria.my/",
     "cros": true,

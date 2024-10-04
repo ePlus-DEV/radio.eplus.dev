@@ -1,7 +1,7 @@
 {
     "nrj-norge": {
         "title": "NRJ",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lydenavnorge.no/nrj/",
         "cros": false,
         "stream": "https://nrj.p4groupaudio.com/NRJ_AH",
@@ -11,7 +11,7 @@
     },
     "beat-fm": {
         "title": "The Beat",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://thebeat.no/",
         "cros": false,
         "stream": "https://stream.oneplay.no/beatoslo64",
@@ -19,7 +19,7 @@
     },
     "scansat": {
         "title": "Scansat Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://scansat.no/",
         "cros": false,
         "stream": "https://stream.scansat.no/scansat_mq",
@@ -88,7 +88,7 @@
     },
     "p4-norge-89-7": {
         "title": "P4 Lyden av",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lydenavnorge.no/p4/",
         "cros": false,
         "stream": "https://p4.p4groupaudio.com/P04_AH",
@@ -97,7 +97,7 @@
     },
     "p11-bandit": {
         "title": "P11 Bandit",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lydenavnorge.no/p12/",
         "cros": false,
         "stream": "https://p11.p4groupaudio.com/P11_AH",
@@ -106,7 +106,7 @@
     },
     "p5-hits": {
         "title": "P5 Hits (Oslo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lydenavnorge.no/p5/",
         "cros": false,
         "stream": "https://p5.p4groupaudio.com/P05_AM",
@@ -115,7 +115,7 @@
     },
     "klem-fm": {
         "title": "P7 Klem FM (Oslo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lydenavnorge.no/p7/",
         "cros": false,
         "stream": "https://p7.p4groupaudio.com/P07_AH",
@@ -132,7 +132,7 @@
     },
     "p4-country": {
         "title": "P10 Radio Country",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lydenavnorge.no/p10/",
         "cros": false,
         "stream": "https://p10.p4groupaudio.com/P10_AM",
@@ -177,7 +177,7 @@
     },
     "nrk-sport": {
         "title": "NRK Sport",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio.nrk.no/",
         "cros": false,
         "stream": "https://lyd.nrk.no/nrk_radio_sport_aac_l",
@@ -195,7 +195,7 @@
     },
     "rox": {
         "title": "Radio Rox (Oslo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiorox.no/",
         "cros": false,
         "stream": "https://stream.oneplay.no/rox64",
@@ -203,7 +203,7 @@
     },
     "1fm": {
         "title": "1FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.1fm.no/",
         "cros": false,
         "stream": "https://s2.radio.co/s914ffa700/listen",
@@ -211,7 +211,7 @@
     },
     "metro": {
         "title": "Radio Metro",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiometro.no/",
         "cros": false,
         "stream": "https://stream.oneplay.no/oslo64",
@@ -306,7 +306,7 @@
     },
     "tonsberg": {
         "title": "Radio Tønsberg",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiotonsberg.no/",
         "cros": false,
         "stream": "https://audio.radiotonsberg.no/tonsberg_mq",

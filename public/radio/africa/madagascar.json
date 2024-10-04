@@ -61,7 +61,7 @@
     },
     "vazo-gasy": {
         "title": "Radio Vazogasy",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiovazogasy.com/",
         "cros": false,
         "stream": "https://stream.radiovazogasy.com/stream",
@@ -101,7 +101,7 @@
     },
     "tiako-be": {
         "title": "Tiako Be",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.tiakobe.fr/",
         "cros": false,
         "stream": "https://tiakobe.ice.infomaniak.ch/tiakobe-64.aac",
@@ -188,7 +188,7 @@
     },
     "mbs": {
         "title": "MBS Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.malagasynews.com/radio/",
         "cros": false,
         "stream": "https://stream.zeno.fm/vrwc8iesy7fuv",

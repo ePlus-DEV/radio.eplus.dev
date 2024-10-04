@@ -1,7 +1,7 @@
 {
   "caracol-en-vivo": {
     "title": "Caracol Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://caracol.com.co/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CARACOL_RADIOAAC_SC",
@@ -38,7 +38,7 @@
   },
   "los-40-urban-bogota": {
     "title": "Los 40 (Bogotá)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://los40.com.co/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_COLOMBIAAAC_SC",
@@ -83,7 +83,7 @@
   },
   "principales": {
     "title": "Los 40 Principales",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://los40.com.co/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_COLOMBIAAAC_SC",
@@ -126,7 +126,7 @@
   },
   "olimpica": {
     "title": "Radio Olímpica",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://olimpicastereo.com.co/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/OLP_BOGOTAAAC_SC",
@@ -135,7 +135,7 @@
   },
   "la-x": {
     "title": "La X",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.laxmasmusica.com/",
     "cros": false,
     "stream": "https://s5.radio.co/s980fc5249/listen",
@@ -144,7 +144,7 @@
   },
   "besame": {
     "title": "Bésame",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.besame.fm/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/BESAME_MEDELLINAAC_SC",
@@ -171,7 +171,7 @@
   },
   "minuto-bogota": {
     "title": "Minuto de Dios (Bogotá)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://minutodedios.fm/",
     "cros": true,
     "stream": "http://sp4.colombiatelecom.com.co:8002/stream",
@@ -197,7 +197,7 @@
   },
   "paisa-estereo": {
     "title": "Paisa Estéreo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.rimixradio.com/audio/paisa.html",
     "cros": false,
     "stream": "https://radiolatina.info/7094/;",
@@ -206,7 +206,7 @@
   },
   "mix-radio-bogota": {
     "title": "Mixradio FM (Bogotá)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mixradio.co/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/MIX_BOGOTAAAC_SC",
@@ -233,7 +233,7 @@
   },
   "maria": {
     "title": "Radio María (Bogotá)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiomariacol.org/",
     "cros": false,
     "stream": "https://dreamsiteradiocp2.com/proxy/rmcolombia2?mp=/stream/1/",
@@ -278,7 +278,7 @@
   },
   "fundingue": {
     "title": "Fundingue Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.fundingue.com",
     "cros": false,
     "stream": "https://s1-ssl.vpsradio.com/listen/fundingue/radio.acc",
@@ -287,7 +287,7 @@
   },
   "tiempo-medellin": {
     "title": "Radio Tiempo (Medellín)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiotiempo.co/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RT_MEDELLINAAC_SC",
@@ -296,7 +296,7 @@
   },
   "barranquilla-estereo": {
     "title": "Barranquilla Estéreo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": false,
     "stream": "https://radio.yaservers.com:6060/stream/1/",
@@ -313,7 +313,7 @@
   },
   "boom-fm": {
     "title": "Boom FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://boom991fm.com/",
     "cros": false,
     "stream": "https://streamming.dobitsoluciones.com:7030/stream/1/",
@@ -331,7 +331,7 @@
   },
   "cacica-valledupar": {
     "title": "Cacica Stereo (Valledupar)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.cacicastereo.com/",
     "cros": true,
     "stream": "http://sonic.paulatina.co:7062/stream/1/",
@@ -367,7 +367,7 @@
   },
   "vallenato": {
     "title": "123 Vallenato",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://rimix.fm/123-vallenato/",
     "cros": false,
     "stream": "https://radiolatina.info/7087/;",

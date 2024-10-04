@@ -79,7 +79,7 @@
   },
   "city-fm": {
     "title": "City",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://cityfm89.com/",
     "cros": false,
     "stream": "https://radio.cityfm89.com/stream",
@@ -314,7 +314,7 @@
   },
   "city-karachi": {
     "title": "City (Karachi)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://cityfm89.com/",
     "cros": false,
     "stream": "https://radio.cityfm89.com/stream",
@@ -330,7 +330,7 @@
   },
   "big": {
     "title": "Big FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://big1062.com/",
     "cros": false,
     "stream": "https://funasia.streamguys1.com/live4",

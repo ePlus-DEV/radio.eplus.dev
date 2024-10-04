@@ -20,7 +20,7 @@
   },
   "foorti": {
     "title": "Radio Foorti",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.radiofoorti.fm/",
     "cros": true,
     "stream": "https://stream.zeno.fm/cwa3vg8s8druv",
@@ -72,7 +72,7 @@
   },
   "bangla-net": {
     "title": "Radio Bangla Net",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiobanglanet.com/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R3563475_SC",

@@ -1,7 +1,7 @@
 {
     "romantica": {
         "title": "La Romántica",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://laromantica.fm/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:8068/stream",
@@ -13,14 +13,14 @@
         "title": "Éxitos FM",
         "type": "audio/mpeg",
         "url": "https://mundour.com/live-exitos/",
-        "cros": false,
+        "cros": true,
         "stream": "https://acp4.lorini.net/proxy/ur2070?mp=/stream",
         "features": "/img/south-america/venezuela/exitos.png",
         "favorite": false
     },
     "fiestafm": {
         "title": "Fiesta Latina",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://fiesta106.com.ve/",
         "cros": false,
         "stream": "https://stream.zeno.fm/e2kzfpr34d0uv",
@@ -68,7 +68,7 @@
     },
     "rumba": {
         "title": "Rumba",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rumbavenezuela.fm/",
         "cros": false,
         "stream": "https://cast20.plugstreaming.com:2020/stream/r981",
@@ -98,7 +98,7 @@
     },
     "tama-stereo-103-9-fm-san-crist": {
         "title": "Tama Stereo (San Cristobal)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.tamastereo.com/",
         "cros": false,
         "stream": "https://guri.tepuyserver.net/8457/stream/1/",
@@ -117,7 +117,7 @@
     },
     "candela": {
         "title": "Candela Pura (Caracas)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://candelapura.fm/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9020/stream",
@@ -136,7 +136,7 @@
     },
     "bella": {
         "title": "Bella",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bellafm.com.ve/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9380/stream",
@@ -145,7 +145,7 @@
     },
     "impresionante": {
         "title": "La Radio Impresionante",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://laradioimpresionante.com/",
         "cros": false,
         "stream": "https://laradiossl.online:10489/stream/1/",
@@ -155,7 +155,7 @@
     },
     "radiocanal-98-3": {
         "title": "RadioCanal",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiocanal.com.ve/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9098/stream",
@@ -164,7 +164,7 @@
     },
     "sabor-maracaibo": {
         "title": "Sabor 106.5 FM (Maracaibo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sabor106.com/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9166/stream",
@@ -173,7 +173,7 @@
     },
     "hot": {
         "title": "Hot",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://hot94.fm/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9016/stream",
@@ -182,7 +182,7 @@
     },
     "rumbos": {
         "title": "Radio Rumbos",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://acp2.lorini.net:19020/stream",
@@ -201,7 +201,7 @@
     },
     "rq": {
         "title": "RQ 910 AM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9014/stream",
@@ -220,7 +220,7 @@
     },
     "lider-barquisimeto": {
         "title": "Líder (Barquisimeto)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://circuitolider.com/",
         "cros": false,
         "stream": "https://acp4.lorini.net/proxy/15020?mp=/stream",
@@ -230,7 +230,7 @@
     },
     "pop-caracas": {
         "title": "Pop (Caracas)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://circuitopopfm.com/",
         "cros": false,
         "stream": "https://stream.zeno.fm/h1vnadktvchvv",
@@ -249,7 +249,7 @@
     },
     "fiesta-caracas": {
         "title": "Fiesta",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://fiesta106.fm/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9012/stream",
@@ -259,7 +259,7 @@
     },
     "adulto-caracas": {
         "title": "Adulto Joven (Caracas)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.88punto1fm.com/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:9168/stream",
@@ -268,7 +268,7 @@
     },
     "woao": {
         "title": "Woao",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.woao.net/",
         "cros": false,
         "stream": "https://stream.zeno.fm/361as28sbc9uv",
@@ -297,7 +297,7 @@
     },
     "chiquinquirena-maracaibo": {
         "title": "Tu FM La Chiquinquireña",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://tufm909.com/",
         "cros": false,
         "stream": "https://server6.globalhostla.com:8098/stream",
@@ -317,7 +317,7 @@
     },
     "activa": {
         "title": "RNV Activa",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://acp2.lorini.net:29010/RNVACTIVA",
@@ -326,7 +326,7 @@
     },
     "unica-99-9-fm": {
         "title": "Única",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://unica999.net/",
         "cros": false,
         "stream": "https://unica-zikoxweb.radioca.st/stream/1/",
@@ -335,7 +335,7 @@
     },
     "rnv-musical": {
         "title": "RNV Musical",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://acp2.lorini.net:29030/RNVMUSICAL",
@@ -344,7 +344,7 @@
     },
     "conexion": {
         "title": "Plataforma Conexion",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.conexion.com.ve/portal/index.php",
         "cros": false,
         "stream": "https://sp3.servidorrprivado.com/1458/;",
@@ -354,7 +354,7 @@
     },
     "planeta-caracas": {
         "title": "Planeta (Caracas)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.planeta105fm.com/",
         "cros": false,
         "stream": "https://cast10.plugstreaming.com:2000/sslstream/planetafm/stream/1/",
@@ -373,7 +373,7 @@
     },
     "victoria-caracas": {
         "title": "Victoria (Caracas)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://emisorasvirtuales.com.co:9252/live",
@@ -392,7 +392,7 @@
     },
     "power-fm": {
         "title": "Power",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://elpodermasjoven.com.ve/",
         "cros": false,
         "stream": "https://stream.zeno.fm/brym6d3xvkdvv",

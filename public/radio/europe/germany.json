@@ -10,7 +10,7 @@
     },
     "antenne": {
         "title": "Antenne Bayern",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antenne.de/",
         "cros": false,
         "stream": "https://stream.antenne.de/antenne/stream/aacp",
@@ -47,7 +47,7 @@
     },
     "mdr": {
         "title": "MDR Jump",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.mdrjump.de/index.html",
         "cros": false,
         "stream": "https://mdr-284320-0.sslcast.mdr.de/mdr/284320/0/aac/high/stream.aac?aggregator=radiolisten-de",
@@ -65,7 +65,7 @@
     },
     "n-joy": {
         "title": "N Joy",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.n-joy.de/",
         "cros": false,
         "stream": "https://icecast.ndr.de/ndr/njoy/live/aac/low?aggregator=radiolisten-de",
@@ -84,7 +84,7 @@
     },
     "ffh": {
         "title": "Hit Radio FFH",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ffh.de/index.html",
         "cros": false,
         "stream": "https://streams.ffh.de/radioffh/aac/livestream.aac?amsparams=playerid:RTFFHRadiolistenDE",
@@ -180,7 +180,7 @@
     },
     "antenne-bayern-top-40": {
         "title": "Antenne Bayern Top 40",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antenne.de/webradio/top-40",
         "cros": false,
         "stream": "https://mp3channels.webradio.antenne.de/top-40.aac",
@@ -217,7 +217,7 @@
     },
     "planet-frankfurt": {
         "title": "Planet Radio (Frankfurt)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.planetradio.de/index.html",
         "cros": false,
         "stream": "https://streams.planetradio.de/planetradio/aac/livestream.aac?amsparams=playerid:RTFFHRadiolistenDE",
@@ -286,7 +286,7 @@
     },
     "top-40": {
         "title": "Radio Top 40",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiotop40.de/",
         "cros": false,
         "stream": "https://edge18.streamonkey.net/antthue-radiotop40/stream/aacp",
@@ -305,7 +305,7 @@
     },
     "deutschlandfunk-schwabisch": {
         "title": "Deutschlandfunk Radio FM (Schwäbisch Hall)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.deutschlandfunk.de/",
         "cros": false,
         "stream": "https://st01.sslstream.dlf.de/dlf/01/high/aac/stream.aac?aggregator=radiolisten-de",
@@ -314,7 +314,7 @@
     },
     "kultur-berlin": {
         "title": "Deutschland Radio Kultur (Berlin)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.deutschlandfunkkultur.de/",
         "cros": false,
         "stream": "https://st02.sslstream.dlf.de/dlf/02/high/aac/stream.aac?aggregator=radiolisten-de",
@@ -323,7 +323,7 @@
     },
     "technobase-fm": {
         "title": "TechnoBase.FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.technobase.fm/",
         "cros": false,
         "stream": "https://listen.technobase.fm/tunein-aac-hd",
@@ -333,7 +333,7 @@
     },
     "metropol-berlin": {
         "title": "Metropol FM (Berlin)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.metropolfm.de/",
         "cros": false,
         "stream": "https://57-129-32-195-8097a5.sfn.edge-ovh-de1.streams.radiosphere.io/516f5978-5ba0-4c2a-96ea-0998d59c47a5/channels/252cbd88-bbec-459e-a8ee-79392644dff2/stream.aac",
@@ -360,7 +360,7 @@
     },
     "ffh-top-40-frankfurt": {
         "title": "FFH Digital Top 40 (Frankfurt)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ffh.de/musik.html",
         "cros": false,
         "stream": "https://mp3.ffh.de/ffhchannels/hqtop40.aac",
@@ -370,7 +370,7 @@
     },
     "saw-magdeburg": {
         "title": "Radio SAW",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiosaw.de/",
         "cros": false,
         "stream": "https://stream.radiosaw.de/saw/aac-48/radiolisten/stream.mp3",
@@ -379,7 +379,7 @@
     },
     "ndr2-hamburg": {
         "title": "NDR 2 (Hamburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ndr.de/ndr2/",
         "cros": false,
         "stream": "https://icecast.ndr.de/ndr/ndr2/hamburg/aac/low?aggregator=radiolisten-de",

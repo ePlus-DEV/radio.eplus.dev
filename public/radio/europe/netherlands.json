@@ -20,7 +20,7 @@
     },
     "npo-1": {
         "title": "NPO Radio 1",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.nporadio1.nl/",
         "cros": false,
         "stream": "https://icecast.omroep.nl/radio1-bb-aac",
@@ -74,7 +74,7 @@
     },
     "q-music": {
         "title": "Qmusic",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://qmusic.nl/",
         "cros": false,
         "stream": "https://stream.qmusic.nl/qmusic/aaclow",
@@ -83,7 +83,7 @@
     },
     "10": {
         "title": "Radio 10",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio10.nl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO10AAC_SC",
@@ -127,7 +127,7 @@
     },
     "rijnmond": {
         "title": "Radio Rijnmond",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rijnmond.nl/",
         "cros": false,
         "stream": "https://d2e9xgjjdd9cr5.cloudfront.net/icecast/rijnmond/radio-aacp",
@@ -136,7 +136,7 @@
     },
     "groot-nieuws": {
         "title": "Groot Nieuws Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.grootnieuwsradio.nl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/GNRAAC_SC",
@@ -212,7 +212,7 @@
     },
     "538-top-50": {
         "title": "538 Top 50 Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.538.nl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR13AAC_SC",
@@ -239,7 +239,7 @@
     },
     "q-dance": {
         "title": "Q-Dance Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.q-dance.com/en/radio/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/Q_DANCEAAC_SC",
@@ -248,7 +248,7 @@
     },
     "sky-lovesongs": {
         "title": "Sky Radio LoveSongs",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.skyradio.nl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/SRGSTR03AAC_SC",
@@ -266,7 +266,7 @@
     },
     "slam-hardstyle": {
         "title": "SLAM! Hardstyle",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.slam.nl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/WEB11_AAC_SC",
@@ -337,7 +337,7 @@
     },
     "funx-slowjamz": {
         "title": "FunX SlowJamz",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.funx.nl/",
         "cros": false,
         "stream": "https://icecast.omroep.nl/funx-slowjamz-sb-aac",
@@ -373,7 +373,7 @@
     },
     "10-90-s-hits": {
         "title": "Radio 10 - 90's Hits",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio10.nl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR22AAC_SC",

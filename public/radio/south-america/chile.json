@@ -1,7 +1,7 @@
 {
   "bio-bio": {
     "title": "Radio Bío Bío",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.biobiochile.cl/",
     "cros": false,
     "stream": "https://redirector.dps.live/biobiosantiago/aac/icecast.audio",
@@ -11,7 +11,7 @@
   },
   "radio-corazon": {
     "title": "Radio Corazón FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.corazon.cl/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CORAZONAAC_SC",
@@ -29,7 +29,7 @@
   },
   "cooperativa": {
     "title": "Radio Cooperativa",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.cooperativa.cl/",
     "cros": false,
     "stream": "https://redirector.dps.live/cooperativafm/aac/icecast.audio",
@@ -38,7 +38,7 @@
   },
   "adn": {
     "title": "ADN Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.adnradio.cl",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ADNAAC_SC",
@@ -56,7 +56,7 @@
   },
   "futuro": {
     "title": "Futuro FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.futuro.cl/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/FUTUROAAC_SC",
@@ -74,7 +74,7 @@
   },
   "fm-dos": {
     "title": "FM Dos",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.fmdos.cl/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/FMDOSAAC_SC",
@@ -101,7 +101,7 @@
   },
   "imagina": {
     "title": "Imagina",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radioimagina.cl/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/IMAGINAAAC_SC",
@@ -110,7 +110,7 @@
   },
   "concierto": {
     "title": "Concierto FM (Santiago)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.concierto.cl/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CONCIERTOAAC_SC",
@@ -119,7 +119,7 @@
   },
   "rock-and-pop": {
     "title": "Rock and Pop",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.rockandpop.cl/",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/ROCK_AND_POPAAC_SC",
@@ -136,7 +136,7 @@
   },
   "uno": {
     "title": "Radio Corporación (Santiago)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiocorporacion.cl/",
     "cros": false,
     "stream": "https://audio1.tustreaming.cl/8026/stream/1/",
@@ -162,7 +162,7 @@
   },
   "beethoven": {
     "title": "Beethoven FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.beethovenfm.cl/",
     "cros": false,
     "stream": "https://redirector.dps.live/beethovenfm/aac/icecast.audio",
@@ -189,7 +189,7 @@
   },
   "festival-valparaiso": {
     "title": "Radio Festival (Viña del Mar)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiofestival.cl/",
     "cros": false,
     "stream": "https://stream.festival.cl/1",
@@ -225,7 +225,7 @@
   },
   "punto-7": {
     "title": "Radio Punto 7",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.pagina7.cl/",
     "cros": false,
     "stream": "https://redirector.dps.live/p7concepcion/aac/icecast.audio",
@@ -234,7 +234,7 @@
   },
   "okey": {
     "title": "Radio Okey",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmokey.cl/",
     "cros": false,
     "stream": "https://streaming.fmokey.cl/FmOkCP.mp3",
@@ -251,7 +251,7 @@
   },
   "fiessta-rancagua": {
     "title": "Radio Fiessta (Rancagua)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiofiessta.cl/",
     "cros": false,
     "stream": "https://mdstrm.com/audio/64ed1a4905a8915e7674ea80/icecast.audio",
@@ -269,7 +269,7 @@
   },
   "digital": {
     "title": "Digital FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.digitalfm.cl/",
     "cros": false,
     "stream": "https://redirector.dps.live/digitalfm/aac/icecast.audio",
@@ -347,7 +347,7 @@
   },
   "austral-valdivia": {
     "title": "Radio Austral (Valdivia)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radioaustralvaldivia.cl/",
     "cros": false,
     "stream": "https://archi-us.digitalproserver.com/austral.aac",

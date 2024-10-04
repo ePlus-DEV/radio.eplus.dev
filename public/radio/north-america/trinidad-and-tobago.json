@@ -1,7 +1,7 @@
 {
   "103": {
     "title": "Radio 103 FM (Saint James)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://103fm.tt/",
     "cros": false,
     "stream": "https://s4.myradiostream.com/14348/stream/1/",
@@ -18,7 +18,7 @@
   },
   "win": {
     "title": "Win Radio Masala (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://winradio101.com/",
     "cros": false,
     "stream": "https://stream.radio.co:80/s9f46a9bb1/listen",
@@ -27,7 +27,7 @@
   },
   "boom": {
     "title": "Boom 94 FM (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://boomchampionstt.com/",
     "cros": true,
     "stream": "http://s8.yesstreaming.net:7103/live",
@@ -45,7 +45,7 @@
   },
   "bacchanal": {
     "title": "Bacchanal Radio (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://bacchanalradioonline.weebly.com/",
     "cros": true,
     "stream": "http://c13.radioboss.fm:8237/stream",
@@ -71,7 +71,7 @@
   },
   "red": {
     "title": "Red (Morichal)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://red967fm.com/",
     "cros": true,
     "stream": "http://104.238.99.1:8000/red967.mp3",
@@ -89,7 +89,7 @@
   },
   "sweet": {
     "title": "Sweet (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.sweet100fm.com",
     "cros": true,
     "stream": "http://media.streambrothers.com:18448/stream",
@@ -98,7 +98,7 @@
   },
   "w-107-1": {
     "title": "W 107.1 FM The Word",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://w107fm.com/",
     "cros": true,
     "stream": "http://104.238.99.1:8000/w107_128.mp3",
@@ -107,7 +107,7 @@
   },
   "wack": {
     "title": "Wack Radio (San Fernando)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.wackradio901fm.com/",
     "cros": true,
     "stream": "http://node-13.zeno.fm:80/n3vg32ukh0quv",
@@ -142,7 +142,7 @@
   },
   "hott": {
     "title": "Hott (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.hott93.com/",
     "cros": true,
     "stream": "https://ice41.securenetsystems.net:80/HOTT93",
@@ -160,7 +160,7 @@
   },
   "more": {
     "title": "More FM (Scarborough)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "https://stream.radio.co:80/se599d8fd9/listen",
@@ -168,7 +168,7 @@
   },
   "isaac": {
     "title": "Isaac (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://familyfocusbroadcasting.com/",
     "cros": true,
     "stream": "https://ice66.securenetsystems.net:80/FFBN",
@@ -177,7 +177,7 @@
   },
   "power": {
     "title": "Power 102 (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://power102fm.com/",
     "cros": true,
     "stream": "https://s8.yesstreaming.net:7169/stream",
@@ -186,7 +186,7 @@
   },
   "music": {
     "title": "Music Radio (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.musicradio97.com/",
     "cros": true,
     "stream": "https://ice42.securenetsystems.net:80/MR97",
@@ -195,7 +195,7 @@
   },
   "enfx": {
     "title": "ENFX Radio Trinidad (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://enfxradio.com/",
     "cros": false,
     "stream": "https://enfxradio.radioca.st/stream/1/",
@@ -204,7 +204,7 @@
   },
   "i95-5-fm": {
     "title": "i95.5 FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://i955fm.com/",
     "cros": true,
     "stream": "http://104.238.99.1:8000/i955fm.mp3",
@@ -213,7 +213,7 @@
   },
   "90fm": {
     "title": "Radio 90.5 FM (Saint Clair)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radio90fm.com/",
     "cros": true,
     "stream": "https://ice42.securenetsystems.net:80/CR90",
@@ -222,7 +222,7 @@
   },
   "tambrin": {
     "title": "Radio Tambrin (Scarborough)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.tambrintobago.com/",
     "cros": true,
     "stream": "https://ice42.securenetsystems.net:80/TAMBRIN",
@@ -240,7 +240,7 @@
   },
   "heartbeat": {
     "title": "Heartbeat (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://heartbeatradiott.com/",
     "cros": true,
     "stream": "https://ice42.securenetsystems.net:80/CLCL",
@@ -249,7 +249,7 @@
   },
   "next": {
     "title": "Next 99 FM (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.next99fm.com/",
     "cros": true,
     "stream": "http://media.streambrothers.com:18442/stream",
@@ -258,7 +258,7 @@
   },
   "talk": {
     "title": "Talk City (Tabago)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.talkcity91fm.com",
     "cros": true,
     "stream": "http://media.streambrothers.com:18450/stream",
@@ -267,7 +267,7 @@
   },
   "omg-hits": {
     "title": "OMG Hits Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "https://streaming.radio.co:80/s3928a1fef/listen",
@@ -276,7 +276,7 @@
   },
   "taj": {
     "title": "Taj",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "https://ice66.securenetsystems.net:80/TAJ",
@@ -285,7 +285,7 @@
   },
   "soca": {
     "title": "Soca Switch Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://socaswitchradio.com/",
     "cros": true,
     "stream": "https://stream.zenolive.com/r65746h1wxquv.aac",
@@ -294,7 +294,7 @@
   },
   "phun": {
     "title": "Phun Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://185.105.4.50:8414/stream/1/",
@@ -303,7 +303,7 @@
   },
   "storm-hd-valencia": {
     "title": "Storm HD Radio (Valencia)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://5.189.142.165:8385/stream/1/",
@@ -312,7 +312,7 @@
   },
   "4-elements": {
     "title": "4 Elements Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.4elementsradio.com/",
     "cros": true,
     "stream": "http://orion.shoutca.st:8537/stream/1/",
@@ -321,7 +321,7 @@
   },
   "2-much": {
     "title": "2 Much Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://2muchradio.com/",
     "cros": true,
     "stream": "http://rosetta.shoutca.st:8667/stream",
@@ -330,7 +330,7 @@
   },
   "fully-catholic": {
     "title": "Fully Catholic Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.fullycatholic.com/",
     "cros": true,
     "stream": "http://198.50.238.178:5344/stream/1/",
@@ -339,7 +339,7 @@
   },
   "street": {
     "title": "The Street (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://freeuk21.listen2myradio.com:25423/;",
@@ -347,7 +347,7 @@
   },
   "woods": {
     "title": "Woods Hit Radio (Port of Spain)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://woodsnetworkac.webs.com/",
     "cros": true,
     "stream": "http://node-16.zeno.fm:80/2f33725t4mzuv",
@@ -356,7 +356,7 @@
   },
   "pure-97-7": {
     "title": "Pure",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://freeuk29.listen2myradio.com:32847/;",
@@ -373,7 +373,7 @@
   },
   "u97-5fm": {
     "title": "U97.5FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://975radio.com/",
     "cros": true,
     "stream": "https://c17.radioboss.fm:18165/stream",

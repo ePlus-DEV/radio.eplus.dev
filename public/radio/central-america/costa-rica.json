@@ -54,7 +54,7 @@
   },
   "fides-san-jose": {
     "title": "Radio Fides (San José)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiofides.co.cr",
     "cros": false,
     "stream": "https://centova.hostingtico.com:7010/stream/1/",
@@ -98,7 +98,7 @@
   },
   "vox-fm-105-5": {
     "title": "VOX FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.voxradio.fm/",
     "cros": false,
     "stream": "https://centova.hostingtico.com:7072/stream/1/",
@@ -168,7 +168,7 @@
   },
   "la-caliente": {
     "title": "La Caliente",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.multimedios.com/radio/programas/la-caliente-907-fm-costa-rica",
     "cros": false,
     "stream": "https://26603.live.streamtheworld.com/QTEJA_CRAAC_SC",
@@ -213,7 +213,7 @@
   },
   "iq-radio": {
     "title": "Radio IQ (San José)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.iqmedios.com/",
     "cros": true,
     "stream": "http://centova.hostingtico.com:9942/stream/1/",
@@ -256,7 +256,7 @@
   },
   "stereo": {
     "title": "Radio 88 Stereo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.88stereo.com/",
     "cros": true,
     "stream": "https://stream.zeno.fm/q7s0apzt1p8uv",
@@ -272,7 +272,7 @@
   },
   "actual": {
     "title": "Radio Actual",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.radioactualfm.com/",
     "cros": true,
     "stream": "http://216.75.41.16:8070/live",
@@ -281,7 +281,7 @@
   },
   "colosal": {
     "title": "Colosal",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.colosalstereo.com",
     "cros": true,
     "stream": "https://stream.zeno.fm/pp8f79bu44zuv",
@@ -325,7 +325,7 @@
   },
   "onda": {
     "title": "Onda Brava (Liberia)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://ondabravaradio.com/",
     "cros": true,
     "stream": "http://ca.radioboss.fm:8221/stream/1/",

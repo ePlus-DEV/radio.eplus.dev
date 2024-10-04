@@ -1,7 +1,7 @@
 {
   "zip": {
     "title": "Zip FM (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://zipfm.net/",
     "cros": true,
     "stream": "https://stream.zenolive.com/8b0hqm93yceuv",
@@ -11,7 +11,7 @@
   },
   "love-101": {
     "title": "Love 101 FM (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://love101.org/",
     "cros": true,
     "stream": "http://node-16.zeno.fm:80/y6g5utrtpy5tv",
@@ -20,7 +20,7 @@
   },
   "fame": {
     "title": "Fame FM (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.fame95fm.com/",
     "cros": true,
     "stream": "http://node-14.zeno.fm:80/d5mn12bchkeuv",
@@ -29,7 +29,7 @@
   },
   "power-106": {
     "title": "Power FM (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://go-jamaica.com/power/",
     "cros": true,
     "stream": "http://node-10.zeno.fm:80/kke12ee08wquv",
@@ -38,7 +38,7 @@
   },
   "mello": {
     "title": "Mello Radio (Montego Bay)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://zeno.fm/radio/mello-fm8vphgd7myfeuv/",
     "cros": true,
     "stream": "http://peridot.streamguys.com:5660/live",
@@ -47,7 +47,7 @@
   },
   "radio-jamaica": {
     "title": "Radio Jamaica",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://rjr94fm.com/",
     "cros": true,
     "stream": "http://node-07.zeno.fm:80/ebqnzkvyv9duv",
@@ -91,7 +91,7 @@
   },
   "ja": {
     "title": "Jaradio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://node-11.zeno.fm:80/a0g20s5hyfeuv",
@@ -99,7 +99,7 @@
   },
   "ncu": {
     "title": "NCU Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://ncu.fm/",
     "cros": true,
     "stream": "http://node-21.zeno.fm:80/n8fydg9gwuquv",
@@ -117,7 +117,7 @@
   },
   "klas-sport": {
     "title": "KLAS Sports Radio (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.klassportsradio.com/",
     "cros": true,
     "stream": "http://node-20.zeno.fm:80/4uw093pbyvduv",
@@ -126,7 +126,7 @@
   },
   "tbc": {
     "title": "TBC Radio (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://tbcradio.org/",
     "cros": false,
     "stream": "https://live.wostreaming.net/direct/tbcradio-tbcradioaac-ibc1",
@@ -143,7 +143,7 @@
   },
   "hitz": {
     "title": "Hitz 92 (Kingston)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://radiohitz92fm.com/",
     "cros": true,
     "stream": "http://node-06.zeno.fm:80/mbng1nnyxrquv",
@@ -151,7 +151,7 @@
   },
   "newstalk": {
     "title": "Newstalk",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://newstalk93fm.net/",
     "cros": true,
     "stream": "https://newstalk93fm.radioca.st/stream/1/",
@@ -159,7 +159,7 @@
   },
   "tun-it-up": {
     "title": "Tun-it-up Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://tunitup.com/",
     "cros": true,
     "stream": "https://tunitup2020.radioca.st/stream/1/",
@@ -168,7 +168,7 @@
   },
   "yfdv-reggae": {
     "title": "UFDV Reggae Airways Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://ufdvradio.com/",
     "cros": true,
     "stream": "http://us10a.serverse.com:8031/stream",
@@ -177,7 +177,7 @@
   },
   "talk-jamaica": {
     "title": "Talk Jamaica Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "https://stream.radio.co/s865966bbf/listen",
@@ -186,7 +186,7 @@
   },
   "jamaican-roots": {
     "title": "Jamaican Roots Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://node-01.zeno.fm:80/bfkd9wv4p0quv",
@@ -212,7 +212,7 @@
   },
   "ufdv": {
     "title": "UFDV Gospel Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://ufdvgospel.com/",
     "cros": true,
     "stream": "http://us10a.serverse.com:8145/stream",
@@ -246,7 +246,7 @@
   },
   "praise": {
     "title": "Praise Hymn Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.praisehymnradio.com/",
     "cros": true,
     "stream": "http://s2.voscast.com:8916/stream/1/",
@@ -255,7 +255,7 @@
   },
   "wblr-97-5-biglink": {
     "title": "WBLR Biglink Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://biglinkradio.webs.com/",
     "cros": true,
     "stream": "http://node-08.zeno.fm:80/kr7qn188urquv",
@@ -272,7 +272,7 @@
   },
   "gospelfm": {
     "title": "Gospel FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.gospelfmjamaica.com/",
     "cros": true,
     "stream": "http://node-12.zeno.fm:80/zpksre88rm0uv",
@@ -281,7 +281,7 @@
   },
   "five-star": {
     "title": "Five Star FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.fivestarfmradio.com/",
     "cros": true,
     "stream": "http://s7.citrus3.com:8128/stream",
@@ -290,7 +290,7 @@
   },
   "zanj": {
     "title": "Zanj Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.zanj.org/",
     "cros": true,
     "stream": "http://node-06.zeno.fm:80/yx5d62e3wy5tv",
@@ -315,7 +315,7 @@
   },
   "bess": {
     "title": "Bes' 100 FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://bessfm.com/",
     "cros": true,
     "stream": "http://streaming510.radionomy.com:80/bes-100-fm",
@@ -323,7 +323,7 @@
   },
   "jam-rock-one": {
     "title": "Jam Rock One Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.jamrockone.com/",
     "cros": false,
     "stream": "https://jroradio.com:8000/stream/1/",
@@ -341,7 +341,7 @@
   },
   "fit": {
     "title": "Fit FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.fitfmja.com/",
     "cros": false,
     "stream": "https://studio25.radiolize.com/radio/8040/radio.mp3",

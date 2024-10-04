@@ -150,7 +150,7 @@
     },
     "antenne-vorarlberg": {
         "title": "Antenne (Vorarlberg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antennevorarlberg.at/",
         "cros": false,
         "stream": "https://edge61.radio.antennevorarlberg.at/av-live",
@@ -255,7 +255,7 @@
     },
     "antenne-tirol": {
         "title": "Antenne (Tirol)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antennetirol.at/",
         "cros": false,
         "stream": "https://frontend.streamonkey.net/anttirol-live?aggregator=radios-co-at",
@@ -274,7 +274,7 @@
     },
     "life": {
         "title": "Life Radio Tirol",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.liferadio.tirol/",
         "cros": false,
         "stream": "https://stream.liferadio.tirol/live/aac-128/radios.co.at",
@@ -330,7 +330,7 @@
     },
     "alpina": {
         "title": "Radio Alpina",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://ice09.fluidstream.net/alpina.aac",
@@ -360,7 +360,7 @@
     },
     "freequenns": {
         "title": "Radio Freequenns",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.freequenns.at",
         "cros": false,
         "stream": "https://www.freequenns.at/live",

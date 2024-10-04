@@ -32,7 +32,7 @@
   },
   "eazy-fm": {
     "title": "Eazy FM (Bangkok)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "105.5 FM",
     "url": "https://eazyfm.teroradio.com/",
     "cros": false,
@@ -69,7 +69,7 @@
   },
   "virginhitz": {
     "title": "HITZ",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "95.5 FM",
     "url": "https://hitz955.teroradio.com/",
     "cros": false,
@@ -79,7 +79,7 @@
   },
   "chill": {
     "title": "Chill",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "89.0 FM",
     "url": "https://chillfm.fm/",
     "cros": false,
@@ -88,7 +88,7 @@
   },
   "big": {
     "title": "Big FM (Bangkok)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "102.8 FM",
     "url": "http://www.bigfm.fm/",
     "cros": false,
@@ -97,7 +97,7 @@
   },
   "mcot": {
     "title": "Mcot Radio FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "100.5 FM",
     "url": "https://news1005.mcot.net/",
     "cros": true,
@@ -374,7 +374,7 @@
   },
   "chill-89": {
     "title": "Chill 89 FM (Bangkok)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "89.0 FM",
     "url": "https://chill.atimeonline.com/",
     "cros": true,
@@ -383,7 +383,7 @@
   },
   "fm-105": {
     "title": "Radio Thailand FM 105.00",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "105.0 FM",
     "url": "https://nbt.prd.go.th/",
     "cros": true,
@@ -393,7 +393,7 @@
   },
   "capitol-fm-bangkok": {
     "title": "Capitol FM (Bangkok)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.capitol.fm/",
     "cros": true,

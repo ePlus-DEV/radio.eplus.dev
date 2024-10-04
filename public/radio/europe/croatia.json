@@ -11,7 +11,7 @@
     },
     "bravo": {
         "title": "bravo!",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bravo.hr/",
         "cros": true,
         "stream": "http://c5.hostingcentar.com:8059/stream/1/",
@@ -20,7 +20,7 @@
     },
     "otvoreni": {
         "title": "Otvoreni Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.otvoreni.hr/",
         "cros": false,
         "stream": "https://stream.otvoreni.hr/stream48",
@@ -38,7 +38,7 @@
     },
     "max": {
         "title": "Radio Max",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomax.hr/",
         "cros": false,
         "stream": "https://azuracast.novi-net.net/radio/8010/radiomax.aac",
@@ -47,7 +47,7 @@
     },
     "antena-zagreb": {
         "title": "Antena Zagreb",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.antenazagreb.hr/",
         "cros": true,
         "stream": "http://live.antenazagreb.hr:8000/stream/1/",
@@ -83,7 +83,7 @@
     },
     "sljeme": {
         "title": "Radio Sljeme",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio.hrt.hr/radio-sljeme",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/SLJEMEAAC_SC",
@@ -92,7 +92,7 @@
     },
     "dalmacija": {
         "title": "Radio Dalmacija",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiodalmacija.hr/",
         "cros": true,
         "stream": "http://shoutcast.pondi.hr:8000/stream/1/",
@@ -101,7 +101,7 @@
     },
     "105": {
         "title": "Radio105",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio105.hr/",
         "cros": false,
         "stream": "https://azuracast.novi-net.net/radio/8050/radio105.aac",
@@ -128,7 +128,7 @@
     },
     "kaj": {
         "title": "Radio Kaj",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://kaj.hr/",
         "cros": true,
         "stream": "http://s8.iqstreaming.com:8050/stream/1/",
@@ -137,7 +137,7 @@
     },
     "hr-r-split": {
         "title": "HR R Split",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio.hrt.hr/radio-split/",
         "cros": false,
         "stream": "https://www.myipcast.com/radio/split",
@@ -146,7 +146,7 @@
     },
     "marija": {
         "title": "Radio Marija",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomarija.hr/",
         "cros": true,
         "stream": "http://dreamsiteradiocp.com:8026/stream/1/",
@@ -182,7 +182,7 @@
     },
     "centar": {
         "title": "Radio Centar",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiocentar.hr",
         "cros": false,
         "stream": "https://radiocentar.hr:8282/stream.aac",
@@ -209,7 +209,7 @@
     },
     "jedan": {
         "title": "Radio 1",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio1.hr/",
         "cros": false,
         "stream": "https://azuracast.novi-net.net/radio/8020/radio1.aac",
@@ -218,7 +218,7 @@
     },
     "studio-m": {
         "title": "Radio Studio M",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.studiom.hr/",
         "cros": false,
         "stream": "https://azuracast.novi-net.net/radio/8040/studiom.aac",
@@ -245,7 +245,7 @@
     },
     "istra": {
         "title": "Radio Istra",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioistra.hr/",
         "cros": false,
         "stream": "https://uk1.streamingpulse.com/ssl/RadioIstra",
@@ -254,7 +254,7 @@
     },
     "student": {
         "title": "Radio Student",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.radiostudent.hr/",
         "cros": true,
         "stream": "http://161.53.122.184:8000/AAC128.aac",
@@ -280,7 +280,7 @@
     },
     "dunav": {
         "title": "Radio Dunav",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio-dunav.com/",
         "cros": true,
         "stream": "http://cp8.shoutcheap.com:8203/stream/1/",
@@ -288,7 +288,7 @@
     },
     "gold": {
         "title": "Gold",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://goldfm.hr/",
         "cros": true,
         "stream": "http://c5.hostingcentar.com:8068/stream/1/",
@@ -306,7 +306,7 @@
     },
     "gradski-trogir": {
         "title": "Gradski Radio Trogir",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://trogirskiportal.hr/radio_trogir/",
         "cros": true,
         "stream": "http://144.76.39.214:6022/stream/1/",

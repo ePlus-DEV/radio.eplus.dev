@@ -5,7 +5,7 @@
       :area="Array.isArray(area) ? area[0] : area"
       :level_1="i18n"
       :level_1_slug="Array.isArray(slug) ? slug[0] : slug"
-      :level_2="name"
+      :level_2="streamName"
     />
     <!-- END - Breadcrumbs -->
 
@@ -90,6 +90,7 @@
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import type { AudioSrc, AudioMimeType } from "vidstack";
 const router = useRouter();
 const route = useRoute();
 const { t } = useI18n();
@@ -119,7 +120,7 @@ interface Track {
 }
 
 useHead({
-  title: title.value as unknown as string,
+  title: title.value,
 });
 
 const data = ref<Track[]>([]);
@@ -128,7 +129,7 @@ const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
 const timezone = ref("Asia/Ho_Chi_Minh");
-import type { AudioSrc, AudioMimeType } from "vidstack";
+
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
 /**
@@ -143,24 +144,24 @@ const fetchData = async () => {
       Object.prototype.hasOwnProperty.call(responseData, route.params.station)
     ) {
       const data = responseData[route.params.station];
-
-      name.value = data.title;
       streamName.value = data.title;
       streamUrl.value = {
         src: data.cros
-          ? `${data.public.corsServer}${data.stream}`
+          ? `${config.public.corsServer}${data.stream}`
           : data.stream,
         type: data.type as AudioMimeType,
       };
+
+      document.title = `${streamName.value} - ${title.value}`;
 
       if (data.schedule !== undefined) {
         fetchSchedule(data.schedule);
       }
     } else {
-      // await router.push("/");
+      await router.push("/");
     }
   } catch (error) {
-    // await router.push(`/${area.value}/${slug.value}`);
+    await router.push(`/${area.value}/${slug.value}`);
   }
 };
 
@@ -175,18 +176,21 @@ const fetchSchedule = async (url: string) => {
     };
 
     if (resDataValue.err === 0 && slug.value === "viet-nam") {
+      document.title = `${streamName.value} - ${title.value}`;
       program.value = resDataValue.data.items as ProgramItem[];
       // Fetch the current song data from the first program item
+      const firstProgramItem = resDataValue.data.items[0];
       fetchSong(
-        `${config.public.apiZingLiveStreamProgramDetail}${(resData.value as { data: { items: ProgramItem[] } }).data.items[0].encodeId}&time=`,
+        `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
-      if ((resData.value as { success: boolean }).success) {
+      const resDataSuccess = resData.value as { success: boolean };
+      if (resDataSuccess.success) {
         data.value = (resData.value as { result: Track[] }).result;
       }
-      document.title = title.value ?? "";
       if (data.value.length > 0) {
-        document.title = `${data.value[0].track_title} - ${data.value[0].track_artist} | ${title.value}`;
+        const firstTrack = data.value[0];
+        document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
       }
     }
     if (polling_schedule.value !== null) {
