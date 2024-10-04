@@ -21,7 +21,7 @@
     },
     "talk-702": {
         "title": "702 Talk Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.primediaplus.com/station/702/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/FM702AAC_SC",
@@ -71,7 +71,7 @@
     },
     "mix": {
         "title": "Mix FM (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://mixfm.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/113_medium.aac",
@@ -121,7 +121,7 @@
     },
     "ccfm": {
         "title": "CCFM (Cape Town)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ccfm.org.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/69_medium.aac",
@@ -151,7 +151,7 @@
     },
     "rosestad-bloemfontein": {
         "title": "Radio Rosestad (Bloemfontein)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://rosestad.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/122_medium.aac",
@@ -161,7 +161,7 @@
     },
     "coast-durban": {
         "title": "East Coast Radio (Durban)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ecr.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/ecr_live_medium.aac",
@@ -181,7 +181,7 @@
     },
     "motsweding-johannesburg": {
         "title": "Motsweding (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.motswedingfm.co.za/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/MOTSWEDINGAAC_SC",
@@ -190,7 +190,7 @@
     },
     "classic": {
         "title": "Classic FM (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/49_medium.aac",
@@ -200,7 +200,7 @@
     },
     "kaya": {
         "title": "Kaya",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.kaya959.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/82_high.aac",
@@ -239,7 +239,7 @@
     },
     "tygerberg-cape-town": {
         "title": "Radio Tygerberg (Cape Town)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.104fm.co.za/",
         "cros": false,
         "stream": "https://zas6.ndx.co.za:8007/stream/1/",
@@ -249,7 +249,7 @@
     },
     "radio-2000": {
         "title": "Radio 2000",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio2000.co.za/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO2000AAC_SC",
@@ -269,7 +269,7 @@
     },
     "lotus": {
         "title": "Lotus FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.lotusfm.co.za/sabc/home/lotusfm",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOTUSFMAAC_SC",
@@ -279,7 +279,7 @@
     },
     "lesedi": {
         "title": "Lesedi (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.lesedifm.co.za/sabc/home/lesedifm",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LESEDIAAC_SC",
@@ -288,7 +288,7 @@
     },
     "bush": {
         "title": "Bush Radio (Cape Town)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bushradio.wpcomstaging.com/",
         "cros": false,
         "stream": "https://zas4.ndx.co.za:9100/stream",
@@ -298,7 +298,7 @@
     },
     "algoa": {
         "title": "Algoa FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.algoafm.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/54_medium.aac",
@@ -307,7 +307,7 @@
     },
     "ligwalagwala": {
         "title": "Ligwalagwala (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.ligwalagwalafm.co.za/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LIGWALAGWALAAAC_SC",
@@ -317,7 +317,7 @@
     },
     "ofm": {
         "title": "OFM 94 97",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ofm.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/ofm_live_high.aac",
@@ -326,7 +326,7 @@
     },
     "ukhozi-durban": {
         "title": "Ukhozi FM (Durban)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ukhozifm.co.za/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/UKHOZIFMAAC_SC",
@@ -336,7 +336,7 @@
     },
     "munghana-johannesburg": {
         "title": "Munghana Lonene FM (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.munghanalonenefm.co.za/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/MUNGANALONENEAAC_SC",
@@ -346,7 +346,7 @@
     },
     "mfm": {
         "title": "MFM (Cape Town)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://mfm.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/46_medium.aac",
@@ -355,7 +355,7 @@
     },
     "veritas": {
         "title": "Radio Veritas",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radioveritas.co.za/",
         "cros": false,
         "stream": "https://zas5.ndx.co.za:9618/stream",
@@ -365,7 +365,7 @@
     },
     "kansel": {
         "title": "Radio Pulpit Kansel (Pretoria)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiopulpit.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/189_medium.aac",
@@ -383,7 +383,7 @@
     },
     "chai": {
         "title": "Chai FM (Johannesburg)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.chaifm.com/",
         "cros": false,
         "stream": "https://zas1.ndx.co.za:8008/stream",
@@ -402,7 +402,7 @@
     },
     "vuma": {
         "title": "Vuma FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://vumafm.co.za/",
         "cros": false,
         "stream": "https://edge.iono.fm/xice/77_medium.aac?p=embed",

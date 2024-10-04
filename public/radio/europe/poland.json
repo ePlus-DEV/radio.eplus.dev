@@ -1,7 +1,7 @@
 {
     "zet": {
         "title": "Radio Zet",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiozet.pl/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_ZETAAC_SC",
@@ -20,7 +20,7 @@
     },
     "rmf": {
         "title": "Radio RMF",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rmf.fm/",
         "cros": false,
         "stream": "https://rs9-krk2-cyfronet.rmfstream.pl/RMFFM48",
@@ -50,7 +50,7 @@
     },
     "maryja": {
         "title": "Radio Maryja",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomaryja.pl/",
         "cros": false,
         "stream": "https://radiomaryja.fastcast4u.com/proxy/radiomaryja?mp=/stream/1/",
@@ -60,7 +60,7 @@
     },
     "tylko-polskie": {
         "title": "Tylko Polskie Przeboje",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://open.fm/",
         "cros": false,
         "stream": "https://stream.open.fm/111",
@@ -88,7 +88,7 @@
     },
     "maxxx-wroclaw": {
         "title": "Radio RMF MAXXX (Wrocław)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rmfmaxxx.pl/",
         "cros": false,
         "stream": "https://rs102-krk-cyfronet.rmfstream.pl/RMFMAXXX48",
@@ -136,7 +136,7 @@
     },
     "opole": {
         "title": "Radio Opole FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radio.opole.pl/",
         "cros": true,
         "stream": "http://dab.radio.opole.pl:8070/1",
@@ -166,7 +166,7 @@
     },
     "kolor": {
         "title": "Radio Kolor",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiokolor.pl/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/zbq79057xd3vv",
@@ -324,7 +324,7 @@
     },
     "rekord-radom": {
         "title": "Radio Rekord (Radom)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiorekord.pl/",
         "cros": false,
         "stream": "https://stream3.nadaje.com:8007/radom2",
@@ -364,7 +364,7 @@
     },
     "fara": {
         "title": "Radio Fara (Przemyśl)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sluchaj.radiofara.pl/",
         "cros": true,
         "stream": "http://62.133.128.22:8000/stream/1/",

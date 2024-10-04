@@ -1,7 +1,7 @@
 {
     "sfera": {
         "title": "Radio Sfera",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://sfera.gr/",
         "cros": false,
         "stream": "https://sfera.live24.gr/sfera4132",
@@ -11,7 +11,7 @@
     },
     "derti-fm": {
         "title": "Derti",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://derti.live24.gr/derty1000",
@@ -19,7 +19,7 @@
     },
     "athens-deejay": {
         "title": "Athens Deejay",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.athensdeejay.gr/",
         "cros": false,
         "stream": "https://az10.yesstreaming.net:8140/radio.mp3",
@@ -62,7 +62,7 @@
     },
     "kalamaria-fm": {
         "title": "Καλαμαριά FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://ice.greekstream.net/focusfm_128",
@@ -70,7 +70,7 @@
     },
     "en-lefko": {
         "title": "En Lefko",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.enlefko.fm/",
         "cros": false,
         "stream": "https://stream.radiojar.com/enlefko877",
@@ -88,7 +88,7 @@
     },
     "diesi-fm": {
         "title": "δίεση FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://diesi.gr/",
         "cros": false,
         "stream": "https://n14a-eu.rcs.revma.com/gkfwrhqxbfhvv",
@@ -97,7 +97,7 @@
     },
     "melodia-fm": {
         "title": "Μελωδία",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.melodia.gr/",
         "cros": false,
         "stream": "https://n02a-eu.rcs.revma.com/8tdwa6ez1duvv",
@@ -130,7 +130,7 @@
     },
     "dromos-fm": {
         "title": "Δρόμος",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.dromosfm.gr/",
         "cros": false,
         "stream": "https://n23a-eu.rcs.revma.com/10q3enqxbfhvv",
@@ -148,7 +148,7 @@
     },
     "ellinadiko-fm": {
         "title": "Ελληνάδικο FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://ellinadikofm.gr/",
         "cros": false,
         "stream": "https://kazura.site:8000/radio.mp3",
@@ -184,7 +184,7 @@
     },
     "red-fm": {
         "title": "Red",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.redfm.gr/",
         "cros": false,
         "stream": "https://stream.radiojar.com/redfm963",
@@ -228,7 +228,7 @@
     },
     "hot-fm-104-6": {
         "title": "Hot FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://hotfm.live24.gr/hotfm",
@@ -290,7 +290,7 @@
     },
     "mad": {
         "title": "Mad Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://mad.gr/mad-radio/",
         "cros": true,
         "stream": "http://mediaserver.mad.tv/stream",

@@ -29,7 +29,7 @@
     },
     "hcjb": {
         "title": "Radio HCJB (Quito)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://hcjb.org/",
         "cros": false,
         "stream": "https://streamingecuador.net:8287/hcjb",
@@ -38,7 +38,7 @@
     },
     "la-voz-cuenca": {
         "title": "La Voz del Tomebamba (Cuenca)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lavozdeltomebamba.com/",
         "cros": false,
         "stream": "https://streamingecuador.com:8074/lavozdeltomebamba",
@@ -47,7 +47,7 @@
     },
     "diblu": {
         "title": "Diblu FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://diblu.ec/",
         "cros": false,
         "stream": "https://streamingecuador.net:9002/stream",
@@ -81,7 +81,7 @@
     },
     "canela": {
         "title": "Radio Canela",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://web.canelaradio.com/",
         "cros": false,
         "stream": "https://streamingecuador.com:9280/stream",
@@ -90,7 +90,7 @@
     },
     "otra-guayaquil": {
         "title": "La Otra FM (Guayaquil)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://web.laotrafm.com/",
         "cros": false,
         "stream": "https://laotrafm.makrodigital.com:9590/stream",
@@ -116,7 +116,7 @@
     },
     "centro-977": {
         "title": "Radio Centro",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://centroecuador.ec/",
         "cros": false,
         "stream": "https://sonicpanel.zonahost.in/8792/stream/1/",
@@ -141,7 +141,7 @@
     },
     "sucre": {
         "title": "Radio Sucre (Guayaquil)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiosucre.com.ec/",
         "cros": false,
         "stream": "https://streamingecuador.net:8076/radiosucre",
@@ -175,7 +175,7 @@
     },
     "caravana-carchi": {
         "title": "Radio Caravana (Carchi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiocaravana.com/",
         "cros": false,
         "stream": "https://streamingecuador.net:9006/stream",
@@ -201,7 +201,7 @@
     },
     "k1": {
         "title": "Radio K1 (Cuenca)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiok1.com/",
         "cros": false,
         "stream": "https://streamingecuador.com:8000/radiok1",
@@ -210,7 +210,7 @@
     },
     "sonorama": {
         "title": "Sonorama FM (Quito)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.sonorama.com.ec/",
         "cros": false,
         "stream": "https://streamingecuador.net:7013/stream",
@@ -218,7 +218,7 @@
     },
     "huancavilca-guayaquil": {
         "title": "Radio Huancavilca (Guayaquil)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiohuancavilca.com.ec/",
         "cros": false,
         "stream": "https://streamingecuador.net:7078/stream",
@@ -226,7 +226,7 @@
     },
     "radioactiva-cuenca": {
         "title": "Radioactiva (Cuenca)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioactiva.ec/",
         "cros": true,
         "stream": "http://dattavolt.com:8394/stream",
@@ -270,7 +270,7 @@
     },
     "rumba-guayaquil": {
         "title": "Radio Rumba Network FM (Guayaquil)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiorumba.fm/",
         "cros": false,
         "stream": "https://streamingecuador.net:8078/radiorumbanetwork",
@@ -304,7 +304,7 @@
     },
     "complice-fm-cuenca": {
         "title": "Radio Cómplice (Cuenca)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.complicefm.com/",
         "cros": true,
         "stream": "http://dattavolt.com:8422/stream",
@@ -312,7 +312,7 @@
     },
     "platinum": {
         "title": "Radio Platinum (Quito)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ecuadoradio.ec/",
         "cros": false,
         "stream": "https://streamingecuador.com:8160/radioplatinum",
@@ -321,7 +321,7 @@
     },
     "quito": {
         "title": "Radio Quito",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ecuadoradio.ec/horarios-radio-quito",
         "cros": false,
         "stream": "https://streamingecuador.net:8332/radioquito",
@@ -329,7 +329,7 @@
     },
     "andina": {
         "title": "Radio Andina",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radioandinariobamba.com/",
         "cros": false,
         "stream": "https://grupomundodigital.com:8580/stream",
@@ -362,7 +362,7 @@
     },
     "morena": {
         "title": "Radio Morena (Guayaquil)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiomorena640.com/",
         "cros": false,
         "stream": "https://www.mistr3m.com:2020/stream/radiomorena",

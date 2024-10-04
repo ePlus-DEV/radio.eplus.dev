@@ -28,7 +28,7 @@
   },
   "grupo-centro": {
     "title": "Grupo Centro (Cochabamba)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://grupocentro.com.bo/",
     "cros": false,
     "stream": "https://radio.yoemito.net:8004/stream",
@@ -46,7 +46,7 @@
   },
   "melodia-la-paz": {
     "title": "Radio Melodía (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiomelodia.fm/",
     "cros": true,
     "stream": "http://stream.consultoradas.com:8194/stream/1/",
@@ -55,7 +55,7 @@
   },
   "radio-disney": {
     "title": "Radio Disney (Bolivia)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://bo.radiodisney.com/",
     "cros": false,
     "stream": "https://22823.live.streamtheworld.com/DISNEY_BOL_SCAAC_SC",
@@ -64,7 +64,7 @@
   },
   "stereo-la-paz": {
     "title": "Radio Stereo (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.stereo97.fm/",
     "cros": false,
     "stream": "https://stream.consultoradas.com/8104/stream/1/",
@@ -89,7 +89,7 @@
   },
   "ciudad": {
     "title": "Radio Ciudad",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://ciudad91.net/",
     "cros": true,
     "stream": "http://streamingenbolivia.com:8002/stream/1/",
@@ -107,7 +107,7 @@
   },
   "fmbolivia": {
     "title": "FM Bolivia (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmbolivia.com.bo/",
     "cros": false,
     "stream": "https://stm11.xcast.com.br:11300/stream/1/",
@@ -124,7 +124,7 @@
   },
   "aclo-potosi": {
     "title": "Radio Aclo (Chuquisaca)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.aclo.org.bo/",
     "cros": true,
     "stream": "http://cloudstream2030.conectarhosting.com:8192/stream/1/",
@@ -133,7 +133,7 @@
   },
   "clasica-cochabamba": {
     "title": "Radio Clásica FM (Cochabamba)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radioclasica100.com/",
     "cros": false,
     "stream": "https://live.turadiotv.com/9976/stream/1/",
@@ -142,7 +142,7 @@
   },
   "estelar-fm-92-5": {
     "title": "Estelar",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.estelarfm.com/",
     "cros": false,
     "stream": "https://turadioweb.net:8370/radio",
@@ -151,7 +151,7 @@
   },
   "kollasuyo": {
     "title": "Radio Kollasuyo (Potosí)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiokollasuyo.bo/",
     "cros": false,
     "stream": "https://azura2.bitstreaming.net:8000/radio128.aac",
@@ -178,7 +178,7 @@
   },
   "maria-bolivia": {
     "title": "Radio María (Bolivia)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiomaria.org.bo/",
     "cros": false,
     "stream": "https://dreamsiteradiocp6.com/proxy/rmbolivia?mp=/stream/1/",
@@ -186,7 +186,7 @@
   },
   "guadalquivir-tarija": {
     "title": "Radio Guadalquivir (Tarija)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://turadio.accesopanel.com:8120/stream/1/",
@@ -212,7 +212,7 @@
   },
   "camargo-bolivia": {
     "title": "Radio Camargo (Bolivia)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiocamargo.com.bo/",
     "cros": false,
     "stream": "https://player.xcast.com.br/proxy/11646/stream/1/",
@@ -237,7 +237,7 @@
   },
   "san-gabriel-el-alto": {
     "title": "Radio San Gabriel (El Alto)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiosangabriel.org.bo/rsg/",
     "cros": false,
     "stream": "https://spanel.gcomstreaming.com:7004/stream/1/",
@@ -245,7 +245,7 @@
   },
   "la-bruja": {
     "title": "Radio La Bruja FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.labrujafm.com/",
     "cros": false,
     "stream": "https://stream.zeno.fm/4bm88fecs7zuv",
@@ -253,7 +253,7 @@
   },
   "majestad": {
     "title": "Radio Majestad (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.majestadfm.com/",
     "cros": false,
     "stream": "https://stream.zeno.fm/qvqzs5zetwzuv",
@@ -261,7 +261,7 @@
   },
   "uno": {
     "title": "Radio Uno",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiounobolivia.com/",
     "cros": true,
     "stream": "http://radio.livestreamingmundial.com:8016/stream/1/",
@@ -269,7 +269,7 @@
   },
   "splendid-la-paz": {
     "title": "Radio Splendid (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiosplendid.bo/",
     "cros": true,
     "stream": "http://spanel.gcomstreaming.com:8032/stream/1/",
@@ -278,7 +278,7 @@
   },
   "el-sonido-de-la-vida-la-paz": {
     "title": "Radio El Sonido de la Vida (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.sccbolivia.com/",
     "cros": true,
     "stream": "http://cloudstream2032.conectarhosting.com:9580/stream/1/",
@@ -296,7 +296,7 @@
   },
   "ambana": {
     "title": "Radio Ambaná",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": false,
     "stream": "https://s02.transmissaodigital.com:7354/stream/1/",
@@ -313,7 +313,7 @@
   },
   "deseo-la-paz": {
     "title": "Radio Deseo (La Paz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiodeseo.com/",
     "cros": true,
     "stream": "http://conectperu.com:8396/stream/1/",
@@ -338,7 +338,7 @@
   },
   "rkc-shinahota": {
     "title": "RKC (Cochabamba)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://kawsachuncoca.com/",
     "cros": false,
     "stream": "https://radio.yoemito.net:8006/stream",
@@ -346,7 +346,7 @@
   },
   "hit-santa-cruz": {
     "title": "Radio Hit (Santa Cruz)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmhit99.com/",
     "cros": true,
     "stream": "http://turadio.accesopanel.com:8040/stream/1/",

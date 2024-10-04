@@ -63,7 +63,7 @@
     },
     "ara": {
         "title": "Radio Ara",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ara.lu/",
         "cros": true,
         "stream": "http://s1.voscast.com:11186/RadioARA.mp3",

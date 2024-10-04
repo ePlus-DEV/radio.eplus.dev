@@ -2,7 +2,7 @@
   "vov1": {
     "title": "VOV 1",
     "description": "VOV1 Radio là kênh phát thanh tổng hợp các tin tức thời sự, chính trị, ngoại giao, kinh tế, văn học nghệ thuật... mới nhất, trực thuộc đài phát thanh Việt Nam VOV, phát sóng 24/24h hàng ngày.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Thời sự",
     "url": "https://vov.vn",
     "cros": false,
@@ -12,7 +12,7 @@
   "vov2": {
     "title": "VOV 2",
     "description": "Hệ văn hóa - đời sống - khoa học VOV2 trực thuộc Đài tiếng nói Việt Nam, là kênh phát thanh quốc gia quốc gia, phát sóng 19 giờ/ ngày, tập trung vào các chương trình liên quan đến văn hóa, giáo dục và xã hội.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Văn Hóa - Xã Hội",
     "url": "https://vov.vn",
     "cros": true,
@@ -22,7 +22,7 @@
   "vov3": {
     "title": "VOV 3",
     "description": "VOV3 Radio là kênh phát thanh thuộc đài tiếng nói Việt Nam, cung cấp các chương trình liên quan đến âm nhạc trong nước và quốc tế, cũng như các thông tin cập nhật trong ngành giải trí.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://vov.vn",
     "cros": false,
@@ -72,7 +72,7 @@
   "vov5": {
     "title": "VOV 5",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": false,
@@ -82,7 +82,7 @@
   "vov-english": {
     "title": "VOV - English",
     "description": "VOV5 English là một trong những kênh đầu tiên của Dịch vụ VOV5 hải ngoại, bắt đầu phát sóng vào ngày 7 tháng 9 năm 1945. Từ năm 1998, các chương trình tiếng Anh đã chính thức được phát trên FM cho cộng đồng nước ngoài tại Việt Nam và khán giả trong nước.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
     "cros": false,
@@ -102,7 +102,7 @@
   "vov5-french": {
     "title": "VOV 5 - French",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -112,7 +112,7 @@
   "vov5-german": {
     "title": "VOV 5 - German",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -122,7 +122,7 @@
   "vov5-indonesian": {
     "title": "VOV 5 - Indonesian",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -132,7 +132,7 @@
   "vov5-japanese": {
     "title": "VOV 5 - Japanese",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -142,7 +142,7 @@
   "vov5-khmer": {
     "title": "VOV 5 - Khmer",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -152,7 +152,7 @@
   "vov5-laotian": {
     "title": "VOV 5 - Laotian",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -162,7 +162,7 @@
   "vov5-russian": {
     "title": "VOV 5 - Russian",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -172,7 +172,7 @@
   "vov5-spanish": {
     "title": "VOV 5 - Spanish",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": true,
@@ -234,7 +234,7 @@
   "vov-suc-khoe": {
     "title": "VOV Sức Khỏe",
     "description": "VOV FM89 là kênh phát thanh chuyên biệt với thông tin tin cậy, liên tục cập nhật, mới mẻ và hấp dẫn về các vấn đề liên quan đến sức khỏe, môi trường và an toàn vệ sinh thực phẩm.",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Giao Thông",
     "url": "https://vov.vn",
     "cros": true,

@@ -176,7 +176,7 @@
   },
   "oz": {
     "title": "OZ (Bandung)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "103.1 FM",
     "url": "http://bandung.ozradio.id/",
     "cros": true,
@@ -186,7 +186,7 @@
   },
   "gajahmada": {
     "title": "Gajahmada",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "102.4 FM",
     "url": "https://gajahmadafm.co.id/",
     "cros": true,
@@ -196,7 +196,7 @@
   },
   "rhema": {
     "title": "88.6 Rhema FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "88.6 FM",
     "url": "https://rhemaradio.com/",
     "cros": true,
@@ -206,7 +206,7 @@
   },
   "suara-muslim": {
     "title": "Suara Muslim",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "93.8 FM",
     "url": "https://suaramuslim.net/",
     "cros": true,
@@ -216,7 +216,7 @@
   },
   "smart-jakart": {
     "title": "Smart (Jakarta)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "95.9 FM",
     "url": "http://www.radiosmartfm.com/",
     "cros": false,
@@ -225,7 +225,7 @@
   },
   "pelita-kasih": {
     "title": "Radio Pelita Kasih",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "96.3 FM",
     "url": "https://www.radiopelitakasih.com/",
     "cros": false,
@@ -235,7 +235,7 @@
   },
   "cosmo-bandung": {
     "title": "Radio Cosmo (Bandung)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "101.9 FM",
     "url": false,
     "cros": true,
@@ -244,7 +244,7 @@
   },
   "trax-fm": {
     "title": "Trax FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "101.4 FM",
     "url": "https://traxonsky.com/",
     "cros": true,
@@ -254,7 +254,7 @@
   },
   "retjo-jogja": {
     "title": "Retjo Buntung (Jogja)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "99.4 FM",
     "url": "https://radio.retjobuntungfm.com/",
     "cros": true,
@@ -264,7 +264,7 @@
   },
   "sonora-fm": {
     "title": "Radio Sonora",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "98.0 FM",
     "url": "http://www.sonora.co.id/",
     "cros": false,
@@ -274,7 +274,7 @@
   },
   "geronimo-jogja": {
     "title": "Geronimo (Jogja)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "106.1 FM",
     "url": "http://www.geronimo.fm/",
     "cros": false,
@@ -284,7 +284,7 @@
   },
   "pro1-makassar": {
     "title": "PRO 1 RRI (Makassar)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "94.4 FM",
     "url": "https://rri.co.id/home.html",
     "cros": true,
@@ -294,7 +294,7 @@
   },
   "motion": {
     "title": "Motion Radio (Jakarta)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "97.5 FM",
     "url": "http://www.motionradiofm.com/",
     "cros": false,
@@ -303,7 +303,7 @@
   },
   "raka": {
     "title": "Raka",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "98.8 FM",
     "url": "http://www.rakafm.co.id/",
     "cros": false,
@@ -312,7 +312,7 @@
   },
   "serambi": {
     "title": "Serambi FM (Banda Aceh)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "90.2 FM",
     "url": "https://serambifm.com/",
     "cros": true,
@@ -321,7 +321,7 @@
   },
   "k-lite-bandung": {
     "title": "K Lite (Bandung)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "107.1 FM",
     "url": "https://serambifm.com/",
     "cros": false,
@@ -330,7 +330,7 @@
   },
   "ras-jakarta": {
     "title": "RAS (Jakarta)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "95.5 FM",
     "url": "https://rasfmjakarta.com/",
     "cros": false,
@@ -339,7 +339,7 @@
   },
   "kita-cirebon": {
     "title": "Kita (Cirebon)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "94.3 FM",
     "url": "https://www.radiokitafm.com/",
     "cros": true,
@@ -357,7 +357,7 @@
   },
   "pas": {
     "title": "Radio Pas",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "101.1 FM",
     "url": "https://pasfmpati.com/radio/",
     "cros": true,
@@ -366,7 +366,7 @@
   },
   "dengerin-musik-indonesia": {
     "title": "Dengerin Musik",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "http://denger.in/",
     "cros": true,
@@ -385,7 +385,7 @@
   },
   "el-shaddai-surakarta": {
     "title": "El Shaddai FM (Surakarta)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "91.3 FM",
     "url": "https://elshaddaifm.com/",
     "cros": true,
@@ -395,7 +395,7 @@
   },
   "bass-salatiga": {
     "title": "Radio Bass (Salatiga)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "93.2 FM",
     "url": "https://bassfm.id/",
     "cros": false,
@@ -404,7 +404,7 @@
   },
   "klcbs": {
     "title": "KLCBS",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "100.4 FM",
     "url": "https://www.klcbs.net/",
     "cros": true,

@@ -10,7 +10,7 @@
   },
   "bbc-2": {
     "title": "BBC Radio 2",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "BBC Radio 2",
     "url": "http://www.bbc.co.uk/radio2",
     "cros": false,
@@ -28,7 +28,7 @@
   },
   "bbc-4": {
     "title": "BBC Radio 4",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "BBC Radio 4",
     "url": "http://www.bbc.co.uk/radio4",
     "cros": false,
@@ -37,7 +37,7 @@
   },
   "bbc-4-extra": {
     "title": "BBC Radio 4 Extra",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "BBC Radio 4 Extra",
     "url": "http://www.bbc.co.uk/radio4extra",
     "cros": false,
@@ -46,7 +46,7 @@
   },
   "bbc-5-live": {
     "title": "BBC Radio 5 Live",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Sport",
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_radio_five_live",
     "cros": false,
@@ -64,7 +64,7 @@
   },
   "bbc-world-service": {
     "title": "BBC Radio World Service",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "BBC Radio 6",
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_world_service",
     "cros": false,
@@ -82,7 +82,7 @@
   },
   "classic-rock": {
     "title": "Absolute Classic Rock",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/absolute-classic-rock",
     "cros": false,
@@ -91,7 +91,7 @@
   },
   "planet-rock": {
     "title": "Planet Rock",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/planet-rock/",
     "cros": false,
@@ -100,7 +100,7 @@
   },
   "jazz-fm": {
     "title": "Jazz FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.jazzfm.com",
     "cros": false,
@@ -109,7 +109,7 @@
   },
   "classic-fm": {
     "title": "Classic FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.classicfm.com",
     "cros": true,
@@ -119,7 +119,7 @@
   },
   "capital-fm": {
     "title": "Capital FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.capitalfm.com",
     "cros": true,
@@ -129,7 +129,7 @@
   },
   "heart-uk": {
     "title": "Heart UK",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.heart.co.uk",
     "cros": true,
@@ -140,7 +140,7 @@
   },
   "virgin": {
     "title": "Virgin Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://virginradio.co.uk",
     "cros": false,
@@ -149,7 +149,7 @@
   },
   "1mix": {
     "title": "1 Mix EDM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.1mix.co.uk/",
     "cros": true,
@@ -159,7 +159,7 @@
   },
   "smooth": {
     "title": "Smooth Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.smoothradio.com/",
     "cros": false,
@@ -169,7 +169,7 @@
   },
   "rinse-fm": {
     "title": "Rinse FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://rinse.fm/",
     "cros": false,
@@ -178,7 +178,7 @@
   },
   "radio-x": {
     "title": "Radio X",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.radiox.co.uk/",
     "cros": false,
@@ -188,7 +188,7 @@
   },
   "absolute": {
     "title": "Absolute Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/absolute-radio/",
     "cros": false,
@@ -197,7 +197,7 @@
   },
   "discover-trance-uk": {
     "title": "Discover Trance",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.discovertrance.com/",
     "cros": false,
@@ -207,7 +207,7 @@
   },
   "caroline": {
     "title": "Radio Caroline",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.radiocaroline.co.uk/",
     "cros": true,
@@ -217,7 +217,7 @@
   },
   "kiss-london": {
     "title": "KISS (London)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/kiss/",
     "cros": false,
@@ -226,7 +226,7 @@
   },
   "greatest-hits-radio": {
     "title": "Greatest Hits Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/greatest-hits/",
     "cros": false,
@@ -235,7 +235,7 @@
   },
   "more-worthing": {
     "title": "More Radio (Worthing)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.moreradio.online/",
     "cros": false,
     "stream": "https://s2.xrad.io:9596/stream/1/",
@@ -244,7 +244,7 @@
   },
   "manx": {
     "title": "Manx Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.manxradio.com/",
     "cros": false,
@@ -254,7 +254,7 @@
   },
   "kane-fm": {
     "title": "Kane FM (London)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.kanefm.com/",
     "cros": false,
@@ -263,7 +263,7 @@
   },
   "sunshine-hereford": {
     "title": "Sunshine Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.sunshineradio.co.uk/",
     "cros": false,
@@ -272,7 +272,7 @@
   },
   "talksport": {
     "title": "Talk Sport",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://talksport.com/",
     "cros": false,
     "stream": "https://radio.talksport.com/stream",
@@ -290,7 +290,7 @@
   },
   "sheffield": {
     "title": "Sheffield Live",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://web.sheffieldlive.org/",
     "cros": true,
     "stream": "http://live.sheffieldlive.org:8000/stream/1/",
@@ -298,7 +298,7 @@
   },
   "1xtra": {
     "title": "BBC Radio 1 Xtra",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_1xtra",
     "cros": false,
@@ -307,7 +307,7 @@
   },
   "solar": {
     "title": "Solar Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "http://www.solarradio.com/",
     "cros": false,
@@ -317,7 +317,7 @@
   },
   "choice-london": {
     "title": "Capital Xtra (London)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.capitalxtra.com/",
     "cros": false,
@@ -327,7 +327,7 @@
   },
   "bbc-glasgow": {
     "title": "BBC Radio Scotland (Glasgow)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.bbc.co.uk/sounds/play/live:bbc_radio_scotland_fm",
     "cros": false,
@@ -336,7 +336,7 @@
   },
   "absolute-80s": {
     "title": "Absolute 80s Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/absolute-80s/",
     "cros": false,
@@ -345,7 +345,7 @@
   },
   "magic-london": {
     "title": "Radio Magic FM (London)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://planetradio.co.uk/magic/",
     "cros": false,
@@ -354,7 +354,7 @@
   },
   "talk": {
     "title": "talkRADIO",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://talkradio.co.uk",
     "cros": false,
@@ -363,7 +363,7 @@
   },
   "fun-radio-uk": {
     "title": "Fun Kids",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.funkidslive.com/",
     "cros": false,
@@ -373,7 +373,7 @@
   },
   "sanskar-leicester": {
     "title": "Sanskar Radio (Leicester)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "http://sanskarradio.com/",
     "cros": false,
@@ -383,7 +383,7 @@
   },
   "island": {
     "title": "Island FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "category": "Âm nhạc",
     "url": "https://www.islandfm.com/",
     "cros": false,
@@ -393,7 +393,7 @@
   },
   "serenade-radio": {
     "title": "Serenade Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.serenade-radio.com/",
     "cros": true,
     "stream": "http://4534.cloudrad.io:8284/stream/1/",
@@ -402,7 +402,7 @@
   },
   "greatest-hits-harrogate": {
     "title": "Greatest Hits Radio (Harrogate and the Yorkshire Dales)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://planetradio.co.uk/greatest-hits/harrogate-yorkshire-dales/",
     "cros": false,
     "stream": "https://stream-mz.planetradio.co.uk/net2harrogate.aac",
@@ -411,7 +411,7 @@
   },
   "amazing": {
     "title": "Amazing Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://amazingradio.com/",
     "cros": true,
     "stream": "https://stream5.amazingradio.com:8443/stream.mp3?redirected=1",
@@ -419,7 +419,7 @@
   },
   "lbc": {
     "title": "LBC",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lbc.co.uk/",
     "cros": false,
     "stream": "https://media-ice.musicradio.com/LBCLondonMP3",
@@ -428,7 +428,7 @@
   },
   "more-hastings": {
     "title": "More Radio (Hastings)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.moreradio.online/",
     "cros": false,
     "stream": "https://s2.xrad.io:9592/stream/1/",
@@ -437,7 +437,7 @@
   },
   "hayes-fm": {
     "title": "Radio Hayes",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://hayesfm.co.uk/",
     "cros": false,
     "stream": "https://s19.myradiostream.com/8026/stream/1/",
@@ -445,7 +445,7 @@
   },
   "absolute-aberdeen": {
     "title": "Absolute Radio (Aberdeen)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://planetradio.co.uk/absolute-radio/",
     "cros": false,
     "stream": "https://stream-ar.planetradio.co.uk/absoluteradiohigh.aac",
@@ -453,7 +453,7 @@
   },
   "mearns-stonehaven": {
     "title": "Mearns FM (Stonehaven)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.mearnsfm.org.uk/",
     "cros": false,
     "stream": "https://stream3.hippynet.co.uk/stream/mearnsfm",
@@ -462,7 +462,7 @@
   },
   "original-aberdeen": {
     "title": "Original 106 Aberdeen (Durris)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.originalfm.com/",
     "cros": false,
     "stream": "https://listen-original.sharp-stream.com/original106.mp3",
@@ -471,7 +471,7 @@
   },
   "shmu-aberdeen": {
     "title": "Shmu FM (Aberdeen)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.shmu.org.uk/",
     "cros": true,
     "stream": "http://stream.shmu.org.uk:8000/shmufm_high.mp3",
@@ -479,7 +479,7 @@
   },
   "talk-aberdeen": {
     "title": "Talk Sport UK (Aberdeen)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://talksport.com/",
     "cros": false,
     "stream": "https://radio.talksport.com/stream",
@@ -487,7 +487,7 @@
   },
   "blast-belfast": {
     "title": "Blast FM (Belfast)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://blast106.com/",
     "cros": true,
     "stream": "http://radiocentre.duckdns.org:8000/blast",

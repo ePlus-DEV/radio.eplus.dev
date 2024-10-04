@@ -11,7 +11,7 @@
     },
     "apintie": {
         "title": "Radio Apintie",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.apintie.sr/",
         "cros": false,
         "stream": "https://surilive.com:8000/stream/1/",
@@ -31,7 +31,7 @@
     },
     "srs-suriname": {
         "title": "Radio SRS",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiosrs.sr/",
         "cros": false,
         "stream": "https://surilive.com:8060/stream/1/",
@@ -41,7 +41,7 @@
     },
     "10-magic-fm": {
         "title": "Radio 10 Magic FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio10.sr/",
         "cros": false,
         "stream": "https://s5.radio.co/s85a633f73/listen",
@@ -60,7 +60,7 @@
     },
     "abc": {
         "title": "Radio ABC",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://abcsuriname.com/",
         "cros": false,
         "stream": "https://surilive.com:8020/stream/1/",
@@ -90,7 +90,7 @@
     },
     "ishara": {
         "title": "Radio Ishara",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": true,
         "stream": "http://nickerie.webhop.net:8000/stream",
@@ -139,7 +139,7 @@
     },
     "rasonic-1": {
         "title": "Radio Rasonic",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": true,
         "stream": "http://108.59.9.147:8136/;",
@@ -177,7 +177,7 @@
     },
     "immanuel": {
         "title": "Radio Immanuël",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.immanuelsr.com/",
         "cros": false,
         "stream": "https://surilive.com:8030/stream/1/",
@@ -187,7 +187,7 @@
     },
     "rk2": {
         "title": "Radio Kabar Katresnan RK2",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.stichtingpuas.sr/",
         "cros": true,
         "stream": "http://server.jvhost.net:8010/stream",
@@ -197,7 +197,7 @@
     },
     "color-suriname-102-5-fm": {
         "title": "Color Radio Suriname",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.colorradiosuriname.com/",
         "cros": false,
         "stream": "https://surilive.com:8070/stream/1/",
@@ -207,7 +207,7 @@
     },
     "nio-fm": {
         "title": "NIO FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://nio.sr/",
         "cros": false,
         "stream": "https://niofm.beheerstream.nl:8060/stream/1/",
@@ -217,7 +217,7 @@
     },
     "lpm": {
         "title": "Radio LPM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://lpmnews.com/",
         "cros": false,
         "stream": "https://surilive.com:8050/stream/1/",
@@ -265,7 +265,7 @@
     },
     "ishara-hindi": {
         "title": "Ishara Hindi FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.isharafm.com/",
         "cros": true,
         "stream": "http://nickerie.webhop.net:8000/stream",
@@ -284,7 +284,7 @@
     },
     "sranan": {
         "title": "Sranan Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://srananradio.com/",
         "cros": true,
         "stream": "http://my.surilive.com:8150/stream/1/",

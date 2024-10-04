@@ -174,7 +174,7 @@
     },
     "hams-espoo": {
         "title": "Hamsi FM (Espoo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.hamsi.fm/",
         "cros": true,
         "stream": "http://radyo.hamsi.fm:8050/stream/1/",
@@ -184,7 +184,7 @@
     },
     "steel-fm": {
         "title": "Steel FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.steelfm.ax/",
         "cros": false,
         "stream": "https://ice6.securenetsystems.net/STEELFM",

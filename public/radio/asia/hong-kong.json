@@ -31,7 +31,7 @@
   },
   "billboard-yin-le-dian-hua-yu-h": {
     "title": "Billboard Radio China 華語Hits",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/music/billboard-china-hits",
     "cros": false,
@@ -69,7 +69,7 @@
   },
   "billboard-yin-le-dian-zhong-ba": {
     "title": "Billboard Radio China 重磅100",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/music/billboard-china-hits",
     "cros": false,
@@ -108,7 +108,7 @@
   },
   "billboard-yin-le-dian-ya-zhou": {
     "title": "Billboard Radio China 亞洲金曲館",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/music/asia-hits",
     "cros": false,
@@ -128,7 +128,7 @@
   },
   "billboard-yin-le-dian-80-90hou": {
     "title": "Billboard Radio China 80/90後",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/",
     "cros": false,
@@ -138,7 +138,7 @@
   },
   "apple-fm": {
     "title": "Apple FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "http://www.apple-fm.com/",
     "cros": true,
@@ -148,7 +148,7 @@
   },
   "billboard-yin-le-dian-rock": {
     "title": "Billboard Radio China Rock",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/music/rock",
     "cros": false,
@@ -158,7 +158,7 @@
   },
   "imc-broadcasting": {
     "title": "IMC Broadcasting",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://imchk.org/radio-imc/",
     "cros": true,
@@ -168,7 +168,7 @@
   },
   "digital-hong-kong": {
     "title": "香港數碼電台",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "http://www.digitalradiohk.net/#/home",
     "cros": true,
@@ -178,7 +178,7 @@
   },
   "billboard-yin-le-dian-han-liu": {
     "title": "Billboard Radio China 韓流熱襲",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/",
     "cros": false,
@@ -188,7 +188,7 @@
   },
   "axr": {
     "title": "AXR Hong Kong",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "http://www.axr.online/",
     "cros": false,
@@ -198,7 +198,7 @@
   },
   "billboard-yin-le-dian-yao-gun": {
     "title": "Billboard Radio China 搖滾",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/music/billboard-china-hits",
     "cros": false,
@@ -208,7 +208,7 @@
   },
   "billboard-yin-le-dian-chill-out": {
     "title": "Billboard Radio China Chill Out",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/",
     "cros": false,
@@ -248,7 +248,7 @@
   },
   "billboard-yin-le-dian-dian-zi": {
     "title": "Billboard Radio China 電子/EDM/Club",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "Stream",
     "url": "https://www.brg-radio.com/music/edm-club",
     "cros": false,
@@ -267,7 +267,7 @@
   },
   "881": {
     "title": "叱咤903",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "88.1 FM",
     "url": "https://www.881903.com/live/881",
     "cros": true,

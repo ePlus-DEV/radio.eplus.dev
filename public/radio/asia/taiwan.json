@@ -11,7 +11,7 @@
   },
   "i-bcc-music-network": {
     "title": "中廣音樂網",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.bcc.com.tw/news3_index.asp",
     "cros": false,
     "stream": "https://stream.rcs.revma.com/ndk05tyy2tzuv",
@@ -20,7 +20,7 @@
   },
   "ufo": {
     "title": "飛碟聯播網",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.uforadio.com.tw/",
     "cros": false,
     "stream": "https://stream.rcs.revma.com/4yevzvbeewzuv",
@@ -38,7 +38,7 @@
   },
   "i-like-bcc-pop-network": {
     "title": "中廣流行網",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.bcc.com.tw/news2_index.asp",
     "cros": false,
     "stream": "https://stream.rcs.revma.com/s1zttsg3qtzuv",
@@ -47,7 +47,7 @@
   },
   "bcc-news-network": {
     "title": "中廣新聞網",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.bcc.com.tw/",
     "cros": false,
     "stream": "https://stream.rcs.revma.com/78fm9wyy2tzuv",
@@ -55,7 +55,7 @@
   },
   "news-98-fm": {
     "title": "九八新聞台",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.news98.com.tw/",
     "cros": false,
     "stream": "https://stream.rcs.revma.com/55tyxsy4qtzuv",
@@ -73,7 +73,7 @@
   },
   "fly": {
     "title": "飛揚調頻",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.flyradio.com.tw",
     "cros": false,
     "stream": "https://n14.rcs.revma.com/e0tdah74hv8uv",
@@ -91,7 +91,7 @@
   },
   "ic-broadcasting": {
     "title": "IC之音竹科廣播FM97.5",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.ic975.com/",
     "cros": false,
     "stream": "https://n01a-eu.rcs.revma.com/7mnq8rt7k5zuv",

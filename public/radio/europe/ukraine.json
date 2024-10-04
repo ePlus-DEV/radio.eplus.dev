@@ -20,7 +20,7 @@
     },
     "hit-fm": {
         "title": "Хіт FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.hitfm.ua/",
         "cros": false,
         "stream": "https://online.hitfm.ua/HitFM_Live",
@@ -73,7 +73,7 @@
     },
     "roks": {
         "title": "Radio ROKS",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioroks.ua/",
         "cros": false,
         "stream": "https://online.radioroks.ua/RadioROKS_Live",
@@ -91,7 +91,7 @@
     },
     "tvoe": {
         "title": "Твоє радіо",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.tvoeradio.com",
         "cros": false,
         "stream": "https://complex.in.ua/tvoeRadio",
@@ -100,7 +100,7 @@
     },
     "melodia": {
         "title": "Радіо Мелодія",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.melodiafm.ua/",
         "cros": false,
         "stream": "https://online.melodiafm.ua/MelodiaFM_Live",
@@ -127,7 +127,7 @@
     },
     "relax": {
         "title": "Радио Relax",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiorelax.ua/",
         "cros": false,
         "stream": "https://online.radiorelax.ua/RadioRelax_Live",
@@ -153,7 +153,7 @@
     },
     "nezalezhnist": {
         "title": "Радіо Незалежність",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://radio-n.com/",
         "cros": true,
         "stream": "http://rad.radio-n.com:8000/stream/1/",
@@ -267,7 +267,7 @@
     },
     "svitle": {
         "title": "Світле радіо",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://svitle.org/",
         "cros": true,
         "stream": "http://online.svitle.org:6728/fm",
@@ -284,7 +284,7 @@
     },
     "maria": {
         "title": "Радіо Марія",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://radiomaria.org.ua/",
         "cros": true,
         "stream": "http://www.radiomaria.org.ua:8000/stream160",

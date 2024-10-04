@@ -1,7 +1,7 @@
 {
   "949": {
     "title": "949 Radio (Ciudad de Guatemala)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://949.com.gt/",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2528_32.aac?v=223434",
@@ -126,7 +126,7 @@
   },
   "clasica-1065": {
     "title": "Clásica (Ciudad de Guatemala)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://clasica1065.com/",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2529_32.aac",
@@ -152,7 +152,7 @@
   },
   "red": {
     "title": "La Red FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lared1061.com/",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2530_32.aac",
@@ -179,7 +179,7 @@
   },
   "radio-mia-937": {
     "title": "Radio Mía",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mia937.com/",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2526_32.aac",
@@ -205,7 +205,7 @@
   },
   "la-mega": {
     "title": "La Mega (Ciudad de Guatemala)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lamega.com.gt/",
     "cros": false,
     "stream": "https://sh4.radioonlinehd.com:8564/stream",
@@ -240,7 +240,7 @@
   },
   "stereo-100": {
     "title": "Stereo Cien (Quetzaltenango)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://stereo100.com.gt/",
     "cros": false,
     "stream": "https://sh1.radioonlinehd.com:8056/stream",
@@ -249,7 +249,7 @@
   },
   "estrella": {
     "title": "Radio Estrella (San Juan Sacatepéquez)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radioestrella.net/",
     "cros": false,
     "stream": "https://sh1.radioonlinehd.com:8000/;",
@@ -257,7 +257,7 @@
   },
   "maria": {
     "title": "Radio María",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiomaria.org.gt/",
     "cros": false,
     "stream": "https://dreamsiteradiocp2.com/proxy/rmguatemala2?mp=/stream",
@@ -275,7 +275,7 @@
   },
   "fm-fama": {
     "title": "Fama",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fama1025.com/",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2525_32.aac",
@@ -300,7 +300,7 @@
   },
   "exa-fm": {
     "title": "Exa FM (Cuidad de Guatemala)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://exafm.com/guatemala/",
     "cros": true,
     "stream": "https://stream.zeno.fm/uvhdnfd73hhvv",
@@ -333,7 +333,7 @@
   },
   "norte-fm": {
     "title": "Radio Norte",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://radionorte680.com/",
     "cros": true,
     "stream": "https://stream.zeno.fm/a68m31ux5k8uv",
@@ -358,7 +358,7 @@
   },
   "occidental-estereo": {
     "title": "Occidental Estéreo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.occidentalradio.com/",
     "cros": false,
     "stream": "https://ss.redradios.net:8043/stream",
@@ -366,7 +366,7 @@
   },
   "club": {
     "title": "Club Radio (Antigua Guatemala)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2539_32.aac",

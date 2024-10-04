@@ -1,7 +1,7 @@
 {
     "energy": {
         "title": "Radio Energy (София)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioenergy.bg/",
         "cros": false,
         "stream": "https://play.global.audio/nrj.aac",
@@ -21,7 +21,7 @@
     },
     "siti": {
         "title": "Pадио City",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.city.bg/",
         "cros": false,
         "stream": "https://play.global.audio/city.aac",
@@ -31,7 +31,7 @@
     },
     "bg": {
         "title": "БГ Радио (София)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.bgradio.bg/",
         "cros": false,
         "stream": "https://play.global.audio/bgradio.aac",
@@ -41,7 +41,7 @@
     },
     "veronika": {
         "title": "Радио Вероника",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioveronika.bg/",
         "cros": false,
         "stream": "https://play.global.audio/veronika.aac",
@@ -71,7 +71,7 @@
     },
     "1-106": {
         "title": "Радио 1 (София)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio1.bg/",
         "cros": false,
         "stream": "https://play.global.audio/radio1.aac",
@@ -161,7 +161,7 @@
     },
     "rock-1": {
         "title": "Радио Rock 1 (София)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radio1rock.bg/",
         "cros": false,
         "stream": "https://play.global.audio/radio1rock.aac",
@@ -171,7 +171,7 @@
     },
     "sumen": {
         "title": "Радио Шумен",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bnr.bg/shumen",
         "cros": true,
         "stream": "http://stream.bnr.bg:8033/radio-shumen.aac",
@@ -181,7 +181,7 @@
     },
     "nazdrave": {
         "title": "Радио Наздраве (София)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.folkradionazdrave.com/",
         "cros": true,
         "stream": "http://powerdj.sf.ddns.bulsat.com:8020/;",
@@ -211,7 +211,7 @@
     },
     "varna": {
         "title": "Радио Варна",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bnr.bg/varna",
         "cros": true,
         "stream": "http://stream.bnr.bg:8031/radio-varna.aac",
@@ -269,7 +269,7 @@
     },
     "miks": {
         "title": "Радио Микс",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiomixx.net/",
         "cros": true,
         "stream": "http://83.97.65.98:9000/stream/1/",
@@ -279,7 +279,7 @@
     },
     "katra": {
         "title": "Katra FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.katrafm.com/",
         "cros": true,
         "stream": "http://www.katrafm.net:9000/live",
@@ -309,7 +309,7 @@
     },
     "sofia": {
         "title": "Радио София",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bnr.bg/sofia",
         "cros": true,
         "stream": "http://stream.bnr.bg:8030/radio-sofia.aac",
@@ -328,7 +328,7 @@
     },
     "bnr-horizont": {
         "title": "БНР Хоризонт (София)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bnr.bg/horizont",
         "cros": true,
         "stream": "http://stream.bnr.bg:8011/horizont.aac",
@@ -357,7 +357,7 @@
     },
     "hristo-botev": {
         "title": "Радио Христо Ботев",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bnr.bg/hristobotev",
         "cros": true,
         "stream": "http://stream.bnr.bg:8012/hristo-botev.aac",

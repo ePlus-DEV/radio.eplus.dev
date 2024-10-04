@@ -19,7 +19,7 @@
     },
     "mix": {
         "title": "Radio Mix Congolaise",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://stream.zeno.fm/qe5g83upga0uv",
@@ -141,7 +141,7 @@
     },
     "tayna": {
         "title": "Radio Tayna",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiotayna.com/",
         "cros": false,
         "stream": "https://stream.zeno.fm/ide8zzvajbcvv",
@@ -170,7 +170,7 @@
     },
     "eventsrdc": {
         "title": "Eventsrdc FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.fm.eventsrdc.com/",
         "cros": false,
         "stream": "https://gazplay.com/efmrdc/eventsrdcfm/icecast.audio",

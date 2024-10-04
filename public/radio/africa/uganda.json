@@ -156,7 +156,7 @@
     },
     "maria-101-8": {
         "title": "Radio Maria",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomaria.ug/",
         "cros": false,
         "stream": "https://dreamsiteradiocp2.com/proxy/rmuganda2?mp=/stream/1/",
@@ -341,7 +341,7 @@
     },
     "point-fm": {
         "title": "Point FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://stream.zeno.fm/hg0axyr5bzzuv",

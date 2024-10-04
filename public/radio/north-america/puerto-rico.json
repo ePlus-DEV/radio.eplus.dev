@@ -10,7 +10,7 @@
   },
   "mega": {
     "title": "La Mega",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lamusica.com/stations/wmeg",
     "cros": false,
     "stream": "https://live.wostreaming.net/direct/sbsystems-wmegfmaac-imc1",
@@ -19,7 +19,7 @@
   },
   "nueva-vida": {
     "title": "Nueva Vida",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://nuevavida.fm/",
     "cros": true,
     "stream": "http://node-03.zeno.fm:80/qgkv1nzpc84tv",
@@ -28,7 +28,7 @@
   },
   "magic": {
     "title": "Magic (Metro)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://magic973.com",
     "cros": false,
     "stream": "https://stream.eleden.com:8210/magic.aac",
@@ -36,7 +36,7 @@
   },
   "kq105": {
     "title": "KQ105",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.univision.com/radio/puerto-rico-wkaq-fm",
     "cros": false,
     "stream": "https://live.wostreaming.net/direct/univision-wkaqfmaac-imc1",
@@ -45,7 +45,7 @@
   },
   "zeta": {
     "title": "Zeta",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lamusica.com/stations/wznt",
     "cros": false,
     "stream": "https://live.wostreaming.net/direct/sbsystems-wzntfmaac-imc1",
@@ -62,7 +62,7 @@
   },
   "la-nueva": {
     "title": "La Nueva",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lamusica.com/stations/woda",
     "cros": false,
     "stream": "https://live.wostreaming.net/direct/sbsystems-wodafmaac-imc1",
@@ -80,7 +80,7 @@
   },
   "play": {
     "title": "Play",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lamusica.com/stations/wrxd",
     "cros": false,
     "stream": "https://live.wostreaming.net/direct/sbsystems-wrxdfmaac-imc1",
@@ -89,7 +89,7 @@
   },
   "renacer": {
     "title": "Radio Renacer",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://unoredradio.com:9850/;",
@@ -107,7 +107,7 @@
   },
   "inspira": {
     "title": "Inspira 88.1 FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://881inspira.fm/",
     "cros": true,
     "stream": "https://smioradio.com:1045/stream",
@@ -141,7 +141,7 @@
   },
   "catolica": {
     "title": "Católica Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.catolicaradiopr.com/",
     "cros": false,
     "stream": "https://live.turadio.stream:7017/catolicaradiopr",
@@ -149,7 +149,7 @@
   },
   "universidad": {
     "title": "Radio Universidad",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.wrtu.pr/",
     "cros": true,
     "stream": "http://streaming.radiouniversidad.pr:8062/;",
@@ -175,7 +175,7 @@
   },
   "wpab-ponce": {
     "title": "WPAB (Ponce)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://server10.servistreaming.com:9059/stream/1/",
@@ -184,7 +184,7 @@
   },
   "fm-96": {
     "title": "FM 96",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fm96puertorico.com/",
     "cros": true,
     "stream": "http://s2.nexuscast.com:8105/stream/1/",
@@ -193,7 +193,7 @@
   },
   "victoria": {
     "title": "Radio Victoria",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.victoria840.com/",
     "cros": true,
     "stream": "http://server10.servistreaming.com:9039/stream/1/",
@@ -202,7 +202,7 @@
   },
   "maranatha": {
     "title": "Maranatha Radio Ministries",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.maranatharadioministries.com/",
     "cros": true,
     "stream": "https://stream.zenolive.com/8h1fp5vzmtwtv",
@@ -211,7 +211,7 @@
   },
   "once": {
     "title": "Radio Once",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radioonce.com/",
     "cros": true,
     "stream": "https://stream.zenolive.com/gw0kpk6wt4zuv.aac",
@@ -228,7 +228,7 @@
   },
   "paraiso": {
     "title": "Radio Paraíso",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.paraiso92.org/",
     "cros": false,
     "stream": "https://stream.eleden.com:8240/wtpm.aac",
@@ -237,7 +237,7 @@
   },
   "cima": {
     "title": "Cima",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://cima103.com/",
     "cros": false,
     "stream": "https://stream.eleden.com:8262/rcima.aac",
@@ -246,7 +246,7 @@
   },
   "fresh-999-fm-san-juan": {
     "title": "Fresh 99.9 (San Juan)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fresh999.com/",
     "cros": true,
     "stream": "http://174.36.206.197:7068/stream/1/",
@@ -271,7 +271,7 @@
   },
   "unica": {
     "title": "Única Radio (Arecibo)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://new.unicaradioam.com/",
     "cros": true,
     "stream": "https://stream.zenolive.com/mynk236wt4zuv",
@@ -289,7 +289,7 @@
   },
   "fm-107-san-juan": {
     "title": "Mix",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mix107pr.com/",
     "cros": true,
     "stream": "http://174.36.206.197:7062/stream/1/",
@@ -307,7 +307,7 @@
   },
   "hot-102": {
     "title": "Hot 102",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://hot102pr.com/escuchanos-en-vivo/",
     "cros": true,
     "stream": "https://server7.servistreaming.com/proxy/hotaac?mp=/stream",
@@ -315,7 +315,7 @@
   },
   "vida": {
     "title": "Radio Vida (Carolina)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiovidaoficial.com/",
     "cros": true,
     "stream": "http://166.88.21.98:9592/;",
@@ -342,7 +342,7 @@
   },
   "la-x94-cristiana": {
     "title": "LA X94 - Radio Cristiana",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lax94.com/",
     "cros": false,
     "stream": "https://securestreams6.autopo.st:2128/stream/1/",
@@ -351,7 +351,7 @@
   },
   "super-k-hatillo": {
     "title": "Superk (Hatillo)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.superk106.com/",
     "cros": true,
     "stream": "http://centova2.whsh4u.com:9179/stream/1/",
@@ -360,7 +360,7 @@
   },
   "procer": {
     "title": "Radio Procer",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.radioprocer1380.com/",
     "cros": false,
     "stream": "https://embed.unored.tv/stream/index.php?s=unoredradio.com&p=9698&m=/;",
@@ -369,7 +369,7 @@
   },
   "x61": {
     "title": "X61 Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.x61radio.com/",
     "cros": true,
     "stream": "http://unoredradio.com:9842/;",

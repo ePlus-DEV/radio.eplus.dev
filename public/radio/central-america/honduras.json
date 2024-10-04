@@ -71,7 +71,7 @@
   },
   "stereo-luz": {
     "title": "Stereo Luz",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://stereoluz.com/v2/",
     "cros": false,
     "stream": "https://stream.playerlive.info:8060/envivo.aac",
@@ -88,7 +88,7 @@
   },
   "estereo-santa-barbara": {
     "title": "SB Stereo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://sbmultimedios.com/",
     "cros": false,
     "stream": "https://stream.playerlive.info:8285/sb.aac",
@@ -105,7 +105,7 @@
   },
   "evangelica-tegucigalpa": {
     "title": "HRVC La Voz Evangélica (Tegucigalpa)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://hrvc.org/V2/",
     "cros": false,
     "stream": "https://stream.playerlive.info:8021/HRVC.aac",
@@ -147,7 +147,7 @@
   },
   "fiel": {
     "title": "Stereo Fiel",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "http://stream.playerlive.info:8091/fiel.aac",
@@ -163,7 +163,7 @@
   },
   "eco": {
     "title": "Radio Eco Digital",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radioecodigital.com/",
     "cros": false,
     "stream": "https://creativoagencia.stream:7055/stream/1/",
@@ -181,7 +181,7 @@
   },
   "inter-fm-919": {
     "title": "Inter",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://inter.hn/",
     "cros": true,
     "stream": "http://162.213.36.141:8000/;",
@@ -190,7 +190,7 @@
   },
   "estrella-san-pedro-sula": {
     "title": "Radio Estrella de Oro (San Pedro Sula)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radioestrelladeoro.org/",
     "cros": false,
     "stream": "https://stream.playerlive.info:8001/live.aac",
@@ -208,7 +208,7 @@
   },
   "la-mera-braza": {
     "title": "Zol Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": true,
     "stream": "https://stream.zeno.fm/gb30bm9daveuv",
@@ -225,7 +225,7 @@
   },
   "moderna": {
     "title": "Radio Moderna",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://player.listenlive.co/28611/es",
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/MODERNAAAC_SC",
@@ -261,7 +261,7 @@
   },
   "radio-conga": {
     "title": "Radio Conga",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://congafm.com/",
     "cros": true,
     "stream": "https://stream.zeno.fm/28h21wxruxmtv",
@@ -294,7 +294,7 @@
   },
   "hrn-tegucigalpa": {
     "title": "Radio HRN (Tegucigalpa)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radiohrn.hn/",
     "cros": false,
     "stream": "https://ice42.securenetsystems.net/HRN",
@@ -319,7 +319,7 @@
   },
   "ondas-santa-barbara": {
     "title": "Radio Ondas del Ulua (Santa Bárbara)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://sbmultimedios.com/",
     "cros": true,
     "stream": "http://stream.playerlive.info:8287/ondas.aac",
@@ -362,7 +362,7 @@
   },
   "otoro": {
     "title": "Otoro Radio (Intibucá)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": false,
     "stream": "https://stream.playerlive.info:8089/live.aac",

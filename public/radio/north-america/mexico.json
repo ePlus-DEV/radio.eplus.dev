@@ -1,7 +1,7 @@
 {
   "los-40": {
     "title": "Los 40 Principales",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://los40.com.mx/",
     "cros": false,
     "stream": "https://25103.live.streamtheworld.com/LOS40_MEXICOAAC_SC",
@@ -10,7 +10,7 @@
   },
   "amor-cdmx": {
     "title": "Radio Amor (Ciudad de México)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://amorfm.mx",
     "cros": false,
     "stream": "https://22973.live.streamtheworld.com/XHSHFM_SC",
@@ -19,7 +19,7 @@
   },
   "mvs-df": {
     "title": "Noticias MVS (Ciudad de México)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mvsnoticias.com/",
     "cros": false,
     "stream": "https://26503.live.streamtheworld.com/XHMVSFM_SC",
@@ -28,7 +28,7 @@
   },
   "ke-buena": {
     "title": "Ke Buena",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.kebuena.com.mx/",
     "cros": false,
     "stream": "https://18243.live.streamtheworld.com/KEBUENA_SC",
@@ -37,7 +37,7 @@
   },
   "alfa": {
     "title": "Alfa Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://alfaenlinea.com/",
     "cros": false,
     "stream": "https://18693.live.streamtheworld.com/XHFAJ_FMAAC_SC",
@@ -46,7 +46,7 @@
   },
   "la-z-fm": {
     "title": "La Z FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://laz.mx/",
     "cros": false,
     "stream": "https://18723.live.streamtheworld.com/XEQR_FMAAC_SC",
@@ -55,7 +55,7 @@
   },
   "universal": {
     "title": "Universal Stereo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://universal881.com/",
     "cros": false,
     "stream": "https://18003.live.streamtheworld.com/XHRED_FMAAC_SC",
@@ -64,7 +64,7 @@
   },
   "stereo-joya": {
     "title": "Stereo Joya 93.7 (Ciudad de México)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://joya937.mx/",
     "cros": false,
     "stream": "https://24863.live.streamtheworld.com/XEJP_FMAAC_SC",
@@ -73,7 +73,7 @@
   },
   "sabrosita": {
     "title": "Sabrosita 590 AM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://sabrositadigital.mx/",
     "cros": false,
     "stream": "https://24883.live.streamtheworld.com/XEPHAMAAC_SC",
@@ -82,7 +82,7 @@
   },
   "beat-100-9": {
     "title": "Beat",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://beat1009.com.mx/",
     "cros": false,
     "stream": "https://23103.live.streamtheworld.com/XHSONFM_SC",
@@ -91,7 +91,7 @@
   },
   "noticias": {
     "title": "88.9 Noticias",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://889noticias.mx/",
     "cros": false,
     "stream": "https://24863.live.streamtheworld.com/XHMFM_SC",
@@ -100,7 +100,7 @@
   },
   "exa-104-9": {
     "title": "Exa",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://exafm.com/",
     "cros": false,
     "stream": "https://25093.live.streamtheworld.com/XHEXA_SC",
@@ -126,7 +126,7 @@
   },
   "w-96-9": {
     "title": "W Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://wradio.com.mx/",
     "cros": false,
     "stream": "https://18723.live.streamtheworld.com/W_RADIO_SC",
@@ -135,7 +135,7 @@
   },
   "reactor": {
     "title": "Reactor",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.imer.mx/reactor/",
     "cros": false,
     "stream": "https://s2.mexside.net/8002/stream/1/",
@@ -144,7 +144,7 @@
   },
   "la-z-ciudad-juarez": {
     "title": "La Z (Ciudad Juárez Chihuahua)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://lazradio.com.mx/juarez/",
     "cros": false,
     "stream": "https://18733.live.streamtheworld.com/XHEM_FM_SC",
@@ -153,7 +153,7 @@
   },
   "oye": {
     "title": "Oye",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://oye897.com.mx/",
     "cros": false,
     "stream": "https://24863.live.streamtheworld.com/XEOYEFMAAC_SC",
@@ -162,7 +162,7 @@
   },
   "mix-cdmx": {
     "title": "Mix (Ciudad de México)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://mixfm.mx/",
     "cros": false,
     "stream": "https://24863.live.streamtheworld.com/XEOYEFMAAC_SC",
@@ -171,7 +171,7 @@
   },
   "banda-monterrey": {
     "title": "Banda (Monterrey)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://banda933.com.mx/",
     "cros": false,
     "stream": "https://14543.live.streamtheworld.com/XHQQ_FM_SC",
@@ -188,7 +188,7 @@
   },
   "rg690": {
     "title": "RG la Deportiva (Monterrey)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.mmradio.com/radio-envivo/29511",
     "cros": false,
     "stream": "https://24283.live.streamtheworld.com/RG690_SC",
@@ -197,7 +197,7 @@
   },
   "rancherita-piedras-negras": {
     "title": "La Rancherita del Aire",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://rancherita.com.mx/",
     "cros": false,
     "stream": "https://ais-sa2.cdnstream1.com/2577_64.aac",
@@ -215,7 +215,7 @@
   },
   "la-mejor-ciudad-de-mexico": {
     "title": "La Mejor (Ciudad de México)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://lamejor.com.mx/",
     "cros": false,
     "stream": "https://23043.live.streamtheworld.com/XERCFM_SC",
@@ -241,7 +241,7 @@
   },
   "ibero": {
     "title": "Ibero",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://ibero909.fm/",
     "cros": true,
     "stream": "https://noasrv.caster.fm:10182/stream",
@@ -250,7 +250,7 @@
   },
   "imagen": {
     "title": "Imagen",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.imagenradio.com.mx/",
     "cros": false,
     "stream": "https://23263.live.streamtheworld.com/XEDAFMAAC_SC",
@@ -258,7 +258,7 @@
   },
   "el-heraldo": {
     "title": "El Heraldo Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://heraldodemexico.com.mx/",
     "cros": true,
     "stream": "http://n0d.radiojar.com:80/g33sp4yqd6quv",
@@ -267,7 +267,7 @@
   },
   "match-fm": {
     "title": "Match FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://matchmx.fm/",
     "cros": false,
     "stream": "https://25023.live.streamtheworld.com/XHPOPFM_SC",
@@ -276,7 +276,7 @@
   },
   "felicidad": {
     "title": "Radio Felicidad (CDMX)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiofelicidad.mx/",
     "cros": false,
     "stream": "https://14003.live.streamtheworld.com/XEFRAM_SC",
@@ -285,7 +285,7 @@
   },
   "max-tlaxcala": {
     "title": "Stereo Max (Tlaxcala)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://cincoradio.com.mx/en-vivo/?estacion=stereo",
     "cros": true,
     "stream": "http://45.169.236.3:8000/stereomax-mp3",
@@ -294,7 +294,7 @@
   },
   "grupera-puebla": {
     "title": "La Grupera (Puebla)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.lagrupera.mx/",
     "cros": true,
     "stream": "http://node-19.zeno.fm:80/ekpa8qg0mv8uv",
@@ -303,7 +303,7 @@
   },
   "casa-de-oracion": {
     "title": "Casa de Oración Radio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://casadeoracionmexico.com/",
     "cros": true,
     "stream": "https://stream.zenolive.com/grd5cv8bgy5tv",
@@ -312,7 +312,7 @@
   },
   "grande-leon": {
     "title": "LG La Grande (León)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://lglagrande-fm.mx/",
     "cros": true,
     "stream": "http://node-20.zeno.fm:80/hzwy93arcwzuv",
@@ -321,7 +321,7 @@
   },
   "unam": {
     "title": "UNAM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.radio.unam.mx/",
     "cros": true,
     "stream": "http://server1.usatelk.com:27547/stream/1/",
@@ -329,7 +329,7 @@
   },
   "maquina-xalapa": {
     "title": "La Máquina (Xalapa)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://maquina977.com/",
     "cros": true,
     "stream": "http://51.161.84.170:8404/stream/1/",
@@ -338,7 +338,7 @@
   },
   "ke-buena-940": {
     "title": "Ke Buena",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.kebuena940.com.mx/",
     "cros": false,
     "stream": "https://22833.live.streamtheworld.com/BESAME_SC",
@@ -346,7 +346,7 @@
   },
   "stereorey-mexico": {
     "title": "Stereorey",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "http://www.stereorey.com/",
     "cros": false,
     "stream": "https://18443.live.streamtheworld.com/STEREOREY_SC",
@@ -355,7 +355,7 @@
   },
   "globo-mexicali": {
     "title": "FM Globo (Mexicali)",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://fmglobo.com/",
     "cros": false,
     "stream": "https://18683.live.streamtheworld.com/XHPFFM_SC",
@@ -364,7 +364,7 @@
   },
   "centro-690": {
     "title": "Radio Centro y El Fonógrafo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiocentroelfonografo.com/",
     "cros": false,
     "stream": "https://24933.live.streamtheworld.com/XEN_AM_SC",
@@ -373,7 +373,7 @@
   },
   "centro-df": {
     "title": "Radio Centro y El Fonógrafo",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://radiocentro.com/",
     "cros": false,
     "stream": "https://22963.live.streamtheworld.com/XEQR_AM_SC",

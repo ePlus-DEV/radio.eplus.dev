@@ -1,7 +1,7 @@
 {
   "abc-hiru-fm": {
     "title": "ABC Hiru FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.hirufm.lk/",
     "cros": true,
     "stream": "http://209.133.216.3:7018/stream/1/",
@@ -26,7 +26,7 @@
   },
   "sooriyan-fm": {
     "title": "Sooriyan FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.sooriyanfm.lk/",
     "cros": true,
     "stream": "http://209.133.216.3:7071/stream/1/",
@@ -34,7 +34,7 @@
   },
   "shakthi-fm": {
     "title": "Shakthi FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://shakthifm.com/",
     "cros": true,
     "stream": "http://live.trusl.com:1160/stream/1/",
@@ -50,7 +50,7 @@
   },
   "sun-fm": {
     "title": "Sun FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.sunfm.lk/",
     "cros": true,
     "stream": "http://209.133.216.3:7058/stream/1/",
@@ -58,7 +58,7 @@
   },
   "y-fm": {
     "title": "Y FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://yfm.lk/",
     "cros": true,
     "stream": "http://live.trusl.com:1180/stream/1/",
@@ -66,7 +66,7 @@
   },
   "sirasa-fm": {
     "title": "Sirasa FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://sirasafm.lk/",
     "cros": true,
     "stream": "http://live.trusl.com:1170/stream/1/",
@@ -114,7 +114,7 @@
   },
   "yes-fm": {
     "title": "Yes FM ශ්‍රී ලංකාව",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://yesfmonline.com",
     "cros": true,
     "stream": "http://live.trusl.com:1150/stream/1/",
@@ -260,7 +260,7 @@
   },
   "live": {
     "title": "LiveFM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://livefm.lk/",
     "cros": true,
     "stream": "http://cp11.serverse.com:7118/stream",

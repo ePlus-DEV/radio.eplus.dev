@@ -40,7 +40,7 @@
     },
     "futurs-medias": {
         "title": "Radio Futurs (Medias)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.igfm.sn/live.php?channel=rfm",
         "cros": false,
         "stream": "https://stream.zeno.fm/kuk0syz5puquv",
@@ -80,7 +80,7 @@
     },
     "iradio": {
         "title": "iRadio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.seneweb.com/",
         "cros": false,
         "stream": "https://stream.zeno.fm/ymw4tvxhq9duv",
@@ -99,7 +99,7 @@
     },
     "allodakar-tamtam": {
         "title": "AlloDakar Radio TamTam",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radioallodakar.net/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R3644495_SC",
@@ -232,7 +232,7 @@
     },
     "zik-fm": {
         "title": "Zik FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://stream.zeno.fm/vtxarcfpmnruv",

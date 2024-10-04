@@ -101,7 +101,7 @@
     },
     "ok": {
         "title": "OK Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.okradio.net/",
         "cros": false,
         "stream": "https://sslstream.okradio.net/stream/1/",

@@ -41,7 +41,7 @@
     },
     "cadena-dial": {
         "title": "Cadena Dial",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.cadenadial.com/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CADENADIALAAC_SC",
@@ -51,7 +51,7 @@
     },
     "flaix": {
         "title": "Flaix FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.flaixfm.cat/",
         "cros": false,
         "stream": "https://stream.flaixfm.cat/icecast",
@@ -81,7 +81,7 @@
     },
     "flaixbac": {
         "title": "Radio Flaixbac (Barcelona)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.flaixbac.cat/",
         "cros": false,
         "stream": "https://stream.flaixbac.cat/icecast",
@@ -91,7 +91,7 @@
     },
     "los40classic": {
         "title": "Los 40 Classic",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://los40.com/los40_classic/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CLASSICAAC_SC",
@@ -149,7 +149,7 @@
     },
     "maria": {
         "title": "Radio María",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiomaria.es/",
         "cros": true,
         "stream": "http://51.77.84.64:8068/stream/1/",
@@ -229,7 +229,7 @@
     },
     "marca": {
         "title": "Radio Marca",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.marca.com/radio.html",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RADIOMARCA_NACIONALAAC_SC",
@@ -345,7 +345,7 @@
     },
     "chanquete-malaga": {
         "title": "Chanquete FM (Málaga)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "http://www.chanquetefm.com/",
         "cros": true,
         "stream": "http://185.23.192.118:8008/stream/1/",
@@ -365,7 +365,7 @@
     },
     "catalunya-informacio": {
         "title": "Catalunya Informació",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.ccma.cat/catradio/",
         "cros": false,
         "stream": "https://shoutcast.ccma.cat/ccma/catalunyainformacioHD.mp3",

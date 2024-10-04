@@ -102,7 +102,7 @@
     },
     "ibadan": {
         "title": "Radio Nigeria (Ibadan)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radionigeriafm.com/",
         "cros": false,
         "stream": "https://eu8.fastcast4u.com/proxy/amuludun?mp=/stream/1/",
@@ -136,7 +136,7 @@
     },
     "liveway": {
         "title": "Liveway Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://liveway.tv/",
         "cros": false,
         "stream": "https://ice7.securenetsystems.net/LIVEWAY",
@@ -307,7 +307,7 @@
     },
     "praiseworld": {
         "title": "Praiseworld Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.praiseworldradio.com/",
         "cros": false,
         "stream": "https://streaming.radio.co/s7dc18f0ad/listen",

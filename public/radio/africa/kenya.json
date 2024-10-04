@@ -1,7 +1,7 @@
 {
     "kameme": {
         "title": "Kameme (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://kamemefm-atunwadigital.streamguys1.com/kamemefm",
@@ -31,7 +31,7 @@
     },
     "hbr": {
         "title": "HBR (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/homeboyzradio",
@@ -41,7 +41,7 @@
     },
     "inooro": {
         "title": "Inooro FM (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/inooro-fm-live-5",
         "cros": false,
         "stream": "https://inoorofm-atunwadigital.streamguys1.com/inoorofm",
@@ -71,7 +71,7 @@
     },
     "kiss": {
         "title": "Kiss 100 FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://kiss100.co.ke/",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/kiss100fm",
@@ -81,7 +81,7 @@
     },
     "citizen": {
         "title": "Radio Citizen (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/radio-citizen-13",
         "cros": false,
         "stream": "https://radiocitizen-atunwadigital.streamguys1.com/radiocitizen",
@@ -91,7 +91,7 @@
     },
     "jambo": {
         "title": "Radio Jambo",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiojambo.co.ke/",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/radiojambo",
@@ -121,7 +121,7 @@
     },
     "ramogi": {
         "title": "Ramogi FM (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/ramogi-fm-10",
         "cros": false,
         "stream": "https://ramogifm-atunwadigital.streamguys1.com/ramogifm",
@@ -131,7 +131,7 @@
     },
     "milele": {
         "title": "Milele (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://milelefm-atunwadigital.streamguys1.com/milelefm",
@@ -151,7 +151,7 @@
     },
     "musyi": {
         "title": "Musyi FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/musyi-fm-7",
         "cros": false,
         "stream": "https://musyifm-atunwadigital.streamguys1.com/musyifm",
@@ -161,7 +161,7 @@
     },
     "egesa": {
         "title": "Egesa FM (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/egesa-fm-3",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/egesafm",
@@ -190,7 +190,7 @@
     },
     "msenangu-fm-mombasa": {
         "title": "Msenangu FM (Mombasa)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/msenangufm",
@@ -200,7 +200,7 @@
     },
     "maria": {
         "title": "Radio Maria",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomaria.co.ke",
         "cros": false,
         "stream": "https://dreamsiteradiocp5.com/proxy/rmkenyanai?mp=/stream/1/",
@@ -220,7 +220,7 @@
     },
     "chamgei": {
         "title": "Chamgei FM (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/chamgei-fm-12",
         "cros": false,
         "stream": "https://chamgeifm-atunwadigital.streamguys1.com/chamgeifm",
@@ -230,7 +230,7 @@
     },
     "meru-fm": {
         "title": "Meru FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://merufm-atunwadigital.streamguys1.com/merufm",
@@ -279,7 +279,7 @@
     },
     "east-fm": {
         "title": "East FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://eastfm-atunwadigital.streamguys1.com/eastfm",
@@ -289,7 +289,7 @@
     },
     "hero": {
         "title": "Hero Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://stream.zeno.fm/sekpu50sy2quv",
@@ -298,7 +298,7 @@
     },
     "mulembe": {
         "title": "Mulembe FM (Nairobi)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/mulembe-fm-8",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/mulembefm",
@@ -308,7 +308,7 @@
     },
     "hot96": {
         "title": "Hot 96",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/hot-96-fm-2",
         "cros": false,
         "stream": "https://hot96-atunwadigital.streamguys1.com/hot96",
@@ -338,7 +338,7 @@
     },
     "bahari": {
         "title": "Bahari FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/bahari-fm-9",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/baharifm",
@@ -348,7 +348,7 @@
     },
     "sulwe": {
         "title": "Sulwe FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/sulwe-4",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/sulwefm",
@@ -358,7 +358,7 @@
     },
     "muuga": {
         "title": "Muuga FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/muuga-fm-11",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/muugafm",
@@ -396,7 +396,7 @@
     },
     "vuuka": {
         "title": "Vuuka FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://citizen.digital/radio/vuuka-fm-6",
         "cros": false,
         "stream": "https://atunwadigital.streamguys1.com/vuukafm",

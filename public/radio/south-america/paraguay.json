@@ -11,7 +11,7 @@
   },
   "rock-pop": {
     "title": "Rock and Pop",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://rockandpop.com.py/",
     "cros": false,
     "stream": "https://cp9.serverse.com/proxy/rockandpop/stream/1/",
@@ -20,7 +20,7 @@
   },
   "nanduti": {
     "title": "Radio Ñandutí",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://nanduti.com.py/",
     "cros": false,
     "stream": "https://cp9.serverse.com/proxy/naduti1020/stream",
@@ -29,7 +29,7 @@
   },
   "estacion-40": {
     "title": "Radio Estación 40",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://estacion40.com.py/",
     "cros": false,
     "stream": "https://mdstrm.com/audio/62d81cfbbfbcee0837ba1b60/icecast.audio",
@@ -56,7 +56,7 @@
   },
   "monumental": {
     "title": "Radio Monumental",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://monumental.com.py/",
     "cros": false,
     "stream": "https://mdstrm.com/audio/62d81ca6a459e4082203c95b/icecast.audio",
@@ -64,7 +64,7 @@
   },
   "urbana": {
     "title": "Radio Urbana",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://urbana.com.py",
     "cros": false,
     "stream": "https://mdstrm.com/audio/62d81cdabff0bc082f8f1a24/icecast.audio",
@@ -116,7 +116,7 @@
   },
   "horizonte": {
     "title": "Horizonte",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": false,
     "stream": "https://stream.radiosenpy.net:7018/;",
@@ -124,7 +124,7 @@
   },
   "itakaru": {
     "title": "Radio Itakaru",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "",
     "cros": false,
     "stream": "https://stream.zeno.fm/s1gaprvh02quv",
@@ -160,7 +160,7 @@
   },
   "kokue-poty": {
     "title": "Radio Kokue Poty",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://kokuepoty.com.py/",
     "cros": true,
     "stream": "http://radio.host.com.py:9302/stream/1/",
@@ -177,7 +177,7 @@
   },
   "san-ignacio": {
     "title": "San Ignacio",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://sanignaciofm.com/",
     "cros": false,
     "stream": "https://streampy.radiosparaguay.com/8154/stream",
@@ -185,7 +185,7 @@
   },
   "fm-azul-y-oro": {
     "title": "FM Azul Y Oro",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.fmazulyoro.com.py",
     "cros": false,
     "stream": "https://radio.host.com.py:7197/;",
@@ -203,7 +203,7 @@
   },
   "conquistador": {
     "title": "Radio Conquistador",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.conquistadorfm891.com/",
     "cros": true,
     "stream": "http://masstreaming.online:8612/stream/1/",
@@ -221,7 +221,7 @@
   },
   "panamericana": {
     "title": "Panamericana",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://panamericanacarapegua.com/",
     "cros": false,
     "stream": "https://v.orlandohugo.com/8156/;",

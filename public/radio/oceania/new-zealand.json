@@ -1,7 +1,7 @@
 {
     "the-sound": {
         "title": "Radio The Sound",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.thesound.co.nz/home.html",
         "cros": false,
         "stream": "https://digitalstreams-edge-lb.mediaworks.nz/sound_net_icy?Dist=TuneIn",
@@ -11,7 +11,7 @@
     },
     "the-rock": {
         "title": "The Rock FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.therock.net.nz/home.html",
         "cros": false,
         "stream": "https://digitalstreams-edge-lb.mediaworks.nz/rock_net_icy?Dist=TuneIn",
@@ -29,7 +29,7 @@
     },
     "95bfm": {
         "title": "Radio 95 b FM (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://95bfm.com/",
         "cros": false,
         "stream": "https://streams.95bfm.com/stream128",
@@ -37,7 +37,7 @@
     },
     "mai": {
         "title": "Mai FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.maifm.co.nz/home.html",
         "cros": false,
         "stream": "https://digitalstreams-edge-lb.mediaworks.nz/mai_net_icy?Dist=TuneIn",
@@ -46,7 +46,7 @@
     },
     "coast": {
         "title": "Coast",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.thecoast.net.nz/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_011_aac",
@@ -55,7 +55,7 @@
     },
     "tarana": {
         "title": "Radio Tarana (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.stuff.co.nz/",
         "cros": false,
         "stream": "https://peridot.streamguys1.com:7155/Tarana.aac",
@@ -71,7 +71,7 @@
     },
     "humm": {
         "title": "Humm FM (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://digitalstreams-edge-lb.mediaworks.nz/humm_net_icy",
@@ -88,7 +88,7 @@
     },
     "george": {
         "title": "Radio George (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.georgefm.co.nz/home.html",
         "cros": false,
         "stream": "https://digitalstreams-edge-lb.mediaworks.nz/george_net_icy",
@@ -97,7 +97,7 @@
     },
     "the-edge": {
         "title": "The Edge (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.theedge.co.nz/home.html",
         "cros": false,
         "stream": "https://digitalstreams-edge-lb.mediaworks.nz/edge_net_icy?Dist=TuneIn",
@@ -132,7 +132,7 @@
     },
     "hauraki": {
         "title": "Radio Hauraki",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.hauraki.co.nz/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_009_aac",
@@ -149,7 +149,7 @@
     },
     "zm-auckland": {
         "title": "ZM (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.zmonline.com/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_008_aac",
@@ -200,7 +200,7 @@
     },
     "the-hits": {
         "title": "The Hits",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.thehits.co.nz/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_005_aac",
@@ -209,7 +209,7 @@
     },
     "gold-sport-auckland": {
         "title": "Gold Sport (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.gold.co.nz/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_016_aac",
@@ -218,7 +218,7 @@
     },
     "the-cheese": {
         "title": "The Cheese",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://thecheese.co.nz/",
         "cros": false,
         "stream": "https://station.thecheese.co.nz/listen/the_cheese/aac",
@@ -236,7 +236,7 @@
     },
     "new-zealand-international": {
         "title": "RNZ Pacific",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rnz.co.nz/international",
         "cros": false,
         "stream": "https://stream-ice.radionz.co.nz/international_aac64",
@@ -244,7 +244,7 @@
     },
     "coast-fm-nz-christchurch": {
         "title": "Coast FM NZ (Christchurch)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.thecoast.net.nz/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_050_aac",
@@ -253,7 +253,7 @@
     },
     "gaia-tauranga": {
         "title": "Gaia FM (Tauranga)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://gaiafm.stationplaylist.com/",
         "cros": true,
         "stream": "http://stream.stationplaylist.com:8000/stream/1/",
@@ -270,7 +270,7 @@
     },
     "ski": {
         "title": "Ski FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://skifmnetwork.co.nz/",
         "cros": false,
         "stream": "https://s2.radio.co/s6436891bc/listen",
@@ -278,7 +278,7 @@
     },
     "flava": {
         "title": "Flava (Auckland)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.flava.co.nz/",
         "cros": false,
         "stream": "https://ais-nzme.streamguys1.com/nz_010_aac",

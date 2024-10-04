@@ -1,7 +1,7 @@
 {
     "abc-newsradio": {
         "title": "ABC News Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.abc.net.au/news/newsradio/",
         "cros": true,
         "stream": "https://live-radio01.mediahubaustralia.com/PBW/aac/",
@@ -26,7 +26,7 @@
     },
     "triple-r": {
         "title": "Triple R",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rrr.org.au/",
         "cros": false,
         "stream": "https://realtime.rrr.org.au/p1m",
@@ -43,7 +43,7 @@
     },
     "2sm": {
         "title": "2SM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://2smsupernetwork.com/",
         "cros": true,
         "stream": "http://s2.viastreaming.net:7100/stream/1/",
@@ -84,7 +84,7 @@
     },
     "raw-fm": {
         "title": "Raw FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.rawfm.com.au/",
         "cros": false,
         "stream": "https://frontend.stream.rawfm.net.au/i/syd-stream-192k.aac",
@@ -92,7 +92,7 @@
     },
     "hope-103-2": {
         "title": "Hope",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://hope1032.com.au/",
         "cros": false,
         "stream": "https://stream.hopemedia.com.au/hope",
@@ -125,7 +125,7 @@
     },
     "fresh-92-7": {
         "title": "Fresh",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.fresh927.com.au/",
         "cros": false,
         "stream": "https://live.fresh927.com.au/freshaac",
@@ -150,7 +150,7 @@
     },
     "joy-94-9": {
         "title": "JOY",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://joy.org.au/",
         "cros": false,
         "stream": "https://stream.joy.org.au/proxy/joy949?mp=/live",
@@ -167,7 +167,7 @@
     },
     "kiss-fm": {
         "title": "Kiss FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://kissfm.com.au/",
         "cros": true,
         "stream": "http://cc.net2streams.com:8565/kissfm.aac",
@@ -224,7 +224,7 @@
     },
     "pbs-fm": {
         "title": "PBS 106.7 FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.pbsfm.org.au/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/3PBS_FMAAC_SC",
@@ -240,7 +240,7 @@
     },
     "89-9-lightfm": {
         "title": "89.9 TheLight",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://thelight.com.au/",
         "cros": false,
         "stream": "https://stream.thelight.com.au:8130/stream/1/",
@@ -249,7 +249,7 @@
     },
     "2me-arabic": {
         "title": "2ME Radio Arabic",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.2me.com.au/",
         "cros": false,
         "stream": "https://streaming.2me.com.au/2me",
@@ -257,7 +257,7 @@
     },
     "101-fm": {
         "title": "101FM (Logan City)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://101fm.com.au/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4CBLAAC_SC",
@@ -281,7 +281,7 @@
     },
     "96five-family": {
         "title": "96five",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.96five.com/",
         "cros": false,
         "stream": "https://stream1.cnmns.net/96five",
@@ -289,7 +289,7 @@
     },
     "curtin-fm": {
         "title": "Curtin FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.curtinfm.com.au/",
         "cros": true,
         "stream": "http://usa7.fastcast4u.com:6192/stream/1/",
@@ -314,7 +314,7 @@
     },
     "4mbs-classic-fm": {
         "title": "4MBS Classic FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.4mbs.com.au/",
         "cros": false,
         "stream": "https://stream.4mbs.com.au/4mbsclassicfm",
@@ -322,7 +322,7 @@
     },
     "puradsifm": {
         "title": "Puradsifm",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://puradsi.com/",
         "cros": true,
         "stream": "http://psrlive3.listenon.in/fmpuradsi?station=puradsifm",
@@ -339,7 +339,7 @@
     },
     "northside-99-3": {
         "title": "Northside Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://northsideradio.com.au/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NSBAAC_SC",
@@ -347,7 +347,7 @@
     },
     "mix-fm-927": {
         "title": "Mix FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.mixfm.com.au/",
         "cros": false,
         "stream": "https://stream.rcs.revma.com/z06q4stdwhruv",

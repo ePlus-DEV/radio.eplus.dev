@@ -129,7 +129,7 @@
     },
     "oceano-pacifico-rfm": {
         "title": "Oceano Pacífico RFM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://rfm.sapo.pt/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/OCEANPACIFICAAC_SC",
@@ -169,7 +169,7 @@
     },
     "oxigenio": {
         "title": "Rádio Oxigénio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.oxigenio.fm/",
         "cros": false,
         "stream": "https://proic1.evspt.com/oxigenio_aac",
@@ -178,7 +178,7 @@
     },
     "radar": {
         "title": "Radio Radar (Lisboa)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radarlisboa.fm/",
         "cros": false,
         "stream": "https://proic1.evspt.com/radar_aac",
@@ -236,7 +236,7 @@
     },
     "batida-lisboa": {
         "title": "Batida FM (Lisboa)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://bauermedia.pt/batidafm",
         "cros": false,
         "stream": "https://stream-icy.bauermedia.pt/batidafm.aac",
@@ -255,7 +255,7 @@
     },
     "maria-102-2": {
         "title": "Radio Maria (Lisboa)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiomaria.pt/",
         "cros": false,
         "stream": "https://dreamsiteradiocp5.com/proxy/rmportugal1?mp=/stream/1/",
@@ -273,7 +273,7 @@
     },
     "santiago-guimaraes": {
         "title": "Radio Santiago (Guimaraes)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.guimaraesdigital.pt/index.php/grupo-santiago/radio-santiago",
         "cros": true,
         "stream": "http://eu6.fastcast4u.com:5002/stream",
@@ -302,7 +302,7 @@
     },
     "botareu": {
         "title": "Radio Botareu (Agueda)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiobotareu.pt/",
         "cros": false,
         "stream": "https://nl.digitalrm.pt:8238/stream",

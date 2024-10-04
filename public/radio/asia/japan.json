@@ -12,7 +12,7 @@
   },
   "shonan-beach-fm": {
     "title": "湘南ビーチFM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "signal": "78.9 FM",
     "url": "https://www.beachfm.co.jp/",
     "cros": false,

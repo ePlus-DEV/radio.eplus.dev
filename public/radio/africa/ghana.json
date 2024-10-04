@@ -117,7 +117,7 @@
     },
     "x-live": {
         "title": "X Live Africa (Accra)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "",
         "cros": false,
         "stream": "https://stream.zeno.fm/d800ga42u8quv",
@@ -241,7 +241,7 @@
     },
     "ghana-music": {
         "title": "Ghana Music Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://ghanamusic.com/",
         "cros": false,
         "stream": "https://streaming.radio.co/s92f890821/listen",

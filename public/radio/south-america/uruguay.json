@@ -171,7 +171,7 @@
     },
     "disney": {
         "title": "Radio Disney (Montevideo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://uy.radiodisney.com/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_URY_MVAAC_SC",
@@ -201,7 +201,7 @@
     },
     "aspen-punta-del-este": {
         "title": "Aspen (Punta del Este)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://aspenpunta.com/",
         "cros": false,
         "stream": "https://streaming2.hostingmontevideo.com:7010/stream/1/",
@@ -220,7 +220,7 @@
     },
     "colonia": {
         "title": "Radio Colonia (Montevideo)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://radiocolonia.com/",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/COLONIA_ADP_SC",
@@ -267,7 +267,7 @@
     },
     "voz-de-melo": {
         "title": "La Voz de Melo",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.lavozdemelo.com.uy/",
         "cros": false,
         "stream": "https://stream.zeno.fm/fzc86k96yy8uv",
@@ -326,7 +326,7 @@
     },
     "zorrilla-de-san-martin": {
         "title": "Radio Zorrilla de San Martín AM (Tacuarembó)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiozorrilla.com/",
         "cros": false,
         "stream": "https://server-usa2.radioseninternet.net/9312/stream/1/",
@@ -345,7 +345,7 @@
     },
     "exito-paysandu": {
         "title": "Éxito FM (Paysandú)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://exitofm.com.uy/",
         "cros": false,
         "stream": "https://salida.stream.com.uy:8506/stream",
@@ -393,7 +393,7 @@
     },
     "radio-maria-uruguay": {
         "title": "Radio María  (Florida)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.radiomaria.org.uy/",
         "cros": true,
         "stream": "http://dreamsiteradiocp2.com:8070/stream/1/",

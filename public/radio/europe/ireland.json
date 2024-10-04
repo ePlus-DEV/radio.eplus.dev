@@ -1,7 +1,7 @@
 {
     "today-fm": {
         "title": "Today FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.todayfm.com/",
         "cros": false,
         "stream": "https://stream.audioxi.com/TDAAC",
@@ -54,7 +54,7 @@
     },
     "beat-102-103": {
         "title": "Beat 102-103",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.beat102103.com/",
         "cros": false,
         "stream": "https://stream.audioxi.com/BEATAAC",
@@ -208,7 +208,7 @@
     },
     "wlr-fm": {
         "title": "WLR FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.wlrfm.com/",
         "cros": false,
         "stream": "https://live-bauerie.sharp-stream.com/WLRAAC",
@@ -233,7 +233,7 @@
     },
     "clare-fm": {
         "title": "Clare FM",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.clare.fm/",
         "cros": false,
         "stream": "https://stream.audioxi.com/CLAREFMAAC",
@@ -275,7 +275,7 @@
     },
     "south-east-radio": {
         "title": "South East Radio",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.southeastradio.ie/",
         "cros": false,
         "stream": "https://stream.audioxi.com/SOUTHEAST",
@@ -327,7 +327,7 @@
     },
     "ocean-fm": {
         "title": "Ocean FM (Carrowduff)",
-        "type": "audio/aac",
+        "type": "audio/mpeg",
         "url": "https://www.oceanfm.ie/",
         "cros": false,
         "stream": "https://stream.audioxi.com/OCEANSAAC",

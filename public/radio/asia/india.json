@@ -245,7 +245,7 @@
   },
   "geethavani-tamil": {
     "title": "Geethavani FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://www.geethavaani.com/",
     "cros": true,
     "stream": "http://centova.radioservers.biz:8037/stream/1/",
@@ -288,7 +288,7 @@
   },
   "shakti": {
     "title": "Shakti FM",
-    "type": "audio/aac",
+    "type": "audio/mpeg",
     "url": "https://shakthifm.com/",
     "cros": true,
     "stream": "http://live.trusl.com:1160/stream/1/",
