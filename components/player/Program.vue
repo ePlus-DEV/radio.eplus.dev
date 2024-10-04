@@ -24,7 +24,8 @@
                 {{ $dayjs.unix(item.startTime).format("dddd - DD/MM//YYYY") }}
               </div>
               <div class="dark:text-white">
-                {{ $dayjs.unix(item.startTime).format("HH:mm") }} - {{ $dayjs.unix(item.endTime).format("HH:mm") }}
+                {{ $dayjs.unix(item.startTime).format("HH:mm") }} -
+                {{ $dayjs.unix(item.endTime).format("HH:mm") }}
               </div>
             </td>
 

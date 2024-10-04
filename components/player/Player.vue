@@ -215,10 +215,13 @@
       </div>
       <!-- END - Player -->
 
-      <span class="text-xs text-gray-500 dark:text-white uppercase font-medium p-5">
-        {{ $dayjs.unix(1728018000).format('YYYY h:mm A') }} -
-        {{ $dayjs.unix(1728018000).tz('America/New_York').format('YYYY h:mm A') }}
-
+      <span
+        class="text-xs text-gray-500 dark:text-white uppercase font-medium p-5"
+      >
+        {{ $dayjs.unix(1728018000).format("YYYY h:mm A") }} -
+        {{
+          $dayjs.unix(1728018000).tz("America/New_York").format("YYYY h:mm A")
+        }}
       </span>
 
       <!-- BEGIN - Program  -->

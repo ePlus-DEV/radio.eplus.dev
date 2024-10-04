@@ -80,7 +80,7 @@
 
 <script setup>
 const config = useRuntimeConfig();
-const dayjs = useDayjs()
+const dayjs = useDayjs();
 const status = ref("digitalocean");
 const color = ref("#0167ff");
 const lastUpdate = ref(new Date().getFullYear());
