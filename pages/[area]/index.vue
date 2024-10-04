@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- BEGIN - Breadcrumbs -->
-    <Breadcrumbs
-      :area="area"
-      level_1=""
-      :level_2="$t(i18n)"
-    />
+    <Breadcrumbs :area="area" level_1="" :level_2="$t(i18n)" />
     <!-- END - Breadcrumbs -->
 
     <!-- BEGIN - Player -->
@@ -34,10 +30,10 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 // Define the area variable
 const route = useRoute(); // Use useRoute to get the route object
 const area = route.params.area as string;
-const i18n = `world.${area.replace(/-/g, '_')}.name`;
+const i18n = `world.${area.replace(/-/g, "_")}.name`;
 
 useHead({
-  title: t(i18n)
+  title: t(i18n),
 });
 
 useSeoMeta({

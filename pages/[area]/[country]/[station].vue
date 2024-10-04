@@ -181,16 +181,16 @@ const fetchSchedule = async (url: string) => {
       // Fetch the current song data from the first program item
       const firstProgramItem = resDataValue.data.items[0];
       fetchSong(
-      `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`
+        `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
       const resDataSuccess = resData.value as { success: boolean };
       if (resDataSuccess.success) {
-      data.value = (resData.value as { result: Track[] }).result;
+        data.value = (resData.value as { result: Track[] }).result;
       }
       if (data.value.length > 0) {
-      const firstTrack = data.value[0];
-      document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
+        const firstTrack = data.value[0];
+        document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
       }
     }
     if (polling_schedule.value !== null) {
