@@ -215,8 +215,6 @@
       </div>
       <!-- END - Player -->
 
-      <span class="text-white">{{ $src }}</span>
-
       <!-- BEGIN - Program  -->
       <PlayerProgram :program="program" />
       <!-- END - Program  -->
