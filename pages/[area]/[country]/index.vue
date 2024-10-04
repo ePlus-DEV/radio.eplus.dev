@@ -37,9 +37,6 @@ const route = useRoute();
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
-const areaI18n = computed(() => (
-  Array.isArray(area.value) ? area.value[0] : area.value
-).replace(/-/g, "_"));
 
 const thumb = computed(() => `/img/${area.value ? area.value : 'asia'}/flags/${slug.value ? slug.value : 'viet-nam'}.png`);
 
