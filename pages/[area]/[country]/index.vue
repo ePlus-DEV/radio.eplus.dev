@@ -38,14 +38,18 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
 
-const thumb = computed(() => `/img/${area.value ? area.value : 'asia'}/flags/${slug.value ? slug.value : 'viet-nam'}.png`);
+const thumb = computed(
+  () =>
+    `/img/${area.value ? area.value : "asia"}/flags/${slug.value ? slug.value : "viet-nam"}.png`,
+);
 
-const i18n = computed(() => (
-  `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`
-));
+const i18n = computed(
+  () =>
+    `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
+);
 
 useHead({
-  title: t(i18n.value)
+  title: t(i18n.value),
 });
 
 useSeoMeta({
@@ -56,9 +60,7 @@ useSeoMeta({
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
  */
-const { data, error } = useFetch(
-  `/radio/${area.value}/${slug.value}.json`
-);
+const { data, error } = useFetch(`/radio/${area.value}/${slug.value}.json`);
 
 watchEffect(() => {
   if (error.value) {
@@ -79,9 +81,9 @@ watchEffect(() => {
     cros: boolean;
   }
 
-  const favoriteChannel = Object.values(data.value as Record<string, Channel>).find(
-    (channel) => channel.favorite,
-  );
+  const favoriteChannel = Object.values(
+    data.value as Record<string, Channel>,
+  ).find((channel) => channel.favorite);
 
   if (!favoriteChannel) {
     console.error("Favorite channel not found");
