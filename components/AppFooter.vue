@@ -81,38 +81,38 @@
 <script setup>
 const config = useRuntimeConfig();
 
-const status = ref('digitalocean');
-const color = ref('#0167ff');
+const status = ref("digitalocean");
+const color = ref("#0167ff");
 const lastUpdate = ref(new Date().getFullYear());
 const links = ref([
-  { id: 1, to: '/about', text: 'navmenu.about' },
-  { id: 2, to: '/privacy-policy', text: 'navmenu.privacy' },
-  { id: 3, to: '/terms-of-use', text: 'navmenu.terms' },
-  { id: 4, to: '/statistics', text: 'navmenu.statistics' },
+  { id: 1, to: "/about", text: "navmenu.about" },
+  { id: 2, to: "/privacy-policy", text: "navmenu.privacy" },
+  { id: 3, to: "/terms-of-use", text: "navmenu.terms" },
+  { id: 4, to: "/statistics", text: "navmenu.statistics" },
 ]);
 const socialLinks = ref([
   {
     id: 1,
-    name: 'Facebook',
+    name: "Facebook",
     href: config.public.facebook,
-    icon: 'facebook-f',
+    icon: "facebook-f",
   },
   {
     id: 2,
-    name: 'X',
+    name: "X",
     href: config.public.x,
-    icon: 'x-twitter',
+    icon: "x-twitter",
   },
-  { id: 3, name: 'GitHub', href: config.public.github, icon: 'github' },
+  { id: 3, name: "GitHub", href: config.public.github, icon: "github" },
 ]);
 
 /// <summary>
 /// Handles the scroll event to toggle the visibility of the "scroll to top" button.
 /// </summary>
 const handleScroll = () => {
-  const topButton = document.getElementById('topButton');
+  const topButton = document.getElementById("topButton");
   if (topButton) {
-    topButton.classList.toggle('hidden', window.scrollY <= 20);
+    topButton.classList.toggle("hidden", window.scrollY <= 20);
   }
 };
 
@@ -120,7 +120,7 @@ const handleScroll = () => {
  * Scrolls the window to the top smoothly.
  */
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 /**
@@ -142,23 +142,27 @@ const getLastUpdate = async () => {
   const success_steps = responseData.deployments[0].progress.success_steps;
   const total_steps = responseData.deployments[0].progress.total_steps;
   if (success_steps === total_steps) {
-    lastUpdate.value = moment(responseData.deployments[0].phase_last_updated_at).format('LLLL');
-    status.value = 'digitalocean';
-    color.value = '#0167ff';
+    lastUpdate.value = moment(
+      responseData.deployments[0].phase_last_updated_at,
+    ).format("LLLL");
+    status.value = "digitalocean";
+    color.value = "#0167ff";
   } else {
     status.value = `Deployment_(${success_steps}/${total_steps})`;
-    color.value = '#031b4e';
-    lastUpdate.value = moment(responseData.deployments[0].created_at).format('LLLL');
+    color.value = "#031b4e";
+    lastUpdate.value = moment(responseData.deployments[0].created_at).format(
+      "LLLL",
+    );
   }
   setInterval(getLastUpdate, 900000); // 15 minutes
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
   getLastUpdate();
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
