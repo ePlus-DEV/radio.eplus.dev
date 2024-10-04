@@ -10,9 +10,9 @@
 
     <!-- BEGIN - Player -->
     <Player
-      country="world.asia.viet_nam"
+      :country="i18n"
       :home="true"
-      thumb="/img/asia/flags/viet-nam.png"
+      :thumb="thumb"
       :streamName="streamName"
       :streamUrl="streamUrl"
     ></Player>
@@ -31,20 +31,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import type { AudioSrc, AudioMimeType } from "vidstack";
+const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 const route = useRoute();
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
-const areaI18n = (
+const areaI18n = computed(() => (
   Array.isArray(area.value) ? area.value[0] : area.value
-).replace(/-/g, "_");
-const i18n = ref(
-  `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
-);
+).replace(/-/g, "_"));
+
+const thumb = computed(() => `/img/${area.value ? area.value : 'asia'}/flags/${slug.value ? slug.value : 'viet-nam'}.png`);
+
+const i18n = computed(() => (
+  `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`
+));
+
+useHead({
+  title: t(i18n.value)
+});
 
 useSeoMeta({
   // will be inferred as the lastmod value in the sitemap
@@ -54,46 +61,44 @@ useSeoMeta({
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
  */
-const fetchData = async (): Promise<void> => {
-  try {
-    const response = await fetch(
-      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
-    );
-    const data = await response.json();
+const { data, error } = useFetch(
+  `/radio/${area.value}/${slug.value}.json`
+);
 
-    if (!data) {
-      throw new Error("No data returned from fetch");
-    }
-
-    interface Channel {
-      favorite: boolean;
-      title: string;
-      stream: string;
-      type: string;
-      cros: boolean;
-    }
-
-    const favoriteChannel = Object.values(data as Record<string, Channel>).find(
-      (channel) => channel.favorite,
-    );
-
-    if (!favoriteChannel) {
-      throw new Error("Favorite channel not found");
-    }
-
-    streamName.value = favoriteChannel.title;
-    streamUrl.value = {
-      src: favoriteChannel.cros
-        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
-        : favoriteChannel.stream,
-      type: favoriteChannel.type as AudioMimeType,
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
+watchEffect(() => {
+  if (error.value) {
+    console.error("Error fetching data:", error.value);
+    return;
   }
-};
 
-onMounted(() => {
-  fetchData();
+  if (!data.value) {
+    console.error("No data returned from fetch");
+    return;
+  }
+
+  interface Channel {
+    favorite: boolean;
+    title: string;
+    stream: string;
+    type: string;
+    cros: boolean;
+  }
+
+  const favoriteChannel = Object.values(data.value as Record<string, Channel>).find(
+    (channel) => channel.favorite,
+  );
+
+  if (!favoriteChannel) {
+    console.error("Favorite channel not found");
+    return;
+  }
+
+  streamName.value = favoriteChannel.title;
+  streamUrl.value = {
+    src: favoriteChannel.cros
+      ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
+      : favoriteChannel.stream,
+    type: favoriteChannel.type as AudioMimeType,
+  };
 });
 </script>

@@ -217,7 +217,7 @@
       </div>
       <!-- END - Player -->
 
-      {{ $src }}
+      <span class="text-white">{{ $src }}</span>
 
       <!-- BEGIN - Program  -->
       <PlayerProgram :program="program" />
@@ -298,6 +298,7 @@ const updateOnlineStatus = () => {
 function onPlay() {
   if (!waiting.value && !streamError.value) {
     $player.value?.play();
+    console.log($player);
     waiting.value = true;
     setTimeout(() => {
       waiting.value = false;
