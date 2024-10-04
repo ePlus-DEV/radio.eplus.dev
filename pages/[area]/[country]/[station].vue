@@ -19,7 +19,7 @@
       :current="current"
       :streamName="streamName"
       :streamUrl="streamUrl"
-      :thumb="`/img/${Array.isArray(area) ? area[0] : area}/flags/${Array.isArray(slug) ? slug[0] : slug}.png`"
+      :thumb="thumb"
     ></Player>
     <!-- END - Player -->
 
@@ -115,6 +115,7 @@ interface Track {
   track_artist: string;
   // Add other properties as needed
 }
+const thumb = ref("");
 
 useHead({
   title: title.value,
@@ -149,6 +150,7 @@ const fetchData = async () => {
         type: data.type as AudioMimeType,
       };
 
+      thumb.value = data.features;
       document.title = `${streamName.value} - ${title.value}`;
 
       if (data.schedule !== undefined) {
