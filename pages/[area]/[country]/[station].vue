@@ -87,9 +87,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeUnmount, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const router = useRouter();
 const route = useRoute();
