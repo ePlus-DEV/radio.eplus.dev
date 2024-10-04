@@ -80,7 +80,7 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
+const dayjs = useDayjs()
 const status = ref("digitalocean");
 const color = ref("#0167ff");
 const lastUpdate = ref(new Date().getFullYear());
@@ -142,7 +142,7 @@ const getLastUpdate = async () => {
   const success_steps = responseData.deployments[0].progress.success_steps;
   const total_steps = responseData.deployments[0].progress.total_steps;
   if (success_steps === total_steps) {
-    lastUpdate.value = moment(
+    lastUpdate.value = dayjs(
       responseData.deployments[0].phase_last_updated_at,
     ).format("LLLL");
     status.value = "digitalocean";
@@ -150,7 +150,7 @@ const getLastUpdate = async () => {
   } else {
     status.value = `Deployment_(${success_steps}/${total_steps})`;
     color.value = "#031b4e";
-    lastUpdate.value = moment(responseData.deployments[0].created_at).format(
+    lastUpdate.value = dayjs(responseData.deployments[0].created_at).format(
       "LLLL",
     );
   }

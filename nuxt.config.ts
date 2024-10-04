@@ -160,7 +160,7 @@ export default defineNuxtConfig({
   },
   dayjs: {
     locales: ["vi", "ja", "zh-cn", "zh-tw", "fr", "ru"],
-    plugins: ["relativeTime", "utc", "timezone"],
+    plugins: ["relativeTime", "utc", "timezone", "localizedFormat"],
     defaultLocale: "en",
     defaultTimezone: "America/New_York",
   },
