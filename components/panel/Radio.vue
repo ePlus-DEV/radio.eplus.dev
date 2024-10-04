@@ -54,7 +54,7 @@
             <div class="indicator-item text-white badge badge-accent">
               {{ country.station_count }}
             </div>
-            <NuxtImg
+            <img
               loading="lazy"
               :src="country.flag"
               :alt="$t(country.name)"
@@ -94,13 +94,13 @@ onMounted(async () => {
     requestOptions: { hitsPerPage: 100 },
   });
   const groupedResults = (result.value.hits as unknown as Country[]).reduce(
-    (acc: GroupedResults, hit: Country) => {
+    (gr: GroupedResults, hit: Country) => {
       const category = hit.category || "Uncategorized";
-      if (!acc[category]) {
-        acc[category] = [];
+      if (!gr[category]) {
+        gr[category] = [];
       }
-      acc[category].push(hit);
-      return acc;
+      gr[category].push(hit);
+      return gr;
     },
     {},
   );
