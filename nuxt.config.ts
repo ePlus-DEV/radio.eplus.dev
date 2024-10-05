@@ -17,6 +17,12 @@ export default defineNuxtConfig({
       apiZingLiveStreamProgramDetail:
         process.env.NUXT_PUBLIC_API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
       apiZingGetLyric: process.env.NUXT_PUBLIC_API_ZING_GET_LYRIC,
+      digitaloceanEndpoint: process.env.NUXT_PUBLIC_DIGITALOCEAN_ENDPOINT,
+      digitaloceanApiKey: process.env.NUXT_PUBLIC_DIGITALOCEAN_API_KEY,
+      x: process.env.NUXT_PUBLIC_X,
+      facebook: process.env.NUXT_PUBLIC_FACEBOOK,
+      github: process.env.NUXT_PUBLIC_GITHUB,
+      copyright: process.env.NUXT_PUBLIC_COPYRIGHT,
     },
   },
   modules: [
@@ -135,8 +141,7 @@ export default defineNuxtConfig({
   fontawesome: {
     component: "fa",
     icons: {
-      solid: [],
-      regular: [],
+      brands: ["facebook-f", "github", "x-twitter"],
     },
     proIcons: {
       solid: [
@@ -148,14 +153,14 @@ export default defineNuxtConfig({
         "wifi-slash",
       ],
       regular: ["magnifying-glass-music", "house", "list-music"],
-      light: ["sun-bright", "moon", "desktop", "bookmark"],
+      light: ["sun-bright", "moon", "desktop", "bookmark", "up"],
       thin: [],
       duotone: ["snooze"],
     },
   },
   dayjs: {
     locales: ["vi", "ja", "zh-cn", "zh-tw", "fr", "ru"],
-    plugins: ["relativeTime", "utc", "timezone"],
+    plugins: ["relativeTime", "utc", "timezone", "localizedFormat"],
     defaultLocale: "en",
     defaultTimezone: "America/New_York",
   },

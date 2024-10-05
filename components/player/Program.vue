@@ -20,11 +20,12 @@
             :key="index"
           >
             <td class="pl-5 pr-3 whitespace-no-wrap">
-              <div class="text-gray-400">
-                {{ item.startTime }}
+              <div class="text-gray-400 uppercase">
+                {{ $dayjs.unix(item.startTime).format("dddd - DD/MM//YYYY") }}
               </div>
               <div class="dark:text-white">
-                {{ item.startTime }} - {{ item.endTime }}
+                {{ $dayjs.unix(item.startTime).format("HH:mm") }} -
+                {{ $dayjs.unix(item.endTime).format("HH:mm") }}
               </div>
             </td>
 

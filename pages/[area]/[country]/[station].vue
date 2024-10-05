@@ -19,7 +19,7 @@
       :current="current"
       :streamName="streamName"
       :streamUrl="streamUrl"
-      :thumb="`/img/${Array.isArray(area) ? area[0] : area}/flags/${Array.isArray(slug) ? slug[0] : slug}.png`"
+      :thumb="thumb"
     ></Player>
     <!-- END - Player -->
 
@@ -87,9 +87,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeUnmount, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const router = useRouter();
 const route = useRoute();
@@ -118,6 +115,7 @@ interface Track {
   track_artist: string;
   // Add other properties as needed
 }
+const thumb = ref("");
 
 useHead({
   title: title.value,
@@ -152,6 +150,7 @@ const fetchData = async () => {
         type: data.type as AudioMimeType,
       };
 
+      thumb.value = data.features;
       document.title = `${streamName.value} - ${title.value}`;
 
       if (data.schedule !== undefined) {

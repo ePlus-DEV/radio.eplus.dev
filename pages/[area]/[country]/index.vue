@@ -3,8 +3,8 @@
     <!-- BEGIN - Breadcrumbs -->
     <Breadcrumbs
       :area="Array.isArray(area) ? area[0] : area"
-      level_1=""
-      :level_2="$t(`world.${areaI18n}.name`)"
+      :level_1="i18n"
+      :level_1_slug="Array.isArray(slug) ? slug[0] : slug"
     />
     <!-- END - Breadcrumbs -->
 
@@ -17,8 +17,6 @@
       :streamUrl="streamUrl"
     ></Player>
     <!-- END - Player -->
-
-    {{ route.params }}
 
     <!-- BEGIN - PanelStation -->
     <PanelStation
@@ -39,9 +37,6 @@ const route = useRoute();
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
-const areaI18n = computed(() =>
-  (Array.isArray(area.value) ? area.value[0] : area.value).replace(/-/g, "_"),
-);
 
 const thumb = computed(
   () =>
