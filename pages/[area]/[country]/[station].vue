@@ -148,21 +148,12 @@ const fetchLyric = async (id: string) => {
       `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`,
     );
     const resData = await res.json();
-    if (resData.err === 0) {
-      if (resData.data.sentences) {
-        let lyricContent = "";
-        resData.data.sentences.forEach(
-          (sentence: { words: { data: string }[] }) => {
-            const lyricLine = sentence.words
-              .map((word: { data: string }) => word.data)
-              .join(" ");
-            lyricContent += `<p class="pb-1">${lyricLine}</p>`;
-          },
-        );
-        lyric.value = lyricContent;
-      } else {
-        lyric.value = t("panel.no_lyric");
-      }
+    if (resData.err === 0 && resData.data.sentences) {
+      lyric.value = resData.data.sentences
+        .map((sentence: { words: { data: string }[] }) =>
+          `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`
+        )
+        .join("");
     } else {
       lyric.value = t("panel.no_lyric");
     }
@@ -181,18 +172,16 @@ const fetchDetail = async (url: string) => {
     const resData = await res.json();
     if (resData.err === 0) {
       song.value = resData.data;
+      const currentMedia = song.value?.currentMedia;
+      if (currentMedia) {
+        document.title = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
+        if (currentMedia.hasLyric) {
+          fetchLyric(currentMedia.encodeId);
+        } else {
+          lyric.value = t("panel.no_lyric");
+        }
+      }
     }
-
-    if (song.value?.currentMedia) {
-      document.title = `${song.value.currentMedia.title} - ${song.value.currentMedia.artists} | ${title.value}`;
-    }
-
-    if (song.value?.currentMedia && song.value?.currentMedia.hasLyric) {
-      fetchLyric(song.value.currentMedia.encodeId);
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-
     if (polling_song.value !== null) {
       clearTimeout(polling_song.value);
     }
@@ -210,9 +199,7 @@ const fetchDetail = async (url: string) => {
  */
 const fetchSchedule = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(
-      url + Math.floor(Date.now() / 1000),
-    );
+    const { data: resData } = await useFetch(url + Math.floor(Date.now() / 1000));
     const resDataValue = resData.value as {
       err: number;
       data: { items: ProgramItem[] };
@@ -220,12 +207,10 @@ const fetchSchedule = async (url: string) => {
 
     if (resDataValue.err === 0 && slug.value === "viet-nam") {
       document.title = `${streamName.value} - ${title.value}`;
-      program.value = resDataValue.data.items as ProgramItem[];
+      program.value = resDataValue.data.items;
       // Fetch the current song data from the first program item
       const firstProgramItem = resDataValue.data.items[0];
-      fetchDetail(
-        `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
-      );
+      fetchDetail(`${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`);
     } else {
       const resDataSuccess = resData.value as { success: boolean };
       if (resDataSuccess.success) {
