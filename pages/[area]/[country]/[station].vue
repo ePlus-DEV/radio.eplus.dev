@@ -150,8 +150,9 @@ const fetchLyric = async (id: string) => {
     const resData = await res.json();
     if (resData.err === 0 && resData.data.sentences) {
       lyric.value = resData.data.sentences
-        .map((sentence: { words: { data: string }[] }) =>
-          `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`
+        .map(
+          (sentence: { words: { data: string }[] }) =>
+            `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
         )
         .join("");
     } else {
@@ -199,7 +200,9 @@ const fetchDetail = async (url: string) => {
  */
 const fetchSchedule = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(url + Math.floor(Date.now() / 1000));
+    const { data: resData } = await useFetch(
+      url + Math.floor(Date.now() / 1000),
+    );
     const resDataValue = resData.value as {
       err: number;
       data: { items: ProgramItem[] };
@@ -210,7 +213,9 @@ const fetchSchedule = async (url: string) => {
       program.value = resDataValue.data.items;
       // Fetch the current song data from the first program item
       const firstProgramItem = resDataValue.data.items[0];
-      fetchDetail(`${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`);
+      fetchDetail(
+        `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
+      );
     } else {
       const resDataSuccess = resData.value as { success: boolean };
       if (resDataSuccess.success) {
