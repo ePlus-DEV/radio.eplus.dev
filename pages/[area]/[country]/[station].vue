@@ -77,11 +77,7 @@
     <!-- END - Lyric -->
 
     <!-- BEGIN - PanelStation -->
-    <PanelStation
-      :area="Array.isArray(area) ? area[0] : area"
-      :slug="Array.isArray(slug) ? slug[0] : slug"
-      :i18n="i18n"
-    />
+    <PanelStation @updateData="handleDataFromChild"/>
     <!-- END - PanelStation -->
   </div>
 </template>
@@ -290,8 +286,25 @@ onMounted(() => {
   //   area: area.value.replace(/-/g, "_"),
   //   country: slug.value,
   // });
-  fetchData();
+  // fetchData();
 });
+
+const handleDataFromChild = (data: any) => {
+  current.value = data;
+  streamName.value = data.title;
+  streamUrl.value = {
+    src: data.cros
+      ? `${config.public.corsServer}${data.stream}`
+      : data.stream,
+    type: data.type as AudioMimeType,
+  };
+  thumb.value = data.features;
+  document.title = `${streamName.value} - ${title.value}`;
+  fetchData();
+  if (data.schedule !== undefined) {
+    fetchSchedule(data.schedule);
+  }
+}
 
 onBeforeUnmount(() => {
   clearTimeout(polling_schedule.value as unknown as number);

@@ -19,11 +19,7 @@
     <!-- END - Player -->
 
     <!-- BEGIN - PanelStation -->
-    <PanelStation
-      :area="Array.isArray(area) ? area[0] : area"
-      :slug="Array.isArray(slug) ? slug[0] : slug"
-      :i18n="i18n"
-    />
+    <PanelStation/>
     <!-- END - PanelStation -->
   </div>
 </template>
@@ -36,7 +32,13 @@ const streamName = ref<string>("");
 const route = useRoute();
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const slug = ref(route.params.country);
+const country = ref(
+  Array.isArray(route.params.country)
+    ? route.params.country[0].replace(/-/g, "_")
+    : route.params.country.replace(/-/g, "_")
+);
 const area = ref(route.params.area);
+// const { result, search } = useAlgoliaSearch("radio.eplus.dev");
 
 const thumb = computed(
   () =>
@@ -45,7 +47,7 @@ const thumb = computed(
 
 const i18n = computed(
   () =>
-    `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
+    `world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
 );
 
 useHead({
@@ -56,6 +58,14 @@ useSeoMeta({
   // will be inferred as the lastmod value in the sitemap
   articleModifiedTime: new Date().toISOString(),
 });
+
+
+// onMounted(async () => {
+//   await search({
+//     query: "",
+//     requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
+//   });
+// });
 
 /**
  * Fetches data from the server and initializes the player with the favorite channel.

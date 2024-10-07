@@ -20,7 +20,7 @@
           :data-tip="data.title"
           :class="[
             isRouteActive(data.objectID)
-              ? 'border-red-700 dark:border-red-600'
+              ? 'border-red-700'
               : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
           ]"
         >
@@ -40,6 +40,7 @@
 <script lang="ts" setup>
 const config = useRuntimeConfig();
 const route = useRoute();
+const emit = defineEmits(['update-data'])
 const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
 const country = ref(
   Array.isArray(route.params.country)
@@ -63,8 +64,12 @@ onMounted(async () => {
       ],
     },
   });
+  results.value = result.value?.hits || [];
 
-  results.value = result.value.hits;
+  const activeData = results.value.find((data: { objectID: string }) => data.objectID === `${route.params.country}-${route.params.station}`);
+  if (activeData) {
+    emit('update-data', activeData);
+  }
 });
 
 /**
@@ -76,3 +81,4 @@ const isRouteActive = (path: string): boolean => {
   return path === `${route.params.country}-${route.params.station}`;
 };
 </script>
+scriptconsts=
