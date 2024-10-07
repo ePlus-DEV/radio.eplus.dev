@@ -19,8 +19,8 @@
           :title="data.title"
           :data-tip="data.title"
           :class="[
-            isRouteActive(index.toString())
-              ? 'border-red-700'
+            isRouteActive(data.objectID)
+              ? 'border-red-700 dark:border-red-600'
               : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
           ]"
         >
@@ -47,8 +47,14 @@ const country = ref(
     : route.params.country.replace(/-/g, "_")
 );
 const area = ref(route.params.area);
-const slug = ref(route.params.country);
-const results = ref<any[]>([]);
+interface StationData {
+  url: string;
+  title: string;
+  station_image: string;
+  objectID: string;
+}
+
+const results = ref<StationData[]>([]);
 const i18n = ref(`world.${String(area.value).replace(/-/g, "_")}.${country.value}`);
 
 onMounted(async () => {
@@ -57,7 +63,12 @@ onMounted(async () => {
     requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
   });
 
-  results.value = result.value.hits;
+  results.value = result.value.hits.map((hit: any) => ({
+    url: hit.url,
+    title: hit.title,
+    station_image: hit.station_image,
+    objectID: hit.objectID
+  }));
 });
 
 /**
@@ -66,6 +77,6 @@ onMounted(async () => {
  * @returns {boolean} - True if the path is the active route, false otherwise.
  */
 const isRouteActive = (path: string): boolean => {
-  return route.params.name === path;
+  return path === `${route.params.country}-${route.params.station}`;
 };
 </script>
