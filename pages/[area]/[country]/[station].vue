@@ -68,6 +68,7 @@
               <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
             </div>
             <div class="pb-4 overflow-y-auto h-64" id="lyric">
+              <!-- skipcq: JS-0693 -->
               <span v-html="lyric" />
             </div>
           </div>
@@ -77,27 +78,24 @@
     <!-- END - Lyric -->
 
     <!-- BEGIN - PanelStation -->
-    <PanelStation
-      :area="Array.isArray(area) ? area[0] : area"
-      :slug="Array.isArray(slug) ? slug[0] : slug"
-      :i18n="i18n"
-    />
+    <PanelStation @updateData="handleDataFromChild" />
     <!-- END - PanelStation -->
   </div>
 </template>
 
 <script setup lang="ts">
 import type { AudioSrc, AudioMimeType } from "vidstack";
-const router = useRouter();
+const $store = useMainStore();
+const dayjs = useDayjs();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
-const name = ref<string | undefined>("");
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
+const timeZone = ref($store.timezone);
 const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
 interface ProgramItem {
@@ -107,7 +105,7 @@ interface ProgramItem {
 }
 
 const program = ref<ProgramItem[]>([]);
-const song = ref({});
+const song = ref<Song>({});
 const info = ref([]);
 const current = ref({});
 interface Track {
@@ -115,6 +113,18 @@ interface Track {
   track_artist: string;
   // Add other properties as needed
 }
+interface CurrentMedia {
+  title: string;
+  artists: string;
+  hasLyric: boolean;
+  encodeId: string;
+}
+
+interface Song {
+  currentMedia?: CurrentMedia;
+  // Add other properties as needed
+}
+
 const thumb = ref("");
 
 useHead({
@@ -126,60 +136,86 @@ const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
-const timezone = ref("Asia/Ho_Chi_Minh");
+// const timezone = ref("Asia/Ho_Chi_Minh");
 
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
 /**
- * Fetches data for the radio station based on the current route parameters.
+ * Fetches the lyrics for the given song ID.
+ * @param {string} id - The ID of the song to fetch lyrics for.
  */
-const fetchData = async () => {
+const fetchLyric = async (id: string) => {
   try {
-    const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
-    const responseData = await res.json();
-    if (
-      typeof route.params.station === "string" &&
-      Object.prototype.hasOwnProperty.call(responseData, route.params.station)
-    ) {
-      const data = responseData[route.params.station];
-      streamName.value = data.title;
-      streamUrl.value = {
-        src: data.cros
-          ? `${config.public.corsServer}${data.stream}`
-          : data.stream,
-        type: data.type as AudioMimeType,
-      };
-
-      thumb.value = data.features;
-      document.title = `${streamName.value} - ${title.value}`;
-
-      if (data.schedule !== undefined) {
-        fetchSchedule(data.schedule);
-      }
+    const res = await fetch(
+      `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
+    );
+    const resData = await res.json();
+    if (resData.err === 0 && resData.data.sentences) {
+      lyric.value = resData.data.sentences
+        .map(
+          (sentence: { words: { data: string }[] }) =>
+            `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
+        )
+        .join("");
     } else {
-      await router.push("/");
+      lyric.value = t("panel.no_lyric");
     }
   } catch (error) {
-    await router.push(`/${area.value}/${slug.value}`);
+    lyric.value = t("panel.no_lyric");
   }
 };
 
+/**
+ * Fetches the current song data from the given URL.
+ * @param {string} url - The URL to fetch the song data from.
+ */
+const fetchDetail = async (url: string) => {
+  try {
+    const res = await fetch(url + dayjs().tz(timeZone.value).unix());
+    const resData = await res.json();
+    if (resData.err === 0) {
+      song.value = resData.data;
+      const currentMedia = song.value?.currentMedia;
+      if (currentMedia) {
+        document.title = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
+        if (currentMedia.hasLyric) {
+          fetchLyric(currentMedia.encodeId);
+        } else {
+          lyric.value = t("panel.no_lyric");
+        }
+      }
+    }
+    if (polling_song.value !== null) {
+      clearTimeout(polling_song.value);
+    }
+    polling_song.value = setInterval(() => {
+      fetchDetail(url);
+    }, 60000);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Fetches the schedule data from the given URL.
+ * @param {string} url - The URL to fetch the schedule data from.
+ */
 const fetchSchedule = async (url: string) => {
   try {
     const { data: resData } = await useFetch(
-      url + Math.floor(Date.now() / 1000),
+      url + dayjs().tz(timeZone.value).unix(),
     );
     const resDataValue = resData.value as {
       err: number;
-      data: { items: any[] };
+      data: { items: ProgramItem[] };
     };
 
     if (resDataValue.err === 0 && slug.value === "viet-nam") {
       document.title = `${streamName.value} - ${title.value}`;
-      program.value = resDataValue.data.items as ProgramItem[];
+      program.value = resDataValue.data.items;
       // Fetch the current song data from the first program item
       const firstProgramItem = resDataValue.data.items[0];
-      fetchSong(
+      fetchDetail(
         `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
@@ -203,95 +239,22 @@ const fetchSchedule = async (url: string) => {
   }
 };
 
-/**
- * Fetches the current song data from the given URL.
- * @param {string} url - The URL to fetch the song data from.
- */
-const fetchSong = async (url: string) => {
-  try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
-    const resData = await res.json();
-    if (resData.err === 0) {
-      song.value = resData.data;
-    }
-    document.title = title.value ?? "";
-    if ((song.value as any).currentMedia) {
-      document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
-    }
+// skipcq: JS-0323
+const handleDataFromChild = (data: any) => {
+  streamName.value = data.station_name;
+  streamUrl.value = {
+    src: data.cros
+      ? `${config.public.corsServer}${data.station_stream}`
+      : data.station_stream,
+    type: data.type as AudioMimeType,
+  };
+  thumb.value = data.station_image;
+  document.title = `${streamName.value} - ${title.value}`;
 
-    if (
-      song.value &&
-      (song.value as any).currentMedia &&
-      (song.value as any).currentMedia.hasLyric
-    ) {
-      fetchLyric((song.value as any).currentMedia.encodeId);
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-
-    if (polling_song.value !== null) {
-      clearTimeout(polling_song.value as unknown as number);
-    }
-    polling_song.value = setInterval(() => {
-      fetchSong(url);
-    }, 60000);
-  } catch (error) {
-    console.error(error);
+  if (data.station_schedule !== undefined) {
+    fetchSchedule(data.station_schedule);
   }
 };
-
-const fetchInfo = async (url: string) => {
-  try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
-    const resData = await res.json();
-    if (resData.success) {
-      info.value = resData;
-    }
-    setInterval(() => {
-      fetchInfo(url);
-    }, 60000);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const fetchLyric = async (id: string) => {
-  try {
-    const res = await fetch(
-      `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`,
-    );
-    const resData = await res.json();
-    if (resData.err === 0) {
-      if (resData.data.sentences) {
-        let lyricContent = "";
-        resData.data.sentences.forEach((sentence: any) => {
-          let lyricLine = sentence.words
-            .map((word: any) => word.data)
-            .join(" ");
-          lyricContent += `<p class="pb-1">${lyricLine}</p>`;
-        });
-        lyric.value = lyricContent;
-      } else {
-        lyric.value = t("panel.no_lyric");
-      }
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-  } catch (error) {
-    lyric.value = t("panel.no_lyric");
-  }
-};
-
-onMounted(() => {
-  // if (!process.env.AREA.includes(area.value)) {
-  //   router.push("/");
-  // }
-  // store.dispatch("storeTIMEZONE", {
-  //   area: area.value.replace(/-/g, "_"),
-  //   country: slug.value,
-  // });
-  fetchData();
-});
 
 onBeforeUnmount(() => {
   clearTimeout(polling_schedule.value as unknown as number);

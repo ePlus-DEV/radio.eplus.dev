@@ -23,6 +23,8 @@ export default defineNuxtConfig({
       facebook: process.env.NUXT_PUBLIC_FACEBOOK,
       github: process.env.NUXT_PUBLIC_GITHUB,
       copyright: process.env.NUXT_PUBLIC_COPYRIGHT,
+      algoliaIndexStation: "radio.eplus.dev",
+      algoliaIndexRadio: "world",
     },
   },
   modules: [
@@ -34,6 +36,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
     "@nuxtjs/algolia",
+    "@pinia/nuxt",
   ],
   app: {
     head: {

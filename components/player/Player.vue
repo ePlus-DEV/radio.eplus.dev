@@ -9,11 +9,7 @@
           <div class="flex items-center p-5 border-b dark:border-gray-600">
             <div class="flex justify-around">
               <span class="relative inline-flex">
-                <nuxt-img
-                  loading="lazy"
-                  class="w-[61px]"
-                  :src="`${config.public.cloudinaryBaseUrl}${thumb}`"
-                />
+                <img loading="lazy" class="w-[61px]" :src="thumb" />
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                   <span
                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
@@ -258,9 +254,7 @@ import {
   type MediaProviderChangeEvent,
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
-
 import { defineProps, ref } from "vue";
-const config = useRuntimeConfig();
 
 const online = ref(navigator.onLine);
 
