@@ -103,7 +103,7 @@ interface ProgramItem {
 }
 
 const program = ref<ProgramItem[]>([]);
-const song = ref({});
+const song = ref<Song>({});
 const info = ref([]);
 const current = ref({});
 interface Track {
@@ -111,6 +111,18 @@ interface Track {
   track_artist: string;
   // Add other properties as needed
 }
+interface CurrentMedia {
+  title: string;
+  artists: string;
+  hasLyric: boolean;
+  encodeId: string;
+}
+
+interface Song {
+  currentMedia?: CurrentMedia;
+  // Add other properties as needed
+}
+
 const thumb = ref("");
 
 useHead({
@@ -139,14 +151,12 @@ const fetchLyric = async (id: string) => {
     if (resData.err === 0) {
       if (resData.data.sentences) {
         let lyricContent = "";
-        resData.data.sentences.forEach(
-          (sentence: { words: { data: string }[] }) => {
-            const lyricLine = sentence.words
-              .map((word: { data: string }) => word.data)
-              .join(" ");
-            lyricContent += `<p class="pb-1">${lyricLine}</p>`;
-          },
-        );
+        resData.data.sentences.forEach((sentence: { words: { data: string }[] }) => {
+          const lyricLine = sentence.words
+            .map((word: { data: string }) => word.data)
+            .join(" ");
+          lyricContent += `<p class="pb-1">${lyricLine}</p>`;
+        });
         lyric.value = lyricContent;
       } else {
         lyric.value = t("panel.no_lyric");
@@ -163,24 +173,23 @@ const fetchLyric = async (id: string) => {
  * Fetches the current song data from the given URL.
  * @param {string} url - The URL to fetch the song data from.
  */
-const fetchSong = async (url: string) => {
+const fetchDetail = async (url: string) => {
   try {
     const res = await fetch(url + Math.floor(Date.now() / 1000));
     const resData = await res.json();
     if (resData.err === 0) {
       song.value = resData.data;
     }
-    document.title = title.value ?? "";
-    if ((song.value as any).currentMedia) {
-      document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
+
+    if (song.value?.currentMedia) {
+      document.title = `${song.value.currentMedia.title} - ${song.value.currentMedia.artists} | ${title.value}`;
     }
 
     if (
-      song.value &&
-      (song.value as any).currentMedia &&
-      (song.value as any).currentMedia.hasLyric
+      song.value?.currentMedia &&
+      song.value?.currentMedia.hasLyric
     ) {
-      fetchLyric((song.value as any).currentMedia.encodeId);
+      fetchLyric((song.value).currentMedia.encodeId);
     } else {
       lyric.value = t("panel.no_lyric");
     }
@@ -189,7 +198,7 @@ const fetchSong = async (url: string) => {
       clearTimeout(polling_song.value as unknown as number);
     }
     polling_song.value = setInterval(() => {
-      fetchSong(url);
+      fetchDetail(url);
     }, 60000);
   } catch (error) {
     console.error(error);
@@ -215,7 +224,7 @@ const fetchSchedule = async (url: string) => {
       program.value = resDataValue.data.items as ProgramItem[];
       // Fetch the current song data from the first program item
       const firstProgramItem = resDataValue.data.items[0];
-      fetchSong(
+      fetchDetail(
         `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
