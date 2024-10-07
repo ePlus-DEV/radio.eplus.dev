@@ -84,11 +84,10 @@
 
 <script setup lang="ts">
 import type { AudioSrc, AudioMimeType } from "vidstack";
-const router = useRouter();
+// const router = useRouter();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
-const name = ref<string | undefined>("");
 const slug = ref(route.params.country);
 const area = ref(route.params.area);
 const i18n = ref(
@@ -126,40 +125,80 @@ const timezone = ref("Asia/Ho_Chi_Minh");
 
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
+
 /**
- * Fetches data for the radio station based on the current route parameters.
+ * Fetches the lyrics for the given song ID.
+ * @param {string} id - The ID of the song to fetch lyrics for.
  */
-const fetchData = async () => {
+const fetchLyric = async (id: string) => {
   try {
-    const res = await fetch(`/radio/${area.value}/${slug.value}.json`);
-    const responseData = await res.json();
-    if (
-      typeof route.params.station === "string" &&
-      Object.prototype.hasOwnProperty.call(responseData, route.params.station)
-    ) {
-      const data = responseData[route.params.station];
-      streamName.value = data.title;
-      streamUrl.value = {
-        src: data.cros
-          ? `${config.public.corsServer}${data.stream}`
-          : data.stream,
-        type: data.type as AudioMimeType,
-      };
-
-      thumb.value = data.features;
-      document.title = `${streamName.value} - ${title.value}`;
-
-      if (data.schedule !== undefined) {
-        fetchSchedule(data.schedule);
+    const res = await fetch(
+      `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`,
+    );
+    const resData = await res.json();
+    if (resData.err === 0) {
+      if (resData.data.sentences) {
+        let lyricContent = "";
+        resData.data.sentences.forEach((sentence: any) => {
+          let lyricLine = sentence.words
+            .map((word: any) => word.data)
+            .join(" ");
+          lyricContent += `<p class="pb-1">${lyricLine}</p>`;
+        });
+        lyric.value = lyricContent;
+      } else {
+        lyric.value = t("panel.no_lyric");
       }
     } else {
-      await router.push("/");
+      lyric.value = t("panel.no_lyric");
     }
   } catch (error) {
-    await router.push(`/${area.value}/${slug.value}`);
+    lyric.value = t("panel.no_lyric");
   }
 };
 
+
+/**
+ * Fetches the current song data from the given URL.
+ * @param {string} url - The URL to fetch the song data from.
+ */
+ const fetchSong = async (url: string) => {
+  try {
+    const res = await fetch(url + Math.floor(Date.now() / 1000));
+    const resData = await res.json();
+    if (resData.err === 0) {
+      song.value = resData.data;
+    }
+    document.title = title.value ?? "";
+    if ((song.value as any).currentMedia) {
+      document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
+    }
+
+    if (
+      song.value &&
+      (song.value as any).currentMedia &&
+      (song.value as any).currentMedia.hasLyric
+    ) {
+      fetchLyric((song.value as any).currentMedia.encodeId);
+    } else {
+      lyric.value = t("panel.no_lyric");
+    }
+
+    if (polling_song.value !== null) {
+      clearTimeout(polling_song.value as unknown as number);
+    }
+    polling_song.value = setInterval(() => {
+      fetchSong(url);
+    }, 60000);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/**
+ * Fetches the schedule data from the given URL.
+ * @param {string} url - The URL to fetch the schedule data from.
+ */
 const fetchSchedule = async (url: string) => {
   try {
     const { data: resData } = await useFetch(
@@ -200,42 +239,9 @@ const fetchSchedule = async (url: string) => {
 };
 
 /**
- * Fetches the current song data from the given URL.
- * @param {string} url - The URL to fetch the song data from.
+ * Fetches the information data from the given URL.
+ * @param {string} url - The URL to fetch the information data from.
  */
-const fetchSong = async (url: string) => {
-  try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
-    const resData = await res.json();
-    if (resData.err === 0) {
-      song.value = resData.data;
-    }
-    document.title = title.value ?? "";
-    if ((song.value as any).currentMedia) {
-      document.title = `${(song.value as any).currentMedia.title} - ${(song.value as any).currentMedia.artists} | ${title.value}`;
-    }
-
-    if (
-      song.value &&
-      (song.value as any).currentMedia &&
-      (song.value as any).currentMedia.hasLyric
-    ) {
-      fetchLyric((song.value as any).currentMedia.encodeId);
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-
-    if (polling_song.value !== null) {
-      clearTimeout(polling_song.value as unknown as number);
-    }
-    polling_song.value = setInterval(() => {
-      fetchSong(url);
-    }, 60000);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const fetchInfo = async (url: string) => {
   try {
     const res = await fetch(url + Math.floor(Date.now() / 1000));
@@ -251,56 +257,18 @@ const fetchInfo = async (url: string) => {
   }
 };
 
-const fetchLyric = async (id: string) => {
-  try {
-    const res = await fetch(
-      `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`,
-    );
-    const resData = await res.json();
-    if (resData.err === 0) {
-      if (resData.data.sentences) {
-        let lyricContent = "";
-        resData.data.sentences.forEach((sentence: any) => {
-          let lyricLine = sentence.words
-            .map((word: any) => word.data)
-            .join(" ");
-          lyricContent += `<p class="pb-1">${lyricLine}</p>`;
-        });
-        lyric.value = lyricContent;
-      } else {
-        lyric.value = t("panel.no_lyric");
-      }
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-  } catch (error) {
-    lyric.value = t("panel.no_lyric");
-  }
-};
-
-onMounted(() => {
-  // if (!process.env.AREA.includes(area.value)) {
-  //   router.push("/");
-  // }
-  // store.dispatch("storeTIMEZONE", {
-  //   area: area.value.replace(/-/g, "_"),
-  //   country: slug.value,
-  // });
-  // fetchData();
-});
-
-const handleDataFromChild = (data: any) => {
-  current.value = data;
-  streamName.value = data.title;
+// skipcq: JS-0323
+const handleDataFromChild = (data: any) => { 
+  streamName.value = data.station_name;
   streamUrl.value = {
-    src: data.cros ? `${config.public.corsServer}${data.stream}` : data.stream,
+    src: data.cros ? `${config.public.corsServer}${data.station_stream}` : data.station_stream,
     type: data.type as AudioMimeType,
   };
-  thumb.value = data.features;
+  thumb.value = data.station_image;
   document.title = `${streamName.value} - ${title.value}`;
-  fetchData();
-  if (data.schedule !== undefined) {
-    fetchSchedule(data.schedule);
+
+  if (data.station_schedule !== undefined) {
+    fetchSchedule(data.station_schedule);
   }
 };
 
