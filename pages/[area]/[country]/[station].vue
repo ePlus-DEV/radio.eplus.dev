@@ -205,7 +205,7 @@ const fetchSchedule = async (url: string) => {
     );
     const resDataValue = resData.value as {
       err: number;
-      data: { items: any[] };
+      data: { items: ProgramItem[] };
     };
 
     if (resDataValue.err === 0 && slug.value === "viet-nam") {
