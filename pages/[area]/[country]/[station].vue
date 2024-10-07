@@ -85,7 +85,8 @@
 
 <script setup lang="ts">
 import type { AudioSrc, AudioMimeType } from "vidstack";
-// const router = useRouter();
+const $store = useMainStore();
+const dayjs = useDayjs();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -94,6 +95,7 @@ const area = ref(route.params.area);
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
+const timeZone = ref($store.timezone);
 const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
 interface ProgramItem {
@@ -145,7 +147,7 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 const fetchLyric = async (id: string) => {
   try {
     const res = await fetch(
-      `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`,
+      `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
     );
     const resData = await res.json();
     if (resData.err === 0 && resData.data.sentences) {
@@ -169,7 +171,7 @@ const fetchLyric = async (id: string) => {
  */
 const fetchDetail = async (url: string) => {
   try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
+    const res = await fetch(url + dayjs().tz(timeZone.value).unix());
     const resData = await res.json();
     if (resData.err === 0) {
       song.value = resData.data;
@@ -201,7 +203,7 @@ const fetchDetail = async (url: string) => {
 const fetchSchedule = async (url: string) => {
   try {
     const { data: resData } = await useFetch(
-      url + Math.floor(Date.now() / 1000),
+      url + dayjs().tz(timeZone.value).unix(),
     );
     const resDataValue = resData.value as {
       err: number;

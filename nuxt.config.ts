@@ -36,6 +36,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
     "@nuxtjs/algolia",
+    "@pinia/nuxt",
   ],
   app: {
     head: {
