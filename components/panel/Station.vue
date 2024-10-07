@@ -47,14 +47,8 @@ const country = ref(
     : route.params.country.replace(/-/g, "_")
 );
 const area = ref(route.params.area);
-interface StationData {
-  url: string;
-  title: string;
-  station_image: string;
-  objectID: string;
-}
-
-const results = ref<StationData[]>([]);
+// skipcq: JS-0323
+const results = ref<any[]>([]);
 const i18n = ref(`world.${String(area.value).replace(/-/g, "_")}.${country.value}`);
 
 onMounted(async () => {
@@ -63,12 +57,7 @@ onMounted(async () => {
     requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
   });
 
-  results.value = result.value.hits.map((hit: any) => ({
-    url: hit.url,
-    title: hit.title,
-    station_image: hit.station_image,
-    objectID: hit.objectID
-  }));
+  results.value = result.value.hits;
 });
 
 /**
