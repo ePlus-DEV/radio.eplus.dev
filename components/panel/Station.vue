@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 const config = useRuntimeConfig();
 const route = useRoute();
-const emit = defineEmits(['update-data'])
+const emit = defineEmits(["update-data"]);
 const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
 const country = ref(
   Array.isArray(route.params.country)
@@ -66,9 +66,12 @@ onMounted(async () => {
   });
   results.value = result.value?.hits || [];
 
-  const activeData = results.value.find((data: { objectID: string }) => data.objectID === `${route.params.country}-${route.params.station}`);
+  const activeData = results.value.find(
+    (data: { objectID: string }) =>
+      data.objectID === `${route.params.country}-${route.params.station}`,
+  );
   if (activeData) {
-    emit('update-data', activeData);
+    emit("update-data", activeData);
   }
 });
 

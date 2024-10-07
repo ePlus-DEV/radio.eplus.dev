@@ -77,7 +77,7 @@
     <!-- END - Lyric -->
 
     <!-- BEGIN - PanelStation -->
-    <PanelStation @updateData="handleDataFromChild"/>
+    <PanelStation @updateData="handleDataFromChild" />
     <!-- END - PanelStation -->
   </div>
 </template>
@@ -293,9 +293,7 @@ const handleDataFromChild = (data: any) => {
   current.value = data;
   streamName.value = data.title;
   streamUrl.value = {
-    src: data.cros
-      ? `${config.public.corsServer}${data.stream}`
-      : data.stream,
+    src: data.cros ? `${config.public.corsServer}${data.stream}` : data.stream,
     type: data.type as AudioMimeType,
   };
   thumb.value = data.features;
@@ -304,7 +302,7 @@ const handleDataFromChild = (data: any) => {
   if (data.schedule !== undefined) {
     fetchSchedule(data.schedule);
   }
-}
+};
 
 onBeforeUnmount(() => {
   clearTimeout(polling_schedule.value as unknown as number);
