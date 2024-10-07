@@ -11,7 +11,7 @@
         class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
       >
         <nuxt-link
-          :to="`/${area}/${slug}/${index}`"
+          :to="`${data.url}`"
           v-for="(data, index) in results"
           v-bind:key="index"
           class="border tooltip tooltip-left"
@@ -26,7 +26,7 @@
         >
           <img
             loading="lazy"
-            :src="config.public.cloudinaryBaseUrl + data.features"
+            :src="data.station_image"
             :alt="data.title"
             class="p-0 sm:p-1 md:p-5 lg:p-10"
           />
@@ -40,40 +40,24 @@
 <script lang="ts" setup>
 const config = useRuntimeConfig();
 const route = useRoute();
-interface Result {
-  title: string;
-  features: string;
-}
+const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
+const country = ref(
+  Array.isArray(route.params.country)
+    ? route.params.country[0].replace(/-/g, "_")
+    : route.params.country.replace(/-/g, "_")
+);
+const area = ref(route.params.area);
+const slug = ref(route.params.country);
+const results = ref<any[]>([]);
+const i18n = ref(`world.${String(area.value).replace(/-/g, "_")}.${country.value}`);
 
-const results = ref<Result[]>([]);
+onMounted(async () => {
+  await search({
+    query: "",
+    requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
+  });
 
-const props = defineProps<{
-  area: string;
-  slug: string;
-  i18n: string;
-}>();
-
-/**
- * Fetches data from the server and updates the results.
- * @returns {Promise<void>} - A promise that resolves when the data is fetched and processed.
- */
-const fetchData = async (): Promise<void> => {
-  try {
-    const response = await fetch(`/radio/${props.area}/${props.slug}.json`);
-    const data = await response.json();
-
-    if (!data) {
-      throw new Error("No data returned from fetch");
-    }
-
-    results.value = data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
-
-onMounted(() => {
-  fetchData();
+  results.value = result.value.hits;
 });
 
 /**

@@ -23,6 +23,8 @@ export default defineNuxtConfig({
       facebook: process.env.NUXT_PUBLIC_FACEBOOK,
       github: process.env.NUXT_PUBLIC_GITHUB,
       copyright: process.env.NUXT_PUBLIC_COPYRIGHT,
+      algoliaIndexStation: "radio.eplus.dev",
+      algoliaIndexRadio: "world",
     },
   },
   modules: [
