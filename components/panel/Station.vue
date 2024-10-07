@@ -44,17 +44,24 @@ const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
 const country = ref(
   Array.isArray(route.params.country)
     ? route.params.country[0].replace(/-/g, "_")
-    : route.params.country.replace(/-/g, "_")
+    : route.params.country.replace(/-/g, "_"),
 );
 const area = ref(route.params.area);
 const slug = ref(route.params.country);
 const results = ref<any[]>([]);
-const i18n = ref(`world.${String(area.value).replace(/-/g, "_")}.${country.value}`);
+const i18n = ref(
+  `world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
+);
 
 onMounted(async () => {
   await search({
     query: "",
-    requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
+    requestOptions: {
+      hitsPerPage: 200,
+      facetFilters: [
+        `station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
+      ],
+    },
   });
 
   results.value = result.value.hits;
