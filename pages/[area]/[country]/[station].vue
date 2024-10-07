@@ -125,7 +125,6 @@ const timezone = ref("Asia/Ho_Chi_Minh");
 
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
-
 /**
  * Fetches the lyrics for the given song ID.
  * @param {string} id - The ID of the song to fetch lyrics for.
@@ -157,12 +156,11 @@ const fetchLyric = async (id: string) => {
   }
 };
 
-
 /**
  * Fetches the current song data from the given URL.
  * @param {string} url - The URL to fetch the song data from.
  */
- const fetchSong = async (url: string) => {
+const fetchSong = async (url: string) => {
   try {
     const res = await fetch(url + Math.floor(Date.now() / 1000));
     const resData = await res.json();
@@ -258,10 +256,12 @@ const fetchInfo = async (url: string) => {
 };
 
 // skipcq: JS-0323
-const handleDataFromChild = (data: any) => { 
+const handleDataFromChild = (data: any) => {
   streamName.value = data.station_name;
   streamUrl.value = {
-    src: data.cros ? `${config.public.corsServer}${data.station_stream}` : data.station_stream,
+    src: data.cros
+      ? `${config.public.corsServer}${data.station_stream}`
+      : data.station_stream,
     type: data.type as AudioMimeType,
   };
   thumb.value = data.station_image;
