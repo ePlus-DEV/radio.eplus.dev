@@ -68,6 +68,7 @@
               <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
             </div>
             <div class="pb-4 overflow-y-auto h-64" id="lyric">
+              <!-- skipcq: JS-0693 -->
               <span v-html="lyric" />
             </div>
           </div>
@@ -121,7 +122,7 @@ const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
-const timezone = ref("Asia/Ho_Chi_Minh");
+// const timezone = ref("Asia/Ho_Chi_Minh");
 
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
@@ -138,9 +139,9 @@ const fetchLyric = async (id: string) => {
     if (resData.err === 0) {
       if (resData.data.sentences) {
         let lyricContent = "";
-        resData.data.sentences.forEach((sentence: any) => {
-          let lyricLine = sentence.words
-            .map((word: any) => word.data)
+        resData.data.sentences.forEach((sentence: { words: { data: string }[] }) => {
+          const lyricLine = sentence.words
+            .map((word: { data: string }) => word.data)
             .join(" ");
           lyricContent += `<p class="pb-1">${lyricLine}</p>`;
         });
@@ -230,25 +231,6 @@ const fetchSchedule = async (url: string) => {
     }
     polling_schedule.value = setInterval(() => {
       fetchSchedule(url);
-    }, 60000);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-/**
- * Fetches the information data from the given URL.
- * @param {string} url - The URL to fetch the information data from.
- */
-const fetchInfo = async (url: string) => {
-  try {
-    const res = await fetch(url + Math.floor(Date.now() / 1000));
-    const resData = await res.json();
-    if (resData.success) {
-      info.value = resData;
-    }
-    setInterval(() => {
-      fetchInfo(url);
     }, 60000);
   } catch (error) {
     console.error(error);
