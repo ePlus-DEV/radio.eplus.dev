@@ -139,12 +139,14 @@ const fetchLyric = async (id: string) => {
     if (resData.err === 0) {
       if (resData.data.sentences) {
         let lyricContent = "";
-        resData.data.sentences.forEach((sentence: { words: { data: string }[] }) => {
-          const lyricLine = sentence.words
-            .map((word: { data: string }) => word.data)
-            .join(" ");
-          lyricContent += `<p class="pb-1">${lyricLine}</p>`;
-        });
+        resData.data.sentences.forEach(
+          (sentence: { words: { data: string }[] }) => {
+            const lyricLine = sentence.words
+              .map((word: { data: string }) => word.data)
+              .join(" ");
+            lyricContent += `<p class="pb-1">${lyricLine}</p>`;
+          },
+        );
         lyric.value = lyricContent;
       } else {
         lyric.value = t("panel.no_lyric");
