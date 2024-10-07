@@ -179,23 +179,17 @@ const fetchDetail = async (url: string) => {
     const resData = await res.json();
     if (resData.err === 0) {
       song.value = resData.data;
+      if (song.value?.currentMedia) {
+        document.title = `${song.value.currentMedia.title} - ${song.value.currentMedia.artists} | ${title.value}`;
+        if (song.value.currentMedia.hasLyric) {
+          fetchLyric(song.value.currentMedia.encodeId);
+        } else {
+          lyric.value = t("panel.no_lyric");
+        }
+      }
     }
-
-    if (song.value?.currentMedia) {
-      document.title = `${song.value.currentMedia.title} - ${song.value.currentMedia.artists} | ${title.value}`;
-    }
-
-    if (
-      song.value?.currentMedia &&
-      song.value?.currentMedia.hasLyric
-    ) {
-      fetchLyric((song.value).currentMedia.encodeId);
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-
     if (polling_song.value !== null) {
-      clearTimeout(polling_song.value as unknown as number);
+      clearTimeout(polling_song.value);
     }
     polling_song.value = setInterval(() => {
       fetchDetail(url);
