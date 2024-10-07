@@ -1,32 +1,32 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useMainStore = defineStore('main', {
+export const useMainStore = defineStore("main", {
   // id: 'myCommonStore',
   state: () => ({
     player: {},
     player_home: {},
-    timezone: "Asia/Ho_Chi_Minh"
-   }),
+    timezone: "Asia/Ho_Chi_Minh",
+  }),
   actions: {
     setPlayer(player: any) {
-      this.player = player
+      this.player = player;
     },
     setPlayerHome(player_home: any) {
-      this.player_home = player_home
+      this.player_home = player_home;
     },
     setTimezone(timezone: string) {
-      this.timezone = timezone
-    }
+      this.timezone = timezone;
+    },
   },
   getters: {
     getPlayer(): any {
-      return this.player
+      return this.player;
     },
     getPlayerHome(): any {
-      return this.player_home
+      return this.player_home;
     },
     getTimezone(): string {
-      return this.timezone
-    }
-  }
-})
+      return this.timezone;
+    },
+  },
+});
