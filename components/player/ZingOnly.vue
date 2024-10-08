@@ -46,16 +46,16 @@
             : song.thumbnail
         "
       />
-      <div class="md:p-2 text-center md:text-left space-y-4">
-        <figcaption class="font-medium">
+      <figcaption class="md:p-2 text-center md:text-left space-y-4">
+        <div class="font-medium">
           <div class="text-sky-500 dark:text-white">
             {{ $t("panel.next") }}: {{ song.nextMedia?.title }}
           </div>
           <div class="text-slate-700 dark:text-white">
             {{ song.nextMedia?.artists }}
           </div>
-        </figcaption>
-      </div>
+        </div>
+      </figcaption>
     </figure>
   </div>
   <!-- END - Zing - Only -->
