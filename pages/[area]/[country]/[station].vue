@@ -174,7 +174,9 @@ const fetchLyric = async (id: string) => {
  */
 const fetchDetail = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(url + dayjs().tz(timeZone.value).unix());
+    const { data: resData } = await useFetch(
+      url + dayjs().tz(timeZone.value).unix(),
+    );
     const resDataValue = resData.value as { err: number; data: Song };
     if (resDataValue.err === 0) {
       song.value = resDataValue.data;
