@@ -296,8 +296,6 @@ const updateOnlineStatus = () => {
 function onPlay() {
   if (!waiting.value && !streamError.value) {
     $player.value?.play();
-    console.log($player);
-    waiting.value = true;
     setTimeout(() => {
       waiting.value = false;
     }, 1000); // Simulate waiting time
@@ -314,7 +312,6 @@ function onPlay() {
 function onPause() {
   if (!waiting.value) {
     $player.value?.pause();
-    waiting.value = true;
     setTimeout(() => {
       waiting.value = false;
     }, 1000); // Simulate waiting time
@@ -375,7 +372,9 @@ onMounted(() => {
     if (error) {
       console.error("Playback error occurred");
     }
-    waiting.value = false;
+    if (canPlay) {
+      waiting.value = false;
+    }
   });
 
   window.addEventListener("online", updateOnlineStatus);

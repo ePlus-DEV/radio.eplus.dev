@@ -66,7 +66,6 @@ export const useMainStore = defineStore("main", {
     setTimezone(area: string, country: string) {
       const timezone =
         (world as World)[area]?.[country]?.timezone || "Asia/Ho_Chi_Minh";
-      console.error(timezone);
       this.timezone = timezone;
     },
   },
