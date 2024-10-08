@@ -68,7 +68,7 @@ useSeoMeta({
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
  */
- const fetchData = async (): Promise<void> => {
+const fetchData = async (): Promise<void> => {
   try {
     const response = await fetch(
       `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
