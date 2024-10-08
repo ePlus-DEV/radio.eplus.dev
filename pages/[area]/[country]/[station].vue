@@ -149,15 +149,21 @@ const fetchLyric = async (id: string) => {
     const { data: resData } = await useFetch(
       `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
     );
-    const resDataValue = resData.value as { err: number; data: { sentences: { words: { data: string }[] }[] } };
+    const resDataValue = resData.value as {
+      err: number;
+      data: { sentences: { words: { data: string }[] }[] };
+    };
     if (resDataValue.err === 0 && resDataValue.data.sentences) {
-      const resDataValue = resData.value as { err: number; data: { sentences: { words: { data: string }[] }[] } };
+      const resDataValue = resData.value as {
+        err: number;
+        data: { sentences: { words: { data: string }[] }[] };
+      };
       lyric.value = resDataValue.data.sentences
-      .map(
-        (sentence: { words: { data: string }[] }) =>
-        `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
-      )
-      .join("");
+        .map(
+          (sentence: { words: { data: string }[] }) =>
+            `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
+        )
+        .join("");
     } else {
       lyric.value = t("panel.no_lyric");
     }
