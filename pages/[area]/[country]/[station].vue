@@ -154,10 +154,6 @@ const fetchLyric = async (id: string) => {
       data: { sentences: { words: { data: string }[] }[] };
     };
     if (resDataValue.err === 0 && resDataValue.data.sentences) {
-      const resDataValue = resData.value as {
-        err: number;
-        data: { sentences: { words: { data: string }[] }[] };
-      };
       lyric.value = resDataValue.data.sentences
         .map(
           (sentence: { words: { data: string }[] }) =>
