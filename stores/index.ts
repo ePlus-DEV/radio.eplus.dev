@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 
 export const useMainStore = defineStore("main", {
-  // id: 'myCommonStore',
   state: () => ({
     player: {},
     player_home: {},
