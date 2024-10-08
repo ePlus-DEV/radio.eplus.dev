@@ -254,6 +254,7 @@ import {
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
 const online = ref(navigator.onLine);
+const $store = useMainStore();
 
 const $player = ref<MediaPlayerElement>(),
   waiting = ref(true),
@@ -322,6 +323,10 @@ watch(
 );
 
 onMounted(() => {
+  // Set the timezone based on the country.
+  const [_, area, country] = props.country.split(".");
+  $store.setTimezone(area, country.replace(/_/g, "-"));
+
   // Select elements with the classes 'vds-play-button' and 'vds-button'
   document
     .querySelectorAll(".vds-play-button")

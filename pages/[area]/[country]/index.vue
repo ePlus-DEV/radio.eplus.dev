@@ -68,42 +68,46 @@ useSeoMeta({
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
  */
-const { data, error } = useFetch(`/radio/${area.value}/${slug.value}.json`);
+ const fetchData = async (): Promise<void> => {
+  try {
+    const response = await fetch(
+      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
+    );
+    const data = await response.json();
 
-watchEffect(() => {
-  if (error.value) {
-    console.error("Error fetching data:", error.value);
-    return;
+    if (!data) {
+      throw new Error("No data returned from fetch");
+    }
+
+    interface Channel {
+      favorite: boolean;
+      title: string;
+      stream: string;
+      type: string;
+      cros: boolean;
+    }
+
+    const favoriteChannel = Object.values(data as Record<string, Channel>).find(
+      (channel) => channel.favorite,
+    );
+
+    if (!favoriteChannel) {
+      throw new Error("Favorite channel not found");
+    }
+
+    streamName.value = favoriteChannel.title;
+    streamUrl.value = {
+      src: favoriteChannel.cros
+        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
+        : favoriteChannel.stream,
+      type: favoriteChannel.type as AudioMimeType,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
+};
 
-  if (!data.value) {
-    console.error("No data returned from fetch");
-    return;
-  }
-
-  interface Channel {
-    favorite: boolean;
-    title: string;
-    stream: string;
-    type: string;
-    cros: boolean;
-  }
-
-  const favoriteChannel = Object.values(
-    data.value as Record<string, Channel>,
-  ).find((channel) => channel.favorite);
-
-  if (!favoriteChannel) {
-    console.error("Favorite channel not found");
-    return;
-  }
-
-  streamName.value = favoriteChannel.title;
-  streamUrl.value = {
-    src: favoriteChannel.cros
-      ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
-      : favoriteChannel.stream,
-    type: favoriteChannel.type as AudioMimeType,
-  };
+onMounted(() => {
+  fetchData();
 });
 </script>

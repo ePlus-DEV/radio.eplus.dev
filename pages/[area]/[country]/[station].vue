@@ -95,7 +95,7 @@ const area = ref(route.params.area);
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
-const timeZone = ref($store.timezone);
+const timeZone = ref($store.getTimezone);
 const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
 interface ProgramItem {
