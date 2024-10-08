@@ -174,10 +174,11 @@ const fetchLyric = async (id: string) => {
  */
 const fetchDetail = async (url: string) => {
   try {
-    const res = await fetch(url + dayjs().tz(timeZone.value).unix());
-    const resData = await res.json();
-    if (resData.err === 0) {
-      song.value = resData.data;
+    const { data: resData } = await useFetch(url + dayjs().tz(timeZone.value).unix());
+    const resDataValue = resData.value as { err: number; data: any };
+    if (resDataValue.err === 0) {
+      const resDataValue = resData.value as { data: Song };
+      song.value = resDataValue.data;
       const currentMedia = song.value?.currentMedia;
       if (currentMedia) {
         document.title = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
