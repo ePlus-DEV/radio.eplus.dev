@@ -38,8 +38,6 @@ const country = ref(
     : route.params.country.replace(/-/g, "_"),
 );
 const area = ref(route.params.area);
-// const { result, search } = useAlgoliaSearch("radio.eplus.dev");
-
 const thumb = computed(
   () =>
     `/img/${area.value ? area.value : "asia"}/flags/${slug.value ? slug.value : "viet-nam"}.png`,
@@ -58,22 +56,14 @@ useSeoMeta({
   articleModifiedTime: new Date().toISOString(),
 });
 
-// onMounted(async () => {
-//   await search({
-//     query: "",
-//     requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
-//   });
-// });
-
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
  */
 const fetchData = async (): Promise<void> => {
   try {
-    const response = await fetch(
+    const data = await $fetch<Record<string, Channel>>(
       `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
     );
-    const data = await response.json();
 
     if (!data) {
       throw new Error("No data returned from fetch");

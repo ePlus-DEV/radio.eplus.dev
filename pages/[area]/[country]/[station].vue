@@ -147,10 +147,10 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
  */
 const fetchLyric = async (id: string) => {
   try {
-    const { data: resData } = await useFetch(
+    const resData = await $fetch(
       `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
     );
-    const resDataValue = resData.value as {
+    const resDataValue = resData as {
       err: number;
       data: { sentences: { words: { data: string }[] }[] };
     };
@@ -175,10 +175,10 @@ const fetchLyric = async (id: string) => {
  */
 const fetchDetail = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(
+    const resData = await $fetch(
       url + dayjs().tz(timeZone.value).unix(),
     );
-    const resDataValue = resData.value as { err: number; data: Song };
+    const resDataValue = resData as { err: number; data: Song };
     if (resDataValue.err === 0) {
       song.value = resDataValue.data;
       const currentMedia = song.value?.currentMedia;
@@ -208,10 +208,10 @@ const fetchDetail = async (url: string) => {
  */
 const fetchSchedule = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(
+    const resData = await $fetch(
       url + dayjs().tz(timeZone.value).unix(),
     );
-    const resDataValue = resData.value as {
+    const resDataValue = resData as {
       err: number;
       data: { items: ProgramItem[] };
     };
@@ -225,9 +225,9 @@ const fetchSchedule = async (url: string) => {
         `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
-      const resDataSuccess = resData.value as { success: boolean };
+      const resDataSuccess = resData as { success: boolean };
       if (resDataSuccess.success) {
-        playlist.value = (resData.value as { result: Track[] }).result;
+        playlist.value = (resData as { result: Track[] }).result;
       }
       if (playlist.value.length > 0) {
         const firstTrack = playlist.value[0];
