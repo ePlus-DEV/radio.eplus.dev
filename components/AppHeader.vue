@@ -183,7 +183,7 @@
       <div class="modal-box dark:bg-gray-700">
         <p>
           <!-- BEGIN - ais-instant-search -->
-          <!-- <Search /> -->
+          <PanelSearch />
           <!-- END - ais-instant-search -->
         </p>
         <div class="modal-action">
