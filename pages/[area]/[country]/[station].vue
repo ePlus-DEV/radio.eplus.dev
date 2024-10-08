@@ -142,8 +142,6 @@ const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
-// const timezone = ref("Asia/Ho_Chi_Minh");
-
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
 /**
