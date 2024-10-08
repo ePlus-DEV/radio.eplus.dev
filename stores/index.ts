@@ -40,7 +40,7 @@ export const useMainStore = defineStore("main", {
       cros: false,
       favorite: false,
       station_schedule: "",
-      url: ""
+      url: "",
     },
     player_home: {
       objectID: "",
@@ -52,7 +52,7 @@ export const useMainStore = defineStore("main", {
       cros: false,
       favorite: false,
       station_schedule: "",
-      url: ""
+      url: "",
     },
     timezone: "Asia/Ho_Chi_Minh",
   }),
@@ -63,8 +63,9 @@ export const useMainStore = defineStore("main", {
     setPlayerHome(player_home: Player) {
       this.player_home = player_home;
     },
-    setTimezone( area: string, country: string) {
-      const timezone = (world as World)[area]?.[country]?.timezone || "Asia/Ho_Chi_Minh";
+    setTimezone(area: string, country: string) {
+      const timezone =
+        (world as World)[area]?.[country]?.timezone || "Asia/Ho_Chi_Minh";
       console.error(timezone);
       this.timezone = timezone;
     },
