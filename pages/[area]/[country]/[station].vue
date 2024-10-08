@@ -175,9 +175,8 @@ const fetchLyric = async (id: string) => {
 const fetchDetail = async (url: string) => {
   try {
     const { data: resData } = await useFetch(url + dayjs().tz(timeZone.value).unix());
-    const resDataValue = resData.value as { err: number; data: any };
+    const resDataValue = resData.value as { err: number; data: Song };
     if (resDataValue.err === 0) {
-      const resDataValue = resData.value as { data: Song };
       song.value = resDataValue.data;
       const currentMedia = song.value?.currentMedia;
       if (currentMedia) {
