@@ -34,9 +34,9 @@
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
                 {{ $t(country) }} -
-                <span :data-tip="currentDate" class="tooltip"> {{
-                  currentTime
-                }} {{ waiting }}</span>
+                <span :data-tip="currentDate" class="tooltip">
+                  {{ currentTime }} {{ waiting }}</span
+                >
               </span>
             </div>
             <div class="flex">
