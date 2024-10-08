@@ -286,9 +286,7 @@ const props = defineProps<{
   program?: Array<object>;
   streamUrl: MediaPlayerElement["src"];
   song?: Array<object>;
-  info?: Array<object>;
   playlist?: Array<object>;
-  current?: Array<object>;
 }>();
 
 const $src = ref(props.streamUrl);
