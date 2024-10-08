@@ -23,11 +23,7 @@
           loading="lazy"
           class="w-10 h-10 object-cover rounded-lg"
           :alt="item.track_title + ' - ' + item.track_artist"
-          :src="
-            item.track_image !== ''
-              ? item.track_image
-              : thumb
-          "
+          :src="item.track_image !== '' ? item.track_image : thumb"
         />
         <div class="flex flex-col px-2 w-4/5">
           <span

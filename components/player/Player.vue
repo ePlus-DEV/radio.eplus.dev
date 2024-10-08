@@ -224,7 +224,7 @@
           <!-- END - Program  -->
 
           <!-- BEGIN - Playlist -->
-          <PlayerPlaylist :playlist="playlist" :thumb="thumb"/>
+          <PlayerPlaylist :playlist="playlist" :thumb="thumb" />
           <!-- END - Playlist -->
         </div>
       </div>
