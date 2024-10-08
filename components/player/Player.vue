@@ -218,13 +218,17 @@
             </div>
           </div>
           <!-- END: Internet -->
+
+          <!-- BEGIN - Program  -->
+          <PlayerProgram :program="program" />
+          <!-- END - Program  -->
+
+          <!-- BEGIN - Playlist -->
+          <PlayerPlaylist :playlist="playlist" :thumb="thumb"/>
+          <!-- END - Playlist -->
         </div>
       </div>
       <!-- END - Player -->
-
-      <!-- BEGIN - Program  -->
-      <PlayerProgram :program="program" />
-      <!-- END - Program  -->
 
       <div class="src-buttons">
         <button @click="changeSource('audio')" class="dark:text-white">

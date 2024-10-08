@@ -10,8 +10,8 @@
     <!-- END - Breadcrumbs -->
 
     <!-- <pre class="text-white">
-      {{ song }}
-      </pre> -->
+      {{ data }}
+    </pre> -->
 
     <!-- BEGIN - Player -->
     <Player
