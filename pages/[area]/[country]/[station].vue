@@ -9,17 +9,13 @@
     />
     <!-- END - Breadcrumbs -->
 
-    <!-- <pre class="text-white">
-      {{ data }}
-    </pre> -->
-
     <!-- BEGIN - Player -->
     <Player
       :country="i18n"
       :song="song"
       :program="program"
       :info="info"
-      :playlist="data"
+      :playlist="playlist"
       :current="current"
       :streamName="streamName"
       :streamUrl="streamUrl"
@@ -115,7 +111,8 @@ const current = ref({});
 interface Track {
   track_title: string;
   track_artist: string;
-  // Add other properties as needed
+  track_image: string;
+  track_played: number;
 }
 
 interface CurrentMedia {
@@ -137,7 +134,7 @@ useHead({
   title: title.value,
 });
 
-const data = ref<Track[]>([]);
+const playlist = ref<Track[]>([]);
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
@@ -230,10 +227,10 @@ const fetchSchedule = async (url: string) => {
     } else {
       const resDataSuccess = resData.value as { success: boolean };
       if (resDataSuccess.success) {
-        data.value = (resData.value as { result: Track[] }).result;
+        playlist.value = (resData.value as { result: Track[] }).result;
       }
-      if (data.value.length > 0) {
-        const firstTrack = data.value[0];
+      if (playlist.value.length > 0) {
+        const firstTrack = playlist.value[0];
         document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
       }
     }
