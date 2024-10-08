@@ -33,7 +33,10 @@
                 {{ streamName }}
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
-                {{ $t(country) }}
+                {{ $t(country) }} -
+                <span :data-tip="currentDate" class="tooltip">
+                  {{ currentTime }} {{ waiting }}</span
+                >
               </span>
             </div>
             <div class="flex">
@@ -44,9 +47,14 @@
             </div>
           </div>
 
+          <!-- BEGIN - Zing - Only -->
+          <PlayerZingOnly :song="song" />
+          <!-- END - Zing - Only -->
+
           <div class="flex flex-col sm:flex-row items-center p-5">
             <div class="flex items-center">
               <div class="flex space-x-3 p-2">
+                <!-- BEGIN - Button Pre -->
                 <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
@@ -61,6 +69,7 @@
                     <line x1="5" y1="19" x2="5" y2="5"></line>
                   </svg>
                 </button>
+                <!-- END - Button Pre -->
                 <!-- BEIGN - Button Pause -->
                 <button
                   v-show="!waiting"
@@ -135,6 +144,7 @@
                   ></path>
                 </svg>
                 <!-- Waiting -->
+                <!-- BEGIN - Button Next -->
                 <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
@@ -149,6 +159,7 @@
                     <line x1="19" y1="5" x2="19" y2="19"></line>
                   </svg>
                 </button>
+                <!-- END - Button Next -->
               </div>
             </div>
             <div class="relative w-full ml-2">
@@ -207,13 +218,17 @@
             </div>
           </div>
           <!-- END: Internet -->
+
+          <!-- BEGIN - Program  -->
+          <PlayerProgram :program="program" />
+          <!-- END - Program  -->
+
+          <!-- BEGIN - Playlist -->
+          <PlayerPlaylist :playlist="playlist || []" :thumb="thumb" />
+          <!-- END - Playlist -->
         </div>
       </div>
       <!-- END - Player -->
-
-      <!-- BEGIN - Program  -->
-      <PlayerProgram :program="program" />
-      <!-- END - Program  -->
 
       <div class="src-buttons">
         <button @click="changeSource('audio')" class="dark:text-white">
@@ -246,7 +261,6 @@ import "vidstack/player";
 import "vidstack/player/layouts";
 import "vidstack/player/ui";
 import "vidstack/icons";
-
 import {
   isHLSProvider,
   type MediaCanPlayEvent,
@@ -254,14 +268,16 @@ import {
   type MediaProviderChangeEvent,
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
-import { defineProps, ref } from "vue";
-
 const online = ref(navigator.onLine);
+const $store = useMainStore();
+const dayjs = useDayjs();
 
 const $player = ref<MediaPlayerElement>(),
   waiting = ref(true),
   streamError = ref(false),
-  button = ref(true);
+  button = ref(true),
+  currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL")),
+  currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
 const props = defineProps<{
   thumb: string;
@@ -269,7 +285,32 @@ const props = defineProps<{
   country: string;
   program?: Array<object>;
   streamUrl: MediaPlayerElement["src"];
+  song?: Song;
+  playlist?: PlaylistItem[];
 }>();
+
+interface CurrentMedia {
+  title: string;
+  artists: string;
+  hasLyric: boolean;
+  encodeId: string;
+  thumbnail?: string;
+}
+
+interface Song {
+  encodeId: string;
+  currentMedia?: CurrentMedia;
+  nextMedia?: CurrentMedia;
+  thumbnail?: string;
+  // Add other properties as needed
+}
+
+interface PlaylistItem {
+  track_title: string;
+  track_artist: string;
+  track_image: string;
+  track_played: number;
+}
 
 const $src = ref(props.streamUrl);
 
@@ -288,8 +329,6 @@ const updateOnlineStatus = () => {
 function onPlay() {
   if (!waiting.value && !streamError.value) {
     $player.value?.play();
-    console.log($player);
-    waiting.value = true;
     setTimeout(() => {
       waiting.value = false;
     }, 1000); // Simulate waiting time
@@ -306,7 +345,6 @@ function onPlay() {
 function onPause() {
   if (!waiting.value) {
     $player.value?.pause();
-    waiting.value = true;
     setTimeout(() => {
       waiting.value = false;
     }, 1000); // Simulate waiting time
@@ -324,7 +362,22 @@ watch(
   },
 );
 
+/**
+ * Updates the current time and date based on the user's timezone.
+ */
+const updateCurrentTime = (): void => {
+  currentTime.value = dayjs().tz($store.getTimezone).format("LTS");
+  currentDate.value = dayjs().tz($store.getTimezone).format("LLLL");
+};
+
+// Update the current time every second
+setInterval(updateCurrentTime, 1000);
+
 onMounted(() => {
+  // Set the timezone based on the country.
+  const [_, area, country] = props.country.split(".");
+  $store.setTimezone(area, country.replace(/_/g, "-"));
+
   // Select elements with the classes 'vds-play-button' and 'vds-button'
   document
     .querySelectorAll(".vds-play-button")
@@ -351,8 +404,11 @@ onMounted(() => {
     console.log("is paused?", "->", paused);
     if (error) {
       console.error("Playback error occurred");
+      waiting.value = false;
     }
-    waiting.value = false;
+    if (canPlay) {
+      waiting.value = false;
+    }
   });
 
   window.addEventListener("online", updateOnlineStatus);

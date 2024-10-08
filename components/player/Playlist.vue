@@ -22,14 +22,8 @@
         <img
           loading="lazy"
           class="w-10 h-10 object-cover rounded-lg"
-          alt="User avatar"
-          :src="
-            item.track_image !== ''
-              ? item.track_image
-              : home !== undefined
-                ? thumb
-                : player.features
-          "
+          :alt="item.track_title + ' - ' + item.track_artist"
+          :src="item.track_image !== '' ? item.track_image : thumb"
         />
         <div class="flex flex-col px-2 w-4/5">
           <span
@@ -45,10 +39,10 @@
         </div>
         <div class="w-1/5 text-right">
           <p class="text-xs text-grey-dark dark:text-white" v-if="index !== 0">
-            {{ item.track_played }}
+            {{ dayjs.unix(item.track_played).fromNow() }}
           </p>
           <div class="relative inline-flex" v-else>
-            <nuxt-img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
+            <img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
           </div>
         </div>
       </div>
@@ -56,11 +50,18 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  playlist: {
-    type: Array,
-    required: true,
-  },
-});
+<script lang="ts" setup>
+const dayjs = useDayjs();
+
+interface PlaylistItem {
+  track_title: string;
+  track_artist: string;
+  track_image: string;
+  track_played: number;
+}
+
+defineProps<{
+  playlist: PlaylistItem[];
+  thumb: string;
+}>();
 </script>

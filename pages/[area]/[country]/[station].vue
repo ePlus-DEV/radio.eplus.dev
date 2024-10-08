@@ -14,9 +14,7 @@
       :country="i18n"
       :song="song"
       :program="program"
-      :info="info"
-      :playlist="data"
-      :current="current"
+      :playlist="playlist"
       :streamName="streamName"
       :streamUrl="streamUrl"
       :thumb="thumb"
@@ -95,7 +93,7 @@ const area = ref(route.params.area);
 const i18n = ref(
   `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
 );
-const timeZone = ref($store.timezone);
+const timeZone = ref($store.getTimezone);
 const title = ref<string | undefined>(t(i18n.value));
 const streamName = ref("");
 interface ProgramItem {
@@ -105,14 +103,14 @@ interface ProgramItem {
 }
 
 const program = ref<ProgramItem[]>([]);
-const song = ref<Song>({});
-const info = ref([]);
-const current = ref({});
+const song = ref<Song>();
 interface Track {
   track_title: string;
   track_artist: string;
-  // Add other properties as needed
+  track_image: string;
+  track_played: number;
 }
+
 interface CurrentMedia {
   title: string;
   artists: string;
@@ -121,24 +119,21 @@ interface CurrentMedia {
 }
 
 interface Song {
+  encodeId: string;
   currentMedia?: CurrentMedia;
   // Add other properties as needed
 }
-
 const thumb = ref("");
-
-useHead({
-  title: title.value,
-});
-
-const data = ref<Track[]>([]);
+const playlist = ref<Track[]>([]);
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
-// const timezone = ref("Asia/Ho_Chi_Minh");
-
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+
+useHead({
+  title: title.value,
+});
 
 /**
  * Fetches the lyrics for the given song ID.
@@ -146,12 +141,15 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
  */
 const fetchLyric = async (id: string) => {
   try {
-    const res = await fetch(
+    const resData = await $fetch(
       `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
     );
-    const resData = await res.json();
-    if (resData.err === 0 && resData.data.sentences) {
-      lyric.value = resData.data.sentences
+    const resDataValue = resData as {
+      err: number;
+      data: { sentences: { words: { data: string }[] }[] };
+    };
+    if (resDataValue.err === 0 && resDataValue.data.sentences) {
+      lyric.value = resDataValue.data.sentences
         .map(
           (sentence: { words: { data: string }[] }) =>
             `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
@@ -171,10 +169,10 @@ const fetchLyric = async (id: string) => {
  */
 const fetchDetail = async (url: string) => {
   try {
-    const res = await fetch(url + dayjs().tz(timeZone.value).unix());
-    const resData = await res.json();
-    if (resData.err === 0) {
-      song.value = resData.data;
+    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
+    const resDataValue = resData as { err: number; data: Song };
+    if (resDataValue.err === 0) {
+      song.value = resDataValue.data;
       const currentMedia = song.value?.currentMedia;
       if (currentMedia) {
         document.title = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
@@ -202,10 +200,8 @@ const fetchDetail = async (url: string) => {
  */
 const fetchSchedule = async (url: string) => {
   try {
-    const { data: resData } = await useFetch(
-      url + dayjs().tz(timeZone.value).unix(),
-    );
-    const resDataValue = resData.value as {
+    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
+    const resDataValue = resData as {
       err: number;
       data: { items: ProgramItem[] };
     };
@@ -219,12 +215,12 @@ const fetchSchedule = async (url: string) => {
         `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
-      const resDataSuccess = resData.value as { success: boolean };
+      const resDataSuccess = resData as { success: boolean };
       if (resDataSuccess.success) {
-        data.value = (resData.value as { result: Track[] }).result;
+        playlist.value = (resData as { result: Track[] }).result;
       }
-      if (data.value.length > 0) {
-        const firstTrack = data.value[0];
+      if (playlist.value.length > 0) {
+        const firstTrack = playlist.value[0];
         document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
       }
     }

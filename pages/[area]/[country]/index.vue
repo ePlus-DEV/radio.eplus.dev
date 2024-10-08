@@ -11,10 +11,10 @@
     <!-- BEGIN - Player -->
     <Player
       :country="i18n"
-      :home="true"
       :thumb="thumb"
       :streamName="streamName"
       :streamUrl="streamUrl"
+      :playlist="playlist"
     ></Player>
     <!-- END - Player -->
 
@@ -26,6 +26,8 @@
 
 <script setup lang="ts">
 import type { AudioSrc, AudioMimeType } from "vidstack";
+const $store = useMainStore();
+const dayjs = useDayjs();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
@@ -38,16 +40,23 @@ const country = ref(
     : route.params.country.replace(/-/g, "_"),
 );
 const area = ref(route.params.area);
-// const { result, search } = useAlgoliaSearch("radio.eplus.dev");
-
 const thumb = computed(
   () =>
     `/img/${area.value ? area.value : "asia"}/flags/${slug.value ? slug.value : "viet-nam"}.png`,
 );
-
+const timeZone = ref($store.getTimezone);
 const i18n = computed(
   () => `world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
 );
+const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
+const playlist = ref<Track[]>([]);
+interface Track {
+  track_title: string;
+  track_artist: string;
+  track_image: string;
+  track_played: number;
+  schedule?: string;
+}
 
 useHead({
   title: t(i18n.value),
@@ -58,52 +67,80 @@ useSeoMeta({
   articleModifiedTime: new Date().toISOString(),
 });
 
-// onMounted(async () => {
-//   await search({
-//     query: "",
-//     requestOptions: { hitsPerPage: 200, facetFilters: [`station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`] },
-//   });
-// });
+/**
+ * Fetches the schedule data from the given URL.
+ * @param {string} url - The URL to fetch the schedule data from.
+ */
+const fetchSchedule = async (url: string) => {
+  try {
+    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
+
+    const resDataSuccess = resData as { success: boolean };
+    if (resDataSuccess.success) {
+      playlist.value = (resData as { result: Track[] }).result;
+    }
+    if (playlist.value.length > 0) {
+      const firstTrack = playlist.value[0];
+      document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${i18n.value}`;
+    }
+    if (polling_schedule.value !== null) {
+      clearTimeout(polling_schedule.value);
+    }
+    polling_schedule.value = setInterval(() => {
+      fetchSchedule(url);
+    }, 60000);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 /**
  * Fetches data from the server and initializes the player with the favorite channel.
  */
-const { data, error } = useFetch(`/radio/${area.value}/${slug.value}.json`);
+const fetchData = async (): Promise<void> => {
+  try {
+    const data = await $fetch<Record<string, Channel>>(
+      `/radio/${area.value ? area.value : "asia"}/${slug.value ? slug.value : "viet-nam"}.json`,
+    );
 
-watchEffect(() => {
-  if (error.value) {
-    console.error("Error fetching data:", error.value);
-    return;
+    if (!data) {
+      throw new Error("No data returned from fetch");
+    }
+
+    interface Channel {
+      favorite: boolean;
+      title: string;
+      stream: string;
+      type: string;
+      cros: boolean;
+      schedule?: string;
+    }
+
+    const favoriteChannel = Object.values(data as Record<string, Channel>).find(
+      (channel) => channel.favorite,
+    );
+
+    if (!favoriteChannel) {
+      throw new Error("Favorite channel not found");
+    }
+
+    streamName.value = favoriteChannel.title;
+    streamUrl.value = {
+      src: favoriteChannel.cros
+        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
+        : favoriteChannel.stream,
+      type: favoriteChannel.type as AudioMimeType,
+    };
+    // Fetch the schedule data if available
+    if (favoriteChannel.schedule !== undefined) {
+      fetchSchedule(favoriteChannel.schedule);
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
+};
 
-  if (!data.value) {
-    console.error("No data returned from fetch");
-    return;
-  }
-
-  interface Channel {
-    favorite: boolean;
-    title: string;
-    stream: string;
-    type: string;
-    cros: boolean;
-  }
-
-  const favoriteChannel = Object.values(
-    data.value as Record<string, Channel>,
-  ).find((channel) => channel.favorite);
-
-  if (!favoriteChannel) {
-    console.error("Favorite channel not found");
-    return;
-  }
-
-  streamName.value = favoriteChannel.title;
-  streamUrl.value = {
-    src: favoriteChannel.cros
-      ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
-      : favoriteChannel.stream,
-    type: favoriteChannel.type as AudioMimeType,
-  };
+onMounted(() => {
+  fetchData();
 });
 </script>
