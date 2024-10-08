@@ -131,7 +131,6 @@ const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
-
 useHead({
   title: title.value,
 });

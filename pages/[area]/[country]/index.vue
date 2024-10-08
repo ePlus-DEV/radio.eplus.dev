@@ -71,18 +71,18 @@ useSeoMeta({
  * Fetches the schedule data from the given URL.
  * @param {string} url - The URL to fetch the schedule data from.
  */
- const fetchSchedule = async (url: string) => {
+const fetchSchedule = async (url: string) => {
   try {
     const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
 
-      const resDataSuccess = resData as { success: boolean };
-      if (resDataSuccess.success) {
-        playlist.value = (resData as { result: Track[] }).result;
-      }
-      if (playlist.value.length > 0) {
-        const firstTrack = playlist.value[0];
-        document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${i18n.value}`;
-      }
+    const resDataSuccess = resData as { success: boolean };
+    if (resDataSuccess.success) {
+      playlist.value = (resData as { result: Track[] }).result;
+    }
+    if (playlist.value.length > 0) {
+      const firstTrack = playlist.value[0];
+      document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${i18n.value}`;
+    }
     if (polling_schedule.value !== null) {
       clearTimeout(polling_schedule.value);
     }
