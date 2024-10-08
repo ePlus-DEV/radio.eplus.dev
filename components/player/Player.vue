@@ -246,7 +246,6 @@ import "vidstack/player";
 import "vidstack/player/layouts";
 import "vidstack/player/ui";
 import "vidstack/icons";
-
 import {
   isHLSProvider,
   type MediaCanPlayEvent,
@@ -254,8 +253,6 @@ import {
   type MediaProviderChangeEvent,
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
-import { defineProps, ref } from "vue";
-
 const online = ref(navigator.onLine);
 
 const $player = ref<MediaPlayerElement>(),
