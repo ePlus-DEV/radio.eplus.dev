@@ -146,17 +146,18 @@ const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
  */
 const fetchLyric = async (id: string) => {
   try {
-    const res = await fetch(
+    const { data: resData } = await useFetch(
       `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
     );
-    const resData = await res.json();
-    if (resData.err === 0 && resData.data.sentences) {
-      lyric.value = resData.data.sentences
-        .map(
-          (sentence: { words: { data: string }[] }) =>
-            `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
-        )
-        .join("");
+    const resDataValue = resData.value as { err: number; data: { sentences: { words: { data: string }[] }[] } };
+    if (resDataValue.err === 0 && resDataValue.data.sentences) {
+      const resDataValue = resData.value as { err: number; data: { sentences: { words: { data: string }[] }[] } };
+      lyric.value = resDataValue.data.sentences
+      .map(
+        (sentence: { words: { data: string }[] }) =>
+        `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
+      )
+      .join("");
     } else {
       lyric.value = t("panel.no_lyric");
     }
