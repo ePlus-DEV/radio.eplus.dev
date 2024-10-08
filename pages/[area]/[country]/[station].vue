@@ -175,9 +175,7 @@ const fetchLyric = async (id: string) => {
  */
 const fetchDetail = async (url: string) => {
   try {
-    const resData = await $fetch(
-      url + dayjs().tz(timeZone.value).unix(),
-    );
+    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
     const resDataValue = resData as { err: number; data: Song };
     if (resDataValue.err === 0) {
       song.value = resDataValue.data;
@@ -208,9 +206,7 @@ const fetchDetail = async (url: string) => {
  */
 const fetchSchedule = async (url: string) => {
   try {
-    const resData = await $fetch(
-      url + dayjs().tz(timeZone.value).unix(),
-    );
+    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
     const resDataValue = resData as {
       err: number;
       data: { items: ProgramItem[] };
