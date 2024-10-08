@@ -9,6 +9,10 @@
     />
     <!-- END - Breadcrumbs -->
 
+    <!-- <pre class="text-white">
+      {{ song }}
+      </pre> -->
+
     <!-- BEGIN - Player -->
     <Player
       :country="i18n"
@@ -105,7 +109,7 @@ interface ProgramItem {
 }
 
 const program = ref<ProgramItem[]>([]);
-const song = ref<Song>({});
+const song = ref<Song>();
 const info = ref([]);
 const current = ref({});
 interface Track {
@@ -113,6 +117,7 @@ interface Track {
   track_artist: string;
   // Add other properties as needed
 }
+
 interface CurrentMedia {
   title: string;
   artists: string;
@@ -121,6 +126,7 @@ interface CurrentMedia {
 }
 
 interface Song {
+  encodeId: string;
   currentMedia?: CurrentMedia;
   // Add other properties as needed
 }

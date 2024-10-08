@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="transform -rotate-1 pb-8">
-      <!-- BEGIN - Player -->
+      <!-- BEGIN - Player -->     
       <div
         class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"
       >
@@ -46,6 +46,10 @@
               />
             </div>
           </div>
+
+          <!-- BEGIN - Zing - Only -->
+          <PlayerZingOnly :song="song" />
+          <!-- END - Zing - Only -->
 
           <div class="flex flex-col sm:flex-row items-center p-5">
             <div class="flex items-center">
@@ -277,6 +281,10 @@ const props = defineProps<{
   country: string;
   program?: Array<object>;
   streamUrl: MediaPlayerElement["src"];
+  song?: Array<object>;
+  info?: Array<object>;
+  playlist?: Array<object>;
+  current?: Array<object>;
 }>();
 
 const $src = ref(props.streamUrl);
