@@ -224,7 +224,7 @@
           <!-- END - Program  -->
 
           <!-- BEGIN - Playlist -->
-          <PlayerPlaylist :playlist="playlist" :thumb="thumb" />
+          <PlayerPlaylist :playlist="playlist || []" :thumb="thumb" />
           <!-- END - Playlist -->
         </div>
       </div>
@@ -285,9 +285,32 @@ const props = defineProps<{
   country: string;
   program?: Array<object>;
   streamUrl: MediaPlayerElement["src"];
-  song?: Array<object>;
-  playlist?: Array<object>;
+  song?: Song;
+  playlist?: PlaylistItem[];
 }>();
+
+interface CurrentMedia {
+  title: string;
+  artists: string;
+  hasLyric: boolean;
+  encodeId: string;
+  thumbnail?: string;
+}
+
+interface Song {
+  encodeId: string;
+  currentMedia?: CurrentMedia;
+  nextMedia?: CurrentMedia;
+  thumbnail?: string;
+  // Add other properties as needed
+}
+
+interface PlaylistItem {
+  track_title: string;
+  track_artist: string;
+  track_image: string;
+  track_played: number;
+}
 
 const $src = ref(props.streamUrl);
 
