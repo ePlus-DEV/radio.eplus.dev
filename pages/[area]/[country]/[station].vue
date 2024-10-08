@@ -14,9 +14,7 @@
       :country="i18n"
       :song="song"
       :program="program"
-      :info="info"
       :playlist="playlist"
-      :current="current"
       :streamName="streamName"
       :streamUrl="streamUrl"
       :thumb="thumb"
@@ -106,8 +104,6 @@ interface ProgramItem {
 
 const program = ref<ProgramItem[]>([]);
 const song = ref<Song>();
-const info = ref([]);
-const current = ref({});
 interface Track {
   track_title: string;
   track_artist: string;
@@ -127,19 +123,18 @@ interface Song {
   currentMedia?: CurrentMedia;
   // Add other properties as needed
 }
-
 const thumb = ref("");
-
-useHead({
-  title: title.value,
-});
-
 const playlist = ref<Track[]>([]);
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
 const lyric = ref(t("panel.updating"));
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+
+
+useHead({
+  title: title.value,
+});
 
 /**
  * Fetches the lyrics for the given song ID.
