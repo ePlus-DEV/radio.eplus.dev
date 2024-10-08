@@ -33,7 +33,10 @@
                 {{ streamName }}
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
-                {{ $t(country) }}
+                {{ $t(country) }} -
+                <span :data-tip="currentDate" class="tooltip"> {{
+                  currentTime
+                }} {{ waiting }}</span>
               </span>
             </div>
             <div class="flex">
@@ -47,6 +50,7 @@
           <div class="flex flex-col sm:flex-row items-center p-5">
             <div class="flex items-center">
               <div class="flex space-x-3 p-2">
+                <!-- BEGIN - Button Pre -->
                 <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
@@ -61,6 +65,7 @@
                     <line x1="5" y1="19" x2="5" y2="5"></line>
                   </svg>
                 </button>
+                <!-- END - Button Pre -->
                 <!-- BEIGN - Button Pause -->
                 <button
                   v-show="!waiting"
@@ -135,6 +140,7 @@
                   ></path>
                 </svg>
                 <!-- Waiting -->
+                <!-- BEGIN - Button Next -->
                 <button class="focus:outline-none">
                   <svg
                     class="w-4 h-4"
@@ -149,6 +155,7 @@
                     <line x1="19" y1="5" x2="19" y2="19"></line>
                   </svg>
                 </button>
+                <!-- END - Button Next -->
               </div>
             </div>
             <div class="relative w-full ml-2">
@@ -255,11 +262,14 @@ import {
 import type { MediaPlayerElement } from "vidstack/elements";
 const online = ref(navigator.onLine);
 const $store = useMainStore();
+const dayjs = useDayjs();
 
 const $player = ref<MediaPlayerElement>(),
   waiting = ref(true),
   streamError = ref(false),
-  button = ref(true);
+  button = ref(true),
+  currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL")),
+  currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
 const props = defineProps<{
   thumb: string;
@@ -321,6 +331,17 @@ watch(
     $src.value = newVal;
   },
 );
+
+/**
+ * Updates the current time and date based on the user's timezone.
+ */
+const updateCurrentTime = (): void => {
+  currentTime.value = dayjs().tz($store.getTimezone).format("LTS");
+  currentDate.value = dayjs().tz($store.getTimezone).format("LLLL");
+};
+
+// Update the current time every second
+setInterval(updateCurrentTime, 1000);
 
 onMounted(() => {
   // Set the timezone based on the country.
