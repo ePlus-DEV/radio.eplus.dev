@@ -371,6 +371,7 @@ onMounted(() => {
     console.log("is paused?", "->", paused);
     if (error) {
       console.error("Playback error occurred");
+      waiting.value = false;
     }
     if (canPlay) {
       waiting.value = false;
