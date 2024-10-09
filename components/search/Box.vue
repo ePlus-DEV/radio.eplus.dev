@@ -4,9 +4,7 @@
       class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70"
     >
       <div class="relative">
-        <div
-          class="relative p-4 border-b border-gray-200 dark:border-neutral-700"
-        >
+        <div class="relative p-4 border-b border-gray-200 dark:border-neutral-700">
           <label for="search-input" class="sr-only">Search input</label>
           <div class="relative">
             <div
@@ -39,10 +37,7 @@
             />
           </div>
         </div>
-
-        <pre class="text-white">{{ result?.hits }}</pre>
-
-        <!-- SearchBox Modal Body -->
+        <!-- BEGIN - SearchBox Modal Body -->
         <div tabindex="-1" class="top-full mt-1">
           <div class="h-80 p-2 overflow-hidden overflow-y-auto scrollbar">
             <div
@@ -50,14 +45,10 @@
             >
               Kết quả tìm kiếm
             </div>
-            <!-- <SearchResult
-              v-for="(hit, index) in result.hits"
-              :key="index"
-              :hit="hit"
-            /> -->
+            <SearchResult :result="result?.hits" />
           </div>
         </div>
-        <!-- End SearchBox Modal Body -->
+        <!-- END - SearchBox Modal Body -->
       </div>
     </div>
   </div>

@@ -177,18 +177,18 @@
         </div>
       </div>
     </nav>
-    <!-- BEGIN - PanelSearch -->
+    <!-- BEGIN - SearchBox -->
     <label for="search-modal" class="modal-button"></label>
     <input type="checkbox" id="search-modal" class="modal-toggle" />
     <div class="modal" role="dialog">
       <div class="modal-box bg-white dark:bg-gray-800 dark:border-gray-800">
-        <PanelSearch />
+        <SearchBox />
       </div>
       <label class="modal-backdrop" for="search-modal">{{
         $t("button.close")
       }}</label>
     </div>
-    <!-- END - PanelSearch -->
+    <!-- END - SearchBox -->
   </div>
 </template>
 
