@@ -143,4 +143,8 @@ const fetchData = async (): Promise<void> => {
 onMounted(() => {
   fetchData();
 });
+
+onBeforeUnmount(() => {
+  clearTimeout(polling_schedule.value as unknown as number);
+});
 </script>

@@ -177,26 +177,18 @@
         </div>
       </div>
     </nav>
+    <!-- BEGIN - SearchBox -->
     <label for="search-modal" class="modal-button"></label>
     <input type="checkbox" id="search-modal" class="modal-toggle" />
-    <div class="modal">
-      <div class="modal-box dark:bg-gray-700">
-        <p>
-          <!-- BEGIN - ais-instant-search -->
-          <!-- <Search /> -->
-          <!-- END - ais-instant-search -->
-        </p>
-        <div class="modal-action">
-          <label
-            for="search-modal"
-            class="btn btn-sm bg-red-500 hover:bg-red-700"
-          >
-            <fa :icon="['fas', 'xmark-large']" class="mr-2" />
-            {{ $t("button.close") }}
-          </label>
-        </div>
+    <div class="modal" role="dialog">
+      <div class="modal-box bg-white dark:bg-gray-800 dark:border-gray-800">
+        <SearchBox />
       </div>
+      <label class="modal-backdrop" for="search-modal">{{
+        $t("button.close")
+      }}</label>
     </div>
+    <!-- END - SearchBox -->
   </div>
 </template>
 

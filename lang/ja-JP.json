@@ -156,7 +156,8 @@
     "search": {
       "text": "探す...",
       "stats": "{nbPages} のページ {page} - {processingTimeMS} ミリ秒で取得された {nbHits} ヒット",
-      "category": "国でフィルタリング"
+      "category": "国でフィルタリング",
+       "popular_channels": "人気のチャンネル"
     }
   },
   "notify": {
