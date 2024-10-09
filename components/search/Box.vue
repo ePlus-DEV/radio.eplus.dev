@@ -30,7 +30,7 @@
             </div>
             <input
               id="search-input"
-              class="py-3 ps-10 pe-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              class="py-3 ps-10 pe-4 block w-full bg-slate-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
               type="text"
               role="combobox"
               aria-expanded="false"
@@ -45,10 +45,20 @@
             <div
               class="block text-xs text-gray-500 m-3 mb-1 dark:text-neutral-500 dark:border-neutral-700"
             >
-              <!-- Kết quả tìm kiếm -->
-              Kênh phổ biến
+              <!-- Search results will be displayed here -->
+              <pre class="text-white">{{ searchResult }}</pre>
+
+              Kênh phổ biến 
             </div>
-            <SearchResult :result="result?.hits" />
+            <SearchResult :result="searchResult?.hits" />
+            <div class="divider divider-neutral text-white">Trang {{ searchResult?.page + 1 }}/{{ searchResult?.nbPages }} - {{ searchResult?.nbHits }}</div>
+
+            <div class="join">
+              <button class="join-item btn btn-sm">1</button>
+              <button class="join-item btn btn-sm btn-active">2</button>
+              <button class="join-item btn-sm btn">3</button>
+              <button class="join-item btn-sm btn">4</button>
+            </div>
           </div>
         </div>
         <!-- END - SearchBox Modal Body -->
@@ -59,7 +69,7 @@
 
 <script lang="ts" setup>
 const config = useRuntimeConfig();
-const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
+const { search, result: searchResult } = useAlgoliaSearch(config.public.algoliaIndexStation);
 
 const input = ref("");
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;

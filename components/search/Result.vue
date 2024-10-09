@@ -1,14 +1,13 @@
 <template>
   <div>
-    <!-- <pre class="text-white">{{ result }}</pre> -->
     <div class="block" v-for="(item, index) in result" :key="index">
       <nuxt-link
-        to="/asia"
+        :to="item.url"
         class="py-2 px-2.5 flex items-center gap-x-3 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
         @click="close"
       >
         <img
-          class="shrink-0 size-5 rounded-full"
+          class="shrink-0 size-10 rounded-full"
           :src="item.station_image"
           alt="Avatar"
         />
