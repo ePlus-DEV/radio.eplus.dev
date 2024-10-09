@@ -9,7 +9,7 @@
         <img
           class="shrink-0 size-10 rounded-full"
           :src="item.station_image"
-          alt="Avatar"
+          :alt="item.station_name"
         />
         <span class="text-sm text-gray-800 dark:text-neutral-200">
           {{ item.station_name }}
