@@ -43,7 +43,8 @@
             <div
               class="block text-xs text-gray-500 m-3 mb-1 dark:text-neutral-500 dark:border-neutral-700"
             >
-              Kết quả tìm kiếm
+              <!-- Kết quả tìm kiếm -->
+              Kênh phổ biến
             </div>
             <SearchResult :result="result?.hits" />
           </div>

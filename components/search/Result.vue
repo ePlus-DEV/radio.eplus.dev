@@ -1,7 +1,8 @@
 <template>
   <div>
-    <pre class="text-white">{{ result }}</pre>
-    <div class="block">
+    <!-- <pre class="text-white">{{ result }}</pre> -->
+    <div class="block" v-for="(item, index) in result"
+    :key="index">
       <nuxt-link
         to="/asia"
         class="py-2 px-2.5 flex items-center gap-x-3 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
@@ -9,20 +10,18 @@
       >
         <img
           class="shrink-0 size-5 rounded-full"
-          src="https://images.unsplash.com/photo-1610186593977-82a3e3696e7f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=320&amp;h=320&amp;q=80"
+          :src="item.station_image"
           alt="Avatar"
         />
         <span
           class="text-sm text-gray-800 dark:text-neutral-200"
-          data-hs-combo-box-search-text="Chris Peti"
-          data-hs-combo-box-value=""
-          >Chris Peti</span
+          > {{ item.station_name }}
+          </span
         >
         <span
           class="ms-auto text-xs text-gray-400 dark:text-neutral-500"
-          data-hs-combo-box-search-text="Offline"
-          data-hs-combo-box-value=""
-          >Offline</span
+          > {{ $t(item.station_country) }}
+          </span
         >
       </nuxt-link>
     </div>
@@ -33,7 +32,38 @@
 defineProps({
   result: {
     type: Array,
-    default: () => [],
+    default: () => [
+      {
+        station_name: "Xone FM 96MHz",
+        station_country: "world.asia.viet_nam",
+        station_image:  "https://radio.eplus.dev/img/asia/viet-nam/xone.png",
+        url: "/asia/viet-nam/xone-fm-96-mhz"
+      },
+      {
+        station_name: "EDM Radio - Zing MP3",
+        station_country: "world.asia.viet_nam",
+        station_image:  "https://radio.eplus.dev/img/asia/viet-nam/edm-radio-zing-mp3.png",
+        url: "/asia/viet-nam/edm-radio-zing-mp3"
+      },
+      {
+        station_name: "US-UK Radio - Zing MP3",
+        station_country: "world.asia.viet_nam",
+        station_image:  "https://radio.eplus.dev/img/asia/viet-nam/us-uk-radio-zing-mp3.png",
+        url: "/asia/viet-nam/us-uk-radio-zing-mp3"
+      },
+      {
+        station_name: "Power 98 Love Songs",
+        station_country: "world.asia.singapore",
+        station_image:  "https://radio.eplus.dev/img/asia/singapore/power.png",
+        url: "/asia/singapore/power"
+      },
+      {
+        station_name: "Heart UK",
+        station_country: "world.europe.united_kingdom",
+        station_image:  "https://radio.eplus.dev/img/europe/united-kingdom/heart.png",
+        url: "/europe/united-kingdom/heart-uk"
+      },
+    ],
   },
 });
 
