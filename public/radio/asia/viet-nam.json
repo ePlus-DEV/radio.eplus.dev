@@ -800,7 +800,7 @@
     "time": "24/7",
     "info": "https://zing.eplus.dev/api/live-stream-info?id=IWZBDE9C&time=",
     "schedule": "https://zing.eplus.dev/api/live-stream-program-list?id=IWZ979CB&time=",
-    "stream": "https://multi-playlist-zmp3.zmdcdn.me/M-uqetyzV0g/zhls/playback-realtime/8c6190a6ace345bd1cf2/index.m3u8",
+    "stream": "https://multi-playlist-zmp3.zmdcdn.me/lFasDfrbcZ4/zhls/playback-realtime/3d19fdb5c1f028ae71e1/index.m3u8",
     "features": "/img/asia/viet-nam/chill-zing-mp3.png"
   },
   "acoustic-radio-zing-mp3": {
