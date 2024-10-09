@@ -184,7 +184,9 @@
       <div class="modal-box bg-white dark:bg-gray-800 dark:border-gray-800">
         <PanelSearch />
       </div>
-      <label class="modal-backdrop" for="search-modal">{{ $t("button.close") }}</label>
+      <label class="modal-backdrop" for="search-modal">{{
+        $t("button.close")
+      }}</label>
     </div>
     <!-- END - PanelSearch -->
   </div>
