@@ -48,10 +48,13 @@
               <!-- Search results will be displayed here -->
               <pre class="text-white">{{ searchResult }}</pre>
 
-              Kênh phổ biến 
+              Kênh phổ biến
             </div>
             <SearchResult :result="searchResult?.hits" />
-            <div class="divider divider-neutral text-white">Trang {{ searchResult?.page + 1 }}/{{ searchResult?.nbPages }} - {{ searchResult?.nbHits }}</div>
+            <div class="divider divider-neutral text-white">
+              Trang {{ searchResult?.page + 1 }}/{{ searchResult?.nbPages }} -
+              {{ searchResult?.nbHits }}
+            </div>
 
             <div class="join">
               <button class="join-item btn btn-sm">1</button>
@@ -69,7 +72,9 @@
 
 <script lang="ts" setup>
 const config = useRuntimeConfig();
-const { search, result: searchResult } = useAlgoliaSearch(config.public.algoliaIndexStation);
+const { search, result: searchResult } = useAlgoliaSearch(
+  config.public.algoliaIndexStation,
+);
 
 const input = ref("");
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
