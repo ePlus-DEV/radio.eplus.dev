@@ -4,7 +4,9 @@
       class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70"
     >
       <div class="relative">
-        <div class="relative p-4 border-b border-gray-200 dark:border-neutral-700">
+        <div
+          class="relative p-4 border-b border-gray-200 dark:border-neutral-700"
+        >
           <label for="search-input" class="sr-only">Search input</label>
           <div class="relative">
             <div
