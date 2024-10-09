@@ -18,25 +18,37 @@
       stroke-linejoin="round"
       class="text-white block border-gray-200 align-middle"
     >
-      <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" class="border-gray-200"></path>
+      <path
+        d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"
+        class="border-gray-200"
+      ></path>
     </svg>
   </button>
 
   <div
-    style="box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05)"
+    style="
+      box-shadow:
+        0 0 #0000,
+        0 0 #0000,
+        0 1px 2px 0 rgb(0 0 0 / 0.05);
+    "
     class="fixed bottom-[calc(4rem+1.5rem)] right-0 mr-4 bg-white p-6 rounded-lg border border-[#e5e7eb] w-[440px] h-[634px] z-50"
   >
     <!-- Heading -->
     <div class="flex flex-col space-y-1.5 pb-6">
       <h2 class="font-semibold text-lg tracking-tight">Chatbot</h2>
-      <p class="text-sm text-[#6b7280] leading-3">Powered by Mendable and Vercel</p>
+      <p class="text-sm text-[#6b7280] leading-3">
+        Powered by Mendable and Vercel
+      </p>
     </div>
 
     <!-- Chat Container -->
     <div class="pr-4 h-[474px]" style="min-width: 100%; display: table">
       <!-- Chat Message AI -->
       <div class="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-        <span class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
+        <span
+          class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8"
+        >
           <div class="rounded-full bg-gray-100 border p-1">
             <svg
               stroke="none"
@@ -57,16 +69,21 @@
           </div>
         </span>
         <p class="leading-relaxed">
-          <span class="block font-bold text-gray-700">AI </span>Hi, how can I help you
-          today?
+          <span class="block font-bold text-gray-700">AI </span>Hi, how can I
+          help you today?
         </p>
       </div>
 
       <!--  User Chat Message -->
       <div class="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-        <span class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
+        <span
+          class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8"
+        >
           <div class="rounded-full bg-gray-100 border p-1">
-            <img src="https://s240-ava-talk-zmp3.zmdcdn.me/2/b/d/0/11/240/bae139139bcdbc58979895476483d591.jpg" alt="">
+            <img
+              src="https://s240-ava-talk-zmp3.zmdcdn.me/2/b/d/0/11/240/bae139139bcdbc58979895476483d591.jpg"
+              alt=""
+            />
           </div>
         </span>
         <p class="leading-relaxed">
@@ -75,7 +92,9 @@
       </div>
       <!-- Ai Chat Message  -->
       <div class="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-        <span class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
+        <span
+          class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8"
+        >
           <div class="rounded-full bg-gray-100 border p-1">
             <svg
               stroke="none"
@@ -96,9 +115,10 @@
           </div>
         </span>
         <p class="leading-relaxed">
-          <span class="block font-bold text-gray-700">AI </span>Sorry, I couldn't find any
-          information in the documentation about that. Expect answer to be less accurateI
-          could not find the answer to this in the verified sources.
+          <span class="block font-bold text-gray-700">AI </span>Sorry, I
+          couldn't find any information in the documentation about that. Expect
+          answer to be less accurateI could not find the answer to this in the
+          verified sources.
         </p>
       </div>
     </div>
