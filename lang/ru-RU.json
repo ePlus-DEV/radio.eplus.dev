@@ -156,7 +156,8 @@
     "search": {
       "text": "Поиск...",
       "stats": "Страница {page} из {nbPages} — {nbHits} хитов получено за {processingTimeMS} мс",
-      "category": "Фильтр по стране"
+      "category": "Фильтр по стране",
+      "popular_channels": "Популярные каналы"
     }
   },
   "notify": {

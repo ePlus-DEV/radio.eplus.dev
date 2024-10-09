@@ -156,7 +156,8 @@
     "search": {
       "text": "Search...",
       "stats": "Page {page} of {nbPages} - {nbHits} hits retrieved in {processingTimeMS} ms",
-      "category": "Filter by country"
+      "category": "Filter by country",
+      "popular_channels": "Popular Channels"
     }
   },
   "notify": {

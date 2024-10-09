@@ -45,23 +45,9 @@
             <div
               class="block text-xs text-gray-500 m-3 mb-1 dark:text-neutral-500 dark:border-neutral-700"
             >
-              <!-- Search results will be displayed here -->
-              <pre class="text-white">{{ searchResult }}</pre>
-
-              Kênh phổ biến
+              {{ $t("popup.search.popular_channels") }}
             </div>
             <SearchResult :result="searchResult?.hits" />
-            <div class="divider divider-neutral text-white">
-              Trang {{ searchResult?.page + 1 }}/{{ searchResult?.nbPages }} -
-              {{ searchResult?.nbHits }}
-            </div>
-
-            <div class="join">
-              <button class="join-item btn btn-sm">1</button>
-              <button class="join-item btn btn-sm btn-active">2</button>
-              <button class="join-item btn-sm btn">3</button>
-              <button class="join-item btn-sm btn">4</button>
-            </div>
           </div>
         </div>
         <!-- END - SearchBox Modal Body -->
@@ -87,7 +73,7 @@ watch(input, (value: string) => {
     await search({
       query: value,
       requestOptions: {
-        hitsPerPage: 5,
+        hitsPerPage: 20,
       },
     });
   }, 500);
