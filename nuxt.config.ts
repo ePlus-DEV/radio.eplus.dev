@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from "nuxt/config";
 import { vite as vidstack } from "vidstack/plugins";
+import world from "./public/radio/world.json";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -14,8 +15,7 @@ export default defineNuxtConfig({
       corsServer: process.env.NUXT_PUBLIC_CORS_SERVER_1,
       placeholder: "https://s3.eplus.dev/i/radio-on-air.png",
       placeholderStation: "https://s3.eplus.dev/i/station-on-air.png",
-      apiZingLiveStreamProgramDetail:
-        process.env.NUXT_PUBLIC_API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
+      apiZingLiveStreamProgramDetail: process.env.NUXT_PUBLIC_API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
       apiZingGetLyric: process.env.NUXT_PUBLIC_API_ZING_GET_LYRIC,
       digitaloceanEndpoint: process.env.NUXT_PUBLIC_DIGITALOCEAN_ENDPOINT,
       digitaloceanApiKey: process.env.NUXT_PUBLIC_DIGITALOCEAN_API_KEY,
@@ -44,97 +44,31 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        {
-          hid: "description",
-          name: "description",
-          content: process.env.DESCRIPTION || "",
-        },
+        { hid: "description", name: "description", content: process.env.DESCRIPTION || "" },
         { name: "msapplication-TileColor", content: "#603cba" },
-        {
-          property: "article:author",
-          content: process.env.FANPAGE,
-        },
-        {
-          property: "article:publisher",
-          content: process.env.FANPAGE,
-        },
+        { property: "article:author", content: process.env.FANPAGE },
+        { property: "article:publisher", content: process.env.FANPAGE },
         { property: "fb:pages", content: "179495025583990" },
         { property: "fb:app_id", content: "363745774395676" },
       ],
       link: [
-        {
-          type: "apple-touch-icon",
-          sizes: "180x180",
-          href: "/brand/apple-touch-icon.png",
-        },
-        {
-          rel: "icon",
-          type: "image/x-icon",
-          sizes: "32x32",
-          href: "/brand/favicon-32x32.png",
-        },
-        {
-          rel: "icon",
-          type: "image/x-icon",
-          sizes: "16x16",
-          href: "/brand/favicon-16x16.png",
-        },
-        {
-          rel: "manifest",
-          href: "/brand/site.webmanifest",
-        },
-        {
-          rel: "mask-icon",
-          color: "#5bbad5",
-          href: "/brand/safari-pinned-tab.svg",
-        },
+        { type: "apple-touch-icon", sizes: "180x180", href: "/brand/apple-touch-icon.png" },
+        { rel: "icon", type: "image/x-icon", sizes: "32x32", href: "/brand/favicon-32x32.png" },
+        { rel: "icon", type: "image/x-icon", sizes: "16x16", href: "/brand/favicon-16x16.png" },
+        { rel: "manifest", href: "/brand/site.webmanifest" },
+        { rel: "mask-icon", color: "#5bbad5", href: "/brand/safari-pinned-tab.svg" },
       ],
     },
   },
   i18n: {
     locales: [
-      {
-        code: "en",
-        file: "en-US.json",
-        name: "English",
-        flag: "/img/europe/flags/united-kingdom.png",
-      },
-      {
-        code: "vi",
-        file: "vi-VN.json",
-        name: "Tiếng Việt",
-        flag: "/img/asia/flags/viet-nam.png",
-      },
-      {
-        code: "ja",
-        file: "ja-JP.json",
-        name: "日本語",
-        flag: "/img/asia/flags/japan.png",
-      },
-      {
-        code: "zh-CN",
-        file: "zh-CN.json",
-        name: "简体中文",
-        flag: "/img/asia/flags/china.png",
-      },
-      {
-        code: "zh-TW",
-        file: "zh-TW.json",
-        name: "繁體中文",
-        flag: "/img/asia/flags/taiwan.png",
-      },
-      {
-        code: "fr",
-        file: "fr-FR.json",
-        name: "Français",
-        flag: "/img/europe/flags/france.png",
-      },
-      {
-        code: "ru",
-        file: "ru-RU.json",
-        name: "Русский",
-        flag: "/img/europe/flags/russia.png",
-      },
+      { code: "en", file: "en-US.json", name: "English", flag: "/img/europe/flags/united-kingdom.png" },
+      { code: "vi", file: "vi-VN.json", name: "Tiếng Việt", flag: "/img/asia/flags/viet-nam.png" },
+      { code: "ja", file: "ja-JP.json", name: "日本語", flag: "/img/asia/flags/japan.png" },
+      { code: "zh-CN", file: "zh-CN.json", name: "简体中文", flag: "/img/asia/flags/china.png" },
+      { code: "zh-TW", file: "zh-TW.json", name: "繁體中文", flag: "/img/asia/flags/taiwan.png" },
+      { code: "fr", file: "fr-FR.json", name: "Français", flag: "/img/europe/flags/france.png" },
+      { code: "ru", file: "ru-RU.json", name: "Русский", flag: "/img/europe/flags/russia.png" },
     ],
     strategy: "no_prefix",
     lazy: true,
@@ -147,14 +81,7 @@ export default defineNuxtConfig({
       brands: ["facebook-f", "github", "x-twitter"],
     },
     proIcons: {
-      solid: [
-        "signal-stream",
-        "xmark-large",
-        "sun-bright",
-        "moon",
-        "desktop",
-        "wifi-slash",
-      ],
+      solid: ["signal-stream", "xmark-large", "sun-bright", "moon", "desktop", "wifi-slash"],
       regular: ["magnifying-glass-music", "house", "list-music"],
       light: ["sun-bright", "moon", "desktop", "bookmark", "up"],
       thin: [],
@@ -174,11 +101,37 @@ export default defineNuxtConfig({
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   colorMode: {
-    preference: "system", // default value of $colorMode.preference
-    fallback: "light", // fallback value if not system preference found
+    preference: "system",
+    fallback: "light",
     classPrefix: "",
     classSuffix: "",
     storageKey: "theme",
+  },
+  generate: {
+    routes: (() => {
+      const routesToGenerate = [];
+      for (const [continentKey, continent] of Object.entries(world)) {
+        const region = continentKey.replace(/_/g, "-");
+        routesToGenerate.push(`/${region}`);
+
+        for (const countryKey of Object.keys(continent)) {
+          routesToGenerate.push(`/${region}/${countryKey}`);
+
+          for (const key of Object.keys((continent as Record<string, Record<string, unknown>>)[countryKey])) {
+            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
+          }
+        }
+      }
+      return routesToGenerate;
+    })(),
+  },
+  sitemap: {
+    sources: ["/api/__sitemap__/urls"],
+    defaults: {
+      changefreq: "daily",
+      priority: 1,
+      lastmod: new Date(),
+    },
   },
   vite: {
     plugins: [vidstack()],
