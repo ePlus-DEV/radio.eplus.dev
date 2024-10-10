@@ -31,11 +31,23 @@ class Zingmp3 {
     return crypto.createHash("sha256").update(str).digest("hex");
   }
 
+  /**
+   * Generates an HMAC SHA-512 hash.
+   * @param {string} str - The string to hash.
+   * @param {string} key - The key to use for hashing.
+   * @returns {string} The resulting HMAC SHA-512 hash.
+   */
   private get_hmac_512(str: string, key: string): string {
     const hmac = crypto.createHmac("sha512", key);
     return hmac.update(Buffer.from(str, "utf-8")).digest("hex");
   }
 
+  /**
+   * Generates a hash signature for API paths that include an ID.
+   * @param {string} api_path - The API path.
+   * @param {string} id - The ID to include in the hash.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_has_id_signature(api_path: string, id: string): string {
     return this.get_hmac_512(
       api_path +
@@ -44,6 +56,11 @@ class Zingmp3 {
     );
   }
 
+  /**
+   * Generates a hash signature for API paths that do not include an ID.
+   * @param {string} api_path - The API path.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_no_id_signature(api_path: string): string {
     return this.get_hmac_512(
       api_path +
@@ -52,6 +69,12 @@ class Zingmp3 {
     );
   }
 
+  /**
+   * Generates a hash signature for the home radio API path.
+   * @param {string} api_path - The API path.
+   * @param {number} count - The count parameter.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_home_radio_signature(api_path: string, count: number): string {
     return this.get_hmac_512(
       api_path +
@@ -62,6 +85,13 @@ class Zingmp3 {
     );
   }
 
+  /**
+   * Generates a hash signature for the list genre API path.
+   * @param {string} api_path - The API path.
+   * @param {string} id - The ID to include in the hash.
+   * @param {number} page - The page number.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_list_genre_signature(
     api_path: string,
     id: string,
@@ -76,6 +106,15 @@ class Zingmp3 {
     );
   }
 
+  /**
+   * Generates a hash signature for the list MV API path.
+   * @param {string} api_path - The API path.
+   * @param {number} count - The count parameter.
+   * @param {string} id - The ID to include in the hash.
+   * @param {string} type - The type parameter.
+   * @param {number} page - The page number.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_list_mv_signature(
     api_path: string,
     count: number,
@@ -92,6 +131,13 @@ class Zingmp3 {
     );
   }
 
+  /**
+   * Generates a hash signature for the category MV API path.
+   * @param {string} api_path - The API path.
+   * @param {string} id - The ID to include in the hash.
+   * @param {string} type - The type parameter.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_catergory_mv_signature(
     api_path: string,
     id: string,
@@ -106,6 +152,14 @@ class Zingmp3 {
     );
   }
 
+  /**
+   * Generates a hash signature for the search API path.
+   * @param {string} api_path - The API path.
+   * @param {number} count - The count parameter.
+   * @param {number} page - The page number.
+   * @param {string} type - The type parameter.
+   * @returns {string} The resulting hash signature.
+   */
   private hash_search_signature(
     api_path: string,
     count: number,
@@ -130,7 +184,7 @@ class Zingmp3 {
 
       return cookie;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
@@ -139,7 +193,7 @@ class Zingmp3 {
     api_path: string,
     params: object,
     is_suggestion = false
-  ): Promise<any> {
+  ): Promise<Record<string, any>> {
     // Change base url for suggestion keyword
     const client = axios.create({
       baseURL: is_suggestion ? "https://ac.zingmp3.vn" : this.URL,
@@ -163,73 +217,96 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_home(): Promise<any> {
+  /**
+   * Fetches the home page data.
+   * @returns {Promise<any>} The home page data.
+   */
+  public async get_home(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/home";
     const count = 30;
 
     try {
       const response = await this.send_request(api_path, {
         page: "1",
-        count: count,
+        count,
         segmentId: "-1",
         sig: this.hash_home_radio_signature(api_path, count),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
+  /**
+   * Fetches the streaming information for a song.
+   * @param {string} id - The ID of the song.
+   * @returns {Promise<any>} The streaming information of the song.
+   */
   public async get_song(id: string): Promise<any> {
     const api_path = "/api/v2/song/get/streaming";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_song_info(id: string): Promise<any> {
+  /**
+   * Fetches the information of a song.
+   * @param {string} id - The ID of the song.
+   * @returns {Promise<any>} The information of the song.
+   */
+  public async get_song_info(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/song/get/info";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
+  /**
+   * Fetches the lyrics of a song.
+   * @param {string} id - The ID of the song.
+   * @returns {Promise<any>} The lyrics of the song.
+   */
   public async get_song_lyric(id: string): Promise<any> {
     const api_path = "/api/v2/lyric/get/lyric";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
+  /**
+   * Fetches the home chart data.
+   * @returns {Promise<any>} The home chart data.
+   */
   public async get_home_chart(): Promise<any> {
     const api_path = "/api/v2/page/get/chart-home";
 
@@ -240,11 +317,15 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_new_release_chart(): Promise<any> {
+  /**
+   * Fetches the new release chart data.
+   * @returns {Promise<any>} The new release chart data.
+   */
+  public async get_new_release_chart(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/newrelease-chart";
 
     try {
@@ -254,68 +335,93 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
+  /**
+   * Fetches the week chart data.
+   * @param {string} id - The ID of the chart.
+   * @param {number} [week=0] - The week number.
+   * @param {number} [year=0] - The year.
+   * @returns {Promise<any>} The week chart data.
+   */
   public async get_week_chart(
     id: string,
-    week: number = 0,
-    year: number = 0
-  ): Promise<any> {
+    week: 0,
+    year: 0
+  ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/week-chart";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
-        week: week,
-        year: year,
+        id,
+        week,
+        year,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_radio(): Promise<any> {
+  /**
+   * Fetches the radio data.
+   * @returns {Promise<any>} The radio data.
+   */
+  public async get_radio(): Promise<unknown> {
     const api_path = "/api/v2/page/get/radio";
     const count = 10;
     const page = 1;
 
     try {
       const response = await this.send_request(api_path, {
-        page: page,
-        count: count,
+        page,
+        count,
         sig: this.hash_home_radio_signature(api_path, count),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_list_by_genre(id: string, page: number = 1): Promise<any> {
+  /**
+   * Fetches a list of items by genre.
+   * @param {string} id - The ID of the genre.
+   * @param {number} [page=1] - The page number.
+   * @returns {Promise<any>} The list of items by genre.
+   */
+  public async get_list_by_genre(
+    id: string,
+    page: 1
+  ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/feed/get/list-by-genre";
     const count = 10;
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
-        page: page,
-        count: count,
+        id,
+        page,
+        count,
         sig: this.hash_list_genre_signature(api_path, id, page),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_artist(name: string): Promise<any> {
+  /**
+   * Fetches the information of an artist.
+   * @param {string} name - The name of the artist.
+   * @returns {Promise<any>} The information of the artist.
+   */
+  public async get_artist(name: string): Promise<unknown> {
     const api_path = "/api/v2/page/get/artist";
 
     try {
@@ -326,11 +432,15 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_hub_home(): Promise<any> {
+  /**
+   * Fetches the hub home data.
+   * @returns {Promise<any>} The hub home data.
+   */
+  public async get_hub_home(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/hub-home";
 
     try {
@@ -340,26 +450,35 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_hub_detail(id: string): Promise<any> {
+  /**
+   * Fetches the details of a hub.
+   * @param {string} id - The ID of the hub.
+   * @returns {Promise<any>} The details of the hub.
+   */
+  public async get_hub_detail(id: string): Promise<unknown> {
     const api_path = "/api/v2/page/get/hub-detail";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_top_100(): Promise<any> {
+  /**
+   * Fetches the top 100 songs.
+   * @returns {Promise<any>} The top 100 songs.
+   */
+  public async get_top_100(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/top-100";
 
     try {
@@ -369,16 +488,24 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
+  /**
+   * Fetches a list of music videos.
+   * @param {string} id - The ID of the genre.
+   * @param {number} [page=1] - The page number.
+   * @param {number} [count=15] - The number of items per page.
+   * @param {string} [sort="listen"] - The sort order (listen, hot, new).
+   * @returns {Promise<any>} The list of music videos.
+   */
   public async get_list_mv(
     id: string,
-    page: number = 1,
-    count: number = 15,
-    sort: string = "listen"
-  ): Promise<any> {
+    page: 1,
+    count: 15,
+    sort: "listen"
+  ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/video/get/list";
     const sort_list = ["listen", "hot", "new"];
     const type = "genre";
@@ -387,83 +514,109 @@ class Zingmp3 {
       if (!sort_list.includes(sort)) throw "Sort must be listen || hot || new.";
 
       const response = await this.send_request(api_path, {
-        id: id,
-        type: type,
-        page: page,
-        count: count,
-        sort: sort,
+        id,
+        type,
+        page,
+        count,
+        sort,
         sig: this.hash_list_mv_signature(api_path, count, id, type, page),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_category_mv(id: string): Promise<any> {
+  /**
+   * Fetches the category music video information.
+   * @param {string} id - The ID of the category.
+   * @returns {Promise<any>} The category music video information.
+   */
+  public async get_category_mv(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/genre/get/info";
     const type = "video";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
-        type: type,
+        id,
+        type,
         sig: this.hash_catergory_mv_signature(api_path, id, type),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_mv(id: string): Promise<any> {
+  /**
+   * Fetches the music video information.
+   * @param {string} id - The ID of the music video.
+   * @returns {Promise<any>} The music video information.
+   */
+  public async get_mv(id: string): Promise<unknown> {
     const api_path = "/api/v2/page/get/video";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_playlist(id: string): Promise<any> {
+  /**
+   * Fetches the playlist information.
+   * @param {string} id - The ID of the playlist.
+   * @returns {Promise<any>} The playlist information.
+   */
+  public async get_playlist(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/playlist";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_suggested_playlists(id: string): Promise<any> {
+  /**
+   * Fetches the suggested playlists for a given playlist ID.
+   * @param {string} id - The ID of the playlist.
+   * @returns {Promise<any>} The suggested playlists.
+   */
+  public async get_suggested_playlists(
+    id: string
+  ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/playlist/get/section-bottom";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_events(): Promise<any> {
+  /**
+   * Fetches the list of upcoming events.
+   * @returns {Promise<any>} The list of upcoming events.
+   */
+  public async get_events(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/event/get/list-incoming";
 
     try {
@@ -473,27 +626,32 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
-  public async get_event_info(id: string): Promise<any> {
+  /**
+   * Fetches the information of an event.
+   * @param {string} id - The ID of the event.
+   * @returns {Promise<any>} The information of the event.
+   */
+  public async get_event_info(id: string): Promise<unknown> {
     const api_path = "/api/v2/event/get/info";
 
     try {
       const response = await this.send_request(api_path, {
-        id: id,
+        id,
         sig: this.hash_has_id_signature(api_path, id),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
   // Search all (Music, Playlist, Artist, Video)
-  public async search_all(keyword: string): Promise<any> {
+  public async search_all(keyword: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/search/multi";
 
     try {
@@ -504,16 +662,24 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
+  /**
+   * Searches for items by type.
+   * @param {string} keyword - The search keyword.
+   * @param {string} type - The type of items to search for (song, playlist, artist, video).
+   * @param {number} [page=1] - The page number.
+   * @param {number} [count=18] - The number of items per page.
+   * @returns {Promise<any>} The search results.
+   */
   public async search_by_type(
     keyword: string,
     type: string,
-    page: number = 1,
-    count: number = 18
-  ): Promise<any> {
+    page: 1,
+    count: 18
+  ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/search";
     const type_list = ["song", "playlist", "artist", "video"];
     try {
@@ -522,20 +688,20 @@ class Zingmp3 {
 
       const response = await this.send_request(api_path, {
         q: keyword,
-        type: type,
-        page: page,
-        count: count,
+        type,
+        page,
+        count,
         sig: this.hash_search_signature(api_path, count, page, type),
       });
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
   // Default suggest keyword
-  public async get_recommend_keyword(): Promise<any> {
+  public async get_recommend_keyword(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/app/get/recommend-keyword";
 
     try {
@@ -545,12 +711,12 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 
   // Suggest keyword when searching
-  public async get_suggestion_keyword(keyword?: string): Promise<any> {
+  public async get_suggestion_keyword(keyword?: string): Promise<Record<string, unknown>> {
     const api_path = "/v1/web/suggestion-keywords";
 
     try {
@@ -567,7 +733,7 @@ class Zingmp3 {
 
       return response;
     } catch (error) {
-      return error;
+      return { error: error instanceof Error ? error.message : String(error) };
     }
   }
 }
