@@ -27,7 +27,7 @@ class Zingmp3 {
   }
 
   // Hash signature
-  private get_hash_256(str: string): string {
+  private static get_hash_256(str: string): string {
     return crypto.createHash("sha256").update(str).digest("hex");
   }
 
@@ -37,7 +37,7 @@ class Zingmp3 {
    * @param {string} key - The key to use for hashing.
    * @returns {string} The resulting HMAC SHA-512 hash.
    */
-  private get_hmac_512(str: string, key: string): string {
+  private static get_hmac_512(str: string, key: string): string {
     const hmac = crypto.createHmac("sha512", key);
     return hmac.update(Buffer.from(str, "utf-8")).digest("hex");
   }
@@ -49,9 +49,9 @@ class Zingmp3 {
    * @returns {string} The resulting hash signature.
    */
   private hash_has_id_signature(api_path: string, id: string): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(`ctime=${this.CTIME}id=${id}version=${this.VERSION}`),
+        Zingmp3.get_hash_256(`ctime=${this.CTIME}id=${id}version=${this.VERSION}`),
       this.SECRET_KEY
     );
   }
@@ -62,9 +62,9 @@ class Zingmp3 {
    * @returns {string} The resulting hash signature.
    */
   private hash_no_id_signature(api_path: string): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(`ctime=${this.CTIME}version=${this.VERSION}`),
+        Zingmp3.get_hash_256(`ctime=${this.CTIME}version=${this.VERSION}`),
       this.SECRET_KEY
     );
   }
@@ -76,9 +76,9 @@ class Zingmp3 {
    * @returns {string} The resulting hash signature.
    */
   private hash_home_radio_signature(api_path: string, count: number): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(
+        Zingmp3.get_hash_256(
           `count=${count}ctime=${this.CTIME}page=1version=${this.VERSION}`
         ),
       this.SECRET_KEY
@@ -97,9 +97,9 @@ class Zingmp3 {
     id: string,
     page: number
   ): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(
+        Zingmp3.get_hash_256(
           `count=10ctime=${this.CTIME}id=${id}page=${page}version=${this.VERSION}`
         ),
       this.SECRET_KEY
@@ -122,9 +122,9 @@ class Zingmp3 {
     type: string,
     page: number
   ): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(
+        Zingmp3.get_hash_256(
           `count=${count}ctime=${this.CTIME}id=${id}page=${page}type=${type}version=${this.VERSION}`
         ),
       this.SECRET_KEY
@@ -143,9 +143,9 @@ class Zingmp3 {
     id: string,
     type: string
   ): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(
+        Zingmp3.get_hash_256(
           `ctime=${this.CTIME}id=${id}type=${type}version=${this.VERSION}`
         ),
       this.SECRET_KEY
@@ -166,9 +166,9 @@ class Zingmp3 {
     page: number,
     type: string
   ): string {
-    return this.get_hmac_512(
+    return Zingmp3.get_hmac_512(
       api_path +
-        this.get_hash_256(
+        Zingmp3.get_hash_256(
           `count=${count}ctime=${this.CTIME}page=${page}type=${type}version=${this.VERSION}`
         ),
       this.SECRET_KEY
@@ -176,13 +176,17 @@ class Zingmp3 {
   }
 
   // Get Cookie
-  private async get_cookie(): Promise<any> {
+  private async get_cookie(): Promise<string | { error: string }> {
     try {
       const response = await axios.get(`${this.URL}`);
       const cookie_jar: string[] | undefined = response.headers["set-cookie"];
       const cookie = cookie_jar?.filter((_value, index) => index === 1)[0];
 
-      return cookie;
+      if (cookie) {
+        return cookie;
+      } else {
+        return { error: "Cookie not found" };
+      }
     } catch (error) {
       return { error: error instanceof Error ? error.message : String(error) };
     }
@@ -193,7 +197,7 @@ class Zingmp3 {
     api_path: string,
     params: object,
     is_suggestion = false
-  ): Promise<Record<string, any>> {
+  ): Promise<Record<string, unknown>> {
     // Change base url for suggestion keyword
     const client = axios.create({
       baseURL: is_suggestion ? "https://ac.zingmp3.vn" : this.URL,
@@ -205,7 +209,7 @@ class Zingmp3 {
       const cookie = await this.get_cookie();
       const response = await client.get(api_path, {
         headers: {
-          Cookie: cookie,
+          Cookie: typeof cookie === 'string' ? cookie : '',
         },
         params: {
           ...params,
@@ -215,7 +219,7 @@ class Zingmp3 {
         },
       });
 
-      return response;
+      return response as unknown as Record<string, unknown>;
     } catch (error) {
       return { error: error instanceof Error ? error.message : String(error) };
     }
