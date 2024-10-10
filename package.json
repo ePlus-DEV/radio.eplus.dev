@@ -45,8 +45,5 @@
   },
   "engines": {
     "node": "20.x"
-  },
-  "devDependencies": {
-    "nuxt-headlessui": "^1.2.0"
   }
 }

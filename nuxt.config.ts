@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from "nuxt/config";
 import { vite as vidstack } from "vidstack/plugins";
+import world from "./public/radio/world.json";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -50,14 +51,8 @@ export default defineNuxtConfig({
           content: process.env.DESCRIPTION || "",
         },
         { name: "msapplication-TileColor", content: "#603cba" },
-        {
-          property: "article:author",
-          content: process.env.FANPAGE,
-        },
-        {
-          property: "article:publisher",
-          content: process.env.FANPAGE,
-        },
+        { property: "article:author", content: process.env.FANPAGE },
+        { property: "article:publisher", content: process.env.FANPAGE },
         { property: "fb:pages", content: "179495025583990" },
         { property: "fb:app_id", content: "363745774395676" },
       ],
@@ -79,10 +74,7 @@ export default defineNuxtConfig({
           sizes: "16x16",
           href: "/brand/favicon-16x16.png",
         },
-        {
-          rel: "manifest",
-          href: "/brand/site.webmanifest",
-        },
+        { rel: "manifest", href: "/brand/site.webmanifest" },
         {
           rel: "mask-icon",
           color: "#5bbad5",
@@ -174,11 +166,39 @@ export default defineNuxtConfig({
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   colorMode: {
-    preference: "system", // default value of $colorMode.preference
-    fallback: "light", // fallback value if not system preference found
+    preference: "system",
+    fallback: "light",
     classPrefix: "",
     classSuffix: "",
     storageKey: "theme",
+  },
+  generate: {
+    routes: (() => {
+      const routesToGenerate = [];
+      for (const [continentKey, continent] of Object.entries(world)) {
+        const region = continentKey.replace(/_/g, "-");
+        routesToGenerate.push(`/${region}`);
+
+        for (const countryKey of Object.keys(continent)) {
+          routesToGenerate.push(`/${region}/${countryKey}`);
+
+          for (const key of Object.keys(
+            (continent as Record<string, Record<string, unknown>>)[countryKey],
+          )) {
+            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
+          }
+        }
+      }
+      return routesToGenerate;
+    })(),
+  },
+  sitemap: {
+    sources: ["/api/__sitemap__/urls"],
+    defaults: {
+      changefreq: "daily",
+      priority: 1,
+      lastmod: new Date(),
+    },
   },
   vite: {
     plugins: [vidstack()],
