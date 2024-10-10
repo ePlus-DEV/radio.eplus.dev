@@ -159,7 +159,7 @@ const getLastUpdate = async () => {
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== "development") {
     getLastUpdate();
   }
 });

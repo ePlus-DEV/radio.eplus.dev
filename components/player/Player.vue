@@ -229,7 +229,6 @@
         </div>
       </div>
       <!-- END - Player -->
-
     </div>
   </div>
 </template>
