@@ -517,7 +517,8 @@ class Zingmp3 {
     const type = "genre";
 
     try {
-      if (!sort_list.includes(sort)) throw new Error("Sort must be listen || hot || new.");
+      if (!sort_list.includes(sort))
+        throw new Error("Sort must be listen || hot || new.");
 
       const response = await this.send_request(api_path, {
         id,
