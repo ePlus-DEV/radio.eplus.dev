@@ -17,7 +17,7 @@ class Zingmp3 {
     API_KEY: string,
     SECRET_KEY: string,
     CTIME: string,
-    VERSION: string,
+    VERSION: string
   ) {
     this.URL = URL;
     this.API_KEY = API_KEY;
@@ -52,9 +52,9 @@ class Zingmp3 {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `ctime=${this.CTIME}id=${id}version=${this.VERSION}`,
+          `ctime=${this.CTIME}id=${id}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -67,7 +67,7 @@ class Zingmp3 {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(`ctime=${this.CTIME}version=${this.VERSION}`),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -81,9 +81,9 @@ class Zingmp3 {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=${count}ctime=${this.CTIME}page=1version=${this.VERSION}`,
+          `count=${count}ctime=${this.CTIME}page=1version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -97,14 +97,14 @@ class Zingmp3 {
   private hash_list_genre_signature(
     api_path: string,
     id: string,
-    page: number,
+    page: number
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=10ctime=${this.CTIME}id=${id}page=${page}version=${this.VERSION}`,
+          `count=10ctime=${this.CTIME}id=${id}page=${page}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -122,14 +122,14 @@ class Zingmp3 {
     count: number,
     id: string,
     type: string,
-    page: number,
+    page: number
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=${count}ctime=${this.CTIME}id=${id}page=${page}type=${type}version=${this.VERSION}`,
+          `count=${count}ctime=${this.CTIME}id=${id}page=${page}type=${type}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -143,14 +143,14 @@ class Zingmp3 {
   private hash_catergory_mv_signature(
     api_path: string,
     id: string,
-    type: string,
+    type: string
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `ctime=${this.CTIME}id=${id}type=${type}version=${this.VERSION}`,
+          `ctime=${this.CTIME}id=${id}type=${type}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -166,14 +166,14 @@ class Zingmp3 {
     api_path: string,
     count: number,
     page: number,
-    type: string,
+    type: string
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=${count}ctime=${this.CTIME}page=${page}type=${type}version=${this.VERSION}`,
+          `count=${count}ctime=${this.CTIME}page=${page}type=${type}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -198,7 +198,7 @@ class Zingmp3 {
   private async send_request(
     api_path: string,
     params: object,
-    is_suggestion = false,
+    is_suggestion = false
   ): Promise<Record<string, unknown>> {
     // Change base url for suggestion keyword
     const client = axios.create({
@@ -229,7 +229,7 @@ class Zingmp3 {
 
   /**
    * Fetches the home page data.
-   * @returns {Promise<any>} The home page data.
+   * @returns {Promise<Record<string, unknown>>} The home page data.
    */
   public async get_home(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/home";
@@ -252,9 +252,9 @@ class Zingmp3 {
   /**
    * Fetches the streaming information for a song.
    * @param {string} id - The ID of the song.
-   * @returns {Promise<any>} The streaming information of the song.
+   * @returns {Promise<Record<string, unknown>>} The streaming information of the song.
    */
-  public async get_song(id: string): Promise<any> {
+  public async get_song(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/song/get/streaming";
 
     try {
@@ -272,7 +272,7 @@ class Zingmp3 {
   /**
    * Fetches the information of a song.
    * @param {string} id - The ID of the song.
-   * @returns {Promise<any>} The information of the song.
+   * @returns {Promise<Record<string, unknown>>} The information of the song.
    */
   public async get_song_info(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/song/get/info";
@@ -292,9 +292,9 @@ class Zingmp3 {
   /**
    * Fetches the lyrics of a song.
    * @param {string} id - The ID of the song.
-   * @returns {Promise<any>} The lyrics of the song.
+   * @returns {Promise<Record<string, unknown>>} The lyrics of the song.
    */
-  public async get_song_lyric(id: string): Promise<any> {
+  public async get_song_lyric(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/lyric/get/lyric";
 
     try {
@@ -311,9 +311,9 @@ class Zingmp3 {
 
   /**
    * Fetches the home chart data.
-   * @returns {Promise<any>} The home chart data.
+   * @returns {Promise<Record<string, unknown>>} The home chart data.
    */
-  public async get_home_chart(): Promise<any> {
+  public async get_home_chart(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/chart-home";
 
     try {
@@ -329,7 +329,7 @@ class Zingmp3 {
 
   /**
    * Fetches the new release chart data.
-   * @returns {Promise<any>} The new release chart data.
+   * @returns {Promise<Record<string, unknown>>} The new release chart data.
    */
   public async get_new_release_chart(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/newrelease-chart";
@@ -350,12 +350,12 @@ class Zingmp3 {
    * @param {string} id - The ID of the chart.
    * @param {number} [week=0] - The week number.
    * @param {number} [year=0] - The year.
-   * @returns {Promise<any>} The week chart data.
+   * @returns {Promise<Record<string, unknown>>} The week chart data.
    */
   public async get_week_chart(
     id: string,
     week: 0,
-    year: 0,
+    year: 0
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/week-chart";
 
@@ -375,7 +375,7 @@ class Zingmp3 {
 
   /**
    * Fetches the radio data.
-   * @returns {Promise<any>} The radio data.
+   * @returns {Promise<Record<string, unknown>>} The radio data.
    */
   public async get_radio(): Promise<unknown> {
     const api_path = "/api/v2/page/get/radio";
@@ -399,11 +399,11 @@ class Zingmp3 {
    * Fetches a list of items by genre.
    * @param {string} id - The ID of the genre.
    * @param {number} [page=1] - The page number.
-   * @returns {Promise<any>} The list of items by genre.
+   * @returns {Promise<Record<string, unknown>>} The list of items by genre.
    */
   public async get_list_by_genre(
     id: string,
-    page: 1,
+    page: 1
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/feed/get/list-by-genre";
     const count = 10;
@@ -425,7 +425,7 @@ class Zingmp3 {
   /**
    * Fetches the information of an artist.
    * @param {string} name - The name of the artist.
-   * @returns {Promise<any>} The information of the artist.
+   * @returns {Promise<Record<string, unknown>>} The information of the artist.
    */
   public async get_artist(name: string): Promise<unknown> {
     const api_path = "/api/v2/page/get/artist";
@@ -444,7 +444,7 @@ class Zingmp3 {
 
   /**
    * Fetches the hub home data.
-   * @returns {Promise<any>} The hub home data.
+   * @returns {Promise<Record<string, unknown>>} The hub home data.
    */
   public async get_hub_home(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/hub-home";
@@ -463,7 +463,7 @@ class Zingmp3 {
   /**
    * Fetches the details of a hub.
    * @param {string} id - The ID of the hub.
-   * @returns {Promise<any>} The details of the hub.
+   * @returns {Promise<Record<string, unknown>>} The details of the hub.
    */
   public async get_hub_detail(id: string): Promise<unknown> {
     const api_path = "/api/v2/page/get/hub-detail";
@@ -482,7 +482,7 @@ class Zingmp3 {
 
   /**
    * Fetches the top 100 songs.
-   * @returns {Promise<any>} The top 100 songs.
+   * @returns {Promise<Record<string, unknown>>} The top 100 songs.
    */
   public async get_top_100(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/top-100";
@@ -504,13 +504,13 @@ class Zingmp3 {
    * @param {number} [page=1] - The page number.
    * @param {number} [count=15] - The number of items per page.
    * @param {string} [sort="listen"] - The sort order (listen, hot, new).
-   * @returns {Promise<any>} The list of music videos.
+   * @returns {Promise<Record<string, unknown>>} The list of music videos.
    */
   public async get_list_mv(
     id: string,
     page: 1,
     count: 15,
-    sort: "listen",
+    sort: "listen"
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/video/get/list";
     const sort_list = ["listen", "hot", "new"];
@@ -537,7 +537,7 @@ class Zingmp3 {
   /**
    * Fetches the category music video information.
    * @param {string} id - The ID of the category.
-   * @returns {Promise<any>} The category music video information.
+   * @returns {Promise<Record<string, unknown>>} The category music video information.
    */
   public async get_category_mv(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/genre/get/info";
@@ -559,7 +559,7 @@ class Zingmp3 {
   /**
    * Fetches the music video information.
    * @param {string} id - The ID of the music video.
-   * @returns {Promise<any>} The music video information.
+   * @returns {Promise<Record<string, unknown>>} The music video information.
    */
   public async get_mv(id: string): Promise<unknown> {
     const api_path = "/api/v2/page/get/video";
@@ -579,7 +579,7 @@ class Zingmp3 {
   /**
    * Fetches the playlist information.
    * @param {string} id - The ID of the playlist.
-   * @returns {Promise<any>} The playlist information.
+   * @returns {Promise<Record<string, unknown>>} The playlist information.
    */
   public async get_playlist(id: string): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/playlist";
@@ -599,10 +599,10 @@ class Zingmp3 {
   /**
    * Fetches the suggested playlists for a given playlist ID.
    * @param {string} id - The ID of the playlist.
-   * @returns {Promise<any>} The suggested playlists.
+   * @returns {Promise<Record<string, unknown>>} The suggested playlists.
    */
   public async get_suggested_playlists(
-    id: string,
+    id: string
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/playlist/get/section-bottom";
 
@@ -620,7 +620,7 @@ class Zingmp3 {
 
   /**
    * Fetches the list of upcoming events.
-   * @returns {Promise<any>} The list of upcoming events.
+   * @returns {Promise<Record<string, unknown>>} The list of upcoming events.
    */
   public async get_events(): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/event/get/list-incoming";
@@ -639,7 +639,7 @@ class Zingmp3 {
   /**
    * Fetches the information of an event.
    * @param {string} id - The ID of the event.
-   * @returns {Promise<any>} The information of the event.
+   * @returns {Promise<Record<string, unknown>>} The information of the event.
    */
   public async get_event_info(id: string): Promise<unknown> {
     const api_path = "/api/v2/event/get/info";
@@ -678,13 +678,13 @@ class Zingmp3 {
    * @param {string} type - The type of items to search for (song, playlist, artist, video).
    * @param {number} [page=1] - The page number.
    * @param {number} [count=18] - The number of items per page.
-   * @returns {Promise<any>} The search results.
+   * @returns {Promise<Record<string, unknown>>} The search results.
    */
   public async search_by_type(
     keyword: string,
     type: string,
     page: 1,
-    count: 18,
+    count: 18
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/search";
     const type_list = ["song", "playlist", "artist", "video"];
@@ -723,7 +723,7 @@ class Zingmp3 {
 
   // Suggest keyword when searching
   public async get_suggestion_keyword(
-    keyword?: string,
+    keyword?: string
   ): Promise<Record<string, unknown>> {
     const api_path = "/v1/web/suggestion-keywords";
 
@@ -736,7 +736,7 @@ class Zingmp3 {
           language: "vi",
           sig: this.hash_no_id_signature(api_path),
         },
-        true,
+        true
       );
 
       return response;
