@@ -8,11 +8,11 @@ export default defineSitemapEventHandler(() => {
     const region = continentKey.replace(/_/g, "-");
     routesToGenerate.push({
       loc: `/${region}`,
-      _sitemap: "pages"
+      _sitemap: "pages",
     });
 
     for (const countryKey of Object.keys(
-      continent as Record<string, unknown>
+      continent as Record<string, unknown>,
     )) {
       routesToGenerate.push({
         loc: `/${region}/${countryKey}`,
@@ -20,12 +20,11 @@ export default defineSitemapEventHandler(() => {
       });
 
       for (const key of Object.keys(
-        (continent as Record<string, Record<string, unknown>>)[countryKey]
+        (continent as Record<string, Record<string, unknown>>)[countryKey],
       )) {
         routesToGenerate.push({
           loc: `/${region}/${countryKey}/${key}`,
           _sitemap: "pages",
-          
         });
       }
     }
