@@ -6,11 +6,11 @@ import axios from "axios";
  * Provides methods to interact with various endpoints of the Zing MP3 API.
  */
 class Zingmp3 {
-  private URL: string;
-  private API_KEY: string;
-  private SECRET_KEY: string;
-  private CTIME: string;
-  private VERSION: string;
+  private readonly URL: string;
+  private readonly API_KEY: string;
+  private readonly SECRET_KEY: string;
+  private readonly CTIME: string;
+  private readonly VERSION: string;
 
   constructor(
     URL: string,
@@ -517,7 +517,7 @@ class Zingmp3 {
     const type = "genre";
 
     try {
-      if (!sort_list.includes(sort)) throw "Sort must be listen || hot || new.";
+      if (!sort_list.includes(sort)) throw new Error("Sort must be listen || hot || new.");
 
       const response = await this.send_request(api_path, {
         id,
@@ -690,7 +690,7 @@ class Zingmp3 {
     const type_list = ["song", "playlist", "artist", "video"];
     try {
       if (!type_list.includes(type))
-        throw "Type must be song || playlist || artist || video.";
+        throw new Error("Type must be song || playlist || artist || video.");
 
       const response = await this.send_request(api_path, {
         q: keyword,
