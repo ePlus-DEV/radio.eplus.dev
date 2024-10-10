@@ -8,5 +8,6 @@ export default defineEventHandler((event) => {
   if (typeof songId !== "string") {
     throw new Error("Invalid song ID");
   }
-  return zing.get_home_chart();
+  // return zing.get_events();
+  return zing.get_song_lyric("ZW8WOI6U");
 });

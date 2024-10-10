@@ -4,6 +4,7 @@ import axios from "axios";
 /**
  * Class representing the Zing MP3 API client.
  * Provides methods to interact with various endpoints of the Zing MP3 API.
+ * https://www.npmjs.com/package/zingmp3-api-next
  */
 class Zingmp3 {
   private readonly URL: string;
@@ -17,7 +18,7 @@ class Zingmp3 {
     API_KEY: string,
     SECRET_KEY: string,
     CTIME: string,
-    VERSION: string,
+    VERSION: string
   ) {
     this.URL = URL;
     this.API_KEY = API_KEY;
@@ -52,9 +53,9 @@ class Zingmp3 {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `ctime=${this.CTIME}id=${id}version=${this.VERSION}`,
+          `ctime=${this.CTIME}id=${id}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -67,7 +68,7 @@ class Zingmp3 {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(`ctime=${this.CTIME}version=${this.VERSION}`),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -81,9 +82,9 @@ class Zingmp3 {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=${count}ctime=${this.CTIME}page=1version=${this.VERSION}`,
+          `count=${count}ctime=${this.CTIME}page=1version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -97,14 +98,14 @@ class Zingmp3 {
   private hash_list_genre_signature(
     api_path: string,
     id: string,
-    page: number,
+    page: number
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=10ctime=${this.CTIME}id=${id}page=${page}version=${this.VERSION}`,
+          `count=10ctime=${this.CTIME}id=${id}page=${page}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -122,14 +123,14 @@ class Zingmp3 {
     count: number,
     id: string,
     type: string,
-    page: number,
+    page: number
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=${count}ctime=${this.CTIME}id=${id}page=${page}type=${type}version=${this.VERSION}`,
+          `count=${count}ctime=${this.CTIME}id=${id}page=${page}type=${type}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -143,14 +144,14 @@ class Zingmp3 {
   private hash_catergory_mv_signature(
     api_path: string,
     id: string,
-    type: string,
+    type: string
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `ctime=${this.CTIME}id=${id}type=${type}version=${this.VERSION}`,
+          `ctime=${this.CTIME}id=${id}type=${type}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -166,14 +167,14 @@ class Zingmp3 {
     api_path: string,
     count: number,
     page: number,
-    type: string,
+    type: string
   ): string {
     return Zingmp3.get_hmac_512(
       api_path +
         Zingmp3.get_hash_256(
-          `count=${count}ctime=${this.CTIME}page=${page}type=${type}version=${this.VERSION}`,
+          `count=${count}ctime=${this.CTIME}page=${page}type=${type}version=${this.VERSION}`
         ),
-      this.SECRET_KEY,
+      this.SECRET_KEY
     );
   }
 
@@ -198,7 +199,7 @@ class Zingmp3 {
   private async send_request(
     api_path: string,
     params: object,
-    is_suggestion = false,
+    is_suggestion = false
   ): Promise<Record<string, unknown>> {
     // Change base url for suggestion keyword
     const client = axios.create({
@@ -354,8 +355,8 @@ class Zingmp3 {
    */
   public async get_week_chart(
     id: string,
-    week: 0,
-    year: 0,
+    week = 0,
+    year = 0
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/page/get/week-chart";
 
@@ -403,7 +404,7 @@ class Zingmp3 {
    */
   public async get_list_by_genre(
     id: string,
-    page: 1,
+    page = 1
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/feed/get/list-by-genre";
     const count = 10;
@@ -501,16 +502,16 @@ class Zingmp3 {
   /**
    * Fetches a list of music videos.
    * @param {string} id - The ID of the genre.
+   * @param {string} [sort="listen"] - The sort order (listen, hot, new).
    * @param {number} [page=1] - The page number.
    * @param {number} [count=15] - The number of items per page.
-   * @param {string} [sort="listen"] - The sort order (listen, hot, new).
    * @returns {Promise<Record<string, unknown>>} The list of music videos.
    */
   public async get_list_mv(
     id: string,
-    page: 1,
-    count: 15,
-    sort: "listen",
+    sort = "listen",
+    page = 1,
+    count = 15
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/video/get/list";
     const sort_list = ["listen", "hot", "new"];
@@ -603,47 +604,9 @@ class Zingmp3 {
    * @returns {Promise<Record<string, unknown>>} The suggested playlists.
    */
   public async get_suggested_playlists(
-    id: string,
+    id: string
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/playlist/get/section-bottom";
-
-    try {
-      const response = await this.send_request(api_path, {
-        id,
-        sig: this.hash_has_id_signature(api_path, id),
-      });
-
-      return response;
-    } catch (error) {
-      return { error: error instanceof Error ? error.message : String(error) };
-    }
-  }
-
-  /**
-   * Fetches the list of upcoming events.
-   * @returns {Promise<Record<string, unknown>>} The list of upcoming events.
-   */
-  public async get_events(): Promise<Record<string, unknown>> {
-    const api_path = "/api/v2/event/get/list-incoming";
-
-    try {
-      const response = await this.send_request(api_path, {
-        sig: this.hash_no_id_signature(api_path),
-      });
-
-      return response;
-    } catch (error) {
-      return { error: error instanceof Error ? error.message : String(error) };
-    }
-  }
-
-  /**
-   * Fetches the information of an event.
-   * @param {string} id - The ID of the event.
-   * @returns {Promise<Record<string, unknown>>} The information of the event.
-   */
-  public async get_event_info(id: string): Promise<unknown> {
-    const api_path = "/api/v2/event/get/info";
 
     try {
       const response = await this.send_request(api_path, {
@@ -684,8 +647,8 @@ class Zingmp3 {
   public async search_by_type(
     keyword: string,
     type: string,
-    page: 1,
-    count: 18,
+    page = 1,
+    count = 18
   ): Promise<Record<string, unknown>> {
     const api_path = "/api/v2/search";
     const type_list = ["song", "playlist", "artist", "video"];
@@ -724,7 +687,7 @@ class Zingmp3 {
 
   // Suggest keyword when searching
   public async get_suggestion_keyword(
-    keyword?: string,
+    keyword?: string
   ): Promise<Record<string, unknown>> {
     const api_path = "/v1/web/suggestion-keywords";
 
@@ -737,7 +700,7 @@ class Zingmp3 {
           language: "vi",
           sig: this.hash_no_id_signature(api_path),
         },
-        true,
+        true
       );
 
       return response;
