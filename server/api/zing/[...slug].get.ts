@@ -9,7 +9,7 @@ export default defineEventHandler((event) => {
     throw new Error("Invalid song ID");
   }
 
-  const slug = getRouterParam(event, 'slug')
+  const slug = getRouterParam(event, "slug");
 
   switch (slug) {
     case "song":
