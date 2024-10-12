@@ -174,10 +174,7 @@ export default defineNuxtConfig({
   },
   generate: {
     routes: (() => {
-      const routesToGenerate = [
-        'api/zing/radio-program-list', 
-        'api/zing/radio-program-detail',
-      ];
+      const routesToGenerate = [];
       for (const [continentKey, continent] of Object.entries(world)) {
         const region = continentKey.replace(/_/g, "-");
         routesToGenerate.push(`/${region}`);
