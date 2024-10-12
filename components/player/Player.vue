@@ -229,24 +229,6 @@
         </div>
       </div>
       <!-- END - Player -->
-
-      <div class="src-buttons">
-        <button @click="changeSource('audio')" class="dark:text-white">
-          Audio
-        </button>
-        <button @click="changeSource('video')" class="dark:text-white">
-          Video
-        </button>
-        <button @click="changeSource('hls')" class="dark:text-white">
-          HLS
-        </button>
-        <button @click="changeSource('youtube')" class="dark:text-white">
-          YouTube
-        </button>
-        <button @click="changeSource('vimeo')" class="dark:text-white">
-          Vimeo
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -351,9 +333,6 @@ function onPause() {
   }
 }
 
-// Initialize src.
-changeSource("audio");
-
 // watch props
 watch(
   () => props.streamUrl,
@@ -437,37 +416,6 @@ function onProviderChange(event: MediaProviderChangeEvent) {
 // We can listen for the `can-play` event to be notified when the player is ready.
 function onCanPlay(event: MediaCanPlayEvent) {
   console.log("Can play", event.detail);
-}
-/**
- * Changes the source of the player based on the provided type.
- *
- * @param {string} type - The type of source to switch to.
- */
-function changeSource(type: string) {
-  switch (type) {
-    case "audio":
-      $src.value = {
-        src: "https://media-ssl.musicradio.com/HeartUK",
-        type: "audio/mp3",
-      };
-      break;
-    case "video":
-      $src.value = "https://files.vidstack.io/sprite-fight/720p.mp4";
-      break;
-    case "hls":
-      $src.value =
-        "https://multi-playlist-zmp3.zmdcdn.me/TgLpe29pVg0/zhls/playback-realtime/e75e51f26db784e9dda6/index.m3u8";
-      break;
-    case "youtube":
-      $src.value = "youtube/_cMxraX_5RE";
-      break;
-    case "vimeo":
-      $src.value = "vimeo/640499893";
-      break;
-    default:
-      $src.value = "https://media-ssl.musicradio.com/HeartUK";
-      break;
-  }
 }
 </script>
 
