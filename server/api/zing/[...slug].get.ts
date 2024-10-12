@@ -6,7 +6,7 @@ export default defineEventHandler((event) => {
 
   const Id = Array.isArray(query.id) ? query.id[0] : query.id;
   if (typeof Id !== "string") {
-    throw new Error("Invalid song ID");
+    return JSON.stringify({ error: "Invalid song ID" });
   }
 
   const slug = getRouterParam(event, "slug");
