@@ -101,6 +101,7 @@ interface ProgramItem {
   encodeId: string;
   // Add other properties as needed
 }
+
 const program = ref<ProgramItem[]>([]);
 const song = ref<Song>();
 interface Track {
@@ -141,7 +142,7 @@ useHead({
 const fetchLyric = async (id: string) => {
   try {
     const resData = await $fetch(
-      `../../../api/zing/lyric?id=${id}&time=${dayjs().tz(timeZone.value).unix()}`,
+      `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
     );
     const resDataValue = resData as {
       err: number;
@@ -211,7 +212,7 @@ const fetchSchedule = async (url: string) => {
       // Fetch the current song data from the first program item
       const firstProgramItem = resDataValue.data.items[0];
       fetchDetail(
-        `../../../api/zing/radio-program-detail?id=${firstProgramItem.encodeId}&time=`,
+        `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
       );
     } else {
       const resDataSuccess = resData as { success: boolean };
@@ -247,12 +248,7 @@ const handleDataFromChild = (data: any) => {
   document.title = `${streamName.value} - ${title.value}`;
 
   if (data.station_schedule !== undefined) {
-    if (slug.value === "viet-nam") {
-      const id = data.station_schedule.split("id=")[1].split("&")[0];
-      fetchSchedule(`../../../api/zing/radio-program-list?id=${id}&time=`);
-    } else {
-      fetchSchedule(data.station_schedule);
-    }
+    fetchSchedule(data.station_schedule);
   }
 };
 

@@ -34,7 +34,6 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.5",
     "@vesp/nuxt-fontawesome": "^1.1.0",
-    "axios": "^1.7.7",
     "daisyui": "^4.12.10",
     "dayjs-nuxt": "^2.1.11",
     "media-icons": "^1.1.5",
