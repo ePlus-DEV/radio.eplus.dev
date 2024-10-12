@@ -9,7 +9,9 @@ export default defineEventHandler((event) => {
     throw new Error("Invalid song ID");
   }
 
-  switch (query.slug) {
+  const slug = getRouterParam(event, 'slug')
+
+  switch (slug) {
     case "song":
       return zing.get_song(Id);
     case "song-info":
