@@ -31,7 +31,7 @@ export default defineEventHandler((event) => {
     case "radio-program-detail":
       return zing.get_radio_program_detail(Id);
     case "radio":
-      return zing.get_radio;
+      return zing.get_radio();
     case "radio-comment":
       return zing.get_radio_comment(Id);
     case "get_list_by_genre":
