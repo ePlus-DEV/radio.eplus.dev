@@ -159,7 +159,9 @@ const getLastUpdate = async () => {
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
-  getLastUpdate();
+  if (process.env.NODE_ENV !== "development") {
+    getLastUpdate();
+  }
 });
 
 onBeforeUnmount(() => {
