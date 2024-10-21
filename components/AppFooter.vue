@@ -58,6 +58,14 @@
           </div>
         </div>
 
+        <client-only>
+          <Vue3Lottie
+            animationLink="https://lottie.host/e9590bf9-8adf-4d72-9fd3-10a24b7fc44a/DqO4GHhVu9.json"
+            :height="200"
+            :width="200"
+          />
+        </client-only>
+
         <p class="mt-4 text-center text-gray-400">
           Copyright © {{ new Date().getFullYear() }}
           <a
