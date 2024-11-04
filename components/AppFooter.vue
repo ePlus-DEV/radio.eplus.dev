@@ -60,7 +60,7 @@
 
         <client-only>
           <Vue3Lottie
-            animationLink="https://lottie.host/e9590bf9-8adf-4d72-9fd3-10a24b7fc44a/DqO4GHhVu9.json"
+            animationLink="https://lottie.host/2db26d49-bff5-4ec1-8efe-402ecd1c3aeb/adIAqSsI3O.json"
             :height="200"
             :width="200"
           />
