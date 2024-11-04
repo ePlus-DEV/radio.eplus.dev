@@ -115,9 +115,9 @@ const socialLinks = ref([
 ]);
 const animationLink = computed(() => {
   const links = [
-    'https://lottie.host/8b962837-2897-4117-96ff-acc8831eb83a/qgDhkOGSpG.json',
-    'https://lottie.host/2db26d49-bff5-4ec1-8efe-402ecd1c3aeb/adIAqSsI3O.json',
-    'https://lottie.host/c45b5a91-af12-4b19-a644-1e4a1173d978/Khjm2z9rbq.json'
+    "https://lottie.host/8b962837-2897-4117-96ff-acc8831eb83a/qgDhkOGSpG.json",
+    "https://lottie.host/2db26d49-bff5-4ec1-8efe-402ecd1c3aeb/adIAqSsI3O.json",
+    "https://lottie.host/c45b5a91-af12-4b19-a644-1e4a1173d978/Khjm2z9rbq.json",
   ];
   return links[Math.floor(Math.random() * links.length)];
 });
