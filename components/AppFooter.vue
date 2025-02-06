@@ -117,7 +117,7 @@ const animationLink = computed(() => {
   const links = [
     "https://lottie.host/0d843710-89a8-4dd8-bf00-eecf57d9b4d3/QFMOaVCTvL.json",
     "https://lottie.host/bf19bbad-99aa-4b85-9f93-f1f2a8472495/EbTxPsG8Wj.json",
-    "https://lottie.host/1880a292-2397-466e-a743-8ea66bd9ede4/JqrpXUiRSe.json"
+    "https://lottie.host/1880a292-2397-466e-a743-8ea66bd9ede4/JqrpXUiRSe.json",
   ];
   return links[Math.floor(Math.random() * links.length)];
 });
