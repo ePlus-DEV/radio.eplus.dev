@@ -100,9 +100,12 @@
                   class="transform hover:scale-125"
                   :class="[
                     button ? 'hidden' : '',
-                    streamError ? 'cursor-not-allowed' : '',
+                    streamError ? 'opacity-50 cursor-not-allowed' : '',
                   ]"
                   @click="onPlay"
+                  :disabled="streamError"
+                  :aria-disabled="streamError"
+                  :title="streamError ? $t('alert.stream_error') : ''"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -295,6 +298,7 @@ interface PlaylistItem {
 }
 
 const $src = ref(props.streamUrl);
+const pendingAutoPlay = ref(false);
 
 /**
  * Updates the online status.
@@ -309,12 +313,28 @@ const updateOnlineStatus = () => {
  * The waiting state is reset after a simulated waiting time of 1 second.
  */
 function onPlay() {
-  if (!waiting.value && !streamError.value) {
-    $player.value?.play();
-    setTimeout(() => {
-      waiting.value = false;
-    }, 1000); // Simulate waiting time
+  // If player reports stream error (not ready), schedule an auto-play when ready
+  if (streamError.value) {
+    pendingAutoPlay.value = true;
+    waiting.value = true;
+    return;
   }
+
+  // Try to play now (player reports can-play). Keep waiting until resolved.
+  waiting.value = true;
+  $player.value
+    ?.play()
+    .then(() => {
+      waiting.value = false;
+      pendingAutoPlay.value = false;
+    })
+    .catch((err: any) => {
+      // If play fails because media isn't ready, set pendingAutoPlay so onCanPlay will retry
+      console.error("Playback start failed:", err);
+      // If error looks like 'media is not ready', ask to wait for can-play
+      pendingAutoPlay.value = true;
+      waiting.value = false;
+    });
 }
 
 /**
@@ -325,19 +345,37 @@ function onPlay() {
  * After a simulated waiting time of 1 second, it resets the waiting state to false.
  */
 function onPause() {
-  if (!waiting.value) {
-    $player.value?.pause();
-    setTimeout(() => {
-      waiting.value = false;
-    }, 1000); // Simulate waiting time
-  }
+  // Pause should always be allowed
+  $player.value?.pause();
+  waiting.value = false;
 }
 
 // watch props
 watch(
   () => props.streamUrl,
   (newVal: MediaPlayerElement["src"]) => {
+    // When source changes we mark as waiting and update the source ref so the provider reloads.
+    waiting.value = true;
+    streamError.value = false;
     $src.value = newVal;
+    // Mark that we want to autoplay once the player is ready (can-play event)
+    pendingAutoPlay.value = true;
+    // Safety fallback: if can-play doesn't fire within 4s, clear waiting so UI isn't stuck.
+    const fallback = setTimeout(() => {
+      if (pendingAutoPlay.value) {
+        pendingAutoPlay.value = false;
+        waiting.value = false;
+      }
+    }, 4000);
+    // Clear fallback if player becomes ready (handled in onCanPlay)
+    // store fallback on the element for cleanup if needed
+    if ($player.value) {
+      try {
+        ($player.value as any)._pendingAutoPlayFallback = fallback;
+      } catch (e) {
+        // ignore
+      }
+    }
   },
 );
 
@@ -379,6 +417,11 @@ onMounted(() => {
     const { paused, error, canPlay } = state;
     button.value = !paused;
     streamError.value = !canPlay;
+    // If stream reports not playable, ensure play button isn't shown as active
+    if (streamError.value) {
+      button.value = false;
+      waiting.value = false;
+    }
     console.log("canPlay?", "->", canPlay);
     console.log("is paused?", "->", paused);
     if (error) {
@@ -411,11 +454,48 @@ function onProviderChange(event: MediaProviderChangeEvent) {
   if (isHLSProvider(provider)) {
     provider.config = {};
   }
+
+  // If the provider has no currentSrc or media not set, mark streamError so UI disables play
+  try {
+    const currentSrc = (provider as any).currentSrc ?? null;
+    const mediaEl = (provider as any).media ?? null;
+    if (!currentSrc || !mediaEl) {
+      streamError.value = true;
+      // not playable
+      button.value = false;
+      waiting.value = false;
+    } else {
+      streamError.value = false;
+    }
+  } catch (e) {
+    // ignore
+  }
 }
 
 // We can listen for the `can-play` event to be notified when the player is ready.
 function onCanPlay(event: MediaCanPlayEvent) {
   console.log("Can play", event.detail);
+  if (pendingAutoPlay.value) {
+    // clear fallback if present
+    try {
+      const fb = ($player.value as any)?._pendingAutoPlayFallback;
+      if (fb) clearTimeout(fb);
+    } catch (e) {
+      // ignore
+    }
+    // attempt to play now that player reports can-play
+    $player.value
+      ?.play()
+      .then(() => {
+        waiting.value = false;
+        pendingAutoPlay.value = false;
+      })
+      .catch((err: any) => {
+        console.error("Playback start failed:", err);
+        waiting.value = false;
+        pendingAutoPlay.value = false;
+      });
+  }
 }
 </script>
 
