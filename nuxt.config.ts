@@ -1,6 +1,10 @@
 import { defineNuxtConfig } from "nuxt/config";
-import { vite as vidstack } from "vidstack/plugins";
-import world from "./public/radio/world.json";
+import world from "./data/world";
+
+const hasAlgoliaConfig = Boolean(
+  process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID &&
+    process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
+);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -36,9 +40,17 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
-    "@nuxtjs/algolia",
+    ...(hasAlgoliaConfig ? ["@nuxtjs/algolia"] : []),
     "@pinia/nuxt",
   ],
+  ...(hasAlgoliaConfig
+    ? {
+        algolia: {
+          applicationId: process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID,
+          apiKey: process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
+        },
+      }
+    : {}),
   app: {
     head: {
       titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
@@ -199,9 +211,6 @@ export default defineNuxtConfig({
       priority: 1,
       lastmod: new Date(),
     },
-  },
-  vite: {
-    plugins: [vidstack()],
   },
   vue: {
     compilerOptions: {
