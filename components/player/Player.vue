@@ -335,7 +335,8 @@ function onPlay() {
     .then(() => {
       waiting.value = false;
       pendingAutoPlay.value = false;
-      if (import.meta.client) localStorage.setItem("radio_autoplay_enabled", "1");
+      if (import.meta.client)
+        localStorage.setItem("radio_autoplay_enabled", "1");
     })
     .catch((err: any) => {
       // If play fails because media isn't ready, set pendingAutoPlay so onCanPlay will retry
@@ -515,7 +516,8 @@ onMounted(() => {
   window.addEventListener("offline", updateOnlineStatus);
 
   const autoPlayEnabled =
-    import.meta.client && localStorage.getItem("radio_autoplay_enabled") === "1";
+    import.meta.client &&
+    localStorage.getItem("radio_autoplay_enabled") === "1";
 
   // Best effort autoplay when entering page.
   // If browser blocks autoplay, retry once user interacts anywhere.

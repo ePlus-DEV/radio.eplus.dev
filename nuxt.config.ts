@@ -3,7 +3,7 @@ import world from "./data/world";
 
 const hasAlgoliaConfig = Boolean(
   process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID &&
-    process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
+  process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
 );
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
