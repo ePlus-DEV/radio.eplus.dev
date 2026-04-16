@@ -299,6 +299,12 @@ interface PlaylistItem {
 
 const $src = ref(props.streamUrl);
 const pendingAutoPlay = ref(false);
+const userPaused = ref(false);
+const reconnectAttempts = ref(0);
+const reconnectTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const removeAutoPlayUnlockListeners = ref<(() => void) | null>(null);
+const MAX_RECONNECT_ATTEMPTS = 5;
+const RECONNECT_BASE_DELAY = 1500;
 
 /**
  * Updates the online status.
@@ -313,6 +319,8 @@ const updateOnlineStatus = () => {
  * The waiting state is reset after a simulated waiting time of 1 second.
  */
 function onPlay() {
+  userPaused.value = false;
+
   // If player reports stream error (not ready), schedule an auto-play when ready
   if (streamError.value) {
     pendingAutoPlay.value = true;
@@ -327,10 +335,12 @@ function onPlay() {
     .then(() => {
       waiting.value = false;
       pendingAutoPlay.value = false;
+      if (import.meta.client) localStorage.setItem("radio_autoplay_enabled", "1");
     })
     .catch((err: any) => {
       // If play fails because media isn't ready, set pendingAutoPlay so onCanPlay will retry
       console.error("Playback start failed:", err);
+      registerAutoPlayUnlock();
       // If error looks like 'media is not ready', ask to wait for can-play
       pendingAutoPlay.value = true;
       waiting.value = false;
@@ -346,8 +356,68 @@ function onPlay() {
  */
 function onPause() {
   // Pause should always be allowed
+  userPaused.value = true;
+  clearReconnectTimer();
+  removeAutoPlayUnlockListeners.value?.();
+  removeAutoPlayUnlockListeners.value = null;
   $player.value?.pause();
   waiting.value = false;
+}
+
+function clearReconnectTimer() {
+  if (reconnectTimer.value) {
+    clearTimeout(reconnectTimer.value);
+    reconnectTimer.value = null;
+  }
+}
+
+function refreshStreamSource() {
+  // Reset then restore the same source to force provider reconnect,
+  // avoid mutating URL because some streams use strict/signed query params.
+  $src.value = "";
+  nextTick(() => {
+    $src.value = props.streamUrl;
+  });
+}
+
+function scheduleReconnect() {
+  if (!online.value || userPaused.value || reconnectTimer.value) return;
+  if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
+    waiting.value = false;
+    streamError.value = true;
+    return;
+  }
+
+  reconnectAttempts.value += 1;
+  const delay = RECONNECT_BASE_DELAY * reconnectAttempts.value;
+  waiting.value = true;
+  pendingAutoPlay.value = true;
+
+  reconnectTimer.value = setTimeout(() => {
+    reconnectTimer.value = null;
+    refreshStreamSource();
+  }, delay);
+}
+
+function registerAutoPlayUnlock() {
+  if (!import.meta.client || removeAutoPlayUnlockListeners.value) return;
+
+  const unlock = () => {
+    removeAutoPlayUnlockListeners.value?.();
+    removeAutoPlayUnlockListeners.value = null;
+    onPlay();
+  };
+
+  const events = ["pointerdown", "keydown", "touchstart"];
+  events.forEach((eventName) => {
+    window.addEventListener(eventName, unlock, { once: true });
+  });
+
+  removeAutoPlayUnlockListeners.value = () => {
+    events.forEach((eventName) => {
+      window.removeEventListener(eventName, unlock);
+    });
+  };
 }
 
 // watch props
@@ -357,7 +427,10 @@ watch(
     // When source changes we mark as waiting and update the source ref so the provider reloads.
     waiting.value = true;
     streamError.value = false;
+    userPaused.value = false;
     $src.value = newVal;
+    reconnectAttempts.value = 0;
+    clearReconnectTimer();
     // Mark that we want to autoplay once the player is ready (can-play event)
     pendingAutoPlay.value = true;
     // Safety fallback: if can-play doesn't fire within 4s, clear waiting so UI isn't stuck.
@@ -388,7 +461,7 @@ const updateCurrentTime = (): void => {
 };
 
 // Update the current time every second
-setInterval(updateCurrentTime, 1000);
+const timeInterval = setInterval(updateCurrentTime, 1000);
 
 onMounted(() => {
   // Set the timezone based on the country.
@@ -414,7 +487,7 @@ onMounted(() => {
 
   // Subscribe to state updates - you can connect them to Vue refs if needed.
   $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
-    const { paused, error, canPlay } = state;
+    const { paused, error, canPlay, ended } = state;
     button.value = !paused;
     streamError.value = !canPlay;
     // If stream reports not playable, ensure play button isn't shown as active
@@ -422,22 +495,43 @@ onMounted(() => {
       button.value = false;
       waiting.value = false;
     }
-    console.log("canPlay?", "->", canPlay);
-    console.log("is paused?", "->", paused);
     if (error) {
       console.error("Playback error occurred");
       waiting.value = false;
+      scheduleReconnect();
     }
     if (canPlay) {
       waiting.value = false;
+      streamError.value = false;
+      reconnectAttempts.value = 0;
+      clearReconnectTimer();
+    }
+    if (ended && !userPaused.value) {
+      scheduleReconnect();
     }
   });
 
   window.addEventListener("online", updateOnlineStatus);
   window.addEventListener("offline", updateOnlineStatus);
+
+  const autoPlayEnabled =
+    import.meta.client && localStorage.getItem("radio_autoplay_enabled") === "1";
+
+  // Best effort autoplay when entering page.
+  // If browser blocks autoplay, retry once user interacts anywhere.
+  if (autoPlayEnabled) {
+    pendingAutoPlay.value = true;
+    waiting.value = true;
+    onPlay();
+  } else {
+    waiting.value = false;
+  }
 });
 
 onUnmounted(() => {
+  clearReconnectTimer();
+  clearInterval(timeInterval);
+  removeAutoPlayUnlockListeners.value?.();
   window.removeEventListener("online", updateOnlineStatus);
   window.removeEventListener("offline", updateOnlineStatus);
 });
@@ -474,7 +568,9 @@ function onProviderChange(event: MediaProviderChangeEvent) {
 
 // We can listen for the `can-play` event to be notified when the player is ready.
 function onCanPlay(event: MediaCanPlayEvent) {
-  console.log("Can play", event.detail);
+  reconnectAttempts.value = 0;
+  clearReconnectTimer();
+
   if (pendingAutoPlay.value) {
     // clear fallback if present
     try {
