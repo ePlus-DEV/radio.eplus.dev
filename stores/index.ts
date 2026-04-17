@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import world from "~/public/radio/world.json";
+import world from "~/data/world";
 
 interface World {
   [area: string]: {
