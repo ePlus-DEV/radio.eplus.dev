@@ -1,5 +1,5 @@
 import { defineSitemapEventHandler } from "#imports";
-import world from "public/radio/world.json";
+import world from "~/data/world";
 
 export default defineSitemapEventHandler(() => {
   const routesToGenerate = [];
