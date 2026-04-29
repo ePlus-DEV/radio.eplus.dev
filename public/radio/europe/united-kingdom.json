@@ -133,7 +133,7 @@
     "category": "Âm nhạc",
     "url": "https://www.heart.co.uk",
     "cros": true,
-    "stream": "https://media-ssl.musicradio.com/HeartUK",
+    "stream": "https://media-ice.musicradio.com/HeartLondonMP3",
     "features": "/img/europe/united-kingdom/heart.png",
     "schedule": "https://api.webrad.io/data/playlist/42/heart?time=",
     "favorite": true
