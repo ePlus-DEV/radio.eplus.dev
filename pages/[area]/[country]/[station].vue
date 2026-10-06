@@ -152,11 +152,37 @@ const countryName = computed(() => t(i18n.value));
 const stationCatalogUrl = computed(
   () => `/radio/${area.value}/${slug.value}.json`,
 );
-const { data: stationCatalog } = await useFetch<
+
+const { data: stationCatalog } = await useAsyncData<
   Record<string, StationCatalogEntry>
->(stationCatalogUrl, {
-  default: () => ({}),
-});
+>(
+  `station-catalog:${area.value}:${slug.value}`,
+  async () => {
+    if (import.meta.server) {
+      const [{ readFile }, { join }] = await Promise.all([
+        import("node:fs/promises"),
+        import("node:path"),
+      ]);
+      const file = join(
+        process.cwd(),
+        "public",
+        "radio",
+        area.value,
+        `${slug.value}.json`,
+      );
+      return JSON.parse(
+        await readFile(file, "utf8"),
+      ) as Record<string, StationCatalogEntry>;
+    }
+
+    return await $fetch<Record<string, StationCatalogEntry>>(
+      stationCatalogUrl.value,
+    );
+  },
+  {
+    default: () => ({}),
+  },
+);
 const stationMeta = computed(
   () => stationCatalog.value?.[stationSlug.value],
 );
