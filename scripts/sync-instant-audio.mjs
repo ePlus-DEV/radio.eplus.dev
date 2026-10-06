@@ -94,7 +94,6 @@ const RESERVED_PATHS = new Set([
   "acerca",
   "apps",
   "buscar",
-  "contact",
   "contacto",
   "dmca",
   "favorites",
@@ -278,10 +277,21 @@ function extractCountryId(response, html) {
   return match?.[1] || "";
 }
 
+function extractWebradioConfig(source = "") {
+  const countryCode =
+    source.match(/countryCode\s*:\s*["']([A-Z]{2})["']/)?.[1] || "";
+  const domainID =
+    source.match(/domainID\s*:\s*(\d+)/)?.[1] || "";
+  const languageCode =
+    source.match(/languageCode\s*:\s*["']([^"']+)["']/)?.[1] || "";
+
+  return { countryCode, domainID, languageCode };
+}
+
 function extractStationCandidates(source, origin) {
   const candidates = new Map();
 
-  const addCandidate = (href, label) => {
+  const addCandidate = (href, label, { trustedStationList = false } = {}) => {
     let url;
     try {
       url = new URL(href, origin);
@@ -295,9 +305,8 @@ function extractStationCandidates(source, origin) {
     if (segments.length !== 1) return;
 
     const slug = segments[0].toLowerCase();
-    if (!slug || RESERVED_PATHS.has(slug) || !/^[a-z0-9-]+$/.test(slug)) {
-      return;
-    }
+    if (!slug || !/^[a-z0-9-]+$/.test(slug)) return;
+    if (!trustedStationList && RESERVED_PATHS.has(slug)) return;
 
     candidates.set(slug, {
       slug,
@@ -306,7 +315,24 @@ function extractStationCandidates(source, origin) {
     });
   };
 
-  // Country sites are normally reachable from GitHub runners and return HTML.
+  // Preferred source: the actual station navigation list rendered by InstantAudio sites.
+  // This avoids false positives such as privacy/help pages and preserves valid station
+  // slugs such as /contact/ (Radio Contact).
+  const stationListMatch = source.match(
+    /<ul\b[^>]*id=["']dynamic-radio-stations["'][^>]*>([\s\S]*?)<\/ul>/i,
+  );
+
+  if (stationListMatch) {
+    const anchorRegex = /<a\b[^>]*href=["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+    let match;
+    while ((match = anchorRegex.exec(stationListMatch[1]))) {
+      addCandidate(match[1], match[2], { trustedStationList: true });
+    }
+
+    if (candidates.size) return [...candidates.values()];
+  }
+
+  // Fallback for other country-site templates and Jina markdown snapshots.
   const anchorRegex = new RegExp(
     `<a\\b[^>]*href=["']([^"'#]+)["'][^>]*>([\\s\\S]*?)</a>`,
     "gi",
@@ -317,7 +343,6 @@ function extractStationCandidates(source, origin) {
     addCandidate(match[1], match[2]);
   }
 
-  // Reader fallback returns Markdown.
   const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
   while ((match = markdownLinkRegex.exec(source))) {
     addCandidate(match[2], match[1]);
@@ -849,9 +874,16 @@ async function syncCountry(country, metadata) {
 
   const countrySource = await fetchTextSource(country.domain + "/");
   const html = countrySource.text;
+  const pageConfig = extractWebradioConfig(html);
+
+  if (!metadata.cca2 && pageConfig.countryCode) {
+    metadata.cca2 = pageConfig.countryCode;
+  }
 
   let candidates = extractStationCandidates(html, country.domain);
-  let countryId = extractCountryId(countrySource.response, html);
+  let countryId =
+    pageConfig.domainID ||
+    extractCountryId(countrySource.response, html);
 
   if (!candidates.length) {
     throw new Error("Unable to discover station slugs for " + country.domain);
@@ -877,10 +909,8 @@ async function syncCountry(country, metadata) {
   );
 
   const stations = {};
-  const blockedCandidates = [];
   let consecutiveForbidden = 0;
   let circuitOpen = false;
-  let nextIndex = candidates.length;
 
   for (let index = 0; index < candidates.length; index += 1) {
     const candidate = candidates[index];
@@ -892,11 +922,8 @@ async function syncCountry(country, metadata) {
       console.log("  + " + candidate.slug);
     } else if (result.status === 403) {
       consecutiveForbidden += 1;
-      blockedCandidates.push(candidate);
-
       if (consecutiveForbidden >= 3) {
         circuitOpen = true;
-        nextIndex = index + 1;
         console.warn(
           "[instant.audio] 3 consecutive 403 responses; stopping direct API requests and switching to browser mode",
         );
@@ -910,16 +937,9 @@ async function syncCountry(country, metadata) {
   }
 
   if (circuitOpen) {
-    const browserCandidates = [
-      ...blockedCandidates,
-      ...candidates.slice(nextIndex),
-    ];
-    const browserStations = await syncStationsViaBrowser(
-      country,
-      countryId,
-      browserCandidates,
+    console.warn(
+      "[instant.audio] Direct API appears blocked for this runner; skipping bulk Playwright API retries",
     );
-    Object.assign(stations, browserStations);
   }
 
   const keys = Object.keys(stations);
@@ -929,7 +949,7 @@ async function syncCountry(country, metadata) {
       stations: fallbackStations,
       countryId,
       source: circuitOpen
-        ? "radio-browser-after-browser-fallback"
+        ? "radio-browser-after-api-block"
         : "radio-browser-fallback"
     };
   }
@@ -939,7 +959,7 @@ async function syncCountry(country, metadata) {
   return {
     stations,
     countryId,
-    source: circuitOpen ? "instant-audio-browser" : "instant-audio"
+    source: "instant-audio"
   };
 }
 
