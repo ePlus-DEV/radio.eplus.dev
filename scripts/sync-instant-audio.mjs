@@ -389,6 +389,40 @@ function findStreamUrl(payload) {
   return candidates[0]?.url || "";
 }
 
+function findInstantAudioStream(payload) {
+  const result = payload?.result || payload || {};
+  const streams = Array.isArray(result.streams) ? result.streams : [];
+
+  const playable = streams
+    .filter((item) => {
+      if (!item || item.isContainer === true || !/^https?:\/\//i.test(item.url || "")) {
+        return false;
+      }
+
+      const mime = String(item.mime || "").toLowerCase();
+      const mediaType = String(item.mediaType || "").toLowerCase();
+      return (
+        mime.startsWith("audio/") ||
+        ["mp3", "aac", "ogg", "opus", "hls"].includes(mediaType)
+      );
+    })
+    .sort((a, b) => {
+      const aHttps = String(a.url).startsWith("https://") ? 1 : 0;
+      const bHttps = String(b.url).startsWith("https://") ? 1 : 0;
+      return bHttps - aHttps;
+    });
+
+  if (playable[0]) {
+    return {
+      url: playable[0].url,
+      mime: playable[0].mime || detectMime(playable[0].url)
+    };
+  }
+
+  const fallback = findStreamUrl(payload);
+  return fallback ? { url: fallback, mime: detectMime(fallback) } : null;
+}
+
 function findTextField(payload, fieldNames) {
   const wanted = new Set(fieldNames.map((field) => field.toLowerCase()));
   const queue = [payload];
@@ -483,12 +517,15 @@ async function syncStation(country, countryId, candidate) {
       }
     });
     const payload = await response.json();
-    const stream = findStreamUrl(payload);
+    const instantResult = payload?.result || payload || {};
+    const stationMetadata = instantResult.station || {};
+    const streamInfo = findInstantAudioStream(payload);
 
-    if (!stream) return null;
+    if (!streamInfo) return null;
 
     const title =
-      findTextField(payload, ["station_name", "station", "title", "name"]) ||
+      String(stationMetadata.title || "").trim() ||
+      findTextField(payload, ["station_name", "title", "name"]) ||
       candidate.title
         .replace(/\s+/g, " ")
         .trim()
@@ -506,14 +543,23 @@ async function syncStation(country, countryId, candidate) {
       "station_image",
       "artwork"
     ]);
+    const website =
+      typeof stationMetadata.url === "string" &&
+      /^https?:\/\//i.test(stationMetadata.url)
+        ? stationMetadata.url
+        : candidate.pageUrl;
 
     return {
       title,
       ...(description ? { description } : {}),
-      type: detectMime(stream),
-      url: candidate.pageUrl,
-      cros: false,
-      stream,
+      ...(stationMetadata.signal ? { signal: stationMetadata.signal } : {}),
+      ...(typeof stationMetadata.acrCloud === "boolean"
+        ? { acrCloud: stationMetadata.acrCloud }
+        : {}),
+      type: streamInfo.mime || detectMime(streamInfo.url),
+      url: website,
+      cros: streamInfo.url.startsWith("http://"),
+      stream: streamInfo.url,
       features:
         image && /^https?:\/\//i.test(image)
           ? image
@@ -562,7 +608,7 @@ async function probeCountryId(country, candidate) {
           if (!response.ok) return null;
 
           const payload = await response.json();
-          return findStreamUrl(payload) ? String(id) : null;
+          return findInstantAudioStream(payload) ? String(id) : null;
         } catch {
           return null;
         }
@@ -716,16 +762,61 @@ async function writeJson(file, data) {
   await writeFile(file, `${JSON.stringify(data, null, 2)}\n`);
 }
 
+function normalizeStreamIdentity(value = "") {
+  try {
+    const url = new URL(value);
+    url.hash = "";
+    return url.toString().replace(/\/$/, "").toLowerCase();
+  } catch {
+    return String(value).trim().replace(/\/$/, "").toLowerCase();
+  }
+}
+
+function mergeStations(existing, discovered) {
+  const merged = { ...existing };
+  const knownStreams = new Set(
+    Object.values(existing)
+      .map((station) => normalizeStreamIdentity(station?.stream))
+      .filter(Boolean),
+  );
+  const existingHasFavorite = Object.values(existing).some(
+    (station) => station?.favorite === true,
+  );
+
+  let added = 0;
+  for (const [baseSlug, stationValue] of Object.entries(discovered)) {
+    const streamKey = normalizeStreamIdentity(stationValue?.stream);
+    if (!streamKey || knownStreams.has(streamKey)) continue;
+
+    let slug = baseSlug;
+    let suffix = 2;
+    while (merged[slug]) {
+      slug = `${baseSlug}-instant-audio${suffix === 2 ? "" : `-${suffix}`}`;
+      suffix += 1;
+    }
+
+    const station = { ...stationValue };
+    if (existingHasFavorite || added > 0) delete station.favorite;
+
+    merged[slug] = station;
+    knownStreams.add(streamKey);
+    added += 1;
+  }
+
+  return { stations: merged, added };
+}
+
 async function updateWorld(country, metadata, stationCount, flagPath) {
   const file = path.join(ROOT, "public", "radio", "world.json");
   const world = await readJson(file);
-  world[country.area] ||= {};
-  world[country.area][country.slug] = {
-    name: `world.${country.area.replace(/-/g, "_")}.${country.slug.replace(/-/g, "_")}`,
+  const areaKey = country.area.replace(/-/g, "_");
+  world[areaKey] ||= {};
+  world[areaKey][country.slug] = {
+    name: `world.${areaKey}.${country.slug.replace(/-/g, "_")}`,
     flag:
       flagPath ||
       `/img/${country.area}/flags/${country.slug}.png`,
-    data: `/radio/${country.area}/${country.slug}.json`,
+    data: `/assets/radio/${country.area}/${country.slug}.json`,
     timezone: metadata.timezone || "UTC",
     station: stationCount
   };
@@ -833,15 +924,28 @@ async function main() {
 
   for (const country of targets) {
     const metadata = await getCountryMetadata(country);
-    const { stations, countryId, source } = await syncCountry(country, metadata);
+    const { stations: discoveredStations, countryId, source } =
+      await syncCountry(country, metadata);
     const flagPath = await downloadFlag(country, metadata.flagPng);
 
+    let stations = discoveredStations;
+    let added = Object.keys(discoveredStations).length;
+
+    if (!country.isMissing) {
+      const existingStations = await readJson(country.destination);
+      const merged = mergeStations(existingStations, discoveredStations);
+      stations = merged.stations;
+      added = merged.added;
+    }
+
     console.log(
-      `[instant.audio] ${country.slug}: ${Object.keys(stations).length} station(s), API country ID ${countryId}, source ${source}`,
+      `[instant.audio] ${country.slug}: discovered ${Object.keys(discoveredStations).length}, added ${added}, total ${Object.keys(stations).length}; API country ID ${countryId}, source ${source}`,
     );
 
     if (!dryRun) {
-      await writeJson(country.destination, stations);
+      if (country.isMissing || added > 0) {
+        await writeJson(country.destination, stations);
+      }
       await updateWorld(
         country,
         metadata,
