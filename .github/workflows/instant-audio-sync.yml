@@ -8,7 +8,7 @@ on:
         required: false
         type: string
       refresh_existing:
-        description: "Refresh an existing country instead of missing countries only"
+        description: "Scan existing countries and append newly discovered stations safely"
         required: false
         default: false
         type: boolean
@@ -24,6 +24,7 @@ on:
       - ".github/workflows/instant-audio-sync.yml"
       - "scripts/sync-instant-audio.mjs"
       - "data/instant-audio-countries.json"
+      - "docs/instant-audio-sync.md"
 
 permissions:
   contents: read
