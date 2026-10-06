@@ -909,10 +909,8 @@ async function syncCountry(country, metadata) {
   );
 
   const stations = {};
-  const blockedCandidates = [];
   let consecutiveForbidden = 0;
   let circuitOpen = false;
-  let nextIndex = candidates.length;
 
   for (let index = 0; index < candidates.length; index += 1) {
     const candidate = candidates[index];
@@ -924,11 +922,8 @@ async function syncCountry(country, metadata) {
       console.log("  + " + candidate.slug);
     } else if (result.status === 403) {
       consecutiveForbidden += 1;
-      blockedCandidates.push(candidate);
-
       if (consecutiveForbidden >= 3) {
         circuitOpen = true;
-        nextIndex = index + 1;
         console.warn(
           "[instant.audio] 3 consecutive 403 responses; stopping direct API requests and switching to browser mode",
         );
