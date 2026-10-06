@@ -3,7 +3,8 @@
     "area": "north-america",
     "slug": "cuba",
     "label": "Cuba",
-    "domain": "https://radiosdecuba.com"
+    "domain": "https://radiosdecuba.com",
+    "cca2": "CU"
   },
   {
     "area": "north-america",
@@ -213,7 +214,8 @@
     "area": "europe",
     "slug": "latvia",
     "label": "Latvija",
-    "domain": "https://latvijasradio.com"
+    "domain": "https://latvijasradio.com",
+    "cca2": "LV"
   },
   {
     "area": "europe",
@@ -225,7 +227,8 @@
     "area": "europe",
     "slug": "lithuania",
     "label": "Lietuva",
-    "domain": "https://radijas.org"
+    "domain": "https://radijas.org",
+    "cca2": "LT"
   },
   {
     "area": "europe",
