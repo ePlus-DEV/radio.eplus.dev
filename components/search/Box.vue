@@ -35,6 +35,7 @@
               role="combobox"
               aria-expanded="false"
               v-model="input"
+              :disabled="!algoliaConfigured"
               :placeholder="$t('popup.search.text')"
             />
           </div>
@@ -58,6 +59,7 @@
 
 <script lang="ts" setup>
 const config = useRuntimeConfig();
+const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
 const { search, result: searchResult } = useAlgoliaSearch(
   config.public.algoliaIndexStation,
 );
@@ -69,13 +71,19 @@ watch(input, (value: string) => {
   if (typingTimeout) {
     clearTimeout(typingTimeout);
   }
+  if (!algoliaConfigured.value) return;
+
   typingTimeout = setTimeout(async () => {
-    await search({
-      query: value,
-      requestOptions: {
-        hitsPerPage: 20,
-      },
-    });
+    try {
+      await search({
+        query: value,
+        requestOptions: {
+          hitsPerPage: 20,
+        },
+      });
+    } catch (error) {
+      console.error("Unable to search stations:", error);
+    }
   }, 500);
 });
 

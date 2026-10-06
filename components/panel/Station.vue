@@ -56,6 +56,7 @@ const emit = defineEmits<{
   (event: "update-data", data: StationResult): void;
 }>();
 const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
+const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
 const results = ref<StationResult[]>([]);
 let requestVersion = 0;
 
@@ -76,7 +77,7 @@ const loadStations = async (): Promise<void> => {
   const country = countrySlug.value;
   const station = stationSlug.value;
 
-  if (!area || !country || !station) {
+  if (!area || !country || !station || !algoliaConfigured.value) {
     results.value = [];
     return;
   }
