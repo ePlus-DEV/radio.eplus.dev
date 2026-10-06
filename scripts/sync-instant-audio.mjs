@@ -1038,27 +1038,136 @@ async function updateLocales(country, metadata) {
   }
 }
 
+async function discoverCountriesViaBrowser() {
+  let chromium;
+  try {
+    ({ chromium } = await import("playwright"));
+  } catch (error) {
+    console.warn("[instant.audio] Browser directory fallback unavailable: " + error.message);
+    return [];
+  }
+
+  console.warn("[instant.audio] Retrying country directory with Playwright");
+
+  let browser;
+  try {
+    browser = await chromium.launch({ headless: true });
+    const context = await browser.newContext({
+      userAgent: BROWSER_USER_AGENT,
+      locale: "en-US",
+    });
+    const page = await context.newPage();
+
+    await page.route("**/*", async (route) => {
+      const type = route.request().resourceType();
+      if (["image", "font", "media"].includes(type)) {
+        await route.abort();
+        return;
+      }
+      await route.continue();
+    });
+
+    const response = await page.goto(INSTANT_HOME, {
+      waitUntil: "domcontentloaded",
+      timeout: 25000,
+    });
+
+    if (!response || response.status() >= 400) {
+      console.warn("[instant.audio] Browser directory returned HTTP " + (response?.status() || "unknown"));
+      return [];
+    }
+
+    const entries = await page.evaluate(() =>
+      Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6,a[href]")).map((element) => ({
+        tag: element.tagName.toLowerCase(),
+        text: String(element.textContent || "").trim(),
+        href: element instanceof HTMLAnchorElement ? element.href : "",
+      })),
+    );
+
+    const countries = [];
+    let area = "";
+    for (const entry of entries) {
+      if (/^h[1-6]$/.test(entry.tag)) {
+        const heading = stripTags(entry.text).toLowerCase();
+        if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
+        continue;
+      }
+      if (entry.tag !== "a" || !area || !entry.href) continue;
+
+      let url;
+      try {
+        url = new URL(entry.href);
+      } catch {
+        continue;
+      }
+
+      if (url.hostname === "instant.audio" || url.hostname.endsWith(".instant.audio")) continue;
+      const label = stripTags(entry.text);
+      if (!label) continue;
+
+      countries.push({ area, label, slug: countrySlug(label), domain: url.origin });
+    }
+
+    return [...new Map(countries.map((item) => [item.area + "/" + item.slug, item])).values()];
+  } catch (error) {
+    console.warn("[instant.audio] Browser directory discovery failed: " + error.message);
+    return [];
+  } finally {
+    if (browser) await browser.close();
+  }
+}
+
+async function persistCountryRegistry(discovered) {
+  if (dryRun || !discovered.length) return;
+  const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
+  let existing = [];
+  try {
+    existing = await readJson(registryFile);
+  } catch {
+    // Allow the registry to be recreated from live discovery.
+  }
+  const existingByKey = new Map(
+    (Array.isArray(existing) ? existing : []).map((item) => [item.area + "/" + item.slug, item]),
+  );
+  const merged = discovered.map((item) => ({
+    ...(existingByKey.get(item.area + "/" + item.slug) || {}),
+    ...item,
+  }));
+  await writeJson(registryFile, merged);
+}
+
+function rotateExistingCountries(countries, count) {
+  if (!countries.length) return [];
+  const runNumber = Number(process.env.GITHUB_RUN_NUMBER || 0);
+  const offset = runNumber > 0 ? runNumber % countries.length : 0;
+  const rotated = [...countries.slice(offset), ...countries.slice(0, offset)];
+  return rotated.slice(0, count);
+}
 async function loadCountryDirectory() {
   try {
     const source = await fetchTextSource(INSTANT_HOME);
     const discovered = discoverCountries(source.text);
 
     if (discovered.length) {
-      console.log(
-        `[instant.audio] Discovered ${discovered.length} countries from instant.audio`,
-      );
+      console.log("[instant.audio] Discovered " + discovered.length + " countries from instant.audio");
+      await persistCountryRegistry(discovered);
       return discovered;
     }
 
-    console.warn(
-      "[instant.audio] instant.audio directory is blocked or unreadable; using repository snapshot",
-    );
+    console.warn("[instant.audio] instant.audio directory is blocked or unreadable; trying browser fallback");
   } catch (error) {
-    console.warn(
-      `[instant.audio] Unable to refresh instant.audio directory; using repository snapshot: ${error.message}`,
-    );
+    console.warn("[instant.audio] Unable to refresh instant.audio directory directly; trying browser fallback: " + error.message);
   }
 
+  const browserDiscovered = await discoverCountriesViaBrowser();
+  if (browserDiscovered.length) {
+    console.log("[instant.audio] Discovered " + browserDiscovered.length + " countries via browser");
+    await persistCountryRegistry(browserDiscovered);
+    return browserDiscovered;
+  }
+
+  console.warn("[instant.audio] Browser directory discovery also failed; using repository snapshot");
   const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
   const registry = await readJson(registryFile);
 
@@ -1066,49 +1175,57 @@ async function loadCountryDirectory() {
     throw new Error("InstantAudio country registry is empty");
   }
 
-  console.log(
-    `[instant.audio] Loaded ${registry.length} countries from repository snapshot`,
-  );
+  console.log("[instant.audio] Loaded " + registry.length + " countries from repository snapshot");
   return registry;
 }
-
 async function main() {
   const discovered = await loadCountryDirectory();
+  const missing = [];
+  const existing = [];
 
-  const selected = [];
   for (const country of discovered) {
     if (requestedCountry && country.slug !== requestedCountry) continue;
 
-    const destination = path.join(
-      ROOT,
-      "public",
-      "radio",
-      country.area,
-      `${country.slug}.json`,
-    );
+    const destination = path.join(ROOT, "public", "radio", country.area, country.slug + ".json");
     const isMissing = !(await exists(destination));
+    const item = { ...country, destination, isMissing };
 
-    if (requestedCountry || isMissing || refreshExisting) {
-      selected.push({ ...country, destination, isMissing });
+    if (requestedCountry) {
+      missing.push(item);
+      continue;
     }
+
+    if (isMissing) missing.push(item);
+    else existing.push(item);
   }
 
-  if (!selected.length) {
-    console.log("[instant.audio] No missing countries found.");
+  let targets;
+  if (requestedCountry) {
+    targets = missing.slice(0, 1);
+  } else if (refreshExisting) {
+    targets = rotateExistingCountries(existing, maxCountries);
+    console.log("[instant.audio] Existing-country refresh requested; selected " + targets.length + " rotating target(s)");
+  } else if (missing.length) {
+    targets = missing.slice(0, maxCountries);
+  } else {
+    targets = rotateExistingCountries(existing, maxCountries);
+    console.log("[instant.audio] No missing countries found; rotating through " + targets.length + " existing country/countries for station augmentation");
+  }
+
+  if (!targets.length) {
+    console.log("[instant.audio] No eligible countries found for this run.");
     return;
   }
 
-  const targets = selected.slice(0, requestedCountry ? 1 : maxCountries);
   console.log(
-    `[instant.audio] Target(s): ${targets
-      .map((item) => `${item.area}/${item.slug}${item.isMissing ? " (missing)" : ""}`)
-      .join(", ")}`,
+    "[instant.audio] Target(s): " + targets.map((item) =>
+      item.area + "/" + item.slug + (item.isMissing ? " (missing)" : " (augment)")
+    ).join(", "),
   );
 
   for (const country of targets) {
     const metadata = await getCountryMetadata(country);
-    const { stations: discoveredStations, countryId, source } =
-      await syncCountry(country, metadata);
+    const { stations: discoveredStations, countryId, source } = await syncCountry(country, metadata);
     const flagPath = await downloadFlag(country, metadata.flagPng);
 
     let stations = discoveredStations;
@@ -1122,19 +1239,16 @@ async function main() {
     }
 
     console.log(
-      `[instant.audio] ${country.slug}: discovered ${Object.keys(discoveredStations).length}, added ${added}, total ${Object.keys(stations).length}; API country ID ${countryId}, source ${source}`,
+      "[instant.audio] " + country.slug + ": discovered " + Object.keys(discoveredStations).length +
+      ", added " + added + ", total " + Object.keys(stations).length +
+      "; API country ID " + countryId + ", source " + source,
     );
 
     if (!dryRun) {
       if (country.isMissing || added > 0) {
         await writeJson(country.destination, stations);
       }
-      await updateWorld(
-        country,
-        metadata,
-        Object.keys(stations).length,
-        flagPath,
-      );
+      await updateWorld(country, metadata, Object.keys(stations).length, flagPath);
       await updateLocales(country, metadata);
     }
   }
@@ -1143,7 +1257,6 @@ async function main() {
     console.log("[instant.audio] Dry run complete; repository files were not changed.");
   }
 }
-
 main().catch((error) => {
   console.error("[instant.audio] Sync failed:", error);
   process.exitCode = 1;
