@@ -1,4 +1,7 @@
 {
+  "404": {
+    "content": "We would like to inform that the page you are looking for, does not exist!"
+  },
   "navmenu": {
     "homepage": "Homepage",
     "about": "About",
@@ -101,7 +104,9 @@
       "denmark": "Denmark",
       "estonia": "Estonia",
       "germany": "Germany",
-      "spain": "Spain"
+      "spain": "Spain",
+      "latvia": "Latvia",
+      "lithuania": "Lithuania"
     },
     "north_america": {
       "name": "North America",
@@ -168,9 +173,6 @@
   },
   "statistics_tooltip": {
     "text": "Incidents: {num} | Downtime: {time} mins | {response}ms"
-  },
-  "404": {
-    "content": "We would like to inform that the page you are looking for, does not exist!"
   },
   "table": {
     "status": "Status",

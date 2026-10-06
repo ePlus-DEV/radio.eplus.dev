@@ -1,4 +1,7 @@
 {
+  "404": {
+    "content": "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
+  },
   "navmenu": {
     "homepage": "Trang Chủ",
     "about": "Giới Thiệu",
@@ -101,7 +104,9 @@
       "denmark": "Đan Mạch",
       "estonia": "E-xtô-ni-a",
       "germany": "Đức",
-      "spain": "Tây Ban Nha"
+      "spain": "Tây Ban Nha",
+      "latvia": "Latvia",
+      "lithuania": "Litva"
     },
     "north_america": {
       "name": "Bắc Mỹ",
@@ -168,9 +173,6 @@
   },
   "statistics_tooltip": {
     "text": "Sự cố: {num} | Ngừng hoạt động: {time} phút | {response}ms"
-  },
-  "404": {
-    "content": "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
   },
   "table": {
     "status": "Trạng thái",

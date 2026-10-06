@@ -539,6 +539,20 @@
       "data": "/assets/radio/europe/spain.json",
       "timezone": "Europe/Madrid",
       "station": 0
+    },
+    "latvia": {
+      "name": "world.europe.latvia",
+      "flag": "/img/europe/flags/latvia.png",
+      "data": "/assets/radio/europe/latvia.json",
+      "timezone": "UTC",
+      "station": 99
+    },
+    "lithuania": {
+      "name": "world.europe.lithuania",
+      "flag": "/img/europe/flags/lithuania.png",
+      "data": "/assets/radio/europe/lithuania.json",
+      "timezone": "UTC",
+      "station": 98
     }
   },
   "north_america": {

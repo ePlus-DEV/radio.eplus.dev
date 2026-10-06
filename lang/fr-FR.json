@@ -1,4 +1,7 @@
 {
+  "404": {
+    "content": "Nous tenons à vous informer que la page que vous recherchez n'existe pas !"
+  },
   "navmenu": {
     "homepage": "Page d'accueil",
     "about": "À propos",
@@ -101,7 +104,9 @@
       "denmark": "Danemark",
       "estonia": "Estonie",
       "germany": "Allemagne",
-      "spain": "Espagne"
+      "spain": "Espagne",
+      "latvia": "Lettonie",
+      "lithuania": "Lituanie"
     },
     "north_america": {
       "name": "Amérique du Nord",
@@ -168,9 +173,6 @@
   },
   "statistics_tooltip": {
     "text": "Incidents : {num} | Temps d'arrêt : {time} min | {response} ms"
-  },
-  "404": {
-    "content": "Nous tenons à vous informer que la page que vous recherchez n'existe pas !"
   },
   "table": {
     "status": "Statut",
