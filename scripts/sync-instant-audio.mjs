@@ -761,23 +761,30 @@ function radioBrowserMime(codec, streamUrl) {
 }
 
 async function syncFromRadioBrowser(country, metadata) {
-  const countryCode = metadata.cca2 || country.cca2 || "";
-  if (!countryCode) {
-    throw new Error(
-      `Unable to use Radio Browser fallback without a country code for ${country.slug}`,
+  const countryCode = String(metadata.cca2 || country.cca2 || "").trim();
+  const countryName = String(metadata.commonName || country.label || country.slug).trim();
+  const limit = maxStations > 0 ? maxStations : 100;
+
+  let endpoint;
+  if (countryCode) {
+    endpoint =
+      `${RADIO_BROWSER_BASE}/${encodeURIComponent(countryCode)}` +
+      `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
+  } else {
+    const base = RADIO_BROWSER_BASE.replace("/bycountrycodeexact", "");
+    endpoint =
+      `${base}/bycountryexact/${encodeURIComponent(countryName)}` +
+      `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
+    console.warn(
+      `[instant.audio] Missing country code for ${country.slug}; falling back to Radio Browser country-name lookup (${countryName})`,
     );
   }
-
-  const limit = maxStations > 0 ? maxStations : 100;
-  const url =
-    `${RADIO_BROWSER_BASE}/${encodeURIComponent(countryCode)}` +
-    `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
 
   console.warn(
     `[instant.audio] Falling back to Radio Browser for ${country.slug}`,
   );
 
-  const response = await fetchWithRetry(url, {
+  const response = await fetchWithRetry(endpoint, {
     headers: {
       accept: "application/json",
       "user-agent": USER_AGENT
@@ -822,13 +829,14 @@ async function syncFromRadioBrowser(country, metadata) {
 
   const keys = Object.keys(stations);
   if (!keys.length) {
-    throw new Error(`Radio Browser returned no playable stations for ${country.slug}`);
+    throw new Error(
+      `Radio Browser returned no playable stations for ${country.slug}`,
+    );
   }
 
   stations[keys[0]].favorite = true;
   return stations;
 }
-
 async function syncCountry(country, metadata) {
   console.log(
     "\n[instant.audio] Syncing " +
@@ -1223,36 +1231,52 @@ async function main() {
     ).join(", "),
   );
 
+  let failedCountries = 0;
   for (const country of targets) {
-    const metadata = await getCountryMetadata(country);
-    const { stations: discoveredStations, countryId, source } = await syncCountry(country, metadata);
-    const flagPath = await downloadFlag(country, metadata.flagPng);
-
-    let stations = discoveredStations;
-    let added = Object.keys(discoveredStations).length;
-
-    if (!country.isMissing) {
-      const existingStations = await readJson(country.destination);
-      const merged = mergeStations(existingStations, discoveredStations);
-      stations = merged.stations;
-      added = merged.added;
-    }
-
-    console.log(
-      "[instant.audio] " + country.slug + ": discovered " + Object.keys(discoveredStations).length +
-      ", added " + added + ", total " + Object.keys(stations).length +
-      "; API country ID " + countryId + ", source " + source,
-    );
-
-    if (!dryRun) {
-      if (country.isMissing || added > 0) {
-        await writeJson(country.destination, stations);
+    try {
+        const metadata = await getCountryMetadata(country);
+        const { stations: discoveredStations, countryId, source } = await syncCountry(country, metadata);
+        const flagPath = await downloadFlag(country, metadata.flagPng);
+    
+        let stations = discoveredStations;
+        let added = Object.keys(discoveredStations).length;
+    
+        if (!country.isMissing) {
+          const existingStations = await readJson(country.destination);
+          const merged = mergeStations(existingStations, discoveredStations);
+          stations = merged.stations;
+          added = merged.added;
+        }
+    
+        console.log(
+          "[instant.audio] " + country.slug + ": discovered " + Object.keys(discoveredStations).length +
+          ", added " + added + ", total " + Object.keys(stations).length +
+          "; API country ID " + countryId + ", source " + source,
+        );
+    
+        if (!dryRun) {
+          if (country.isMissing || added > 0) {
+            await writeJson(country.destination, stations);
+          }
+          await updateWorld(country, metadata, Object.keys(stations).length, flagPath);
+          await updateLocales(country, metadata);
+        }
       }
-      await updateWorld(country, metadata, Object.keys(stations).length, flagPath);
-      await updateLocales(country, metadata);
+    
+    
+    } catch (error) {
+      failedCountries += 1;
+      console.error(
+        `[instant.audio] ${country.slug}: sync failed, skipping country: ${error.message}`,
+      );
     }
   }
 
+  if (failedCountries === targets.length) {
+    console.warn(
+      "[instant.audio] All selected countries failed; run completed without data changes.",
+    );
+  }
   if (dryRun) {
     console.log("[instant.audio] Dry run complete; repository files were not changed.");
   }
