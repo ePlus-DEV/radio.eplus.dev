@@ -265,32 +265,47 @@ function extractCountryId(response, html) {
 
 function extractStationCandidates(source, origin) {
   const candidates = new Map();
-  const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
-  let match;
 
-  while ((match = linkRegex.exec(source))) {
+  const addCandidate = (href, label) => {
     let url;
     try {
-      url = new URL(match[2]);
+      url = new URL(href, origin);
     } catch {
-      continue;
+      return;
     }
 
-    if (url.origin !== origin) continue;
+    if (url.origin !== origin) return;
 
     const segments = url.pathname.split("/").filter(Boolean);
-    if (segments.length !== 1) continue;
+    if (segments.length !== 1) return;
 
     const slug = segments[0].toLowerCase();
     if (!slug || RESERVED_PATHS.has(slug) || !/^[a-z0-9-]+$/.test(slug)) {
-      continue;
+      return;
     }
 
     candidates.set(slug, {
       slug,
-      title: stripTags(match[1]) || slug.replace(/-/g, " "),
+      title: stripTags(label || "") || slug.replace(/-/g, " "),
       pageUrl: `${origin}/${slug}/`
     });
+  };
+
+  // Country sites are normally reachable from GitHub runners and return HTML.
+  const anchorRegex = new RegExp(
+    `<a\\b[^>]*href=["']([^"'#]+)["'][^>]*>([\\s\\S]*?)</a>`,
+    "gi",
+  );
+  let match;
+
+  while ((match = anchorRegex.exec(source))) {
+    addCandidate(match[1], match[2]);
+  }
+
+  // Reader fallback returns Markdown.
+  const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  while ((match = markdownLinkRegex.exec(source))) {
+    addCandidate(match[2], match[1]);
   }
 
   return [...candidates.values()];
