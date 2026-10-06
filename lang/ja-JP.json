@@ -157,7 +157,7 @@
       "text": "探す...",
       "stats": "{nbPages} のページ {page} - {processingTimeMS} ミリ秒で取得された {nbHits} ヒット",
       "category": "国でフィルタリング",
-       "popular_channels": "人気のチャンネル"
+      "popular_channels": "人気のチャンネル"
     }
   },
   "notify": {
@@ -181,7 +181,8 @@
     "view": "意見"
   },
   "alert": {
-    "play_button": "ブラウザのデフォルトでは、ラジオを聞くには ▶ ボタンを押す必要があります。"
+    "play_button": "ブラウザのデフォルトでは、ラジオを聞くには ▶ ボタンを押す必要があります。",
+    "stream_error": "このストリームは現在再生できません。"
   },
   "text": {
     "guide": "ガイド",

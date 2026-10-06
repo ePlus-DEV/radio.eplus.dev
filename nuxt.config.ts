@@ -1,11 +1,15 @@
 import { defineNuxtConfig } from "nuxt/config";
-import { vite as vidstack } from "vidstack/plugins";
-import world from "./public/radio/world.json";
+import world from "./data/world";
+
+const hasAlgoliaConfig = Boolean(
+  process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID &&
+  process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
+);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== "production" },
   ssr: false,
   pages: true,
   runtimeConfig: {
@@ -36,9 +40,17 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
-    "@nuxtjs/algolia",
+    ...(hasAlgoliaConfig ? ["@nuxtjs/algolia"] : []),
     "@pinia/nuxt",
   ],
+  ...(hasAlgoliaConfig
+    ? {
+        algolia: {
+          applicationId: process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID,
+          apiKey: process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
+        },
+      }
+    : {}),
   app: {
     head: {
       titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
@@ -58,19 +70,19 @@ export default defineNuxtConfig({
       ],
       link: [
         {
-          type: "apple-touch-icon",
+          rel: "apple-touch-icon",
           sizes: "180x180",
           href: "/brand/apple-touch-icon.png",
         },
         {
           rel: "icon",
-          type: "image/x-icon",
+          type: "image/png",
           sizes: "32x32",
           href: "/brand/favicon-32x32.png",
         },
         {
           rel: "icon",
-          type: "image/x-icon",
+          type: "image/png",
           sizes: "16x16",
           href: "/brand/favicon-16x16.png",
         },
@@ -84,6 +96,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    restructureDir: false,
     locales: [
       {
         code: "en",
@@ -197,11 +210,8 @@ export default defineNuxtConfig({
     defaults: {
       changefreq: "daily",
       priority: 1,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString(),
     },
-  },
-  vite: {
-    plugins: [vidstack()],
   },
   vue: {
     compilerOptions: {

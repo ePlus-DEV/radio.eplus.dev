@@ -181,7 +181,8 @@
     "view": "Voir"
   },
   "alert": {
-    "play_button": "Par défaut du navigateur, vous devez appuyer sur le bouton ▶ pour commencer à écouter la radio."
+    "play_button": "Par défaut du navigateur, vous devez appuyer sur le bouton ▶ pour commencer à écouter la radio.",
+    "stream_error": "Ce flux ne peut pas être lu pour le moment."
   },
   "text": {
     "guide": "Guide",

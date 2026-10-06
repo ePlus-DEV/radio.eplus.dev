@@ -100,9 +100,12 @@
                   class="transform hover:scale-125"
                   :class="[
                     button ? 'hidden' : '',
-                    streamError ? 'cursor-not-allowed' : '',
+                    streamError ? 'opacity-50 cursor-not-allowed' : '',
                   ]"
                   @click="onPlay"
+                  :disabled="streamError"
+                  :aria-disabled="streamError"
+                  :title="streamError ? $t('alert.stream_error') : ''"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +253,7 @@ import {
   type MediaProviderChangeEvent,
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
-const online = ref(navigator.onLine);
+const online = ref(true);
 const $store = useMainStore();
 const dayjs = useDayjs();
 
@@ -295,12 +298,33 @@ interface PlaylistItem {
 }
 
 const $src = ref(props.streamUrl);
+const pendingAutoPlay = ref(false);
+const userPaused = ref(false);
+const reconnectAttempts = ref(0);
+const reconnectTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const removeAutoPlayUnlockListeners = ref<(() => void) | null>(null);
+const pendingAutoPlayFallback = ref<ReturnType<typeof setTimeout> | null>(null);
+let unsubscribePlayerState: (() => void) | undefined;
+let timeInterval: ReturnType<typeof setInterval> | null = null;
+const MAX_RECONNECT_ATTEMPTS = 5;
+const RECONNECT_BASE_DELAY = 1500;
 
 /**
  * Updates the online status.
  */
 const updateOnlineStatus = () => {
+  const wasOffline = !online.value;
   online.value = navigator.onLine;
+
+  if (!online.value) {
+    clearReconnectTimer();
+    waiting.value = false;
+    return;
+  }
+
+  if (wasOffline && !userPaused.value) {
+    scheduleReconnect();
+  }
 };
 
 /**
@@ -309,12 +333,33 @@ const updateOnlineStatus = () => {
  * The waiting state is reset after a simulated waiting time of 1 second.
  */
 function onPlay() {
-  if (!waiting.value && !streamError.value) {
-    $player.value?.play();
-    setTimeout(() => {
-      waiting.value = false;
-    }, 1000); // Simulate waiting time
+  userPaused.value = false;
+
+  // If player reports stream error (not ready), schedule an auto-play when ready
+  if (streamError.value) {
+    pendingAutoPlay.value = true;
+    waiting.value = true;
+    return;
   }
+
+  // Try to play now (player reports can-play). Keep waiting until resolved.
+  waiting.value = true;
+  $player.value
+    ?.play()
+    .then(() => {
+      waiting.value = false;
+      pendingAutoPlay.value = false;
+      if (import.meta.client)
+        localStorage.setItem("radio_autoplay_enabled", "1");
+    })
+    .catch((err: unknown) => {
+      // If play fails because media isn't ready, set pendingAutoPlay so onCanPlay will retry
+      console.error("Playback start failed:", err);
+      registerAutoPlayUnlock();
+      // If error looks like 'media is not ready', ask to wait for can-play
+      pendingAutoPlay.value = true;
+      waiting.value = false;
+    });
 }
 
 /**
@@ -325,19 +370,97 @@ function onPlay() {
  * After a simulated waiting time of 1 second, it resets the waiting state to false.
  */
 function onPause() {
-  if (!waiting.value) {
-    $player.value?.pause();
-    setTimeout(() => {
-      waiting.value = false;
-    }, 1000); // Simulate waiting time
+  // Pause should always be allowed
+  userPaused.value = true;
+  clearReconnectTimer();
+  removeAutoPlayUnlockListeners.value?.();
+  removeAutoPlayUnlockListeners.value = null;
+  $player.value?.pause();
+  waiting.value = false;
+}
+
+function clearReconnectTimer() {
+  if (reconnectTimer.value) {
+    clearTimeout(reconnectTimer.value);
+    reconnectTimer.value = null;
   }
+}
+
+function refreshStreamSource() {
+  // Reset then restore the same source to force provider reconnect,
+  // avoid mutating URL because some streams use strict/signed query params.
+  $src.value = "";
+  nextTick(() => {
+    $src.value = props.streamUrl;
+  });
+}
+
+function scheduleReconnect() {
+  if (!online.value || userPaused.value || reconnectTimer.value) return;
+  if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
+    waiting.value = false;
+    streamError.value = true;
+    return;
+  }
+
+  reconnectAttempts.value += 1;
+  const delay = RECONNECT_BASE_DELAY * reconnectAttempts.value;
+  waiting.value = true;
+  pendingAutoPlay.value = true;
+
+  reconnectTimer.value = setTimeout(() => {
+    reconnectTimer.value = null;
+    refreshStreamSource();
+  }, delay);
+}
+
+function registerAutoPlayUnlock() {
+  if (!import.meta.client || removeAutoPlayUnlockListeners.value) return;
+
+  const unlock = () => {
+    removeAutoPlayUnlockListeners.value?.();
+    removeAutoPlayUnlockListeners.value = null;
+    onPlay();
+  };
+
+  const events = ["pointerdown", "keydown", "touchstart"];
+  events.forEach((eventName) => {
+    window.addEventListener(eventName, unlock, { once: true });
+  });
+
+  removeAutoPlayUnlockListeners.value = () => {
+    events.forEach((eventName) => {
+      window.removeEventListener(eventName, unlock);
+    });
+  };
 }
 
 // watch props
 watch(
   () => props.streamUrl,
   (newVal: MediaPlayerElement["src"]) => {
+    // When source changes we mark as waiting and update the source ref so the provider reloads.
+    waiting.value = true;
+    streamError.value = false;
+    userPaused.value = false;
     $src.value = newVal;
+    reconnectAttempts.value = 0;
+    clearReconnectTimer();
+    // Mark that we want to autoplay once the player is ready (can-play event)
+    pendingAutoPlay.value = true;
+    // Safety fallback: if can-play doesn't fire within 4s, clear waiting so UI isn't stuck.
+    if (pendingAutoPlayFallback.value) {
+      clearTimeout(pendingAutoPlayFallback.value);
+      pendingAutoPlayFallback.value = null;
+    }
+
+    pendingAutoPlayFallback.value = setTimeout(() => {
+      if (pendingAutoPlay.value) {
+        pendingAutoPlay.value = false;
+        waiting.value = false;
+      }
+      pendingAutoPlayFallback.value = null;
+    }, 4000);
   },
 );
 
@@ -350,12 +473,13 @@ const updateCurrentTime = (): void => {
 };
 
 // Update the current time every second
-setInterval(updateCurrentTime, 1000);
-
 onMounted(() => {
   // Set the timezone based on the country.
   const [_, area, country] = props.country.split(".");
   $store.setTimezone(area, country.replace(/_/g, "-"));
+  online.value = navigator.onLine;
+  updateCurrentTime();
+  timeInterval = setInterval(updateCurrentTime, 1000);
 
   // Select elements with the classes 'vds-play-button' and 'vds-button'
   document
@@ -375,26 +499,58 @@ onMounted(() => {
    */
 
   // Subscribe to state updates - you can connect them to Vue refs if needed.
-  $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
-    const { paused, error, canPlay } = state;
+  unsubscribePlayerState = $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
+    const { paused, error, canPlay, ended } = state;
     button.value = !paused;
-    streamError.value = !canPlay;
-    console.log("canPlay?", "->", canPlay);
-    console.log("is paused?", "->", paused);
+
     if (error) {
-      console.error("Playback error occurred");
+      streamError.value = true;
+      button.value = false;
       waiting.value = false;
+      scheduleReconnect();
+    } else if (canPlay) {
+      waiting.value = false;
+      streamError.value = false;
+      reconnectAttempts.value = 0;
+      clearReconnectTimer();
     }
-    if (canPlay) {
-      waiting.value = false;
+
+    if (ended && !userPaused.value) {
+      scheduleReconnect();
     }
   });
 
   window.addEventListener("online", updateOnlineStatus);
   window.addEventListener("offline", updateOnlineStatus);
+
+  const autoPlayEnabled =
+    import.meta.client &&
+    localStorage.getItem("radio_autoplay_enabled") === "1";
+
+  // Best effort autoplay when entering page.
+  // If browser blocks autoplay, retry once user interacts anywhere.
+  if (autoPlayEnabled) {
+    pendingAutoPlay.value = true;
+    waiting.value = true;
+    onPlay();
+  } else {
+    waiting.value = false;
+  }
 });
 
 onUnmounted(() => {
+  clearReconnectTimer();
+  if (timeInterval) {
+    clearInterval(timeInterval);
+    timeInterval = null;
+  }
+  unsubscribePlayerState?.();
+  unsubscribePlayerState = undefined;
+  if (pendingAutoPlayFallback.value) {
+    clearTimeout(pendingAutoPlayFallback.value);
+    pendingAutoPlayFallback.value = null;
+  }
+  removeAutoPlayUnlockListeners.value?.();
   window.removeEventListener("online", updateOnlineStatus);
   window.removeEventListener("offline", updateOnlineStatus);
 });
@@ -406,16 +562,53 @@ onUnmounted(() => {
  */
 function onProviderChange(event: MediaProviderChangeEvent) {
   const provider = event.detail;
-  console.log("Provider changed", provider);
+  if (!provider) {
+    waiting.value = true;
+    return;
+  }
+
   // We can configure provider's here.
   if (isHLSProvider(provider)) {
     provider.config = {};
   }
+
+  // If the provider has no currentSrc or media not set, mark streamError so UI disables play
+  const providerWithMedia = provider as Partial<{
+    currentSrc: string;
+    media: HTMLMediaElement | null;
+  }>;
+
+  if (!providerWithMedia.currentSrc || !providerWithMedia.media) {
+    waiting.value = true;
+    return;
+  }
+
+  streamError.value = false;
 }
 
 // We can listen for the `can-play` event to be notified when the player is ready.
-function onCanPlay(event: MediaCanPlayEvent) {
-  console.log("Can play", event.detail);
+function onCanPlay(_: MediaCanPlayEvent) {
+  reconnectAttempts.value = 0;
+  clearReconnectTimer();
+
+  if (pendingAutoPlay.value) {
+    if (pendingAutoPlayFallback.value) {
+      clearTimeout(pendingAutoPlayFallback.value);
+      pendingAutoPlayFallback.value = null;
+    }
+    // attempt to play now that player reports can-play
+    $player.value
+      ?.play()
+      .then(() => {
+        waiting.value = false;
+        pendingAutoPlay.value = false;
+      })
+      .catch((err: unknown) => {
+        console.error("Playback start failed:", err);
+        waiting.value = false;
+        pendingAutoPlay.value = false;
+      });
+  }
 }
 </script>
 

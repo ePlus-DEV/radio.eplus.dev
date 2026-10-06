@@ -1,12 +1,9 @@
-FROM node:20
+FROM node:24.15.0
 
 WORKDIR /app
 
 COPY . .
-RUN npm install \
-    --prefer-offline \
-    --frozen-lockfile \
-    --non-interactive
+RUN npm ci
 
 ENV HOST 0.0.0.0
 EXPOSE 3000

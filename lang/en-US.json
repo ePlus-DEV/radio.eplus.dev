@@ -181,7 +181,8 @@
     "view": "View"
   },
   "alert": {
-    "play_button": "By default of the browser, you need to press the ▶ button to start listening to the Radio."
+    "play_button": "By default of the browser, you need to press the ▶ button to start listening to the Radio.",
+    "stream_error": "This stream cannot be played right now."
   },
   "text": {
     "guide": "Guide",
