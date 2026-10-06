@@ -78,6 +78,10 @@ watch(input, (value: string) => {
     });
   }, 500);
 });
+
+onBeforeUnmount(() => {
+  if (typingTimeout) clearTimeout(typingTimeout);
+});
 </script>
 
 <style scoped>
