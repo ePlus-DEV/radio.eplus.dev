@@ -1,4 +1,7 @@
 {
+  "404": {
+    "content": "很抱歉，您要查找的頁面不存在！"
+  },
   "navmenu": {
     "homepage": "首頁",
     "about": "關於",
@@ -101,7 +104,9 @@
       "denmark": "丹麥",
       "estonia": "愛沙尼亞",
       "germany": "德國",
-      "spain": "西班牙"
+      "spain": "西班牙",
+      "latvia": "拉脫維亞",
+      "lithuania": "立陶宛"
     },
     "north_america": {
       "name": "北美洲",
@@ -168,9 +173,6 @@
   },
   "statistics_tooltip": {
     "text": "事件：{num} | 停機時間：{time} 分鐘 | {response}ms"
-  },
-  "404": {
-    "content": "很抱歉，您要查找的頁面不存在！"
   },
   "table": {
     "status": "狀態",

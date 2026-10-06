@@ -1,4 +1,7 @@
 {
+  "404": {
+    "content": "We would like to inform you that the page you are looking for, does not exist!"
+  },
   "navmenu": {
     "homepage": "ホームページ",
     "about": "約",
@@ -101,7 +104,9 @@
       "denmark": "デンマーク",
       "estonia": "エストニア",
       "germany": "ドイツ",
-      "spain": "スペイン"
+      "spain": "スペイン",
+      "latvia": "ラトビア",
+      "lithuania": "リトアニア"
     },
     "north_america": {
       "name": "北米",
@@ -168,9 +173,6 @@
   },
   "statistics_tooltip": {
     "text": "インシデント: {num} | ダウンタイム: {time} 分 | {response} ミリ秒"
-  },
-  "404": {
-    "content": "We would like to inform you that the page you are looking for, does not exist!"
   },
   "table": {
     "status": "状態",

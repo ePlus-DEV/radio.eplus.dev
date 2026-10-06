@@ -1,4 +1,7 @@
 {
+  "404": {
+    "content": "我们想告诉您，您正在寻找的页面不存在！"
+  },
   "navmenu": {
     "homepage": "主页",
     "about": "关于",
@@ -101,7 +104,9 @@
       "denmark": "丹麦",
       "estonia": "爱沙尼亚",
       "germany": "德国",
-      "spain": "西班牙"
+      "spain": "西班牙",
+      "latvia": "拉脱维亚",
+      "lithuania": "立陶宛"
     },
     "north_america": {
       "name": "北美洲",
@@ -168,9 +173,6 @@
   },
   "statistics_tooltip": {
     "text": "事件：{num} | 停机时间：{time} 分钟 | {response}ms"
-  },
-  "404": {
-    "content": "我们想告诉您，您正在寻找的页面不存在！"
   },
   "table": {
     "status": "状态",
