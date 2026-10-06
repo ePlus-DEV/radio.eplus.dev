@@ -177,34 +177,50 @@ async function fetchWithRetry(url, options = {}, attempts = 3) {
   throw lastError;
 }
 
-function discoverCountries(html) {
+async function fetchTextSource(url) {
+  try {
+    const response = await fetchWithRetry(url, {
+      headers: { accept: "text/html,application/xhtml+xml" }
+    });
+    return {
+      text: await response.text(),
+      response,
+      via: "direct"
+    };
+  } catch (directError) {
+    const readerUrl = `https://r.jina.ai/${url}`;
+    console.warn(
+      `[instant.audio] Direct page fetch failed for ${url}; using reader fallback: ${directError.message}`,
+    );
+
+    const response = await fetchWithRetry(readerUrl, {
+      headers: { accept: "text/plain,text/markdown" }
+    });
+
+    return {
+      text: await response.text(),
+      response: null,
+      via: "reader"
+    };
+  }
+}
+
+function discoverCountries(source) {
   const countries = [];
   let area = "";
-  const tokenRegex =
-    /<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>|<a\b[^>]*href=["'](https?:\/\/[^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi;
 
-  let match;
-  while ((match = tokenRegex.exec(html))) {
-    if (match[1]) {
-      const heading = stripTags(match[1]).toLowerCase();
-      if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
-      continue;
-    }
-
-    if (!area || !match[2] || !match[3]) continue;
-
-    const label = stripTags(match[3]);
-    if (!label) continue;
+  const addCountry = (label, href) => {
+    if (!area || !label || !href) return;
 
     let url;
     try {
-      url = new URL(match[2]);
+      url = new URL(href);
     } catch {
-      continue;
+      return;
     }
 
     if (url.hostname === "instant.audio" || url.hostname.endsWith(".instant.audio")) {
-      continue;
+      return;
     }
 
     countries.push({
@@ -213,13 +229,45 @@ function discoverCountries(html) {
       slug: countrySlug(label),
       domain: url.origin
     });
+  };
+
+  const tokenRegex =
+    /<h[1-6][^>]*>([\\s\\S]*?)<\\/h[1-6]>|<a\\b[^>]*href=["'](https?:\\/\\/[^"'#]+)["'][^>]*>([\\s\\S]*?)<\\/a>/gi;
+
+  let match;
+  while ((match = tokenRegex.exec(source))) {
+    if (match[1]) {
+      const heading = stripTags(match[1]).toLowerCase();
+      if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
+      continue;
+    }
+
+    addCountry(stripTags(match[3] || ""), match[2]);
+  }
+
+  if (!countries.length) {
+    area = "";
+    for (const line of source.split(/\\r?\\n/)) {
+      const headingMatch = line.match(/^#{1,6}\\s+(.+?)\\s*$/);
+      if (headingMatch) {
+        const heading = stripTags(headingMatch[1]).toLowerCase();
+        if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
+        continue;
+      }
+
+      const linkRegex = /\\[([^\\]]+)\\]\\((https?:\\/\\/[^)]+)\\)/g;
+      let linkMatch;
+      while ((linkMatch = linkRegex.exec(line))) {
+        addCountry(stripTags(linkMatch[1]), linkMatch[2]);
+      }
+    }
   }
 
   return [...new Map(countries.map((item) => [`${item.area}/${item.slug}`, item])).values()];
 }
 
 function extractCountryId(response, html) {
-  const linkHeader = response.headers.get("link") || "";
+  const linkHeader = response?.headers?.get("link") || "";
   const combined = `${linkHeader}\n${html}`;
   const match = combined.match(
     /https:\/\/api\.instant\.audio\/data\/streams\/(\d+)\/[a-z0-9-]+/i,
@@ -227,37 +275,43 @@ function extractCountryId(response, html) {
   return match?.[1] || "";
 }
 
-function extractStationCandidates(html, origin) {
+function extractStationCandidates(source, origin) {
   const candidates = new Map();
-  const anchorRegex = /<a\b([^>]*)href=["']([^"'#]+)["']([^>]*)>([\s\S]*?)<\/a>/gi;
 
-  let match;
-  while ((match = anchorRegex.exec(html))) {
-    const href = match[2];
-    const label = stripTags(match[4]);
+  const addCandidate = (href, label) => {
     let url;
-
     try {
       url = new URL(href, origin);
     } catch {
-      continue;
+      return;
     }
 
-    if (url.origin !== origin) continue;
+    if (url.origin !== origin) return;
 
     const segments = url.pathname.split("/").filter(Boolean);
-    if (segments.length !== 1) continue;
+    if (segments.length !== 1) return;
 
     const slug = segments[0].toLowerCase();
-    if (!slug || RESERVED_PATHS.has(slug)) continue;
-
-    if (!/^[a-z0-9-]+$/.test(slug)) continue;
+    if (!slug || RESERVED_PATHS.has(slug) || !/^[a-z0-9-]+$/.test(slug)) {
+      return;
+    }
 
     candidates.set(slug, {
       slug,
-      title: label || slug.replace(/-/g, " "),
+      title: stripTags(label || "") || slug.replace(/-/g, " "),
       pageUrl: `${origin}/${slug}/`
     });
+  };
+
+  const anchorRegex = /<a\\b([^>]*)href=["']([^"'#]+)["']([^>]*)>([\\s\\S]*?)<\\/a>/gi;
+  let match;
+  while ((match = anchorRegex.exec(source))) {
+    addCandidate(match[2], match[4]);
+  }
+
+  const markdownLinkRegex = /\\[([^\\]]+)\\]\\((https?:\\/\\/[^)]+)\\)/g;
+  while ((match = markdownLinkRegex.exec(source))) {
+    addCandidate(match[2], match[1]);
   }
 
   return [...candidates.values()];
@@ -457,20 +511,70 @@ async function syncStation(country, countryId, candidate) {
   }
 }
 
+async function probeCountryId(candidate) {
+  const MAX_ID = 200;
+  const BATCH_SIZE = 8;
+
+  console.warn(
+    `[instant.audio] Country preload ID unavailable; probing API IDs for ${candidate.slug}`,
+  );
+
+  for (let start = 1; start <= MAX_ID; start += BATCH_SIZE) {
+    const ids = Array.from(
+      { length: Math.min(BATCH_SIZE, MAX_ID - start + 1) },
+      (_, index) => start + index,
+    );
+
+    const results = await Promise.all(
+      ids.map(async (id) => {
+        const url = `${API_BASE}/${id}/${candidate.slug}`;
+        try {
+          const response = await fetch(url, {
+            redirect: "follow",
+            headers: {
+              "user-agent": USER_AGENT,
+              accept: "application/json"
+            }
+          });
+          if (!response.ok) return null;
+
+          const payload = await response.json();
+          return findStreamUrl(payload) ? String(id) : null;
+        } catch {
+          return null;
+        }
+      }),
+    );
+
+    const found = results.find(Boolean);
+    if (found) return found;
+
+    await sleep(150);
+  }
+
+  return "";
+}
+
 async function syncCountry(country) {
   console.log(`\n[instant.audio] Syncing ${country.area}/${country.slug} from ${country.domain}`);
 
-  const homeResponse = await fetchWithRetry(`${country.domain}/`, {
-    headers: { accept: "text/html" }
-  });
-  const html = await homeResponse.text();
-  const countryId = extractCountryId(homeResponse, html);
+  const countrySource = await fetchTextSource(`${country.domain}/`);
+  const html = countrySource.text;
+
+  let candidates = extractStationCandidates(html, country.domain);
+  let countryId = extractCountryId(countrySource.response, html);
+
+  if (!candidates.length) {
+    throw new Error(`Unable to discover station slugs for ${country.domain}`);
+  }
+
+  if (!countryId) {
+    countryId = await probeCountryId(candidates[0]);
+  }
 
   if (!countryId) {
     throw new Error(`Unable to discover InstantAudio country ID for ${country.domain}`);
   }
-
-  let candidates = extractStationCandidates(html, country.domain);
   if (maxStations > 0) candidates = candidates.slice(0, maxStations);
 
   console.log(
@@ -556,11 +660,8 @@ async function updateLocales(country, metadata) {
 }
 
 async function main() {
-  const instantResponse = await fetchWithRetry(INSTANT_HOME, {
-    headers: { accept: "text/html" }
-  });
-  const instantHtml = await instantResponse.text();
-  const discovered = discoverCountries(instantHtml);
+  const instantSource = await fetchTextSource(INSTANT_HOME);
+  const discovered = discoverCountries(instantSource.text);
 
   if (!discovered.length) {
     throw new Error("No InstantAudio countries were discovered from instant.audio");
