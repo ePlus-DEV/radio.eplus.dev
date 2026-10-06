@@ -33,13 +33,11 @@ const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 const route = useRoute();
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
-const slug = ref(route.params.country);
-const country = ref(
-  Array.isArray(route.params.country)
-    ? route.params.country[0].replace(/-/g, "_")
-    : route.params.country.replace(/-/g, "_"),
-);
-const area = ref(route.params.area);
+const normalizeParam = (value: string | string[] | undefined): string =>
+  Array.isArray(value) ? value[0] || "" : value || "";
+const slug = computed(() => normalizeParam(route.params.country));
+const country = computed(() => slug.value.replace(/-/g, "_"));
+const area = computed(() => normalizeParam(route.params.area));
 const thumb = computed(
   () =>
     `/img/${area.value ? area.value : "asia"}/flags/${slug.value ? slug.value : "viet-nam"}.png`,
@@ -58,14 +56,24 @@ interface Track {
   schedule?: string;
 }
 
-useHead({
-  title: t(i18n.value),
-});
+const countryName = computed(() => t(i18n.value));
+const seoTitle = computed(() => `Live Radio in ${countryName.value}`);
+const seoDescription = computed(
+  () =>
+    `Listen to live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`,
+);
 
-useSeoMeta({
-  // will be inferred as the lastmod value in the sitemap
-  articleModifiedTime: new Date().toISOString(),
-});
+useHead(() => ({
+  title: seoTitle.value,
+}));
+
+useSeoMeta(() => ({
+  description: seoDescription.value,
+  ogTitle: seoTitle.value,
+  ogDescription: seoDescription.value,
+  twitterTitle: seoTitle.value,
+  twitterDescription: seoDescription.value,
+}));
 
 /**
  * Fetches the schedule data from the given URL.
@@ -78,10 +86,6 @@ const fetchSchedule = async (url: string) => {
     const resDataSuccess = resData as { success: boolean };
     if (resDataSuccess.success) {
       playlist.value = (resData as { result: Track[] }).result;
-    }
-    if (playlist.value.length > 0) {
-      const firstTrack = playlist.value[0];
-      document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${i18n.value}`;
     }
     if (polling_schedule.value !== null) {
       clearTimeout(polling_schedule.value);
@@ -145,6 +149,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  clearTimeout(polling_schedule.value as unknown as number);
+  clearInterval(polling_schedule.value as unknown as number);
 });
 </script>

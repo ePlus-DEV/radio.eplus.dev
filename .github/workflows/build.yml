@@ -35,3 +35,19 @@ jobs:
 
       - name: "Generate application"
         run: npm run generate
+
+      - name: "Verify generated SEO"
+        run: |
+          test -f .output/public/index.html
+          test -f .output/public/sitemap.xml
+          test -f .output/public/robots.txt
+          test -f .output/public/llms.txt
+          test -f .output/public/agents.md
+
+          grep -q 'rel="canonical"' .output/public/index.html
+          grep -q 'https://radio.eplus.dev/asia/viet-nam/vov1' .output/public/sitemap.xml
+          if grep -q 'https://radio.eplus.dev/asia/viet-nam/name' .output/public/sitemap.xml; then
+            echo "Invalid country metadata URL found in sitemap"
+            exit 1
+          fi
+          grep -q 'Sitemap: https://radio.eplus.dev/sitemap.xml' .output/public/robots.txt

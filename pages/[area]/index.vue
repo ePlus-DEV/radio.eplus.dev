@@ -26,19 +26,27 @@ const streamName = ref<string>("");
 import type { AudioSrc, AudioMimeType } from "vidstack";
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
 
-// Define the area variable
-const route = useRoute(); // Use useRoute to get the route object
-const area = route.params.area as string;
-const i18n = `world.${area.replace(/-/g, "_")}.name`;
+const route = useRoute();
+const area = computed(() => String(route.params.area || ""));
+const i18n = computed(() => `world.${area.value.replace(/-/g, "_")}.name`);
+const areaName = computed(() => t(i18n.value));
+const seoTitle = computed(() => `Live Radio in ${areaName.value}`);
+const seoDescription = computed(
+  () =>
+    `Browse and listen to live internet radio stations across ${areaName.value} on Radio ePlus.`,
+);
 
-useHead({
-  title: t(i18n),
-});
+useHead(() => ({
+  title: seoTitle.value,
+}));
 
-useSeoMeta({
-  // will be inferred as the lastmod value in the sitemap
-  articleModifiedTime: new Date().toISOString(),
-});
+useSeoMeta(() => ({
+  description: seoDescription.value,
+  ogTitle: seoTitle.value,
+  ogDescription: seoDescription.value,
+  twitterTitle: seoTitle.value,
+  twitterDescription: seoDescription.value,
+}));
 
 /**
  * Fetches data from the server and initializes the player with the favorite channel.

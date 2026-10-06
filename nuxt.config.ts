@@ -1,5 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
-import world from "./data/world";
+import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 
 const algoliaApplicationId =
   process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID ||
@@ -10,12 +10,25 @@ const algoliaApiKey =
   process.env.ALGOLIA_API_KEY ||
   "";
 const hasAlgoliaConfig = Boolean(algoliaApplicationId && algoliaApiKey);
+const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").replace(
+  /\/$/,
+  "",
+);
+const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "Radio ePlus";
+const defaultDescription =
+  process.env.DESCRIPTION ||
+  "Listen to live internet radio stations from around the world on Radio ePlus.";
+const radioSeoRoutes = getRadioSeoRoutes();
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
+  site: {
+    url: siteUrl,
+    name: siteName,
+  },
   devtools: { enabled: process.env.NODE_ENV !== "production" },
-  ssr: false,
+  ssr: true,
   pages: true,
   runtimeConfig: {
     public: {
@@ -36,6 +49,9 @@ export default defineNuxtConfig({
       algoliaIndexStation: "radio.eplus.dev",
       algoliaIndexRadio: "world",
       algoliaConfigured: hasAlgoliaConfig,
+      siteUrl,
+      siteName,
+      defaultDescription,
     },
   },
   modules: [
@@ -57,14 +73,13 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
+      titleTemplate: `%s | ${siteName}`,
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
-          hid: "description",
           name: "description",
-          content: process.env.DESCRIPTION || "",
+          content: defaultDescription,
         },
         { name: "msapplication-TileColor", content: "#603cba" },
         { property: "article:author", content: process.env.FANPAGE },
@@ -189,33 +204,20 @@ export default defineNuxtConfig({
     classSuffix: "",
     storageKey: "theme",
   },
-  generate: {
-    routes: (() => {
-      const routesToGenerate = [];
-      for (const [continentKey, continent] of Object.entries(world)) {
-        const region = continentKey.replace(/_/g, "-");
-        routesToGenerate.push(`/${region}`);
-
-        for (const countryKey of Object.keys(continent)) {
-          routesToGenerate.push(`/${region}/${countryKey}`);
-
-          for (const key of Object.keys(
-            (continent as Record<string, Record<string, unknown>>)[countryKey],
-          )) {
-            routesToGenerate.push(`/${region}/${countryKey}/${key}`);
-          }
-        }
-      }
-      return routesToGenerate;
-    })(),
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: [
+        ...radioSeoRoutes.map((route) => route.loc),
+        "/sitemap.xml",
+      ],
+    },
   },
   sitemap: {
-    sources: ["/api/__sitemap__/urls"],
-    defaults: {
-      changefreq: "daily",
-      priority: 1,
-      lastmod: new Date().toISOString(),
-    },
+    urls: radioSeoRoutes.map((route) => ({
+      ...getSitemapEntry(route),
+      loc: `${siteUrl}${route.loc}`,
+    })),
   },
   vue: {
     compilerOptions: {
