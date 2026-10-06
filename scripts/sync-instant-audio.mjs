@@ -178,16 +178,29 @@ async function fetchWithRetry(url, options = {}, attempts = 3) {
 }
 
 async function fetchTextSource(url) {
-  const readerUrl = `https://r.jina.ai/${url}`;
-  const response = await fetchWithRetry(readerUrl, {
-    headers: { accept: "text/plain,text/markdown" }
-  });
+  try {
+    const response = await fetchWithRetry(url, {
+      headers: { accept: "text/html,application/xhtml+xml" }
+    });
 
-  return {
-    text: await response.text(),
-    response: null,
-    via: "reader"
-  };
+    return {
+      text: await response.text(),
+      response,
+      via: "direct"
+    };
+  } catch (directError) {
+    const readerUrl = `https://r.jina.ai/${url}`;
+    const response = await fetchWithRetry(readerUrl, {
+      headers: { accept: "text/plain,text/markdown" }
+    });
+
+    return {
+      text: await response.text(),
+      response: null,
+      via: "reader",
+      directError
+    };
+  }
 }
 
 function discoverCountries(source) {
@@ -478,7 +491,7 @@ async function syncStation(country, countryId, candidate) {
 }
 
 async function probeCountryId(candidate) {
-  const MAX_ID = 120;
+  const MAX_ID = 180;
   const BATCH_SIZE = 8;
 
   console.warn(
@@ -625,15 +638,42 @@ async function updateLocales(country, metadata) {
   }
 }
 
-async function main() {
-  const instantSource = await fetchTextSource(INSTANT_HOME);
-  const discovered = discoverCountries(instantSource.text);
+async function loadCountryDirectory() {
+  try {
+    const source = await fetchTextSource(INSTANT_HOME);
+    const discovered = discoverCountries(source.text);
 
-  if (!discovered.length) {
-    console.error("[instant.audio] Reader source preview:");
-    console.error(instantSource.text.split(/\r?\n/).slice(0, 80).join("\n"));
-    throw new Error("No InstantAudio countries were discovered from instant.audio");
+    if (discovered.length) {
+      console.log(
+        `[instant.audio] Discovered ${discovered.length} countries from instant.audio`,
+      );
+      return discovered;
+    }
+
+    console.warn(
+      "[instant.audio] instant.audio directory is blocked or unreadable; using repository snapshot",
+    );
+  } catch (error) {
+    console.warn(
+      `[instant.audio] Unable to refresh instant.audio directory; using repository snapshot: ${error.message}`,
+    );
   }
+
+  const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
+  const registry = await readJson(registryFile);
+
+  if (!Array.isArray(registry) || !registry.length) {
+    throw new Error("InstantAudio country registry is empty");
+  }
+
+  console.log(
+    `[instant.audio] Loaded ${registry.length} countries from repository snapshot`,
+  );
+  return registry;
+}
+
+async function main() {
+  const discovered = await loadCountryDirectory();
 
   const selected = [];
   for (const country of discovered) {
