@@ -41,8 +41,12 @@
 interface StationResult {
   objectID: string;
   title?: string;
-  station_name?: string;
+  station_name: string;
   station_image: string;
+  station_stream: string;
+  station_schedule?: string;
+  cros: boolean;
+  type: string;
   url: string;
 }
 
