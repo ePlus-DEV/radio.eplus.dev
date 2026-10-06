@@ -247,15 +247,15 @@ function discoverCountries(source) {
 
   if (!countries.length) {
     area = "";
-    for (const line of source.split(/\\r?\\n/)) {
-      const headingMatch = line.match(/^#{1,6}\\s+(.+?)\\s*$/);
+    for (const line of source.split(/\r?\n/)) {
+      const headingMatch = line.match(/^#{1,6}\s+(.+?)\s*$/);
       if (headingMatch) {
         const heading = stripTags(headingMatch[1]).toLowerCase();
         if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
         continue;
       }
 
-      const linkRegex = /\\[([^\\]]+)\\]\\((https?:\\/\\/[^)]+)\\)/g;
+      const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
       let linkMatch;
       while ((linkMatch = linkRegex.exec(line))) {
         addCountry(stripTags(linkMatch[1]), linkMatch[2]);
