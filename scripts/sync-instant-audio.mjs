@@ -86,15 +86,24 @@ const AREA_ALIASES = {
 
 const RESERVED_PATHS = new Set([
   "about",
+  "acerca",
   "apps",
+  "buscar",
   "contact",
+  "contacto",
   "dmca",
   "favorites",
+  "favoritos",
   "favourites",
+  "generos",
+  "genres",
   "help",
   "include-your-radio",
+  "incluir-tu-radio",
+  "menu",
   "privacy-policy",
   "recently-played",
+  "escuchado-recientemente",
   "search"
 ]);
 
