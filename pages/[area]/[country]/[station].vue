@@ -271,7 +271,7 @@ const handleDataFromChild = (data: StationData): void => {
   const version = requestVersion;
   clearPolling();
 
-  $store.setTimezone(area.value.replace(/-/g, "_"), slug.value.replace(/-/g, "_"));
+  $store.setTimezone(area.value, slug.value);
 
   streamName.value = data.station_name;
   streamUrl.value = {
