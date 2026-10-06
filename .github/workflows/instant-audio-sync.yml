@@ -45,6 +45,11 @@ jobs:
         with:
           node-version: "24.15.0"
 
+      - name: "Install browser crawler"
+        run: |
+          npm install --no-save --package-lock=false crawlee@3 playwright@1.55.0
+          npx playwright install --with-deps chromium
+
       - name: "Validate InstantAudio API discovery"
         run: |
           node scripts/sync-instant-audio.mjs \
@@ -71,6 +76,11 @@ jobs:
         with:
           node-version: "24.15.0"
           cache: "npm"
+
+      - name: "Install browser crawler"
+        run: |
+          npm install --no-save --package-lock=false crawlee@3 playwright@1.55.0
+          npx playwright install --with-deps chromium
 
       - name: "Discover and sync missing countries"
         id: sync
