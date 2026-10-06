@@ -35,3 +35,16 @@ node scripts/sync-instant-audio.mjs --country=cuba --refresh-existing --max-stat
 For endpoints such as `https://api.instant.audio/data/streams/45/radio-rebelde`, the sync reads station metadata (`title`, website, signal, ACRCloud availability) and the `streams` array. Entries marked as containers or non-audio MIME types are ignored. The structured stream list is used before the generic URL heuristic.
 
 World metadata keeps the repository's existing underscore region keys (for example `north_america`) and `/assets/radio/...` data paths.
+
+## Browser fallback for 403 responses
+
+GitHub-hosted runners can be denied by InstantAudio with HTTP 403 even when the same endpoint works in a normal browser.
+
+The sync now uses a circuit breaker:
+
+1. try the structured InstantAudio API directly;
+2. after 3 consecutive HTTP 403 responses, stop direct API requests for that country;
+3. retry the remaining stations through **Crawlee + Playwright**, loading the real country station page in Chromium and calling the API from that browser origin;
+4. if browser-origin requests are still blocked, fall back to Radio Browser instead of hammering InstantAudio.
+
+The browser crawler runs with concurrency 1 and blocks image/font/media resources to reduce bandwidth and upstream load.
