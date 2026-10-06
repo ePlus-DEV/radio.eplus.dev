@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 interface StationResult {
   objectID: string;
-  title?: string;
+  title: string;
   station_name: string;
   station_image: string;
   station_stream: string;
@@ -50,13 +50,21 @@ interface StationResult {
   url: string;
 }
 
+interface StationCatalogEntry {
+  title: string;
+  description?: string;
+  type: string;
+  cros: boolean;
+  stream: string;
+  features?: string;
+  schedule?: string;
+}
+
 const config = useRuntimeConfig();
 const route = useRoute();
 const emit = defineEmits<{
   (event: "update-data", data: StationResult): void;
 }>();
-const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
-const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
 const results = ref<StationResult[]>([]);
 let requestVersion = 0;
 
@@ -77,25 +85,32 @@ const loadStations = async (): Promise<void> => {
   const country = countrySlug.value;
   const station = stationSlug.value;
 
-  if (!area || !country || !station || !algoliaConfigured.value) {
+  if (!area || !country) {
     results.value = [];
     return;
   }
 
   try {
-    await search({
-      query: "",
-      requestOptions: {
-        hitsPerPage: 200,
-        facetFilters: [
-          `station_country:world.${area.replace(/-/g, "_")}.${country.replace(/-/g, "_")}`,
-        ],
-      },
-    });
+    const catalog = await $fetch<Record<string, StationCatalogEntry>>(
+      `/radio/${area}/${country}.json`,
+    );
 
     if (currentVersion !== requestVersion) return;
 
-    results.value = (result.value?.hits || []) as unknown as StationResult[];
+    results.value = Object.entries(catalog || {}).map(([stationKey, data]) => ({
+      objectID: `${country}-${stationKey}`,
+      title: data.title,
+      station_name: data.title,
+      station_image: data.features || String(config.public.placeholderStation),
+      station_stream: data.stream,
+      station_schedule: data.schedule,
+      cros: Boolean(data.cros),
+      type: data.type || "audio/mpeg",
+      url: `/${area}/${country}/${stationKey}`,
+    }));
+
+    if (!station) return;
+
     const activeData = results.value.find(
       (data) => data.objectID === `${country}-${station}`,
     );
@@ -104,7 +119,7 @@ const loadStations = async (): Promise<void> => {
   } catch (error) {
     if (currentVersion !== requestVersion) return;
     results.value = [];
-    console.error("Unable to load stations:", error);
+    console.error("Unable to load local station catalog:", error);
   }
 };
 
