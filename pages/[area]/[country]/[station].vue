@@ -121,6 +121,16 @@ interface StationData {
   type: string;
 }
 
+interface StationCatalogEntry {
+  title: string;
+  description?: string;
+  type: string;
+  cros: boolean;
+  stream: string;
+  features?: string;
+  schedule?: string;
+}
+
 const $store = useMainStore();
 const dayjs = useDayjs();
 const route = useRoute();
@@ -132,11 +142,77 @@ const normalizeParam = (value: string | string[] | undefined): string =>
 
 const slug = computed(() => normalizeParam(route.params.country));
 const area = computed(() => normalizeParam(route.params.area));
+const stationSlug = computed(() => normalizeParam(route.params.station));
 const i18n = computed(
   () =>
     `world.${area.value.replace(/-/g, "_")}.${slug.value.replace(/-/g, "_")}`,
 );
-const title = computed(() => t(i18n.value));
+const countryName = computed(() => t(i18n.value));
+
+const stationCatalogUrl = computed(
+  () => `/radio/${area.value}/${slug.value}.json`,
+);
+
+const { data: stationCatalog } = await useAsyncData<
+  Record<string, StationCatalogEntry>
+>(
+  `station-catalog:${area.value}:${slug.value}`,
+  async () => {
+    if (import.meta.server) {
+      const [{ readFile }, { join }] = await Promise.all([
+        import("node:fs/promises"),
+        import("node:path"),
+      ]);
+      const file = join(
+        process.cwd(),
+        "public",
+        "radio",
+        area.value,
+        `${slug.value}.json`,
+      );
+      return JSON.parse(
+        await readFile(file, "utf8"),
+      ) as Record<string, StationCatalogEntry>;
+    }
+
+    return await $fetch<Record<string, StationCatalogEntry>>(
+      stationCatalogUrl.value,
+    );
+  },
+  {
+    default: () => ({}),
+  },
+);
+const stationMeta = computed(
+  () => stationCatalog.value?.[stationSlug.value],
+);
+
+const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
+const stationName = computed(
+  () =>
+    stationMeta.value?.title ||
+    stationSlug.value
+      .split("-")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" "),
+);
+const seoTitle = computed(
+  () => `${stationName.value} Live Radio - ${countryName.value}`,
+);
+const seoDescription = computed(
+  () =>
+    stationMeta.value?.description ||
+    `Listen to ${stationName.value} live from ${countryName.value} on Radio ePlus.`,
+);
+const seoImage = computed(() => {
+  const image = stationMeta.value?.features;
+  if (!image) return `${siteUrl.value}/brand/logo-share.png`;
+  return image.startsWith("http") ? image : `${siteUrl.value}${image}`;
+});
+const canonicalUrl = computed(
+  () => `${siteUrl.value}/${area.value}/${slug.value}/${stationSlug.value}`,
+);
 
 const streamName = ref("");
 const program = ref<ProgramItem[]>([]);
@@ -146,13 +222,52 @@ const playlist = ref<Track[]>([]);
 const lyric_popup = ref(false);
 const lyricLines = ref<string[]>([t("panel.updating")]);
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
-const pageTitle = ref(title.value);
 let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
 let requestVersion = 0;
 const POLL_INTERVAL = 60_000;
 
+watch(
+  stationMeta,
+  (meta) => {
+    if (!meta) return;
+    streamName.value = meta.title;
+    thumb.value = meta.features || String(config.public.placeholderStation);
+    streamUrl.value = {
+      src: meta.cros
+        ? `${config.public.corsServer || ""}${meta.stream}`
+        : meta.stream,
+      type: meta.type as AudioMimeType,
+    };
+  },
+  { immediate: true },
+);
+
 useHead(() => ({
-  title: pageTitle.value,
+  title: seoTitle.value,
+  script: [
+    {
+      key: "radio-station-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "RadioStation",
+        name: stationName.value,
+        description: seoDescription.value,
+        url: canonicalUrl.value,
+        image: seoImage.value,
+      }),
+    },
+  ],
+}));
+
+useSeoMeta(() => ({
+  description: seoDescription.value,
+  ogTitle: seoTitle.value,
+  ogDescription: seoDescription.value,
+  ogImage: seoImage.value,
+  twitterTitle: seoTitle.value,
+  twitterDescription: seoDescription.value,
+  twitterImage: seoImage.value,
 }));
 
 const clearPolling = (): void => {
@@ -202,7 +317,6 @@ const fetchDetail = async (url: string, version: number): Promise<void> => {
     const currentMedia = value.data.currentMedia;
     if (!currentMedia) return;
 
-    pageTitle.value = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
 
     if (currentMedia.hasLyric) {
       await fetchLyric(currentMedia.encodeId, version);
@@ -231,8 +345,6 @@ const fetchSchedule = async (url: string, version: number): Promise<void> => {
     if (value.err === 0 && slug.value === "viet-nam") {
       const items = value.data?.items || [];
       program.value = items;
-      pageTitle.value = `${streamName.value} - ${title.value}`;
-
       const firstProgram = items[0];
       if (firstProgram?.encodeId && config.public.apiZingLiveStreamProgramDetail) {
         await fetchDetail(
@@ -247,7 +359,6 @@ const fetchSchedule = async (url: string, version: number): Promise<void> => {
       playlist.value = value.result;
       const firstTrack = value.result[0];
       if (firstTrack) {
-        pageTitle.value = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
       }
     }
   } catch (error) {
@@ -285,16 +396,10 @@ const handleDataFromChild = (data: StationData): void => {
   song.value = undefined;
   playlist.value = [];
   lyricLines.value = [t("panel.updating")];
-  pageTitle.value = `${streamName.value} - ${title.value}`;
-
   if (data.station_schedule) {
     void pollSchedule(data.station_schedule, version);
   }
 };
-
-watch(title, (value) => {
-  if (!streamName.value) pageTitle.value = value;
-});
 
 onBeforeUnmount(() => {
   requestVersion += 1;

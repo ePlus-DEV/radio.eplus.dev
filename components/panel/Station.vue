@@ -80,6 +80,8 @@ const i18n = computed(
 );
 
 const loadStations = async (): Promise<void> => {
+  if (import.meta.server) return;
+
   const currentVersion = ++requestVersion;
   const area = areaSlug.value;
   const country = countrySlug.value;

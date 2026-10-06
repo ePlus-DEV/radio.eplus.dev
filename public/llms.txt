@@ -1,0 +1,21 @@
+# Radio ePlus
+
+> Radio ePlus is an internet radio directory for discovering and listening to live radio stations from countries around the world.
+
+## Canonical site
+
+- https://radio.eplus.dev/
+
+## Discovery
+
+- Sitemap: https://radio.eplus.dev/sitemap.xml
+- Robots: https://radio.eplus.dev/robots.txt
+- Agent guide: https://radio.eplus.dev/agents.md
+
+## Site structure
+
+- /`area` — browse countries in a region
+- /`area`/`country` — browse radio stations in a country
+- /`area`/`country`/`station` — listen to a specific station
+
+Station pages may include live program, track, schedule, and lyric data when available.
