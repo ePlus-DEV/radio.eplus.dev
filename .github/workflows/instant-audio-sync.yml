@@ -23,6 +23,7 @@ on:
     paths:
       - ".github/workflows/instant-audio-sync.yml"
       - "scripts/sync-instant-audio.mjs"
+      - "data/instant-audio-countries.json"
 
 permissions:
   contents: read
@@ -46,8 +47,7 @@ jobs:
       - name: "Validate InstantAudio API discovery"
         run: |
           node scripts/sync-instant-audio.mjs \
-            --country=cuba \
-            --refresh-existing \
+            --country=latvia \
             --max-stations=3 \
             --dry-run
 
