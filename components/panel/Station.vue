@@ -12,8 +12,8 @@
       >
         <nuxt-link
           :to="`${data.url}`"
-          v-for="(data, index) in results"
-          v-bind:key="index"
+          v-for="data in results"
+          :key="data.objectID"
           class="border tooltip tooltip-left"
           active-class="active border-red-700"
           :title="data.title"
@@ -38,50 +38,87 @@
 </template>
 
 <script lang="ts" setup>
+interface StationResult {
+  objectID: string;
+  title?: string;
+  station_name: string;
+  station_image: string;
+  station_stream: string;
+  station_schedule?: string;
+  cros: boolean;
+  type: string;
+  url: string;
+}
+
 const config = useRuntimeConfig();
 const route = useRoute();
-const emit = defineEmits(["update-data"]);
+const emit = defineEmits<{
+  (event: "update-data", data: StationResult): void;
+}>();
 const { result, search } = useAlgoliaSearch(config.public.algoliaIndexStation);
-const country = ref(
-  Array.isArray(route.params.country)
-    ? route.params.country[0].replace(/-/g, "_")
-    : route.params.country.replace(/-/g, "_"),
-);
-const area = ref(route.params.area);
-// skipcq: JS-0323
-const results = ref<any[]>([]);
-const i18n = ref(
-  `world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
+const results = ref<StationResult[]>([]);
+let requestVersion = 0;
+
+const normalizeParam = (value: string | string[] | undefined): string =>
+  Array.isArray(value) ? value[0] || "" : value || "";
+
+const areaSlug = computed(() => normalizeParam(route.params.area));
+const countrySlug = computed(() => normalizeParam(route.params.country));
+const stationSlug = computed(() => normalizeParam(route.params.station));
+const i18n = computed(
+  () =>
+    `world.${areaSlug.value.replace(/-/g, "_")}.${countrySlug.value.replace(/-/g, "_")}`,
 );
 
-onMounted(async () => {
-  await search({
-    query: "",
-    requestOptions: {
-      hitsPerPage: 200,
-      facetFilters: [
-        `station_country:world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
-      ],
-    },
-  });
-  results.value = result.value?.hits || [];
+const loadStations = async (): Promise<void> => {
+  const currentVersion = ++requestVersion;
+  const area = areaSlug.value;
+  const country = countrySlug.value;
+  const station = stationSlug.value;
 
-  const activeData = results.value.find(
-    (data: { objectID: string }) =>
-      data.objectID === `${route.params.country}-${route.params.station}`,
-  );
-  if (activeData) {
-    emit("update-data", activeData);
+  if (!area || !country || !station) {
+    results.value = [];
+    return;
   }
+
+  try {
+    await search({
+      query: "",
+      requestOptions: {
+        hitsPerPage: 200,
+        facetFilters: [
+          `station_country:world.${area.replace(/-/g, "_")}.${country.replace(/-/g, "_")}`,
+        ],
+      },
+    });
+
+    if (currentVersion !== requestVersion) return;
+
+    results.value = (result.value?.hits || []) as unknown as StationResult[];
+    const activeData = results.value.find(
+      (data) => data.objectID === `${country}-${station}`,
+    );
+
+    if (activeData) emit("update-data", activeData);
+  } catch (error) {
+    if (currentVersion !== requestVersion) return;
+    results.value = [];
+    console.error("Unable to load stations:", error);
+  }
+};
+
+watch(
+  () => [route.params.area, route.params.country, route.params.station],
+  () => {
+    void loadStations();
+  },
+  { immediate: true },
+);
+
+onBeforeUnmount(() => {
+  requestVersion += 1;
 });
 
-/**
- * Checks if the given path is the active route.
- * @param {string} path - The path to check.
- * @returns {boolean} - True if the path is the active route, false otherwise.
- */
-const isRouteActive = (path: string): boolean => {
-  return path === `${route.params.country}-${route.params.station}`;
-};
+const isRouteActive = (path: string): boolean =>
+  path === `${countrySlug.value}-${stationSlug.value}`;
 </script>
-scriptconsts=

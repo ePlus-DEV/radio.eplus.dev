@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="block" v-for="(item, index) in result" :key="index">
+    <div class="block" v-for="item in result" :key="item.objectID || item.url">
       <nuxt-link
         :to="item.url"
         class="py-2 px-2.5 flex items-center gap-x-3 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"

@@ -9,7 +9,7 @@ const hasAlgoliaConfig = Boolean(
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== "production" },
   ssr: false,
   pages: true,
   runtimeConfig: {
@@ -70,19 +70,19 @@ export default defineNuxtConfig({
       ],
       link: [
         {
-          type: "apple-touch-icon",
+          rel: "apple-touch-icon",
           sizes: "180x180",
           href: "/brand/apple-touch-icon.png",
         },
         {
           rel: "icon",
-          type: "image/x-icon",
+          type: "image/png",
           sizes: "32x32",
           href: "/brand/favicon-32x32.png",
         },
         {
           rel: "icon",
-          type: "image/x-icon",
+          type: "image/png",
           sizes: "16x16",
           href: "/brand/favicon-16x16.png",
         },
