@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- BEGIN - Skeleton -->
-    <div v-if="Object.keys(world).length === 0">
+    <div v-if="loading">
       <div
         v-for="i in chooseTheArea ? 1 : 7"
         :key="i"
@@ -73,6 +73,8 @@ const props = defineProps<{
   chooseTheArea?: string;
 }>();
 
+const config = useRuntimeConfig();
+const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
 const { result, search } = useAlgoliaSearch("world");
 interface Country {
   name: string;
@@ -87,31 +89,46 @@ interface GroupedResults {
 }
 
 const world = ref<GroupedResults>({});
+const loading = ref(true);
 
 onMounted(async () => {
-  await search({
-    query: "",
-    requestOptions: { hitsPerPage: 100 },
-  });
-  const groupedResults = (result.value.hits as unknown as Country[]).reduce(
-    (gr: GroupedResults, hit: Country) => {
-      const category = hit.category || "Uncategorized";
-      if (!gr[category]) {
-        gr[category] = [];
-      }
-      gr[category].push(hit);
-      return gr;
-    },
-    {},
-  );
-
-  if (props.chooseTheArea && groupedResults[props.chooseTheArea]) {
-    world.value = {
-      [props.chooseTheArea]: groupedResults[props.chooseTheArea],
-    };
+  if (!algoliaConfigured.value) {
+    loading.value = false;
     return;
   }
 
-  world.value = groupedResults;
+  try {
+    await search({
+      query: "",
+      requestOptions: { hitsPerPage: 100 },
+    });
+
+    const groupedResults = (result.value?.hits || []).reduce(
+      (gr: GroupedResults, hit) => {
+        const country = hit as unknown as Country;
+        const category = country.category || "Uncategorized";
+        if (!gr[category]) {
+          gr[category] = [];
+        }
+        gr[category].push(country);
+        return gr;
+      },
+      {},
+    );
+
+    if (props.chooseTheArea && groupedResults[props.chooseTheArea]) {
+      world.value = {
+        [props.chooseTheArea]: groupedResults[props.chooseTheArea],
+      };
+      return;
+    }
+
+    world.value = groupedResults;
+  } catch (error) {
+    world.value = {};
+    console.error("Unable to load radio countries:", error);
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
