@@ -233,16 +233,6 @@
     "features": "http://xfm.lt/favicon.ico",
     "source": "radio-browser:9642c775-0601-11e8-ae97-52543be04c81"
   },
-  "marijos-radijas-cbf74fea": {
-    "title": "Marijos radijas",
-    "description": "religious",
-    "type": "audio/mpeg",
-    "url": "http://www.marijosradijas.lt/",
-    "cros": true,
-    "stream": "http://stream.marijosradijas.lt:8001/marijosradijas.mp3",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:cbf74fea-e12a-49ea-873a-2688a01768ee"
-  },
   "neringa-fm": {
     "title": "Neringa FM",
     "description": "university radio",
@@ -271,16 +261,6 @@
     "stream": "https://n08.radiojar.com/d9cm273ystzuv",
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:4c65c801-7411-462c-9c0b-e7c1741e1c6e"
-  },
-  "zip-fm-12f74e09": {
-    "title": "ZIP FM",
-    "description": "pop music",
-    "type": "audio/mpeg",
-    "url": "http://www.zipfm.lt/",
-    "cros": false,
-    "stream": "https://stream1.zipfm.lt/zipfm128.mp3",
-    "features": "https://zipfm.lt/wp-content/uploads/2023/11/cropped-zipfm-icon-180x180.png",
-    "source": "radio-browser:12f74e09-6058-4c3e-9f01-076a16fb6407"
   },
   "vilnius-fm": {
     "title": "Vilnius fm",
@@ -336,15 +316,6 @@
     "stream": "https://pulsas.lt/stream",
     "features": "https://static.wixstatic.com/media/7757d3_77841452a4234261bc90518fa7aca7c4%7emv2.png/v1/fill/w_180%2ch_180%2clg_1%2cusm_0.66_1.00_0.01/7757d3_77841452a4234261bc90518fa7aca7c4%7emv2.png",
     "source": "radio-browser:36cb9fb3-c1cf-405b-a21b-8c1ef49aae53"
-  },
-  "radiocentras-0b5592b3": {
-    "title": "Radiocentras",
-    "type": "audio/mpeg",
-    "url": "https://rc.lt/",
-    "cros": false,
-    "stream": "https://stream2.rockfm.lt/crf128.mp3",
-    "features": "https://rczipbucket.s3.eu-north-1.amazonaws.com/rc/1665234650.jpg",
-    "source": "radio-browser:0b5592b3-a5b0-4626-976b-054729a6a236"
   },
   "neringafm": {
     "title": "NeringaFM",
@@ -404,15 +375,6 @@
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:fa44d9a2-69fd-4ed4-aca5-387ddc028851"
   },
-  "mano": {
-    "title": "Mano",
-    "type": "audio/mpeg",
-    "url": "http://klausyk.manofm.lt:8000/Icecast2",
-    "cros": true,
-    "stream": "http://klausyk.manofm.lt:8000/Icecast2",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:4672f3ab-7d31-4779-925f-0cc7fb802436"
-  },
   "mazeikiai-fm": {
     "title": "Mazeikiai FM",
     "description": "pop music",
@@ -422,25 +384,6 @@
     "stream": "http://91.211.246.42:8000/Mazeikiai",
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:ff04dbd9-38f7-4156-b174-d3fdd23e7c95"
-  },
-  "mano-fm-f61db6a7": {
-    "title": "Mano FM",
-    "type": "audio/mpeg",
-    "url": "http://klausyk.manofm.lt:8000/Icecast2",
-    "cros": true,
-    "stream": "http://klausyk.manofm.lt:8000/Icecast2",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:f61db6a7-46f8-4bf8-a030-b4d7ee3b7eb9"
-  },
-  "radio-laluna": {
-    "title": "Radio LaLuna",
-    "description": "classic hits, hits, pop, russian hits",
-    "type": "audio/aac",
-    "url": "https://laluna.lt/",
-    "cros": true,
-    "stream": "http://radio.m-1.fm/laluna/high",
-    "features": "https://laluna.lt/favicon.ico",
-    "source": "radio-browser:03db9951-7df0-47c3-a848-a1ac8b5b54fc"
   },
   "lrt-radijas": {
     "title": "LRT Radijas",
@@ -496,15 +439,6 @@
     "features": "https://www.gerasfm.lt/wp-content/uploads/2018/07/cropped-gerasfm-192x192.png",
     "source": "radio-browser:ce0f7dd9-4c9e-4c40-ada6-0c89a394b9e9"
   },
-  "radio-fiesta-beb0a9b3": {
-    "title": "Radio Fiesta",
-    "type": "audio/mpeg",
-    "url": "https://radiofiesta.lt/",
-    "cros": false,
-    "stream": "https://stream2.radiofiesta.lt/rfs128.mp3",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:beb0a9b3-b050-4af4-8341-cd74fba76b64"
-  },
   "lrt-klasika": {
     "title": "LRT Klasika",
     "type": "application/x-mpegURL",
@@ -513,16 +447,6 @@
     "stream": "https://stream-live.lrt.lt/klasika/master.m3u8",
     "features": "https://www.lrt.lt/favicon.ico",
     "source": "radio-browser:48a6ee5e-9fc2-476e-a711-ab6bc0fde5b4"
-  },
-  "marijos-radijas-4d364a9b": {
-    "title": "Marijos radijas",
-    "description": "christian",
-    "type": "audio/mpeg",
-    "url": "http://www.marijosradijas.lt/",
-    "cros": true,
-    "stream": "http://stream.marijosradijas.lt:8001/marijosradijas.mp3",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:4d364a9b-453a-42be-a1da-fd71fafc81a4"
   },
   "power-lt": {
     "title": "Power LT",
@@ -551,15 +475,6 @@
     "features": "https://topfm.lt/img/tamsus.png",
     "source": "radio-browser:07489f83-e84e-408e-8cba-e65d8d79e83c"
   },
-  "neringa-fm-ae468d13": {
-    "title": "Neringa fm *",
-    "type": "audio/aac",
-    "url": "https://neringafm.lt/listen-neringa-fm-online/",
-    "cros": true,
-    "stream": "http://185.11.24.72:8000/neringafm",
-    "features": "http://185.11.24.72:8000/neringafm",
-    "source": "radio-browser:ae468d13-3b90-4f8f-8a8d-deda87fb91e7"
-  },
   "power-gold": {
     "title": "Power Gold",
     "type": "audio/aac",
@@ -577,15 +492,6 @@
     "stream": "https://c18.radioboss.fm:8529/stream",
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:cc71aeb0-fe7e-458c-aa5e-c58ff9158b7a"
-  },
-  "top-fm-lt": {
-    "title": "TOP FM LT",
-    "type": "audio/mpeg",
-    "url": "https://topfm.lt/",
-    "cros": false,
-    "stream": "https://radio.topfm.lt/listen/topfm/topfm-320",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:03388e4a-0711-4a4b-be70-c82ed91f9826"
   },
   "pmr": {
     "title": "PMR",
@@ -651,15 +557,6 @@
     "stream": "https://stream.radijo-musikii.net/radio/8000/radio.mp3",
     "features": "https://www.radijo-musikii.net/favicon.png",
     "source": "radio-browser:42d15c51-9299-4866-a39f-0a67b09a94b4"
-  },
-  "topfm-lt": {
-    "title": "TopFm.lt",
-    "type": "audio/mpeg",
-    "url": "https://topfm.lt/",
-    "cros": false,
-    "stream": "https://radio.topfm.lt/listen/topfm/topfm-320",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:c840c28f-8036-4aa8-b77c-dae6686f4b95"
   },
   "geras2-fm": {
     "title": "Geras2 FM",
@@ -752,15 +649,6 @@
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:263460df-4482-4802-b4eb-8b5c26bcde4f"
   },
-  "top-fm": {
-    "title": "TOP FM",
-    "type": "audio/mpeg",
-    "url": "https://topfm.lt/",
-    "cros": false,
-    "stream": "https://radio.topfm.lt/listen/topfm/topfm-320",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:7f2107bb-de3d-4526-8d19-5d8ddb902e78"
-  },
   "audiomastering-lt": {
     "title": "Audiomastering.lt",
     "type": "audio/mpeg",
@@ -769,15 +657,6 @@
     "stream": "http://radio.audiomastering.lt:8000/hq",
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:0cd4f3f1-0942-4cce-ab42-d891b6692454"
-  },
-  "relax-fm-senti": {
-    "title": "Relax FM Senti",
-    "type": "audio/mpeg",
-    "url": "https://relaxfm.lt/",
-    "cros": false,
-    "stream": "https://klausyk.radijas.lt/listen/sentimentai/live",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:ddd7feb0-dc9f-46b1-b529-a37bd7265176"
   },
   "radio-r": {
     "title": "Radio R",
@@ -797,24 +676,6 @@
     "stream": "https://mira.streamerr.co/listen/mantinhodancepulsefm/radio.aac",
     "features": "https://mantinhodancepulsefm.com/wp-content/uploads/2020/06/download.png",
     "source": "radio-browser:bb37213b-b431-41c5-b514-6a3725812517"
-  },
-  "puko-radijas": {
-    "title": "Puko Radijas",
-    "type": "audio/mpeg",
-    "url": "https://pukas.lt/",
-    "cros": true,
-    "stream": "http://212.95.45.82:8000/stream",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:a0fce2e0-159a-4dc9-a937-0a88ea3165b2"
-  },
-  "lrt-radijas-6bf3559c": {
-    "title": "LRT Radijas",
-    "type": "application/x-mpegURL",
-    "url": "https://www.lrt.lt/mediateka/tiesiogiai/lrt-radijas",
-    "cros": false,
-    "stream": "https://stream-live.lrt.lt/radijas/master.m3u8",
-    "features": "https://www.lrt.lt/favicon.ico",
-    "source": "radio-browser:6bf3559c-2163-4450-b60b-b6007be5d7f8"
   },
   "estakada99": {
     "title": "estakada99",
@@ -845,15 +706,6 @@
     "stream": "https://rdtk.out.airtime.pro/rdtk_a",
     "features": "https://s3.eplus.dev/i/station-on-air.png",
     "source": "radio-browser:eeebf3a9-34b7-49d0-8d6f-b270d8a7e775"
-  },
-  "goldfm": {
-    "title": "GoldFM",
-    "type": "audio/aac",
-    "url": "https://goldfm.lt/",
-    "cros": true,
-    "stream": "http://stream.goldfm.lt/goldfm.aac",
-    "features": "https://s3.eplus.dev/i/station-on-air.png",
-    "source": "radio-browser:4ebc2b85-34e8-4d55-99c8-66a4425e564e"
   },
   "powerhitradio-lithuania": {
     "title": "PowerHitRadio Lithuania",
