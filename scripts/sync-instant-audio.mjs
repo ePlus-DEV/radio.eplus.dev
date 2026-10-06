@@ -9,6 +9,9 @@ const INSTANT_HOME = "https://instant.audio/";
 const API_BASE = "https://api.instant.audio/data/streams";
 const USER_AGENT =
   "Radio-ePlus-Data-Sync/1.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
+const BROWSER_USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+  "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
 
 const args = new Map(
   process.argv.slice(2).map((arg) => {
@@ -466,7 +469,16 @@ async function syncStation(country, countryId, candidate) {
 
   try {
     const response = await fetchWithRetry(apiUrl, {
-      headers: { accept: "application/json" }
+      headers: {
+        accept: "application/json, text/plain, */*",
+        "accept-language": "en-US,en;q=0.9",
+        origin: country.domain,
+        referer: `${country.domain}/`,
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "cross-site",
+        "user-agent": BROWSER_USER_AGENT
+      }
     });
     const payload = await response.json();
     const stream = findStreamUrl(payload);
@@ -514,7 +526,7 @@ async function syncStation(country, countryId, candidate) {
   }
 }
 
-async function probeCountryId(candidate) {
+async function probeCountryId(country, candidate) {
   const MAX_ID = 180;
   const BATCH_SIZE = 8;
 
@@ -535,8 +547,14 @@ async function probeCountryId(candidate) {
           const response = await fetch(url, {
             redirect: "follow",
             headers: {
-              "user-agent": USER_AGENT,
-              accept: "application/json"
+              accept: "application/json, text/plain, */*",
+              "accept-language": "en-US,en;q=0.9",
+              origin: country.domain,
+              referer: `${country.domain}/`,
+              "sec-fetch-dest": "empty",
+              "sec-fetch-mode": "cors",
+              "sec-fetch-site": "cross-site",
+              "user-agent": BROWSER_USER_AGENT
             }
           });
           if (!response.ok) return null;
@@ -572,7 +590,7 @@ async function syncCountry(country) {
   }
 
   if (!countryId) {
-    countryId = await probeCountryId(candidates[0]);
+    countryId = await probeCountryId(country, candidates[0]);
   }
 
   if (!countryId) {
