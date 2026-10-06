@@ -66,8 +66,13 @@
               <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
             </div>
             <div class="pb-4 overflow-y-auto h-64" id="lyric">
-              <!-- skipcq: JS-0693 -->
-              <span v-html="lyric" />
+              <p
+                v-for="(line, index) in lyricLines"
+                :key="`${index}-${line}`"
+                class="pb-1"
+              >
+                {{ line }}
+              </p>
             </div>
           </div>
         </div>
@@ -82,28 +87,12 @@
 </template>
 
 <script setup lang="ts">
-import type { AudioSrc, AudioMimeType } from "vidstack";
-const $store = useMainStore();
-const dayjs = useDayjs();
-const route = useRoute();
-const { t } = useI18n();
-const config = useRuntimeConfig();
-const slug = ref(route.params.country);
-const area = ref(route.params.area);
-const i18n = ref(
-  `world.${String(area.value).replace(/-/g, "_")}.${String(slug.value).replace(/-/g, "_")}`,
-);
-const timeZone = ref($store.getTimezone);
-const title = ref<string | undefined>(t(i18n.value));
-const streamName = ref("");
+import type { AudioMimeType, AudioSrc } from "vidstack";
+
 interface ProgramItem {
-  // Define the properties of ProgramItem based on the structure of resDataValue.data.items
   encodeId: string;
-  // Add other properties as needed
 }
 
-const program = ref<ProgramItem[]>([]);
-const song = ref<Song>();
 interface Track {
   track_title: string;
   track_artist: string;
@@ -121,139 +110,194 @@ interface CurrentMedia {
 interface Song {
   encodeId: string;
   currentMedia?: CurrentMedia;
-  // Add other properties as needed
 }
+
+interface StationData {
+  station_name: string;
+  station_stream: string;
+  station_image: string;
+  station_schedule?: string;
+  cros: boolean;
+  type: string;
+}
+
+const $store = useMainStore();
+const dayjs = useDayjs();
+const route = useRoute();
+const { t } = useI18n();
+const config = useRuntimeConfig();
+
+const normalizeParam = (value: string | string[] | undefined): string =>
+  Array.isArray(value) ? value[0] || "" : value || "";
+
+const slug = computed(() => normalizeParam(route.params.country));
+const area = computed(() => normalizeParam(route.params.area));
+const i18n = computed(
+  () =>
+    `world.${area.value.replace(/-/g, "_")}.${slug.value.replace(/-/g, "_")}`,
+);
+const title = computed(() => t(i18n.value));
+
+const streamName = ref("");
+const program = ref<ProgramItem[]>([]);
+const song = ref<Song>();
 const thumb = ref("");
 const playlist = ref<Track[]>([]);
-const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
-const polling_song = ref<ReturnType<typeof setInterval> | null>(null);
 const lyric_popup = ref(false);
-const lyric = ref(t("panel.updating"));
+const lyricLines = ref<string[]>([t("panel.updating")]);
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+const pageTitle = ref(title.value);
+let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
+let requestVersion = 0;
+const POLL_INTERVAL = 60_000;
 
-useHead({
-  title: title.value,
-});
+useHead(() => ({
+  title: pageTitle.value,
+}));
 
-/**
- * Fetches the lyrics for the given song ID.
- * @param {string} id - The ID of the song to fetch lyrics for.
- */
-const fetchLyric = async (id: string) => {
+const clearPolling = (): void => {
+  if (pollingSchedule) {
+    clearTimeout(pollingSchedule);
+    pollingSchedule = null;
+  }
+};
+
+const currentTimestamp = (): number =>
+  dayjs().tz($store.getTimezone).unix();
+
+const fetchLyric = async (id: string, version: number): Promise<void> => {
   try {
     const resData = await $fetch(
-      `${config.public.apiZingGetLyric}${id}&time=${dayjs().tz(timeZone.value).unix()}`,
+      `${config.public.apiZingGetLyric}${id}&time=${currentTimestamp()}`,
     );
-    const resDataValue = resData as {
-      err: number;
-      data: { sentences: { words: { data: string }[] }[] };
-    };
-    if (resDataValue.err === 0 && resDataValue.data.sentences) {
-      lyric.value = resDataValue.data.sentences
-        .map(
-          (sentence: { words: { data: string }[] }) =>
-            `<p class="pb-1">${sentence.words.map((word: { data: string }) => word.data).join(" ")}</p>`,
-        )
-        .join("");
-    } else {
-      lyric.value = t("panel.no_lyric");
-    }
-  } catch (error) {
-    lyric.value = t("panel.no_lyric");
-  }
-};
+    if (version !== requestVersion) return;
 
-/**
- * Fetches the current song data from the given URL.
- * @param {string} url - The URL to fetch the song data from.
- */
-const fetchDetail = async (url: string) => {
-  try {
-    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
-    const resDataValue = resData as { err: number; data: Song };
-    if (resDataValue.err === 0) {
-      song.value = resDataValue.data;
-      const currentMedia = song.value?.currentMedia;
-      if (currentMedia) {
-        document.title = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
-        if (currentMedia.hasLyric) {
-          fetchLyric(currentMedia.encodeId);
-        } else {
-          lyric.value = t("panel.no_lyric");
-        }
-      }
-    }
-    if (polling_song.value !== null) {
-      clearTimeout(polling_song.value);
-    }
-    polling_song.value = setInterval(() => {
-      fetchDetail(url);
-    }, 60000);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-/**
- * Fetches the schedule data from the given URL.
- * @param {string} url - The URL to fetch the schedule data from.
- */
-const fetchSchedule = async (url: string) => {
-  try {
-    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
-    const resDataValue = resData as {
+    const value = resData as {
       err: number;
-      data: { items: ProgramItem[] };
+      data?: { sentences?: { words: { data: string }[] }[] };
     };
 
-    if (resDataValue.err === 0 && slug.value === "viet-nam") {
-      document.title = `${streamName.value} - ${title.value}`;
-      program.value = resDataValue.data.items;
-      // Fetch the current song data from the first program item
-      const firstProgramItem = resDataValue.data.items[0];
-      fetchDetail(
-        `${config.public.apiZingLiveStreamProgramDetail}${firstProgramItem.encodeId}&time=`,
+    if (value.err === 0 && value.data?.sentences?.length) {
+      lyricLines.value = value.data.sentences.map((sentence) =>
+        sentence.words.map((word) => word.data).join(" "),
       );
-    } else {
-      const resDataSuccess = resData as { success: boolean };
-      if (resDataSuccess.success) {
-        playlist.value = (resData as { result: Track[] }).result;
-      }
-      if (playlist.value.length > 0) {
-        const firstTrack = playlist.value[0];
-        document.title = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
-      }
+      return;
     }
-    if (polling_schedule.value !== null) {
-      clearTimeout(polling_schedule.value);
-    }
-    polling_schedule.value = setInterval(() => {
-      fetchSchedule(url);
-    }, 60000);
   } catch (error) {
-    console.error(error);
+    console.error("Unable to load lyrics:", error);
+  }
+
+  if (version === requestVersion) lyricLines.value = [t("panel.no_lyric")];
+};
+
+const fetchDetail = async (url: string, version: number): Promise<void> => {
+  try {
+    const resData = await $fetch(`${url}${currentTimestamp()}`);
+    if (version !== requestVersion) return;
+
+    const value = resData as { err: number; data?: Song };
+    if (value.err !== 0 || !value.data) return;
+
+    song.value = value.data;
+    const currentMedia = value.data.currentMedia;
+    if (!currentMedia) return;
+
+    pageTitle.value = `${currentMedia.title} - ${currentMedia.artists} | ${title.value}`;
+
+    if (currentMedia.hasLyric) {
+      await fetchLyric(currentMedia.encodeId, version);
+    } else {
+      lyricLines.value = [t("panel.no_lyric")];
+    }
+  } catch (error) {
+    if (version === requestVersion) {
+      console.error("Unable to load current song:", error);
+    }
   }
 };
 
-// skipcq: JS-0323
-const handleDataFromChild = (data: any) => {
+const fetchSchedule = async (url: string, version: number): Promise<void> => {
+  try {
+    const resData = await $fetch(`${url}${currentTimestamp()}`);
+    if (version !== requestVersion) return;
+
+    const value = resData as {
+      err?: number;
+      success?: boolean;
+      data?: { items?: ProgramItem[] };
+      result?: Track[];
+    };
+
+    if (value.err === 0 && slug.value === "viet-nam") {
+      const items = value.data?.items || [];
+      program.value = items;
+      pageTitle.value = `${streamName.value} - ${title.value}`;
+
+      const firstProgram = items[0];
+      if (firstProgram?.encodeId && config.public.apiZingLiveStreamProgramDetail) {
+        await fetchDetail(
+          `${config.public.apiZingLiveStreamProgramDetail}${firstProgram.encodeId}&time=`,
+          version,
+        );
+      }
+      return;
+    }
+
+    if (value.success && Array.isArray(value.result)) {
+      playlist.value = value.result;
+      const firstTrack = value.result[0];
+      if (firstTrack) {
+        pageTitle.value = `${firstTrack.track_title} - ${firstTrack.track_artist} | ${title.value}`;
+      }
+    }
+  } catch (error) {
+    if (version === requestVersion) {
+      console.error("Unable to load station schedule:", error);
+    }
+  }
+};
+
+const pollSchedule = async (url: string, version: number): Promise<void> => {
+  await fetchSchedule(url, version);
+  if (version !== requestVersion) return;
+
+  pollingSchedule = setTimeout(() => {
+    void pollSchedule(url, version);
+  }, POLL_INTERVAL);
+};
+
+const handleDataFromChild = (data: StationData): void => {
+  requestVersion += 1;
+  const version = requestVersion;
+  clearPolling();
+
+  $store.setTimezone(area.value.replace(/-/g, "_"), slug.value.replace(/-/g, "_"));
+
   streamName.value = data.station_name;
   streamUrl.value = {
     src: data.cros
-      ? `${config.public.corsServer}${data.station_stream}`
+      ? `${config.public.corsServer || ""}${data.station_stream}`
       : data.station_stream,
     type: data.type as AudioMimeType,
   };
   thumb.value = data.station_image;
-  document.title = `${streamName.value} - ${title.value}`;
+  program.value = [];
+  song.value = undefined;
+  playlist.value = [];
+  lyricLines.value = [t("panel.updating")];
+  pageTitle.value = `${streamName.value} - ${title.value}`;
 
-  if (data.station_schedule !== undefined) {
-    fetchSchedule(data.station_schedule);
+  if (data.station_schedule) {
+    void pollSchedule(data.station_schedule, version);
   }
 };
 
+watch(title, (value) => {
+  if (!streamName.value) pageTitle.value = value;
+});
+
 onBeforeUnmount(() => {
-  clearTimeout(polling_schedule.value as unknown as number);
-  clearTimeout(polling_song.value as unknown as number);
+  requestVersion += 1;
+  clearPolling();
 });
 </script>
