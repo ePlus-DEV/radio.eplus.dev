@@ -542,17 +542,17 @@
     },
     "latvia": {
       "name": "world.europe.latvia",
-      "flag": "/img/europe/flags/latvia.png",
+      "flag": "/img/europe/flags/latvia.svg",
       "data": "/assets/radio/europe/latvia.json",
-      "timezone": "UTC",
-      "station": 99
+      "timezone": "Europe/Riga",
+      "station": 78
     },
     "lithuania": {
       "name": "world.europe.lithuania",
-      "flag": "/img/europe/flags/lithuania.png",
+      "flag": "/img/europe/flags/lithuania.svg",
       "data": "/assets/radio/europe/lithuania.json",
-      "timezone": "UTC",
-      "station": 98
+      "timezone": "Europe/Vilnius",
+      "station": 82
     }
   },
   "north_america": {
