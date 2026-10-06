@@ -7,6 +7,8 @@ import path from "node:path";
 const ROOT = process.cwd();
 const INSTANT_HOME = "https://instant.audio/";
 const API_BASE = "https://api.instant.audio/data/streams";
+const RADIO_BROWSER_BASE =
+  "https://de1.api.radio-browser.info/json/stations/bycountrycodeexact";
 const USER_AGENT =
   "Radio-ePlus-Data-Sync/1.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
 const BROWSER_USER_AGENT =
@@ -576,7 +578,83 @@ async function probeCountryId(country, candidate) {
   return "";
 }
 
-async function syncCountry(country) {
+function radioBrowserMime(codec, streamUrl) {
+  const value = String(codec || "").toLowerCase();
+  if (value.includes("aac")) return "audio/aac";
+  if (value.includes("ogg")) return "audio/ogg";
+  if (value.includes("opus")) return "audio/opus";
+  return detectMime(streamUrl);
+}
+
+async function syncFromRadioBrowser(country, metadata) {
+  if (!metadata.cca2) {
+    throw new Error(
+      `Unable to use Radio Browser fallback without a country code for ${country.slug}`,
+    );
+  }
+
+  const limit = maxStations > 0 ? maxStations : 100;
+  const url =
+    `${RADIO_BROWSER_BASE}/${encodeURIComponent(metadata.cca2)}` +
+    `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
+
+  console.warn(
+    `[instant.audio] Falling back to Radio Browser for ${country.slug}`,
+  );
+
+  const response = await fetchWithRetry(url, {
+    headers: {
+      accept: "application/json",
+      "user-agent": USER_AGENT
+    }
+  });
+  const payload = await response.json();
+  const stations = {};
+
+  for (const item of Array.isArray(payload) ? payload : []) {
+    const title = String(item.name || "").trim();
+    const stream = String(item.url_resolved || item.url || "").trim();
+
+    if (!title || !/^https?:\/\//i.test(stream)) continue;
+
+    let slug = slugify(title);
+    if (!slug) continue;
+
+    if (stations[slug]) {
+      slug = `${slug}-${String(item.stationuuid || "").slice(0, 8)}`;
+    }
+
+    const tags = String(item.tags || "")
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean)
+      .slice(0, 5);
+
+    stations[slug] = {
+      title,
+      ...(tags.length ? { description: tags.join(", ") } : {}),
+      type: radioBrowserMime(item.codec, stream),
+      url: String(item.homepage || country.domain),
+      cros: stream.startsWith("http://"),
+      stream,
+      features:
+        String(item.favicon || "").startsWith("http")
+          ? item.favicon
+          : "https://s3.eplus.dev/i/station-on-air.png",
+      source: `radio-browser:${item.stationuuid || slug}`
+    };
+  }
+
+  const keys = Object.keys(stations);
+  if (!keys.length) {
+    throw new Error(`Radio Browser returned no playable stations for ${country.slug}`);
+  }
+
+  stations[keys[0]].favorite = true;
+  return stations;
+}
+
+async function syncCountry(country, metadata) {
   console.log(`\n[instant.audio] Syncing ${country.area}/${country.slug} from ${country.domain}`);
 
   const countrySource = await fetchTextSource(`${country.domain}/`);
@@ -614,12 +692,17 @@ async function syncCountry(country) {
 
   const keys = Object.keys(stations);
   if (!keys.length) {
-    throw new Error(`No playable stations discovered for ${country.slug}`);
+    const fallbackStations = await syncFromRadioBrowser(country, metadata);
+    return {
+      stations: fallbackStations,
+      countryId,
+      source: "radio-browser-fallback"
+    };
   }
 
   stations[keys[0]].favorite = true;
 
-  return { stations, countryId };
+  return { stations, countryId, source: "instant-audio" };
 }
 
 async function readJson(file) {
@@ -748,12 +831,12 @@ async function main() {
   );
 
   for (const country of targets) {
-    const { stations, countryId } = await syncCountry(country);
     const metadata = await getCountryMetadata(country);
+    const { stations, countryId, source } = await syncCountry(country, metadata);
     const flagPath = await downloadFlag(country, metadata.flagPng);
 
     console.log(
-      `[instant.audio] ${country.slug}: ${Object.keys(stations).length} station(s), API country ID ${countryId}`,
+      `[instant.audio] ${country.slug}: ${Object.keys(stations).length} station(s), API country ID ${countryId}, source ${source}`,
     );
 
     if (!dryRun) {
