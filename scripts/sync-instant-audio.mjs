@@ -1261,10 +1261,7 @@ async function main() {
           await updateWorld(country, metadata, Object.keys(stations).length, flagPath);
           await updateLocales(country, metadata);
         }
-      }
-    
-    
-    } catch (error) {
+      } catch (error) {
       failedCountries += 1;
       console.error(
         `[instant.audio] ${country.slug}: sync failed, skipping country: ${error.message}`,
