@@ -175,6 +175,7 @@ async function fetchWithRetry(url, options = {}, attempts = 3) {
 
       if (response.ok) return response;
       lastError = new Error(`${response.status} ${response.statusText} for ${url}`);
+      lastError.status = response.status;
 
       if (![429, 500, 502, 503, 504].includes(response.status)) {
         throw lastError;
@@ -500,8 +501,60 @@ async function downloadFlag(country, flagUrl) {
   return relative;
 }
 
+function stationFromInstantPayload(country, candidate, apiUrl, payload) {
+  const instantResult = payload?.result || payload || {};
+  const stationMetadata = instantResult.station || {};
+  const streamInfo = findInstantAudioStream(payload);
+
+  if (!streamInfo) return null;
+
+  const title =
+    String(stationMetadata.title || "").trim() ||
+    findTextField(payload, ["station_name", "title", "name"]) ||
+    candidate.title
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/^./, (char) => char.toUpperCase());
+
+  const description = findTextField(payload, [
+    "description",
+    "summary",
+    "profile"
+  ]);
+  const image = findTextField(payload, [
+    "logo",
+    "image",
+    "image_url",
+    "station_image",
+    "artwork"
+  ]);
+  const website =
+    typeof stationMetadata.url === "string" &&
+    /^https?:\/\//i.test(stationMetadata.url)
+      ? stationMetadata.url
+      : candidate.pageUrl;
+
+  return {
+    title,
+    ...(description ? { description } : {}),
+    ...(stationMetadata.signal ? { signal: stationMetadata.signal } : {}),
+    ...(typeof stationMetadata.acrCloud === "boolean"
+      ? { acrCloud: stationMetadata.acrCloud }
+      : {}),
+    type: streamInfo.mime || detectMime(streamInfo.url),
+    url: website,
+    cros: streamInfo.url.startsWith("http://"),
+    stream: streamInfo.url,
+    features:
+      image && /^https?:\/\//i.test(image)
+        ? image
+        : "https://s3.eplus.dev/i/station-on-air.png",
+    source: apiUrl
+  };
+}
+
 async function syncStation(country, countryId, candidate) {
-  const apiUrl = `${API_BASE}/${countryId}/${candidate.slug}`;
+  const apiUrl = API_BASE + "/" + countryId + "/" + candidate.slug;
 
   try {
     const response = await fetchWithRetry(apiUrl, {
@@ -509,7 +562,7 @@ async function syncStation(country, countryId, candidate) {
         accept: "application/json, text/plain, */*",
         "accept-language": "en-US,en;q=0.9",
         origin: country.domain,
-        referer: `${country.domain}/`,
+        referer: country.domain + "/",
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "cross-site",
@@ -517,61 +570,136 @@ async function syncStation(country, countryId, candidate) {
       }
     });
     const payload = await response.json();
-    const instantResult = payload?.result || payload || {};
-    const stationMetadata = instantResult.station || {};
-    const streamInfo = findInstantAudioStream(payload);
-
-    if (!streamInfo) return null;
-
-    const title =
-      String(stationMetadata.title || "").trim() ||
-      findTextField(payload, ["station_name", "title", "name"]) ||
-      candidate.title
-        .replace(/\s+/g, " ")
-        .trim()
-        .replace(/^./, (char) => char.toUpperCase());
-
-    const description = findTextField(payload, [
-      "description",
-      "summary",
-      "profile"
-    ]);
-    const image = findTextField(payload, [
-      "logo",
-      "image",
-      "image_url",
-      "station_image",
-      "artwork"
-    ]);
-    const website =
-      typeof stationMetadata.url === "string" &&
-      /^https?:\/\//i.test(stationMetadata.url)
-        ? stationMetadata.url
-        : candidate.pageUrl;
-
     return {
-      title,
-      ...(description ? { description } : {}),
-      ...(stationMetadata.signal ? { signal: stationMetadata.signal } : {}),
-      ...(typeof stationMetadata.acrCloud === "boolean"
-        ? { acrCloud: stationMetadata.acrCloud }
-        : {}),
-      type: streamInfo.mime || detectMime(streamInfo.url),
-      url: website,
-      cros: streamInfo.url.startsWith("http://"),
-      stream: streamInfo.url,
-      features:
-        image && /^https?:\/\//i.test(image)
-          ? image
-          : "https://s3.eplus.dev/i/station-on-air.png",
-      source: apiUrl
+      station: stationFromInstantPayload(country, candidate, apiUrl, payload),
+      status: response.status,
+      via: "direct"
     };
   } catch (error) {
-    if (!String(error.message).includes("404")) {
-      console.warn(`Skip ${country.slug}/${candidate.slug}: ${error.message}`);
+    if (error?.status !== 404) {
+      console.warn(
+        "Skip " + country.slug + "/" + candidate.slug + ": " + error.message,
+      );
     }
-    return null;
+    return {
+      station: null,
+      status: Number(error?.status || 0),
+      via: "direct",
+      error: String(error?.message || error)
+    };
   }
+}
+
+async function syncStationsViaBrowser(country, countryId, candidates) {
+  if (!candidates.length) return {};
+
+  let PlaywrightCrawler;
+  try {
+    ({ PlaywrightCrawler } = await import("crawlee"));
+  } catch (error) {
+    console.warn(
+      "[instant.audio] Browser fallback unavailable: " + error.message,
+    );
+    return {};
+  }
+
+  console.warn(
+    "[instant.audio] Switching to Crawlee + Playwright for " +
+      candidates.length +
+      " station(s)",
+  );
+
+  const stations = {};
+  const crawler = new PlaywrightCrawler({
+    maxConcurrency: 1,
+    maxRequestRetries: 1,
+    requestHandlerTimeoutSecs: 35,
+    navigationTimeoutSecs: 25,
+    launchContext: {
+      launchOptions: {
+        headless: true
+      }
+    },
+    preNavigationHooks: [
+      async ({ page }) => {
+        await page.route("**/*", async (route) => {
+          const type = route.request().resourceType();
+          if (["image", "font", "media"].includes(type)) {
+            await route.abort();
+            return;
+          }
+          await route.continue();
+        });
+      }
+    ],
+    requestHandler: async ({ page, request, log }) => {
+      const candidate = request.userData.candidate;
+      const apiUrl = API_BASE + "/" + countryId + "/" + candidate.slug;
+
+      const result = await page.evaluate(async (url) => {
+        try {
+          const response = await fetch(url, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              accept: "application/json, text/plain, */*"
+            }
+          });
+          return {
+            status: response.status,
+            ok: response.ok,
+            text: await response.text()
+          };
+        } catch (error) {
+          return {
+            status: 0,
+            ok: false,
+            text: "",
+            error: String(error)
+          };
+        }
+      }, apiUrl);
+
+      if (!result.ok) {
+        log.warning(
+          "Browser API fetch failed for " +
+            candidate.slug +
+            ": " +
+            (result.status || result.error || "unknown"),
+        );
+        return;
+      }
+
+      let payload;
+      try {
+        payload = JSON.parse(result.text);
+      } catch {
+        log.warning("Browser API returned non-JSON for " + candidate.slug);
+        return;
+      }
+
+      const station = stationFromInstantPayload(
+        country,
+        candidate,
+        apiUrl,
+        payload,
+      );
+      if (station) {
+        stations[candidate.slug] = station;
+        console.log("  + " + candidate.slug + " (browser)");
+      }
+    }
+  });
+
+  await crawler.run(
+    candidates.map((candidate) => ({
+      url: candidate.pageUrl,
+      uniqueKey: country.slug + ":" + candidate.slug,
+      userData: { candidate }
+    })),
+  );
+
+  return stations;
 }
 
 async function probeCountryId(country, candidate) {
@@ -702,16 +830,23 @@ async function syncFromRadioBrowser(country, metadata) {
 }
 
 async function syncCountry(country, metadata) {
-  console.log(`\n[instant.audio] Syncing ${country.area}/${country.slug} from ${country.domain}`);
+  console.log(
+    "\n[instant.audio] Syncing " +
+      country.area +
+      "/" +
+      country.slug +
+      " from " +
+      country.domain,
+  );
 
-  const countrySource = await fetchTextSource(`${country.domain}/`);
+  const countrySource = await fetchTextSource(country.domain + "/");
   const html = countrySource.text;
 
   let candidates = extractStationCandidates(html, country.domain);
   let countryId = extractCountryId(countrySource.response, html);
 
   if (!candidates.length) {
-    throw new Error(`Unable to discover station slugs for ${country.domain}`);
+    throw new Error("Unable to discover station slugs for " + country.domain);
   }
 
   if (!countryId) {
@@ -719,22 +854,64 @@ async function syncCountry(country, metadata) {
   }
 
   if (!countryId) {
-    throw new Error(`Unable to discover InstantAudio country ID for ${country.domain}`);
+    throw new Error(
+      "Unable to discover InstantAudio country ID for " + country.domain,
+    );
   }
   if (maxStations > 0) candidates = candidates.slice(0, maxStations);
 
   console.log(
-    `[instant.audio] Country ID ${countryId}; validating ${candidates.length} candidate station(s)`,
+    "[instant.audio] Country ID " +
+      countryId +
+      "; validating " +
+      candidates.length +
+      " candidate station(s)",
   );
 
   const stations = {};
-  for (const candidate of candidates) {
-    const station = await syncStation(country, countryId, candidate);
-    if (station) {
-      stations[candidate.slug] = station;
-      console.log(`  + ${candidate.slug}`);
+  const blockedCandidates = [];
+  let consecutiveForbidden = 0;
+  let circuitOpen = false;
+  let nextIndex = candidates.length;
+
+  for (let index = 0; index < candidates.length; index += 1) {
+    const candidate = candidates[index];
+    const result = await syncStation(country, countryId, candidate);
+
+    if (result.station) {
+      stations[candidate.slug] = result.station;
+      consecutiveForbidden = 0;
+      console.log("  + " + candidate.slug);
+    } else if (result.status === 403) {
+      consecutiveForbidden += 1;
+      blockedCandidates.push(candidate);
+
+      if (consecutiveForbidden >= 3) {
+        circuitOpen = true;
+        nextIndex = index + 1;
+        console.warn(
+          "[instant.audio] 3 consecutive 403 responses; stopping direct API requests and switching to browser mode",
+        );
+        break;
+      }
+    } else {
+      consecutiveForbidden = 0;
     }
+
     await sleep(120);
+  }
+
+  if (circuitOpen) {
+    const browserCandidates = [
+      ...blockedCandidates,
+      ...candidates.slice(nextIndex),
+    ];
+    const browserStations = await syncStationsViaBrowser(
+      country,
+      countryId,
+      browserCandidates,
+    );
+    Object.assign(stations, browserStations);
   }
 
   const keys = Object.keys(stations);
@@ -743,13 +920,19 @@ async function syncCountry(country, metadata) {
     return {
       stations: fallbackStations,
       countryId,
-      source: "radio-browser-fallback"
+      source: circuitOpen
+        ? "radio-browser-after-browser-fallback"
+        : "radio-browser-fallback"
     };
   }
 
   stations[keys[0]].favorite = true;
 
-  return { stations, countryId, source: "instant-audio" };
+  return {
+    stations,
+    countryId,
+    source: circuitOpen ? "instant-audio-browser" : "instant-audio"
+  };
 }
 
 async function readJson(file) {
