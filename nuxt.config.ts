@@ -96,6 +96,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    restructureDir: false,
     locales: [
       {
         code: "en",
@@ -209,7 +210,7 @@ export default defineNuxtConfig({
     defaults: {
       changefreq: "daily",
       priority: 1,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString(),
     },
   },
   vue: {
