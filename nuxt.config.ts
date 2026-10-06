@@ -1,10 +1,15 @@
 import { defineNuxtConfig } from "nuxt/config";
 import world from "./data/world";
 
-const hasAlgoliaConfig = Boolean(
-  process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID &&
-  process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
-);
+const algoliaApplicationId =
+  process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID ||
+  process.env.ALGOLIA_APPLICATION_ID ||
+  "";
+const algoliaApiKey =
+  process.env.NUXT_PUBLIC_ALGOLIA_API_KEY ||
+  process.env.ALGOLIA_API_KEY ||
+  "";
+const hasAlgoliaConfig = Boolean(algoliaApplicationId && algoliaApiKey);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -30,6 +35,7 @@ export default defineNuxtConfig({
       copyright: process.env.NUXT_PUBLIC_COPYRIGHT,
       algoliaIndexStation: "radio.eplus.dev",
       algoliaIndexRadio: "world",
+      algoliaConfigured: hasAlgoliaConfig,
     },
   },
   modules: [
@@ -40,17 +46,15 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
     "@nuxtjs/sitemap",
-    ...(hasAlgoliaConfig ? ["@nuxtjs/algolia"] : []),
+    "@nuxtjs/algolia",
     "@pinia/nuxt",
   ],
-  ...(hasAlgoliaConfig
-    ? {
-        algolia: {
-          applicationId: process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID,
-          apiKey: process.env.NUXT_PUBLIC_ALGOLIA_API_KEY,
-        },
-      }
-    : {}),
+  algolia: {
+    // Always register the module so its composables are generated even when
+    // deployment credentials are not available during the build phase.
+    applicationId: algoliaApplicationId || "disabled",
+    apiKey: algoliaApiKey || "disabled",
+  },
   app: {
     head: {
       titleTemplate: `%s - Radio Internet | ${process.env.WEBSITE_NAME}`,
