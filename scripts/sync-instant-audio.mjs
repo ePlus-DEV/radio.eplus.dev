@@ -433,7 +433,7 @@ async function getCountryMetadata(country) {
     const item = Array.isArray(payload) ? payload[0] : payload;
 
     return {
-      cca2: item?.cca2 || "",
+      cca2: item?.cca2 || country.cca2 || "",
       timezone: item?.timezones?.[0] || "UTC",
       flagPng: item?.flags?.png || "",
       commonName: item?.name?.common || country.label
@@ -441,7 +441,7 @@ async function getCountryMetadata(country) {
   } catch (error) {
     console.warn(`REST Countries lookup failed for ${country.slug}: ${error.message}`);
     return {
-      cca2: "",
+      cca2: country.cca2 || "",
       timezone: "UTC",
       flagPng: "",
       commonName: country.label
@@ -587,7 +587,8 @@ function radioBrowserMime(codec, streamUrl) {
 }
 
 async function syncFromRadioBrowser(country, metadata) {
-  if (!metadata.cca2) {
+  const countryCode = metadata.cca2 || country.cca2 || "";
+  if (!countryCode) {
     throw new Error(
       `Unable to use Radio Browser fallback without a country code for ${country.slug}`,
     );
@@ -595,7 +596,7 @@ async function syncFromRadioBrowser(country, metadata) {
 
   const limit = maxStations > 0 ? maxStations : 100;
   const url =
-    `${RADIO_BROWSER_BASE}/${encodeURIComponent(metadata.cca2)}` +
+    `${RADIO_BROWSER_BASE}/${encodeURIComponent(countryCode)}` +
     `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
 
   console.warn(
