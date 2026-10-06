@@ -253,7 +253,7 @@ import {
   type MediaProviderChangeEvent,
 } from "vidstack";
 import type { MediaPlayerElement } from "vidstack/elements";
-const online = ref(navigator.onLine);
+const online = ref(true);
 const $store = useMainStore();
 const dayjs = useDayjs();
 
@@ -304,6 +304,8 @@ const reconnectAttempts = ref(0);
 const reconnectTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 const removeAutoPlayUnlockListeners = ref<(() => void) | null>(null);
 const pendingAutoPlayFallback = ref<ReturnType<typeof setTimeout> | null>(null);
+let unsubscribePlayerState: (() => void) | undefined;
+let timeInterval: ReturnType<typeof setInterval> | null = null;
 const MAX_RECONNECT_ATTEMPTS = 5;
 const RECONNECT_BASE_DELAY = 1500;
 
@@ -311,7 +313,18 @@ const RECONNECT_BASE_DELAY = 1500;
  * Updates the online status.
  */
 const updateOnlineStatus = () => {
+  const wasOffline = !online.value;
   online.value = navigator.onLine;
+
+  if (!online.value) {
+    clearReconnectTimer();
+    waiting.value = false;
+    return;
+  }
+
+  if (wasOffline && !userPaused.value) {
+    scheduleReconnect();
+  }
 };
 
 /**
@@ -460,12 +473,13 @@ const updateCurrentTime = (): void => {
 };
 
 // Update the current time every second
-const timeInterval = setInterval(updateCurrentTime, 1000);
-
 onMounted(() => {
   // Set the timezone based on the country.
   const [_, area, country] = props.country.split(".");
   $store.setTimezone(area, country.replace(/_/g, "-"));
+  online.value = navigator.onLine;
+  updateCurrentTime();
+  timeInterval = setInterval(updateCurrentTime, 1000);
 
   // Select elements with the classes 'vds-play-button' and 'vds-button'
   document
@@ -485,26 +499,22 @@ onMounted(() => {
    */
 
   // Subscribe to state updates - you can connect them to Vue refs if needed.
-  $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
+  unsubscribePlayerState = $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
     const { paused, error, canPlay, ended } = state;
     button.value = !paused;
-    streamError.value = !canPlay;
-    // If stream reports not playable, ensure play button isn't shown as active
-    if (streamError.value) {
+
+    if (error) {
+      streamError.value = true;
       button.value = false;
       waiting.value = false;
-    }
-    if (error) {
-      console.error("Playback error occurred");
-      waiting.value = false;
       scheduleReconnect();
-    }
-    if (canPlay) {
+    } else if (canPlay) {
       waiting.value = false;
       streamError.value = false;
       reconnectAttempts.value = 0;
       clearReconnectTimer();
     }
+
     if (ended && !userPaused.value) {
       scheduleReconnect();
     }
@@ -530,7 +540,12 @@ onMounted(() => {
 
 onUnmounted(() => {
   clearReconnectTimer();
-  clearInterval(timeInterval);
+  if (timeInterval) {
+    clearInterval(timeInterval);
+    timeInterval = null;
+  }
+  unsubscribePlayerState?.();
+  unsubscribePlayerState = undefined;
   if (pendingAutoPlayFallback.value) {
     clearTimeout(pendingAutoPlayFallback.value);
     pendingAutoPlayFallback.value = null;
@@ -547,7 +562,11 @@ onUnmounted(() => {
  */
 function onProviderChange(event: MediaProviderChangeEvent) {
   const provider = event.detail;
-  console.log("Provider changed", provider);
+  if (!provider) {
+    waiting.value = true;
+    return;
+  }
+
   // We can configure provider's here.
   if (isHLSProvider(provider)) {
     provider.config = {};
@@ -560,10 +579,7 @@ function onProviderChange(event: MediaProviderChangeEvent) {
   }>;
 
   if (!providerWithMedia.currentSrc || !providerWithMedia.media) {
-    streamError.value = true;
-    // not playable
-    button.value = false;
-    waiting.value = false;
+    waiting.value = true;
     return;
   }
 
