@@ -630,6 +630,8 @@ async function main() {
   const discovered = discoverCountries(instantSource.text);
 
   if (!discovered.length) {
+    console.error("[instant.audio] Reader source preview:");
+    console.error(instantSource.text.split(/\r?\n/).slice(0, 80).join("\n"));
     throw new Error("No InstantAudio countries were discovered from instant.audio");
   }
 
