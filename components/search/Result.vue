@@ -3,18 +3,18 @@
     <div class="block" v-for="item in result" :key="item.objectID || item.url">
       <nuxt-link
         :to="item.url"
-        class="py-2 px-2.5 flex items-center gap-x-3 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-        @click="close"
+        class="flex items-center gap-3 rounded-2xl px-3 py-3 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-400/40 dark:hover:bg-white/5"
+        @click="$emit('select')"
       >
         <img
-          class="shrink-0 size-10 rounded-full"
+          class="h-11 w-11 shrink-0 rounded-xl bg-white object-contain p-1 ring-1 ring-slate-200 dark:ring-white/10"
           :src="item.station_image"
           :alt="item.station_name"
         />
-        <span class="text-sm text-gray-800 dark:text-neutral-200">
+        <span class="min-w-0 flex-1 truncate text-sm font-medium text-slate-800 dark:text-slate-100">
           {{ item.station_name }}
         </span>
-        <span class="ms-auto text-xs text-gray-400 dark:text-neutral-500">
+        <span class="hidden shrink-0 text-xs text-slate-400 sm:block">
           {{ $t(item.station_country) }}
         </span>
       </nuxt-link>
@@ -23,6 +23,10 @@
 </template>
 
 <script setup>
+defineEmits<{
+  (event: "select"): void;
+}>();
+
 defineProps({
   result: {
     type: Array,
@@ -63,14 +67,4 @@ defineProps({
     ],
   },
 });
-
-/**
- * close search modal.
- */
-const close = () => {
-  const modalButton = document.querySelector(".modal-button");
-  if (modalButton) {
-    modalButton.click();
-  }
-};
 </script>
