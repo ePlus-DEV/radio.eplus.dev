@@ -1609,6 +1609,52 @@ async function main() {
     else existing.push(item);
   }
 
+  if (flagsOnly) {
+    const flagTargets = [];
+
+    for (const country of discovered) {
+      if (requestedCountry && country.slug !== requestedCountry) continue;
+
+      const pngPath = path.join(
+        ROOT,
+        "public",
+        "img",
+        country.area,
+        "flags",
+        `${country.slug}.png`,
+      );
+
+      const missingPng = !(await exists(pngPath));
+      if (requestedCountry || refreshExisting || missingPng) {
+        flagTargets.push({
+          ...country,
+          isMissing: missingPng,
+        });
+      }
+    }
+
+    const targets = requestedCountry
+      ? flagTargets.slice(0, 1)
+      : refreshExisting
+        ? rotateExistingCountries(flagTargets, maxCountries)
+        : flagTargets.slice(0, maxCountries);
+
+    if (!targets.length) {
+      console.log("[instant.audio] No missing country PNG flags found.");
+      return;
+    }
+
+    console.log(
+      "[instant.audio] Flag target(s): " +
+        targets.map((item) =>
+          item.area + "/" + item.slug + (item.isMissing ? " (missing PNG)" : " (refresh)")
+        ).join(", "),
+    );
+
+    await syncFlagsOnly(targets);
+    return;
+  }
+
   let targets;
   if (requestedCountry) {
     targets = missing.slice(0, 1);
@@ -1632,11 +1678,6 @@ async function main() {
       item.area + "/" + item.slug + (item.isMissing ? " (missing)" : " (augment)")
     ).join(", "),
   );
-
-  if (flagsOnly) {
-    await syncFlagsOnly(targets);
-    return;
-  }
 
   let failedCountries = 0;
   for (const country of targets) {
