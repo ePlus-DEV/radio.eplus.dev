@@ -993,19 +993,37 @@ async function generateStationTextArtwork(country, stationSlug, title) {
 
   const relative = `/img/${country.area}/${country.slug}/${stationSlug}.png`;
   const destination = path.join(ROOT, "public", relative);
+  const brandLogo = path.join(ROOT, "public", "brand", "logo-white.svg");
   await mkdir(path.dirname(destination), { recursive: true });
 
+  if (!(await exists(brandLogo))) {
+    console.warn(
+      `[instant.audio] Repo brand logo is missing; cannot generate branded artwork for ${country.slug}/${stationSlug}`,
+    );
+    return DEFAULT_STATION_IMAGE;
+  }
+
   const label = stationInitials(title || stationSlug);
+  const pointSize = label.length > 6 ? "11" : label.length > 3 ? "14" : "17";
+
   const result = spawnSync(
     command,
     [
       "-size", "96x66",
-      "xc:none",
-      "-gravity", "center",
-      "-fill", "#64748b",
+      "xc:#0f172a",
+      "-gravity", "north",
+      "-fill", "#f8fafc",
       "-font", "DejaVu-Sans-Bold",
-      "-pointsize", label.length > 6 ? "12" : "16",
-      "-annotate", "0", label,
+      "-pointsize", pointSize,
+      "-annotate", "+0+10", label,
+      "(",
+        brandLogo,
+        "-background", "none",
+        "-resize", "18x18>",
+      ")",
+      "-gravity", "south",
+      "-geometry", "+0+7",
+      "-composite",
       `PNG32:${destination}`,
     ],
     {
@@ -1016,13 +1034,13 @@ async function generateStationTextArtwork(country, stationSlug, title) {
 
   if (result.status !== 0) {
     console.warn(
-      `[instant.audio] Unable to generate text artwork for ${country.slug}/${stationSlug}: ${String(result.stderr || result.stdout || "ImageMagick failed").trim()}`,
+      `[instant.audio] Unable to generate branded text artwork for ${country.slug}/${stationSlug}: ${String(result.stderr || result.stdout || "ImageMagick failed").trim()}`,
     );
     return DEFAULT_STATION_IMAGE;
   }
 
   console.log(
-    `[instant.audio] Generated text artwork for ${country.slug}/${stationSlug}: ${relative}`,
+    `[instant.audio] Generated branded text artwork for ${country.slug}/${stationSlug}: ${relative}`,
   );
   return relative;
 }
