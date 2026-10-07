@@ -6,7 +6,15 @@
     "cros": true,
     "stream": "http://209.133.216.3:7018/stream/1/",
     "features": "/img/asia/sri-lanka/abc-hiru-fm.png",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "http://209.133.216.3:7018/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "abc-shaa-fm": {
     "title": "ABC Shaa FM",
@@ -14,7 +22,15 @@
     "url": "https://www.shaafm.lk/",
     "cros": false,
     "stream": "https://eu10b.serverse.com:1936/shaafm/shaafm/playlist.m3u8",
-    "features": "/img/asia/sri-lanka/abc-shaa-fm.png"
+    "features": "/img/asia/sri-lanka/abc-shaa-fm.png",
+    "streams": [
+      {
+        "url": "https://eu10b.serverse.com:1936/shaafm/shaafm/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "red-fm-sri-lanka": {
     "title": "Red FM",
@@ -22,7 +38,15 @@
     "url": "https://www.redfm.lk/",
     "cros": false,
     "stream": "https://shaincast.caster.fm:47830/listen.mp3",
-    "features": "/img/asia/sri-lanka/red-fm-sri-lanka.png"
+    "features": "/img/asia/sri-lanka/red-fm-sri-lanka.png",
+    "streams": [
+      {
+        "url": "https://shaincast.caster.fm:47830/listen.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "sooriyan-fm": {
     "title": "Sooriyan FM",
@@ -30,7 +54,15 @@
     "url": "https://www.sooriyanfm.lk/",
     "cros": true,
     "stream": "http://209.133.216.3:7071/stream/1/",
-    "features": "/img/asia/sri-lanka/sooriyan-fm.png"
+    "features": "/img/asia/sri-lanka/sooriyan-fm.png",
+    "streams": [
+      {
+        "url": "http://209.133.216.3:7071/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "shakthi-fm": {
     "title": "Shakthi FM",
@@ -38,7 +70,22 @@
     "url": "https://shakthifm.com/",
     "cros": true,
     "stream": "http://live.trusl.com:1160/stream/1/",
-    "features": "/img/asia/sri-lanka/shakthi-fm.png"
+    "features": "/img/asia/sri-lanka/shakthi-fm.png",
+    "streams": [
+      {
+        "url": "http://live.trusl.com:1160/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://mbc.thestreamtech.com:8086/stream",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:1e9d4d45-2239-4052-ab6f-e428845329e0"
+      }
+    ],
+    "description": "local news, music, tamil music"
   },
   "fm-derana": {
     "title": "FM Derana",
@@ -46,7 +93,15 @@
     "url": "https://www.fmderana.lk/",
     "cros": false,
     "stream": "https://cp12.serverse.com/proxy/fmderana/stream/1/",
-    "features": "/img/asia/sri-lanka/fm-derana.png"
+    "features": "/img/asia/sri-lanka/fm-derana.png",
+    "streams": [
+      {
+        "url": "https://cp12.serverse.com/proxy/fmderana/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "sun-fm": {
     "title": "Sun FM",
@@ -54,7 +109,21 @@
     "url": "https://www.sunfm.lk/",
     "cros": true,
     "stream": "http://209.133.216.3:7058/stream/1/",
-    "features": "/img/asia/sri-lanka/sun-fm.png"
+    "features": "/img/asia/sri-lanka/sun-fm.png",
+    "streams": [
+      {
+        "url": "http://209.133.216.3:7058/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://radio.lotustechnologieslk.net:2020/stream/sunfmgarden",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0a3176a2-58da-4e51-920f-a93754f76db0"
+      }
+    ]
   },
   "y-fm": {
     "title": "Y FM",
@@ -62,7 +131,22 @@
     "url": "https://yfm.lk/",
     "cros": true,
     "stream": "http://live.trusl.com:1180/stream/1/",
-    "features": "/img/asia/sri-lanka/y-fm.png"
+    "features": "/img/asia/sri-lanka/y-fm.png",
+    "streams": [
+      {
+        "url": "http://live.trusl.com:1180/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://live.trusl.com:1180/;",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:c0519ec6-e033-11e8-a9cc-52543be04c81"
+      }
+    ],
+    "description": "entertainment, music, news"
   },
   "sirasa-fm": {
     "title": "Sirasa FM",
@@ -70,7 +154,22 @@
     "url": "https://sirasafm.lk/",
     "cros": true,
     "stream": "http://live.trusl.com:1170/stream/1/",
-    "features": "/img/asia/sri-lanka/sirasa-fm.png"
+    "features": "/img/asia/sri-lanka/sirasa-fm.png",
+    "streams": [
+      {
+        "url": "http://live.trusl.com:1170/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://live.trusl.com:1170/;",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:96f09e9d-e006-11e8-a9cc-52543be04c81"
+      }
+    ],
+    "description": "entertainment, music, news"
   },
   "neth-fm": {
     "title": "Neth FM",
@@ -78,7 +177,21 @@
     "url": "http://nethnews.lk/",
     "cros": true,
     "stream": "http://cp11.serverse.com:7669/stream/1/",
-    "features": "/img/asia/sri-lanka/neth-fm.png"
+    "features": "/img/asia/sri-lanka/neth-fm.png",
+    "streams": [
+      {
+        "url": "http://cp11.serverse.com:7669/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://cp11.serverse.com/proxy/nethfm/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b30adf4b-9acd-4e4e-ad08-f9335a1a9c46"
+      }
+    ]
   },
   "varnam-fm": {
     "title": "Varnam FM",
@@ -86,7 +199,15 @@
     "url": "https://startamilradio.com/",
     "cros": true,
     "stream": "http://s3.voscast.com:8402/stream/1/",
-    "features": "/img/asia/sri-lanka/varnam-fm.png"
+    "features": "/img/asia/sri-lanka/varnam-fm.png",
+    "streams": [
+      {
+        "url": "http://s3.voscast.com:8402/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "rhythm-fm": {
     "title": "Rhythm FM",
@@ -94,7 +215,15 @@
     "url": "",
     "cros": true,
     "stream": "http://live.tnlrn.com:8030/live.mp3",
-    "features": "/img/asia/sri-lanka/rhythm-fm.png"
+    "features": "/img/asia/sri-lanka/rhythm-fm.png",
+    "streams": [
+      {
+        "url": "http://live.tnlrn.com:8030/live.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "siyatha-fm": {
     "title": "Siyatha FM",
@@ -102,7 +231,22 @@
     "url": "https://siyathafm.lk/",
     "cros": true,
     "stream": "https://s9.voscast.com:9393/live",
-    "features": "/img/asia/sri-lanka/siyatha-fm.png"
+    "features": "/img/asia/sri-lanka/siyatha-fm.png",
+    "streams": [
+      {
+        "url": "https://s9.voscast.com:9393/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://srv01.onlineradio.voaplus.com/siyathafm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:310bf19d-4ac8-4549-904c-891909b9bc00"
+      }
+    ],
+    "description": "music"
   },
   "abc-gold-fm": {
     "title": "ABC Gold FM",
@@ -110,7 +254,15 @@
     "url": "https://www.goldfm.lk/",
     "cros": false,
     "stream": "https://eu10b.serverse.com:1936/goldfm/goldfm/playlist.m3u8",
-    "features": "/img/asia/sri-lanka/abc-gold-fm.png"
+    "features": "/img/asia/sri-lanka/abc-gold-fm.png",
+    "streams": [
+      {
+        "url": "https://eu10b.serverse.com:1936/goldfm/goldfm/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "yes-fm": {
     "title": "Yes FM ශ්‍රී ලංකාව",
@@ -118,7 +270,22 @@
     "url": "https://yesfmonline.com",
     "cros": true,
     "stream": "http://live.trusl.com:1150/stream/1/",
-    "features": "/img/asia/sri-lanka/yes-fm.png"
+    "features": "/img/asia/sri-lanka/yes-fm.png",
+    "streams": [
+      {
+        "url": "http://live.trusl.com:1150/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://live.trusl.com:1150/",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:89a2dd1b-7197-11ea-b1cf-52543be04c81"
+      }
+    ],
+    "description": "welcome to generation yes"
   },
   "kiss-fm": {
     "title": "Kiss FM",
@@ -126,7 +293,15 @@
     "url": "http://kissfm.lk",
     "cros": true,
     "stream": "http://s3.voscast.com:8404/stream/1/",
-    "features": "/img/asia/sri-lanka/kiss-fm.png"
+    "features": "/img/asia/sri-lanka/kiss-fm.png",
+    "streams": [
+      {
+        "url": "http://s3.voscast.com:8404/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "rasa-fm": {
     "title": "Rasa FM",
@@ -134,7 +309,15 @@
     "url": "",
     "cros": false,
     "stream": "https://shaincast.caster.fm:47814/listen.mp3",
-    "features": "/img/asia/sri-lanka/rasa-fm.png"
+    "features": "/img/asia/sri-lanka/rasa-fm.png",
+    "streams": [
+      {
+        "url": "https://shaincast.caster.fm:47814/listen.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "thendral": {
     "title": "SLBC Thendral FM",
@@ -142,7 +325,15 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.20:8000/Threndralstream",
-    "features": "/img/asia/sri-lanka/thendral.png"
+    "features": "/img/asia/sri-lanka/thendral.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.20:8000/Threndralstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "lite-fm": {
     "title": "Lite FM",
@@ -150,7 +341,15 @@
     "url": "https://www.lite87.com/",
     "cros": false,
     "stream": "https://live.tnlrn.com:8020/live.mp3",
-    "features": "/img/asia/sri-lanka/lite-fm.png"
+    "features": "/img/asia/sri-lanka/lite-fm.png",
+    "streams": [
+      {
+        "url": "https://live.tnlrn.com:8020/live.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "v-fm": {
     "title": "V FM Radio",
@@ -158,7 +357,22 @@
     "url": "https://www.vfm.lk/",
     "cros": false,
     "stream": "https://eu2-centova.serverse.com/proxy/fmlanka/stream",
-    "features": "/img/asia/sri-lanka/v-fm.png"
+    "features": "/img/asia/sri-lanka/v-fm.png",
+    "streams": [
+      {
+        "url": "https://eu2-centova.serverse.com/proxy/fmlanka/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "http://dc1.serverse.com:7178/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9c28c3be-22c7-484b-9c5f-253fbd47fe3c"
+      }
+    ],
+    "description": "entertainment, music, news"
   },
   "sinhala-commercial-service": {
     "title": "SLBC Sinhala Commercial Service",
@@ -166,7 +380,16 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.6:8000/Scomstream",
-    "features": "/img/asia/sri-lanka/sinhala-commercial-service.png"
+    "features": "/img/asia/sri-lanka/sinhala-commercial-service.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.6:8000/Scomstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "entertaiment, state"
   },
   "fox-91-4": {
     "title": "Fox",
@@ -174,7 +397,15 @@
     "url": "http://www.fox914.com",
     "cros": false,
     "stream": "https://cp11.serverse.com/proxy/foxfm/stream/;stream.mp3",
-    "features": "/img/asia/sri-lanka/fox-91-4.png"
+    "features": "/img/asia/sri-lanka/fox-91-4.png",
+    "streams": [
+      {
+        "url": "https://cp11.serverse.com/proxy/foxfm/stream/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "slbc-tamil-national-service": {
     "title": "SLBC Tamil National Service",
@@ -182,7 +413,21 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.6:8000/Tnsstream",
-    "features": "/img/asia/sri-lanka/slbc-tamil-national-service.png"
+    "features": "/img/asia/sri-lanka/slbc-tamil-national-service.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.6:8000/Tnsstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://stream-32.zeno.fm/xekhrn4zetzuv?zs=KXT1gTNYSemcxyslV6-vdA",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:6a7c8a21-cb7d-41d2-8c32-99c355e2ac20"
+      }
+    ]
   },
   "shraddha": {
     "title": "Shraddha Radio",
@@ -190,7 +435,15 @@
     "url": "https://www.shraddha.lk/radio-old/",
     "cros": false,
     "stream": "https://cp11.serverse.com/proxy/kqxjpewq?mp=/stream/1/",
-    "features": "/img/asia/sri-lanka/shraddha.png"
+    "features": "/img/asia/sri-lanka/shraddha.png",
+    "streams": [
+      {
+        "url": "https://cp11.serverse.com/proxy/kqxjpewq?mp=/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "city": {
     "title": "SLBC City FM",
@@ -198,7 +451,16 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.20:8000/citystream",
-    "features": "/img/asia/sri-lanka/city.png"
+    "features": "/img/asia/sri-lanka/city.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.20:8000/citystream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "entertainment, state"
   },
   "real": {
     "title": "Real Radio",
@@ -206,7 +468,15 @@
     "url": "http://realradio.lk/",
     "cros": true,
     "stream": "http://s3.voscast.com:8406/stream/1/",
-    "features": "/img/asia/sri-lanka/real.png"
+    "features": "/img/asia/sri-lanka/real.png",
+    "streams": [
+      {
+        "url": "http://s3.voscast.com:8406/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "slbc-sri-lanka": {
     "title": "SLBC Radio",
@@ -214,7 +484,16 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.20:8000/RSLstream",
-    "features": "/img/asia/sri-lanka/slbc-sri-lanka.png"
+    "features": "/img/asia/sri-lanka/slbc-sri-lanka.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.20:8000/RSLstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "entertainment, state"
   },
   "sha-lanka": {
     "title": "Sha Lanka Radio",
@@ -223,7 +502,15 @@
     "cros": false,
     "stream": "https://us10a.serverse.com/proxy/taaiqpqr?mp=/stream",
     "features": "/img/asia/sri-lanka/sha-lanka.png",
-    "schedule": "https://api.webrad.io/data/playlist/130/sha-lanka?time="
+    "schedule": "https://api.webrad.io/data/playlist/130/sha-lanka?time=",
+    "streams": [
+      {
+        "url": "https://us10a.serverse.com/proxy/taaiqpqr?mp=/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "tnlradio": {
     "title": "TNL Radio",
@@ -231,7 +518,15 @@
     "url": "",
     "cros": false,
     "stream": "https://live.tnlrn.com:8010/live.mp3",
-    "features": "/img/asia/sri-lanka/tnlradio.png"
+    "features": "/img/asia/sri-lanka/tnlradio.png",
+    "streams": [
+      {
+        "url": "https://live.tnlrn.com:8010/live.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "bathusha": {
     "title": "Bathusha Radio",
@@ -240,7 +535,15 @@
     "cros": true,
     "stream": "http://eu10.fastcast4u.com:8270/stream/1/",
     "features": "/img/asia/sri-lanka/bathusha.png",
-    "schedule": "https://api.webrad.io/data/playlist/130/bathusha?time="
+    "schedule": "https://api.webrad.io/data/playlist/130/bathusha?time=",
+    "streams": [
+      {
+        "url": "http://eu10.fastcast4u.com:8270/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "lakhanda-fm": {
     "title": "Lakhanda FM",
@@ -248,7 +551,16 @@
     "url": "https://www.lakhandaradio.lk/",
     "cros": false,
     "stream": "https://cp12.serverse.com/proxy/itnfm?mp=/stream",
-    "features": "/img/asia/sri-lanka/lakhanda-fm.png"
+    "features": "/img/asia/sri-lanka/lakhanda-fm.png",
+    "streams": [
+      {
+        "url": "https://cp12.serverse.com/proxy/itnfm?mp=/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "documentaries, entertainment, music, news"
   },
   "vasantham": {
     "title": "Vasantham",
@@ -256,7 +568,16 @@
     "url": "https://www.vasanthamfm.lk/",
     "cros": false,
     "stream": "https://cp12.serverse.com/proxy/vasanthamfm?mp=/stream",
-    "features": "/img/asia/sri-lanka/vasantham.png"
+    "features": "/img/asia/sri-lanka/vasantham.png",
+    "streams": [
+      {
+        "url": "https://cp12.serverse.com/proxy/vasanthamfm?mp=/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "tamil melody songs, tamil music, tamil songs"
   },
   "live": {
     "title": "LiveFM",
@@ -265,7 +586,15 @@
     "cros": true,
     "stream": "http://cp11.serverse.com:7118/stream",
     "features": "/img/asia/sri-lanka/live.png",
-    "schedule": "https://api.webrad.io/data/playlist/130/live?time="
+    "schedule": "https://api.webrad.io/data/playlist/130/live?time=",
+    "streams": [
+      {
+        "url": "http://cp11.serverse.com:7118/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "freefm-lk": {
     "title": "Freefm.lk",
@@ -273,7 +602,22 @@
     "url": "https://freefm.lk/",
     "cros": true,
     "stream": "https://stream.zeno.fm/z7q96fbw7rquv",
-    "features": "/img/asia/sri-lanka/freefm-lk.png"
+    "features": "/img/asia/sri-lanka/freefm-lk.png",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/z7q96fbw7rquv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://stream-49.zeno.fm/1tcs4fbw7rquv?zs=uMl9BSttRSuqxlf3fWqc8g",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:382f3856-638e-4833-8bef-1af25a02c065"
+      }
+    ],
+    "description": "music"
   },
   "slbc-asia-english": {
     "title": "SLBC Asia English",
@@ -281,7 +625,15 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.6:8000/Asiastream",
-    "features": "/img/asia/sri-lanka/slbc-asia-english.png"
+    "features": "/img/asia/sri-lanka/slbc-asia-english.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.6:8000/Asiastream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "e-fm": {
     "title": "E FM",
@@ -289,7 +641,15 @@
     "url": "http://efm.lk/",
     "cros": true,
     "stream": "http://207.148.74.192:7860/stream.mp3",
-    "features": "/img/asia/sri-lanka/e-fm.png"
+    "features": "/img/asia/sri-lanka/e-fm.png",
+    "streams": [
+      {
+        "url": "http://207.148.74.192:7860/stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "shree-fm": {
     "title": "Shree FM",
@@ -297,7 +657,15 @@
     "url": "http://shreefm.lk/",
     "cros": true,
     "stream": "http://207.148.74.192:7860/stream2.mp3",
-    "features": "/img/asia/sri-lanka/shree-fm.png"
+    "features": "/img/asia/sri-lanka/shree-fm.png",
+    "streams": [
+      {
+        "url": "http://207.148.74.192:7860/stream2.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "slbc-tamil": {
     "title": "SLBC Tamil National Service",
@@ -305,7 +673,15 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.6:8000/Tnsstream",
-    "features": "/img/asia/sri-lanka/slbc-tamil.png"
+    "features": "/img/asia/sri-lanka/slbc-tamil.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.6:8000/Tnsstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kalutara": {
     "title": "Radio Kalutara",
@@ -313,7 +689,15 @@
     "url": "https://www.radiokalutara.lk/",
     "cros": true,
     "stream": "http://66.70.245.224:8016/stream/1/",
-    "features": "/img/asia/sri-lanka/kalutara.png"
+    "features": "/img/asia/sri-lanka/kalutara.png",
+    "streams": [
+      {
+        "url": "http://66.70.245.224:8016/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "ran-fm": {
     "title": "Ran FM",
@@ -321,7 +705,22 @@
     "url": "http://ranfm.lk/",
     "cros": true,
     "stream": "http://207.148.74.192:7860/ran.mp3",
-    "features": "/img/asia/sri-lanka/ran-fm.png"
+    "features": "/img/asia/sri-lanka/ran-fm.png",
+    "streams": [
+      {
+        "url": "http://207.148.74.192:7860/ran.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://a3.asurahosting.com/listen/ranfm/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c9fb32cf-618b-433b-8abe-964617d3d989"
+      }
+    ],
+    "description": "entertainment, music, news"
   },
   "slbc-kandurata-fm": {
     "title": "SLBC Kandurata FM",
@@ -329,7 +728,15 @@
     "url": "https://sinhala.newsslbc.lk/",
     "cros": true,
     "stream": "http://220.247.227.20:8000/kandystream",
-    "features": "/img/asia/sri-lanka/slbc-kandurata-fm.png"
+    "features": "/img/asia/sri-lanka/slbc-kandurata-fm.png",
+    "streams": [
+      {
+        "url": "http://220.247.227.20:8000/kandystream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "waharaka": {
     "title": "Waharaka Radio",
@@ -338,7 +745,15 @@
     "cros": true,
     "stream": "http://s6.voscast.com:8112/stream/1/",
     "features": "/img/asia/sri-lanka/waharaka.png",
-    "schedule": "https://api.webrad.io/data/playlist/130/waharaka?time="
+    "schedule": "https://api.webrad.io/data/playlist/130/waharaka?time=",
+    "streams": [
+      {
+        "url": "http://s6.voscast.com:8112/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "bestcoast-fm": {
     "title": "bestcoast.fm",
@@ -347,6 +762,842 @@
     "cros": false,
     "stream": "https://streams.radio.co/sea5dddd6b/listen",
     "features": "/img/asia/sri-lanka/bestcoast-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/130/bestcoast-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/130/bestcoast-fm?time=",
+    "streams": [
+      {
+        "url": "https://streams.radio.co/sea5dddd6b/listen",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "http://streams.radio.co/sea5dddd6b/listen",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:ae628010-757c-4b08-8be6-1c04581f7021"
+      }
+    ],
+    "description": "music"
+  },
+  "tube-tamil-fm-radio": {
+    "title": "Tube Tamil FM Radio டியூப் தமிழ் எஃப்.எம் பண்பலை ரேடியோ",
+    "description": "indian music, jaffna, radio, south indian, sri lanka",
+    "type": "audio/mpeg",
+    "url": "https://tubetamil.fm/",
+    "cros": true,
+    "stream": "http://s2.voscast.com:12084/;stream1619441439791/1",
+    "streams": [
+      {
+        "url": "http://s2.voscast.com:12084/;stream1619441439791/1",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3260b4f1-f1bd-4850-9c1d-8d7ffdeb3bbd"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3260b4f1-f1bd-4850-9c1d-8d7ffdeb3bbd"
+  },
+  "hiru-fm": {
+    "title": "Hiru FM",
+    "description": "talk & speech",
+    "type": "audio/mpeg",
+    "url": "https://www.hirufm.lk/",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden/stream/1/",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:756c4ac1-c020-4139-86c2-57cc4dd12643"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/hiru-fm.png",
+    "source": "radio-browser:756c4ac1-c020-4139-86c2-57cc4dd12643"
+  },
+  "sitha-fm": {
+    "title": "Sitha FM",
+    "description": "entertainment, music, news",
+    "type": "audio/mpeg",
+    "url": "http://sithafm.lk/",
+    "cros": true,
+    "stream": "http://shaincast.caster.fm:48148/listen.mp3",
+    "streams": [
+      {
+        "url": "http://shaincast.caster.fm:48148/listen.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:5ad9ac86-e034-11e8-a9cc-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:5ad9ac86-e034-11e8-a9cc-52543be04c81"
+  },
+  "slbc-swadeshiya-sewaya": {
+    "title": "SLBC -Swadeshiya Sewaya",
+    "description": "entertainment, state",
+    "type": "audio/mpeg",
+    "url": "http://www.slbc.lk/",
+    "cros": true,
+    "stream": "http://220.247.227.6:8000/Snsstream",
+    "streams": [
+      {
+        "url": "http://220.247.227.6:8000/Snsstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:1520dbc4-e000-11e8-a9cc-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/slbc-swadeshiya-sewaya.png",
+    "source": "radio-browser:1520dbc4-e000-11e8-a9cc-52543be04c81"
+  },
+  "parani-gee": {
+    "title": "Parani Gee",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "http://www.srilankanrecords.com/",
+    "cros": true,
+    "stream": "http://151.80.42.191:8288/stream",
+    "streams": [
+      {
+        "url": "http://151.80.42.191:8288/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7ef92e60-e037-11e8-a9cc-52543be04c81"
+      },
+      {
+        "url": "http://cast2.citrus3.com:2199/tunein/srilankanrecords.pls",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/parani-gee.png",
+    "source": "radio-browser:7ef92e60-e037-11e8-a9cc-52543be04c81"
+  },
+  "hiru-fm-b742fcc1": {
+    "title": "Hiru FM",
+    "description": "entertainment, music, news",
+    "type": "audio/mpeg",
+    "url": "https://www.hirufm.lk/",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b742fcc1-7118-4241-8650-8cf9f8ad8a59"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/hiru-fm-b742fcc1.png",
+    "source": "radio-browser:b742fcc1-7118-4241-8650-8cf9f8ad8a59"
+  },
+  "lakviru-radio": {
+    "title": "Lakviru Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.shraddha.lk/lakviru-radio/",
+    "cros": true,
+    "stream": "http://cp11.serverse.com:7643/stream",
+    "streams": [
+      {
+        "url": "http://cp11.serverse.com:7643/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:bf12d434-4024-409d-a223-6f6d3088534f"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bf12d434-4024-409d-a223-6f6d3088534f"
+  },
+  "gold-fm": {
+    "title": "Gold FM",
+    "type": "audio/mpeg",
+    "url": "https://www.goldfm.lk/",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:2020/stream/goldfmgarden",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:2020/stream/goldfmgarden",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a8721ffc-305e-4578-9b63-8bbca9d65283"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/gold-fm.png",
+    "source": "radio-browser:a8721ffc-305e-4578-9b63-8bbca9d65283"
+  },
+  "tamil-eelam-radio-north-east": {
+    "title": "தமிழீழ வானொலி -​ Tamil​ Eelam Radio (North​ &​ East)​",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radio.com.lk",
+    "cros": true,
+    "stream": "http://stream.zeno.fm/c6mgmtfg8e9uv",
+    "streams": [
+      {
+        "url": "http://stream.zeno.fm/c6mgmtfg8e9uv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:24cc0ccf-a8c5-4e4a-9277-f618618cab30"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/tamil-eelam-radio-north-east.png",
+    "source": "radio-browser:24cc0ccf-a8c5-4e4a-9277-f618618cab30"
+  },
+  "rangiri-sri-lanka": {
+    "title": "Rangiri Sri Lanka",
+    "type": "audio/mpeg",
+    "url": "https://rangirisrilanka.lk/radio/",
+    "cros": false,
+    "stream": "https://rangiri.radioca.st/stream",
+    "streams": [
+      {
+        "url": "https://rangiri.radioca.st/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ae01254c-7b72-4e4c-8109-f54abacdc823"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:ae01254c-7b72-4e4c-8109-f54abacdc823"
+  },
+  "lankasri-fm": {
+    "title": "Lankasri fm",
+    "description": "tamil music",
+    "type": "audio/mpeg",
+    "url": "https://lankasri.fm/",
+    "cros": true,
+    "stream": "http://media2.lankasri.fm/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://media2.lankasri.fm/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:81efb1d0-b644-4398-a26f-edd0c5dda269"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/lankasri-fm.png",
+    "source": "radio-browser:81efb1d0-b644-4398-a26f-edd0c5dda269"
+  },
+  "classic-radio": {
+    "title": "Classic Radio",
+    "type": "audio/aac",
+    "url": "https://trn.lk/",
+    "cros": false,
+    "stream": "https://cp11.serverse.com/proxy/classic/stream",
+    "streams": [
+      {
+        "url": "https://cp11.serverse.com/proxy/classic/stream",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:cbf5edde-190d-4bfd-a246-2e6ac81c0b62"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:cbf5edde-190d-4bfd-a246-2e6ac81c0b62"
+  },
+  "laksara": {
+    "title": "Laksara",
+    "description": "entertainment, music",
+    "type": "application/x-mpegURL",
+    "url": "https://www.laksara.com/",
+    "cros": false,
+    "stream": "https://5a1178b42cc03.streamlock.net/laksara/laksara/chunklist_w1617919055.m3u8",
+    "streams": [
+      {
+        "url": "https://5a1178b42cc03.streamlock.net/laksara/laksara/chunklist_w1617919055.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:a1b16b8a-9f50-420d-bd98-6a3029dc9571"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/laksara.png",
+    "source": "radio-browser:a1b16b8a-9f50-420d-bd98-6a3029dc9571"
+  },
+  "isira-tnl": {
+    "title": "Isira TNL",
+    "description": "entertainment, music",
+    "type": "audio/mpeg",
+    "url": "https://radio.tnltv.lk/",
+    "cros": true,
+    "stream": "http://124.43.10.122:8080/live",
+    "streams": [
+      {
+        "url": "http://124.43.10.122:8080/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9d10be4b-4b1f-483e-820a-64c46abae1e2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9d10be4b-4b1f-483e-820a-64c46abae1e2"
+  },
+  "siyatha-fm-c1356aca": {
+    "title": "Siyatha FM",
+    "description": "classical",
+    "type": "audio/aac",
+    "url": "https://radio.com.lk",
+    "cros": true,
+    "stream": "http://live.trusl.com:1170/;?type=http&nocache=0",
+    "streams": [
+      {
+        "url": "http://live.trusl.com:1170/;?type=http&nocache=0",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:c1356aca-de00-4ad5-aae2-8195b6af3bc1"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/siyatha-fm-c1356aca.png",
+    "source": "radio-browser:c1356aca-de00-4ad5-aae2-8195b6af3bc1"
+  },
+  "yes-fm-online": {
+    "title": "Yes FM Online",
+    "type": "audio/aac",
+    "url": "https://yesfmonline.com/",
+    "cros": true,
+    "stream": "http://live.trusl.com:1150/;",
+    "streams": [
+      {
+        "url": "http://live.trusl.com:1150/;",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:d4f99e90-000c-4c8d-9624-6673d40eb9db"
+      },
+      {
+        "url": "http://live.trusl.com:1150/listen.pls?sid=1",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:d4f99e90-000c-4c8d-9624-6673d40eb9db"
+  },
+  "sunfm": {
+    "title": "SunFM",
+    "type": "audio/mpeg",
+    "url": "https://www.sunfm.lk/",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:2020/stream/sunfmgarden",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:2020/stream/sunfmgarden",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7ca1623c-636b-4633-b794-ed0a78be7bce"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/sunfm.png",
+    "source": "radio-browser:7ca1623c-636b-4633-b794-ed0a78be7bce"
+  },
+  "hiru-fm-7906c7e6": {
+    "title": "Hiru FM",
+    "type": "audio/mpeg",
+    "url": "https://onlineradiofm.in/stations/hiru-fm",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden?1707015384",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden?1707015384",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7906c7e6-b142-421e-ad3c-56d085b59fd9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:7906c7e6-b142-421e-ad3c-56d085b59fd9"
+  },
+  "lakhanda-radio": {
+    "title": "LAKHANDA RADIO",
+    "type": "audio/mpeg",
+    "url": "http://www.itnfm.lk/",
+    "cros": false,
+    "stream": "https://cp12.serverse.com/proxy/itnfm?mp=/stream&1707017036",
+    "streams": [
+      {
+        "url": "https://cp12.serverse.com/proxy/itnfm?mp=/stream&1707017036",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9ac16e1f-b7a2-4c66-be4e-391f11550c8a"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/lakhanda-radio.png",
+    "source": "radio-browser:9ac16e1f-b7a2-4c66-be4e-391f11550c8a"
+  },
+  "kothmale-fm": {
+    "title": "Kothmale FM",
+    "description": "entertainment, music, news",
+    "type": "audio/aac",
+    "url": "https://kothmalefm.lk/",
+    "cros": false,
+    "stream": "https://s11.myradiostream.com:25116/listen.mp3",
+    "streams": [
+      {
+        "url": "https://s11.myradiostream.com:25116/listen.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:40bf2631-5b95-4af0-9b03-3818ef237f57"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:40bf2631-5b95-4af0-9b03-3818ef237f57"
+  },
+  "star-fm-srilanka": {
+    "title": "Star FM Srilanka",
+    "description": "tamil songs",
+    "type": "audio/mpeg",
+    "url": "https://www.starfm.lk/",
+    "cros": false,
+    "stream": "https://stream.starfm.lk:12025/stream",
+    "streams": [
+      {
+        "url": "https://stream.starfm.lk:12025/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bc8805dd-a40c-449e-9f43-ce592e9073a0"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/star-fm-srilanka.png",
+    "source": "radio-browser:bc8805dd-a40c-449e-9f43-ce592e9073a0"
+  },
+  "golden-maple-radio": {
+    "title": "Golden Maple Radio",
+    "description": "entertainment, music",
+    "type": "audio/mpeg",
+    "url": "https://mytuner-radio.com/radio/golden-maple-web-radio-477975/",
+    "cros": true,
+    "stream": "http://s46.myradiostream.com:11156/listen.mp3",
+    "streams": [
+      {
+        "url": "http://s46.myradiostream.com:11156/listen.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:a2c810c5-a1b7-4c18-bf86-2e04902353ff"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/golden-maple-radio.png",
+    "source": "radio-browser:a2c810c5-a1b7-4c18-bf86-2e04902353ff"
+  },
+  "radio-plus-sri-lanka": {
+    "title": "Radio Plus Sri Lanka",
+    "description": "entertainment, music",
+    "type": "audio/mpeg",
+    "url": "https://radioplus.lk/",
+    "cros": false,
+    "stream": "https://altair.streamerr.co/stream/8036",
+    "streams": [
+      {
+        "url": "https://altair.streamerr.co/stream/8036",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a6bf6cfc-1c8d-42a5-bf96-c83a4e3b90cf"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:a6bf6cfc-1c8d-42a5-bf96-c83a4e3b90cf"
+  },
+  "rajarata-sewaya": {
+    "title": "Rajarata Sewaya",
+    "description": "entertainment, music, news",
+    "type": "audio/mpeg",
+    "url": "https://zeno.fm/radio/rajaratasevayalive/",
+    "cros": true,
+    "stream": "http://220.247.227.20:8000/rajaratastream",
+    "streams": [
+      {
+        "url": "http://220.247.227.20:8000/rajaratastream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c9e115dd-2da0-4a5d-9576-f54727de5ae1"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/rajarata-sewaya.png",
+    "source": "radio-browser:c9e115dd-2da0-4a5d-9576-f54727de5ae1"
+  },
+  "fox-91-4-fm": {
+    "title": "FOX 91.4 FM",
+    "description": "entertainment, music, pop",
+    "type": "audio/mpeg",
+    "url": "https://foxon914.com/",
+    "cros": true,
+    "stream": "http://142.132.250.174:7673/stream",
+    "streams": [
+      {
+        "url": "http://142.132.250.174:7673/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c84ff061-3eb4-4ee6-8e69-f44e28b38221"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c84ff061-3eb4-4ee6-8e69-f44e28b38221"
+  },
+  "radio-plus-hitz": {
+    "title": "Radio Plus Hitz",
+    "description": "entertainment, music, remixes",
+    "type": "audio/mpeg",
+    "url": "https://radioplus.lk/",
+    "cros": false,
+    "stream": "https://altair.streamerr.co/stream/8054",
+    "streams": [
+      {
+        "url": "https://altair.streamerr.co/stream/8054",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c0c3e003-667d-47c6-a028-799f2e5603a9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c0c3e003-667d-47c6-a028-799f2e5603a9"
+  },
+  "real-radio-sri-lanka-97-1": {
+    "title": "Real Radio Sri Lanka 97.1",
+    "description": "dance, pop, spanish, top 40",
+    "type": "audio/mpeg",
+    "url": "http://www.realradio.lk/",
+    "cros": false,
+    "stream": "https://srv02.onlineradio.voaplus.com/realfm",
+    "streams": [
+      {
+        "url": "https://srv02.onlineradio.voaplus.com/realfm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:47c69182-81b4-41fb-b67c-6f77747695b2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:47c69182-81b4-41fb-b67c-6f77747695b2"
+  },
+  "yfm-srilanka": {
+    "title": "YFM-SRiLanka",
+    "type": "audio/aac",
+    "url": "https://myy.lk/",
+    "cros": false,
+    "stream": "https://mbc.thestreamtech.com:7032/index.html",
+    "streams": [
+      {
+        "url": "https://mbc.thestreamtech.com:7032/index.html",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:0c3497a6-1a1e-445e-bd64-7313bb41b95a"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:0c3497a6-1a1e-445e-bd64-7313bb41b95a",
+    "description": "entertainment, music, news, pop music"
+  },
+  "sooriyan-fm-sri-lanka": {
+    "title": "Sooriyan Fm Sri Lanka",
+    "description": "jazz, news, tamil",
+    "type": "audio/mpeg",
+    "url": "https://www.sooriyanfm.lk/listenlive.php",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:8006/",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:8006/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0e309df5-eebb-4fed-a5eb-61d0ac70012c"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/sooriyan-fm-sri-lanka.png",
+    "source": "radio-browser:0e309df5-eebb-4fed-a5eb-61d0ac70012c"
+  },
+  "gold-fm-93-2-backup": {
+    "title": "Gold FM - 93.2 Backup",
+    "type": "audio/mpeg",
+    "url": "https://www.goldfm.lk/onair.html",
+    "cros": false,
+    "stream": "https://radio.lotustechnologieslk.net:8000/",
+    "streams": [
+      {
+        "url": "https://radio.lotustechnologieslk.net:8000/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:59014fd4-7560-44bf-9550-58a1bbae9458"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:59014fd4-7560-44bf-9550-58a1bbae9458"
+  },
+  "y-fm-hi-res": {
+    "title": "Y FM - Hi-Res",
+    "description": "entertainment, music, news",
+    "type": "audio/aac",
+    "url": "https://myy.lk/",
+    "cros": false,
+    "stream": "https://mbc.thestreamtech.com:7032/",
+    "streams": [
+      {
+        "url": "https://mbc.thestreamtech.com:7032/",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:57815694-07c8-43ed-b4f3-a49b4e0a7c49"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:57815694-07c8-43ed-b4f3-a49b4e0a7c49"
+  },
+  "life-87-8-sri-lanka": {
+    "title": "Life 87.8 Sri Lanka",
+    "description": "dance, hip-hop, pop, top 40",
+    "type": "audio/mpeg",
+    "url": "https://lite878.com/",
+    "cros": false,
+    "stream": "https://srv02.onlineradio.voaplus.com/lite878",
+    "streams": [
+      {
+        "url": "https://srv02.onlineradio.voaplus.com/lite878",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0fd38f47-def6-4a5e-bb30-4ae1f9097b69"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:0fd38f47-def6-4a5e-bb30-4ae1f9097b69"
+  },
+  "lite-87-8": {
+    "title": "Lite 87.8",
+    "type": "audio/mpeg",
+    "url": "https://lite878.com/",
+    "cros": false,
+    "stream": "https://lite878.com/wp-content/uploads/2020/12/spotifydown.com-Better-Place-From-TROLLS-Band-Together.mp3",
+    "streams": [
+      {
+        "url": "https://lite878.com/wp-content/uploads/2020/12/spotifydown.com-Better-Place-From-TROLLS-Band-Together.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f123519d-4188-46d6-87dc-a8a2d76d2fd9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:f123519d-4188-46d6-87dc-a8a2d76d2fd9"
+  },
+  "abdulbasit-abdulsamad": {
+    "title": "Abdulbasit Abdulsamad",
+    "type": "audio/aac",
+    "url": "https://mp3islam.com/",
+    "cros": false,
+    "stream": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:32fface7-e6a9-4f9b-8e44-e7c5b0026fe9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:32fface7-e6a9-4f9b-8e44-e7c5b0026fe9"
+  },
+  "wellon-radio-cafe": {
+    "title": "Wellon Radio Cafe",
+    "type": "audio/mpeg",
+    "url": "https://wellonradio.com/",
+    "cros": false,
+    "stream": "https://wellonradio.out.airtime.pro/wellonradio_a",
+    "streams": [
+      {
+        "url": "https://wellonradio.out.airtime.pro/wellonradio_a",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:6604d74e-d11f-4c24-a640-cadc8a7c2304"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/wellon-radio-cafe.png",
+    "source": "radio-browser:6604d74e-d11f-4c24-a640-cadc8a7c2304"
+  },
+  "kiss-fm-sri-lanka": {
+    "title": "Kiss FM Sri Lanka",
+    "description": "english, hits, pop, sri lanka, top 40",
+    "type": "audio/mpeg",
+    "url": "https://kissfm.lk/",
+    "cros": false,
+    "stream": "https://srv02.onlineradio.voaplus.com/kissfm",
+    "streams": [
+      {
+        "url": "https://srv02.onlineradio.voaplus.com/kissfm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:19c6399f-7321-4206-a424-62ac1508cb61"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/kiss-fm-sri-lanka.png",
+    "source": "radio-browser:19c6399f-7321-4206-a424-62ac1508cb61"
+  },
+  "jothi-fm": {
+    "title": "Jothi FM",
+    "type": "audio/mpeg",
+    "url": "https://jothi.appj.uk/",
+    "cros": false,
+    "stream": "https://radio-station.hadawatha.lk/listen/jothi-fm/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio-station.hadawatha.lk/listen/jothi-fm/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:eec9aee1-4bd0-4ad7-8c75-add44bc92ef7"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:eec9aee1-4bd0-4ad7-8c75-add44bc92ef7"
+  },
+  "pirai-fm": {
+    "title": "Pirai FM",
+    "description": "slbc mazhayaga fm",
+    "type": "audio/mpeg",
+    "url": "https://www.slbc.lk/world-heritage-sites/pirei-fm",
+    "cros": true,
+    "stream": "http://220.247.234.207:8000/piraistream",
+    "streams": [
+      {
+        "url": "http://220.247.234.207:8000/piraistream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:bdfa6f41-ddce-47d2-934d-244a9628d82e"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bdfa6f41-ddce-47d2-934d-244a9628d82e"
+  },
+  "the-one-radio": {
+    "title": "The One Radio",
+    "description": "entertainment, music",
+    "type": "audio/aac",
+    "url": "https://theoneradio.radio12345.com/",
+    "cros": true,
+    "stream": "http://uk15freenew.listen2myradio.com:6122/stream",
+    "streams": [
+      {
+        "url": "http://uk15freenew.listen2myradio.com:6122/stream",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:9d08b893-2d1e-44c0-93e7-cf416f84ba82"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/the-one-radio.png",
+    "source": "radio-browser:9d08b893-2d1e-44c0-93e7-cf416f84ba82"
+  },
+  "gee-fm": {
+    "title": "Gee FM",
+    "type": "audio/mpeg",
+    "url": "https://geefmsrilanka.blogspot.com/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/jiylwkly3ufvv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/jiylwkly3ufvv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:5d7fd421-ce17-4fbc-bc2d-38232881b1e9"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/gee-fm.png",
+    "source": "radio-browser:5d7fd421-ce17-4fbc-bc2d-38232881b1e9"
+  },
+  "legends-96-6-fm": {
+    "title": "Legends 96.6 FM",
+    "description": "2000s, 80s, 90s, classic hits, english",
+    "type": "audio/aac",
+    "url": "https://legends966.com/",
+    "cros": false,
+    "stream": "https://mbc.thestreamtech.com:8585/stream",
+    "streams": [
+      {
+        "url": "https://mbc.thestreamtech.com:8585/stream",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:3ec7bcb8-e708-4d98-ac38-1c09a48f2031"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3ec7bcb8-e708-4d98-ac38-1c09a48f2031"
+  },
+  "dreamzlanka-fm": {
+    "title": "DreamzLanka FM",
+    "type": "audio/mpeg",
+    "url": "https://dreamzlanka.appj.uk/",
+    "cros": false,
+    "stream": "https://radio-station.hadawatha.lk/listen/dreamzlanka-fm/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio-station.hadawatha.lk/listen/dreamzlanka-fm/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:479ae177-2340-44f9-badc-2e5d21e9ef68"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:479ae177-2340-44f9-badc-2e5d21e9ef68"
+  },
+  "cir": {
+    "title": "CIR",
+    "type": "audio/mpeg",
+    "url": "http://www.slbc.lk/",
+    "cros": true,
+    "stream": "http://220.247.234.207:8000/cirstream",
+    "streams": [
+      {
+        "url": "http://220.247.234.207:8000/cirstream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c0c69afc-1354-4b0b-aac6-f43e4df98da6"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c0c69afc-1354-4b0b-aac6-f43e4df98da6"
+  },
+  "hadawatha-fm": {
+    "title": "Hadawatha FM",
+    "type": "audio/mpeg",
+    "url": "https://fm.hadawatha.lk/",
+    "cros": false,
+    "stream": "https://radio-station.hadawatha.lk/listen/hadawatha-fm/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio-station.hadawatha.lk/listen/hadawatha-fm/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bf2ce310-ffa1-4fac-92d2-87421d61b7f8"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bf2ce310-ffa1-4fac-92d2-87421d61b7f8"
+  },
+  "radioeka": {
+    "title": "Radioeka",
+    "type": "audio/mpeg",
+    "url": "https://radioeka.lk/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/n86me57rzv8uv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/n86me57rzv8uv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:75a51de4-c83b-4b3c-b5ee-0fe9b3b40853"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/radioeka.png",
+    "source": "radio-browser:75a51de4-c83b-4b3c-b5ee-0fe9b3b40853"
+  },
+  "isai-fm-tamil": {
+    "title": "Isai FM Tamil",
+    "type": "audio/mpeg",
+    "url": "https://tamilocean.com/",
+    "cros": false,
+    "stream": "https://stream.tamilocean.com/isailive/",
+    "streams": [
+      {
+        "url": "https://stream.tamilocean.com/isailive/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:80fe28ea-99aa-4ec8-8361-bddb2b889211"
+      }
+    ],
+    "features": "/img/asia/sri-lanka/isai-fm-tamil.png",
+    "source": "radio-browser:80fe28ea-99aa-4ec8-8361-bddb2b889211"
   }
 }

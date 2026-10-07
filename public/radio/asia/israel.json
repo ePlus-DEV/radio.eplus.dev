@@ -7,7 +7,21 @@
     "stream": "https://glzwizzlv.bynetcdn.com/glglz_mp3",
     "features": "/img/asia/israel/galgalatz.png",
     "schedule": "https://api.webrad.io/data/playlist/137/galgalatz?time=",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://glzwizzlv.bynetcdn.com/glglz_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "https://glzwizzlv.bynetcdn.com/glglz_mp3?awCollectionId=misc&awEpisodeId=glglz",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:45700958-16ab-422a-85bb-d402722463f0"
+      }
+    ]
   },
   "kol-israel-reshet-gimel": {
     "title": "כאן גימל",
@@ -16,7 +30,15 @@
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/749625_mp3",
     "features": "/img/asia/israel/kol-israel-reshet-gimel.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/kol-israel-reshet-gimel?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/kol-israel-reshet-gimel?time=",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/749625_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kol-israel-reshet-bet": {
     "title": "כאן ב'",
@@ -25,7 +47,15 @@
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/749624_mp3",
     "features": "/img/asia/israel/kol-israel-reshet-bet.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/kol-israel-reshet-bet?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/kol-israel-reshet-bet?time=",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/749624_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "reka": {
     "title": "כאן רק",
@@ -33,7 +63,15 @@
     "url": "https://www.kan.org.il/live/radio.aspx?stationId=10",
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/kanreka_mp3",
-    "features": "/img/asia/israel/reka.png"
+    "features": "/img/asia/israel/reka.png",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/kanreka_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "88-fm": {
     "title": "88 FM",
@@ -41,7 +79,21 @@
     "url": "https://www.kan.org.il/live/radio.aspx?stationId=4",
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/749623_mp3",
-    "features": "/img/asia/israel/88-fm.png"
+    "features": "/img/asia/israel/88-fm.png",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/749623_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "https://29073.live.streamtheworld.com/KAN_88.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cf46c74f-1c46-4956-a3a5-245fbe7b4d6d"
+      }
+    ]
   },
   "kol-ha-musica": {
     "title": "כאן קול המוסיקה",
@@ -49,7 +101,15 @@
     "url": "https://www.kan.org.il/live/radio.aspx?stationid=7",
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/kankolhamusica_mp3",
-    "features": "/img/asia/israel/kol-ha-musica.png"
+    "features": "/img/asia/israel/kol-ha-musica.png",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/kankolhamusica_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kol-israel-reshet-aleph-moresh": {
     "title": "כאן תרבות",
@@ -57,7 +117,15 @@
     "url": "https://www.kan.org.il/live/radio.aspx?stationId=5",
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/kantarbut_mp3",
-    "features": "/img/asia/israel/kol-israel-reshet-aleph-moresh.png"
+    "features": "/img/asia/israel/kol-israel-reshet-aleph-moresh.png",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/kantarbut_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "galei-zahal": {
     "title": "גלי צה",
@@ -66,7 +134,21 @@
     "cros": false,
     "stream": "https://glzwizzlv.bynetcdn.com/glz_mp3?awCollectionId=misc&awEpisodeId=glz",
     "features": "/img/asia/israel/galei-zahal.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/galei-zahal?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/galei-zahal?time=",
+    "streams": [
+      {
+        "url": "https://glzwizzlv.bynetcdn.com/glz_mp3?awCollectionId=misc&awEpisodeId=glz",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "http://glzwizzlv.bynetcdn.com/glz_mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:962326cb-0601-11e8-ae97-52543be04c81"
+      }
+    ]
   },
   "radios-100-fm": {
     "title": "FM 100 רדיוס",
@@ -74,7 +156,15 @@
     "url": "https://www.100fm.co.il/",
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Radios_100FM/Audio/icecast.audio",
-    "features": "/img/asia/israel/radios-100-fm.png"
+    "features": "/img/asia/israel/radios-100-fm.png",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Radios_100FM/Audio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "eco-99-fm": {
     "title": "אקו FM",
@@ -82,7 +172,16 @@
     "url": "https://eco99fm.maariv.co.il/",
     "cros": false,
     "stream": "https://eco-live.mediacast.co.il/99fm_aac",
-    "features": "/img/asia/israel/eco-99-fm.png"
+    "features": "/img/asia/israel/eco-99-fm.png",
+    "streams": [
+      {
+        "url": "https://eco-live.mediacast.co.il/99fm_aac",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "pop, top 40"
   },
   "lev-hamedina-91-fm": {
     "title": "רדיו לב המדינה",
@@ -91,7 +190,16 @@
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Lev_Hamedina/Audio/icecast.audio",
     "features": "/img/asia/israel/lev-hamedina-91-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/lev-hamedina-91-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/lev-hamedina-91-fm?time=",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Lev_Hamedina/Audio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "music, news"
   },
   "tel-aviv": {
     "title": "רדיו תל אביב",
@@ -100,7 +208,16 @@
     "cros": false,
     "stream": "https://102.livecdn.biz/102fm_aac",
     "features": "/img/asia/israel/tel-aviv.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/tel-aviv?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/tel-aviv?time=",
+    "streams": [
+      {
+        "url": "https://102.livecdn.biz/102fm_aac",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "contenmporary, music, talk, ישראל"
   },
   "kol-israel-reshet-dalet": {
     "title": "כאן מכאן",
@@ -108,7 +225,15 @@
     "url": "https://www.makan.org.il/",
     "cros": false,
     "stream": "https://kanliveicy.media.kan.org.il/icy/makan_mp3",
-    "features": "/img/asia/israel/kol-israel-reshet-dalet.png"
+    "features": "/img/asia/israel/kol-israel-reshet-dalet.png",
+    "streams": [
+      {
+        "url": "https://kanliveicy.media.kan.org.il/icy/makan_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "yasoo": {
     "title": "רדיו יאסו",
@@ -117,7 +242,16 @@
     "cros": true,
     "stream": "http://radio-yasoo.ath.cx:7500/;",
     "features": "/img/asia/israel/yasoo.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/yasoo?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/yasoo?time=",
+    "streams": [
+      {
+        "url": "http://radio-yasoo.ath.cx:7500/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "greek folk, greek folk music, greek internet radio, greek music, greek traditional"
   },
   "kol-barama-fm": {
     "title": "רדיו קול ברמה",
@@ -126,7 +260,16 @@
     "cros": true,
     "stream": "http://kb.cdnwz.net/kol_barama",
     "features": "/img/asia/israel/kol-barama-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/kol-barama-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/kol-barama-fm?time=",
+    "streams": [
+      {
+        "url": "http://kb.cdnwz.net/kol_barama",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "ilstations, דתי"
   },
   "pervoye": {
     "title": "פרוויה רדיו",
@@ -135,7 +278,16 @@
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Pervoia/Audio/icecast.audio",
     "features": "/img/asia/israel/pervoye.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/pervoye?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/pervoye?time=",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Pervoia/Audio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "pop"
   },
   "jerusalem-fm": {
     "title": "רדיו ירושלים",
@@ -144,7 +296,16 @@
     "cros": false,
     "stream": "https://radio.streamgates.net/stream/101fm",
     "features": "/img/asia/israel/jerusalem-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/jerusalem-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/jerusalem-fm?time=",
+    "streams": [
+      {
+        "url": "https://radio.streamgates.net/stream/101fm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "music, news"
   },
   "fm-102": {
     "title": "קול הים האדום",
@@ -153,7 +314,15 @@
     "cros": false,
     "stream": "https://radio.streamgates.net/stream/eilat",
     "features": "/img/asia/israel/fm-102.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/fm-102?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/fm-102?time=",
+    "streams": [
+      {
+        "url": "https://radio.streamgates.net/stream/eilat",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "nostalgia": {
     "title": "רדיו נוסטלגיה ישראלית",
@@ -162,7 +331,15 @@
     "cros": true,
     "stream": "http://194.213.4.197:8000/stream/1/",
     "features": "/img/asia/israel/nostalgia.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/nostalgia?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/nostalgia?time=",
+    "streams": [
+      {
+        "url": "http://194.213.4.197:8000/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kahol-yavan": {
     "title": "רדיו כחול יוון",
@@ -171,7 +348,15 @@
     "cros": true,
     "stream": "https://icecast.myradio.co.il/livegreece",
     "features": "/img/asia/israel/kahol-yavan.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/kahol-yavan?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/kahol-yavan?time=",
+    "streams": [
+      {
+        "url": "https://icecast.myradio.co.il/livegreece",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "menta": {
     "title": "רדיו מנטה",
@@ -180,7 +365,15 @@
     "cros": true,
     "stream": "http://menta-fm.co.il:8888/menta",
     "features": "/img/asia/israel/menta.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/menta?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/menta?time=",
+    "streams": [
+      {
+        "url": "http://menta-fm.co.il:8888/menta",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kol-rega": {
     "title": "קול רגעקול רגע",
@@ -189,7 +382,16 @@
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Kol_Rega/Live_Audio/icecast.audio",
     "features": "/img/asia/israel/kol-rega.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/kol-rega?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/kol-rega?time=",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Kol_Rega/Live_Audio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "music, news, pop, talk & speech"
   },
   "haifa": {
     "title": "רדיו חיפה",
@@ -198,7 +400,15 @@
     "cros": false,
     "stream": "https://cp11.livecdn.biz/radiohaifa",
     "features": "/img/asia/israel/haifa.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/haifa?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/haifa?time=",
+    "streams": [
+      {
+        "url": "https://cp11.livecdn.biz/radiohaifa",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kol-hay": {
     "title": "רדיו קול חי",
@@ -206,7 +416,16 @@
     "url": "https://www.93fm.co.il/",
     "cros": false,
     "stream": "https://media2.93fm.co.il/live-new",
-    "features": "/img/asia/israel/kol-hay.png"
+    "features": "/img/asia/israel/kol-hay.png",
+    "streams": [
+      {
+        "url": "https://media2.93fm.co.il/live-new",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "israel, orthodox, דתי"
   },
   "beat-94-3": {
     "title": "רדיו ביט",
@@ -214,7 +433,15 @@
     "url": "http://www.radio-beat.com",
     "cros": true,
     "stream": "http://live.radio-beat.com/stream1/",
-    "features": "/img/asia/israel/beat-94-3.png"
+    "features": "/img/asia/israel/beat-94-3.png",
+    "streams": [
+      {
+        "url": "http://live.radio-beat.com/stream1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "radiodance-israel": {
     "title": "רדיו דאנס",
@@ -223,7 +450,15 @@
     "cros": true,
     "stream": "http://icecast.live:8007/radiodance",
     "features": "/img/asia/israel/radiodance-israel.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/radiodance-israel?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/radiodance-israel?time=",
+    "streams": [
+      {
+        "url": "http://icecast.live:8007/radiodance",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "ran": {
     "title": "רדיו רן",
@@ -231,7 +466,15 @@
     "url": "http://www.radioran.co.il/",
     "cros": true,
     "stream": "http://185.80.220.12:8047/stream",
-    "features": "/img/asia/israel/ran.png"
+    "features": "/img/asia/israel/ran.png",
+    "streams": [
+      {
+        "url": "http://185.80.220.12:8047/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "harokdim": {
     "title": "רדיו הרוקדים",
@@ -240,7 +483,15 @@
     "cros": false,
     "stream": "https://live.ecast.co.il/stream1/8938/stream/1/",
     "features": "/img/asia/israel/harokdim.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/harokdim?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/harokdim?time=",
+    "streams": [
+      {
+        "url": "https://live.ecast.co.il/stream1/8938/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mevaser-tov": {
     "title": "רדיו מבשר טוברדיו מבשר טוב",
@@ -248,7 +499,15 @@
     "url": "https://www.770tv.org/",
     "cros": true,
     "stream": "http://770tv.no-ip.org:7777/stream/1/",
-    "features": "/img/asia/israel/mevaser-tov.png"
+    "features": "/img/asia/israel/mevaser-tov.png",
+    "streams": [
+      {
+        "url": "http://770tv.no-ip.org:7777/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "rdyw-nwsmym-mzrhyt": {
     "title": "רדיו נושמים מזרחית",
@@ -257,7 +516,15 @@
     "cros": false,
     "stream": "https://mzr.mediacast.co.il/mzradio",
     "features": "/img/asia/israel/rdyw-nwsmym-mzrhyt.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/rdyw-nwsmym-mzrhyt?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/rdyw-nwsmym-mzrhyt?time=",
+    "streams": [
+      {
+        "url": "https://mzr.mediacast.co.il/mzradio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "darom": {
     "title": "רדיו דרום",
@@ -265,7 +532,16 @@
     "url": "https://www.radiodarom.co.il/",
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio",
-    "features": "/img/asia/israel/darom.png"
+    "features": "/img/asia/israel/darom.png",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Darom_97FM/Live/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "music, news"
   },
   "hamesh-995": {
     "title": "רדיו חם אש",
@@ -273,7 +549,15 @@
     "url": "https://www.995.co.il/",
     "cros": false,
     "stream": "https://995.livecdn.biz/995fm",
-    "features": "/img/asia/israel/hamesh-995.png"
+    "features": "/img/asia/israel/hamesh-995.png",
+    "streams": [
+      {
+        "url": "https://995.livecdn.biz/995fm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "non-stop": {
     "title": "רדיו ללא הפסקה",
@@ -281,7 +565,15 @@
     "url": "https://103fm.maariv.co.il/",
     "cros": false,
     "stream": "https://cdn.cybercdn.live/103FM/Live/icecast.audio",
-    "features": "/img/asia/israel/non-stop.png"
+    "features": "/img/asia/israel/non-stop.png",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/103FM/Live/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "joint": {
     "title": "Joint Radio Reggae",
@@ -290,7 +582,16 @@
     "cros": true,
     "stream": "https://jointil.com/stream-reggae",
     "features": "/img/asia/israel/joint.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/joint?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/joint?time=",
+    "streams": [
+      {
+        "url": "https://jointil.com/stream-reggae",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "dub, dub reggae, reggae, reggae pop, reggaeton"
   },
   "idc": {
     "title": "הרדיו הבינתחומי FM",
@@ -298,7 +599,15 @@
     "url": "https://1062fm.co.il/",
     "cros": false,
     "stream": "https://1062onair.idc.ac.il/idc123.mp3",
-    "features": "/img/asia/israel/idc.png"
+    "features": "/img/asia/israel/idc.png",
+    "streams": [
+      {
+        "url": "https://1062onair.idc.ac.il/idc123.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "orenu": {
     "title": "רדיו אורנו",
@@ -307,7 +616,15 @@
     "cros": false,
     "stream": "https://listen7.myradio24.com/orenu",
     "features": "/img/asia/israel/orenu.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/orenu?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/orenu?time=",
+    "streams": [
+      {
+        "url": "https://listen7.myradio24.com/orenu",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mizrahit": {
     "title": "רדיו מזרחית",
@@ -316,7 +633,15 @@
     "cros": false,
     "stream": "https://rdm.mediacast.co.il:7777/radiom",
     "features": "/img/asia/israel/mizrahit.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/mizrahit?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/mizrahit?time=",
+    "streams": [
+      {
+        "url": "https://rdm.mediacast.co.il:7777/radiom",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "2000-2610": {
     "title": "רדיו ערוץ 2000",
@@ -325,7 +650,15 @@
     "cros": false,
     "stream": "https://cdn.cybercdn.live/Radio2000/MP3/icecast.audio",
     "features": "/img/asia/israel/2000-2610.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/2000-2610?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/2000-2610?time=",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Radio2000/MP3/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "ashams": {
     "title": "רדיו א-שמס",
@@ -333,7 +666,15 @@
     "url": "https://www.ashams.com/",
     "cros": false,
     "stream": "https://cdna.streamgates.net/Ashams/Live/playlist.m3u8",
-    "features": "/img/asia/israel/ashams.png"
+    "features": "/img/asia/israel/ashams.png",
+    "streams": [
+      {
+        "url": "https://cdna.streamgates.net/Ashams/Live/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "soul-of-the-caucasus": {
     "title": "Soul of the Caucasus",
@@ -342,7 +683,15 @@
     "cros": true,
     "stream": "http://45.88.76.52:8000/live",
     "features": "/img/asia/israel/soul-of-the-caucasus.png",
-    "schedule": "https://api.webrad.io/data/playlist/137/soul-of-the-caucasus?time="
+    "schedule": "https://api.webrad.io/data/playlist/137/soul-of-the-caucasus?time=",
+    "streams": [
+      {
+        "url": "http://45.88.76.52:8000/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "emtsa-haderech": {
     "title": "רדיו תשעים - רדיו אמצע הדרך",
@@ -350,7 +699,15 @@
     "url": "http://live1.co.il/90fm/",
     "cros": false,
     "stream": "https://radio.streamgates.net/stream/90fm",
-    "features": "/img/asia/israel/emtsa-haderech.png"
+    "features": "/img/asia/israel/emtsa-haderech.png",
+    "streams": [
+      {
+        "url": "https://radio.streamgates.net/stream/90fm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kol-yizrael-106fm": {
     "title": "רדיו קול יזרעאל",
@@ -358,7 +715,15 @@
     "url": "",
     "cros": false,
     "stream": "https://radio.streamgates.net/stream/yezreel",
-    "features": "/img/asia/israel/kol-yizrael-106fm.png"
+    "features": "/img/asia/israel/kol-yizrael-106fm.png",
+    "streams": [
+      {
+        "url": "https://radio.streamgates.net/stream/yezreel",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "bbvostok": {
     "title": "רדיו בוכרי ב.ב. ווסטוק",
@@ -366,6 +731,1116 @@
     "url": "https://bbvostok.com/",
     "cros": false,
     "stream": "https://liveradio.co.il:1100/stream/1/",
-    "features": "/img/asia/israel/bbvostok.png"
+    "features": "/img/asia/israel/bbvostok.png",
+    "streams": [
+      {
+        "url": "https://liveradio.co.il:1100/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "glglz": {
+    "title": "Glglz",
+    "type": "audio/mpeg",
+    "url": "https://glz.co.il/%D7%92%D7%9C%D7%92%D7%9C%D7%A6",
+    "cros": false,
+    "stream": "https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE",
+    "streams": [
+      {
+        "url": "https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:29cd4b62-14e2-11e9-a80b-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/israel/glglz.png",
+    "source": "radio-browser:29cd4b62-14e2-11e9-a80b-52543be04c81"
+  },
+  "a-shams": {
+    "title": "اذاعة الشمس - A-Shams",
+    "description": "ilstations",
+    "type": "audio/aac",
+    "url": "https://www.ashams.com/",
+    "cros": false,
+    "stream": "https://cdna.streamgates.net/Ashams/Live/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdna.streamgates.net/Ashams/Live/icecast.audio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:3b20727f-de34-40b3-84ba-f7ba1ed9821b"
+      }
+    ],
+    "features": "/img/asia/israel/a-shams.png",
+    "source": "radio-browser:3b20727f-de34-40b3-84ba-f7ba1ed9821b"
+  },
+  "radios-100fm": {
+    "title": "Radios 100FM",
+    "description": "workout",
+    "type": "audio/aac",
+    "url": "http://digital.100fm.co.il/#100fm",
+    "cros": true,
+    "stream": "http://gb25.streamgates.net/radios-audio/100Workout/icecast.audio",
+    "streams": [
+      {
+        "url": "http://gb25.streamgates.net/radios-audio/100Workout/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:962f863e-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/israel/radios-100fm.png",
+    "source": "radio-browser:962f863e-0601-11e8-ae97-52543be04c81"
+  },
+  "glglz-fc22f9c5": {
+    "title": "גלגלצ - Glglz",
+    "description": "ilstations",
+    "type": "audio/mpeg",
+    "url": "https://glz.co.il/%D7%92%D7%9C%D7%92%D7%9C%D7%A6",
+    "cros": true,
+    "stream": "http://glzwizzlv.bynetcdn.com/glglz_mp3",
+    "streams": [
+      {
+        "url": "http://glzwizzlv.bynetcdn.com/glglz_mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fc22f9c5-efa0-4099-9e37-c1d3448c25ce"
+      }
+    ],
+    "features": "/img/asia/israel/glglz-fc22f9c5.png",
+    "source": "radio-browser:fc22f9c5-efa0-4099-9e37-c1d3448c25ce"
+  },
+  "tel-aviv-102fm": {
+    "title": "תל אביב Tel Aviv 102FM",
+    "description": "hebrew, ilstations, israeli pop, pop, tel aviv",
+    "type": "audio/aac",
+    "url": "http://102fm.co.il/",
+    "cros": true,
+    "stream": "http://102.livecdn.biz/102fm_aac",
+    "streams": [
+      {
+        "url": "http://102.livecdn.biz/102fm_aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:82333dc7-7622-4cf1-a8d8-2068e0b79ec9"
+      }
+    ],
+    "features": "/img/asia/israel/tel-aviv-102fm.png",
+    "source": "radio-browser:82333dc7-7622-4cf1-a8d8-2068e0b79ec9"
+  },
+  "jewish-music-stream": {
+    "title": "Jewish Music Stream",
+    "type": "audio/mpeg",
+    "url": "https://jewishmusicstream.com/",
+    "cros": false,
+    "stream": "https://stream.jewishmusicstream.com:8000/",
+    "streams": [
+      {
+        "url": "https://stream.jewishmusicstream.com:8000/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:006ffcf8-e541-11e8-a9cc-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/israel/jewish-music-stream.png",
+    "source": "radio-browser:006ffcf8-e541-11e8-a9cc-52543be04c81"
+  },
+  "noshmim-mizrahit": {
+    "title": "נושמים מזרחית - Noshmim Mizrahit",
+    "description": "ilstations, oriental, מזרחי",
+    "type": "audio/mpeg",
+    "url": "http://www.mizrahit.fm/",
+    "cros": true,
+    "stream": "http://www.rs.mizrahit.fm:7777/",
+    "streams": [
+      {
+        "url": "http://www.rs.mizrahit.fm:7777/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:60f56ca4-3e39-45a6-ad94-cee362330fd5"
+      }
+    ],
+    "features": "/img/asia/israel/noshmim-mizrahit.png",
+    "source": "radio-browser:60f56ca4-3e39-45a6-ad94-cee362330fd5"
+  },
+  "galgalatz-91-8-fm": {
+    "title": "Galgalatz 91.8 FM",
+    "description": "hits, pop, world",
+    "type": "audio/mpeg",
+    "url": "https://glz.co.il/%D7%92%D7%9C%D7%92%D7%9C%D7%A6",
+    "cros": false,
+    "stream": "https://glzicylv01.bynetcdn.com/glglz_mp3",
+    "streams": [
+      {
+        "url": "https://glzicylv01.bynetcdn.com/glglz_mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:8407749b-aa65-4aee-b503-bd6e196bea9d"
+      }
+    ],
+    "features": "/img/asia/israel/galgalatz-91-8-fm.png",
+    "source": "radio-browser:8407749b-aa65-4aee-b503-bd6e196bea9d"
+  },
+  "100fm-100-movies": {
+    "title": "100fm - 100% Movies",
+    "description": "movie music, music, pop",
+    "type": "audio/aac",
+    "url": "https://superradio.cc/",
+    "cros": true,
+    "stream": "http://gb25.streamgates.net/radios-audio/100Movies/icecast.audio",
+    "streams": [
+      {
+        "url": "http://gb25.streamgates.net/radios-audio/100Movies/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:49aa910d-859e-4f2b-a1ca-04f163de07bb"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:49aa910d-859e-4f2b-a1ca-04f163de07bb"
+  },
+  "galey-yisrael": {
+    "title": "גלי ישראל Galey Yisrael",
+    "description": "news",
+    "type": "audio/mpeg",
+    "url": "http://www.gly.co.il/",
+    "cros": false,
+    "stream": "https://cdn.cybercdn.live/Galei_Israel/Live/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Galei_Israel/Live/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c7a3001d-f31b-4f7a-90fe-ea4b689150e9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c7a3001d-f31b-4f7a-90fe-ea4b689150e9"
+  },
+  "joint-radio-blues-rock": {
+    "title": "#joint radio Blues Rock",
+    "description": "60s, 70s, 80s, alternative rock, bluegrass",
+    "type": "audio/mpeg",
+    "url": "https://www.jointil.com/",
+    "cros": false,
+    "stream": "https://jointil.com/stream-blues",
+    "streams": [
+      {
+        "url": "https://jointil.com/stream-blues",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:13d86ff8-058f-44e6-ba21-ccd065fb5dca"
+      }
+    ],
+    "features": "/img/asia/israel/joint-radio-blues-rock.png",
+    "source": "radio-browser:13d86ff8-058f-44e6-ba21-ccd065fb5dca"
+  },
+  "kabbalah-rus": {
+    "title": "קבלה לעם רוסית - Kabbalah rus",
+    "description": "ilstations",
+    "type": "audio/mpeg",
+    "url": "http://www.kab.info/",
+    "cros": true,
+    "stream": "http://icecast.kab.tv/live1-rus-574bcfd5.mp3",
+    "streams": [
+      {
+        "url": "http://icecast.kab.tv/live1-rus-574bcfd5.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:b0bb7dd9-f47a-4da3-9546-ad7fb54c19ca"
+      }
+    ],
+    "features": "/img/asia/israel/kabbalah-rus.png",
+    "source": "radio-browser:b0bb7dd9-f47a-4da3-9546-ad7fb54c19ca"
+  },
+  "radios-100fm-100-oldies": {
+    "title": "Radios 100FM - 100% Oldies",
+    "description": "oldies",
+    "type": "audio/aac",
+    "url": "http://digital.100fm.co.il/#oldies",
+    "cros": true,
+    "stream": "http://gb25.streamgates.net/radios-audio/100Oldies/icecast.audio",
+    "streams": [
+      {
+        "url": "http://gb25.streamgates.net/radios-audio/100Oldies/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:f4318e61-7d93-4d94-9de3-c7f93f73e585"
+      }
+    ],
+    "features": "/img/asia/israel/radios-100fm-100-oldies.png",
+    "source": "radio-browser:f4318e61-7d93-4d94-9de3-c7f93f73e585"
+  },
+  "eco-99fm": {
+    "title": "אקו eco 99fm",
+    "description": "ilstations",
+    "type": "audio/aac",
+    "url": "http://eco99fm.maariv.co.il/",
+    "cros": true,
+    "stream": "http://99.mediacast.co.il/99fm_aac?hash=1559501510715.m4a",
+    "streams": [
+      {
+        "url": "http://99.mediacast.co.il/99fm_aac?hash=1559501510715.m4a",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:63d80255-3707-4c84-a4de-3da487c5f2bf"
+      }
+    ],
+    "features": "/img/asia/israel/eco-99fm.png",
+    "source": "radio-browser:63d80255-3707-4c84-a4de-3da487c5f2bf"
+  },
+  "joint-radio-beat-trance": {
+    "title": "#joint radio Beat Trance",
+    "description": "ambient, edm, edm radioshows, electronic, electronic music",
+    "type": "audio/mpeg",
+    "url": "https://www.jointil.com/",
+    "cros": false,
+    "stream": "https://jointil.com/stream-beat",
+    "streams": [
+      {
+        "url": "https://jointil.com/stream-beat",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0324180d-596a-4b6b-a486-67e606e23d36"
+      }
+    ],
+    "features": "/img/asia/israel/joint-radio-beat-trance.png",
+    "source": "radio-browser:0324180d-596a-4b6b-a486-67e606e23d36"
+  },
+  "israeli-voice-radio": {
+    "title": "Israeli voice radio",
+    "type": "audio/aac",
+    "url": "https://israelivoiceradio.co.il/",
+    "cros": false,
+    "stream": "https://icecast.live/ivr",
+    "streams": [
+      {
+        "url": "https://icecast.live/ivr",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:2687dea7-8484-4156-ae36-5aa5ca56bc7b"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:2687dea7-8484-4156-ae36-5aa5ca56bc7b",
+    "description": "60's, 70's, 80's, 90's pop, rock and ballads"
+  },
+  "kol-chai-music": {
+    "title": "קול חי מיוזיק - Kol Chai Music",
+    "description": "israel, orthodox, דתי",
+    "type": "audio/aac",
+    "url": "https://kcm.fm/",
+    "cros": false,
+    "stream": "https://media2.93fm.co.il/livemusic",
+    "streams": [
+      {
+        "url": "https://media2.93fm.co.il/livemusic",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:6698d366-17a6-4969-a28e-185c8dc1f91b"
+      }
+    ],
+    "features": "/img/asia/israel/kol-chai-music.png",
+    "source": "radio-browser:6698d366-17a6-4969-a28e-185c8dc1f91b"
+  },
+  "kan-bet": {
+    "title": "Kan Bet",
+    "description": "news",
+    "type": "audio/mpeg",
+    "url": "https://www.kan.org.il/",
+    "cros": false,
+    "stream": "https://28563.live.streamtheworld.com/KAN_BET.mp3",
+    "streams": [
+      {
+        "url": "https://28563.live.streamtheworld.com/KAN_BET.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c2b724db-9ddb-41e2-b190-324014c55467"
+      }
+    ],
+    "features": "/img/asia/israel/kan-bet.png",
+    "source": "radio-browser:c2b724db-9ddb-41e2-b190-324014c55467"
+  },
+  "kabbalah-fr": {
+    "title": "Kabbalah Fr",
+    "description": "cabale, kabbalah, kabbale",
+    "type": "audio/mpeg",
+    "url": "http://www.kab.info/",
+    "cros": true,
+    "stream": "http://icecast.kab.tv/live1-spa-574bcfd5.mp3",
+    "streams": [
+      {
+        "url": "http://icecast.kab.tv/live1-spa-574bcfd5.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fe0b12d8-2953-11e9-a80b-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:fe0b12d8-2953-11e9-a80b-52543be04c81"
+  },
+  "kol-hashfela": {
+    "title": "קול השפלה - Kol Hashfela",
+    "description": "ilstations",
+    "type": "audio/aac",
+    "url": "https://www.1036kh.com/",
+    "cros": true,
+    "stream": "http://1036kh.cdnwz.net/1036kh",
+    "streams": [
+      {
+        "url": "http://1036kh.cdnwz.net/1036kh",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:e13d3c86-a635-436d-96a8-cde0fe08a4d0"
+      }
+    ],
+    "features": "/img/asia/israel/kol-hashfela.png",
+    "source": "radio-browser:e13d3c86-a635-436d-96a8-cde0fe08a4d0"
+  },
+  "kabbalah-eng": {
+    "title": "קבלה לעם אנגלית - Kabbalah eng",
+    "description": "ilstations",
+    "type": "audio/mpeg",
+    "url": "http://www.kab.info/",
+    "cros": true,
+    "stream": "http://icecast.kab.tv/live1-eng-574bcfd5.mp3",
+    "streams": [
+      {
+        "url": "http://icecast.kab.tv/live1-eng-574bcfd5.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:8c009e29-7a57-4695-9bd7-7ed39b5dd470"
+      }
+    ],
+    "features": "/img/asia/israel/kabbalah-eng.png",
+    "source": "radio-browser:8c009e29-7a57-4695-9bd7-7ed39b5dd470"
+  },
+  "radios-100fm-100-80s": {
+    "title": "Radios 100FM - 100% 80s",
+    "description": "1980s, 80's",
+    "type": "audio/aac",
+    "url": "http://digital.100fm.co.il/#s80",
+    "cros": true,
+    "stream": "http://gb25.streamgates.net/radios-audio/10080s/icecast.audio",
+    "streams": [
+      {
+        "url": "http://gb25.streamgates.net/radios-audio/10080s/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:e24a4c7d-c489-413b-a337-60a6c252444f"
+      }
+    ],
+    "features": "/img/asia/israel/radios-100fm-100-80s.png",
+    "source": "radio-browser:e24a4c7d-c489-413b-a337-60a6c252444f"
+  },
+  "guitar-j-williams": {
+    "title": "GUITAR - J. WILLIAMS",
+    "type": "audio/mpeg",
+    "url": "https://www.radio-addict.com/es/streaming/il",
+    "cros": true,
+    "stream": "http://drive.uber.radio/uber/crjohnwilliamsguitarist/icecast.audio",
+    "streams": [
+      {
+        "url": "http://drive.uber.radio/uber/crjohnwilliamsguitarist/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:d902048f-5fcf-445a-9494-77d74dee9e43"
+      }
+    ],
+    "features": "/img/asia/israel/guitar-j-williams.png",
+    "source": "radio-browser:d902048f-5fcf-445a-9494-77d74dee9e43"
+  },
+  "hakatze": {
+    "title": "הקצה - Hakatze",
+    "description": "ilstations",
+    "type": "audio/mpeg",
+    "url": "https://kzradio.net/",
+    "cros": true,
+    "stream": "http://kzradio.mediacast.co.il/kzradio_live/kzradio/icecast.audio",
+    "streams": [
+      {
+        "url": "http://kzradio.mediacast.co.il/kzradio_live/kzradio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:80d7414f-1ff8-4c1a-b081-6888a7bcf564"
+      }
+    ],
+    "features": "/img/asia/israel/hakatze.png",
+    "source": "radio-browser:80d7414f-1ff8-4c1a-b081-6888a7bcf564"
+  },
+  "radio-100-90s": {
+    "title": "Radio 100% 90s",
+    "description": "90s, classic hits, dance, oldies",
+    "type": "audio/aac",
+    "url": "https://digital.100fm.co.il/",
+    "cros": false,
+    "stream": "https://gb25.streamgates.net/radios-audio/10090s/icecast.audio",
+    "streams": [
+      {
+        "url": "https://gb25.streamgates.net/radios-audio/10090s/icecast.audio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:692ae6f6-a6bd-4b69-991c-818a674b0e20"
+      }
+    ],
+    "features": "/img/asia/israel/radio-100-90s.png",
+    "source": "radio-browser:692ae6f6-a6bd-4b69-991c-818a674b0e20"
+  },
+  "avivmedia": {
+    "title": "AVIVmedia",
+    "description": "electronic, trance",
+    "type": "audio/mpeg",
+    "url": "https://www.avivmedia.com/",
+    "cros": true,
+    "stream": "http://176.9.7.145:8127/stream",
+    "streams": [
+      {
+        "url": "http://176.9.7.145:8127/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:1a524655-ad7a-454b-ac8d-855188b740a3"
+      },
+      {
+        "url": "https://equinox.shoutca.st/tunein/avivmediafm.pls",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/israel/avivmedia.png",
+    "source": "radio-browser:1a524655-ad7a-454b-ac8d-855188b740a3"
+  },
+  "kabbalah-heb": {
+    "title": "קבלה לעם עברית - Kabbalah heb",
+    "description": "ilstations",
+    "type": "audio/mpeg",
+    "url": "http://www.kab.info/",
+    "cros": true,
+    "stream": "http://icecast.kab.tv/live1-heb-574bcfd5.mp3",
+    "streams": [
+      {
+        "url": "http://icecast.kab.tv/live1-heb-574bcfd5.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:268e07ee-b1b5-4604-9b13-53c6e167abad"
+      }
+    ],
+    "features": "/img/asia/israel/kabbalah-heb.png",
+    "source": "radio-browser:268e07ee-b1b5-4604-9b13-53c6e167abad"
+  },
+  "radio-nas": {
+    "title": "Radio Nas",
+    "type": "audio/aac",
+    "url": "https://nasradio.fm/",
+    "cros": false,
+    "stream": "https://cdna.streamgates.net/RadioNas/Live-Audio/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdna.streamgates.net/RadioNas/Live-Audio/icecast.audio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:12bdb972-b398-4b3b-b7bd-c960ee884b78"
+      }
+    ],
+    "features": "/img/asia/israel/radio-nas.png",
+    "source": "radio-browser:12bdb972-b398-4b3b-b7bd-c960ee884b78"
+  },
+  "kabbalah-fre": {
+    "title": "קבלה לעם צרפתית - Kabbalah fre",
+    "description": "ilstations",
+    "type": "audio/mpeg",
+    "url": "http://www.kab.info/",
+    "cros": true,
+    "stream": "http://icecast.kab.tv/live1-fre-574bcfd5.mp3",
+    "streams": [
+      {
+        "url": "http://icecast.kab.tv/live1-fre-574bcfd5.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7be389c9-5e57-46ec-a607-c8dbb04b0f4e"
+      }
+    ],
+    "features": "/img/asia/israel/kabbalah-fre.png",
+    "source": "radio-browser:7be389c9-5e57-46ec-a607-c8dbb04b0f4e"
+  },
+  "glz": {
+    "title": "Glz",
+    "type": "audio/mpeg",
+    "url": "https://glz.co.il/",
+    "cros": true,
+    "stream": "http://glzwizzlv.bynetcdn.com/glz_mp3?awCollectionId=misc&awEpisodeId=glz",
+    "streams": [
+      {
+        "url": "http://glzwizzlv.bynetcdn.com/glz_mp3?awCollectionId=misc&awEpisodeId=glz",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:2f605613-f5f8-4c8f-8edc-c7c3945023fb"
+      }
+    ],
+    "features": "/img/asia/israel/glz.png",
+    "source": "radio-browser:2f605613-f5f8-4c8f-8edc-c7c3945023fb"
+  },
+  "assalam": {
+    "title": ".assalam",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radios.org.il",
+    "cros": false,
+    "stream": "https://backup.qurango.net/radio/ahmad_khader_altarabulsi",
+    "streams": [
+      {
+        "url": "https://backup.qurango.net/radio/ahmad_khader_altarabulsi",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bf1cebbf-a58d-41a4-95f2-8abd5e50f6bf"
+      }
+    ],
+    "features": "/img/asia/israel/assalam.png",
+    "source": "radio-browser:bf1cebbf-a58d-41a4-95f2-8abd5e50f6bf"
+  },
+  "radioplus": {
+    "title": "RadioPlus",
+    "type": "audio/mpeg",
+    "url": "https://www.radioplus.co.il/",
+    "cros": true,
+    "stream": "http://s3.yesstreaming.net:7049/stream",
+    "streams": [
+      {
+        "url": "http://s3.yesstreaming.net:7049/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:e35759c0-9e8f-422d-8da4-46d032c64e4e"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:e35759c0-9e8f-422d-8da4-46d032c64e4e"
+  },
+  "ze-rock-radio": {
+    "title": "Ze Rock Radio",
+    "description": "indy, metal, post punk, punk, rock",
+    "type": "audio/mpeg",
+    "url": "https://zerockradio.com/",
+    "cros": false,
+    "stream": "https://icecast.live/proxy/zerock/zerock",
+    "streams": [
+      {
+        "url": "https://icecast.live/proxy/zerock/zerock",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e77ab056-eda4-4438-8e0f-6e8522e75343"
+      }
+    ],
+    "features": "/img/asia/israel/ze-rock-radio.png",
+    "source": "radio-browser:e77ab056-eda4-4438-8e0f-6e8522e75343"
+  },
+  "radio-nahariya": {
+    "title": "Radio Nahariya",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www.radionahariya.com/",
+    "cros": false,
+    "stream": "https://cast.radionahariya.com:8443/main.mp3",
+    "streams": [
+      {
+        "url": "https://cast.radionahariya.com:8443/main.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:508a19e3-3d7b-4b0c-9d75-cb7c228522b0"
+      }
+    ],
+    "features": "/img/asia/israel/radio-nahariya.png",
+    "source": "radio-browser:508a19e3-3d7b-4b0c-9d75-cb7c228522b0"
+  },
+  "radio-qualita": {
+    "title": "Radio Qualita",
+    "type": "audio/mpeg",
+    "url": "https://www.studioqualita.com/",
+    "cros": false,
+    "stream": "https://www.radioking.com/play/radio-qualita",
+    "streams": [
+      {
+        "url": "https://www.radioking.com/play/radio-qualita",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:66ddc564-98ec-4901-a9e7-91fc2e64fcaa"
+      }
+    ],
+    "features": "/img/asia/israel/radio-qualita.png",
+    "source": "radio-browser:66ddc564-98ec-4901-a9e7-91fc2e64fcaa"
+  },
+  "radio-haifa": {
+    "title": "Radio Haifa רדיו חיפה",
+    "type": "audio/aac",
+    "url": "https://1075.fm/",
+    "cros": false,
+    "stream": "https://1075.livecdn.biz/radiohaifa",
+    "streams": [
+      {
+        "url": "https://1075.livecdn.biz/radiohaifa",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:4a3e0c55-774e-47db-929b-e8841d38a871"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:4a3e0c55-774e-47db-929b-e8841d38a871"
+  },
+  "kan-gimel": {
+    "title": "KAN Gimel כאן גימל",
+    "type": "audio/mpeg",
+    "url": "https://www.kan.org.il/content/kan/kan-gimel/",
+    "cros": false,
+    "stream": "https://27873.live.streamtheworld.com/KAN_GIMMEL.mp3",
+    "streams": [
+      {
+        "url": "https://27873.live.streamtheworld.com/KAN_GIMMEL.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e8c19fc3-7409-4999-a9dd-b3d81cf934ed"
+      }
+    ],
+    "features": "/img/asia/israel/kan-gimel.png",
+    "source": "radio-browser:e8c19fc3-7409-4999-a9dd-b3d81cf934ed"
+  },
+  "101-5fm": {
+    "title": "101.5fm רדיו התחנה",
+    "description": "music",
+    "type": "audio/aac",
+    "url": "https://www.hatahana.co.il/",
+    "cros": false,
+    "stream": "https://cdn.cybercdn.live/Hatahana_1015/Live_Audio/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Hatahana_1015/Live_Audio/icecast.audio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:b42c9d1b-22c2-41a0-b13c-207a8c92f982"
+      }
+    ],
+    "features": "/img/asia/israel/101-5fm.png",
+    "source": "radio-browser:b42c9d1b-22c2-41a0-b13c-207a8c92f982"
+  },
+  "kol-play": {
+    "title": "קול פליי | kol-play",
+    "type": "audio/aac",
+    "url": "https://kol-play.co.il/",
+    "cros": false,
+    "stream": "https://cdn.cybercdn.live/Kol_Barama/Music/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Kol_Barama/Music/icecast.audio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:712c3a1d-8387-4cf1-b354-4be74b153ee0"
+      }
+    ],
+    "features": "/img/asia/israel/kol-play.png",
+    "source": "radio-browser:712c3a1d-8387-4cf1-b354-4be74b153ee0"
+  },
+  "kan-bet-0dd41509": {
+    "title": "Kan Bet",
+    "description": "news",
+    "type": "audio/mpeg",
+    "url": "https://www.kan.org.il/",
+    "cros": false,
+    "stream": "https://25583.live.streamtheworld.com/KAN_BET.mp3?dist=bynetredirect&1737047133",
+    "streams": [
+      {
+        "url": "https://25583.live.streamtheworld.com/KAN_BET.mp3?dist=bynetredirect&1737047133",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0dd41509-199c-458c-84d5-44ed192ba9a8"
+      }
+    ],
+    "features": "/img/asia/israel/kan-bet-0dd41509.png",
+    "source": "radio-browser:0dd41509-199c-458c-84d5-44ed192ba9a8"
+  },
+  "radio-cs": {
+    "title": "#Radio CS",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radios.org.il",
+    "cros": false,
+    "stream": "https://n0a.radiojar.com/0tpy1h0kxtzuv?rj-ttl=5&rj-tok=AAABhdgGORQA-2acfyF3_4WY2g",
+    "streams": [
+      {
+        "url": "https://n0a.radiojar.com/0tpy1h0kxtzuv?rj-ttl=5&rj-tok=AAABhdgGORQA-2acfyF3_4WY2g",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7cee6800-7c93-497f-9c9d-7efc55756757"
+      }
+    ],
+    "features": "/img/asia/israel/radio-cs.png",
+    "source": "radio-browser:7cee6800-7c93-497f-9c9d-7efc55756757"
+  },
+  "kzradio": {
+    "title": "kzradio",
+    "type": "audio/mpeg",
+    "url": "https://kzradio.net/",
+    "cros": false,
+    "stream": "https://kzradio.mediacast.co.il/kzradio_live/kzradio/icecast.audio",
+    "streams": [
+      {
+        "url": "https://kzradio.mediacast.co.il/kzradio_live/kzradio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f520dfc7-dd5d-4c0e-a62f-9ab411e28b8b"
+      }
+    ],
+    "features": "/img/asia/israel/kzradio.png",
+    "source": "radio-browser:f520dfc7-dd5d-4c0e-a62f-9ab411e28b8b"
+  },
+  "kan-tarbut": {
+    "title": "Kan Tarbut",
+    "type": "audio/mpeg",
+    "url": "https://www.kan.org.il/content/kan/kan-tarbut/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_TARBUT.mp3?dist",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/KAN_TARBUT.mp3?dist",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:5f9d9e6b-20ff-4901-98bc-fd42bcbee477"
+      }
+    ],
+    "features": "/img/asia/israel/kan-tarbut.png",
+    "source": "radio-browser:5f9d9e6b-20ff-4901-98bc-fd42bcbee477"
+  },
+  "101-5fm-e673a4df": {
+    "title": "101.5fm נותנים למוזיקה לדבר רדיו דרום",
+    "type": "audio/mpeg",
+    "url": "https://1015.radiodarom.co.il/",
+    "cros": false,
+    "stream": "https://cdn.cybercdn.live/Darom_1015FM/Live/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Darom_1015FM/Live/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e673a4df-e224-4787-a8ec-52c391992bb6"
+      }
+    ],
+    "features": "/img/asia/israel/101-5fm-e673a4df.png",
+    "source": "radio-browser:e673a4df-e224-4787-a8ec-52c391992bb6"
+  },
+  "radio-lev-hamedina-241af301": {
+    "title": "Radio Lev Hamedina",
+    "type": "audio/mpeg",
+    "url": "https://www.facebook.com/LevHroob",
+    "cros": true,
+    "stream": "http://cdn.cybercdn.live/Lev_Hamedina/Audio/icecast.audio",
+    "streams": [
+      {
+        "url": "http://cdn.cybercdn.live/Lev_Hamedina/Audio/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:241af301-da67-417b-8267-f38177100b6d"
+      },
+      {
+        "url": "http://91fm.streamgates.net/Lev91Fm",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:241af301-da67-417b-8267-f38177100b6d"
+  },
+  "104-5fm-radio": {
+    "title": "104.5fm radio זשכםמ",
+    "description": "music, news",
+    "type": "audio/aac",
+    "url": "https://1045fm.maariv.co.il/",
+    "cros": false,
+    "stream": "https://radio.streamgates.net/stream/1045fm",
+    "streams": [
+      {
+        "url": "https://radio.streamgates.net/stream/1045fm",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:8cca0e0b-ccd9-416e-89cc-325ecc325f69"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:8cca0e0b-ccd9-416e-89cc-325ecc325f69"
+  },
+  "radio-sahar": {
+    "title": "Radio Sahar",
+    "description": "alternative rock, classic rock, hebrew, hip-hop, indie rock",
+    "type": "audio/mpeg",
+    "url": "https://radiosahar.co.il/",
+    "cros": false,
+    "stream": "https://live.ecast.co.il/stream/sahar/stream",
+    "streams": [
+      {
+        "url": "https://live.ecast.co.il/stream/sahar/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b5b9d7ed-2c9f-4f8a-98ac-440631f2b100"
+      }
+    ],
+    "features": "/img/asia/israel/radio-sahar.png",
+    "source": "radio-browser:b5b9d7ed-2c9f-4f8a-98ac-440631f2b100"
+  },
+  "radio-90fm": {
+    "title": "Radio 90FM",
+    "type": "audio/aac",
+    "url": "https://www.90fm.co.il/",
+    "cros": false,
+    "stream": "https://cdn.cybercdn.live/Emtza_Haderech/Live_Audio/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdn.cybercdn.live/Emtza_Haderech/Live_Audio/icecast.audio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:9443edb8-3a88-463d-9e61-b88de4727a4d"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9443edb8-3a88-463d-9e61-b88de4727a4d"
+  },
+  "ivri-6": {
+    "title": "Ivri 6",
+    "type": "audio/mpeg",
+    "url": "https://ivri6.net/",
+    "cros": false,
+    "stream": "https://streaming.radio.co/sa06221901/listen",
+    "streams": [
+      {
+        "url": "https://streaming.radio.co/sa06221901/listen",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b1a2d866-eeff-427f-9d92-f53b290e16c9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:b1a2d866-eeff-427f-9d92-f53b290e16c9"
+  },
+  "mizrahit-fm-best": {
+    "title": "Mizrahit FM Best",
+    "type": "audio/mpeg",
+    "url": "https://mizrahit.fm/",
+    "cros": true,
+    "stream": "http://rs.mizrahit.fm:7777/arabellavie",
+    "streams": [
+      {
+        "url": "http://rs.mizrahit.fm:7777/arabellavie",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:abfcd777-432c-4c66-b622-d8582080e743"
+      }
+    ],
+    "features": "/img/asia/israel/mizrahit-fm-best.png",
+    "source": "radio-browser:abfcd777-432c-4c66-b622-d8582080e743"
+  },
+  "audioversity": {
+    "title": "AudioVersity",
+    "type": "audio/mpeg",
+    "url": "https://1062fm.co.il/en/",
+    "cros": false,
+    "stream": "https://1062onair.runi.ac.il/idc123.mp3",
+    "streams": [
+      {
+        "url": "https://1062onair.runi.ac.il/idc123.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9687cb4b-6c60-429e-a7f0-28180e746075"
+      }
+    ],
+    "features": "/img/asia/israel/audioversity.png",
+    "source": "radio-browser:9687cb4b-6c60-429e-a7f0-28180e746075"
+  },
+  "star-33-radiostation": {
+    "title": "Star 33 Radiostation",
+    "type": "audio/mpeg",
+    "url": "https://online.star33radio.com/",
+    "cros": false,
+    "stream": "https://online.star33radio.com:1115/stream",
+    "streams": [
+      {
+        "url": "https://online.star33radio.com:1115/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:00355ea7-ab3b-4789-bc03-ebe0107015bf"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:00355ea7-ab3b-4789-bc03-ebe0107015bf"
+  },
+  "rak-musica": {
+    "title": "Rak Musica",
+    "type": "audio/aac",
+    "url": "https://rak-musica.webnode.be/",
+    "cros": false,
+    "stream": "https://play.radioking.io/rak-musica/670240",
+    "streams": [
+      {
+        "url": "https://play.radioking.io/rak-musica/670240",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:d81cba95-90cb-493c-b921-133ab74daa0f"
+      }
+    ],
+    "features": "/img/asia/israel/rak-musica.png",
+    "source": "radio-browser:d81cba95-90cb-493c-b921-133ab74daa0f"
+  },
+  "kol-hai": {
+    "title": "kol hai",
+    "type": "audio/aac",
+    "url": "https://live.kcm.fm/livemusic",
+    "cros": false,
+    "stream": "https://live.kcm.fm/livemusic",
+    "streams": [
+      {
+        "url": "https://live.kcm.fm/livemusic",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:ed1d2969-5c0e-4575-a0ac-dd76b29c9ddd"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:ed1d2969-5c0e-4575-a0ac-dd76b29c9ddd"
+  },
+  "kan-88": {
+    "title": "KAN 88",
+    "type": "application/x-mpegURL",
+    "url": "https://kan.org.il/",
+    "cros": false,
+    "stream": "https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/radio/kan_88/live.livx/playlist.m3u8?renditions&dvr=7200000",
+    "streams": [
+      {
+        "url": "https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/radio/kan_88/live.livx/playlist.m3u8?renditions&dvr=7200000",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:4add95c3-ddf9-49bc-9815-bb729d66c1f8"
+      }
+    ],
+    "features": "/img/asia/israel/kan-88.png",
+    "source": "radio-browser:4add95c3-ddf9-49bc-9815-bb729d66c1f8"
+  },
+  "radios-100fm-100-nostalgia": {
+    "title": "Radios 100FM - 100% Nostalgia",
+    "description": "nostalgia",
+    "type": "audio/aac",
+    "url": "https://digital.100fm.co.il/#Nostalgia",
+    "cros": false,
+    "stream": "https://gb25.streamgates.net/radios-audio/100Nostalgia/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://gb25.streamgates.net/radios-audio/100Nostalgia/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:186c4d9b-28bc-4b95-b4ba-b342752dc7f5"
+      }
+    ],
+    "features": "/img/asia/israel/radios-100fm-100-nostalgia.png",
+    "source": "radio-browser:186c4d9b-28bc-4b95-b4ba-b342752dc7f5"
+  },
+  "eco-99fm-dd08fbb3": {
+    "title": "Eco 99fm",
+    "description": "music, talk",
+    "type": "audio/aac",
+    "url": "https://eco99fm.maariv.co.il/",
+    "cros": false,
+    "stream": "https://eco01.livecdn.biz/ecolive/99fm_aac/icecast.audio?hash=1559501510715.m4a",
+    "streams": [
+      {
+        "url": "https://eco01.livecdn.biz/ecolive/99fm_aac/icecast.audio?hash=1559501510715.m4a",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:dd08fbb3-277e-4a49-9866-7fd6c21bb124"
+      }
+    ],
+    "features": "/img/asia/israel/eco-99fm-dd08fbb3.png",
+    "source": "radio-browser:dd08fbb3-277e-4a49-9866-7fd6c21bb124"
+  },
+  "kan-reka": {
+    "title": "כאן רקע Kan Reka",
+    "description": "amharic, foreign languages, international, israel, jewish",
+    "type": "application/x-mpegURL",
+    "url": "https://www.kan.org.il/content/kan/kan-reka/",
+    "cros": false,
+    "stream": "https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/radio/kan_reka/live.livx/playlist.m3u8?renditions",
+    "streams": [
+      {
+        "url": "https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/radio/kan_reka/live.livx/playlist.m3u8?renditions",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:20818139-130d-4179-abba-a8020933ab19"
+      }
+    ],
+    "features": "/img/asia/israel/kan-reka.png",
+    "source": "radio-browser:20818139-130d-4179-abba-a8020933ab19"
+  },
+  "nachman": {
+    "title": "Nachman",
+    "type": "audio/aac",
+    "url": "https://breslevforyou.co.il/",
+    "cros": false,
+    "stream": "https://cast.breslevforyou.co.il/listen/radiobreslev/radio.mp3",
+    "streams": [
+      {
+        "url": "https://cast.breslevforyou.co.il/listen/radiobreslev/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a46e3a39-40cc-441f-b9f6-9fbaecaa4de3"
+      }
+    ],
+    "features": "/img/asia/israel/nachman.png",
+    "source": "radio-browser:a46e3a39-40cc-441f-b9f6-9fbaecaa4de3"
+  },
+  "abdulbasit-abdulsamad": {
+    "title": "Abdulbasit Abdulsamad",
+    "type": "audio/aac",
+    "url": "https://mp3islam.com/",
+    "cros": false,
+    "stream": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:4e044620-577e-4622-8114-461d2b1d55bf"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:4e044620-577e-4622-8114-461d2b1d55bf"
+  },
+  "radio-france-israel": {
+    "title": "Radio France Israël",
+    "type": "audio/mpeg",
+    "url": "https://radiofranceisrael.com/",
+    "cros": false,
+    "stream": "https://stream10.vestaradio.com/Radio-France-Israel",
+    "streams": [
+      {
+        "url": "https://stream10.vestaradio.com/Radio-France-Israel",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:353e22a8-1026-4b8e-bef4-5b94b91f049d"
+      }
+    ],
+    "features": "/img/asia/israel/radio-france-israel.png",
+    "source": "radio-browser:353e22a8-1026-4b8e-bef4-5b94b91f049d"
+  },
+  "radios-nostalgia-96-3fm": {
+    "title": "Radios Nostalgia 96.3FM (רדיוס נוסטלגי)",
+    "type": "audio/mpeg",
+    "url": "https://www.963fm.co.il/",
+    "cros": false,
+    "stream": "https://cdna.streamgates.net/radios-audio/Nostalgia_963fm/icecast.audio",
+    "streams": [
+      {
+        "url": "https://cdna.streamgates.net/radios-audio/Nostalgia_963fm/icecast.audio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d60c0b3d-d41e-46c1-9bdd-593bd811881b"
+      }
+    ],
+    "features": "/img/asia/israel/radios-nostalgia-96-3fm.png",
+    "source": "radio-browser:d60c0b3d-d41e-46c1-9bdd-593bd811881b"
   }
 }

@@ -106,14 +106,14 @@ const world = {
       "flag": "/img/asia/flags/viet-nam.png",
       "data": "/assets/radio/asia/viet-nam.json",
       "timezone": "Asia/Ho_Chi_Minh",
-      "station": 0
+      "station": 103
     },
     "singapore": {
       "name": "world.asia.singapore",
       "flag": "/img/asia/flags/singapore.png",
       "data": "/assets/radio/asia/singapore.json",
       "timezone": "Asia/Singapore",
-      "station": 0
+      "station": 87
     },
     "korea": {
       "name": "world.asia.korea",
@@ -155,7 +155,7 @@ const world = {
       "flag": "/img/asia/flags/philippines.png",
       "data": "/assets/radio/asia/philippines.json",
       "timezone": "Asia/Manila",
-      "station": 0
+      "station": 126
     },
     "indonesia": {
       "name": "world.asia.indonesia",
@@ -204,14 +204,14 @@ const world = {
       "flag": "/img/asia/flags/israel.png",
       "data": "/assets/radio/asia/israel.json",
       "timezone": "Asia/Jerusalem",
-      "station": 0
+      "station": 105
     },
     "sri-lanka": {
       "name": "world.asia.sri_lanka",
       "flag": "/img/asia/flags/sri-lanka.png",
       "data": "/assets/radio/asia/sri-lanka.json",
       "timezone": "Asia/Colombo",
-      "station": 0
+      "station": 89
     },
     "nepal": {
       "name": "world.asia.nepal",
