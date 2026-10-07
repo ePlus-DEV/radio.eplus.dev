@@ -188,11 +188,11 @@ test("polishSlug handles Polish country names used by mWyniki", () => {
 test("getMwynikiCountryPage builds the national-team page from country code", () => {
   assert.equal(
     getMwynikiCountryPage({ slug: "lithuania" }, { cca2: "LT" }),
-    "https://www.mwyniki.pl/litwa//druzyny/litwa_1/",
+    "https://www.mwyniki.pl/litwa/",
   );
   assert.equal(
     getMwynikiCountryPage({ slug: "latvia" }, { cca2: "LV" }),
-    "https://www.mwyniki.pl/lotwa//druzyny/lotwa_1/",
+    "https://www.mwyniki.pl/lotwa/",
   );
 });
 

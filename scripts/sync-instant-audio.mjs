@@ -598,7 +598,7 @@ export function getMwynikiCountryPage(country, metadata = {}) {
   );
 
   return slug
-    ? `${MWYNIKI_BASE}/${slug}//druzyny/${slug}_1/`
+    ? `${MWYNIKI_BASE}/${slug}/`
     : "";
 }
 
@@ -609,15 +609,14 @@ export function extractMwynikiFlagUrl(html, pageUrl) {
 
   while ((match = imageRegex.exec(source))) {
     const tag = match[0];
-    const alt = tag.match(/\balt=["']([^"']*)["']/i)?.[1] || "";
-    if (!/^logo\s+/i.test(alt.trim())) continue;
-
     const src =
       tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] ||
       tag.match(/\bdata-src=["']([^"']+)["']/i)?.[1] ||
       "";
 
-    if (!src) continue;
+    if (!src || !/\/images\/responsive\/flags\/\d+\.png(?:[?#].*)?$/i.test(src)) {
+      continue;
+    }
 
     try {
       return new URL(src, pageUrl).toString();
