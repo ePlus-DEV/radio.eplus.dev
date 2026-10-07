@@ -976,32 +976,34 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
   const homepage =
     /^https?:\/\//i.test(String(homepageUrl || ""))
       ? String(homepageUrl)
-      : country.domain + "/";
+      : "";
 
   const preferred = await tryDownloadStationImage(
     country,
     stationSlug,
     preferredImage,
-    homepage,
+    homepage || country.domain + "/",
   );
   if (preferred) return preferred;
 
   const candidates = [];
-  try {
-    const page = await fetchWithRetry(homepage, {
-      timeoutMs: 6000,
-      headers: {
-        accept: "text/html,application/xhtml+xml",
-        referer: country.domain + "/"
-      }
-    }, 1);
-    const html = await page.text();
-    candidates.push(...extractStationImageCandidates(html, homepage));
-  } catch (error) {
-    runStats.homepageArtworkFailures += 1;
-    console.warn(
-      `[instant.audio] Unable to inspect homepage artwork for ${country.slug}/${stationSlug}: ${error.message}`,
-    );
+  if (homepage) {
+    try {
+      const page = await fetchWithRetry(homepage, {
+        timeoutMs: 6000,
+        headers: {
+          accept: "text/html,application/xhtml+xml",
+          referer: country.domain + "/"
+        }
+      }, 1);
+      const html = await page.text();
+      candidates.push(...extractStationImageCandidates(html, homepage));
+    } catch (error) {
+      runStats.homepageArtworkFailures += 1;
+      console.warn(
+        `[instant.audio] Unable to inspect homepage artwork for ${country.slug}/${stationSlug}: ${error.message}`,
+      );
+    }
   }
 
   for (const candidate of candidates) {
@@ -1265,7 +1267,7 @@ async function syncFromRadioBrowser(country, metadata) {
             country,
             slug,
             String(item.favicon || ""),
-            String(item.homepage || country.domain),
+            String(item.homepage || ""),
           ),
           source: `radio-browser:${item.stationuuid || slug}`,
         },
