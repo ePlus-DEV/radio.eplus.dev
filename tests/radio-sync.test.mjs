@@ -63,7 +63,13 @@ test("mergeStations skips duplicate stream URLs", () => {
   const result = mergeStations(existing, discovered);
 
   assert.equal(result.added, 0);
-  assert.deepEqual(result.stations, existing);
+  assert.equal(Object.keys(result.stations).length, 1);
+  assert.equal(result.stations.alpha.stream, "https://stream.example/live/");
+  assert.equal(result.stations.alpha.favorite, true);
+  assert.deepEqual(
+    result.stations.alpha.streams.map((item) => item.url),
+    ["https://stream.example/live/"],
+  );
 });
 
 test("mergeStations does not create a second favorite", () => {
