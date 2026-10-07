@@ -13,6 +13,7 @@ import {
   mergeStations,
   normalizeStationStreams,
   normalizeStreamIdentity,
+  normalizeVietMapAddress,
   stationArtworkConvertArgs,
   resolveCountryTimezone,
 } from "../scripts/sync-instant-audio.mjs";
@@ -356,4 +357,70 @@ test("classifyStationArtwork flags legacy external artwork for normalization", (
       needs_reprocess: true,
     },
   );
+});
+
+
+test("normalizeVietMapAddress keeps the old three-level administrative hierarchy", () => {
+  const result = normalizeVietMapAddress(
+    {
+      display: "123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh",
+      name: "123 Nguyễn Huệ",
+      boundaries: [
+        { type: 0, id: 12, full_name: "Thành Phố Hồ Chí Minh" },
+        { type: 1, id: 760, full_name: "Quận 1" },
+        { type: 2, id: 26734, full_name: "Phường Bến Nghé" },
+      ],
+    },
+    { legacy: true },
+  );
+
+  assert.equal(result.full, "123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh");
+  assert.deepEqual(result.province, { id: 12, name: "Thành Phố Hồ Chí Minh" });
+  assert.deepEqual(result.district, { id: 760, name: "Quận 1" });
+  assert.deepEqual(result.ward, { id: 26734, name: "Phường Bến Nghé" });
+});
+
+test("normalizeVietMapAddress omits district for the current two-level hierarchy", () => {
+  const result = normalizeVietMapAddress({
+    display: "123 Nguyễn Huệ, Phường Sài Gòn, Thành Phố Hồ Chí Minh",
+    boundaries: [
+      { type: 0, id: 12, full_name: "Thành Phố Hồ Chí Minh" },
+      { type: 2, id: 999, full_name: "Phường Sài Gòn" },
+    ],
+  });
+
+  assert.equal(result.district, null);
+  assert.equal(result.ward.name, "Phường Sài Gòn");
+});
+
+test("mergeStations enriches an existing station with location and structured address", () => {
+  const existing = {
+    alpha: {
+      title: "Alpha",
+      stream: "https://radio.example/live",
+      type: "audio/mpeg",
+      cros: false,
+    },
+  };
+  const discovered = {
+    alpha: {
+      title: "Alpha",
+      stream: "https://radio.example/live",
+      location: { lat: 10.77, lng: 106.7 },
+      address: {
+        legacy: {
+          full: "Quận 1, Thành Phố Hồ Chí Minh",
+          district: { id: 760, name: "Quận 1" },
+        },
+        current: null,
+        source: "vietmap-reverse-v4",
+      },
+    },
+  };
+
+  const result = mergeStations(existing, discovered);
+
+  assert.equal(result.enriched, 1);
+  assert.deepEqual(result.stations.alpha.location, { lat: 10.77, lng: 106.7 });
+  assert.equal(result.stations.alpha.address.legacy.district.name, "Quận 1");
 });
