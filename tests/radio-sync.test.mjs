@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  classifyStationArtwork,
   extractStationCandidates,
   extractStationImageCandidates,
   findInstantAudioStreams,
@@ -318,5 +319,41 @@ test("stationArtworkConvertArgs keeps the full logo inside a 96x66 transparent c
       "96x66",
       "PNG32:/tmp/output.png",
     ],
+  );
+});
+
+
+test("classifyStationArtwork flags the default radio image for reprocessing", () => {
+  assert.deepEqual(
+    classifyStationArtwork("https://s3.eplus.dev/i/station-on-air.png"),
+    {
+      status: "fallback",
+      source: "default-radio",
+      reason: "no-usable-source",
+      needs_reprocess: true,
+    },
+  );
+});
+
+test("classifyStationArtwork treats repository artwork as usable", () => {
+  assert.deepEqual(
+    classifyStationArtwork("/img/asia/viet-nam/vov1.png"),
+    {
+      status: "local",
+      source: "repository",
+      needs_reprocess: false,
+    },
+  );
+});
+
+test("classifyStationArtwork flags legacy external artwork for normalization", () => {
+  assert.deepEqual(
+    classifyStationArtwork("https://example.com/logo.png"),
+    {
+      status: "external",
+      source: "legacy-external",
+      reason: "not-normalized",
+      needs_reprocess: true,
+    },
   );
 });
