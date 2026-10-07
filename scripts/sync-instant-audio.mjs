@@ -1402,6 +1402,25 @@ async function writeRunSummary() {
 
   console.log(lines.join("\n"));
 
+  if (runStats.countries.length) {
+    console.log("\nCountry breakdown:");
+    console.table(
+      runStats.countries.map((item) => ({
+        Country: item.country,
+        Status: item.status,
+        Source: item.source || "-",
+        Discovered: item.discovered,
+        Added: item.added,
+        Total: item.total,
+        Downloaded: item.downloaded,
+        Reused: item.reused,
+        Fallback: item.fallback,
+        "Candidate fail": item.candidateFailures,
+        "Homepage fail": item.homepageFailures,
+      })),
+    );
+  }
+
   if (process.env.GITHUB_STEP_SUMMARY) {
     const markdown = [
       "## Radio sync result",
