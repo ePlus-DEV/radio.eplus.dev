@@ -7,10 +7,9 @@ import path from "node:path";
 const ROOT = process.cwd();
 const INSTANT_HOME = "https://instant.audio/";
 const API_BASE = "https://api.instant.audio/data/streams";
-const RADIO_BROWSER_BASE =
-  "https://de1.api.radio-browser.info/json/stations/bycountrycodeexact";
 const USER_AGENT =
-  "Radio-ePlus-Data-Sync/2.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+  "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
 const DEFAULT_STATION_IMAGE = "https://s3.eplus.dev/i/station-on-air.png";
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 const IMAGE_EXTENSIONS = new Map([
@@ -20,9 +19,6 @@ const IMAGE_EXTENSIONS = new Map([
   ["image/gif", "gif"],
   ["image/svg+xml", "svg"]
 ]);
-const BROWSER_USER_AGENT =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
-  "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
 
 const args = new Map(
   process.argv.slice(2).map((arg) => {
@@ -686,13 +682,7 @@ async function syncStation(country, countryId, candidate) {
     const response = await fetchWithRetry(apiUrl, {
       headers: {
         accept: "application/json, text/plain, */*",
-        "accept-language": "en-US,en;q=0.9",
-        origin: country.domain,
-        referer: country.domain + "/",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "cross-site",
-        "user-agent": BROWSER_USER_AGENT
+        referer: country.domain + "/"
       }
     });
     const payload = await response.json();
@@ -724,123 +714,6 @@ async function syncStation(country, countryId, candidate) {
   }
 }
 
-async function syncStationsViaBrowser(country, countryId, candidates) {
-  if (!candidates.length) return {};
-
-  let PlaywrightCrawler;
-  try {
-    ({ PlaywrightCrawler } = await import("crawlee"));
-  } catch (error) {
-    console.warn(
-      "[instant.audio] Browser fallback unavailable: " + error.message,
-    );
-    return {};
-  }
-
-  console.warn(
-    "[instant.audio] Switching to Crawlee + Playwright for " +
-      candidates.length +
-      " station(s)",
-  );
-
-  const stations = {};
-  const crawler = new PlaywrightCrawler({
-    maxConcurrency: 1,
-    maxRequestRetries: 1,
-    requestHandlerTimeoutSecs: 35,
-    navigationTimeoutSecs: 25,
-    launchContext: {
-      launchOptions: {
-        headless: true
-      }
-    },
-    preNavigationHooks: [
-      async ({ page }) => {
-        await page.route("**/*", async (route) => {
-          const type = route.request().resourceType();
-          if (["image", "font", "media"].includes(type)) {
-            await route.abort();
-            return;
-          }
-          await route.continue();
-        });
-      }
-    ],
-    requestHandler: async ({ page, request, log }) => {
-      const candidate = request.userData.candidate;
-      const apiUrl = API_BASE + "/" + countryId + "/" + candidate.slug;
-
-      const result = await page.evaluate(async (url) => {
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              accept: "application/json, text/plain, */*"
-            }
-          });
-          return {
-            status: response.status,
-            ok: response.ok,
-            text: await response.text()
-          };
-        } catch (error) {
-          return {
-            status: 0,
-            ok: false,
-            text: "",
-            error: String(error)
-          };
-        }
-      }, apiUrl);
-
-      if (!result.ok) {
-        log.warning(
-          "Browser API fetch failed for " +
-            candidate.slug +
-            ": " +
-            (result.status || result.error || "unknown"),
-        );
-        return;
-      }
-
-      let payload;
-      try {
-        payload = JSON.parse(result.text);
-      } catch {
-        log.warning("Browser API returned non-JSON for " + candidate.slug);
-        return;
-      }
-
-      const station = stationFromInstantPayload(
-        country,
-        candidate,
-        apiUrl,
-        payload,
-      );
-      if (station) {
-        station.features = await downloadStationImage(
-          country,
-          candidate.slug,
-          station.features,
-        );
-        stations[candidate.slug] = station;
-        console.log("  + " + candidate.slug + " (browser)");
-      }
-    }
-  });
-
-  await crawler.run(
-    candidates.map((candidate) => ({
-      url: candidate.pageUrl,
-      uniqueKey: country.slug + ":" + candidate.slug,
-      userData: { candidate }
-    })),
-  );
-
-  return stations;
-}
-
 async function probeCountryId(country, candidate) {
   const MAX_ID = 180;
   const BATCH_SIZE = 8;
@@ -863,13 +736,8 @@ async function probeCountryId(country, candidate) {
             redirect: "follow",
             headers: {
               accept: "application/json, text/plain, */*",
-              "accept-language": "en-US,en;q=0.9",
-              origin: country.domain,
               referer: `${country.domain}/`,
-              "sec-fetch-dest": "empty",
-              "sec-fetch-mode": "cors",
-              "sec-fetch-site": "cross-site",
-              "user-agent": BROWSER_USER_AGENT
+              "user-agent": USER_AGENT
             }
           });
           if (!response.ok) return null;
@@ -891,92 +759,6 @@ async function probeCountryId(country, candidate) {
   return "";
 }
 
-function radioBrowserMime(codec, streamUrl) {
-  const value = String(codec || "").toLowerCase();
-  if (value.includes("aac")) return "audio/aac";
-  if (value.includes("ogg")) return "audio/ogg";
-  if (value.includes("opus")) return "audio/opus";
-  return detectMime(streamUrl);
-}
-
-async function syncFromRadioBrowser(country, metadata) {
-  const countryCode = String(metadata.cca2 || country.cca2 || "").trim();
-  const countryName = String(metadata.commonName || country.label || country.slug).trim();
-  const limit = maxStations > 0 ? maxStations : 100;
-
-  let endpoint;
-  if (countryCode) {
-    endpoint =
-      `${RADIO_BROWSER_BASE}/${encodeURIComponent(countryCode)}` +
-      `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
-  } else {
-    const base = RADIO_BROWSER_BASE.replace("/bycountrycodeexact", "");
-    endpoint =
-      `${base}/bycountryexact/${encodeURIComponent(countryName)}` +
-      `?hidebroken=true&order=votes&reverse=true&limit=${limit}`;
-    console.warn(
-      `[instant.audio] Missing country code for ${country.slug}; falling back to Radio Browser country-name lookup (${countryName})`,
-    );
-  }
-
-  console.warn(
-    `[instant.audio] Falling back to Radio Browser for ${country.slug}`,
-  );
-
-  const response = await fetchWithRetry(endpoint, {
-    headers: {
-      accept: "application/json",
-      "user-agent": USER_AGENT
-    }
-  });
-  const payload = await response.json();
-  const stations = {};
-
-  for (const item of Array.isArray(payload) ? payload : []) {
-    const title = String(item.name || "").trim();
-    const stream = String(item.url_resolved || item.url || "").trim();
-
-    if (!title || !/^https?:\/\//i.test(stream)) continue;
-
-    let slug = slugify(title);
-    if (!slug) continue;
-
-    if (stations[slug]) {
-      slug = `${slug}-${String(item.stationuuid || "").slice(0, 8)}`;
-    }
-
-    const tags = String(item.tags || "")
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter(Boolean)
-      .slice(0, 5);
-
-    stations[slug] = {
-      title,
-      ...(tags.length ? { description: tags.join(", ") } : {}),
-      type: radioBrowserMime(item.codec, stream),
-      url: String(item.homepage || country.domain),
-      cros: stream.startsWith("http://"),
-      stream,
-      features: await downloadStationImage(
-        country,
-        slug,
-        String(item.favicon || ""),
-      ),
-      source: `radio-browser:${item.stationuuid || slug}`
-    };
-  }
-
-  const keys = Object.keys(stations);
-  if (!keys.length) {
-    throw new Error(
-      `Radio Browser returned no playable stations for ${country.slug}`,
-    );
-  }
-
-  stations[keys[0]].favorite = true;
-  return stations;
-}
 async function syncCountry(country, metadata) {
   console.log(
     "\n[instant.audio] Syncing " +
@@ -1025,10 +807,8 @@ async function syncCountry(country, metadata) {
 
   const stations = {};
   let consecutiveForbidden = 0;
-  let circuitOpen = false;
 
-  for (let index = 0; index < candidates.length; index += 1) {
-    const candidate = candidates[index];
+  for (const candidate of candidates) {
     const result = await syncStation(country, countryId, candidate);
 
     if (result.station) {
@@ -1038,11 +818,9 @@ async function syncCountry(country, metadata) {
     } else if (result.status === 403) {
       consecutiveForbidden += 1;
       if (consecutiveForbidden >= 3) {
-        circuitOpen = true;
-        console.warn(
-          "[instant.audio] 3 consecutive 403 responses; stopping direct API requests and switching to browser mode",
+        throw new Error(
+          "InstantAudio direct API returned 403 for 3 consecutive stations; stopping this country",
         );
-        break;
       }
     } else {
       consecutiveForbidden = 0;
@@ -1051,22 +829,11 @@ async function syncCountry(country, metadata) {
     await sleep(120);
   }
 
-  if (circuitOpen) {
-    console.warn(
-      "[instant.audio] Direct API appears blocked for this runner; skipping bulk Playwright API retries",
-    );
-  }
-
   const keys = Object.keys(stations);
   if (!keys.length) {
-    const fallbackStations = await syncFromRadioBrowser(country, metadata);
-    return {
-      stations: fallbackStations,
-      countryId,
-      source: circuitOpen
-        ? "radio-browser-after-api-block"
-        : "radio-browser-fallback"
-    };
+    throw new Error(
+      "InstantAudio direct API returned no playable stations for " + country.slug,
+    );
   }
 
   stations[keys[0]].favorite = true;
@@ -1074,7 +841,7 @@ async function syncCountry(country, metadata) {
   return {
     stations,
     countryId,
-    source: "instant-audio"
+    source: "instant-audio-direct"
   };
 }
 
@@ -1181,86 +948,6 @@ async function updateLocales(country, metadata) {
   }
 }
 
-async function discoverCountriesViaBrowser() {
-  let chromium;
-  try {
-    ({ chromium } = await import("playwright"));
-  } catch (error) {
-    console.warn("[instant.audio] Browser directory fallback unavailable: " + error.message);
-    return [];
-  }
-
-  console.warn("[instant.audio] Retrying country directory with Playwright");
-
-  let browser;
-  try {
-    browser = await chromium.launch({ headless: true });
-    const context = await browser.newContext({
-      userAgent: BROWSER_USER_AGENT,
-      locale: "en-US",
-    });
-    const page = await context.newPage();
-
-    await page.route("**/*", async (route) => {
-      const type = route.request().resourceType();
-      if (["image", "font", "media"].includes(type)) {
-        await route.abort();
-        return;
-      }
-      await route.continue();
-    });
-
-    const response = await page.goto(INSTANT_HOME, {
-      waitUntil: "domcontentloaded",
-      timeout: 25000,
-    });
-
-    if (!response || response.status() >= 400) {
-      console.warn("[instant.audio] Browser directory returned HTTP " + (response?.status() || "unknown"));
-      return [];
-    }
-
-    const entries = await page.evaluate(() =>
-      Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6,a[href]")).map((element) => ({
-        tag: element.tagName.toLowerCase(),
-        text: String(element.textContent || "").trim(),
-        href: element instanceof HTMLAnchorElement ? element.href : "",
-      })),
-    );
-
-    const countries = [];
-    let area = "";
-    for (const entry of entries) {
-      if (/^h[1-6]$/.test(entry.tag)) {
-        const heading = stripTags(entry.text).toLowerCase();
-        if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
-        continue;
-      }
-      if (entry.tag !== "a" || !area || !entry.href) continue;
-
-      let url;
-      try {
-        url = new URL(entry.href);
-      } catch {
-        continue;
-      }
-
-      if (url.hostname === "instant.audio" || url.hostname.endsWith(".instant.audio")) continue;
-      const label = stripTags(entry.text);
-      if (!label) continue;
-
-      countries.push({ area, label, slug: countrySlug(label), domain: url.origin });
-    }
-
-    return [...new Map(countries.map((item) => [item.area + "/" + item.slug, item])).values()];
-  } catch (error) {
-    console.warn("[instant.audio] Browser directory discovery failed: " + error.message);
-    return [];
-  } finally {
-    if (browser) await browser.close();
-  }
-}
-
 async function persistCountryRegistry(discovered) {
   if (dryRun || !discovered.length) return;
   const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
@@ -1298,19 +985,14 @@ async function loadCountryDirectory() {
       return discovered;
     }
 
-    console.warn("[instant.audio] instant.audio directory is blocked or unreadable; trying browser fallback");
+    console.warn("[instant.audio] InstantAudio directory returned no countries; using repository snapshot");
   } catch (error) {
-    console.warn("[instant.audio] Unable to refresh instant.audio directory directly; trying browser fallback: " + error.message);
+    console.warn(
+      "[instant.audio] Unable to refresh InstantAudio directory directly; using repository snapshot: " +
+        error.message,
+    );
   }
 
-  const browserDiscovered = await discoverCountriesViaBrowser();
-  if (browserDiscovered.length) {
-    console.log("[instant.audio] Discovered " + browserDiscovered.length + " countries via browser");
-    await persistCountryRegistry(browserDiscovered);
-    return browserDiscovered;
-  }
-
-  console.warn("[instant.audio] Browser directory discovery also failed; using repository snapshot");
   const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
   const registry = await readJson(registryFile);
 
@@ -1404,9 +1086,9 @@ async function main() {
     }
   }
 
-  if (failedCountries === targets.length) {
-    console.warn(
-      "[instant.audio] All selected countries failed; run completed without data changes.",
+  if (failedCountries > 0) {
+    throw new Error(
+      failedCountries + " of " + targets.length + " selected country sync(s) failed",
     );
   }
   if (dryRun) {
