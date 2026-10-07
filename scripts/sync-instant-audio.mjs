@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { appendFile, mkdir, readFile, writeFile, access, unlink } from "node:fs/promises";
+import { appendFile, mkdir, readFile, writeFile, access, unlink, copyFile } from "node:fs/promises";
 import { constants as fsConstants } from "node:fs";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -21,6 +21,7 @@ const DEFAULT_STATION_IMAGE = "https://s3.eplus.dev/i/station-on-air.png";
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 const STATION_ARTWORK_WIDTH = 96;
 const STATION_ARTWORK_HEIGHT = 66;
+const STATION_ARTWORK_BACKUP_ROOT = path.join(ROOT, "backup", "station-artwork");
 const IMAGE_EXTENSIONS = new Map([
   ["image/png", "png"],
   ["image/jpeg", "jpg"],
@@ -764,6 +765,32 @@ async function downloadFlag(country, metadata) {
   }
 }
 
+async function backupStationArtwork(country, stationSlug, imagePath) {
+  if (!imagePath?.startsWith("/img/")) return "";
+
+  const source = path.join(ROOT, "public", imagePath);
+  if (!(await exists(source))) return "";
+
+  const filename = path.basename(imagePath);
+  const backup = path.join(
+    STATION_ARTWORK_BACKUP_ROOT,
+    country.area,
+    country.slug,
+    filename,
+  );
+
+  if (await exists(backup)) return backup;
+
+  await mkdir(path.dirname(backup), { recursive: true });
+  await copyFile(source, backup);
+
+  console.log(
+    `[instant.audio] Backed up existing artwork for ${country.slug}/${stationSlug}: ${path.relative(ROOT, backup)}`,
+  );
+
+  return backup;
+}
+
 async function findExistingStationImage(country, stationSlug) {
   const base = path.join(ROOT, "public", "img", country.area, country.slug);
   for (const extension of ["png", "jpg", "webp", "gif", "svg"]) {
@@ -918,6 +945,12 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
     if (dryRun) return relative;
 
     const destination = path.join(ROOT, "public", relative);
+
+    const existingArtwork = await findExistingStationImage(country, stationSlug);
+    if (existingArtwork) {
+      await backupStationArtwork(country, stationSlug, existingArtwork);
+    }
+
     await normalizeStationArtwork(bytes, extension, destination);
     runStats.imagesDownloaded += 1;
     console.log(
