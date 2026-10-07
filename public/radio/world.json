@@ -376,21 +376,21 @@
       "name": "world.europe.greece",
       "flag": "/img/europe/flags/greece.png",
       "data": "/assets/radio/europe/greece.json",
-      "timezone": "UTC",
+      "timezone": "Europe/Athens",
       "station": 134
     },
     "croatia": {
       "name": "world.europe.croatia",
       "flag": "/img/europe/flags/croatia.png",
       "data": "/assets/radio/europe/croatia.json",
-      "timezone": "UTC",
+      "timezone": "Europe/Zagreb",
       "station": 139
     },
     "ireland": {
       "name": "world.europe.ireland",
       "flag": "/img/europe/flags/ireland.png",
       "data": "/assets/radio/europe/ireland.json",
-      "timezone": "UTC",
+      "timezone": "Europe/Dublin",
       "station": 124
     },
     "italy": {
