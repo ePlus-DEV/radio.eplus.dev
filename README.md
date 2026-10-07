@@ -1,3 +1,11 @@
+> [!IMPORTANT]
+> **Canonical / active repository**
+>
+> This is the current Radio ePlus codebase used for `https://radio.eplus.dev`.
+> Use this repository for the radio UI/player, station data, sync tooling, tests, and deployment work.
+>
+> **Do not use `ePlus-DEV/get-radio` for new work.** That repository is a legacy PHP crawler kept only for historical reference and is not part of the current production flow.
+
 # Radio ePlus
 
 Radio ePlus is a Nuxt-based internet radio application for browsing and listening to live radio stations from around the world.
