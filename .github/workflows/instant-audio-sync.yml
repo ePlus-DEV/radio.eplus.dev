@@ -77,11 +77,6 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
-      - name: "Install browser crawler"
-        run: |
-          npm install --no-save --package-lock=false crawlee@3 playwright@1.55.0
-          npx playwright install --with-deps chromium
-
       - name: "Discover and sync radio countries"
         id: sync
         shell: bash
@@ -104,11 +99,49 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: "Validate generated data"
+      - name: "Validate synced data"
         if: steps.sync.outputs.changed == 'true'
+        shell: bash
         run: |
-          npm ci
-          npm run generate
+          node --check scripts/sync-instant-audio.mjs
+
+          node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+          import { execFileSync } from "node:child_process";
+
+          const changed = execFileSync(
+            "git",
+            ["diff", "--name-only", "--diff-filter=ACM", "--", "public/radio", "data/instant-audio-countries.json"],
+            { encoding: "utf8" },
+          )
+            .trim()
+            .split("\n")
+            .filter(Boolean);
+
+          for (const file of changed.filter((file) => file.endsWith(".json"))) {
+            const data = JSON.parse(readFileSync(file, "utf8"));
+
+            if (
+              file.startsWith("public/radio/") &&
+              file !== "public/radio/world.json"
+            ) {
+              for (const [slug, station] of Object.entries(data)) {
+                if (!station || typeof station !== "object") {
+                  throw new Error(`${file}: invalid station ${slug}`);
+                }
+
+                if (
+                  typeof station.stream !== "string" ||
+                  !/^https?:\/\//i.test(station.stream)
+                ) {
+                  throw new Error(`${file}: station ${slug} has invalid stream`);
+                }
+              }
+            }
+
+            console.log(`Validated ${file}`);
+          }
+          NODE
 
       - name: "Create or update sync pull request"
         if: steps.sync.outputs.changed == 'true'
@@ -141,7 +174,8 @@ jobs:
           - uses the station API pattern exposed by InstantAudio country sites
           - only imports stations with a validated stream URL
           - updates country JSON, world metadata, localized country names, and flags
-          - runs the Nuxt production generator before opening/updating this PR
+          - validates changed JSON and station stream URLs before opening/updating this PR
+          - leaves the full Nuxt build to the normal pull-request CI
 
           Review stream ownership/availability before merging. The InstantAudio endpoint is externally operated and is treated as an upstream data source, not as a guaranteed public API contract.
           EOF
