@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full min-w-0 pb-6 sm:pb-8">
+  <section class="w-full min-w-0 pb-4 sm:pb-8">
     <div
       class="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-slate-950 text-white shadow-2xl shadow-slate-950/20"
     >
@@ -7,10 +7,10 @@
         class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.20),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.16),transparent_42%)]"
       ></div>
 
-      <div class="relative p-4 sm:p-6 lg:p-7">
-        <div class="flex min-w-0 items-center gap-4 sm:gap-5">
+      <div class="relative p-3.5 sm:p-6 lg:p-7">
+        <div class="flex min-w-0 items-center gap-3 sm:gap-5">
           <div
-            class="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg ring-1 ring-white/10 sm:h-24 sm:w-24"
+            class="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white p-2 shadow-lg ring-1 ring-white/10 sm:h-24 sm:w-24"
           >
             <img
               loading="lazy"
@@ -28,7 +28,7 @@
           </div>
 
           <div class="min-w-0 flex-1">
-            <div class="mb-2 flex flex-wrap items-center gap-2">
+            <div class="mb-1.5 flex flex-wrap items-center gap-2 sm:mb-2">
               <span
                 class="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-300 ring-1 ring-inset ring-rose-400/20"
               >
@@ -48,13 +48,13 @@
               </span>
             </div>
 
-            <p class="text-xs font-medium uppercase tracking-[0.15em] text-slate-400">
+            <p class="text-[11px] font-medium uppercase tracking-[0.15em] text-slate-400 sm:text-xs">
               {{ $t("panel.play_from_radio") }}
             </p>
-            <h2 class="mt-1 truncate text-xl font-semibold tracking-tight sm:text-2xl">
+            <h2 class="mt-1 truncate text-lg font-semibold tracking-tight sm:text-2xl">
               {{ streamName || $t(country) }}
             </h2>
-            <div class="mt-2 flex min-w-0 items-center gap-2 text-sm text-slate-400">
+            <div class="mt-1.5 flex min-w-0 items-center gap-2 text-xs text-slate-400 sm:mt-2 sm:text-sm">
               <span class="truncate">{{ $t(country) }}</span>
               <span aria-hidden="true">•</span>
               <span :title="currentDate" class="shrink-0">{{ currentTime }}</span>
@@ -71,13 +71,13 @@
         </div>
 
         <div
-          class="mt-5 flex min-w-0 flex-col gap-4 rounded-2xl bg-white/[0.06] p-3 ring-1 ring-inset ring-white/10 sm:flex-row sm:items-center sm:p-4"
+          class="mt-4 flex min-w-0 items-center gap-2.5 rounded-2xl bg-white/[0.06] p-2.5 ring-1 ring-inset ring-white/10 sm:mt-5 sm:gap-4 sm:p-4"
         >
-          <div class="flex items-center justify-center sm:justify-start">
+          <div class="flex shrink-0 items-center justify-center">
             <button
               v-if="waiting"
               type="button"
-              class="flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-950 shadow-lg"
+              class="flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14 bg-white text-slate-950 shadow-lg"
               aria-label="Loading stream"
               disabled
             >
@@ -106,35 +106,73 @@
             <button
               v-else-if="playing"
               type="button"
-              class="flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-950 shadow-lg transition hover:scale-105 hover:bg-rose-50 active:scale-95"
+              class="flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14 bg-white text-slate-950 shadow-lg transition hover:scale-105 hover:bg-rose-50 active:scale-95"
               @click="onPause"
               aria-label="Pause radio"
             >
-              <fa :icon="['fas', 'pause']" class="text-lg" />
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="h-5 w-5 fill-current sm:h-6 sm:w-6"
+              >
+                <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+              </svg>
             </button>
 
             <button
               v-else
               type="button"
-              class="flex h-14 w-14 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/30 transition hover:scale-105 hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+              class="flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14 bg-rose-500 text-white shadow-lg shadow-rose-950/30 transition hover:scale-105 hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
               @click="onPlay"
               :disabled="!hasPlayableSource"
               aria-label="Play radio"
             >
-              <fa :icon="['fas', 'play']" class="ml-0.5 text-lg" />
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="ml-0.5 h-5 w-5 fill-current sm:h-6 sm:w-6"
+              >
+                <path d="M8 5.7v12.6c0 .85.92 1.38 1.66.95l9.85-6.3a1.1 1.1 0 0 0 0-1.9l-9.85-6.3A1.1 1.1 0 0 0 8 5.7Z"></path>
+              </svg>
             </button>
           </div>
 
-          <div class="flex min-w-0 flex-1 items-center gap-3">
+          <div class="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
             <button
               type="button"
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-300 transition hover:bg-white/10 hover:text-white"
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-300 transition hover:bg-white/10 hover:text-white sm:h-10 sm:w-10"
               @click="toggleMute"
               :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
             >
-              <fa
-                :icon="['fas', muted || volume === 0 ? 'volume-xmark' : volume < 0.5 ? 'volume-low' : 'volume-high']"
-              />
+              <svg
+                v-if="muted || volume === 0"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="h-5 w-5 fill-none stroke-current"
+              >
+                <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
+              </svg>
+              <svg
+                v-else
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="h-5 w-5 fill-none stroke-current"
+              >
+                <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                <path
+                  v-if="volume >= 0.5"
+                  d="M16 8.2c1.25 1 2 2.33 2 3.8s-.75 2.8-2 3.8"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                ></path>
+                <path
+                  d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                ></path>
+              </svg>
             </button>
 
             <input
@@ -148,7 +186,7 @@
               class="radio-volume h-1.5 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-white/15"
             />
 
-            <span class="w-9 shrink-0 text-right text-xs tabular-nums text-slate-500">
+            <span class="hidden w-9 shrink-0 text-right text-xs tabular-nums text-slate-500 sm:inline">
               {{ Math.round((muted ? 0 : volume) * 100) }}%
             </span>
           </div>
