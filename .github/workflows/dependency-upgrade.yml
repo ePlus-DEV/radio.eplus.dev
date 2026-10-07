@@ -31,8 +31,10 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
-      - name: Refresh lockfile
-        run: npm install
+      - name: Rebuild lockfile for the new major stack
+        run: |
+          rm -f package-lock.json
+          npm install
 
       - name: Run unit tests
         run: npm test
