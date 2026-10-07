@@ -11,7 +11,7 @@ The repository includes a scheduled GitHub Action that discovers country sites f
 - InstantAudio's structured `result.station` + `result.streams` payload is preferred, so HTML/container entries are ignored and playable audio streams are selected explicitly.
 - Stream endpoints are validated before a station is written; duplicate stream URLs are skipped.
 - Station artwork is downloaded into `public/img/<area>/<country>/` and country JSON uses the local asset path. Images are MIME-checked and capped at 2 MB.
-- Artwork priority is InstantAudio metadata, then the image embedded in the country station list, then the Radio Browser favicon fallback.
+- Artwork priority is InstantAudio metadata, then the image embedded in the country station list.
 - Requests are deliberately serialized and rate-limited.
 - Changes are proposed through a pull request, never pushed directly to `main`.
 - The crawler check stays lightweight; the normal pull-request CI owns the Nuxt build.
@@ -38,15 +38,15 @@ For endpoints such as `https://api.instant.audio/data/streams/45/radio-rebelde`,
 
 World metadata keeps the repository's existing underscore region keys (for example `north_america`) and `/assets/radio/...` data paths.
 
-## Lightweight fallback strategy
+## Direct-only sync strategy
 
-The crawler follows the same simple idea as the original PHP grabber: read the country page, extract station slugs, call the structured stream endpoint, and write JSON plus local artwork.
+The crawler intentionally follows the original PHP grabber model:
 
-GitHub-hosted runners can still receive HTTP 403 from InstantAudio. To avoid turning every sync into a browser build:
+1. read the country page server-side;
+2. extract the InstantAudio country ID and station slugs;
+3. call the structured InstantAudio stream API directly with a browser-like User-Agent;
+4. download station artwork locally and write the country JSON.
 
-1. try the structured InstantAudio API directly;
-2. stop direct requests after 3 consecutive HTTP 403 responses;
-3. fall back to Radio Browser when no InstantAudio station can be collected;
-4. browser helpers remain available in the script as an emergency directory fallback, but the normal workflow does not install Chromium/Crawlee.
+There is no Playwright/Crawlee browser mode and no Radio Browser station fallback. If the direct InstantAudio API is blocked or returns no playable stations, the selected country fails and the GitHub Actions job reports a real failure instead of silently switching data sources.
 
-This keeps scheduled syncs fast while retaining a repository snapshot of the InstantAudio country directory when upstream discovery is unavailable.
+The repository country registry may still be used only as a snapshot of country URLs when the InstantAudio directory page itself cannot be refreshed; station data is never sourced from that snapshot.
