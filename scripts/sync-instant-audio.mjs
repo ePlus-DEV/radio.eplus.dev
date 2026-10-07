@@ -24,8 +24,6 @@ const IMAGE_EXTENSIONS = new Map([
   ["image/webp", "webp"],
   ["image/gif", "gif"],
   ["image/svg+xml", "svg"],
-  ["image/x-icon", "ico"],
-  ["image/vnd.microsoft.icon", "ico"],
   ["image/avif", "avif"]
 ]);
 
@@ -679,6 +677,9 @@ async function downloadFlag(country, metadata) {
     });
 
     const contentType = response.headers.get("content-type") || "";
+    if (/image\/(?:x-icon|vnd\.microsoft\.icon)/i.test(contentType)) {
+      throw new Error("favicon/ICO is not accepted as station artwork");
+    }
     if (!contentType.toLowerCase().startsWith("image/")) {
       throw new Error(`mWyniki flag returned ${contentType || "unknown content-type"}`);
     }
@@ -720,7 +721,7 @@ export function imageExtension(contentType, imageUrl) {
 
   try {
     const ext = path.extname(new URL(imageUrl).pathname).slice(1).toLowerCase();
-    if (["png", "jpg", "jpeg", "webp", "gif", "svg", "ico", "avif"].includes(ext)) {
+    if (["png", "jpg", "jpeg", "webp", "gif", "svg", "avif"].includes(ext)) {
       return ext === "jpeg" ? "jpg" : ext;
     }
   } catch {
@@ -740,6 +741,7 @@ export function extractStationImageCandidates(html, pageUrl) {
     try {
       const absolute = new URL(raw, pageUrl).toString();
       if (!/^https?:\/\//i.test(absolute)) return;
+      if (/\.ico(?:[?#].*)?$/i.test(absolute)) return;
       if (!candidates.includes(absolute)) candidates.push(absolute);
     } catch {
       // Ignore malformed image URLs.
@@ -756,26 +758,12 @@ export function extractStationImageCandidates(html, pageUrl) {
     while ((match = pattern.exec(source))) add(match[1]);
   }
 
-  const linkPattern = /<link\b[^>]*rel=["']([^"']+)["'][^>]*href=["']([^"']+)["'][^>]*>/gi;
-  let linkMatch;
-  while ((linkMatch = linkPattern.exec(source))) {
-    if (/\b(?:icon|shortcut icon|apple-touch-icon|apple-touch-icon-precomposed)\b/i.test(linkMatch[1])) {
-      add(linkMatch[2]);
-    }
-  }
-
-  const reversedLinkPattern = /<link\b[^>]*href=["']([^"']+)["'][^>]*rel=["']([^"']+)["'][^>]*>/gi;
-  while ((linkMatch = reversedLinkPattern.exec(source))) {
-    if (/\b(?:icon|shortcut icon|apple-touch-icon|apple-touch-icon-precomposed)\b/i.test(linkMatch[2])) {
-      add(linkMatch[1]);
-    }
-  }
-
   return candidates;
 }
 
 async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) {
   if (!/^https?:\/\//i.test(String(imageUrl || ""))) return "";
+  if (/\.ico(?:[?#].*)?$/i.test(String(imageUrl))) return "";
 
   try {
     const response = await fetchWithRetry(imageUrl, {
@@ -862,13 +850,6 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
     console.warn(
       `[instant.audio] Unable to inspect homepage artwork for ${country.slug}/${stationSlug}: ${error.message}`,
     );
-  }
-
-  try {
-    const favicon = new URL("/favicon.ico", homepage).toString();
-    if (!candidates.includes(favicon)) candidates.push(favicon);
-  } catch {
-    // Ignore malformed homepage URL.
   }
 
   for (const candidate of candidates) {
@@ -1289,16 +1270,19 @@ export function mergeStations(existing, discovered) {
   return { stations: merged, added };
 }
 
-async function repairMissingStationImages(country, stations) {
+async function repairStationImages(country, stations) {
   for (const [slug, station] of Object.entries(stations)) {
     const image = String(station?.features || "");
     if (!image.startsWith("/img/")) continue;
 
     const imageFile = path.join(ROOT, "public", image);
-    if (await exists(imageFile)) continue;
+    const missing = !(await exists(imageFile));
+    const lowQuality = /\.ico$/i.test(image);
+
+    if (!missing && !lowQuality) continue;
 
     console.warn(
-      `[instant.audio] Repairing missing image reference for ${country.slug}/${slug}: ${image}`,
+      `[instant.audio] Repairing ${lowQuality ? "low-quality" : "missing"} artwork for ${country.slug}/${slug}: ${image}`,
     );
 
     station.features = await resolveStationImage(
@@ -1696,7 +1680,7 @@ async function main() {
           added = merged.added;
         }
     
-        stations = await repairMissingStationImages(country, stations);
+        stations = await repairStationImages(country, stations);
 
         const discoveredCount = Object.keys(discoveredStations).length;
         runStats.countriesSucceeded += 1;
