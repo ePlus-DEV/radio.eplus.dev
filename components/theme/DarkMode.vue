@@ -1,91 +1,33 @@
 <template>
-  <div>
-    <div class="dropdown dropdown-end">
-      <label
-        tabindex="0"
-        class="h-10 w-10 flex justify-center items-center focus:outline-none"
-        role="button"
-      >
-        <fa
-          :icon="['fas', icon]"
-          class="w-6 h-6"
-          :class="
-            $colorMode.preference !== 'system'
-              ? 'text-yellow-500'
-              : 'text-white'
-          "
-        />
-      </label>
+  <div class="dropdown dropdown-end">
+    <button
+      tabindex="0"
+      type="button"
+      class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+      :aria-label="$t('text.darkmode.' + $colorMode.preference)"
+    >
+      <fa :icon="['fas', icon]" class="h-4 w-4" />
+    </button>
 
-      <div
-        class="menu dropdown-content p-2 gap-1 absolute z-50 top-full right-0 bg-white rounded-lg ring-1 ring-slate-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm text-slate-700 font-semibold dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-300 mt-4"
-        id="headlessui-listbox-options-:R7beilb6:"
-        tabindex="0"
+    <div
+      tabindex="0"
+      class="dropdown-content z-[70] mt-3 w-40 rounded-2xl border border-slate-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900"
+    >
+      <button
+        v-for="option in options"
+        :key="option.value"
+        type="button"
+        class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition"
+        :class="
+          $colorMode.preference === option.value
+            ? 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-300'
+            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5'
+        "
+        @click="$colorMode.preference = option.value"
       >
-        <div
-          class="py-1 px-2 flex items-center cursor-pointer"
-          :class="
-            $colorMode.preference === 'light'
-              ? 'text-sky-500 cursor-not-allowed'
-              : 'cursor-pointer'
-          "
-          role="option"
-          @click.prevent.stop="$colorMode.preference = 'light'"
-        >
-          <fa
-            :icon="['fal', 'sun-bright']"
-            class="w-6 h-6 mr-2"
-            :class="
-              $colorMode.preference !== 'light'
-                ? 'text-slate-400 dark:text-slate-500'
-                : ''
-            "
-          />
-          {{ $t("text.darkmode.light") }}
-        </div>
-        <div
-          class="py-1 px-2 flex items-center"
-          :class="
-            $colorMode.preference === 'dark'
-              ? 'text-sky-500 cursor-not-allowed'
-              : 'cursor-pointer'
-          "
-          role="option"
-          @click.prevent.stop="$colorMode.preference = 'dark'"
-        >
-          <fa
-            :icon="['fal', 'moon']"
-            class="w-6 h-6 mr-2"
-            :class="
-              $colorMode.preference !== 'dark'
-                ? 'text-slate-400 dark:text-slate-500'
-                : ''
-            "
-          />
-          {{ $t("text.darkmode.dark") }}
-        </div>
-        <div
-          class="py-1 px-2 flex items-center"
-          :class="
-            $colorMode.preference === 'system'
-              ? 'text-sky-500 cursor-not-allowed'
-              : 'cursor-pointer'
-          "
-          role="option"
-          @click.prevent.stop="$colorMode.preference = 'system'"
-        >
-          <fa
-            :icon="['fal', 'desktop']"
-            class="w-6 h-6 mr-2"
-            :class="
-              $colorMode.preference !== 'system'
-                ? 'text-slate-400 dark:text-slate-500'
-                : ''
-            "
-          />
-          {{ $t("text.darkmode.system") }}
-        </div>
-      </div>
+        <fa :icon="['fal', option.icon]" class="h-4 w-4" />
+        <span>{{ $t(option.label) }}</span>
+      </button>
     </div>
   </div>
 </template>
@@ -93,45 +35,27 @@
 <script lang="ts" setup>
 const colorMode = useColorMode();
 
-/**
- * Icon mapping for each color mode.
- */
+const options = [
+  { value: "light", icon: "sun-bright", label: "text.darkmode.light" },
+  { value: "dark", icon: "moon", label: "text.darkmode.dark" },
+  { value: "system", icon: "desktop", label: "text.darkmode.system" },
+] as const;
+
 const icons = {
   system: "desktop",
   light: "sun-bright",
   dark: "moon",
 };
 
-const icon = ref(icons[colorMode.preference as keyof typeof icons]);
-
-// Function to get the corresponding icon
-function getIcon(theme: string) {
-  return icons[theme as keyof typeof icons] || icons.system;
-}
-
-// Reusable function to set theme classes
-function updateThemeClasses(theme: string) {
-  if (typeof document !== "undefined") {
-    const htmlElement = document.documentElement;
-    htmlElement.classList.toggle("bg-gray-800", theme === "dark");
-    htmlElement.classList.toggle("bg-gray-200", theme !== "dark");
-  }
-}
-
-if (typeof window !== "undefined") {
-  const storedTheme = localStorage.getItem("theme");
-  if (storedTheme) {
-    updateThemeClasses(storedTheme);
-    icon.value = getIcon(storedTheme);
-  }
-}
+const icon = computed(
+  () => icons[colorMode.preference as keyof typeof icons] || icons.system,
+);
 
 watch(
   () => colorMode.preference,
-  (newVal: string) => {
-    updateThemeClasses(newVal);
-    icon.value = getIcon(newVal);
+  (theme) => {
+    if (!import.meta.client) return;
+    localStorage.setItem("theme", theme);
   },
-  { immediate: true },
 );
 </script>
