@@ -12,6 +12,7 @@ import {
   mergeStations,
   normalizeStationStreams,
   normalizeStreamIdentity,
+  stationArtworkConvertArgs,
   resolveCountryTimezone,
 } from "../scripts/sync-instant-audio.mjs";
 
@@ -296,6 +297,26 @@ test("mergeStations enriches an existing station with fallback streams", () => {
     [
       "https://primary.example/live",
       "https://backup.example/live.aac",
+    ],
+  );
+});
+
+
+test("stationArtworkConvertArgs keeps the full logo inside a 96x66 transparent canvas", () => {
+  assert.deepEqual(
+    stationArtworkConvertArgs("/tmp/source.webp", "/tmp/output.png"),
+    [
+      "/tmp/source.webp[0]",
+      "-auto-orient",
+      "-resize",
+      "96x66>",
+      "-gravity",
+      "center",
+      "-background",
+      "none",
+      "-extent",
+      "96x66",
+      "PNG32:/tmp/output.png",
     ],
   );
 });

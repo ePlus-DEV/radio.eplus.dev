@@ -171,6 +171,13 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
+      - name: "Install ImageMagick"
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          convert -version
+
       - name: "Show effective sync settings"
         shell: bash
         run: |
@@ -314,7 +321,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git switch -C "$BRANCH"
-          git add public/radio public/img data/world.ts data/instant-audio-countries.json lang
+          git add public/radio public/img backup/station-artwork data/world.ts data/instant-audio-countries.json lang
           git commit -m "data: sync radio countries from InstantAudio"
           git push --force-with-lease origin "$BRANCH"
 

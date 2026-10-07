@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-import { appendFile, mkdir, readFile, writeFile, access } from "node:fs/promises";
+import { appendFile, mkdir, readFile, writeFile, access, unlink, copyFile } from "node:fs/promises";
 import { constants as fsConstants } from "node:fs";
+import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -18,6 +19,9 @@ const USER_AGENT =
   "Radio-ePlus-Data-Sync/2.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
 const DEFAULT_STATION_IMAGE = "https://s3.eplus.dev/i/station-on-air.png";
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+const STATION_ARTWORK_WIDTH = 96;
+const STATION_ARTWORK_HEIGHT = 66;
+const STATION_ARTWORK_BACKUP_ROOT = path.join(ROOT, "backup", "station-artwork");
 const IMAGE_EXTENSIONS = new Map([
   ["image/png", "png"],
   ["image/jpeg", "jpg"],
@@ -761,6 +765,32 @@ async function downloadFlag(country, metadata) {
   }
 }
 
+async function backupStationArtwork(country, stationSlug, imagePath) {
+  if (!imagePath?.startsWith("/img/")) return "";
+
+  const source = path.join(ROOT, "public", imagePath);
+  if (!(await exists(source))) return "";
+
+  const filename = path.basename(imagePath);
+  const backup = path.join(
+    STATION_ARTWORK_BACKUP_ROOT,
+    country.area,
+    country.slug,
+    filename,
+  );
+
+  if (await exists(backup)) return backup;
+
+  await mkdir(path.dirname(backup), { recursive: true });
+  await copyFile(source, backup);
+
+  console.log(
+    `[instant.audio] Backed up existing artwork for ${country.slug}/${stationSlug}: ${path.relative(ROOT, backup)}`,
+  );
+
+  return backup;
+}
+
 async function findExistingStationImage(country, stationSlug) {
   const base = path.join(ROOT, "public", "img", country.area, country.slug);
   for (const extension of ["png", "jpg", "webp", "gif", "svg"]) {
@@ -786,6 +816,66 @@ export function imageExtension(contentType, imageUrl) {
   }
 
   return "";
+}
+
+
+export function stationArtworkConvertArgs(sourcePath, destination) {
+  return [
+    `${sourcePath}[0]`,
+    "-auto-orient",
+    "-resize",
+    `${STATION_ARTWORK_WIDTH}x${STATION_ARTWORK_HEIGHT}>`,
+    "-gravity",
+    "center",
+    "-background",
+    "none",
+    "-extent",
+    `${STATION_ARTWORK_WIDTH}x${STATION_ARTWORK_HEIGHT}`,
+    `PNG32:${destination}`,
+  ];
+}
+
+function imageMagickCommand() {
+  const magick = spawnSync("magick", ["-version"], { stdio: "ignore" });
+  if (magick.status === 0) return "magick";
+
+  const convert = spawnSync("convert", ["-version"], { stdio: "ignore" });
+  if (convert.status === 0) return "convert";
+
+  return "";
+}
+
+async function normalizeStationArtwork(bytes, extension, destination) {
+  const command = imageMagickCommand();
+  if (!command) {
+    throw new Error(
+      "ImageMagick is required to normalize station artwork to 96x66",
+    );
+  }
+
+  await mkdir(path.dirname(destination), { recursive: true });
+  const sourcePath = `${destination}.source.${extension || "img"}`;
+
+  try {
+    await writeFile(sourcePath, bytes);
+
+    const result = spawnSync(
+      command,
+      stationArtworkConvertArgs(sourcePath, destination),
+      {
+        encoding: "utf8",
+        maxBuffer: 1024 * 1024,
+      },
+    );
+
+    if (result.status !== 0) {
+      throw new Error(
+        String(result.stderr || result.stdout || "ImageMagick conversion failed").trim(),
+      );
+    }
+  } finally {
+    await unlink(sourcePath).catch(() => {});
+  }
 }
 
 export function extractStationImageCandidates(html, pageUrl) {
@@ -851,15 +941,20 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
       throw new Error(`unsupported image type ${contentType || imageUrl}`);
     }
 
-    const relative = `/img/${country.area}/${country.slug}/${stationSlug}.${extension}`;
+    const relative = `/img/${country.area}/${country.slug}/${stationSlug}.png`;
     if (dryRun) return relative;
 
     const destination = path.join(ROOT, "public", relative);
-    await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, bytes);
+
+    const existingArtwork = await findExistingStationImage(country, stationSlug);
+    if (existingArtwork) {
+      await backupStationArtwork(country, stationSlug, existingArtwork);
+    }
+
+    await normalizeStationArtwork(bytes, extension, destination);
     runStats.imagesDownloaded += 1;
     console.log(
-      `[instant.audio] Image saved for ${country.slug}/${stationSlug}: ${relative}`,
+      `[instant.audio] Image normalized to 96x66 PNG for ${country.slug}/${stationSlug}: ${relative}`,
     );
     return relative;
   } catch (error) {
