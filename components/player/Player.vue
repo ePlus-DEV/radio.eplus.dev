@@ -1,232 +1,299 @@
 <template>
   <section class="w-full min-w-0 pb-4 sm:pb-8">
     <div
-      class="relative overflow-hidden rounded-[28px] border border-slate-200/80 bg-white text-slate-950 shadow-[0_18px_45px_-28px_rgba(15,23,42,0.45)] dark:border-white/10 dark:bg-slate-900 dark:text-white"
+      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)] dark:border-white/10 dark:bg-slate-900"
     >
-      <div
-        class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-br from-rose-100/80 via-transparent to-sky-100/50 dark:from-rose-500/10 dark:to-sky-500/5"
-      ></div>
-
-      <div class="relative p-4 sm:p-5 lg:p-6">
-        <div class="flex min-w-0 items-center gap-3.5 sm:gap-5">
+      <div class="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div class="relative min-w-0 overflow-hidden p-4 sm:p-6">
           <div
-            class="relative flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[20px] border border-slate-200 bg-white p-2 shadow-sm dark:border-white/10 dark:bg-white sm:h-20 sm:w-20"
-          >
-            <img
-              loading="lazy"
-              :src="thumb"
-              :alt="$t(country)"
-              class="max-h-full max-w-full object-contain"
-            />
-          </div>
+            class="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.13),transparent_42%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.10),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.12),transparent_42%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.07),transparent_38%)]"
+          ></div>
 
-          <div class="min-w-0 flex-1">
-            <div class="mb-1.5 flex min-w-0 items-center gap-2">
-              <span
-                class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-50 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-400/20"
+          <div class="relative">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex min-w-0 items-center gap-2">
+                <span
+                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-400/20"
+                >
+                  <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                  Live
+                </span>
+                <span
+                  v-if="sourceList.length > 1"
+                  class="truncate text-[11px] font-medium text-slate-400 dark:text-slate-500"
+                >
+                  Source {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
+                </span>
+              </div>
+
+              <button
+                v-if="queueCount > 0"
+                type="button"
+                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 lg:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                :aria-expanded="mobileQueueOpen"
+                aria-label="Toggle playlist"
+                @click="mobileQueueOpen = !mobileQueueOpen"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-                Live
-              </span>
-              <span
-                v-if="sourceList.length > 1"
-                class="truncate text-[11px] font-medium text-slate-400 dark:text-slate-500"
-              >
-                Source {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
-              </span>
+                <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" aria-hidden="true">
+                  <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
+                  <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                </svg>
+                <span>{{ queueCount }}</span>
+              </button>
             </div>
 
-            <h2 class="truncate text-[17px] font-semibold leading-tight tracking-tight sm:text-xl">
-              {{ streamName || $t(country) }}
-            </h2>
-
-            <div class="mt-1.5 flex min-w-0 items-center gap-2 text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
-              <span class="truncate">{{ $t(country) }}</span>
-              <span class="text-slate-300 dark:text-slate-600" aria-hidden="true">•</span>
-              <span :title="currentDate" class="shrink-0 tabular-nums">{{ currentTime }}</span>
-            </div>
-          </div>
-
-          <button
-            v-if="waiting"
-            type="button"
-            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 shadow-sm ring-1 ring-slate-200 sm:h-14 sm:w-14 dark:bg-white/10 dark:text-white dark:ring-white/10"
-            aria-label="Loading stream"
-            disabled
-          >
-            <svg class="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle class="opacity-20" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"></circle>
-              <path class="opacity-80" fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3z"></path>
-            </svg>
-          </button>
-
-          <button
-            v-else-if="playing"
-            type="button"
-            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-14 sm:w-14 dark:bg-white dark:text-slate-950"
-            @click="onPause"
-            aria-label="Pause radio"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 fill-current sm:h-6 sm:w-6">
-              <rect x="6" y="5" width="4" height="14" rx="1"></rect>
-              <rect x="14" y="5" width="4" height="14" rx="1"></rect>
-            </svg>
-          </button>
-
-          <button
-            v-else
-            type="button"
-            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-14 sm:w-14"
-            @click="onPlay"
-            :disabled="!hasPlayableSource"
-            aria-label="Play radio"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" class="ml-0.5 h-5 w-5 fill-current sm:h-6 sm:w-6">
-              <path d="M8 5.7v12.6c0 .85.92 1.38 1.66.95l9.85-6.3a1.1 1.1 0 0 0 0-1.9l-9.85-6.3A1.1 1.1 0 0 0 8 5.7Z"></path>
-            </svg>
-          </button>
-        </div>
-
-        <div
-          class="mt-4 flex items-center gap-3 border-t border-slate-100 pt-3.5 dark:border-white/10"
-        >
-          <div class="flex min-w-0 flex-1 items-center gap-2.5">
-            <span
-              class="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300"
-              :class="{ 'opacity-50': !playing }"
-            >
-              <span class="flex h-3 items-end gap-[2px]" aria-hidden="true">
-                <span class="radio-bar h-1 w-[2px] rounded-full bg-current" :class="{ 'is-playing': playing }"></span>
-                <span class="radio-bar h-2.5 w-[2px] rounded-full bg-current" :class="{ 'is-playing': playing }"></span>
-                <span class="radio-bar h-1.5 w-[2px] rounded-full bg-current" :class="{ 'is-playing': playing }"></span>
-              </span>
-              {{ playing ? "On air" : waiting ? "Connecting" : "Ready" }}
-            </span>
-
-            <span class="truncate text-xs text-slate-400 dark:text-slate-500">
-              {{ $t("panel.play_from_radio") }}
-            </span>
-          </div>
-
-          <div class="hidden min-w-0 flex-1 items-center gap-2.5 sm:flex">
-            <button
-              type="button"
-              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
-              @click="toggleMute"
-              :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
-            >
-              <svg
-                v-if="muted || volume === 0"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                class="h-4.5 w-4.5 fill-none stroke-current"
+            <div class="mt-4 flex min-w-0 items-center gap-4 sm:mt-5 sm:gap-5">
+              <div
+                class="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[24px] border border-slate-200 bg-white p-2.5 shadow-md shadow-slate-950/5 sm:h-32 sm:w-32 dark:border-white/10"
               >
-                <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
-              </svg>
-              <svg
+                <img
+                  loading="lazy"
+                  :src="nowPlayingArtwork"
+                  :alt="nowPlayingTitle"
+                  class="max-h-full max-w-full object-contain"
+                />
+                <span
+                  v-if="playing"
+                  class="absolute bottom-2.5 right-2.5 flex h-7 w-7 items-end justify-center gap-[2px] rounded-full bg-slate-950/80 pb-2 text-white backdrop-blur dark:bg-white/90 dark:text-slate-950"
+                  aria-hidden="true"
+                >
+                  <span class="radio-bar h-1 w-[2px] rounded-full bg-current is-playing"></span>
+                  <span class="radio-bar h-2.5 w-[2px] rounded-full bg-current is-playing"></span>
+                  <span class="radio-bar h-1.5 w-[2px] rounded-full bg-current is-playing"></span>
+                </span>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-xs font-medium text-slate-400 dark:text-slate-500">
+                  {{ streamName || $t(country) }}
+                </p>
+
+                <h2 class="mt-1.5 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-slate-950 sm:text-2xl dark:text-white">
+                  {{ nowPlayingTitle }}
+                </h2>
+
+                <p
+                  v-if="nowPlayingArtist"
+                  class="mt-1.5 truncate text-sm text-slate-500 dark:text-slate-400"
+                >
+                  {{ nowPlayingArtist }}
+                </p>
+
+                <div class="mt-2 flex min-w-0 items-center gap-2 text-xs text-slate-400 dark:text-slate-500">
+                  <span class="truncate">{{ $t(country) }}</span>
+                  <span aria-hidden="true">•</span>
+                  <span :title="currentDate" class="shrink-0 tabular-nums">{{ currentTime }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 flex items-center gap-3 sm:mt-6">
+              <button
+                v-if="waiting"
+                type="button"
+                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 shadow-sm ring-1 ring-slate-200 sm:h-16 sm:w-16 dark:bg-white/10 dark:text-white dark:ring-white/10"
+                aria-label="Loading stream"
+                disabled
+              >
+                <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle class="opacity-20" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"></circle>
+                  <path class="opacity-80" fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3z"></path>
+                </svg>
+              </button>
+
+              <button
+                v-else-if="playing"
+                type="button"
+                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16 dark:bg-white dark:text-slate-950"
+                @click="onPause"
+                aria-label="Pause radio"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-current">
+                  <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                  <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+                </svg>
+              </button>
+
+              <button
                 v-else
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                class="h-4.5 w-4.5 fill-none stroke-current"
+                type="button"
+                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/25 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-16 sm:w-16"
+                @click="onPlay"
+                :disabled="!hasPlayableSource"
+                aria-label="Play radio"
               >
-                <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                <path
-                  v-if="volume >= 0.5"
-                  d="M16 8.2c1.25 1 2 2.33 2 3.8s-.75 2.8-2 3.8"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                ></path>
-                <path d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8" stroke-width="1.8" stroke-linecap="round"></path>
-              </svg>
-            </button>
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="ml-0.5 h-6 w-6 fill-current">
+                  <path d="M8 5.7v12.6c0 .85.92 1.38 1.66.95l9.85-6.3a1.1 1.1 0 0 0 0-1.9l-9.85-6.3A1.1 1.1 0 0 0 8 5.7Z"></path>
+                </svg>
+              </button>
 
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              :value="muted ? 0 : volume"
-              @input="onVolumeInput"
-              aria-label="Volume"
-              class="radio-volume h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-slate-200 dark:bg-white/15"
-            />
+              <div class="hidden min-w-0 flex-1 items-center gap-3 sm:flex">
+                <button
+                  type="button"
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
+                  @click="toggleMute"
+                  :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
+                >
+                  <svg
+                    v-if="muted || volume === 0"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="h-5 w-5 fill-none stroke-current"
+                  >
+                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                    <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                  <svg
+                    v-else
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="h-5 w-5 fill-none stroke-current"
+                  >
+                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                    <path
+                      v-if="volume >= 0.5"
+                      d="M16 8.2c1.25 1 2 2.33 2 3.8s-.75 2.8-2 3.8"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    ></path>
+                    <path d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                </button>
 
-            <span class="w-8 shrink-0 text-right text-[11px] tabular-nums text-slate-400 dark:text-slate-500">
-              {{ Math.round((muted ? 0 : volume) * 100) }}%
-            </span>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  :value="muted ? 0 : volume"
+                  @input="onVolumeInput"
+                  aria-label="Volume"
+                  class="radio-volume h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-slate-200 dark:bg-white/15"
+                />
+
+                <span class="w-8 shrink-0 text-right text-[11px] tabular-nums text-slate-400 dark:text-slate-500">
+                  {{ Math.round((muted ? 0 : volume) * 100) }}%
+                </span>
+              </div>
+
+              <div class="ml-auto flex items-center gap-1.5 sm:ml-0">
+                <button
+                  type="button"
+                  class="flex h-10 w-10 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 sm:hidden dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
+                  @click="toggleMute"
+                  :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
+                >
+                  <svg
+                    v-if="muted || volume === 0"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="h-5 w-5 fill-none stroke-current"
+                  >
+                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                    <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                  <svg
+                    v-else
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="h-5 w-5 fill-none stroke-current"
+                  >
+                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
+                    <path d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                </button>
+
+                <span
+                  class="hidden items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 text-[11px] font-semibold text-emerald-700 lg:inline-flex dark:bg-emerald-400/10 dark:text-emerald-300"
+                  :class="{ 'opacity-50': !playing }"
+                >
+                  <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+                  {{ playing ? "On air" : waiting ? "Connecting" : "Ready" }}
+                </span>
+              </div>
+            </div>
+
+            <div
+              v-if="mobileQueueOpen && queueCount > 0"
+              class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 lg:hidden dark:border-white/10 dark:bg-slate-950/35"
+            >
+              <PlayerQueue
+                :playlist="playlist || []"
+                :program="program || []"
+                :thumb="thumb"
+                :station-name="streamName || $t(country)"
+              />
+            </div>
+
+            <div
+              v-if="streamError"
+              class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-200 dark:ring-rose-400/20"
+              role="alert"
+            >
+              <div class="flex min-w-0 items-center gap-2">
+                <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
+                <span class="truncate">{{ $t("alert.stream_error") }}</span>
+              </div>
+              <button
+                type="button"
+                class="shrink-0 rounded-lg bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-200 dark:bg-rose-400/15 dark:text-rose-100 dark:hover:bg-rose-400/25"
+                @click="retryCurrentSource"
+              >
+                Retry
+              </button>
+            </div>
+
+            <div
+              v-if="!online"
+              class="mt-4 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-inset ring-amber-200 dark:bg-amber-400/10 dark:text-amber-100 dark:ring-amber-300/20"
+              role="alert"
+            >
+              <fa :icon="['fas', 'wifi-slash']" class="shrink-0" />
+              <span>{{ $t("text.offline") }}</span>
+            </div>
+
+            <div
+              v-if="song?.currentMedia"
+              class="mt-4 border-t border-slate-100 pt-4 dark:border-white/10"
+            >
+              <div class="flex min-w-0 items-center gap-3">
+                <img
+                  v-if="song.currentMedia.thumbnail || song.thumbnail"
+                  :src="song.currentMedia.thumbnail || song.thumbnail"
+                  :alt="song.currentMedia.title"
+                  class="h-11 w-11 shrink-0 rounded-xl object-cover"
+                />
+                <div class="min-w-0">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+                    Now playing
+                  </p>
+                  <p class="mt-0.5 truncate text-sm font-medium text-slate-700 dark:text-slate-200">
+                    {{ song.currentMedia.title }}
+                    <span v-if="song.currentMedia.artists" class="font-normal text-slate-400 dark:text-slate-500">
+                      · {{ song.currentMedia.artists }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <button
-            type="button"
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 sm:hidden dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
-            @click="toggleMute"
-            :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
-          >
-            <svg
-              v-if="muted || volume === 0"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              class="h-5 w-5 fill-none stroke-current"
-            >
-              <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-              <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
-            </svg>
-            <svg
-              v-else
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              class="h-5 w-5 fill-none stroke-current"
-            >
-              <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-              <path d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8" stroke-width="1.8" stroke-linecap="round"></path>
-            </svg>
-          </button>
 
           <div class="radio-videojs-host" aria-hidden="true">
             <video ref="mediaElement" class="video-js" playsinline preload="auto"></video>
           </div>
         </div>
 
-        <div
-          v-if="streamError"
-          class="mt-3 flex items-center justify-between gap-3 rounded-xl bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-200 dark:ring-rose-400/20"
-          role="alert"
+        <aside
+          v-if="queueCount > 0"
+          class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 lg:block dark:border-white/10 dark:bg-slate-950/30"
         >
-          <div class="flex min-w-0 items-center gap-2">
-            <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
-            <span class="truncate">{{ $t("alert.stream_error") }}</span>
-          </div>
-          <button
-            type="button"
-            class="shrink-0 rounded-lg bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-200 dark:bg-rose-400/15 dark:text-rose-100 dark:hover:bg-rose-400/25"
-            @click="retryCurrentSource"
-          >
-            Retry
-          </button>
-        </div>
-
-        <div
-          v-if="!online"
-          class="mt-3 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-inset ring-amber-200 dark:bg-amber-400/10 dark:text-amber-100 dark:ring-amber-300/20"
-          role="alert"
-        >
-          <fa :icon="['fas', 'wifi-slash']" class="shrink-0" />
-          <span>{{ $t("text.offline") }}</span>
-        </div>
-      </div>
-
-      <div
-        v-if="
-          (song !== undefined && song.currentMedia !== undefined) ||
-          (program && program.length > 0) ||
-          (playlist && playlist.length > 0)
-        "
-        class="relative border-t border-slate-100 bg-slate-50/70 dark:border-white/10 dark:bg-slate-950/40"
-      >
-        <PlayerZingOnly :song="song" />
-        <PlayerProgram :program="program" />
-        <PlayerPlaylist :playlist="playlist || []" :thumb="thumb" />
+          <PlayerQueue
+            :playlist="playlist || []"
+            :program="program || []"
+            :thumb="thumb"
+            :station-name="streamName || $t(country)"
+          />
+        </aside>
       </div>
     </div>
   </section>
@@ -261,11 +328,19 @@ interface PlaylistItem {
   track_played: number;
 }
 
+interface ProgramItem {
+  startTime?: number;
+  endTime?: number;
+  title?: string;
+  description?: string;
+  encodeId?: string;
+}
+
 const props = defineProps<{
   thumb: string;
   streamName: string;
   country: string;
-  program?: Array<object>;
+  program?: ProgramItem[];
   streamUrl: RadioSource;
   streamUrls?: RadioSource[];
   song?: Song;
@@ -285,6 +360,7 @@ const userPaused = ref(false);
 const reconnectAttempts = ref(0);
 const volume = ref(1);
 const muted = ref(false);
+const mobileQueueOpen = ref(false);
 const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
 const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
@@ -312,6 +388,38 @@ const sourceList = computed<RadioSource[]>(() => {
 });
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
+
+const queueCount = computed(
+  () => (props.playlist?.length || 0) + (props.program?.length || 0),
+);
+
+const nowPlayingTitle = computed(() => {
+  const songTitle = props.song?.currentMedia?.title?.trim();
+  if (songTitle) return songTitle;
+
+  const playlistTitle = props.playlist?.[0]?.track_title?.trim();
+  if (playlistTitle) return playlistTitle;
+
+  return props.streamName || "Live radio";
+});
+
+const nowPlayingArtist = computed(() => {
+  const songArtist = props.song?.currentMedia?.artists?.trim();
+  if (songArtist) return songArtist;
+
+  const playlistArtist = props.playlist?.[0]?.track_artist?.trim();
+  if (playlistArtist) return playlistArtist;
+
+  return "";
+});
+
+const nowPlayingArtwork = computed(
+  () =>
+    props.song?.currentMedia?.thumbnail ||
+    props.song?.thumbnail ||
+    props.playlist?.[0]?.track_image ||
+    props.thumb,
+);
 
 const updateCurrentTime = (): void => {
   currentTime.value = dayjs().tz($store.getTimezone).format("LTS");
@@ -618,6 +726,7 @@ watch(
   () => [props.streamUrl, props.streamUrls] as const,
   () => {
     activeSourceIndex.value = 0;
+    mobileQueueOpen.value = false;
     reconnectAttempts.value = 0;
     streamError.value = false;
     userPaused.value = false;
