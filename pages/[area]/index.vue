@@ -40,9 +40,11 @@ const area = computed(() => String(route.params.area || ""));
 const areaKey = computed(() => area.value.replace(/-/g, "_"));
 const i18n = computed(() => `world.${areaKey.value}.name`);
 const areaName = computed(() => t(i18n.value));
-const countryCount = computed(
-  () => Object.keys((worldData as Record<string, unknown>)[areaKey.value] || {}).length,
+const areaCountries = computed(
+  () =>
+    (worldData as Record<string, Record<string, unknown>>)[areaKey.value] || {},
 );
+const countryCount = computed(() => Object.keys(areaCountries.value).length);
 
 const seoTitle = computed(() => `Live Radio in ${areaName.value}`);
 const seoDescription = computed(
