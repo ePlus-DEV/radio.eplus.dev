@@ -557,9 +557,21 @@ async function downloadFlag(country, flagUrl) {
   if (dryRun) return relative;
 
   await mkdir(path.dirname(destination), { recursive: true });
-  const response = await fetchWithRetry(flagUrl);
+  const response = await fetchWithRetry(flagUrl, {
+    headers: { accept: "image/png,image/*;q=0.8" }
+  });
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().startsWith("image/")) {
+    throw new Error(`Flag download returned ${contentType || "unknown content-type"} for ${country.slug}`);
+  }
+
   const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length) {
+    throw new Error(`Flag download returned an empty image for ${country.slug}`);
+  }
+
   await writeFile(destination, bytes);
+  console.log(`[instant.audio] Flag saved for ${country.slug}: ${relative}`);
 
   return relative;
 }
