@@ -34,7 +34,7 @@
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
                 {{ $t(country) }} -
-                <span :data-tip="currentDate" class="tooltip">
+                <span :title="currentDate">
                   {{ currentTime }}</span
                 >
               </span>
