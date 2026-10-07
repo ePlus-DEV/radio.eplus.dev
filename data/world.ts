@@ -350,7 +350,7 @@ const world = {
       "flag": "/img/europe/flags/united-kingdom.png",
       "data": "/assets/radio/europe/united-kingdom.json",
       "timezone": "Europe/London",
-      "station": 0
+      "station": 148
     },
     "ukraine": {
       "name": "world.europe.ukraine",
@@ -490,14 +490,14 @@ const world = {
       "flag": "/img/europe/flags/sweden.png",
       "data": "/assets/radio/europe/sweden.json",
       "timezone": "Europe/Stockholm",
-      "station": 0
+      "station": 131
     },
     "bulgaria": {
       "name": "world.europe.bulgaria",
       "flag": "/img/europe/flags/bulgaria.png",
       "data": "/assets/radio/europe/bulgaria.json",
       "timezone": "Europe/Sofia",
-      "station": 0
+      "station": 118
     },
     "belgium": {
       "name": "world.europe.belgium",
