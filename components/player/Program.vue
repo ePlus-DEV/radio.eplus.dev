@@ -1,47 +1,37 @@
 <template>
-  <!-- BEGIN - Program -->
-  <div class="h-full flex flex-col" v-if="program && program.length > 0">
-    <div
-      class="bg-white dark:bg-gray-800 text-sm text-gray-500 dark:text-white font-bold px-5 py-2 shadow border-b border-gray-300"
-    >
-      {{ $t("panel.schedule") }}
+  <section v-if="program && program.length > 0" class="border-t border-white/10">
+    <div class="flex items-center justify-between px-4 py-3 sm:px-6">
+      <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-300">
+        {{ $t("panel.schedule") }}
+      </h3>
+      <span class="text-xs text-slate-500">{{ program.length }}</span>
     </div>
 
-    <div
-      class="w-full h-full overflow-auto shadow bg-white dark:bg-gray-800"
-      id="journal-scroll"
-    >
-      <table class="w-full">
-        <tbody>
-          <tr
-            class="relative transform scale-100 text-xs py-1 border-b-2 border-blue-100 cursor-default"
-            :class="index === 0 ? 'bg-blue-500 bg-opacity-25' : ''"
-            v-for="(item, index) in program"
-            :key="index"
-          >
-            <td class="pl-5 pr-3 whitespace-no-wrap">
-              <div class="text-gray-400 uppercase">
-                {{ $dayjs.unix(item.startTime).format("dddd - DD/MM//YYYY") }}
-              </div>
-              <div class="dark:text-white">
-                {{ $dayjs.unix(item.startTime).format("HH:mm") }} -
-                {{ $dayjs.unix(item.endTime).format("HH:mm") }}
-              </div>
-            </td>
+    <div class="max-h-56 overflow-y-auto px-3 pb-3 sm:px-4">
+      <div
+        v-for="(item, index) in program"
+        :key="index"
+        class="grid grid-cols-[82px_minmax(0,1fr)] gap-3 border-t border-white/8 px-2 py-3 text-sm first:border-t-0"
+        :class="index === 0 ? 'rounded-xl bg-white/[0.05]' : ''"
+      >
+        <div>
+          <div class="font-medium text-slate-200">
+            {{ $dayjs.unix(item.startTime).format("HH:mm") }}–{{ $dayjs.unix(item.endTime).format("HH:mm") }}
+          </div>
+          <div class="mt-1 text-[11px] uppercase tracking-wide text-slate-500">
+            {{ $dayjs.unix(item.startTime).format("DD/MM") }}
+          </div>
+        </div>
 
-            <td class="px-2 py-2 whitespace-no-wrap">
-              <div class="leading-5 text-gray-500 font-medium">
-                {{ item.title }}
-              </div>
-              <div class="leading-5 text-gray-900 dark:text-gray-200">
-                {{ item.description }}
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="min-w-0">
+          <p class="truncate font-medium text-slate-200">{{ item.title }}</p>
+          <p class="mt-1 line-clamp-2 text-xs leading-5 text-slate-400">
+            {{ item.description }}
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
