@@ -5,6 +5,9 @@ import {
   extractStationCandidates,
   extractStationImageCandidates,
   imageExtension,
+  getMwynikiCountryPage,
+  extractMwynikiFlagUrl,
+  polishSlug,
   mergeStations,
   normalizeStreamIdentity,
   resolveCountryTimezone,
@@ -172,5 +175,31 @@ test("extractStationImageCandidates handles href-before-rel link markup", () => 
   assert.deepEqual(
     extractStationImageCandidates(html, "https://radio.example/"),
     ["https://radio.example/station-icon.png"],
+  );
+});
+
+
+test("polishSlug handles Polish country names used by mWyniki", () => {
+  assert.equal(polishSlug("Łotwa"), "lotwa");
+  assert.equal(polishSlug("Wietnam"), "wietnam");
+  assert.equal(polishSlug("Wybrzeże Kości Słoniowej"), "wybrzeze-kosci-sloniowej");
+});
+
+test("getMwynikiCountryPage builds the national-team page from country code", () => {
+  assert.equal(
+    getMwynikiCountryPage({ slug: "lithuania" }, { cca2: "LT" }),
+    "https://www.mwyniki.pl/litwa//druzyny/litwa_1/",
+  );
+  assert.equal(
+    getMwynikiCountryPage({ slug: "latvia" }, { cca2: "LV" }),
+    "https://www.mwyniki.pl/lotwa//druzyny/lotwa_1/",
+  );
+});
+
+test("extractMwynikiFlagUrl finds the country logo image", () => {
+  const html = '<img class="team-logo" alt="Logo Litwa" src="/images/responsive/flags/118.png">';
+  assert.equal(
+    extractMwynikiFlagUrl(html, "https://www.mwyniki.pl/litwa//druzyny/litwa_1/"),
+    "https://www.mwyniki.pl/images/responsive/flags/118.png",
   );
 });

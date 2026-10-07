@@ -56,12 +56,14 @@
               >
                 {{ country.station_count }}
               </div>
-              <img
-                loading="lazy"
-                :src="country.flag"
-                :alt="$t(country.name)"
-                class="p-0 sm:p-1 md:p-5 lg:p-8"
-              />
+              <div class="flex h-20 w-28 items-center justify-center p-2 sm:h-20 sm:w-28 md:h-24 md:w-32">
+                <img
+                  loading="lazy"
+                  :src="country.flag"
+                  :alt="$t(country.name)"
+                  class="max-h-full max-w-full object-contain"
+                />
+              </div>
             </nuxt-link>
           </div>
         </div>
