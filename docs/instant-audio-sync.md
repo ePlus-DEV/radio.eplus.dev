@@ -48,3 +48,19 @@ The crawler keeps the sync lightweight:
 4. use the repository country snapshot when the InstantAudio directory cannot be refreshed.
 
 There is no Playwright/Crawlee browser fallback. Pull-request validation also avoids live upstream calls and runs syntax checks plus unit tests only.
+
+
+## Vietnam legacy address enrichment
+
+For Vietnam, the sync keeps Radio Browser coordinates and can reverse-geocode them with VietMap Reverse API v4.
+
+Set the GitHub Actions secret `VIETMAP_API_KEY`. The sync requests `display_type=6`, then caches:
+
+- `location.lat/lng`
+- `address.legacy.full`
+- structured legacy `province / district / ward`
+- `address.current` for the post-merger address
+
+The station UI only exposes a **Quận / Huyện (địa chỉ cũ)** filter, backed by `address.legacy.district.name`. Ward data is retained for search/detail use but is not a filter level.
+
+If the secret is missing or VietMap is temporarily unavailable, radio sync still succeeds and keeps the coordinates without blocking station updates.
