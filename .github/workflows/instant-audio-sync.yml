@@ -160,6 +160,7 @@ jobs:
       pull-requests: write
     env:
       GH_TOKEN: ${{ github.token }}
+      VIETMAP_API_KEY: ${{ secrets.VIETMAP_API_KEY }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -349,6 +350,7 @@ jobs:
           - downloads station artwork into `public/img/<area>/<country>/` and stores local image paths in JSON
           - validates changed JSON, station stream URLs, and locally referenced station images
           - pull-request validation runs syntax checks and unit tests only; it does not call live radio providers
+          - Vietnam stations with Radio Browser coordinates are reverse-geocoded through VietMap when `VIETMAP_API_KEY` is configured; legacy and current addresses are cached in station JSON
 
           Review stream ownership/availability before merging. The InstantAudio endpoint is externally operated and is treated as an upstream data source, not as a guaranteed public API contract.
           EOF
