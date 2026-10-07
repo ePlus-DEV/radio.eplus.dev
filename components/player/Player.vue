@@ -270,6 +270,7 @@ const props = defineProps<{
   country: string;
   program?: Array<object>;
   streamUrl: MediaPlayerElement["src"];
+  streamUrls?: MediaPlayerElement["src"][];
   song?: Song;
   playlist?: PlaylistItem[];
 }>();
@@ -297,7 +298,14 @@ interface PlaylistItem {
   track_played: number;
 }
 
-const $src = ref(props.streamUrl);
+const sourceList = computed<MediaPlayerElement["src"][]>(() => {
+  const candidates = Array.isArray(props.streamUrls) && props.streamUrls.length
+    ? props.streamUrls
+    : [props.streamUrl];
+  return candidates.filter(Boolean);
+});
+const activeSourceIndex = ref(0);
+const $src = ref(sourceList.value[0] || props.streamUrl);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(false);
 const reconnectAttempts = ref(0);
@@ -306,7 +314,7 @@ const removeAutoPlayUnlockListeners = ref<(() => void) | null>(null);
 const pendingAutoPlayFallback = ref<ReturnType<typeof setTimeout> | null>(null);
 let unsubscribePlayerState: (() => void) | undefined;
 let timeInterval: ReturnType<typeof setInterval> | null = null;
-const MAX_RECONNECT_ATTEMPTS = 5;
+const MAX_RECONNECT_ATTEMPTS = 2;
 const RECONNECT_BASE_DELAY = 1500;
 
 /**
@@ -386,18 +394,39 @@ function clearReconnectTimer() {
   }
 }
 
+function currentStreamSource(): MediaPlayerElement["src"] {
+  return sourceList.value[activeSourceIndex.value] || props.streamUrl;
+}
+
 function refreshStreamSource() {
-  // Reset then restore the same source to force provider reconnect,
-  // avoid mutating URL because some streams use strict/signed query params.
+  // Reset then restore the current candidate to force provider reconnect.
   $src.value = "";
   nextTick(() => {
-    $src.value = props.streamUrl;
+    $src.value = currentStreamSource();
   });
+}
+
+function advanceFallbackSource(): boolean {
+  if (activeSourceIndex.value + 1 >= sourceList.value.length) return false;
+
+  activeSourceIndex.value += 1;
+  reconnectAttempts.value = 0;
+  streamError.value = false;
+  waiting.value = true;
+  pendingAutoPlay.value = true;
+
+  console.warn(
+    `Radio stream failed; switching to fallback ${activeSourceIndex.value + 1}/${sourceList.value.length}`,
+  );
+
+  refreshStreamSource();
+  return true;
 }
 
 function scheduleReconnect() {
   if (!online.value || userPaused.value || reconnectTimer.value) return;
   if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
+    if (advanceFallbackSource()) return;
     waiting.value = false;
     streamError.value = true;
     return;
@@ -435,20 +464,19 @@ function registerAutoPlayUnlock() {
   };
 }
 
-// watch props
+// watch stream candidates
 watch(
-  () => props.streamUrl,
-  (newVal: MediaPlayerElement["src"]) => {
-    // When source changes we mark as waiting and update the source ref so the provider reloads.
+  () => [props.streamUrl, props.streamUrls] as const,
+  () => {
+    activeSourceIndex.value = 0;
     waiting.value = true;
     streamError.value = false;
     userPaused.value = false;
-    $src.value = newVal;
+    $src.value = currentStreamSource();
     reconnectAttempts.value = 0;
     clearReconnectTimer();
-    // Mark that we want to autoplay once the player is ready (can-play event)
     pendingAutoPlay.value = true;
-    // Safety fallback: if can-play doesn't fire within 4s, clear waiting so UI isn't stuck.
+
     if (pendingAutoPlayFallback.value) {
       clearTimeout(pendingAutoPlayFallback.value);
       pendingAutoPlayFallback.value = null;
@@ -456,12 +484,15 @@ watch(
 
     pendingAutoPlayFallback.value = setTimeout(() => {
       if (pendingAutoPlay.value) {
-        pendingAutoPlay.value = false;
-        waiting.value = false;
+        if (!advanceFallbackSource()) {
+          pendingAutoPlay.value = false;
+          waiting.value = false;
+        }
       }
       pendingAutoPlayFallback.value = null;
     }, 4000);
   },
+  { deep: true },
 );
 
 /**
