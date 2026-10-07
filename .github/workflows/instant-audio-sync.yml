@@ -1,5 +1,5 @@
 name: "Radio data sync"
-run-name: "Radio sync • ${{ github.event_name }} • mode=${{ inputs.sync_mode || 'validate' }} • country=${{ inputs.country || 'auto' }} • batch=${{ inputs.batch_size || '5' }}"
+run-name: "Radio sync • ${{ github.event_name }} • mode=${{ inputs.sync_mode || 'validate' }} • country=${{ inputs.country || 'Auto selection' }} • batch=${{ inputs.batch_size || '5' }}"
 
 on:
   workflow_dispatch:
@@ -23,9 +23,98 @@ on:
           - "5"
           - "10"
       country:
-        description: "Optional: run one country only (e.g. latvia). When set, batch size is ignored."
-        required: false
-        type: string
+        description: "Choose one country, or Auto selection to use the selected batch mode."
+        required: true
+        default: "Auto selection"
+        type: choice
+        options:
+          - "Auto selection"
+          - "Algérie | algeria"
+          - "Argentina | argentina"
+          - "Australia | australia"
+          - "Bangladesh | bangladesh"
+          - "België | belgium"
+          - "Bolivia | bolivia"
+          - "Brasil | brazil"
+          - "Cameroon | cameroon"
+          - "Česká republika | czechia"
+          - "Chile | chile"
+          - "Colombia | colombia"
+          - "Congo | congo"
+          - "Costa Rica | costa-rica"
+          - "Côte d'Ivoire | cote-d-ivoire"
+          - "Cuba | cuba"
+          - "Danmark | denmark"
+          - "Deutschland | germany"
+          - "Ecuador | ecuador"
+          - "Eesti | estonia"
+          - "El Salvador | el-salvador"
+          - "España | spain"
+          - "France | france"
+          - "Ghana | ghana"
+          - "Guatemala | guatemala"
+          - "Haïti | haiti"
+          - "Hanguk | korea"
+          - "Hellas | greece"
+          - "Honduras | honduras"
+          - "Hong Kong | hong-kong"
+          - "Hrvatska | croatia"
+          - "India | india"
+          - "Indonesia | indonesia"
+          - "Ireland | ireland"
+          - "Italia | italy"
+          - "Jamaica | jamaica"
+          - "Kenya | kenya"
+          - "Latvija | latvia"
+          - "Lëtzebuerg | luxembourg"
+          - "Lietuva | lithuania"
+          - "Madagasikara | madagascar"
+          - "Magyarország | hungary"
+          - "Malaysia | malaysia"
+          - "Maroc | morocco"
+          - "México | mexico"
+          - "Misr | egypt"
+          - "Nederland | netherlands"
+          - "Nepāla | nepal"
+          - "New Zealand | new-zealand"
+          - "Nicaragua | nicaragua"
+          - "Nigeria | nigeria"
+          - "Nihon | japan"
+          - "Norge | norway"
+          - "Österreich | austria"
+          - "Pakistan | pakistan"
+          - "Panamá | panama"
+          - "Paraguay | paraguay"
+          - "Perú | peru"
+          - "Philippines | philippines"
+          - "Polska | poland"
+          - "Portugal | portugal"
+          - "Puerto Rico | puerto-rico"
+          - "República Dominicana | dominican-republic"
+          - "România | romania"
+          - "Schweiz | switzerland"
+          - "Sénégal | senegal"
+          - "Singapore | singapore"
+          - "Slovenija | slovenia"
+          - "South Africa | south-africa"
+          - "Srbija | serbia"
+          - "Sri Lankā | sri-lanka"
+          - "Suomi | finland"
+          - "Suriname | suriname"
+          - "Sverige | sweden"
+          - "Trinidad and Tobago | trinidad-and-tobago"
+          - "Tunisie | tunisia"
+          - "Uganda | uganda"
+          - "United Kingdom | united-kingdom"
+          - "Uruguay | uruguay"
+          - "Venezuela | venezuela"
+          - "Việt Nam | viet-nam"
+          - "България | bulgaria"
+          - "Україна | ukraine"
+          - "יִשְׂרָאֵל‎ | israel"
+          - "ประเทศไทย | thailand"
+          - "中国 | china"
+          - "台灣 | taiwan"
   pull_request:
     paths:
       - ".github/workflows/instant-audio-sync.yml"
@@ -90,8 +179,12 @@ jobs:
             echo ""
             echo "- Trigger: \`${{ github.event_name }}\`"
             echo "- Mode: \`${{ inputs.sync_mode || 'missing_countries' }}\`"
-            echo "- Country: \`${{ inputs.country || 'automatic selection' }}\`"
-            echo "- Batch size: \`${{ inputs.country && '1 (single-country override)' || inputs.batch_size || '5' }}\`"
+            echo "- Country: \`${{ inputs.country || 'Auto selection' }}\`"
+            if [[ "${{ inputs.country || 'Auto selection' }}" == "Auto selection" ]]; then
+              echo "- Batch size: \`${{ inputs.batch_size || '5' }}\`"
+            else
+              echo "- Batch size: \`1 (single-country override)\`"
+            fi
             echo ""
             echo "> Safety: batch size is limited to 3, 5, or 10 countries so station artwork and fallback-stream checks can finish before the 45-minute timeout."
             echo "> Note: each run starts from \`main\`. Merge the current bot data PR before starting another automatic batch to avoid selecting the same countries again."
@@ -101,8 +194,12 @@ jobs:
         id: sync
         shell: bash
         run: |
+          RAW_COUNTRY="${{ inputs.country || 'Auto selection' }}"
+          COUNTRY=""
           BATCH_SIZE="${{ inputs.batch_size || '5' }}"
-          if [[ -n "${{ inputs.country || '' }}" ]]; then
+
+          if [[ "$RAW_COUNTRY" != "Auto selection" ]]; then
+            COUNTRY="${RAW_COUNTRY##* | }"
             BATCH_SIZE="1"
           fi
 
@@ -123,8 +220,8 @@ jobs:
               ;;
           esac
 
-          if [[ -n "${{ inputs.country || '' }}" ]]; then
-            ARGS+=(--country="${{ inputs.country }}")
+          if [[ -n "$COUNTRY" ]]; then
+            ARGS+=(--country="$COUNTRY")
           fi
 
           node scripts/sync-instant-audio.mjs "${ARGS[@]}"
