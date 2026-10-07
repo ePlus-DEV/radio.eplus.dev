@@ -7,7 +7,15 @@
     "stream": "https://samaapew107-itelservices.radioca.st/stream/1/",
     "features": "/img/asia/pakistan/mera.png",
     "schedule": "https://api.webrad.io/data/playlist/63/mera?time=",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://samaapew107-itelservices.radioca.st/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-101-live": {
     "title": "Radio FM",
@@ -15,7 +23,15 @@
     "url": "https://www.radio.gov.pk/",
     "cros": false,
     "stream": "https://whmsonic.radio.gov.pk:7008/stream/1/",
-    "features": "/img/asia/pakistan/fm-101-live.png"
+    "features": "/img/asia/pakistan/fm-101-live.png",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7008/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mast-fm": {
     "title": "Mast FM",
@@ -23,7 +39,15 @@
     "url": "http://mast103.com/",
     "cros": true,
     "stream": "http://110.36.229.158:8000/stream/6/",
-    "features": "/img/asia/pakistan/mast-fm.png"
+    "features": "/img/asia/pakistan/mast-fm.png",
+    "streams": [
+      {
+        "url": "http://110.36.229.158:8000/stream/6/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm-101": {
     "title": "FM 101",
@@ -31,7 +55,15 @@
     "url": "https://www.radio.gov.pk/",
     "cros": true,
     "stream": "http://58.65.171.102:8006/stream/1/",
-    "features": "/img/asia/pakistan/fm-101.png"
+    "features": "/img/asia/pakistan/fm-101.png",
+    "streams": [
+      {
+        "url": "http://58.65.171.102:8006/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mast-lahore": {
     "title": "Mast FM (Lahore)",
@@ -39,7 +71,15 @@
     "url": "http://www.mast103.com/",
     "cros": true,
     "stream": "http://110.36.229.158:8000/stream/1/",
-    "features": "/img/asia/pakistan/mast-lahore.png"
+    "features": "/img/asia/pakistan/mast-lahore.png",
+    "streams": [
+      {
+        "url": "http://110.36.229.158:8000/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "apna-107": {
     "title": "Apna",
@@ -48,7 +88,15 @@
     "cros": true,
     "stream": "http://72.255.62.220:7070/live107",
     "features": "/img/asia/pakistan/apna-107.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/apna-107?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/apna-107?time=",
+    "streams": [
+      {
+        "url": "http://72.255.62.220:7070/live107",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm-100": {
     "title": "FM 100",
@@ -57,7 +105,15 @@
     "cros": true,
     "stream": "http://162.244.80.118:3024/stream/1/",
     "features": "/img/asia/pakistan/fm-100.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/fm-100?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/fm-100?time=",
+    "streams": [
+      {
+        "url": "http://162.244.80.118:3024/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mera-1074": {
     "title": "Mera FM",
@@ -66,7 +122,15 @@
     "cros": false,
     "stream": "https://samaakhi107-itelservices.radioca.st/stream/1/",
     "features": "/img/asia/pakistan/mera-1074.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/mera-1074?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/mera-1074?time=",
+    "streams": [
+      {
+        "url": "https://samaakhi107-itelservices.radioca.st/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "suno-urdu-live": {
     "title": "Suno Urdu Live",
@@ -75,7 +139,15 @@
     "cros": true,
     "stream": "http://110.93.246.72:8000/SUNO",
     "features": "/img/asia/pakistan/suno-urdu-live.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/suno-urdu-live?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/suno-urdu-live?time=",
+    "streams": [
+      {
+        "url": "http://110.93.246.72:8000/SUNO",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "city-fm": {
     "title": "City",
@@ -84,7 +156,15 @@
     "cros": false,
     "stream": "https://radio.cityfm89.com/stream",
     "features": "/img/asia/pakistan/city-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/city-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/city-fm?time=",
+    "streams": [
+      {
+        "url": "https://radio.cityfm89.com/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "hyderabad-fm": {
     "title": "FM 101 (Hyderabad)",
@@ -92,7 +172,15 @@
     "url": "https://www.radio.gov.pk/",
     "cros": true,
     "stream": "http://203.124.35.147:9004/stream/2/",
-    "features": "/img/asia/pakistan/hyderabad-fm.png"
+    "features": "/img/asia/pakistan/hyderabad-fm.png",
+    "streams": [
+      {
+        "url": "http://203.124.35.147:9004/stream/2/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mirpur-93": {
     "title": "FM101 Mirpur",
@@ -100,7 +188,15 @@
     "url": "https://fm101mirpur.com/",
     "cros": true,
     "stream": "http://210.56.24.230:8030/;",
-    "features": "/img/asia/pakistan/mirpur-93.png"
+    "features": "/img/asia/pakistan/mirpur-93.png",
+    "streams": [
+      {
+        "url": "http://210.56.24.230:8030/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "pbc-101": {
     "title": "PBC",
@@ -108,7 +204,15 @@
     "url": "",
     "cros": false,
     "stream": "https://whmsonic.radio.gov.pk:7008/stream/1/",
-    "features": "/img/asia/pakistan/pbc-101.png"
+    "features": "/img/asia/pakistan/pbc-101.png",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7008/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "radio-1": {
     "title": "FM 91 (Karachi)",
@@ -117,7 +221,15 @@
     "cros": false,
     "stream": "https://cc.vmakerhost.com/proxy/karachi?mp=/stream/1/",
     "features": "/img/asia/pakistan/radio-1.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/radio-1?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/radio-1?time=",
+    "streams": [
+      {
+        "url": "https://cc.vmakerhost.com/proxy/karachi?mp=/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "hot-fm": {
     "title": "Hot FM",
@@ -126,7 +238,15 @@
     "cros": true,
     "stream": "http://srv3.vmakerhost.com:8030/;",
     "features": "/img/asia/pakistan/hot-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/hot-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/hot-fm?time=",
+    "streams": [
+      {
+        "url": "http://srv3.vmakerhost.com:8030/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "power-99": {
     "title": "Power99",
@@ -134,7 +254,15 @@
     "url": "https://power99.live/",
     "cros": true,
     "stream": "https://stream.zeno.fm/xh2e8vsz1uquv",
-    "features": "/img/asia/pakistan/power-99.png"
+    "features": "/img/asia/pakistan/power-99.png",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/xh2e8vsz1uquv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "awaz-fm": {
     "title": "Radio Awaz",
@@ -142,7 +270,15 @@
     "url": "https://radioawaz.com.pk/live-fm-104-bhalwal/",
     "cros": true,
     "stream": "http://158.69.4.171:8144/stream/1/",
-    "features": "/img/asia/pakistan/awaz-fm.png"
+    "features": "/img/asia/pakistan/awaz-fm.png",
+    "streams": [
+      {
+        "url": "http://158.69.4.171:8144/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "planet-94": {
     "title": "Radio Planet 94",
@@ -150,7 +286,15 @@
     "url": "",
     "cros": true,
     "stream": "http://58.65.171.102:8002/stream/1/",
-    "features": "/img/asia/pakistan/planet-94.png"
+    "features": "/img/asia/pakistan/planet-94.png",
+    "streams": [
+      {
+        "url": "http://58.65.171.102:8002/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "funny-paki": {
     "title": "Funny Paki Radio",
@@ -158,7 +302,15 @@
     "url": "https://www.funnypaki.com/",
     "cros": true,
     "stream": "http://radiopaki.funnypaki.com:8886/stream/1/",
-    "features": "/img/asia/pakistan/funny-paki.png"
+    "features": "/img/asia/pakistan/funny-paki.png",
+    "streams": [
+      {
+        "url": "http://radiopaki.funnypaki.com:8886/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "awaz-106": {
     "title": "Radio Awaz",
@@ -166,7 +318,15 @@
     "url": "https://radioawaz.com.pk/",
     "cros": true,
     "stream": "http://158.69.4.171:8136/stream/1/",
-    "features": "/img/asia/pakistan/awaz-106.png"
+    "features": "/img/asia/pakistan/awaz-106.png",
+    "streams": [
+      {
+        "url": "http://158.69.4.171:8136/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "awaz-105-4": {
     "title": "Radio Awaz FM",
@@ -174,7 +334,15 @@
     "url": "https://radioawaz.com.pk/",
     "cros": true,
     "stream": "http://158.69.4.171:8132/stream/1/",
-    "features": "/img/asia/pakistan/awaz-105-4.png"
+    "features": "/img/asia/pakistan/awaz-105-4.png",
+    "streams": [
+      {
+        "url": "http://158.69.4.171:8132/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "aladin": {
     "title": "Aladin Radio",
@@ -183,7 +351,15 @@
     "cros": true,
     "stream": "http://172.93.237.106:8173/live",
     "features": "/img/asia/pakistan/aladin.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/aladin?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/aladin?time=",
+    "streams": [
+      {
+        "url": "http://172.93.237.106:8173/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "karachi-fm-live": {
     "title": "FM Karachi Radio",
@@ -191,7 +367,15 @@
     "url": "https://fm100pakistan.com/",
     "cros": true,
     "stream": "http://162.244.80.118:4900/stream/1/",
-    "features": "/img/asia/pakistan/karachi-fm-live.png"
+    "features": "/img/asia/pakistan/karachi-fm-live.png",
+    "streams": [
+      {
+        "url": "http://162.244.80.118:4900/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "spice-fm-107": {
     "title": "Spice",
@@ -200,7 +384,15 @@
     "cros": false,
     "stream": "https://s6.myradiostream.com/12306/;",
     "features": "/img/asia/pakistan/spice-fm-107.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/spice-fm-107?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/spice-fm-107?time=",
+    "streams": [
+      {
+        "url": "https://s6.myradiostream.com/12306/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "riphah": {
     "title": "Riphah FM (Islamabad)",
@@ -208,7 +400,15 @@
     "url": "https://www.riphahfm.com/",
     "cros": true,
     "stream": "http://162.244.80.106:11470/stream/1/",
-    "features": "/img/asia/pakistan/riphah.png"
+    "features": "/img/asia/pakistan/riphah.png",
+    "streams": [
+      {
+        "url": "http://162.244.80.106:11470/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mashaal-mashaalorg": {
     "title": "Mashaal Radio",
@@ -216,7 +416,15 @@
     "url": "https://www.mashaalradio.com/",
     "cros": false,
     "stream": "https://rfeaudio-lh.akamaihd.net/i/PACKRFE_Axia20@828906/master.m3u8",
-    "features": "/img/asia/pakistan/mashaal-mashaalorg.png"
+    "features": "/img/asia/pakistan/mashaal-mashaalorg.png",
+    "streams": [
+      {
+        "url": "https://rfeaudio-lh.akamaihd.net/i/PACKRFE_Axia20@828906/master.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "hum": {
     "title": "Hum FM 106",
@@ -225,7 +433,15 @@
     "cros": false,
     "stream": "https://server.mediacast4u.stream:8002/stream/1/",
     "features": "/img/asia/pakistan/hum.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/hum?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/hum?time=",
+    "streams": [
+      {
+        "url": "https://server.mediacast4u.stream:8002/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "voa-deewa": {
     "title": "VOA Deewa",
@@ -233,7 +449,15 @@
     "url": "https://www.voadeewanews.com/",
     "cros": false,
     "stream": "https://stream.radiojar.com/gw0kuxvna3quv",
-    "features": "/img/asia/pakistan/voa-deewa.png"
+    "features": "/img/asia/pakistan/voa-deewa.png",
+    "streams": [
+      {
+        "url": "https://stream.radiojar.com/gw0kuxvna3quv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pakistan-toronto": {
     "title": "Radio Pakistan (Toronto)",
@@ -241,7 +465,15 @@
     "url": "http://radiopakistanfm.com/home/",
     "cros": false,
     "stream": "https://s3.radio.co/s3b10a57ef/listen",
-    "features": "/img/asia/pakistan/pakistan-toronto.png"
+    "features": "/img/asia/pakistan/pakistan-toronto.png",
+    "streams": [
+      {
+        "url": "https://s3.radio.co/s3b10a57ef/listen",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "jeevay": {
     "title": "Radio Jeevay FM",
@@ -249,7 +481,15 @@
     "url": "http://www.radiojp.pk/",
     "cros": true,
     "stream": "http://158.69.227.214:8155/;",
-    "features": "/img/asia/pakistan/jeevay.png"
+    "features": "/img/asia/pakistan/jeevay.png",
+    "streams": [
+      {
+        "url": "http://158.69.227.214:8155/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kompis-fm": {
     "title": "Kompis FM",
@@ -258,7 +498,15 @@
     "cros": false,
     "stream": "https://eu2.fastcast4u.com/proxy/kompisfm?mp=/stream/1/",
     "features": "/img/asia/pakistan/kompis-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/kompis-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/kompis-fm?time=",
+    "streams": [
+      {
+        "url": "https://eu2.fastcast4u.com/proxy/kompisfm?mp=/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pakistan-karachi": {
     "title": "Radio Pakistan FM 93 (Karachi)",
@@ -267,7 +515,15 @@
     "cros": false,
     "stream": "https://whmsonic.radio.gov.pk:7022/stream/1/",
     "features": "/img/asia/pakistan/pakistan-karachi.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/pakistan-karachi?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/pakistan-karachi?time=",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7022/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pak-filmi": {
     "title": "Radio Pak Filmi",
@@ -276,7 +532,15 @@
     "cros": true,
     "stream": "http://74.91.125.187:8214/stream/1/",
     "features": "/img/asia/pakistan/pak-filmi.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/pak-filmi?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/pak-filmi?time=",
+    "streams": [
+      {
+        "url": "http://74.91.125.187:8214/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm-world": {
     "title": "FM World",
@@ -285,7 +549,15 @@
     "cros": true,
     "stream": "http://radio.itelservices.net:8612/stream/1/",
     "features": "/img/asia/pakistan/fm-world.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/fm-world?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/fm-world?time=",
+    "streams": [
+      {
+        "url": "http://radio.itelservices.net:8612/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "sunrise-hasan-abda": {
     "title": "Sunrise Radio FM (Hasan Abdal)",
@@ -293,7 +565,15 @@
     "url": "https://www.sunriseradio.com/",
     "cros": false,
     "stream": "https://direct.sharp-stream.com/sunriseradio.mp3",
-    "features": "/img/asia/pakistan/sunrise-hasan-abda.png"
+    "features": "/img/asia/pakistan/sunrise-hasan-abda.png",
+    "streams": [
+      {
+        "url": "https://direct.sharp-stream.com/sunriseradio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "funcafe": {
     "title": "FunCafe Web Radio",
@@ -302,7 +582,15 @@
     "cros": false,
     "stream": "https://radio.fun.cafe/radio/8800/radio.mp3",
     "features": "/img/asia/pakistan/funcafe.png",
-    "schedule": "https://api.webrad.io/data/playlist/63/funcafe?time="
+    "schedule": "https://api.webrad.io/data/playlist/63/funcafe?time=",
+    "streams": [
+      {
+        "url": "https://radio.fun.cafe/radio/8800/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "101-karachi": {
     "title": "FM 101 (Karachi)",
@@ -310,7 +598,15 @@
     "url": "https://www.radio.gov.pk/",
     "cros": true,
     "stream": "http://210.56.24.230:8036/;",
-    "features": "/img/asia/pakistan/101-karachi.png"
+    "features": "/img/asia/pakistan/101-karachi.png",
+    "streams": [
+      {
+        "url": "http://210.56.24.230:8036/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "city-karachi": {
     "title": "City (Karachi)",
@@ -318,7 +614,16 @@
     "url": "https://cityfm89.com/",
     "cros": false,
     "stream": "https://radio.cityfm89.com/stream",
-    "features": "/img/asia/pakistan/city-karachi.png"
+    "features": "/img/asia/pakistan/city-karachi.png",
+    "streams": [
+      {
+        "url": "https://radio.cityfm89.com/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "city fm 89 islamabad"
   },
   "mast-karachi": {
     "title": "Mast (Karachi)",
@@ -326,7 +631,15 @@
     "url": "",
     "cros": true,
     "stream": "http://110.36.229.158:8000/stream/8/",
-    "features": "/img/asia/pakistan/mast-karachi.png"
+    "features": "/img/asia/pakistan/mast-karachi.png",
+    "streams": [
+      {
+        "url": "http://110.36.229.158:8000/stream/8/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "big": {
     "title": "Big FM",
@@ -334,7 +647,15 @@
     "url": "https://big1062.com/",
     "cros": false,
     "stream": "https://funasia.streamguys1.com/live4",
-    "features": "/img/asia/pakistan/big.png"
+    "features": "/img/asia/pakistan/big.png",
+    "streams": [
+      {
+        "url": "https://funasia.streamguys1.com/live4",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "ncac": {
     "title": "NCAC",
@@ -342,7 +663,15 @@
     "url": "https://www.radio.gov.pk/",
     "cros": true,
     "stream": "http://whmsonic.radio.gov.pk:8010/stream/1/",
-    "features": "/img/asia/pakistan/ncac.png"
+    "features": "/img/asia/pakistan/ncac.png",
+    "streams": [
+      {
+        "url": "http://whmsonic.radio.gov.pk:8010/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "hot-karachi": {
     "title": "Hot FM (Karachi)",
@@ -350,7 +679,15 @@
     "url": "https://www.hotfm.com.pk/home.php",
     "cros": true,
     "stream": "http://srv3.vmakerhost.com:8000/;",
-    "features": "/img/asia/pakistan/hot-karachi.png"
+    "features": "/img/asia/pakistan/hot-karachi.png",
+    "streams": [
+      {
+        "url": "http://srv3.vmakerhost.com:8000/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "apna-karachi": {
     "title": "Apna FM (Karachi)",
@@ -358,6 +695,967 @@
     "url": "http://apnakarachi107.fm/",
     "cros": true,
     "stream": "http://72.255.62.220:7070/live107",
-    "features": "/img/asia/pakistan/apna-karachi.png"
+    "features": "/img/asia/pakistan/apna-karachi.png",
+    "streams": [
+      {
+        "url": "http://72.255.62.220:7070/live107",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "samaa-fm-107-4": {
+    "title": "Samaa FM 107.4",
+    "description": "news, talk",
+    "type": "audio/mpeg",
+    "url": "https://www.samaafm.com/",
+    "cros": false,
+    "stream": "https://samaakhi107-itelservices.radioca.st/stream",
+    "streams": [
+      {
+        "url": "https://samaakhi107-itelservices.radioca.st/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:babb87d8-14f7-4d42-b813-390ac01fb3c9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:babb87d8-14f7-4d42-b813-390ac01fb3c9"
+  },
+  "hot-fm-105": {
+    "title": "Hot FM 105",
+    "description": "entertainment, news, sports, talk",
+    "type": "audio/mpeg",
+    "url": "http://www.hotfm.com.pk/home.php",
+    "cros": true,
+    "stream": "http://172.93.237.106:8000/listen.mp3",
+    "streams": [
+      {
+        "url": "http://172.93.237.106:8000/listen.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:82785967-c645-4bc2-a02a-e5e00e03ce4a"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:82785967-c645-4bc2-a02a-e5e00e03ce4a"
+  },
+  "radio-pakistan-multan-mw": {
+    "title": "Radio Pakistan Multan MW",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8034/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8034/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7a1339a6-c0ef-41b1-9d5b-9fa469ef3463"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-multan-mw.png",
+    "source": "radio-browser:7a1339a6-c0ef-41b1-9d5b-9fa469ef3463"
+  },
+  "radio-pak-filmi": {
+    "title": "Radio Pak Filmi",
+    "description": "lollywood, radio pak filmi, urdu",
+    "type": "audio/mpeg",
+    "url": "https://www.pakfilmi.com/",
+    "cros": true,
+    "stream": "http://s17.ssl-stream.com:8214/stream",
+    "streams": [
+      {
+        "url": "http://s17.ssl-stream.com:8214/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:cc059379-dd72-451e-82af-434cb3859c7b"
+      },
+      {
+        "url": "https://s17.ssl-stream.com:2199/tunein/radiopak.pls",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pak-filmi.png",
+    "source": "radio-browser:cc059379-dd72-451e-82af-434cb3859c7b"
+  },
+  "radio-pakistan-islamabad": {
+    "title": "Radio Pakistan Islamabad",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7003/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7003/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:755d2c71-1bdd-45b0-a526-02f0e4754af5"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-islamabad.png",
+    "source": "radio-browser:755d2c71-1bdd-45b0-a526-02f0e4754af5"
+  },
+  "fm-100-pakistan-karachi": {
+    "title": "FM 100 Pakistan Karachi",
+    "type": "audio/mpeg",
+    "url": "http://fm100pakistan.com/",
+    "cros": true,
+    "stream": "http://162.244.80.118:3024/stream.mp3?ver=349829",
+    "streams": [
+      {
+        "url": "http://162.244.80.118:3024/stream.mp3?ver=349829",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:6f46ab47-2919-4ed5-a70a-9ea0cd739cc2"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-100-pakistan-karachi.svg",
+    "source": "radio-browser:6f46ab47-2919-4ed5-a70a-9ea0cd739cc2"
+  },
+  "radio-pakistan-lahore-news-and-current-affair-am-1332-khz": {
+    "title": "Radio Pakistan Lahore News and Current Affair AM 1332 KHZ",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7004/stream?type=http&nocache=12",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7004/stream?type=http&nocache=12",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:34cdd9d2-fba9-4a1e-a0d0-35d70252d349"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-lahore-news-and-current-affair-am-1332-khz.png",
+    "source": "radio-browser:34cdd9d2-fba9-4a1e-a0d0-35d70252d349"
+  },
+  "fm-101-islamabad": {
+    "title": "FM 101 Islamabad",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7008/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7008/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e366ead6-6019-4a01-824d-6f4bea17f9a0"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-101-islamabad.png",
+    "source": "radio-browser:e366ead6-6019-4a01-824d-6f4bea17f9a0"
+  },
+  "fm-93-rawalpindi": {
+    "title": "FM 93 Rawalpindi",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8036/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8036/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7ba74437-f804-4526-aaa5-6105c9f534f8"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-rawalpindi.png",
+    "source": "radio-browser:7ba74437-f804-4526-aaa5-6105c9f534f8"
+  },
+  "radio-pakistan-world-service": {
+    "title": "Radio Pakistan World Service",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7005/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7005/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7423d8e7-7da9-4e0c-bc66-32e2f22830ef"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-world-service.png",
+    "source": "radio-browser:7423d8e7-7da9-4e0c-bc66-32e2f22830ef"
+  },
+  "hum-fm-106-2": {
+    "title": "Hum FM 106.2",
+    "description": "bollywood",
+    "type": "audio/mpeg",
+    "url": "https://www.1062.fm/",
+    "cros": false,
+    "stream": "https://server.mediacast4u.stream/8002/stream",
+    "streams": [
+      {
+        "url": "https://server.mediacast4u.stream/8002/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a754b1cb-4a13-47ab-9215-10473d5a13c8"
+      }
+    ],
+    "features": "/img/asia/pakistan/hum-fm-106-2.png",
+    "source": "radio-browser:a754b1cb-4a13-47ab-9215-10473d5a13c8"
+  },
+  "radio-pakistan-hyderabad-mw-1008-khz": {
+    "title": "Radio Pakistan Hyderabad MW 1008 KHz",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8042/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8042/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:36be6e9b-4750-4164-a307-cb7e604f06fe"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-hyderabad-mw-1008-khz.png",
+    "source": "radio-browser:36be6e9b-4750-4164-a307-cb7e604f06fe"
+  },
+  "hot-fm-karachi": {
+    "title": "HOT FM Karachi",
+    "type": "audio/mpeg",
+    "url": "http://www.hotfm.com.pk/home.php",
+    "cros": true,
+    "stream": "http://172.93.237.106:8000/",
+    "streams": [
+      {
+        "url": "http://172.93.237.106:8000/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:e7bcdf54-4498-49b0-91f0-26cac233b6ce"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:e7bcdf54-4498-49b0-91f0-26cac233b6ce"
+  },
+  "fm-100-pakistan-hyderabad": {
+    "title": "FM 100 Pakistan Hyderabad",
+    "type": "audio/mpeg",
+    "url": "http://fm100pakistan.com/",
+    "cros": true,
+    "stream": "http://162.244.80.118:3024/stream.mp3?ver=517748",
+    "streams": [
+      {
+        "url": "http://162.244.80.118:3024/stream.mp3?ver=517748",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:bcf92941-0daf-44b0-b8af-bddee31bd9df"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-100-pakistan-hyderabad.svg",
+    "source": "radio-browser:bcf92941-0daf-44b0-b8af-bddee31bd9df"
+  },
+  "fm-93-lahore": {
+    "title": "FM 93 Lahore",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8088/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8088/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a9592d38-17fc-4fd7-9d8a-f0526906c5ed"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-lahore.png",
+    "source": "radio-browser:a9592d38-17fc-4fd7-9d8a-f0526906c5ed"
+  },
+  "love-islam-radio": {
+    "title": "Love-Islam-Radio",
+    "type": "audio/mpeg",
+    "url": "https://stream-52.zeno.fm/",
+    "cros": false,
+    "stream": "https://stream-52.zeno.fm/f9h69cgbu68uv",
+    "streams": [
+      {
+        "url": "https://stream-52.zeno.fm/f9h69cgbu68uv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ffcdc7e1-089e-4dfb-b11f-c2dcb26ef923"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:ffcdc7e1-089e-4dfb-b11f-c2dcb26ef923"
+  },
+  "radio-pakistan-peshawar-mw": {
+    "title": "Radio Pakistan Peshawar MW",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8072/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8072/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:028c2a22-b730-4141-a9b4-9a4ac3d30cd8"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-peshawar-mw.png",
+    "source": "radio-browser:028c2a22-b730-4141-a9b4-9a4ac3d30cd8"
+  },
+  "fm-93-multan": {
+    "title": "FM 93 Multan",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8032/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8032/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:99b56c5c-edbe-4e87-b64b-849227848cae"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-multan.png",
+    "source": "radio-browser:99b56c5c-edbe-4e87-b64b-849227848cae"
+  },
+  "fm-101-karachi": {
+    "title": "FM 101 Karachi",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8048/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8048/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:828fb723-869a-45bb-80b1-e295d2c7dd15"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-101-karachi.png",
+    "source": "radio-browser:828fb723-869a-45bb-80b1-e295d2c7dd15"
+  },
+  "radio-pakistan-quetta-mw": {
+    "title": "Radio Pakistan Quetta MW",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8060/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8060/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ea24a46f-5bb4-4d28-9a72-c2145981a741"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-quetta-mw.png",
+    "source": "radio-browser:ea24a46f-5bb4-4d28-9a72-c2145981a741"
+  },
+  "fm-93-faisalabad": {
+    "title": "FM 93 Faisalabad",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8022/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8022/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:441f7112-15a2-4e0b-9ef4-ee665f413196"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-faisalabad.png",
+    "source": "radio-browser:441f7112-15a2-4e0b-9ef4-ee665f413196"
+  },
+  "fm-92": {
+    "title": "fm.92",
+    "description": "classical",
+    "type": "audio/aac",
+    "url": "https://radio.net.pk",
+    "cros": true,
+    "stream": "http://s33.myradiostream.com:13872/listen.m4a",
+    "streams": [
+      {
+        "url": "http://s33.myradiostream.com:13872/listen.m4a",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:4a8afdc5-60a8-4ad5-b228-a83d14bcee01"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-92.webp",
+    "source": "radio-browser:4a8afdc5-60a8-4ad5-b228-a83d14bcee01"
+  },
+  "fm-93-karachi": {
+    "title": "FM 93 Karachi",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7022/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7022/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:35e8c983-748e-4e46-b079-493083b2309d"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-karachi.png",
+    "source": "radio-browser:35e8c983-748e-4e46-b079-493083b2309d"
+  },
+  "fm-93-mianwali": {
+    "title": "FM 93 Mianwali",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8028/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8028/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cdab57de-03eb-4e53-b45c-96ab178261cb"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-mianwali.png",
+    "source": "radio-browser:cdab57de-03eb-4e53-b45c-96ab178261cb"
+  },
+  "fm-101-larkana": {
+    "title": "FM 101 Larkana",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8050/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8050/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4ff924cf-f0a7-4983-b354-09eb32d75352"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-101-larkana.png",
+    "source": "radio-browser:4ff924cf-f0a7-4983-b354-09eb32d75352"
+  },
+  "radio-one-fm-91": {
+    "title": "Radio One FM 91",
+    "description": "islamabad, karachi, lahore, pakistan fm radio, radio one fm91",
+    "type": "audio/mpeg",
+    "url": "https://fm91.com.pk/",
+    "cros": false,
+    "stream": "https://cc.vmakerhost.com/proxy/karachi?mp=/stream",
+    "streams": [
+      {
+        "url": "https://cc.vmakerhost.com/proxy/karachi?mp=/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:47efdce4-809f-4cd3-8e3c-85a2eabce1ef"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:47efdce4-809f-4cd3-8e3c-85a2eabce1ef"
+  },
+  "radio-quran": {
+    "title": "#radio quran",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radio.net.pk",
+    "cros": false,
+    "stream": "https://n0a.radiojar.com/0tpy1h0kxtzuv?rj-ttl=5&rj-tok=AAABhdgGORQA-2acfyF3_4WY2g",
+    "streams": [
+      {
+        "url": "https://n0a.radiojar.com/0tpy1h0kxtzuv?rj-ttl=5&rj-tok=AAABhdgGORQA-2acfyF3_4WY2g",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f4cfa2fb-afba-41f1-9066-6457aba81226"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-quran.webp",
+    "source": "radio-browser:f4cfa2fb-afba-41f1-9066-6457aba81226"
+  },
+  "fm-94-4": {
+    "title": "Fm.94.4",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radio.net.pk",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7002/stream?type=http&nocache=12",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7002/stream?type=http&nocache=12",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:658d9779-0334-4d8a-87bf-6872db0973e6"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-94-4.webp",
+    "source": "radio-browser:658d9779-0334-4d8a-87bf-6872db0973e6"
+  },
+  "aladin-radio-network": {
+    "title": "Aladin Radio Network",
+    "type": "audio/mpeg",
+    "url": "http://aladinradio.com/",
+    "cros": false,
+    "stream": "https://cc.vmakerhost.com/proxy/magic?mp=/live",
+    "streams": [
+      {
+        "url": "https://cc.vmakerhost.com/proxy/magic?mp=/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4a29dbc1-77e1-449a-b6b5-62e19f66a8fc"
+      }
+    ],
+    "features": "/img/asia/pakistan/aladin-radio-network.jpg",
+    "source": "radio-browser:4a29dbc1-77e1-449a-b6b5-62e19f66a8fc"
+  },
+  "fm-101-mithi": {
+    "title": "FM 101 Mithi",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8052/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8052/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d41946b4-342a-4b9a-b0e5-f86f017980ea"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-101-mithi.png",
+    "source": "radio-browser:d41946b4-342a-4b9a-b0e5-f86f017980ea"
+  },
+  "radio-pakistan-multan": {
+    "title": "Radio Pakistan Multan",
+    "description": "🇵🇰",
+    "type": "audio/mpeg",
+    "url": "https://whmsonic.radio.gov.pk:8034/stream?type=http&nocache=12",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8034/stream?type=http&nocache=12",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8034/stream?type=http&nocache=12",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:aeeb2c2b-8697-44c6-aa11-528ecf40e5ca"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:aeeb2c2b-8697-44c6-aa11-528ecf40e5ca"
+  },
+  "radio-one-fm-91-gwadar": {
+    "title": "Radio One FM 91 Gwadar",
+    "description": "music, news, radio one fm 91 gwadar, talk",
+    "type": "audio/mpeg",
+    "url": "https://fm91.com.pk/",
+    "cros": true,
+    "stream": "http://cc.vmakerhost.com:8147/stream",
+    "streams": [
+      {
+        "url": "http://cc.vmakerhost.com:8147/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:d5144a6e-50c3-4dfb-a555-a82ff7756e19"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-one-fm-91-gwadar.png",
+    "source": "radio-browser:d5144a6e-50c3-4dfb-a555-a82ff7756e19"
+  },
+  "radio-pakistan-lahore": {
+    "title": "Radio Pakistan Lahore",
+    "description": "🌀",
+    "type": "audio/mpeg",
+    "url": "https://whmsonic.radio.gov.pk:8026/relay?type=http&nocache=9",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8026/relay?type=http&nocache=9",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8026/relay?type=http&nocache=9",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cab938da-32c3-485b-81ef-a56701cf33e1"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:cab938da-32c3-485b-81ef-a56701cf33e1"
+  },
+  "fm-93-chitral": {
+    "title": "FM 93 Chitral",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8066/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8066/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:abb391a9-3226-4822-b0ee-243a80b27227"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-93-chitral.png",
+    "source": "radio-browser:abb391a9-3226-4822-b0ee-243a80b27227"
+  },
+  "papa-johns-pizza-pakistan": {
+    "title": "Papa John's Pizza Pakistan",
+    "type": "audio/mpeg",
+    "url": "https://www/papajohns.com.pk",
+    "cros": true,
+    "stream": "http://162.252.85.85:7086/",
+    "streams": [
+      {
+        "url": "http://162.252.85.85:7086/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:ed3e4d31-7133-4eb3-a7e5-9729bf9c3ab2"
+      },
+      {
+        "url": "http://162.252.85.85:7086/listen.pls?sid=1",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:ed3e4d31-7133-4eb3-a7e5-9729bf9c3ab2"
+  },
+  "101peshawar": {
+    "title": "101peshawar",
+    "type": "audio/mpeg",
+    "url": "https://whmsonic.radio.gov.pk:8070/relay?type=http&nocache=9",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8070/relay?type=http&nocache=9",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8070/relay?type=http&nocache=9",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:47f7bdd9-85b4-4638-9a31-9214a98f3412"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:47f7bdd9-85b4-4638-9a31-9214a98f3412"
+  },
+  "bahawal-pur-mw-station": {
+    "title": "BAHAWAL PUR MW STATION",
+    "type": "audio/mpeg",
+    "url": "https://www.radio.gov.pk/live-streaming",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8088/stream?type=http&nocache=4",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8088/stream?type=http&nocache=4",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:dedfe164-38f0-4cce-a1f8-a241f3051bd3"
+      }
+    ],
+    "features": "/img/asia/pakistan/bahawal-pur-mw-station.png",
+    "source": "radio-browser:dedfe164-38f0-4cce-a1f8-a241f3051bd3"
+  },
+  "all4masti": {
+    "title": "All4Masti",
+    "description": "beats, jazz, rock, smooth",
+    "type": "audio/mpeg",
+    "url": "https://all4masti.com/",
+    "cros": true,
+    "stream": "http://stream.zeno.fm/bahhkuge5zhvv",
+    "streams": [
+      {
+        "url": "http://stream.zeno.fm/bahhkuge5zhvv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:af53a4c2-6fcf-47cf-b771-dbd316a951c2"
+      }
+    ],
+    "features": "/img/asia/pakistan/all4masti.png",
+    "source": "radio-browser:af53a4c2-6fcf-47cf-b771-dbd316a951c2"
+  },
+  "fm": {
+    "title": "fm",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radio.net.pk",
+    "cros": true,
+    "stream": "http://canada1.reliastream.com:8191/stream",
+    "streams": [
+      {
+        "url": "http://canada1.reliastream.com:8191/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7e5e5c40-2008-4001-906e-3c3c3dbfb1aa"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm.webp",
+    "source": "radio-browser:7e5e5c40-2008-4001-906e-3c3c3dbfb1aa"
+  },
+  "live": {
+    "title": "live",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radio.net.pk",
+    "cros": true,
+    "stream": "http://live.mp3quran.net:9752/",
+    "streams": [
+      {
+        "url": "http://live.mp3quran.net:9752/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:a2d26639-cddd-4d4e-8a9f-028f9a22ddc4"
+      }
+    ],
+    "features": "/img/asia/pakistan/live.webp",
+    "source": "radio-browser:a2d26639-cddd-4d4e-8a9f-028f9a22ddc4"
+  },
+  "radio-mirpur": {
+    "title": "Radio Mirpur",
+    "description": "☕",
+    "type": "audio/mpeg",
+    "url": "https://whmsonic.radio.gov.pk:8074/?type=http&nocache=9",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8074/?type=http&nocache=9",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8074/?type=http&nocache=9",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:978471ff-f3b8-478c-ac05-4265920fcfa6"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:978471ff-f3b8-478c-ac05-4265920fcfa6"
+  },
+  "mera-fm-107-4-lahore": {
+    "title": "Mera FM 107.4 Lahore",
+    "type": "audio/mpeg",
+    "url": "https://www.merafm.com/radio-stations/",
+    "cros": false,
+    "stream": "https://samaalhr107-itelservices.radioca.st/stream",
+    "streams": [
+      {
+        "url": "https://samaalhr107-itelservices.radioca.st/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c46c844f-7fb2-4201-9cf0-55c4cfe23a79"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c46c844f-7fb2-4201-9cf0-55c4cfe23a79"
+  },
+  "fm-3ab56e05": {
+    "title": "fm...",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://radio.net.pk",
+    "cros": true,
+    "stream": "http://n0a.radiojar.com/htnudfgugm8uv?rj-ttl=5&rj-tok=AAABjGvN8wYArmabhGP5SLHW1A",
+    "streams": [
+      {
+        "url": "http://n0a.radiojar.com/htnudfgugm8uv?rj-ttl=5&rj-tok=AAABjGvN8wYArmabhGP5SLHW1A",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3ab56e05-9da3-4c21-8f0a-933f1763ee40"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-3ab56e05.webp",
+    "source": "radio-browser:3ab56e05-9da3-4c21-8f0a-933f1763ee40"
+  },
+  "radio-pakistan-ws": {
+    "title": "Radio Pakistan WS",
+    "description": "🌙🌙🌙",
+    "type": "audio/mpeg",
+    "url": "https://whmsonic.radio.gov.pk:7005/stream?type=http&nocache=12",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7005/stream?type=http&nocache=12",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7005/stream?type=http&nocache=12",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:fcca7b76-244f-424d-aa81-cc5468ac855c"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:fcca7b76-244f-424d-aa81-cc5468ac855c"
+  },
+  "ak-radio-trarkhal": {
+    "title": "AK radio Trarkhal",
+    "description": "❤️",
+    "type": "audio/mpeg",
+    "url": "https://whmsonic.radio.gov.pk:8076/relay?type=http&nocache=9",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8076/relay?type=http&nocache=9",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8076/relay?type=http&nocache=9",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:2983eb2f-065f-4a8e-aadd-35a16b111ea2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:2983eb2f-065f-4a8e-aadd-35a16b111ea2"
+  },
+  "abdulbasit-abdulsamad": {
+    "title": "Abdulbasit Abdulsamad",
+    "type": "audio/aac",
+    "url": "https://mp3islam.com/",
+    "cros": false,
+    "stream": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:10c92029-3d0f-45cf-99ee-f0a9baaac5f2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:10c92029-3d0f-45cf-99ee-f0a9baaac5f2"
+  },
+  "fm-101-sargodha": {
+    "title": "FM 101 Sargodha",
+    "description": "public radio",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8040/relay",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8040/relay",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0741fb0c-e2fb-4f03-83fb-02cfd6d8ff92"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-101-sargodha.png",
+    "source": "radio-browser:0741fb0c-e2fb-4f03-83fb-02cfd6d8ff92"
+  },
+  "shopen-anime-radio": {
+    "title": "Shopen Anime Radio",
+    "type": "audio/aac",
+    "url": "https://shopen.pk/",
+    "cros": false,
+    "stream": "https://s97.radiolize.com:8040/radio.mp3",
+    "streams": [
+      {
+        "url": "https://s97.radiolize.com:8040/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:0ee4a7b1-ea58-4fad-92f0-2393d2c2ecf4"
+      }
+    ],
+    "features": "/img/asia/pakistan/shopen-anime-radio.avif",
+    "source": "radio-browser:0ee4a7b1-ea58-4fad-92f0-2393d2c2ecf4"
+  },
+  "radio-pakistan-d-i-khan-mw-711": {
+    "title": "Radio Pakistan D.I. Khan MW 711",
+    "description": "public radio",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:7000/Dikhan",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:7000/Dikhan",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a8067725-3d72-406f-828b-9ba72f638479"
+      }
+    ],
+    "features": "/img/asia/pakistan/radio-pakistan-d-i-khan-mw-711.png",
+    "source": "radio-browser:a8067725-3d72-406f-828b-9ba72f638479"
+  },
+  "insaf-radio": {
+    "title": "Insaf Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.insaf.pk/insafradio",
+    "cros": false,
+    "stream": "https://cdn.voscast.com/resources/?key=4e1e2d7ac97ea7ad9493c529df2ab16c&c=wmp",
+    "streams": [
+      {
+        "url": "https://cdn.voscast.com/resources/?key=4e1e2d7ac97ea7ad9493c529df2ab16c&c=wmp",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e8ab0292-edcb-4a23-b686-b2a268950770"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:e8ab0292-edcb-4a23-b686-b2a268950770"
+  },
+  "fm-101-khairpur": {
+    "title": "FM 101 Khairpur",
+    "description": "public radio",
+    "type": "audio/mpeg",
+    "url": "https://radio.gov.pk/",
+    "cros": false,
+    "stream": "https://whmsonic.radio.gov.pk:8054/stream",
+    "streams": [
+      {
+        "url": "https://whmsonic.radio.gov.pk:8054/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:db40900f-da30-44c1-84d0-1fb235daf393"
+      }
+    ],
+    "features": "/img/asia/pakistan/fm-101-khairpur.png",
+    "source": "radio-browser:db40900f-da30-44c1-84d0-1fb235daf393"
+  },
+  "hot-fm-nawabshah": {
+    "title": "Hot fm Nawabshah",
+    "type": "audio/mpeg",
+    "url": "http://zeno.fm/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/t961q1d0vp6vv/",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/t961q1d0vp6vv/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:839ddcf6-e094-4542-96b6-4d7e6c252220"
+      }
+    ],
+    "features": "/img/asia/pakistan/hot-fm-nawabshah.png",
+    "source": "radio-browser:839ddcf6-e094-4542-96b6-4d7e6c252220"
+  },
+  "highrise-24-7-radio-pakistan": {
+    "title": "Highrise 24/7 Radio - PAKISTAN",
+    "description": "highrise, music",
+    "type": "audio/mpeg",
+    "url": "https://radio.net.pk",
+    "cros": true,
+    "stream": "http://78.154.103.2:9326/stream",
+    "streams": [
+      {
+        "url": "http://78.154.103.2:9326/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:1434bd71-b352-42a1-924a-6aa005684224"
+      }
+    ],
+    "features": "/img/asia/pakistan/highrise-24-7-radio-pakistan.webp",
+    "source": "radio-browser:1434bd71-b352-42a1-924a-6aa005684224"
+  },
+  "universal-health-radio": {
+    "title": "Universal Health Radio (اردو)",
+    "description": "cdc, education, fda, health, news",
+    "type": "audio/mpeg",
+    "url": "https://universalhealthradio.org/",
+    "cros": false,
+    "stream": "https://radio.universalhealthradio.org/uhr-ur.mp3",
+    "streams": [
+      {
+        "url": "https://radio.universalhealthradio.org/uhr-ur.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:05a993a1-3718-434a-9f16-39b05810701e"
+      }
+    ],
+    "features": "/img/asia/pakistan/universal-health-radio.jpg",
+    "source": "radio-browser:05a993a1-3718-434a-9f16-39b05810701e"
   }
 }

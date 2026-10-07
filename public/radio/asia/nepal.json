@@ -6,7 +6,16 @@
     "cros": true,
     "stream": "https://stream.zeno.fm/fvrx47wpg0quv",
     "features": "/img/asia/nepal/audio.png",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/fvrx47wpg0quv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "entertainment, music, pop"
   },
   "hits-fm": {
     "title": "Hits FM",
@@ -14,7 +23,15 @@
     "url": "https://www.hitsfm.com.np/",
     "cros": false,
     "stream": "https://usa15.fastcast4u.com/proxy/hitsfm912?mp=/stream/1/",
-    "features": "/img/asia/nepal/hits-fm.png"
+    "features": "/img/asia/nepal/hits-fm.png",
+    "streams": [
+      {
+        "url": "https://usa15.fastcast4u.com/proxy/hitsfm912?mp=/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kantipur": {
     "title": "Radio Kantipur",
@@ -22,7 +39,15 @@
     "url": "https://radiokantipur.com",
     "cros": true,
     "stream": "http://broadcast.radiokantipur.com:7248/stream/1/",
-    "features": "/img/asia/nepal/kantipur.png"
+    "features": "/img/asia/nepal/kantipur.png",
+    "streams": [
+      {
+        "url": "http://broadcast.radiokantipur.com:7248/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "nepal": {
     "title": "Radio Nepal",
@@ -30,7 +55,15 @@
     "url": "https://radionepal.gov.np/",
     "cros": true,
     "stream": "https://radionepal.news/live/",
-    "features": "/img/asia/nepal/nepal.png"
+    "features": "/img/asia/nepal/nepal.png",
+    "streams": [
+      {
+        "url": "https://radionepal.news/live/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kalika-fm": {
     "title": "Kalika FM",
@@ -38,7 +71,21 @@
     "url": "https://www.kalikanews.com/",
     "cros": true,
     "stream": "http://kalika-stream.softnep.com:7740/stream/1/",
-    "features": "/img/asia/nepal/kalika-fm.png"
+    "features": "/img/asia/nepal/kalika-fm.png",
+    "streams": [
+      {
+        "url": "http://kalika-stream.softnep.com:7740/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://kalika-stream.softnep.com:7740/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:153b9adb-62d9-4211-82c0-4a8420314226"
+      }
+    ]
   },
   "saptakoshi-fm": {
     "title": "Saptakoshi FM",
@@ -46,7 +93,15 @@
     "url": "https://skonline.com.np/",
     "cros": false,
     "stream": "https://live.itech.host:4535/stream",
-    "features": "/img/asia/nepal/saptakoshi-fm.png"
+    "features": "/img/asia/nepal/saptakoshi-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:4535/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "image-fm": {
     "title": "Image FM",
@@ -55,7 +110,21 @@
     "cros": false,
     "stream": "https://radio-streaming-serv-1.hamropatro.com/radio/8040/radio.mp3",
     "features": "/img/asia/nepal/image-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/image-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/image-fm?time=",
+    "streams": [
+      {
+        "url": "https://radio-streaming-serv-1.hamropatro.com/radio/8040/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/9",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3e2e793d-0dc0-4cdd-b03d-adc252e0c662"
+      }
+    ]
   },
   "capital-fm": {
     "title": "Capital FM",
@@ -63,7 +132,15 @@
     "url": "https://www.cfmonair.com/",
     "cros": true,
     "stream": "http://streaming.softnep.net:8037/stream/1/",
-    "features": "/img/asia/nepal/capital-fm.png"
+    "features": "/img/asia/nepal/capital-fm.png",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8037/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "times-fm": {
     "title": "Times FM",
@@ -72,7 +149,15 @@
     "cros": false,
     "stream": "https://streaming.webhostnepal.com/8028/;",
     "features": "/img/asia/nepal/times-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/times-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/times-fm?time=",
+    "streams": [
+      {
+        "url": "https://streaming.webhostnepal.com/8028/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "nepaliko": {
     "title": "Nepaliko Radio",
@@ -80,7 +165,15 @@
     "url": "",
     "cros": true,
     "stream": "https://streaming.webhostnepal.com/9888/;",
-    "features": "/img/asia/nepal/nepaliko.png"
+    "features": "/img/asia/nepal/nepaliko.png",
+    "streams": [
+      {
+        "url": "https://streaming.webhostnepal.com/9888/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "synergy-fm": {
     "title": "Synergy FM",
@@ -88,7 +181,15 @@
     "url": "https://synergyfm.com.np/",
     "cros": false,
     "stream": "https://live.itech.host:3880/stream",
-    "features": "/img/asia/nepal/synergy-fm.png"
+    "features": "/img/asia/nepal/synergy-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:3880/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "classic-fm": {
     "title": "Classic",
@@ -97,7 +198,15 @@
     "cros": false,
     "stream": "https://radio-streaming-serv-1.hamropatro.com/radio/8060/radio.mp3",
     "features": "/img/asia/nepal/classic-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/classic-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/classic-fm?time=",
+    "streams": [
+      {
+        "url": "https://radio-streaming-serv-1.hamropatro.com/radio/8060/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "bhaktapur-fm": {
     "title": "Bhaktapur FM",
@@ -106,7 +215,21 @@
     "cros": true,
     "stream": "http://streaming.softnep.net:8309/stream/1/",
     "features": "/img/asia/nepal/bhaktapur-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/bhaktapur-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/bhaktapur-fm?time=",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8309/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/303",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cded1cf7-d685-4332-8ce4-4ef9ea52bd85"
+      }
+    ]
   },
   "lumbini": {
     "title": "Radio Lumbini",
@@ -115,7 +238,15 @@
     "cros": true,
     "stream": "http://streaming.softnep.net:8085/stream/1/",
     "features": "/img/asia/nepal/lumbini.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/lumbini?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/lumbini?time=",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8085/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "shreenagar-fm": {
     "title": "Shreenagar FM",
@@ -123,7 +254,15 @@
     "url": "",
     "cros": false,
     "stream": "https://live.itech.host:9593/live",
-    "features": "/img/asia/nepal/shreenagar-fm.png"
+    "features": "/img/asia/nepal/shreenagar-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:9593/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "image-news": {
     "title": "Image News",
@@ -132,7 +271,21 @@
     "cros": false,
     "stream": "https://radio-streaming-serv-1.hamropatro.com/radio/8050/radio.mp3",
     "features": "/img/asia/nepal/image-news.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/image-news?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/image-news?time=",
+    "streams": [
+      {
+        "url": "https://radio-streaming-serv-1.hamropatro.com/radio/8050/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/439",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:954ff8df-6000-443b-b139-b4a8ab4da720"
+      }
+    ]
   },
   "pathibhara-fm": {
     "title": "Pathibhara FM",
@@ -140,7 +293,15 @@
     "url": "https://www.pathibharafm.org/",
     "cros": false,
     "stream": "https://live.itech.host:8749/stream",
-    "features": "/img/asia/nepal/pathibhara-fm.png"
+    "features": "/img/asia/nepal/pathibhara-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:8749/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "annapurna-fm": {
     "title": "Radio Annapurna",
@@ -149,7 +310,15 @@
     "cros": true,
     "stream": "http://streaming.softnep.net:8091/stream/1/",
     "features": "/img/asia/nepal/annapurna-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/annapurna-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/annapurna-fm?time=",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8091/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "nepal-fm": {
     "title": "Nepal FM",
@@ -158,7 +327,15 @@
     "cros": false,
     "stream": "https://astream.nepalipatro.com.np:8147/index.html?sid=1",
     "features": "/img/asia/nepal/nepal-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/nepal-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/nepal-fm?time=",
+    "streams": [
+      {
+        "url": "https://astream.nepalipatro.com.np:8147/index.html?sid=1",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "butwal-fm": {
     "title": "Butwal FM",
@@ -167,7 +344,21 @@
     "cros": true,
     "stream": "http://streaming.softnep.net:8003/stream/1/",
     "features": "/img/asia/nepal/butwal-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/butwal-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/butwal-fm?time=",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8003/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://streaming.softnep.net:10994/;stream.nsv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f7d8a07a-21dc-40cf-82fe-ac8483e364c3"
+      }
+    ]
   },
   "ilam-fm": {
     "title": "Ilam FM",
@@ -175,7 +366,15 @@
     "url": "https://www.ilamfm.org/",
     "cros": true,
     "stream": "http://live.itech.host:9635/stream",
-    "features": "/img/asia/nepal/ilam-fm.png"
+    "features": "/img/asia/nepal/ilam-fm.png",
+    "streams": [
+      {
+        "url": "http://live.itech.host:9635/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "thaha-sanchar": {
     "title": "Radio Thaha Sanchar",
@@ -183,7 +382,15 @@
     "url": "https://www.thahasanchar.com/",
     "cros": true,
     "stream": "http://streaming.softnep.net:8025/stream/1/",
-    "features": "/img/asia/nepal/thaha-sanchar.png"
+    "features": "/img/asia/nepal/thaha-sanchar.png",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8025/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "vijaya-fm": {
     "title": "Vijaya FM",
@@ -191,7 +398,15 @@
     "url": "https://vijayafm.org.np/",
     "cros": false,
     "stream": "https://live.itech.host:3320/live",
-    "features": "/img/asia/nepal/vijaya-fm.png"
+    "features": "/img/asia/nepal/vijaya-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:3320/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "resunga": {
     "title": "Radio Resunga",
@@ -199,7 +414,15 @@
     "url": "https://radioresunga.com.np/",
     "cros": false,
     "stream": "https://live.itech.host:9066/live",
-    "features": "/img/asia/nepal/resunga.png"
+    "features": "/img/asia/nepal/resunga.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:9066/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "keeps-fm": {
     "title": "Keeps",
@@ -208,7 +431,15 @@
     "cros": false,
     "stream": "https://radio-streaming-serv-1.hamropatro.com/radio/8280/radio.mp3",
     "features": "/img/asia/nepal/keeps-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/keeps-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/keeps-fm?time=",
+    "streams": [
+      {
+        "url": "https://radio-streaming-serv-1.hamropatro.com/radio/8280/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "triveni": {
     "title": "Radio Triveni",
@@ -217,7 +448,15 @@
     "cros": true,
     "stream": "http://streaming.softnep.net:8031/stream/1/",
     "features": "/img/asia/nepal/triveni.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/triveni?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/triveni?time=",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8031/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mero-fm": {
     "title": "Mero FM",
@@ -226,7 +465,15 @@
     "cros": true,
     "stream": "http://streaming.hamropatro.com:8553/;",
     "features": "/img/asia/nepal/mero-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/mero-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/mero-fm?time=",
+    "streams": [
+      {
+        "url": "http://streaming.hamropatro.com:8553/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "buddha-awaaz": {
     "title": "Radio Buddha Awaaz",
@@ -234,7 +481,15 @@
     "url": "https://www.buddhaawaaz.com/",
     "cros": false,
     "stream": "https://live.itech.host:9353/stream",
-    "features": "/img/asia/nepal/buddha-awaaz.png"
+    "features": "/img/asia/nepal/buddha-awaaz.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:9353/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "krishnasar-fm": {
     "title": "Krishnasar FM",
@@ -242,7 +497,15 @@
     "url": "https://www.krishnasaronline.com.np/",
     "cros": false,
     "stream": "https://live.itech.host:8434/live",
-    "features": "/img/asia/nepal/krishnasar-fm.png"
+    "features": "/img/asia/nepal/krishnasar-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:8434/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "damauli-fm-94-2-fm": {
     "title": "Damauli FM",
@@ -250,7 +513,15 @@
     "url": "https://damaulifm.org/",
     "cros": false,
     "stream": "https://live.itech.host:8786/live",
-    "features": "/img/asia/nepal/damauli-fm-94-2-fm.png"
+    "features": "/img/asia/nepal/damauli-fm-94-2-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:8786/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "nepalbani": {
     "title": "Radio Nepalbani",
@@ -258,7 +529,15 @@
     "url": "https://www.nepalbani.org.np/",
     "cros": false,
     "stream": "https://live.itech.host:8676/stream",
-    "features": "/img/asia/nepal/nepalbani.png"
+    "features": "/img/asia/nepal/nepalbani.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:8676/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "good-news-fm": {
     "title": "Good News FM",
@@ -267,7 +546,21 @@
     "cros": false,
     "stream": "https://live.itech.host:8167/stream",
     "features": "/img/asia/nepal/good-news-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/good-news-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/good-news-fm?time=",
+    "streams": [
+      {
+        "url": "https://live.itech.host:8167/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5098435466231808",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1c4df7d4-7b5f-4615-9355-d312c9db1ff8"
+      }
+    ]
   },
   "radiosagar": {
     "title": "RadioSagar",
@@ -276,7 +569,16 @@
     "cros": false,
     "stream": "https://eu1.fastcast4u.com/proxy/radiosag?mp=/stream/1/",
     "features": "/img/asia/nepal/radiosagar.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/radiosagar?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/radiosagar?time=",
+    "streams": [
+      {
+        "url": "https://eu1.fastcast4u.com/proxy/radiosag?mp=/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "pop"
   },
   "choice-fm": {
     "title": "Choice FM",
@@ -284,7 +586,15 @@
     "url": "https://www.choicefm.org/",
     "cros": false,
     "stream": "https://live.itech.host:8466/live",
-    "features": "/img/asia/nepal/choice-fm.png"
+    "features": "/img/asia/nepal/choice-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:8466/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "himal-online": {
     "title": "Himal Radio",
@@ -293,7 +603,15 @@
     "cros": true,
     "stream": "http://streaming.webhostnepal.com:8022/stream/1/",
     "features": "/img/asia/nepal/himal-online.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/himal-online?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/himal-online?time=",
+    "streams": [
+      {
+        "url": "http://streaming.webhostnepal.com:8022/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "ujyaalo-90-network": {
     "title": "Ujyaalo 90 Network",
@@ -301,7 +619,22 @@
     "url": "https://www.ujyaaloonline.com/",
     "cros": true,
     "stream": "https://stream.zeno.fm/h527zwd11uquv",
-    "features": "/img/asia/nepal/ujyaalo-90-network.png"
+    "features": "/img/asia/nepal/ujyaalo-90-network.png",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/h527zwd11uquv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://stream.zenolive.com/wtuvp08xq1duv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:11db7327-9ceb-4ad6-a00f-7f68ac3d20ed"
+      }
+    ],
+    "description": "entertainment, media, news, variety"
   },
   "bheri": {
     "title": "Radio Bheri",
@@ -309,7 +642,15 @@
     "url": "https://radiobheri.com.np/",
     "cros": false,
     "stream": "https://live.itech.host:9060/live?",
-    "features": "/img/asia/nepal/bheri.png"
+    "features": "/img/asia/nepal/bheri.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:9060/live?",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "star-fm": {
     "title": "Star FM",
@@ -317,7 +658,15 @@
     "url": "https://www.starfm.com.np/",
     "cros": false,
     "stream": "https://live.itech.host:9544/stream",
-    "features": "/img/asia/nepal/star-fm.png"
+    "features": "/img/asia/nepal/star-fm.png",
+    "streams": [
+      {
+        "url": "https://live.itech.host:9544/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "city": {
     "title": "Radio City",
@@ -326,7 +675,15 @@
     "cros": true,
     "stream": "http://onlineradio.websoftitnepal.com:8036/stream/1/",
     "features": "/img/asia/nepal/city.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/city?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/city?time=",
+    "streams": [
+      {
+        "url": "http://onlineradio.websoftitnepal.com:8036/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "makwanpur": {
     "title": "Radio Makwanpur",
@@ -334,7 +691,15 @@
     "url": "https://radiomakawanpur.com/",
     "cros": true,
     "stream": "http://streaming.softnep.net:8057/stream/1/",
-    "features": "/img/asia/nepal/makwanpur.png"
+    "features": "/img/asia/nepal/makwanpur.png",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8057/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "madhyabindu": {
     "title": "Radio Madhyabindu",
@@ -342,7 +707,15 @@
     "url": "https://www.madhyabindufm.org.np/live-page",
     "cros": true,
     "stream": "https://streaming.softnep.net:10981/stream/1/",
-    "features": "/img/asia/nepal/madhyabindu.png"
+    "features": "/img/asia/nepal/madhyabindu.png",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10981/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "himalaya": {
     "title": "Radio Himalaya",
@@ -351,7 +724,15 @@
     "cros": true,
     "stream": "http://live.itech.host:8541/stream/1/",
     "features": "/img/asia/nepal/himalaya.png",
-    "schedule": "https://api.webrad.io/data/playlist/128/himalaya?time="
+    "schedule": "https://api.webrad.io/data/playlist/128/himalaya?time=",
+    "streams": [
+      {
+        "url": "http://live.itech.host:8541/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "b-fm": {
     "title": "B FM",
@@ -359,6 +740,1439 @@
     "url": "",
     "cros": false,
     "stream": "https://radio-streaming-serv-1.hamropatro.com/radio/8290/radio.mp3",
-    "features": "/img/asia/nepal/b-fm.png"
+    "features": "/img/asia/nepal/b-fm.png",
+    "streams": [
+      {
+        "url": "https://radio-streaming-serv-1.hamropatro.com/radio/8290/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "kantipur-fm": {
+    "title": "Kantipur FM",
+    "description": "kantipur, kathmandu, nepal, nepali",
+    "type": "audio/mpeg",
+    "url": "https://radiokantipur.com/",
+    "cros": false,
+    "stream": "https://radio-broadcast.ekantipur.com/stream",
+    "streams": [
+      {
+        "url": "https://radio-broadcast.ekantipur.com/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:724e92cd-9d57-4fef-b7e6-adad9fcc270d"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:724e92cd-9d57-4fef-b7e6-adad9fcc270d"
+  },
+  "kalika-fm-95-2-fm": {
+    "title": "Kalika FM 95.2 FM",
+    "type": "audio/mpeg",
+    "url": "http://www.kalikafm.com.np/",
+    "cros": false,
+    "stream": "https://streaming.softnep.net:10828/stream",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10828/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9620e2a3-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "http://www.surfmusic.de/m3u/kalika-fm-95-2-fm,16363.m3u",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/nepal/kalika-fm-95-2-fm.png",
+    "source": "radio-browser:9620e2a3-0601-11e8-ae97-52543be04c81"
+  },
+  "bbc-nepali": {
+    "title": "BBC Nepali",
+    "description": "news",
+    "type": "audio/mpeg",
+    "url": "https://www.bbc.com/nepali",
+    "cros": false,
+    "stream": "https://stream.live.vc.bbcmedia.co.uk/bbc_nepali_radio",
+    "streams": [
+      {
+        "url": "https://stream.live.vc.bbcmedia.co.uk/bbc_nepali_radio",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:665ec0ef-5997-4727-8994-f972225b327b"
+      }
+    ],
+    "features": "/img/asia/nepal/bbc-nepali.png",
+    "source": "radio-browser:665ec0ef-5997-4727-8994-f972225b327b"
+  },
+  "capital-fm-92-4": {
+    "title": "Capital FM 92.4",
+    "type": "audio/mpeg",
+    "url": "http://www.cfmonair.com/",
+    "cros": true,
+    "stream": "http://streaming.softnep.net:8037/;",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8037/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:96497781-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:96497781-0601-11e8-ae97-52543be04c81"
+  },
+  "hits-fm-91-2": {
+    "title": "Hits FM 91.2",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "http://www.hitsfm.com.np/",
+    "cros": false,
+    "stream": "https://usa15.fastcast4u.com/proxy/hitsfm912?mp=/1",
+    "streams": [
+      {
+        "url": "https://usa15.fastcast4u.com/proxy/hitsfm912?mp=/1",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bf97c17e-5fda-4420-83ad-7ae423324467"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bf97c17e-5fda-4420-83ad-7ae423324467"
+  },
+  "radio-himalaya": {
+    "title": "Radio Himalaya",
+    "description": "himalaya, nepal",
+    "type": "audio/mpeg",
+    "url": "http://www.radiohimalaya.com/",
+    "cros": false,
+    "stream": "https://live.itech.host/himalayaradio?1588276425741",
+    "streams": [
+      {
+        "url": "https://live.itech.host/himalayaradio?1588276425741",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1dbce3bb-8002-42b3-923d-fa3f25cf2f1d"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-himalaya.png",
+    "source": "radio-browser:1dbce3bb-8002-42b3-923d-fa3f25cf2f1d"
+  },
+  "cin-khabar": {
+    "title": "CIN Khabar",
+    "description": "entertainment, news, pop, talk",
+    "type": "audio/aac",
+    "url": "https://www.cinkhabar.com/",
+    "cros": false,
+    "stream": "https://streaming.softnep.net:10996/;stream.nsv&type=mp3&volume=60",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10996/;stream.nsv&type=mp3&volume=60",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:3e78590f-ab9c-4e13-a512-189a17a54965"
+      }
+    ],
+    "features": "/img/asia/nepal/cin-khabar.png",
+    "source": "radio-browser:3e78590f-ab9c-4e13-a512-189a17a54965"
+  },
+  "swadesh-93-2-fm": {
+    "title": "Swadesh 93.2 FM",
+    "type": "audio/mpeg",
+    "url": "https://swadeshfm.com/",
+    "cros": true,
+    "stream": "http://216.55.141.189:8653/stream?type=http&nocache=66846",
+    "streams": [
+      {
+        "url": "http://216.55.141.189:8653/stream?type=http&nocache=66846",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:6451cd54-2491-4200-8534-1574d711cc1d"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:6451cd54-2491-4200-8534-1574d711cc1d"
+  },
+  "naya-radio": {
+    "title": "Naya Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.nayafm.com.np/",
+    "cros": true,
+    "stream": "http://live.itech.host:1110/;",
+    "streams": [
+      {
+        "url": "http://live.itech.host:1110/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:0b8d9d9a-16fa-4043-bba6-4a4dbbe149b8"
+      }
+    ],
+    "features": "/img/asia/nepal/naya-radio.png",
+    "source": "radio-browser:0b8d9d9a-16fa-4043-bba6-4a4dbbe149b8"
+  },
+  "swadesh-fm": {
+    "title": "Swadesh FM",
+    "type": "audio/mpeg",
+    "url": "https://www.hamropatro.com/radio",
+    "cros": false,
+    "stream": "https://radio.garden/api/ara/content/listen/ApPqIXdm/channel.mp3?1700834587158",
+    "streams": [
+      {
+        "url": "https://radio.garden/api/ara/content/listen/ApPqIXdm/channel.mp3?1700834587158",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:6852f6c3-f0a4-4f74-87b3-63c566d4e953"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:6852f6c3-f0a4-4f74-87b3-63c566d4e953"
+  },
+  "ultimae-radio": {
+    "title": "Ultimaě radio",
+    "description": "electronic",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://ultimae-bofaradio.radioca.st/",
+    "streams": [
+      {
+        "url": "https://ultimae-bofaradio.radioca.st/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:74e0791d-cfd0-49a7-957f-89750dcdd444"
+      }
+    ],
+    "features": "/img/asia/nepal/ultimae-radio.webp",
+    "source": "radio-browser:74e0791d-cfd0-49a7-957f-89750dcdd444"
+  },
+  "khozee-radio": {
+    "title": "Khozee Radio",
+    "type": "audio/aac",
+    "url": "https://www.hamropatro.com/radio/Khozee-Radio",
+    "cros": true,
+    "stream": "http://216.55.141.189:8060/stream/1/",
+    "streams": [
+      {
+        "url": "http://216.55.141.189:8060/stream/1/",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:89c15aba-e1bc-41c4-a4b7-6b2830da80a8"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:89c15aba-e1bc-41c4-a4b7-6b2830da80a8"
+  },
+  "bfbs-gurkha-radio": {
+    "title": "BFBS Gurkha Radio",
+    "type": "audio/aac",
+    "url": "https://radio.bfbs.com/stations/bfbs-gurkha-network",
+    "cros": false,
+    "stream": "https://listen-ssvcbfbs.sharp-stream.com/ssvcbfbs3.aac",
+    "streams": [
+      {
+        "url": "https://listen-ssvcbfbs.sharp-stream.com/ssvcbfbs3.aac",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:72b33a84-773a-45d3-99c9-cc8558d05b37"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:72b33a84-773a-45d3-99c9-cc8558d05b37"
+  },
+  "kool-fm-90-3": {
+    "title": "KOOL FM 90.3",
+    "type": "audio/mpeg",
+    "url": "https://www.kool903.com/",
+    "cros": false,
+    "stream": "https://streaming.softnep.net:10944/;stream.nsv&type=mp3&volume=70",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10944/;stream.nsv&type=mp3&volume=70",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:36d94d0a-c866-4e06-bbc2-3cf6f7dddea3"
+      }
+    ],
+    "features": "/img/asia/nepal/kool-fm-90-3.png",
+    "source": "radio-browser:36d94d0a-c866-4e06-bbc2-3cf6f7dddea3"
+  },
+  "radio-thaha-sanchar": {
+    "title": "Radio Thaha Sanchar",
+    "type": "audio/mpeg",
+    "url": "https://thahasanchar.com/live",
+    "cros": false,
+    "stream": "https://streaming.softnep.net:10988/;stream.nsv&type=mp3",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10988/;stream.nsv&type=mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:6c0eecb0-e8bf-44ce-9c7b-17eca6d95b8c"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-thaha-sanchar.png",
+    "source": "radio-browser:6c0eecb0-e8bf-44ce-9c7b-17eca6d95b8c"
+  },
+  "jayaprithvi-f-m": {
+    "title": "Jayaprithvi F.M.",
+    "description": "classical, news",
+    "type": "audio/mpeg",
+    "url": "https://www.jpkhabar.com/",
+    "cros": false,
+    "stream": "https://streaming.softnep.net:10824/",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10824/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:6fe1411f-9aa6-42d1-a1ee-02ac2e6d0941"
+      }
+    ],
+    "features": "/img/asia/nepal/jayaprithvi-f-m.jpg",
+    "source": "radio-browser:6fe1411f-9aa6-42d1-a1ee-02ac2e6d0941"
+  },
+  "abdulbasit-abdulsamad": {
+    "title": "Abdulbasit Abdulsamad",
+    "type": "audio/aac",
+    "url": "https://mp3islam.com/",
+    "cros": false,
+    "stream": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:d0556a00-067f-4071-9cd1-da2f53f4d3b9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:d0556a00-067f-4071-9cd1-da2f53f4d3b9"
+  },
+  "napho-radio-fm-88-25": {
+    "title": "Napho Radio FM 88.25",
+    "type": "audio/mpeg",
+    "url": "http://naphoradio.com/",
+    "cros": false,
+    "stream": "https://radio11.plathong.net/7136/;stream.mp3",
+    "streams": [
+      {
+        "url": "https://radio11.plathong.net/7136/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a6cc118a-9941-4e39-8d77-fc91e257abb9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:a6cc118a-9941-4e39-8d77-fc91e257abb9"
+  },
+  "chitwan-radio-network": {
+    "title": "Chitwan Radio Network",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/123",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/123",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:88e2eb2e-19ba-4f61-90c1-2559361166cd"
+      }
+    ],
+    "features": "/img/asia/nepal/chitwan-radio-network.webp",
+    "source": "radio-browser:88e2eb2e-19ba-4f61-90c1-2559361166cd"
+  },
+  "nepal-network": {
+    "title": "Nepal Network",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5092732051652608",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5092732051652608",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:256cd8a9-9a8c-4f1d-a945-37d1d33d2954"
+      }
+    ],
+    "features": "/img/asia/nepal/nepal-network.webp",
+    "source": "radio-browser:256cd8a9-9a8c-4f1d-a945-37d1d33d2954"
+  },
+  "sumiran-fm": {
+    "title": "Sumiran FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5132813491765248",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5132813491765248",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1a797814-993b-45e1-b93b-54ee56cf86e2"
+      }
+    ],
+    "features": "/img/asia/nepal/sumiran-fm.webp",
+    "source": "radio-browser:1a797814-993b-45e1-b93b-54ee56cf86e2"
+  },
+  "bhojpuriya-fm": {
+    "title": "Bhojpuriya FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/64",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/64",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:de6bb5c4-c331-41c6-b167-e8ec2d09c35d"
+      }
+    ],
+    "features": "/img/asia/nepal/bhojpuriya-fm.webp",
+    "source": "radio-browser:de6bb5c4-c331-41c6-b167-e8ec2d09c35d"
+  },
+  "radio-annapurna-nepal": {
+    "title": "Radio Annapurna Nepal",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/34",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/34",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:57daa244-452f-4d35-8bc7-ac117e23c4d0"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-annapurna-nepal.webp",
+    "source": "radio-browser:57daa244-452f-4d35-8bc7-ac117e23c4d0"
+  },
+  "red-fm": {
+    "title": "Red FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5070153408577536",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5070153408577536",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:58bf7768-a4c7-492c-a178-3412bb552c38"
+      }
+    ],
+    "features": "/img/asia/nepal/red-fm.webp",
+    "source": "radio-browser:58bf7768-a4c7-492c-a178-3412bb552c38"
+  },
+  "nepali-radio-network": {
+    "title": "Nepali Radio Network",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/560",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/560",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:698c1427-ca23-4940-910d-75af1b17e76c"
+      }
+    ],
+    "features": "/img/asia/nepal/nepali-radio-network.webp",
+    "source": "radio-browser:698c1427-ca23-4940-910d-75af1b17e76c"
+  },
+  "bbc-world-service-english": {
+    "title": "BBC World Service English",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5639388954361856",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5639388954361856",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:fb7bf67a-71da-4254-87ce-ffcca66cdfe8"
+      }
+    ],
+    "features": "/img/asia/nepal/bbc-world-service-english.webp",
+    "source": "radio-browser:fb7bf67a-71da-4254-87ce-ffcca66cdfe8"
+  },
+  "bhojpuriya-fm-92-8": {
+    "title": "Bhojpuriya FM 92.8",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": true,
+    "stream": "http://streaming.softnep.net:8143/;stream.nsv&type=mp3&volume=60",
+    "streams": [
+      {
+        "url": "http://streaming.softnep.net:8143/;stream.nsv&type=mp3&volume=60",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:a3f23ffa-a988-4d04-9e71-a15253bf5e1e"
+      }
+    ],
+    "features": "/img/asia/nepal/bhojpuriya-fm-92-8.webp",
+    "source": "radio-browser:a3f23ffa-a988-4d04-9e71-a15253bf5e1e"
+  },
+  "nepali-online-radio": {
+    "title": "Nepali Online Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/1754975892132",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/1754975892132",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:8620f316-926d-4696-ba8a-90294c9612e2"
+      }
+    ],
+    "features": "/img/asia/nepal/nepali-online-radio.webp",
+    "source": "radio-browser:8620f316-926d-4696-ba8a-90294c9612e2"
+  },
+  "radio-city": {
+    "title": "Radio City",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/192",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/192",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cf9a561f-e523-4b1d-a1c5-95f299b20011"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-city.webp",
+    "source": "radio-browser:cf9a561f-e523-4b1d-a1c5-95f299b20011"
+  },
+  "makalu-fm": {
+    "title": "Makalu FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/318",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/318",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4ef73e6d-e17d-4b80-8e78-5e10b8ddb565"
+      }
+    ],
+    "features": "/img/asia/nepal/makalu-fm.webp",
+    "source": "radio-browser:4ef73e6d-e17d-4b80-8e78-5e10b8ddb565"
+  },
+  "24-nepali-online-radio": {
+    "title": "24 Nepali Online Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5648733377134592",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5648733377134592",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d8764a21-8dc3-453b-89d3-70671f691555"
+      }
+    ],
+    "features": "/img/asia/nepal/24-nepali-online-radio.webp",
+    "source": "radio-browser:d8764a21-8dc3-453b-89d3-70671f691555"
+  },
+  "radio-sambridha-nepal-nesdo-fm-92-6": {
+    "title": "Radio Sambridha Nepal (Nesdo Fm) (92.6)",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5712961207271424",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5712961207271424",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d5b88768-385c-443f-8f86-af45f96b8b37"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-sambridha-nepal-nesdo-fm-92-6.webp",
+    "source": "radio-browser:d5b88768-385c-443f-8f86-af45f96b8b37"
+  },
+  "radio-jhapa": {
+    "title": "Radio Jhapa",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/612",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/612",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:5addfb96-f8ad-4ae3-a9c8-0ed6a6704019"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-jhapa.webp",
+    "source": "radio-browser:5addfb96-f8ad-4ae3-a9c8-0ed6a6704019"
+  },
+  "universal-health-radio": {
+    "title": "Universal Health Radio (नेपाली)",
+    "description": "cdc, education, fda, health, nepali",
+    "type": "audio/mpeg",
+    "url": "https://universalhealthradio.org/",
+    "cros": false,
+    "stream": "https://radio.universalhealthradio.org/uhr-ne.mp3",
+    "streams": [
+      {
+        "url": "https://radio.universalhealthradio.org/uhr-ne.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1bdf27fc-a902-420f-a9f8-ac2571f534c7"
+      }
+    ],
+    "features": "/img/asia/nepal/universal-health-radio.jpg",
+    "source": "radio-browser:1bdf27fc-a902-420f-a9f8-ac2571f534c7"
+  },
+  "tinau-fm": {
+    "title": "Tinau FM",
+    "type": "audio/mpeg",
+    "url": "https://tinaufm.com.np/",
+    "cros": false,
+    "stream": "https://streaming.softnep.net:10854/;stream.nsv;type=mp3&volume=70",
+    "streams": [
+      {
+        "url": "https://streaming.softnep.net:10854/;stream.nsv;type=mp3&volume=70",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:655d76c0-f0b0-4adc-a457-43a608d9917d"
+      }
+    ],
+    "features": "/img/asia/nepal/tinau-fm.jpg",
+    "source": "radio-browser:655d76c0-f0b0-4adc-a457-43a608d9917d"
+  },
+  "music-maithili": {
+    "title": "Music Maithili",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/1754975476345",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/1754975476345",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:37951642-6a7a-446e-aabd-60178060b726"
+      }
+    ],
+    "features": "/img/asia/nepal/music-maithili.webp",
+    "source": "radio-browser:37951642-6a7a-446e-aabd-60178060b726"
+  },
+  "radio-comedy-champion": {
+    "title": "Radio Comedy Champion",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5694556735537152",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5694556735537152",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:45917824-e32c-4a59-a356-582501c5d8fe"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-comedy-champion.webp",
+    "source": "radio-browser:45917824-e32c-4a59-a356-582501c5d8fe"
+  },
+  "itahari-fm": {
+    "title": "Itahari FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5704214992912384",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5704214992912384",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ef4cff42-bf79-4781-9123-7333b574247f"
+      }
+    ],
+    "features": "/img/asia/nepal/itahari-fm.webp",
+    "source": "radio-browser:ef4cff42-bf79-4781-9123-7333b574247f"
+  },
+  "kalika-fm-musical": {
+    "title": "Kalika FM Musical",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5722620169289728",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5722620169289728",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f1c1c113-b851-4497-aa8a-33e7bd51d579"
+      }
+    ],
+    "features": "/img/asia/nepal/kalika-fm-musical.webp",
+    "source": "radio-browser:f1c1c113-b851-4497-aa8a-33e7bd51d579"
+  },
+  "nepalbodh": {
+    "title": "NepalBodh",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5762972326559744",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5762972326559744",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:967553fd-2cf5-46f2-b068-891599c6f47c"
+      }
+    ],
+    "features": "/img/asia/nepal/nepalbodh.webp",
+    "source": "radio-browser:967553fd-2cf5-46f2-b068-891599c6f47c"
+  },
+  "radio-holeri-fm": {
+    "title": "Radio Holeri FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/613",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/613",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d91a6a0b-2eec-4fe7-a2fb-c1f2e530297a"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-holeri-fm.webp",
+    "source": "radio-browser:d91a6a0b-2eec-4fe7-a2fb-c1f2e530297a"
+  },
+  "radio-olive-nepal": {
+    "title": "Radio Olive Nepal",
+    "type": "audio/aac",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/6280161257324544",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/6280161257324544",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:7f4b8a10-8994-425e-8caa-dbd5e607a8b7"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-olive-nepal.webp",
+    "source": "radio-browser:7f4b8a10-8994-425e-8caa-dbd5e607a8b7"
+  },
+  "nepali-sanchar-radio": {
+    "title": "Nepali Sanchar Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/160",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/160",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7c738df1-a57e-433f-bb48-7cae94edd73e"
+      }
+    ],
+    "features": "/img/asia/nepal/nepali-sanchar-radio.webp",
+    "source": "radio-browser:7c738df1-a57e-433f-bb48-7cae94edd73e"
+  },
+  "antenna-foundation-nepal": {
+    "title": "Antenna Foundation Nepal",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/362",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/362",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:24c8b1c2-cf0d-4621-b457-739357bca194"
+      }
+    ],
+    "features": "/img/asia/nepal/antenna-foundation-nepal.webp",
+    "source": "radio-browser:24c8b1c2-cf0d-4621-b457-739357bca194"
+  },
+  "fm-adhyatma-jyoti": {
+    "title": "FM Adhyatma Jyoti",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/502",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/502",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4b7d0907-1b0f-4da5-9848-9fe8c9539e02"
+      }
+    ],
+    "features": "/img/asia/nepal/fm-adhyatma-jyoti.webp",
+    "source": "radio-browser:4b7d0907-1b0f-4da5-9848-9fe8c9539e02"
+  },
+  "rajbanshi-online-radio": {
+    "title": "Rajbanshi Online Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5089000765259776",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5089000765259776",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0f35fc23-2196-4da8-ad2e-b95137db4805"
+      }
+    ],
+    "features": "/img/asia/nepal/rajbanshi-online-radio.webp",
+    "source": "radio-browser:0f35fc23-2196-4da8-ad2e-b95137db4805"
+  },
+  "radio-sajha-online": {
+    "title": "Radio Sajha Online",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5153047720230912",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5153047720230912",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:43fdaead-4580-44e3-a071-c4f008969897"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-sajha-online.webp",
+    "source": "radio-browser:43fdaead-4580-44e3-a071-c4f008969897"
+  },
+  "radio-chhimeki": {
+    "title": "Radio Chhimeki",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5195102160945152",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5195102160945152",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e264437f-a8f3-4fb4-a69f-111a63ef1ae9"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-chhimeki.webp",
+    "source": "radio-browser:e264437f-a8f3-4fb4-a69f-111a63ef1ae9"
+  },
+  "radio-bijayabasti": {
+    "title": "Radio Bijayabasti",
+    "type": "audio/aac",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/536",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/536",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:d613dddb-407d-4f8e-8b52-595144c173e9"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-bijayabasti.webp",
+    "source": "radio-browser:d613dddb-407d-4f8e-8b52-595144c173e9"
+  },
+  "cin": {
+    "title": "CIN",
+    "type": "audio/aac",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5630818481340416",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5630818481340416",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a50b4c52-95a2-405b-b9e8-6d26cac93ea7"
+      }
+    ],
+    "features": "/img/asia/nepal/cin.webp",
+    "source": "radio-browser:a50b4c52-95a2-405b-b9e8-6d26cac93ea7"
+  },
+  "radio-suseli": {
+    "title": "Radio Suseli",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5637666806693888",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5637666806693888",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:11d753a9-8286-468d-ac96-1558f4437d7d"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-suseli.webp",
+    "source": "radio-browser:11d753a9-8286-468d-ac96-1558f4437d7d"
+  },
+  "radio-entertainment": {
+    "title": "Radio Entertainment",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5659565563707392",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5659565563707392",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1e9e25f1-1703-430b-baca-3629d2d5bb98"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-entertainment.webp",
+    "source": "radio-browser:1e9e25f1-1703-430b-baca-3629d2d5bb98"
+  },
+  "siddhartha-fm": {
+    "title": "Siddhartha  FM",
+    "type": "audio/aac",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5664612039000064",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5664612039000064",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:bf789fb5-da18-420a-9bcb-0a7aa73885c1"
+      }
+    ],
+    "features": "/img/asia/nepal/siddhartha-fm.webp",
+    "source": "radio-browser:bf789fb5-da18-420a-9bcb-0a7aa73885c1"
+  },
+  "radio-namaste-ghorahi-dang": {
+    "title": "Radio Namaste (Ghorahi Dang)",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5676250880278528",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5676250880278528",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:938804f1-04da-46ee-90ec-0a42b223b5f8"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-namaste-ghorahi-dang.webp",
+    "source": "radio-browser:938804f1-04da-46ee-90ec-0a42b223b5f8"
+  },
+  "nsanchar-online-radio": {
+    "title": "Nsanchar Online Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5729629102931968",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5729629102931968",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:2af78431-a387-401a-813f-1ad1ede8265b"
+      }
+    ],
+    "features": "/img/asia/nepal/nsanchar-online-radio.webp",
+    "source": "radio-browser:2af78431-a387-401a-813f-1ad1ede8265b"
+  },
+  "advance-fm": {
+    "title": "Advance FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/1777266954225",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/1777266954225",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:878f1412-268b-4b4f-8b09-33c265caff76"
+      }
+    ],
+    "features": "/img/asia/nepal/advance-fm.webp",
+    "source": "radio-browser:878f1412-268b-4b4f-8b09-33c265caff76"
+  },
+  "radio-parasi": {
+    "title": "Radio Parasi",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/223",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/223",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9656fff3-b36b-49b4-8666-a9c62de8bcf0"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-parasi.webp",
+    "source": "radio-browser:9656fff3-b36b-49b4-8666-a9c62de8bcf0"
+  },
+  "radio-rudraksha": {
+    "title": "Radio Rudraksha",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/25",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/25",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f840a94b-25b8-49d4-a8ce-632d59e72980"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-rudraksha.webp",
+    "source": "radio-browser:f840a94b-25b8-49d4-a8ce-632d59e72980"
+  },
+  "radio-janmabhumi": {
+    "title": "Radio Janmabhumi",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5072336292151296",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5072336292151296",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:379f5eb4-8eaa-4c52-8118-5412ee817238"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-janmabhumi.webp",
+    "source": "radio-browser:379f5eb4-8eaa-4c52-8118-5412ee817238"
+  },
+  "kingdom-voice-fm": {
+    "title": "Kingdom Voice FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5096889982648320",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5096889982648320",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:8782443c-995a-479b-88b9-64e8297afb2e"
+      }
+    ],
+    "features": "/img/asia/nepal/kingdom-voice-fm.webp",
+    "source": "radio-browser:8782443c-995a-479b-88b9-64e8297afb2e"
+  },
+  "radio-jugar-fm": {
+    "title": "Radio Jugar FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5098565154111488",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5098565154111488",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b76fedcc-e49a-48b9-a091-ca54ffae81bf"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-jugar-fm.webp",
+    "source": "radio-browser:b76fedcc-e49a-48b9-a091-ca54ffae81bf"
+  },
+  "radio-swabhiman": {
+    "title": "Radio Swabhiman",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5114406746718208",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5114406746718208",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4d363924-0a8e-4c14-9c17-bf9d85b42630"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-swabhiman.webp",
+    "source": "radio-browser:4d363924-0a8e-4c14-9c17-bf9d85b42630"
+  },
+  "radio-pariwartan-silaawaj": {
+    "title": "Radio Pariwartan Silaawaj",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5115748882055168",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5115748882055168",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:de8cabc4-adda-4513-8e35-59ec52b9619f"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-pariwartan-silaawaj.webp",
+    "source": "radio-browser:de8cabc4-adda-4513-8e35-59ec52b9619f"
+  },
+  "radio-kamal": {
+    "title": "Radio Kamal",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5115844034035712",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5115844034035712",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b6f5855e-c01c-4d29-a091-3d97d458c724"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-kamal.webp",
+    "source": "radio-browser:b6f5855e-c01c-4d29-a091-3d97d458c724"
+  },
+  "vsansar-online-radio": {
+    "title": "VSansar Online Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5117028245438464",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5117028245438464",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0e86009e-1187-4534-aba8-17f4bde4e61f"
+      }
+    ],
+    "features": "/img/asia/nepal/vsansar-online-radio.webp",
+    "source": "radio-browser:0e86009e-1187-4534-aba8-17f4bde4e61f"
+  },
+  "daman-fm": {
+    "title": "Daman FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5118707611205632",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5118707611205632",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b36f7c22-2678-4338-8100-dfc7afe5c8e5"
+      }
+    ],
+    "features": "/img/asia/nepal/daman-fm.webp",
+    "source": "radio-browser:b36f7c22-2678-4338-8100-dfc7afe5c8e5"
+  },
+  "jagaran-radio-online": {
+    "title": "Jagaran Radio Online",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5122105970524160",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5122105970524160",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:fbea0f21-25c9-47b7-8775-8b4eecf47913"
+      }
+    ],
+    "features": "/img/asia/nepal/jagaran-radio-online.webp",
+    "source": "radio-browser:fbea0f21-25c9-47b7-8775-8b4eecf47913"
+  },
+  "afno-fm-okhaldhunga": {
+    "title": "Afno Fm Okhaldhunga",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5135177703489536",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5135177703489536",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3f31ba8e-6d42-46c3-8caa-9642937b4d27"
+      }
+    ],
+    "features": "/img/asia/nepal/afno-fm-okhaldhunga.webp",
+    "source": "radio-browser:3f31ba8e-6d42-46c3-8caa-9642937b4d27"
+  },
+  "krishi-radio": {
+    "title": "Krishi Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5159000981110784",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5159000981110784",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b40fbc1c-80b3-415d-859d-bbba83f7d49a"
+      }
+    ],
+    "features": "/img/asia/nepal/krishi-radio.webp",
+    "source": "radio-browser:b40fbc1c-80b3-415d-859d-bbba83f7d49a"
+  },
+  "radio-himshikhar": {
+    "title": "Radio Himshikhar",
+    "type": "audio/aac",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5169237691727872",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5169237691727872",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:52407aef-8369-49f2-bc6f-efb6fe814e11"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-himshikhar.webp",
+    "source": "radio-browser:52407aef-8369-49f2-bc6f-efb6fe814e11"
+  },
+  "triveni-times-fm-100-6": {
+    "title": "Triveni Times FM 100.6",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5172139856494592",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5172139856494592",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:04e7fa15-da91-458b-810b-59e08c38a7d5"
+      }
+    ],
+    "features": "/img/asia/nepal/triveni-times-fm-100-6.webp",
+    "source": "radio-browser:04e7fa15-da91-458b-810b-59e08c38a7d5"
+  },
+  "radio-chinari": {
+    "title": "Radio Chinari",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5185286415843328",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5185286415843328",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:58675682-efd0-4b0b-bcf4-194af33c36c0"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-chinari.webp",
+    "source": "radio-browser:58675682-efd0-4b0b-bcf4-194af33c36c0"
+  },
+  "janata-radio": {
+    "title": "Janata Radio",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5204489751494656",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5204489751494656",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7b2c9c14-07e1-4b61-9f16-2d65dfa35eb1"
+      }
+    ],
+    "features": "/img/asia/nepal/janata-radio.webp",
+    "source": "radio-browser:7b2c9c14-07e1-4b61-9f16-2d65dfa35eb1"
+  },
+  "radio-samarpan": {
+    "title": "Radio Samarpan",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/545",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/545",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9f9cd9e9-5d34-4ce6-98f4-21607d8bda92"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-samarpan.webp",
+    "source": "radio-browser:9f9cd9e9-5d34-4ce6-98f4-21607d8bda92"
+  },
+  "radio-shivashakti": {
+    "title": "Radio Shivashakti",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/556",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/556",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9dbdf7b4-55f1-45b0-bf7f-e81fafadad32"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-shivashakti.webp",
+    "source": "radio-browser:9dbdf7b4-55f1-45b0-bf7f-e81fafadad32"
+  },
+  "radio-artha-sarokar": {
+    "title": "Radio Artha Sarokar",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5641049345097728",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5641049345097728",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7c3a3a76-3bcf-41d6-9c30-a6a48125bc93"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-artha-sarokar.webp",
+    "source": "radio-browser:7c3a3a76-3bcf-41d6-9c30-a6a48125bc93"
+  },
+  "baideshik-rojgar": {
+    "title": "Baideshik Rojgar",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5645757971431424",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5645757971431424",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:254a84c9-7560-46f6-abf7-8f4592a1bb2d"
+      }
+    ],
+    "features": "/img/asia/nepal/baideshik-rojgar.webp",
+    "source": "radio-browser:254a84c9-7560-46f6-abf7-8f4592a1bb2d"
+  },
+  "radio-ganatantra-aawaj": {
+    "title": "Radio Ganatantra Aawaj",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5661090081931264",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5661090081931264",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:25d02136-f618-4dbf-96bd-7f8cdb2c1ecf"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-ganatantra-aawaj.webp",
+    "source": "radio-browser:25d02136-f618-4dbf-96bd-7f8cdb2c1ecf"
+  },
+  "khulaasa-news": {
+    "title": "Khulaasa News",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5663048301805568",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5663048301805568",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a24a117f-15c1-46e2-8b9f-df383e9e0273"
+      }
+    ],
+    "features": "/img/asia/nepal/khulaasa-news.webp",
+    "source": "radio-browser:a24a117f-15c1-46e2-8b9f-df383e9e0273"
+  },
+  "radio-sarangi-pokhara-101-3-mhz": {
+    "title": "Radio Sarangi (Pokhara) (101.3 Mhz)",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5666633592864768",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5666633592864768",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:90ec4b05-a21e-4069-b871-b83b3155a5ba"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-sarangi-pokhara-101-3-mhz.webp",
+    "source": "radio-browser:90ec4b05-a21e-4069-b871-b83b3155a5ba"
+  },
+  "jayaprithvi-fm": {
+    "title": "Jayaprithvi FM",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5668801058177024",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5668801058177024",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4053d4ae-0c32-4d22-baeb-15e65aa8ea3e"
+      }
+    ],
+    "features": "/img/asia/nepal/jayaprithvi-fm.webp",
+    "source": "radio-browser:4053d4ae-0c32-4d22-baeb-15e65aa8ea3e"
+  },
+  "radio-bandhan": {
+    "title": "Radio Bandhan",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5676510457364480",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5676510457364480",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:fcde3a55-d4c9-44f6-9588-4f81774dcc40"
+      }
+    ],
+    "features": "/img/asia/nepal/radio-bandhan.webp",
+    "source": "radio-browser:fcde3a55-d4c9-44f6-9588-4f81774dcc40"
+  },
+  "music-city": {
+    "title": "Music City",
+    "type": "audio/mpeg",
+    "url": "https://radionp.com",
+    "cros": false,
+    "stream": "https://www.hamropatro.com/api/radio/stream/5685532208136192",
+    "streams": [
+      {
+        "url": "https://www.hamropatro.com/api/radio/stream/5685532208136192",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:680b7512-e8f8-4ab9-9922-57479b828d58"
+      }
+    ],
+    "features": "/img/asia/nepal/music-city.webp",
+    "source": "radio-browser:680b7512-e8f8-4ab9-9922-57479b828d58"
   }
 }

@@ -7,7 +7,15 @@
     "cros": false,
     "stream": "https://radioislamindonesia.com/rodja-low.mp3",
     "features": "/img/asia/indonesia/rodja.png",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://radioislamindonesia.com/rodja-low.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "suara-surabaya": {
     "title": "Suara Surabaya",
@@ -17,7 +25,15 @@
     "cros": false,
     "stream": "https://c5.siar.us/proxy/ssfm/stream",
     "features": "/img/asia/indonesia/suara-surabaya.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/suara-surabaya?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/suara-surabaya?time=",
+    "streams": [
+      {
+        "url": "https://c5.siar.us/proxy/ssfm/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "prambors": {
     "title": "Prambors",
@@ -27,7 +43,15 @@
     "cros": false,
     "stream": "https://22253.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&pname=tdwidgets&pversion=2.9&banners=300x250&sbmid=fb62568d-e4b4-4b69-af58-def042897d60",
     "features": "/img/asia/indonesia/prambors.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/prambors?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/prambors?time=",
+    "streams": [
+      {
+        "url": "https://22253.live.streamtheworld.com/PRAMBORS_FM.mp3?dist=pramborsweb&tdsdk=js-2.9&pname=tdwidgets&pversion=2.9&banners=300x250&sbmid=fb62568d-e4b4-4b69-af58-def042897d60",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "hard-rock": {
     "title": "Hard Rock FM",
@@ -37,7 +61,15 @@
     "cros": true,
     "stream": "https://n13.radiojar.com/7csmg90fuqruv",
     "features": "/img/asia/indonesia/hard-rock.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/hard-rock?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/hard-rock?time=",
+    "streams": [
+      {
+        "url": "https://n13.radiojar.com/7csmg90fuqruv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "indika": {
     "title": "Indika",
@@ -47,7 +79,15 @@
     "cros": false,
     "stream": "https://s2.radio.co/sf58a82d7d/listen",
     "features": "/img/asia/indonesia/indika.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/indika?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/indika?time=",
+    "streams": [
+      {
+        "url": "https://s2.radio.co/sf58a82d7d/listen",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mustang": {
     "title": "Mustang (Jakarta)",
@@ -56,7 +96,15 @@
     "url": "https://mustang88fm.com/",
     "cros": false,
     "stream": "https://wz.mari.co.id:1936/web_mustangfm/mustangfm/playlist.m3u8",
-    "features": "/img/asia/indonesia/mustang.png"
+    "features": "/img/asia/indonesia/mustang.png",
+    "streams": [
+      {
+        "url": "https://wz.mari.co.id:1936/web_mustangfm/mustangfm/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "delta-fm": {
     "title": "Delta FM",
@@ -66,7 +114,15 @@
     "cros": true,
     "stream": "http://live.deltafm.net:9002/deltafm",
     "features": "/img/asia/indonesia/delta-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/delta-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/delta-fm?time=",
+    "streams": [
+      {
+        "url": "http://live.deltafm.net:9002/deltafm",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "bens-jakarta": {
     "title": "Bens Radio (Jakarta)",
@@ -75,7 +131,15 @@
     "url": "https://www.bensradio.com/",
     "cros": true,
     "stream": "https://node-16.zeno.fm/99v5msp3v68uv",
-    "features": "/img/asia/indonesia/bens-jakarta.png"
+    "features": "/img/asia/indonesia/bens-jakarta.png",
+    "streams": [
+      {
+        "url": "https://node-16.zeno.fm/99v5msp3v68uv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "ardan": {
     "title": "Ardan FM",
@@ -84,7 +148,21 @@
     "url": "http://ardanradio.com/",
     "cros": true,
     "stream": "http://listento.ardanradio.com:1059/stream/1/",
-    "features": "/img/asia/indonesia/ardan.png"
+    "features": "/img/asia/indonesia/ardan.png",
+    "streams": [
+      {
+        "url": "http://listento.ardanradio.com:1059/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://stream.rcs.revma.com/ugpyzu9n5k3vv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:d0d5c057-c111-4975-9034-40ee02fcd7c4"
+      }
+    ]
   },
   "cosmopolitan": {
     "title": "Cosmopolitan",
@@ -94,7 +172,16 @@
     "cros": true,
     "stream": "https://n0c.radiojar.com/u7d8heq3bnzuv",
     "features": "/img/asia/indonesia/cosmopolitan.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/cosmopolitan?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/cosmopolitan?time=",
+    "streams": [
+      {
+        "url": "https://n0c.radiojar.com/u7d8heq3bnzuv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "family"
   },
   "nagaswara": {
     "title": "Nagaswara",
@@ -104,7 +191,15 @@
     "cros": false,
     "stream": "https://live.nagaswarafm.com:8088/stream",
     "features": "/img/asia/indonesia/nagaswara.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/nagaswara?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/nagaswara?time=",
+    "streams": [
+      {
+        "url": "https://live.nagaswarafm.com:8088/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "swaragama-jogja": {
     "title": "Swaragama (Jogja)",
@@ -114,7 +209,15 @@
     "cros": false,
     "stream": "http://usa.jogjastreamers.com:8000/swaragama456789?s=67529584319283",
     "features": "/img/asia/indonesia/swaragama-jogja.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/swaragama-jogja?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/swaragama-jogja?time=",
+    "streams": [
+      {
+        "url": "http://usa.jogjastreamers.com:8000/swaragama456789?s=67529584319283",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "dangdut": {
     "title": "Swaragama (Jogja)",
@@ -124,7 +227,15 @@
     "cros": true,
     "stream": "http://202.147.199.99:8000/stream/1/",
     "features": "/img/asia/indonesia/dangdut.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/dangdut?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/dangdut?time=",
+    "streams": [
+      {
+        "url": "http://202.147.199.99:8000/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "i-fm": {
     "title": "iRadio (Jakarta)",
@@ -134,7 +245,15 @@
     "cros": true,
     "stream": "https://n0d.radiojar.com/4ywdgup3bnzuv",
     "features": "/img/asia/indonesia/i-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/i-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/i-fm?time=",
+    "streams": [
+      {
+        "url": "https://n0d.radiojar.com/4ywdgup3bnzuv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "muslim": {
     "title": "Radio Muslim",
@@ -143,7 +262,15 @@
     "url": "https://radiomuslim.com/",
     "cros": true,
     "stream": "https://n0d.radiojar.com/4ywdgup3bnzuv",
-    "features": "/img/asia/indonesia/muslim.png"
+    "features": "/img/asia/indonesia/muslim.png",
+    "streams": [
+      {
+        "url": "https://n0d.radiojar.com/4ywdgup3bnzuv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "elshinta-jakarta": {
     "title": "Radio Elshinta (Jakarta)",
@@ -153,7 +280,22 @@
     "cros": true,
     "stream": "https://app-etslive-2.vidio.com/live/7166/master.m3u8?auth=aFErdkFlK1BDbXFMc3JNQ2p3QjFxbE1hTmwxQWViMUpLOHhjVmdYWVRnYlU3eUppNmhFR25HTHZUR1hXZnQxdng3SXZFbjYwbjdXVDRkRkF2VjJPbkFvZ280NzB4dEFkZDFpRXQ1WU9iNmFNSjFTN1hlVWZnRnFHaGpBMUlTeDBTM1B1SDh3YXZuckQwNzJXZWs1M1NscnVsSzdYTWUwSUtMaENNTFg5d0o3N2hJV1pOWjVFenhpcXRVK1FsVTNQSDhMNkl0dExxbzM3bVVGK0t2WDlrM2VTYXdUNVFSUUdELzFGbmVrUHA4U3g4MEo5d0drbG1hTEdzRDRwQm13cWRvTkJhdFZRdWhwRzl1MkNaNFNudmxsTHkwUGRDVURPWXdzQlVaZkErS1dEL0pqUHloL0FZRFJDa1M4cGpBSkN2dTBUYUJQTmFEZVh0akltS0dHYTc2SzJJZjNzdHg5dThYRHVqbGp1bEhuVFZzMGNXcENMWnhNYVh4NTZiYUJxUUZmTHZ0OHIzS0ZqNS9zbVpCUzJUTnY2VjdmYzNadmRzOEgxdG5hYmFtUHZPV1EwKytSYjlHRWdEZXJjUVhwQUoyOWcyM0ZiWVJlK2RLVk1aSXljRDl6NWFtUlNsQnU2OXdNeGZRd0VVUkNZajhLbERiZ1d2SmJxNHBWSTBOQ2RlRWFmcDlxakxhaFhwZHBCL29TVmd3bU1RRE5jNlJmOFZIc3BBdFhQNjBDbStWWDBsWXhyNFh6bkY2YXJYV1NINXNOeHU4WkpUa3ZDN1BYd245eXNiZjI0UXJvb2hBNGUrNWExVjNQb1RxL3Niem1QQm4xME1NUnBoNnpoNzVyT2Y2eVBCVXhIWTUzMjZwZ2ExdWNmSTFWajhzTnJSY3dxU3NENkNPY0x6WmxXM1d1aEd1MzZOaW9RRHd2U0h1Z09zU0RlbVJnRkVkT2hVMXBTU21UN3RraWp3V3FQUCtSVS9OMm0xTkIrQ01uUmFqb0tWL0dmMEs5SlZUMHBBd05DT00vR3FpcG96ZE1ZMm4xM2NtY2dadz09&trace_id=58f5c0af5528c6d11441a4490774d0b3/3513438922992833148",
     "features": "/img/asia/indonesia/elshinta-jakarta.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/elshinta-jakarta?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/elshinta-jakarta?time=",
+    "streams": [
+      {
+        "url": "https://app-etslive-2.vidio.com/live/7166/master.m3u8?auth=aFErdkFlK1BDbXFMc3JNQ2p3QjFxbE1hTmwxQWViMUpLOHhjVmdYWVRnYlU3eUppNmhFR25HTHZUR1hXZnQxdng3SXZFbjYwbjdXVDRkRkF2VjJPbkFvZ280NzB4dEFkZDFpRXQ1WU9iNmFNSjFTN1hlVWZnRnFHaGpBMUlTeDBTM1B1SDh3YXZuckQwNzJXZWs1M1NscnVsSzdYTWUwSUtMaENNTFg5d0o3N2hJV1pOWjVFenhpcXRVK1FsVTNQSDhMNkl0dExxbzM3bVVGK0t2WDlrM2VTYXdUNVFSUUdELzFGbmVrUHA4U3g4MEo5d0drbG1hTEdzRDRwQm13cWRvTkJhdFZRdWhwRzl1MkNaNFNudmxsTHkwUGRDVURPWXdzQlVaZkErS1dEL0pqUHloL0FZRFJDa1M4cGpBSkN2dTBUYUJQTmFEZVh0akltS0dHYTc2SzJJZjNzdHg5dThYRHVqbGp1bEhuVFZzMGNXcENMWnhNYVh4NTZiYUJxUUZmTHZ0OHIzS0ZqNS9zbVpCUzJUTnY2VjdmYzNadmRzOEgxdG5hYmFtUHZPV1EwKytSYjlHRWdEZXJjUVhwQUoyOWcyM0ZiWVJlK2RLVk1aSXljRDl6NWFtUlNsQnU2OXdNeGZRd0VVUkNZajhLbERiZ1d2SmJxNHBWSTBOQ2RlRWFmcDlxakxhaFhwZHBCL29TVmd3bU1RRE5jNlJmOFZIc3BBdFhQNjBDbStWWDBsWXhyNFh6bkY2YXJYV1NINXNOeHU4WkpUa3ZDN1BYd245eXNiZjI0UXJvb2hBNGUrNWExVjNQb1RxL3Niem1QQm4xME1NUnBoNnpoNzVyT2Y2eVBCVXhIWTUzMjZwZ2ExdWNmSTFWajhzTnJSY3dxU3NENkNPY0x6WmxXM1d1aEd1MzZOaW9RRHd2U0h1Z09zU0RlbVJnRkVkT2hVMXBTU21UN3RraWp3V3FQUCtSVS9OMm0xTkIrQ01uUmFqb0tWL0dmMEs5SlZUMHBBd05DT00vR3FpcG96ZE1ZMm4xM2NtY2dadz09&trace_id=58f5c0af5528c6d11441a4490774d0b3/3513438922992833148",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://stream-ssl.arenastreaming.com:8000/jakarta",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b2357cbe-d080-4099-8cae-770539945230"
+      }
+    ],
+    "description": "news"
   },
   "fajri-bogor": {
     "title": "Radio Fajri (Bogor)",
@@ -163,7 +305,15 @@
     "cros": true,
     "stream": "http://coloid.fajrifm.com:9930/;",
     "features": "/img/asia/indonesia/fajri-bogor.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/fajri-bogor?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/fajri-bogor?time=",
+    "streams": [
+      {
+        "url": "http://coloid.fajrifm.com:9930/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "dahlia": {
     "title": "Dahlia",
@@ -172,7 +322,15 @@
     "url": "https://www.radiodahliafm.com/",
     "cros": false,
     "stream": "https://svara-stream.radioddns.net:8443/bandung_dahliafm",
-    "features": "/img/asia/indonesia/dahlia.png"
+    "features": "/img/asia/indonesia/dahlia.png",
+    "streams": [
+      {
+        "url": "https://svara-stream.radioddns.net:8443/bandung_dahliafm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "oz": {
     "title": "OZ (Bandung)",
@@ -182,7 +340,15 @@
     "cros": true,
     "stream": "http://s3.vinhostmedia.com:1031/;",
     "features": "/img/asia/indonesia/oz.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/oz?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/oz?time=",
+    "streams": [
+      {
+        "url": "http://s3.vinhostmedia.com:1031/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "gajahmada": {
     "title": "Gajahmada",
@@ -192,7 +358,15 @@
     "cros": true,
     "stream": "http://gajahmada.i.streaming.id:8000/live",
     "features": "/img/asia/indonesia/gajahmada.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/gajahmada?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/gajahmada?time=",
+    "streams": [
+      {
+        "url": "http://gajahmada.i.streaming.id:8000/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "rhema": {
     "title": "88.6 Rhema FM",
@@ -202,7 +376,15 @@
     "cros": true,
     "stream": "http://gajahmada.i.streaming.id:8000/live",
     "features": "/img/asia/indonesia/rhema.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/rhema?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/rhema?time=",
+    "streams": [
+      {
+        "url": "http://gajahmada.i.streaming.id:8000/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "suara-muslim": {
     "title": "Suara Muslim",
@@ -212,7 +394,16 @@
     "cros": true,
     "stream": "http://pu.klikhost.com:8052/stream/1/",
     "features": "/img/asia/indonesia/suara-muslim.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/suara-muslim?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/suara-muslim?time=",
+    "streams": [
+      {
+        "url": "http://pu.klikhost.com:8052/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "motivational, peace, religion, religious"
   },
   "smart-jakart": {
     "title": "Smart (Jakarta)",
@@ -221,7 +412,15 @@
     "url": "http://www.radiosmartfm.com/",
     "cros": false,
     "stream": "https://streamingv2.shoutcast.com/smart-jakarta",
-    "features": "/img/asia/indonesia/smart-jakart.png"
+    "features": "/img/asia/indonesia/smart-jakart.png",
+    "streams": [
+      {
+        "url": "https://streamingv2.shoutcast.com/smart-jakarta",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pelita-kasih": {
     "title": "Radio Pelita Kasih",
@@ -231,7 +430,15 @@
     "cros": false,
     "stream": "https://live.indostreamserver.com/8030/stream/1/",
     "features": "/img/asia/indonesia/pelita-kasih.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/pelita-kasih?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/pelita-kasih?time=",
+    "streams": [
+      {
+        "url": "https://live.indostreamserver.com/8030/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "cosmo-bandung": {
     "title": "Radio Cosmo (Bandung)",
@@ -240,7 +447,15 @@
     "url": false,
     "cros": true,
     "stream": "http://scg.streamingmurah.com:8074/stream/1/",
-    "features": "/img/asia/indonesia/cosmo-bandung.png"
+    "features": "/img/asia/indonesia/cosmo-bandung.png",
+    "streams": [
+      {
+        "url": "http://scg.streamingmurah.com:8074/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "trax-fm": {
     "title": "Trax FM",
@@ -250,7 +465,15 @@
     "cros": true,
     "stream": "https://n02.radiojar.com/rrqf78p3bnzuv",
     "features": "/img/asia/indonesia/trax-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/trax-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/trax-fm?time=",
+    "streams": [
+      {
+        "url": "https://n02.radiojar.com/rrqf78p3bnzuv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "retjo-jogja": {
     "title": "Retjo Buntung (Jogja)",
@@ -260,7 +483,15 @@
     "cros": true,
     "stream": "http://scg.streamingmurah.com:9940/stream/1/",
     "features": "/img/asia/indonesia/retjo-jogja.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/retjo-jogja?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/retjo-jogja?time=",
+    "streams": [
+      {
+        "url": "http://scg.streamingmurah.com:9940/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "sonora-fm": {
     "title": "Radio Sonora",
@@ -270,7 +501,15 @@
     "cros": false,
     "stream": "https://streamingv2.shoutcast.com/sonora-surabaya",
     "features": "/img/asia/indonesia/sonora-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/sonora-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/sonora-fm?time=",
+    "streams": [
+      {
+        "url": "https://streamingv2.shoutcast.com/sonora-surabaya",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "geronimo-jogja": {
     "title": "Geronimo (Jogja)",
@@ -280,7 +519,15 @@
     "cros": false,
     "stream": "https://live2.indostreamserver.com/8018/stream/1/",
     "features": "/img/asia/indonesia/geronimo-jogja.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/geronimo-jogja?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/geronimo-jogja?time=",
+    "streams": [
+      {
+        "url": "https://live2.indostreamserver.com/8018/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pro1-makassar": {
     "title": "PRO 1 RRI (Makassar)",
@@ -290,7 +537,15 @@
     "cros": true,
     "stream": "https://cdnmakassarpro1.rri.co.id/web-rrimakasarpro1.mp3",
     "features": "/img/asia/indonesia/pro1-makassar.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/pro1-makassar?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/pro1-makassar?time=",
+    "streams": [
+      {
+        "url": "https://cdnmakassarpro1.rri.co.id/web-rrimakasarpro1.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "motion": {
     "title": "Motion Radio (Jakarta)",
@@ -299,7 +554,15 @@
     "url": "http://www.motionradiofm.com/",
     "cros": false,
     "stream": "https://streamingv2.shoutcast.com/motion-jakarta",
-    "features": "/img/asia/indonesia/motion.png"
+    "features": "/img/asia/indonesia/motion.png",
+    "streams": [
+      {
+        "url": "https://streamingv2.shoutcast.com/motion-jakarta",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "raka": {
     "title": "Raka",
@@ -308,7 +571,15 @@
     "url": "http://www.rakafm.co.id/",
     "cros": false,
     "stream": "https://streamingv2.shoutcast.com/raka-bandung",
-    "features": "/img/asia/indonesia/raka.png"
+    "features": "/img/asia/indonesia/raka.png",
+    "streams": [
+      {
+        "url": "https://streamingv2.shoutcast.com/raka-bandung",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "serambi": {
     "title": "Serambi FM (Banda Aceh)",
@@ -317,7 +588,15 @@
     "url": "https://serambifm.com/",
     "cros": true,
     "stream": "http://live.serambifm.com:8902/stream/1/",
-    "features": "/img/asia/indonesia/serambi.png"
+    "features": "/img/asia/indonesia/serambi.png",
+    "streams": [
+      {
+        "url": "http://live.serambifm.com:8902/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "k-lite-bandung": {
     "title": "K Lite (Bandung)",
@@ -326,7 +605,15 @@
     "url": "https://serambifm.com/",
     "cros": false,
     "stream": "https://svara-stream.radioddns.net:8443/bandung_klitefm_acc",
-    "features": "/img/asia/indonesia/k-lite-bandung.png"
+    "features": "/img/asia/indonesia/k-lite-bandung.png",
+    "streams": [
+      {
+        "url": "https://svara-stream.radioddns.net:8443/bandung_klitefm_acc",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "ras-jakarta": {
     "title": "RAS (Jakarta)",
@@ -335,7 +622,15 @@
     "url": "https://rasfmjakarta.com/",
     "cros": false,
     "stream": "https://i.klikhost.com/9006/;",
-    "features": "/img/asia/indonesia/ras-jakarta.png"
+    "features": "/img/asia/indonesia/ras-jakarta.png",
+    "streams": [
+      {
+        "url": "https://i.klikhost.com/9006/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kita-cirebon": {
     "title": "Kita (Cirebon)",
@@ -344,7 +639,15 @@
     "url": "https://www.radiokitafm.com/",
     "cros": true,
     "stream": "http://live.radiosunnah.net/;",
-    "features": "/img/asia/indonesia/kita-cirebon.png"
+    "features": "/img/asia/indonesia/kita-cirebon.png",
+    "streams": [
+      {
+        "url": "http://live.radiosunnah.net/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "most": {
     "title": "Most",
@@ -353,7 +656,15 @@
     "url": "https://most1058fm.com/",
     "cros": false,
     "stream": "https://wz.mari.co.id:1936/web_mostfm/mostfm/playlist.m3u8",
-    "features": "/img/asia/indonesia/most.png"
+    "features": "/img/asia/indonesia/most.png",
+    "streams": [
+      {
+        "url": "https://wz.mari.co.id:1936/web_mostfm/mostfm/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pas": {
     "title": "Radio Pas",
@@ -362,7 +673,15 @@
     "url": "https://pasfmpati.com/radio/",
     "cros": true,
     "stream": "http://45.64.97.82:8886/stream/2/",
-    "features": "/img/asia/indonesia/pas.png"
+    "features": "/img/asia/indonesia/pas.png",
+    "streams": [
+      {
+        "url": "http://45.64.97.82:8886/stream/2/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "dengerin-musik-indonesia": {
     "title": "Dengerin Musik",
@@ -372,7 +691,22 @@
     "cros": true,
     "stream": "http://stream.denger.in:8888/dmi",
     "features": "/img/asia/indonesia/dengerin-musik-indonesia.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/dengerin-musik-indonesia?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/dengerin-musik-indonesia?time=",
+    "streams": [
+      {
+        "url": "http://stream.denger.in:8888/dmi",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "https://stream.denger.in/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4a81cd8d-4d78-4711-a351-5ccd5bd02d68"
+      }
+    ],
+    "description": "pop music, pop rock, top 40"
   },
   "kis": {
     "title": "Kis FM",
@@ -381,7 +715,15 @@
     "url": "https://kis951fm.com/",
     "cros": false,
     "stream": "https://wz.mari.co.id:1936/web_kisfm/kisfm/playlist.m3u8",
-    "features": "/img/asia/indonesia/kis.png"
+    "features": "/img/asia/indonesia/kis.png",
+    "streams": [
+      {
+        "url": "https://wz.mari.co.id:1936/web_kisfm/kisfm/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "el-shaddai-surakarta": {
     "title": "El Shaddai FM (Surakarta)",
@@ -391,7 +733,16 @@
     "cros": true,
     "stream": "http://shaddai.onlivestreaming.net:9130/live",
     "features": "/img/asia/indonesia/el-shaddai-surakarta.png",
-    "schedule": "https://api.webrad.io/data/playlist/57/el-shaddai-surakarta?time="
+    "schedule": "https://api.webrad.io/data/playlist/57/el-shaddai-surakarta?time=",
+    "streams": [
+      {
+        "url": "http://shaddai.onlivestreaming.net:9130/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "media kristen"
   },
   "bass-salatiga": {
     "title": "Radio Bass (Salatiga)",
@@ -400,7 +751,15 @@
     "url": "https://bassfm.id/",
     "cros": false,
     "stream": "https://bassfm.radio.yufid.com/;",
-    "features": "/img/asia/indonesia/bass-salatiga.png"
+    "features": "/img/asia/indonesia/bass-salatiga.png",
+    "streams": [
+      {
+        "url": "https://bassfm.radio.yufid.com/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "klcbs": {
     "title": "KLCBS",
@@ -409,6 +768,1450 @@
     "url": "https://www.klcbs.net/",
     "cros": true,
     "stream": "http://s3.vinhostmedia.com:1055/;",
-    "features": "/img/asia/indonesia/klcbs.png"
+    "features": "/img/asia/indonesia/klcbs.png",
+    "streams": [
+      {
+        "url": "http://s3.vinhostmedia.com:1055/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "i-radio-jakarta": {
+    "title": "I-Radio Jakarta",
+    "description": "indonesia, pop",
+    "type": "audio/mpeg",
+    "url": "http://iradiofm.com/",
+    "cros": true,
+    "stream": "http://stream.radiojar.com/4ywdgup3bnzuv",
+    "streams": [
+      {
+        "url": "http://stream.radiojar.com/4ywdgup3bnzuv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:1c3b70d9-39d5-49d5-a81a-77833667a88b"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:1c3b70d9-39d5-49d5-a81a-77833667a88b"
+  },
+  "rdi-97-1-fm": {
+    "title": "RDI 97.1 FM",
+    "description": "dangdut",
+    "type": "audio/mpeg",
+    "url": "http://www.rdifm.co.id/",
+    "cros": true,
+    "stream": "http://202.147.199.99:8000/;stream/1",
+    "streams": [
+      {
+        "url": "http://202.147.199.99:8000/;stream/1",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:962fdcaf-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/indonesia/rdi-97-1-fm.png",
+    "source": "radio-browser:962fdcaf-0601-11e8-ae97-52543be04c81"
+  },
+  "suara-giri-98-4-fm": {
+    "title": "Suara Giri 98.4 FM",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "http://www.girifm.com/",
+    "cros": true,
+    "stream": "http://streaming.girifm.com:8010/",
+    "streams": [
+      {
+        "url": "http://streaming.girifm.com:8010/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:1010a082-c072-482d-b664-1f9f7d34f9fc"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:1010a082-c072-482d-b664-1f9f7d34f9fc"
+  },
+  "wijaya-fm-103-5-fm-surabaya": {
+    "title": "Wijaya FM 103.5 FM Surabaya",
+    "description": "undefined",
+    "type": "audio/aac",
+    "url": "https://radiowijayafm.com/",
+    "cros": true,
+    "stream": "http://wijayafm.onlivestreaming.net:9880/stream?",
+    "streams": [
+      {
+        "url": "http://wijayafm.onlivestreaming.net:9880/stream?",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:4dd1c605-504d-4240-9b5d-072eed0e9b5a"
+      }
+    ],
+    "features": "/img/asia/indonesia/wijaya-fm-103-5-fm-surabaya.png",
+    "source": "radio-browser:4dd1c605-504d-4240-9b5d-072eed0e9b5a"
+  },
+  "retjo-buntung-99-4-fm": {
+    "title": "Retjo Buntung 99.4 FM",
+    "description": "yogyakarta",
+    "type": "audio/mpeg",
+    "url": "http://retjobuntungfm.com/",
+    "cros": true,
+    "stream": "http://45.64.97.82:9940/",
+    "streams": [
+      {
+        "url": "http://45.64.97.82:9940/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:963277e4-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/indonesia/retjo-buntung-99-4-fm.png",
+    "source": "radio-browser:963277e4-0601-11e8-ae97-52543be04c81"
+  },
+  "89-2-fm-jakarta-campur-sari": {
+    "title": "89.2 FM Jakarta, Campur sari",
+    "type": "audio/aac",
+    "url": "https://www.campursarifm.com/",
+    "cros": false,
+    "stream": "https://a8.siar.us/listen/campursari/stream",
+    "streams": [
+      {
+        "url": "https://a8.siar.us/listen/campursari/stream",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:1bdb7538-d6af-4c77-ab1e-d51185aa9384"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:1bdb7538-d6af-4c77-ab1e-d51185aa9384"
+  },
+  "radio-dangdut-97-1-fm-jakarta": {
+    "title": "Radio Dangdut 97.1 FM Jakarta",
+    "type": "audio/mpeg",
+    "url": "http://www.rdifm.co.id/",
+    "cros": true,
+    "stream": "http://202.147.199.99:8000/;",
+    "streams": [
+      {
+        "url": "http://202.147.199.99:8000/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:5f96f5c1-e75a-4129-abd3-d7e08360fa56"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-dangdut-97-1-fm-jakarta.png",
+    "source": "radio-browser:5f96f5c1-e75a-4129-abd3-d7e08360fa56"
+  },
+  "hardrock-87-6-fm-jakarta": {
+    "title": "Hardrock 87.6 FM Jakarta",
+    "type": "audio/mpeg",
+    "url": "https://hardrockfm.com/",
+    "cros": true,
+    "stream": "http://stream.radiojar.com/7csmg90fuqruv",
+    "streams": [
+      {
+        "url": "http://stream.radiojar.com/7csmg90fuqruv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c77a82b2-ff5c-4010-a1bb-d2e767865e58"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c77a82b2-ff5c-4010-a1bb-d2e767865e58"
+  },
+  "cnn-indonesia": {
+    "title": "CNN Indonesia",
+    "description": "news",
+    "type": "application/x-mpegURL",
+    "url": "https://cnnindonesia.com/",
+    "cros": false,
+    "stream": "https://live.cnnindonesia.com/livecnn/smil:cnntv/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "https://live.cnnindonesia.com/livecnn/smil:cnntv/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:6f424852-4bf4-431e-a715-3fcb553095b3"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:6f424852-4bf4-431e-a715-3fcb553095b3"
+  },
+  "suara-muslim-surabaya": {
+    "title": "Suara Muslim Surabaya",
+    "type": "audio/mpeg",
+    "url": "http://suaramuslim.net/",
+    "cros": true,
+    "stream": "http://pu.klikhost.com:8052/",
+    "streams": [
+      {
+        "url": "http://pu.klikhost.com:8052/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fb19cfc3-4839-11ea-a860-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:fb19cfc3-4839-11ea-a860-52543be04c81"
+  },
+  "traxfm-jakarta": {
+    "title": "TraxFM Jakarta",
+    "description": "misc",
+    "type": "audio/aac",
+    "url": "https://radioonline.co.id",
+    "cros": false,
+    "stream": "https://stream.radiojar.com/rrqf78p3bnzuv.mp3",
+    "streams": [
+      {
+        "url": "https://stream.radiojar.com/rrqf78p3bnzuv.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:236b5aaf-cbd7-411d-9047-b1ab3e8849cd"
+      }
+    ],
+    "features": "/img/asia/indonesia/traxfm-jakarta.webp",
+    "source": "radio-browser:236b5aaf-cbd7-411d-9047-b1ab3e8849cd"
+  },
+  "v-radio": {
+    "title": "V Radio",
+    "description": "80s, 90s",
+    "type": "audio/mpeg",
+    "url": "http://www.vradiofm.com/",
+    "cros": true,
+    "stream": "http://202.147.199.100:8000/;stream.nsv",
+    "streams": [
+      {
+        "url": "http://202.147.199.100:8000/;stream.nsv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9641528d-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9641528d-0601-11e8-ae97-52543be04c81"
+  },
+  "gen-98-7-fm-jakarta": {
+    "title": "Gen 98.7 FM Jakarta",
+    "description": "music, news, talk",
+    "type": "application/x-mpegURL",
+    "url": "https://gen987fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_genfm/genfm/chunklist_w279187457.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_genfm/genfm/chunklist_w279187457.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:6282b213-c07e-4ec7-a8b2-4eb19e18d03b"
+      }
+    ],
+    "features": "/img/asia/indonesia/gen-98-7-fm-jakarta.png",
+    "source": "radio-browser:6282b213-c07e-4ec7-a8b2-4eb19e18d03b"
+  },
+  "rri-pro-3-kbrn": {
+    "title": "RRI Pro 3 KBRN",
+    "description": "music, national, network, news and talk",
+    "type": "audio/aac",
+    "url": "https://rri.co.id/",
+    "cros": false,
+    "stream": "https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3",
+    "streams": [
+      {
+        "url": "https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:c3d1e054-d320-47e1-9998-512bf9f90d4f"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c3d1e054-d320-47e1-9998-512bf9f90d4f"
+  },
+  "98-4-suara-giri-fm-gresik": {
+    "title": "98,4 Suara Giri FM Gresik",
+    "description": "misc",
+    "type": "audio/mpeg",
+    "url": "http://www.girifm.com/",
+    "cros": true,
+    "stream": "http://streaming.girifm.com:8010/;stream.nsv",
+    "streams": [
+      {
+        "url": "http://streaming.girifm.com:8010/;stream.nsv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:5e900633-27d6-4ee4-88e2-9064a6095a1f"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:5e900633-27d6-4ee4-88e2-9064a6095a1f"
+  },
+  "iradio-fm": {
+    "title": "Iradio FM",
+    "description": "rock",
+    "type": "audio/mpeg",
+    "url": "https://iradiofm.com/streaming/",
+    "cros": true,
+    "stream": "http://n03.radiojar.com/4ywdgup3bnzuv",
+    "streams": [
+      {
+        "url": "http://n03.radiojar.com/4ywdgup3bnzuv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:754f1d61-4793-4d12-b6f6-7f0c9183138b"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:754f1d61-4793-4d12-b6f6-7f0c9183138b"
+  },
+  "sindo-trijaya-104-6-fm-jakarta": {
+    "title": "Sindo Trijaya 104.6 FM Jakarta",
+    "type": "audio/mpeg",
+    "url": "http://www.mnctrijayafm.com/",
+    "cros": true,
+    "stream": "http://202.147.199.101:8000/;stream.nsv",
+    "streams": [
+      {
+        "url": "http://202.147.199.101:8000/;stream.nsv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9626f1a2-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9626f1a2-0601-11e8-ae97-52543be04c81"
+  },
+  "95-1-kiss-fm": {
+    "title": "95.1 Kiss FM",
+    "description": "pop adul kontemporer",
+    "type": "application/x-mpegURL",
+    "url": "https://kis951fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_kisfm/kisfm/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_kisfm/kisfm/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:2f80c876-86a0-4c3e-b104-94d26030da80"
+      }
+    ],
+    "features": "/img/asia/indonesia/95-1-kiss-fm.png",
+    "source": "radio-browser:2f80c876-86a0-4c3e-b104-94d26030da80"
+  },
+  "cosmopolitan-90-4-fm-jakarta": {
+    "title": "Cosmopolitan 90.4 FM Jakarta",
+    "type": "audio/aac",
+    "url": "https://cosmopolitanfm.com/",
+    "cros": true,
+    "stream": "http://stream.radiojar.com/u7d8heq3bnzuv",
+    "streams": [
+      {
+        "url": "http://stream.radiojar.com/u7d8heq3bnzuv",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:736345ce-11b5-4cd6-bcf5-4b2f02c80921"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:736345ce-11b5-4cd6-bcf5-4b2f02c80921"
+  },
+  "sb-fm-tembang-kenangan": {
+    "title": "SB FM tembang kenangan",
+    "description": "classic hits, pop",
+    "type": "audio/mpeg",
+    "url": "https://sbfmparepare.radio12345.com/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/d16n50mkzhhvv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/d16n50mkzhhvv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c8f4aa0a-5eec-484f-9449-c640e0d03a99"
+      }
+    ],
+    "features": "/img/asia/indonesia/sb-fm-tembang-kenangan.png",
+    "source": "radio-browser:c8f4aa0a-5eec-484f-9449-c640e0d03a99"
+  },
+  "m-stream-indo": {
+    "title": "M-Stream Indo",
+    "description": "alternative / indie, pop, top hits",
+    "type": "audio/aac",
+    "url": "https://zeno.fm/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/iln4upodbvuuv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/iln4upodbvuuv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:b3196f29-8c85-4dd8-8a83-6ddc4d1b5620"
+      }
+    ],
+    "features": "/img/asia/indonesia/m-stream-indo.webp",
+    "source": "radio-browser:b3196f29-8c85-4dd8-8a83-6ddc4d1b5620"
+  },
+  "dangdut2": {
+    "title": "Dangdut2",
+    "description": "dangdut",
+    "type": "audio/mpeg",
+    "url": "https://zeno.fm/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/vwhplynnpfjtv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/vwhplynnpfjtv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d712c6d6-a5b2-421d-96ea-20e472f2d8ae"
+      }
+    ],
+    "features": "/img/asia/indonesia/dangdut2.png",
+    "source": "radio-browser:d712c6d6-a5b2-421d-96ea-20e472f2d8ae"
+  },
+  "gen-987-fm": {
+    "title": "gen 987 FM",
+    "description": "pop",
+    "type": "application/x-mpegURL",
+    "url": "https://gen987fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_genfm/genfm/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_genfm/genfm/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:af9d2835-a790-4741-9044-278467fbc297"
+      }
+    ],
+    "features": "/img/asia/indonesia/gen-987-fm.jpg",
+    "source": "radio-browser:af9d2835-a790-4741-9044-278467fbc297"
+  },
+  "88-0-mustang-fm-jakarta": {
+    "title": "88.0  Mustang FM Jakarta",
+    "description": "musik and news",
+    "type": "application/x-mpegURL",
+    "url": "https://mustang88fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_mustangfm/mustangfm/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_mustangfm/mustangfm/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:cfe1148b-37d1-49be-814c-4a023f08beeb"
+      }
+    ],
+    "features": "/img/asia/indonesia/88-0-mustang-fm-jakarta.png",
+    "source": "radio-browser:cfe1148b-37d1-49be-814c-4a023f08beeb"
+  },
+  "jak-101-fm": {
+    "title": "Jak 101 FM",
+    "description": "music, news, talk",
+    "type": "application/x-mpegURL",
+    "url": "https://jak101fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_jakfm/jakfm/chunklist_w1246572933.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_jakfm/jakfm/chunklist_w1246572933.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:38c09fe6-481f-4f49-a52e-ce21adabd16d"
+      }
+    ],
+    "features": "/img/asia/indonesia/jak-101-fm.png",
+    "source": "radio-browser:38c09fe6-481f-4f49-a52e-ce21adabd16d"
+  },
+  "suara-soneta": {
+    "title": "Suara Soneta",
+    "description": "dangdut, melayu",
+    "type": "audio/aac",
+    "url": "https://www.suarasoneta.com/",
+    "cros": false,
+    "stream": "https://a2.siar.us//listen//suarasoneta//radio.mp3",
+    "streams": [
+      {
+        "url": "https://a2.siar.us//listen//suarasoneta//radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:66d55788-6e57-4755-ac58-aa85bfb7cf94"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:66d55788-6e57-4755-ac58-aa85bfb7cf94"
+  },
+  "radio-sholawat": {
+    "title": "Radio Sholawat",
+    "description": "religious, sholawat",
+    "type": "audio/mpeg",
+    "url": "http://temborocity.blogspot.com/2019/11/radio-sholawat.html?m=1",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/us5bsznu3rptv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/us5bsznu3rptv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cb031493-2f67-4dd7-ba4a-1e9d413b22a0"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-sholawat.jpg",
+    "source": "radio-browser:cb031493-2f67-4dd7-ba4a-1e9d413b22a0"
+  },
+  "mettaswara-koplo": {
+    "title": "Mettaswara Koplo",
+    "description": "koplo",
+    "type": "audio/aac",
+    "url": "https://mettaswara.com/",
+    "cros": false,
+    "stream": "https://mettaswara.com:8700//koplo",
+    "streams": [
+      {
+        "url": "https://mettaswara.com:8700//koplo",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:30ba9673-6034-40ff-966d-b8a8b3da2536"
+      }
+    ],
+    "features": "/img/asia/indonesia/mettaswara-koplo.png",
+    "source": "radio-browser:30ba9673-6034-40ff-966d-b8a8b3da2536"
+  },
+  "rdi-97-1-fm-jakarta": {
+    "title": "RDI 97.1 FM Jakarta",
+    "description": "dangdut, music, news, talk",
+    "type": "audio/mpeg",
+    "url": "http://rdifm.co.id/",
+    "cros": true,
+    "stream": "http://202.147.199.99:8000/stream",
+    "streams": [
+      {
+        "url": "http://202.147.199.99:8000/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7f6abc6a-c340-47c4-ac8c-06a6916cd0f3"
+      }
+    ],
+    "features": "/img/asia/indonesia/rdi-97-1-fm-jakarta.png",
+    "source": "radio-browser:7f6abc6a-c340-47c4-ac8c-06a6916cd0f3"
+  },
+  "hot-93-2-fm": {
+    "title": "Hot 93.2 FM",
+    "description": "music, news, talk",
+    "type": "application/x-mpegURL",
+    "url": "https://hot932fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_hotfm/hotfm/chunklist_w167204702.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_hotfm/hotfm/chunklist_w167204702.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:4c5fec4b-634f-43e2-8e97-0d1330cc6c19"
+      }
+    ],
+    "features": "/img/asia/indonesia/hot-93-2-fm.png",
+    "source": "radio-browser:4c5fec4b-634f-43e2-8e97-0d1330cc6c19"
+  },
+  "andika-fm-kediri": {
+    "title": "Andika FM Kediri",
+    "type": "audio/mpeg",
+    "url": "https://www.andikafm.com/",
+    "cros": true,
+    "stream": "http://andikafm.onlivestreaming.net:1057/stream",
+    "streams": [
+      {
+        "url": "http://andikafm.onlivestreaming.net:1057/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:dc3adee6-7f3b-4d91-aafb-11c9ec078655"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:dc3adee6-7f3b-4d91-aafb-11c9ec078655"
+  },
+  "dj-baru": {
+    "title": "DJ BARU",
+    "description": "dance",
+    "type": "audio/mpeg",
+    "url": "https://zeno.fm/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/iwcyhq56nwiuv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/iwcyhq56nwiuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ccbfd849-0510-427b-9c0a-a28763b93f17"
+      }
+    ],
+    "features": "/img/asia/indonesia/dj-baru.png",
+    "source": "radio-browser:ccbfd849-0510-427b-9c0a-a28763b93f17"
+  },
+  "radio-rodja-756-am": {
+    "title": "Radio Rodja 756 AM",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://www.radiorodja.com/",
+    "cros": false,
+    "stream": "https://radioislamindonesia.com/rodja.mp3?_=2",
+    "streams": [
+      {
+        "url": "https://radioislamindonesia.com/rodja.mp3?_=2",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:4be9df7d-6314-480f-9967-469ae11f094f"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-rodja-756-am.png",
+    "source": "radio-browser:4be9df7d-6314-480f-9967-469ae11f094f"
+  },
+  "tarbiyah-sunnah": {
+    "title": "Tarbiyah Sunnah",
+    "description": "talk & speech",
+    "type": "audio/mpeg",
+    "url": "https://radioislamindonesia.com/",
+    "cros": false,
+    "stream": "https://radioislamindonesia.com/tarbiyah.mp3",
+    "streams": [
+      {
+        "url": "https://radioislamindonesia.com/tarbiyah.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bafb06c5-1278-444f-81a4-b045dce5e80f"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bafb06c5-1278-444f-81a4-b045dce5e80f"
+  },
+  "radio-hang-fm": {
+    "title": "Radio Hang FM",
+    "description": "islam, salafy, sunnah",
+    "type": "audio/mpeg",
+    "url": "https://www.hangmedia.co.id/",
+    "cros": true,
+    "stream": "http://185.47.62.52:8000/",
+    "streams": [
+      {
+        "url": "http://185.47.62.52:8000/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3cd1a00f-9ddb-11e9-a787-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3cd1a00f-9ddb-11e9-a787-52543be04c81"
+  },
+  "dahlia-bandung-101-5-fm": {
+    "title": "Dahlia Bandung 101.5 FM",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "https://www.radiodahliafm.com/",
+    "cros": false,
+    "stream": "https://svara-stream.radioddns.net/bandung_dahliafm",
+    "streams": [
+      {
+        "url": "https://svara-stream.radioddns.net/bandung_dahliafm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:537e27f1-da35-4b91-b057-a8a1041a23c8"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:537e27f1-da35-4b91-b057-a8a1041a23c8"
+  },
+  "101-4-fm-i-radio-jakarta": {
+    "title": "101.4 FM I-Radio JAKARTA",
+    "type": "audio/mpeg",
+    "url": "https://iradiofm.com/",
+    "cros": false,
+    "stream": "https://stream.radiojar.com/4ywdgup3bnzuv?1739561339",
+    "streams": [
+      {
+        "url": "https://stream.radiojar.com/4ywdgup3bnzuv?1739561339",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0677e9b2-65d5-49fb-b292-17bc5f1c4bd0"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:0677e9b2-65d5-49fb-b292-17bc5f1c4bd0"
+  },
+  "female-fm": {
+    "title": "Female FM",
+    "description": "misc",
+    "type": "audio/aac",
+    "url": "https://radioonline.co.id",
+    "cros": true,
+    "stream": "http://onlineradiobox.com/json/id/female/play",
+    "streams": [
+      {
+        "url": "http://onlineradiobox.com/json/id/female/play",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:98749a3b-5b5f-46d1-8e69-41978946f4b3"
+      }
+    ],
+    "features": "/img/asia/indonesia/female-fm.webp",
+    "source": "radio-browser:98749a3b-5b5f-46d1-8e69-41978946f4b3"
+  },
+  "campursari-fm-jakarta": {
+    "title": "Campursari FM Jakarta",
+    "description": "campursari, dangdut, koplo",
+    "type": "audio/aac",
+    "url": "https://www.campursarifm.com/",
+    "cros": false,
+    "stream": "https://streaming.campursarifm.com/listen/campursari/campursari892",
+    "streams": [
+      {
+        "url": "https://streaming.campursarifm.com/listen/campursari/campursari892",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:fd6e2783-293c-476e-8201-ddeda1336ca3"
+      }
+    ],
+    "features": "/img/asia/indonesia/campursari-fm-jakarta.png",
+    "source": "radio-browser:fd6e2783-293c-476e-8201-ddeda1336ca3"
+  },
+  "90-1-radio-media-fm-surabaya": {
+    "title": "90.1 radio Media FM surabaya",
+    "description": "misc",
+    "type": "audio/aac",
+    "url": "http://www.radiomediafm.com/",
+    "cros": true,
+    "stream": "http://streaming.radiomediafm.com:8400/;",
+    "streams": [
+      {
+        "url": "http://streaming.radiomediafm.com:8400/;",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:ea277596-af89-467b-8b69-3e9e6840e2f0"
+      }
+    ],
+    "features": "/img/asia/indonesia/90-1-radio-media-fm-surabaya.png",
+    "source": "radio-browser:ea277596-af89-467b-8b69-3e9e6840e2f0"
+  },
+  "rama-fm-bandung-104-7-fm": {
+    "title": "Rama FM Bandung 104.7 FM",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "https://ramafm.com/",
+    "cros": false,
+    "stream": "https://i.klikhost.com/8330/;",
+    "streams": [
+      {
+        "url": "https://i.klikhost.com/8330/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:33f8be1d-fd23-493f-97d6-e582f7b9bf03"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:33f8be1d-fd23-493f-97d6-e582f7b9bf03"
+  },
+  "gajahmada-fm": {
+    "title": "Gajahmada FM",
+    "type": "audio/mpeg",
+    "url": "https://gajahmadafm.co.id/",
+    "cros": false,
+    "stream": "https://server.radioimeldafm.co.id:8040/gajahmadafm",
+    "streams": [
+      {
+        "url": "https://server.radioimeldafm.co.id:8040/gajahmadafm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ff88b2dc-3993-4ff3-bcda-8fa74e3e1e2d"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:ff88b2dc-3993-4ff3-bcda-8fa74e3e1e2d"
+  },
+  "rri-voice-of-indonesia": {
+    "title": "RRI Voice Of Indonesia",
+    "description": "culture, international, news, pop, rock",
+    "type": "audio/aac",
+    "url": "https://www.voinews.id/",
+    "cros": false,
+    "stream": "https://stream-node0.rri.co.id/streaming/25/9125/voi.mp3",
+    "streams": [
+      {
+        "url": "https://stream-node0.rri.co.id/streaming/25/9125/voi.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a66636e2-6edb-443b-b5a0-9b9b400e73b2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:a66636e2-6edb-443b-b5a0-9b9b400e73b2"
+  },
+  "pejuang-kopi": {
+    "title": "Pejuang Kopi",
+    "description": "contemporary hits, hits, indie rock, local music, pop",
+    "type": "audio/mpeg",
+    "url": "https://zeno.fm/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/sthgzynfcd0uv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/sthgzynfcd0uv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b5e68d2f-88a8-4627-b89b-ed6f56f61920"
+      }
+    ],
+    "features": "/img/asia/indonesia/pejuang-kopi.webp",
+    "source": "radio-browser:b5e68d2f-88a8-4627-b89b-ed6f56f61920"
+  },
+  "pro1-rri-makassar": {
+    "title": "Pro1 RRI Makassar",
+    "description": "news",
+    "type": "audio/aac",
+    "url": "https://rri.co.id/stream/radio",
+    "cros": false,
+    "stream": "https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro1.mp3",
+    "streams": [
+      {
+        "url": "https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro1.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:aeb477fd-ece0-40f3-b69d-f3db1a88cb28"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:aeb477fd-ece0-40f3-b69d-f3db1a88cb28"
+  },
+  "sonora-fm-bandung": {
+    "title": "Sonora FM Bandung",
+    "description": "misc",
+    "type": "audio/mpeg",
+    "url": "http://www.sonorabandung.com/",
+    "cros": false,
+    "stream": "https://streamingv2.shoutcast.com/sonora-bandung",
+    "streams": [
+      {
+        "url": "https://streamingv2.shoutcast.com/sonora-bandung",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bffe0959-edde-4adb-8b05-6a045317dca2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bffe0959-edde-4adb-8b05-6a045317dca2"
+  },
+  "imelda-fm": {
+    "title": "Imelda FM",
+    "description": "classick hits, hits",
+    "type": "audio/mpeg",
+    "url": "https://radioimeldafm.co.id/",
+    "cros": false,
+    "stream": "https://server.radioimeldafm.co.id:8030/imeldafm",
+    "streams": [
+      {
+        "url": "https://server.radioimeldafm.co.id:8030/imeldafm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:8cc60825-c2c2-48e7-bb2b-516a60fab5f3"
+      }
+    ],
+    "features": "/img/asia/indonesia/imelda-fm.jpg",
+    "source": "radio-browser:8cc60825-c2c2-48e7-bb2b-516a60fab5f3"
+  },
+  "paramuda-radio-bandung": {
+    "title": "PARAMUDA Radio Bandung",
+    "type": "audio/mpeg",
+    "url": "https://www.paramudaradio.com/",
+    "cros": false,
+    "stream": "https://i.klikhost.com/8332/;",
+    "streams": [
+      {
+        "url": "https://i.klikhost.com/8332/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f6e181d7-dab3-434c-a4ec-ba10196776d8"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:f6e181d7-dab3-434c-a4ec-ba10196776d8"
+  },
+  "most-105-8-fm-jakarta": {
+    "title": "Most 105.8 FM Jakarta",
+    "description": "90s, culture, greatest hits, the best of 80's",
+    "type": "application/x-mpegURL",
+    "url": "https://most1058fm.com/",
+    "cros": false,
+    "stream": "https://wz.mari.co.id:1936/web_mostfm/mostfm/chunklist_w405836415.m3u8",
+    "streams": [
+      {
+        "url": "https://wz.mari.co.id:1936/web_mostfm/mostfm/chunklist_w405836415.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:16cc7691-8785-4e36-ae75-c9376eedfdcf"
+      }
+    ],
+    "features": "/img/asia/indonesia/most-105-8-fm-jakarta.jpg",
+    "source": "radio-browser:16cc7691-8785-4e36-ae75-c9376eedfdcf"
+  },
+  "alternatif-radio-jakarta": {
+    "title": "Alternatif radio jakarta",
+    "description": "easy listning, jazz, pop, top40",
+    "type": "audio/mpeg",
+    "url": "http://www.pemancar99.com/alternatif-radio/",
+    "cros": false,
+    "stream": "https://void.idserverhost.com/8016/stream",
+    "streams": [
+      {
+        "url": "https://void.idserverhost.com/8016/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a4e98f6e-e326-41eb-97a4-f5f477842fab"
+      }
+    ],
+    "features": "/img/asia/indonesia/alternatif-radio-jakarta.jpg",
+    "source": "radio-browser:a4e98f6e-e326-41eb-97a4-f5f477842fab"
+  },
+  "al-faruq-purwokerto-banyumas-24kb-aac": {
+    "title": "Al-Faruq Purwokerto Banyumas <24kb aac+>",
+    "description": "banyumas, islam, islamic, salaf, salafi",
+    "type": "audio/aac",
+    "url": "https://alfaruq.net/",
+    "cros": true,
+    "stream": "http://alfaruq.radioislam.my.id:12000/",
+    "streams": [
+      {
+        "url": "http://alfaruq.radioislam.my.id:12000/",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:f36067b3-bb5f-476c-9d55-dccc26f3f8aa"
+      }
+    ],
+    "features": "/img/asia/indonesia/al-faruq-purwokerto-banyumas-24kb-aac.webp",
+    "source": "radio-browser:f36067b3-bb5f-476c-9d55-dccc26f3f8aa"
+  },
+  "gen-103-1-fm-surabaya": {
+    "title": "Gen 103.1 FM Surabaya",
+    "description": "pop",
+    "type": "audio/aac",
+    "url": "https://gen1031fm.com/streaming",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_genfmsby/gensbyic.stream/playlist.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_genfmsby/gensbyic.stream/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:12fcc184-5c90-47e8-900c-9c76d977eb0c"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:12fcc184-5c90-47e8-900c-9c76d977eb0c"
+  },
+  "rri-pro-2-92-1-fm-tanjungpinang": {
+    "title": "RRI Pro 2 92.1 FM Tanjungpinang",
+    "description": "local information, local music, local news, local radio, local talk",
+    "type": "audio/aac",
+    "url": "https://rri.co.id/tanjungpinang",
+    "cros": false,
+    "stream": "https://stream-node2.rri.co.id/streaming/21/9221/rritjpinangpro2.mp3",
+    "streams": [
+      {
+        "url": "https://stream-node2.rri.co.id/streaming/21/9221/rritjpinangpro2.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:7e096af2-f010-4200-b58c-00a8415cb25d"
+      }
+    ],
+    "features": "/img/asia/indonesia/rri-pro-2-92-1-fm-tanjungpinang.webp",
+    "source": "radio-browser:7e096af2-f010-4200-b58c-00a8415cb25d"
+  },
+  "radio-music-indonesia": {
+    "title": "Radio Music Indonesia",
+    "type": "audio/aac",
+    "url": "https://radiofm.novawap.com/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/wvq442iwm6ztv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/wvq442iwm6ztv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:5f708482-beb3-4a18-b2e2-e03e901f105a"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-music-indonesia.avif",
+    "source": "radio-browser:5f708482-beb3-4a18-b2e2-e03e901f105a"
+  },
+  "iswara-jakarta": {
+    "title": "iSWARA JAKARTA",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "https://radiostream.novawap.com/",
+    "cros": false,
+    "stream": "https://stream.radiojar.com/4ywdgup3bnzuv",
+    "streams": [
+      {
+        "url": "https://stream.radiojar.com/4ywdgup3bnzuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b33c2a75-8607-4c66-a1ef-87f99bf076de"
+      }
+    ],
+    "features": "/img/asia/indonesia/iswara-jakarta.jpg",
+    "source": "radio-browser:b33c2a75-8607-4c66-a1ef-87f99bf076de"
+  },
+  "rasika-fm-usa-semarang": {
+    "title": "RASIKA FM USA SEMARANG",
+    "type": "audio/aac",
+    "url": "http://rasikafm.com/",
+    "cros": false,
+    "stream": "https://svara-stream.radioddns.net/rasikafm_stereo",
+    "streams": [
+      {
+        "url": "https://svara-stream.radioddns.net/rasikafm_stereo",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a3da221b-9758-4198-b2ab-2cda8da1dc0b"
+      }
+    ],
+    "features": "/img/asia/indonesia/rasika-fm-usa-semarang.webp",
+    "source": "radio-browser:a3da221b-9758-4198-b2ab-2cda8da1dc0b"
+  },
+  "radio-islam-malang-1": {
+    "title": "Radio Islam Malang 1",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "http://siaran.radioislam.my.id:11132/index.html",
+    "cros": true,
+    "stream": "http://siaran.radioislam.my.id:11132/",
+    "streams": [
+      {
+        "url": "http://siaran.radioislam.my.id:11132/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7d390034-928b-4c7b-a5cb-966471ea12da"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:7d390034-928b-4c7b-a5cb-966471ea12da"
+  },
+  "elgangga-fm": {
+    "title": "Elgangga FM",
+    "type": "audio/aac",
+    "url": "https://www.radioelgangga.com/",
+    "cros": false,
+    "stream": "https://b.alhastream.com:5140/radio",
+    "streams": [
+      {
+        "url": "https://b.alhastream.com:5140/radio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:36a85693-63d2-4a0b-b0d7-5599b4b3dab1"
+      }
+    ],
+    "features": "/img/asia/indonesia/elgangga-fm.png",
+    "source": "radio-browser:36a85693-63d2-4a0b-b0d7-5599b4b3dab1"
+  },
+  "smartradio-indonesia": {
+    "title": "SmartRadio Indonesia",
+    "description": "community radio, yogyakarta",
+    "type": "audio/aac",
+    "url": "http://www.forumcerdas.net/",
+    "cros": true,
+    "stream": "http://radio.forumcerdas.net:8000/",
+    "streams": [
+      {
+        "url": "http://radio.forumcerdas.net:8000/",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:59dc38ae-6332-49f4-b163-574a163ee872"
+      }
+    ],
+    "features": "/img/asia/indonesia/smartradio-indonesia.webp",
+    "source": "radio-browser:59dc38ae-6332-49f4-b163-574a163ee872"
+  },
+  "bahtera-yudha-fm-surabaya": {
+    "title": "Bahtera Yudha FM Surabaya",
+    "description": "media kristen",
+    "type": "audio/mpeg",
+    "url": "https://onlineradiobox.com/id/bahterayudha/",
+    "cros": true,
+    "stream": "http://streaming.bahterayudhafm.com:8050/;rojer.mp3",
+    "streams": [
+      {
+        "url": "http://streaming.bahterayudhafm.com:8050/;rojer.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fe34f563-5455-4007-b947-99e91381a24b"
+      }
+    ],
+    "features": "/img/asia/indonesia/bahtera-yudha-fm-surabaya.png",
+    "source": "radio-browser:fe34f563-5455-4007-b947-99e91381a24b"
+  },
+  "hard-rock-fm-surabaya": {
+    "title": "hard rock FM surabaya",
+    "description": "adul, hits, top 40",
+    "type": "audio/aac",
+    "url": "https://hardrockfm.com/hardrock-fm-surabaya/",
+    "cros": false,
+    "stream": "https://n0c.radiojar.com/yg8ne2v80k8uv",
+    "streams": [
+      {
+        "url": "https://n0c.radiojar.com/yg8ne2v80k8uv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:69bc015f-acfd-4175-af3b-bbc131c5bee1"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:69bc015f-acfd-4175-af3b-bbc131c5bee1"
+  },
+  "radio-losta-fm-blitar-89-2-mhz": {
+    "title": "Radio Losta FM Blitar 89.2 MHz",
+    "description": "alternative / indie, dangdut, hits, koplo, local news",
+    "type": "audio/mpeg",
+    "url": "https://radiolostasetia.blogspot.com/",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/ar3nv92ahfhvv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/ar3nv92ahfhvv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e1866e35-b8a6-41a9-a282-2553f48db28b"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-losta-fm-blitar-89-2-mhz.jpg",
+    "source": "radio-browser:e1866e35-b8a6-41a9-a282-2553f48db28b"
+  },
+  "radio-kasih": {
+    "title": "Radio Kasih",
+    "description": "misc",
+    "type": "audio/aac",
+    "url": "https://radioonline.co.id",
+    "cros": false,
+    "stream": "https://onlineradiobox.com/json/id/kasih/play",
+    "streams": [
+      {
+        "url": "https://onlineradiobox.com/json/id/kasih/play",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:8134038e-9484-42eb-95c7-cf6eb63f8ae9"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-kasih.webp",
+    "source": "radio-browser:8134038e-9484-42eb-95c7-cf6eb63f8ae9"
+  },
+  "harmoni-fm-blitar": {
+    "title": "Harmoni FM Blitar",
+    "description": "media kristen",
+    "type": "audio/mpeg",
+    "url": "https://onlineradiobox.com/id/harmoni/",
+    "cros": true,
+    "stream": "http://cbnradio.streamguys1.com/praise-128K",
+    "streams": [
+      {
+        "url": "http://cbnradio.streamguys1.com/praise-128K",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:8bee3a9d-3981-4b6c-8199-d1a989f3b8cb"
+      }
+    ],
+    "features": "/img/asia/indonesia/harmoni-fm-blitar.png",
+    "source": "radio-browser:8bee3a9d-3981-4b6c-8199-d1a989f3b8cb"
+  },
+  "retjo-buntung": {
+    "title": "Retjo Buntung",
+    "type": "audio/mpeg",
+    "url": "https://retjobuntungfm.com/home",
+    "cros": true,
+    "stream": "http://45.64.97.82:9940/stream",
+    "streams": [
+      {
+        "url": "http://45.64.97.82:9940/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c885f925-1ddc-4cc5-ae69-a2f80270061d"
+      }
+    ],
+    "features": "/img/asia/indonesia/retjo-buntung.png",
+    "source": "radio-browser:c885f925-1ddc-4cc5-ae69-a2f80270061d"
+  },
+  "firza-mpc-radio": {
+    "title": "Firza MPC Radio",
+    "type": "audio/aac",
+    "url": "https://firzadankiaradio,blogspot.com/",
+    "cros": false,
+    "stream": "https://mpc1.mediacp.eu/stream/firzaradio",
+    "streams": [
+      {
+        "url": "https://mpc1.mediacp.eu/stream/firzaradio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:c223d279-e73c-43a0-aff2-4c61c780eb9e"
+      }
+    ],
+    "features": "/img/asia/indonesia/firza-mpc-radio.png",
+    "source": "radio-browser:c223d279-e73c-43a0-aff2-4c61c780eb9e"
+  },
+  "ronggohadi-97-8-fm-lamongan": {
+    "title": "Ronggohadi 97.8 FM Lamongan",
+    "description": "misc",
+    "type": "audio/aac",
+    "url": "https://www.ronggohadi.com/",
+    "cros": false,
+    "stream": "https://c3.siar.us/proxy/ronggohadifm/stream",
+    "streams": [
+      {
+        "url": "https://c3.siar.us/proxy/ronggohadifm/stream",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:b87a4b55-f418-4c76-8339-dc33fa1b8221"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:b87a4b55-f418-4c76-8339-dc33fa1b8221"
+  },
+  "trax-fm-semarang": {
+    "title": "trax fm semarang",
+    "type": "audio/aac",
+    "url": "http://n0f.radiojar.com/fr9zqhv80k8uv",
+    "cros": true,
+    "stream": "http://n0f.radiojar.com/fr9zqhv80k8uv",
+    "streams": [
+      {
+        "url": "http://n0f.radiojar.com/fr9zqhv80k8uv",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:94f9a147-1fea-45fb-9ba7-b7dc9712668e"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:94f9a147-1fea-45fb-9ba7-b7dc9712668e"
+  },
+  "hang-106-fm": {
+    "title": "Hang 106 FM",
+    "type": "audio/mpeg",
+    "url": "https://www.hangmedia.co.id/default.html",
+    "cros": true,
+    "stream": "http://185.47.62.52:8000/listen.mp3/stats?sid=1&json=1&callback=jQuery1124046759743595637016_1677813104799&_=1677813104800",
+    "streams": [
+      {
+        "url": "http://185.47.62.52:8000/listen.mp3/stats?sid=1&json=1&callback=jQuery1124046759743595637016_1677813104799&_=1677813104800",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:5ed99da2-c11f-42b3-bd92-1adb65452237"
+      }
+    ],
+    "features": "/img/asia/indonesia/hang-106-fm.png",
+    "source": "radio-browser:5ed99da2-c11f-42b3-bd92-1adb65452237"
+  },
+  "mqfm-bandung-indonesia": {
+    "title": "MQFM Bandung - Indonesia",
+    "type": "audio/mpeg",
+    "url": "https://mqfmnetwork.com/",
+    "cros": false,
+    "stream": "https://mqfmstreaming.kamil.web.id/;",
+    "streams": [
+      {
+        "url": "https://mqfmstreaming.kamil.web.id/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:78dee7e2-14ad-4303-af9a-785fc7f4e3ea"
+      }
+    ],
+    "features": "/img/asia/indonesia/mqfm-bandung-indonesia.png",
+    "source": "radio-browser:78dee7e2-14ad-4303-af9a-785fc7f4e3ea"
+  },
+  "rodja-bandung-104-3-fm": {
+    "title": "Rodja Bandung 104.3 FM",
+    "type": "audio/mpeg",
+    "url": "https://rodjabandung.com/",
+    "cros": false,
+    "stream": "https://radioislamindonesia.com/rodja-bandung.mp3",
+    "streams": [
+      {
+        "url": "https://radioislamindonesia.com/rodja-bandung.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:46d5d533-8deb-4be1-95dc-a1c4d6b14232"
+      }
+    ],
+    "features": "/img/asia/indonesia/rodja-bandung-104-3-fm.png",
+    "source": "radio-browser:46d5d533-8deb-4be1-95dc-a1c4d6b14232"
+  },
+  "mettaswara-indonesia": {
+    "title": "Mettaswara Indonesia",
+    "description": "dance, pop, rock",
+    "type": "audio/aac",
+    "url": "https://radiostream.novawap.com/",
+    "cros": false,
+    "stream": "https://mettaswara.com:8700/indo",
+    "streams": [
+      {
+        "url": "https://mettaswara.com:8700/indo",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:06feb250-6777-4a8a-8cdf-6e94fe48adc7"
+      }
+    ],
+    "features": "/img/asia/indonesia/mettaswara-indonesia.png",
+    "source": "radio-browser:06feb250-6777-4a8a-8cdf-6e94fe48adc7"
+  },
+  "loker-musik-indonesia": {
+    "title": "Loker Musik Indonesia",
+    "description": "indonesia, pop",
+    "type": "audio/aac",
+    "url": "https://www.lokermusik.com/",
+    "cros": false,
+    "stream": "https://stream.lokermusik.com/listen/lokermusik/lokermusik",
+    "streams": [
+      {
+        "url": "https://stream.lokermusik.com/listen/lokermusik/lokermusik",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:083d312c-59c5-47fc-a00a-5515cc6771f2"
+      }
+    ],
+    "features": "/img/asia/indonesia/loker-musik-indonesia.png",
+    "source": "radio-browser:083d312c-59c5-47fc-a00a-5515cc6771f2"
+  },
+  "kis-95-1-fm": {
+    "title": "Kis 95.1 FM",
+    "description": "music, news, talk",
+    "type": "application/x-mpegURL",
+    "url": "https://kis951fm.com/",
+    "cros": true,
+    "stream": "http://103.246.184.62:1935/noice_kisfm/kisfm/chunklist_w1678859544.m3u8",
+    "streams": [
+      {
+        "url": "http://103.246.184.62:1935/noice_kisfm/kisfm/chunklist_w1678859544.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:c926b2da-3360-4fc3-8111-1a46e8fc5da5"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c926b2da-3360-4fc3-8111-1a46e8fc5da5"
+  },
+  "radio-rodja-756-am-100-1-fm": {
+    "title": "Radio Rodja 756 AM & 100.1 FM",
+    "type": "audio/mpeg",
+    "url": "https://www.radiorodja.com/live/",
+    "cros": true,
+    "stream": "http://live2.radiorodja.com:8000/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://live2.radiorodja.com:8000/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:70abc402-ef45-42ae-84ce-daf16cea3ca9"
+      }
+    ],
+    "features": "/img/asia/indonesia/radio-rodja-756-am-100-1-fm.jpg",
+    "source": "radio-browser:70abc402-ef45-42ae-84ce-daf16cea3ca9"
+  },
+  "radio-gentara": {
+    "title": "Radio Gentara",
+    "type": "audio/mpeg",
+    "url": "https://radiogentara.com/",
+    "cros": false,
+    "stream": "https://s1.gntr.net/listen/radio_gentara/gentara64",
+    "streams": [
+      {
+        "url": "https://s1.gntr.net/listen/radio_gentara/gentara64",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1fc68030-02cc-436b-8e6f-1499f37d69b1"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:1fc68030-02cc-436b-8e6f-1499f37d69b1"
+  },
+  "fress-fm": {
+    "title": "Fress FM",
+    "description": "easy listening, general, koplo, local music, music",
+    "type": "audio/aac",
+    "url": "https://www.fressfm.com/",
+    "cros": true,
+    "stream": "http://streaming.fressfm.com:11185/stream",
+    "streams": [
+      {
+        "url": "http://streaming.fressfm.com:11185/stream",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:c845aa42-cad3-41c5-9081-381e1c2fa5dc"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c845aa42-cad3-41c5-9081-381e1c2fa5dc"
+  },
+  "radio-muara-jakarta": {
+    "title": "Radio Muara Jakarta",
+    "type": "audio/mpeg",
+    "url": "http://y2mate.com/",
+    "cros": true,
+    "stream": "http://45.64.97.82:8778/stream/1/",
+    "streams": [
+      {
+        "url": "http://45.64.97.82:8778/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c2562aa0-6e56-41d7-ba3e-f7d7d65701ec"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:c2562aa0-6e56-41d7-ba3e-f7d7d65701ec"
+  },
+  "rri-pro1-banjarmasin": {
+    "title": "RRI Pro1 Banjarmasin",
+    "description": "news talk music",
+    "type": "audio/aac",
+    "url": "https://www.rri.co.id/",
+    "cros": false,
+    "stream": "https://stream-node0.rri.co.id/streaming/19/9019/rribanjarmasinpro1.mp3",
+    "streams": [
+      {
+        "url": "https://stream-node0.rri.co.id/streaming/19/9019/rribanjarmasinpro1.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:f1dc8d83-40b9-4d37-be99-5722ca4db0b7"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:f1dc8d83-40b9-4d37-be99-5722ca4db0b7"
+  },
+  "tidar-sakti-fm-batu": {
+    "title": "Tidar Sakti FM Batu",
+    "description": "misc",
+    "type": "audio/aac",
+    "url": "https://radioonline.co.id",
+    "cros": true,
+    "stream": "http://pu.klikhost.com:8770/stream",
+    "streams": [
+      {
+        "url": "http://pu.klikhost.com:8770/stream",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:94879d49-6ea1-49b7-be61-f8b2483f67dc"
+      }
+    ],
+    "features": "/img/asia/indonesia/tidar-sakti-fm-batu.webp",
+    "source": "radio-browser:94879d49-6ea1-49b7-be61-f8b2483f67dc"
+  },
+  "radio-islam-malang-1-a70e843f": {
+    "title": "Radio Islam Malang 1",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "http://malang.radioislam.my.id:11132/index.html?sid=1",
+    "cros": true,
+    "stream": "http://malang.radioislam.my.id:11132/",
+    "streams": [
+      {
+        "url": "http://malang.radioislam.my.id:11132/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:a70e843f-9814-4e24-9163-63b028efffc4"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:a70e843f-9814-4e24-9163-63b028efffc4"
   }
 }

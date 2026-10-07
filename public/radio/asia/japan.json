@@ -8,7 +8,22 @@
     "stream": "https://ottava2.out.airtime.pro/ottava2_a",
     "features": "/img/asia/japan/ottava.png",
     "schedule": "https://api.webrad.io/data/playlist/144/ottava?time=",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://ottava2.out.airtime.pro/ottava2_a",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "http://ottava2.out.airtime.pro:8000/ottava2_a",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:1909f412-f4d4-4edd-9ea2-50a288183ba0"
+      }
+    ],
+    "description": "classical"
   },
   "shonan-beach-fm": {
     "title": "湘南ビーチFM",
@@ -18,7 +33,15 @@
     "cros": false,
     "stream": "https://shonanbeachfm.out.airtime.pro/shonanbeachfm_c",
     "features": "/img/asia/japan/shonan-beach-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/shonan-beach-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/shonan-beach-fm?time=",
+    "streams": [
+      {
+        "url": "https://shonanbeachfm.out.airtime.pro/shonanbeachfm_c",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "nhk-1": {
     "title": "R1 NHKラジオ第1",
@@ -28,7 +51,15 @@
     "cros": false,
     "stream": "https://nhkradioakr1-i.akamaihd.net/hls/live/511633/1-r1/1-r1-01.m3u8",
     "features": "/img/asia/japan/nhk-1.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/nhk-1?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/nhk-1?time=",
+    "streams": [
+      {
+        "url": "https://nhkradioakr1-i.akamaihd.net/hls/live/511633/1-r1/1-r1-01.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "nhk-2": {
     "title": "R2 NHKラジオ第2",
@@ -38,7 +69,15 @@
     "cros": false,
     "stream": "https://nhkradioakr2-i.akamaihd.net/hls/live/511929/1-r2/1-r2-01.m3u8",
     "features": "/img/asia/japan/nhk-2.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/nhk-2?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/nhk-2?time=",
+    "streams": [
+      {
+        "url": "https://nhkradioakr2-i.akamaihd.net/hls/live/511929/1-r2/1-r2-01.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "nhk-fm": {
     "title": "NHK FM",
@@ -47,7 +86,22 @@
     "url": "https://www.nhk.or.jp/radio/",
     "cros": false,
     "stream": "https://nhkradioakfm-i.akamaihd.net/hls/live/512290/1-fm/1-fm-01.m3u8",
-    "features": "/img/asia/japan/nhk-fm.png"
+    "features": "/img/asia/japan/nhk-fm.png",
+    "streams": [
+      {
+        "url": "https://nhkradioakfm-i.akamaihd.net/hls/live/512290/1-fm/1-fm-01.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      },
+      {
+        "url": "http://mnet.x10.mx/nhkfm.m3u8",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:d57ca8c1-613c-4df4-bc94-e16fbe2fad6c"
+      }
+    ],
+    "description": "classical, jpop"
   },
   "musashino-fm": {
     "title": "むさしのFM",
@@ -57,7 +111,15 @@
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB032-MP3",
     "features": "/img/asia/japan/musashino-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/musashino-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/musashino-fm?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB032-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "umeda-fm-be-happy-789": {
     "title": "ウメダfm Be Happy!",
@@ -66,7 +128,15 @@
     "url": "https://www.be-happy789.com/",
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB068-MP3",
-    "features": "/img/asia/japan/umeda-fm-be-happy-789.png"
+    "features": "/img/asia/japan/umeda-fm-be-happy-789.png",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB068-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "big-b-jpop": {
     "title": "Big B Radio #Jpop",
@@ -76,7 +146,16 @@
     "cros": false,
     "stream": "https://antares.dribbcast.com/proxy/jpop?mp=/s",
     "features": "/img/asia/japan/big-b-jpop.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/big-b-jpop?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/big-b-jpop?time=",
+    "streams": [
+      {
+        "url": "https://antares.dribbcast.com/proxy/jpop?mp=/s",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "music, pop"
   },
   "jpopsuki": {
     "title": "JPopsuki Radio",
@@ -86,7 +165,15 @@
     "cros": true,
     "stream": "http://jpopsuki.fm:8000/stream",
     "features": "/img/asia/japan/jpopsuki.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/jpopsuki?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/jpopsuki?time=",
+    "streams": [
+      {
+        "url": "http://jpopsuki.fm:8000/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm-karatsu": {
     "title": "FMからつ﻿",
@@ -96,7 +183,15 @@
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB092-MP3",
     "features": "/img/asia/japan/fm-karatsu.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/fm-karatsu?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/fm-karatsu?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB092-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "jphip": {
     "title": "JPHiP Radio",
@@ -106,7 +201,15 @@
     "cros": true,
     "stream": "http://radio.jphip.com:8800/;",
     "features": "/img/asia/japan/jphip.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/jphip?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/jphip?time=",
+    "streams": [
+      {
+        "url": "http://radio.jphip.com:8800/;",
+        "type": "audio/MPEG",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm-nishi-tokyo": {
     "title": "FM西東京",
@@ -116,7 +219,15 @@
     "cros": true,
     "stream": "https://musicbird.leanstream.co/JCB031-MP3",
     "features": "/img/asia/japan/fm-nishi-tokyo.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/fm-nishi-tokyo?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/fm-nishi-tokyo?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB031-MP3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kiku-fm": {
     "title": "FMひらかた",
@@ -125,7 +236,15 @@
     "url": "http://www.kiku-fm779.com/",
     "cros": false,
     "stream": "https://host02.media-gather.jp/_media__mg00009kj5c_live/_definst_/1359071597_3874/playlist.m3u8",
-    "features": "/img/asia/japan/kiku-fm.png"
+    "features": "/img/asia/japan/kiku-fm.png",
+    "streams": [
+      {
+        "url": "https://host02.media-gather.jp/_media__mg00009kj5c_live/_definst_/1359071597_3874/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-karuizawa": {
     "title": "FM軽井沢",
@@ -135,7 +254,15 @@
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB108-MP3",
     "features": "/img/asia/japan/fm-karuizawa.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/fm-karuizawa?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/fm-karuizawa?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB108-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "omg-k-pop": {
     "title": "OMG K Pop",
@@ -145,7 +272,15 @@
     "cros": true,
     "stream": "http://stream.omgkpop.com:8234/stream",
     "features": "/img/asia/japan/omg-k-pop.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/omg-k-pop?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/omg-k-pop?time=",
+    "streams": [
+      {
+        "url": "http://stream.omgkpop.com:8234/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "shonan": {
     "title": "レディオ湘南 FM",
@@ -155,7 +290,15 @@
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB101-MP3",
     "features": "/img/asia/japan/shonan.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/shonan?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/shonan?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB101-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "kishi-wada": {
     "title": "ラヂオきしわだ",
@@ -165,7 +308,15 @@
     "cros": true,
     "stream": "http://61.89.201.27:8000/radikishi.mp3",
     "features": "/img/asia/japan/kishi-wada.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/kishi-wada?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/kishi-wada?time=",
+    "streams": [
+      {
+        "url": "http://61.89.201.27:8000/radikishi.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "ban-ban": {
     "title": "Ban Ban ラジオ",
@@ -174,7 +325,15 @@
     "url": "https://www.banban.jp/radio/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30078/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/ban-ban.png"
+    "features": "/img/asia/japan/ban-ban.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30078/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-tachikawa": {
     "title": "エフエムたちかわ",
@@ -183,7 +342,15 @@
     "url": "http://fm844.co.jp/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30033/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/fm-tachikawa.png"
+    "features": "/img/asia/japan/fm-tachikawa.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30033/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-miki": {
     "title": "FMみっきぃ",
@@ -193,7 +360,15 @@
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB110-MP3",
     "features": "/img/asia/japan/fm-miki.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/fm-miki?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/fm-miki?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB110-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-edogawa": {
     "title": "FMえどがわ",
@@ -203,7 +378,15 @@
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB033-MP3",
     "features": "/img/asia/japan/fm-edogawa.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/fm-edogawa?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/fm-edogawa?time=",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB033-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-nirai": {
     "title": "FMニライ",
@@ -212,7 +395,15 @@
     "url": "https://www.fmnirai.com/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30003/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/fm-nirai.png"
+    "features": "/img/asia/japan/fm-nirai.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30003/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-uruma": {
     "title": "FMうるま",
@@ -221,7 +412,15 @@
     "url": "https://fmuruma.com/index_2.html",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30011/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/fm-uruma.png"
+    "features": "/img/asia/japan/fm-uruma.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30011/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "chofu-fm": {
     "title": "調布FM",
@@ -230,7 +429,15 @@
     "url": "https://www.chofu-fm.com/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30039/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/chofu-fm.png"
+    "features": "/img/asia/japan/chofu-fm.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30039/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-jaga": {
     "title": "FM-Jaga",
@@ -239,7 +446,15 @@
     "url": "https://www.jaga.fm/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30016/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/fm-jaga.png"
+    "features": "/img/asia/japan/fm-jaga.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30016/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mid-fm": {
     "title": "Mid-FM",
@@ -249,7 +464,15 @@
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30004/livestream/playlist.m3u8",
     "features": "/img/asia/japan/mid-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/mid-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/mid-fm?time=",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30004/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-chiao": {
     "title": "エフエム熱海湯河原 Ciao!",
@@ -259,7 +482,15 @@
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30062/livestream/playlist.m3u8",
     "features": "/img/asia/japan/fm-chiao.png",
-    "schedule": "https://api.webrad.io/data/playlist/144/fm-chiao?time="
+    "schedule": "https://api.webrad.io/data/playlist/144/fm-chiao?time=",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30062/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-chupea": {
     "title": "FMちゅーピー",
@@ -268,7 +499,15 @@
     "url": "https://chupea.fm/",
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB082-MP3",
-    "features": "/img/asia/japan/fm-chupea.png"
+    "features": "/img/asia/japan/fm-chupea.png",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB082-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-yutopia": {
     "title": "FMゆーとぴあ",
@@ -277,7 +516,15 @@
     "url": "http://www.yutopia.or.jp/~fm763/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30030/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/fm-yutopia.png"
+    "features": "/img/asia/japan/fm-yutopia.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30030/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "sea-wave": {
     "title": "Sea Wave FMいわき",
@@ -286,7 +533,15 @@
     "url": "https://www.fm-iwaki.co.jp/",
     "cros": false,
     "stream": "https://mtist.as.smartstream.ne.jp/30009/livestream/playlist.m3u8",
-    "features": "/img/asia/japan/sea-wave.png"
+    "features": "/img/asia/japan/sea-wave.png",
+    "streams": [
+      {
+        "url": "https://mtist.as.smartstream.ne.jp/30009/livestream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-odawara": {
     "title": "FMおだわら",
@@ -295,7 +550,15 @@
     "url": "https://fm-odawara.com/",
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB017-MP3",
-    "features": "/img/asia/japan/fm-odawara.png"
+    "features": "/img/asia/japan/fm-odawara.png",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB017-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm-pipi": {
     "title": "FMおだわら",
@@ -304,6 +567,1549 @@
     "url": "https://fmpipi.co.jp/",
     "cros": false,
     "stream": "https://musicbird.leanstream.co/JCB043-MP3",
-    "features": "/img/asia/japan/fm-pipi.png"
+    "features": "/img/asia/japan/fm-pipi.png",
+    "streams": [
+      {
+        "url": "https://musicbird.leanstream.co/JCB043-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "jazz-sakura-asia-dream-radio": {
+    "title": "Jazz Sakura (asia dream radio)",
+    "description": "japanese, japanese music, jazz",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": true,
+    "stream": "http://kathy.torontocast.com:3330/stream/1/?esPlayer&cb=82181.mp3",
+    "streams": [
+      {
+        "url": "http://kathy.torontocast.com:3330/stream/1/?esPlayer&cb=82181.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9766d47a-68a3-4a30-8aec-c026f1ec6020"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9766d47a-68a3-4a30-8aec-c026f1ec6020"
+  },
+  "anime-para-ti": {
+    "title": "Anime Para Ti",
+    "description": "anime, anime openings, jpop, music",
+    "type": "audio/mpeg",
+    "url": "https://www.facebook.com/radioanimeparati",
+    "cros": false,
+    "stream": "https://stream.zeno.fm/qpn8mkt8c4duv",
+    "streams": [
+      {
+        "url": "https://stream.zeno.fm/qpn8mkt8c4duv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1adf1539-e647-44c3-85d8-b437b768fb8c"
+      }
+    ],
+    "features": "/img/asia/japan/anime-para-ti.avif",
+    "source": "radio-browser:1adf1539-e647-44c3-85d8-b437b768fb8c"
+  },
+  "listen-moe-jpop-vorbis": {
+    "title": "Listen.Moe JPop Vorbis",
+    "description": "jpop",
+    "type": "audio/ogg",
+    "url": "https://listen.moe/",
+    "cros": false,
+    "stream": "https://listen.moe/stream",
+    "streams": [
+      {
+        "url": "https://listen.moe/stream",
+        "type": "audio/ogg",
+        "cros": false,
+        "source": "radio-browser:e4e4d123-0616-11ea-afd6-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/japan/listen-moe-jpop-vorbis.jpg",
+    "source": "radio-browser:e4e4d123-0616-11ea-afd6-52543be04c81"
+  },
+  "retro-pc-game-music-streaming-radio": {
+    "title": "Retro PC GAME MUSIC Streaming Radio",
+    "description": "chiptune, retro games, soundtracks, video game",
+    "type": "audio/mpeg",
+    "url": "http://gyusyabu.ddo.jp/MP3/MP3.html",
+    "cros": true,
+    "stream": "http://gyusyabu.ddo.jp:8000/",
+    "streams": [
+      {
+        "url": "http://gyusyabu.ddo.jp:8000/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9f9cc220-3462-11e8-bb9b-52543be04c81"
+      },
+      {
+        "url": "http://gyusyabu.ddo.jp:8000/listen.pls",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/japan/retro-pc-game-music-streaming-radio.jpg",
+    "source": "radio-browser:9f9cc220-3462-11e8-bb9b-52543be04c81"
+  },
+  "gensokyo-radio": {
+    "title": "Gensokyo Radio",
+    "description": "anime, touhou",
+    "type": "audio/mpeg",
+    "url": "https://gensokyoradio.net/",
+    "cros": false,
+    "stream": "https://stream.gensokyoradio.net/3",
+    "streams": [
+      {
+        "url": "https://stream.gensokyoradio.net/3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:248a7684-7e28-4912-9812-efefc2bba2e1"
+      },
+      {
+        "url": "https://stream.gensokyoradio.net/GensokyoRadio-enhanced.m3u",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:248a7684-7e28-4912-9812-efefc2bba2e1"
+  },
+  "r-a-dio": {
+    "title": "R/a/dio",
+    "description": "anime, jpop",
+    "type": "audio/mpeg",
+    "url": "http://r-a-d.io/",
+    "cros": false,
+    "stream": "https://relay0.r-a-d.io/main.mp3",
+    "streams": [
+      {
+        "url": "https://relay0.r-a-d.io/main.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7b85cb6b-ebb8-11e8-a471-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/japan/r-a-dio.png",
+    "source": "radio-browser:7b85cb6b-ebb8-11e8-a471-52543be04c81"
+  },
+  "j1-gold-http": {
+    "title": "J1 Gold (HTTP)",
+    "description": "jpop",
+    "type": "audio/mpeg",
+    "url": "https://en.j1fm.tokyo/",
+    "cros": true,
+    "stream": "http://jenny.torontocast.com:8062/",
+    "streams": [
+      {
+        "url": "http://jenny.torontocast.com:8062/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:32d5e5ac-e196-4451-9193-bd41a7961556"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:32d5e5ac-e196-4451-9193-bd41a7961556"
+  },
+  "fm-kahoku-78-7-fm-jozz5am-fm-78-7-mhz-kahoku-city-ishikawa": {
+    "title": "FM Kahoku 78.7 (FMかほく, JOZZ5AM-FM, 78.7 MHz, Kahoku City, Ishikawa)",
+    "description": "enka, japan, japanese, jpop, kayokyoku",
+    "type": "audio/mpeg",
+    "url": "http://fm.kahoku.net/",
+    "cros": true,
+    "stream": "http://radio.kahoku.net:8000/;",
+    "streams": [
+      {
+        "url": "http://radio.kahoku.net:8000/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:961b7ba6-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:961b7ba6-0601-11e8-ae97-52543be04c81"
+  },
+  "shonan-beach-fm-78-9": {
+    "title": "Shonan Beach FM 78.9",
+    "description": "classic jazz, hawaiian music, pop, smooth jazz",
+    "type": "audio/mpeg",
+    "url": "https://www.beachfm.co.jp/",
+    "cros": true,
+    "stream": "http://shonanbeachfm.out.airtime.pro:8000/shonanbeachfm_a",
+    "streams": [
+      {
+        "url": "http://shonanbeachfm.out.airtime.pro:8000/shonanbeachfm_a",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9f66a5b4-66c0-4389-88f3-f8285ad4239a"
+      }
+    ],
+    "features": "/img/asia/japan/shonan-beach-fm-78-9.jpg",
+    "source": "radio-browser:9f66a5b4-66c0-4389-88f3-f8285ad4239a"
+  },
+  "free-fm-tokyo": {
+    "title": "Free FM Tokyo",
+    "description": "free fm, free japan music, musica, tokyo",
+    "type": "audio/mpeg",
+    "url": "http://freefmradio.net/",
+    "cros": false,
+    "stream": "https://rocafmadrid.radioca.st/",
+    "streams": [
+      {
+        "url": "https://rocafmadrid.radioca.st/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:af566e6b-3d2b-4b96-92ca-a9cb183e6fd8"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:af566e6b-3d2b-4b96-92ca-a9cb183e6fd8"
+  },
+  "free-fm-80-tokyo": {
+    "title": "Free FM 80 Tokyo",
+    "description": "#80s, #freefm, #freefm80s",
+    "type": "audio/mpeg",
+    "url": "http://www.freefmworld.com/",
+    "cros": false,
+    "stream": "https://freefm80.radioca.st/",
+    "streams": [
+      {
+        "url": "https://freefm80.radioca.st/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:54732c01-db87-4aa2-b313-22fd5fa7eee9"
+      }
+    ],
+    "features": "/img/asia/japan/free-fm-80-tokyo.jpg",
+    "source": "radio-browser:54732c01-db87-4aa2-b313-22fd5fa7eee9"
+  },
+  "j1-hits-http": {
+    "title": "J1 Hits (HTTP)",
+    "type": "audio/mpeg",
+    "url": "https://en.j1fm.tokyo/",
+    "cros": true,
+    "stream": "http://jenny.torontocast.com:8056/",
+    "streams": [
+      {
+        "url": "http://jenny.torontocast.com:8056/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3c5dc353-b1ce-43be-a361-ae555535a2b0"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3c5dc353-b1ce-43be-a361-ae555535a2b0"
+  },
+  "box-japan-city-pop": {
+    "title": "BOX : Japan City Pop - 日本のシティポップ",
+    "description": "city pop, japanese",
+    "type": "audio/mpeg",
+    "url": "https://boxradio.net/",
+    "cros": false,
+    "stream": "https://play.streamafrica.net/japancitypop",
+    "streams": [
+      {
+        "url": "https://play.streamafrica.net/japancitypop",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:30b09043-9b67-43d7-b9c6-b4401e5cb636"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:30b09043-9b67-43d7-b9c6-b4401e5cb636"
+  },
+  "nightwave-plaza-opus-96": {
+    "title": "Nightwave Plaza OPUS 96",
+    "description": "aesthetic, chillwave, futurefunk, lofi, vaporwave",
+    "type": "audio/ogg",
+    "url": "http://radio.plaza.one/",
+    "cros": true,
+    "stream": "http://radio.plaza.one/opus",
+    "streams": [
+      {
+        "url": "http://radio.plaza.one/opus",
+        "type": "audio/ogg",
+        "cros": true,
+        "source": "radio-browser:9af1536b-1acd-11ea-a620-52543be04c81"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9af1536b-1acd-11ea-a620-52543be04c81"
+  },
+  "free-fm-tokyo-b641d7ab": {
+    "title": "Free FM Tokyo",
+    "description": "1980s, 2000s, 80's, 80s rock, 90's",
+    "type": "audio/mpeg",
+    "url": "http://freefmradio.net/",
+    "cros": false,
+    "stream": "https://rocafmadrid.radioca.st/stream",
+    "streams": [
+      {
+        "url": "https://rocafmadrid.radioca.st/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b641d7ab-4548-426f-92ba-c0b65bff204d"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:b641d7ab-4548-426f-92ba-c0b65bff204d"
+  },
+  "super-tokio-radio": {
+    "title": "Súper Tokio Radio",
+    "description": "international",
+    "type": "audio/mpeg",
+    "url": "https://supertokio.com/",
+    "cros": false,
+    "stream": "https://streamer.radio.co/s83eb8ff39/listen",
+    "streams": [
+      {
+        "url": "https://streamer.radio.co/s83eb8ff39/listen",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:da391117-93a3-4f25-8dc3-c8aa604dde6a"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:da391117-93a3-4f25-8dc3-c8aa604dde6a"
+  },
+  "fred-film-radio": {
+    "title": "Fred Film Radio(日本語)",
+    "description": "culture, film, movie",
+    "type": "audio/mpeg",
+    "url": "http://www.fred.fm/",
+    "cros": false,
+    "stream": "https://s10.webradio-hosting.com/proxy/fredradiojp/stream",
+    "streams": [
+      {
+        "url": "https://s10.webradio-hosting.com/proxy/fredradiojp/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:5a2cbfe7-0518-44e9-aca6-0fd41e466ff0"
+      }
+    ],
+    "features": "/img/asia/japan/fred-film-radio.png",
+    "source": "radio-browser:5a2cbfe7-0518-44e9-aca6-0fd41e466ff0"
+  },
+  "moon-mission-recordings": {
+    "title": "Moon Mission Recordings",
+    "description": "deep house, techno",
+    "type": "audio/mpeg",
+    "url": "https://www.moonmission.jp/",
+    "cros": true,
+    "stream": "http://uk5.internet-radio.com:8306/",
+    "streams": [
+      {
+        "url": "http://uk5.internet-radio.com:8306/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:04d1eabe-f19d-11e8-a471-52543be04c81"
+      },
+      {
+        "url": "http://www.internet-radio.com/servers/tools/playlistgenerator/?u=http://uk5.internet-radio.com:8306/listen.pls&t=.m3u",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:04d1eabe-f19d-11e8-a471-52543be04c81"
+  },
+  "nightwave-plaza-mp3-182": {
+    "title": "Nightwave Plaza MP3 182",
+    "type": "audio/mpeg",
+    "url": "https://plaza.one/",
+    "cros": true,
+    "stream": "http://radio.plaza.one/mp3",
+    "streams": [
+      {
+        "url": "http://radio.plaza.one/mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:4b0e9c63-3cec-4964-a3d7-de99decd023b"
+      }
+    ],
+    "features": "/img/asia/japan/nightwave-plaza-mp3-182.png",
+    "source": "radio-browser:4b0e9c63-3cec-4964-a3d7-de99decd023b"
+  },
+  "listen-moe-j-pop-mp3": {
+    "title": "Listen.moe J-Pop (MP3)",
+    "type": "audio/mpeg",
+    "url": "https://listen.moe/",
+    "cros": false,
+    "stream": "https://listen.moe/fallback",
+    "streams": [
+      {
+        "url": "https://listen.moe/fallback",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e698b1df-bd9c-4084-9c21-22a452b27664"
+      }
+    ],
+    "features": "/img/asia/japan/listen-moe-j-pop-mp3.jpg",
+    "source": "radio-browser:e698b1df-bd9c-4084-9c21-22a452b27664"
+  },
+  "j-pop-powerplay": {
+    "title": "J-POP Powerplay",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "http://www.asiadreamradio.com/stations/en/",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3560/",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3560/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:cf0ab710-020b-4e3f-99af-2bf059466d36"
+      }
+    ],
+    "features": "/img/asia/japan/j-pop-powerplay.webp",
+    "source": "radio-browser:cf0ab710-020b-4e3f-99af-2bf059466d36"
+  },
+  "onlyhits-japan": {
+    "title": "OnlyHits Japan",
+    "type": "audio/mpeg",
+    "url": "https://j.onlyhit.us/",
+    "cros": false,
+    "stream": "https://j.onlyhit.us/play",
+    "streams": [
+      {
+        "url": "https://j.onlyhit.us/play",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3ab8903d-117f-4f25-802e-d048dcdd0675"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3ab8903d-117f-4f25-802e-d048dcdd0675"
+  },
+  "j-rock-powerplay-asia-dream-radio": {
+    "title": "J-Rock Powerplay(Asia DREAM Radio)",
+    "description": "music, pop",
+    "type": "audio/mpeg",
+    "url": "http://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3340/;?shoutcast",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3340/;?shoutcast",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:51f0066d-6de7-40b5-83a0-f264727f30a4"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:51f0066d-6de7-40b5-83a0-f264727f30a4"
+  },
+  "j1-hits": {
+    "title": "J1 HITS",
+    "type": "audio/mpeg",
+    "url": "https://www.j1fm.tokyo/",
+    "cros": false,
+    "stream": "https://jenny.torontocast.com:2000/stream/J1HITS?_=184325",
+    "streams": [
+      {
+        "url": "https://jenny.torontocast.com:2000/stream/J1HITS?_=184325",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:5a4eb5bc-7fbd-43fb-a6a4-cc4517ce6ac4"
+      }
+    ],
+    "features": "/img/asia/japan/j1-hits.webp",
+    "source": "radio-browser:5a4eb5bc-7fbd-43fb-a6a4-cc4517ce6ac4"
+  },
+  "real-love-music-radio-future-funk": {
+    "title": "Real Love Music - Radio Future Funk",
+    "description": "future funk",
+    "type": "audio/mpeg",
+    "url": "https://zeno.fm/radio/future-fnk/",
+    "cros": false,
+    "stream": "https://stream-152.zeno.fm/48533y95cnruv?zs=doyTUcjfTvCVtBOS3nlI8g",
+    "streams": [
+      {
+        "url": "https://stream-152.zeno.fm/48533y95cnruv?zs=doyTUcjfTvCVtBOS3nlI8g",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:45ea052e-37c2-403e-be57-8bf66daa86af"
+      }
+    ],
+    "features": "/img/asia/japan/real-love-music-radio-future-funk.webp",
+    "source": "radio-browser:45ea052e-37c2-403e-be57-8bf66daa86af"
+  },
+  "fm": {
+    "title": "FM世田谷",
+    "description": "83.4, full service, music",
+    "type": "audio/mpeg",
+    "url": "https://fmsetagaya.com/",
+    "cros": false,
+    "stream": "https://fmsetagaya834.out.airtime.pro/fmsetagaya834_a",
+    "streams": [
+      {
+        "url": "https://fmsetagaya834.out.airtime.pro/fmsetagaya834_a",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:fad42bb6-2865-4854-94a7-96152e881800"
+      }
+    ],
+    "features": "/img/asia/japan/fm.gif",
+    "source": "radio-browser:fad42bb6-2865-4854-94a7-96152e881800"
+  },
+  "j-pop-powerplay-kawaii-asia-dream-radio": {
+    "title": "J-Pop Powerplay Kawaii(asia dream radio)",
+    "description": "music, pop",
+    "type": "audio/mpeg",
+    "url": "http://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3060/;?shoutcast",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3060/;?shoutcast",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ecbcdd6f-ac5f-408f-9d9b-cc979e5344c4"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:ecbcdd6f-ac5f-408f-9d9b-cc979e5344c4"
+  },
+  "vaporwave": {
+    "title": "Vaporwave",
+    "description": "vaporwave",
+    "type": "audio/ogg",
+    "url": "https://plaza.one/",
+    "cros": true,
+    "stream": "http://radio.plaza.one/ogg",
+    "streams": [
+      {
+        "url": "http://radio.plaza.one/ogg",
+        "type": "audio/ogg",
+        "cros": true,
+        "source": "radio-browser:6d1d23d9-50d9-412d-83e2-d4c087d121d8"
+      }
+    ],
+    "features": "/img/asia/japan/vaporwave.png",
+    "source": "radio-browser:6d1d23d9-50d9-412d-83e2-d4c087d121d8"
+  },
+  "alr-jazz-radio": {
+    "title": "ALR Jazz Radio",
+    "type": "audio/aac",
+    "url": "https://www.alrjazz.com/",
+    "cros": true,
+    "stream": "http://195.154.79.204:8638/stream",
+    "streams": [
+      {
+        "url": "http://195.154.79.204:8638/stream",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:90397feb-f9ab-43b8-87c0-4a8e1b7e4316"
+      },
+      {
+        "url": "http://radio30.virtualtronics.com:2199/tunein/abaco-stream.pls",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:90397feb-f9ab-43b8-87c0-4a8e1b7e4316"
+  },
+  "jazz-sakura": {
+    "title": "Jazz Sakura",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3330/;",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3330/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e4f7dac4-db05-446d-9282-d79a56ce7327"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:e4f7dac4-db05-446d-9282-d79a56ce7327"
+  },
+  "ashiyaradio": {
+    "title": "AshiyaRadio〜アシヤ・ラヂヲ〜",
+    "description": "bossa nova, jazz, piano jazz",
+    "type": "audio/aac",
+    "url": "https://ashiya.radio/",
+    "cros": false,
+    "stream": "https://s3.radio.co/sc8d895604/listen",
+    "streams": [
+      {
+        "url": "https://s3.radio.co/sc8d895604/listen",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:ee614813-177f-4b83-ae6a-5e5b22d440d1"
+      }
+    ],
+    "features": "/img/asia/japan/ashiyaradio.png",
+    "source": "radio-browser:ee614813-177f-4b83-ae6a-5e5b22d440d1"
+  },
+  "nhk": {
+    "title": "NHKワールド・ラジオ日本",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www3.nhk.or.jp/nhkworld/ja/",
+    "cros": false,
+    "stream": "https://masterpl.hls.nhkworld.jp/hls/r1/live/master.m3u8",
+    "streams": [
+      {
+        "url": "https://masterpl.hls.nhkworld.jp/hls/r1/live/master.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:0eed3332-c2b2-4eda-9d0c-897322162663"
+      }
+    ],
+    "features": "/img/asia/japan/nhk.png",
+    "source": "radio-browser:0eed3332-c2b2-4eda-9d0c-897322162663"
+  },
+  "j-pop-powerplay-kawaii": {
+    "title": "J-Pop Powerplay Kawaii",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3060/;",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3060/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3dc4d4af-a0fd-4d0d-b3a0-723668b68d24"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3dc4d4af-a0fd-4d0d-b3a0-723668b68d24"
+  },
+  "hitsujikai-radio": {
+    "title": "Hitsujikai Radio",
+    "description": "christian",
+    "type": "audio/mpeg",
+    "url": "https://www.hitsujikai-radio.com/",
+    "cros": true,
+    "stream": "http://streaming.radio.co/se4a8e6a93/listen",
+    "streams": [
+      {
+        "url": "http://streaming.radio.co/se4a8e6a93/listen",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:deff64de-b1f4-442e-832c-1180917ac894"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:deff64de-b1f4-442e-832c-1180917ac894"
+  },
+  "wvvv-v96-9": {
+    "title": "WVVV V96.9",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "https://www.v969radio.net/",
+    "cros": false,
+    "stream": "https://ice5.securenetsystems.net/WVVVFM",
+    "streams": [
+      {
+        "url": "https://ice5.securenetsystems.net/WVVVFM",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:987dffac-52d9-4ca7-98c9-e5ac1088e1df"
+      }
+    ],
+    "features": "/img/asia/japan/wvvv-v96-9.jpg",
+    "source": "radio-browser:987dffac-52d9-4ca7-98c9-e5ac1088e1df"
+  },
+  "yamanakako-from-fuji-iyashinomori-woodland-study-center-the-university-of-tokyo-forests-yamanakako-yamanashi": {
+    "title": "yamanakako from Fuji Iyashinomori Woodland Study Center, The University of Tokyo Forests (Yamanakako, Yamanashi)",
+    "description": "relax",
+    "type": "audio/mpeg",
+    "url": "http://cyberforest.nenv.k.u-tokyo.ac.jp/#contact",
+    "cros": true,
+    "stream": "http://mp3s.nc.u-tokyo.ac.jp/Fuji_CyberForest.mp3",
+    "streams": [
+      {
+        "url": "http://mp3s.nc.u-tokyo.ac.jp/Fuji_CyberForest.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:f96b2ae2-fe8c-4248-a92d-3c86ebc8f50c"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:f96b2ae2-fe8c-4248-a92d-3c86ebc8f50c"
+  },
+  "japan-hits-asia-dream-radio": {
+    "title": "Japan Hits - asia DREAM radio",
+    "description": "j-pop, japanese, japanese idols, jpop",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.com/",
+    "cros": true,
+    "stream": "http://quincy.torontocast.com:2020/stream.mp3",
+    "streams": [
+      {
+        "url": "http://quincy.torontocast.com:2020/stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:e0f2f4cb-d4c3-48ee-8668-333329e158e0"
+      }
+    ],
+    "features": "/img/asia/japan/japan-hits-asia-dream-radio.jpg",
+    "source": "radio-browser:e0f2f4cb-d4c3-48ee-8668-333329e158e0"
+  },
+  "opening-radio": {
+    "title": "Opening Radio",
+    "type": "audio/mpeg",
+    "url": "https://zeno.fm/radio/opening-radio/",
+    "cros": true,
+    "stream": "http://stream.zeno.fm/tza2ayy47qruv",
+    "streams": [
+      {
+        "url": "http://stream.zeno.fm/tza2ayy47qruv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3ddece15-fd94-44a1-bf9c-6f62107e3d9d"
+      }
+    ],
+    "features": "/img/asia/japan/opening-radio.png",
+    "source": "radio-browser:3ddece15-fd94-44a1-bf9c-6f62107e3d9d"
+  },
+  "tilderadio": {
+    "title": "tilderadio",
+    "description": "internacional, music, tilde, tildeverse",
+    "type": "audio/ogg",
+    "url": "https://tilderadio.org/",
+    "cros": false,
+    "stream": "https://tilderadio.org/listen",
+    "streams": [
+      {
+        "url": "https://tilderadio.org/listen",
+        "type": "audio/ogg",
+        "cros": false,
+        "source": "radio-browser:907271e6-0c55-4342-b344-468206e831f2"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:907271e6-0c55-4342-b344-468206e831f2"
+  },
+  "afn-go-tokyo": {
+    "title": "AFN GO TOKYO",
+    "description": "military",
+    "type": "audio/mpeg",
+    "url": "https://afngo.net/afnpacific/Tokyo",
+    "cros": true,
+    "stream": "http://17633.live.streamtheworld.com:3690/AFNP_TKO_SC",
+    "streams": [
+      {
+        "url": "http://17633.live.streamtheworld.com:3690/AFNP_TKO_SC",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:f10bb488-9f8d-40da-9f7d-f4fa63191c68"
+      },
+      {
+        "url": "http://playerservices.streamtheworld.com/m3u/AFNP_TKO.m3u",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:f10bb488-9f8d-40da-9f7d-f4fa63191c68"
+  },
+  "j-club-club-bandstand": {
+    "title": "J-Club Club Bandstand",
+    "description": "1930s, 1940s, big band, jazz, swing",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.com/",
+    "cros": false,
+    "stream": "https://cast1.torontocast.com:2060/;.mp3",
+    "streams": [
+      {
+        "url": "https://cast1.torontocast.com:2060/;.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a36cb1a5-f9b5-4739-a86a-987d256b7d0e"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:a36cb1a5-f9b5-4739-a86a-987d256b7d0e"
+  },
+  "wrep": {
+    "title": "WREP",
+    "description": "hip-hop, hiphop, rap, trap",
+    "type": "audio/aac",
+    "url": "https://wrep.jp/",
+    "cros": true,
+    "stream": "http://c13.radioboss.fm:8200/stream",
+    "streams": [
+      {
+        "url": "http://c13.radioboss.fm:8200/stream",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:72f14258-8fb1-40d3-a161-426e2832a947"
+      }
+    ],
+    "features": "/img/asia/japan/wrep.png",
+    "source": "radio-browser:72f14258-8fb1-40d3-a161-426e2832a947"
+  },
+  "j-club-powerplay-hiphop-asia-dream-radio": {
+    "title": "J-Club Powerplay HipHop(Asia DREAM Radio)",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "http://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3350/;?shoutcast",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3350/;?shoutcast",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:53e7d317-c9e8-4054-87a4-2e21893e80cc"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:53e7d317-c9e8-4054-87a4-2e21893e80cc"
+  },
+  "gensokyo-radio-original": {
+    "title": "Gensokyo Radio (Original)",
+    "type": "audio/mpeg",
+    "url": "https://stream.gensokyoradio.net/",
+    "cros": false,
+    "stream": "https://stream.gensokyoradio.net/1",
+    "streams": [
+      {
+        "url": "https://stream.gensokyoradio.net/1",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e219fec2-ee95-4c12-86fb-34142143f562"
+      }
+    ],
+    "features": "/img/asia/japan/gensokyo-radio-original.png",
+    "source": "radio-browser:e219fec2-ee95-4c12-86fb-34142143f562"
+  },
+  "jphip-radio": {
+    "title": "JPHiP Radio",
+    "description": "j-pop, japanese, japanese music, jpop",
+    "type": "audio/mpeg",
+    "url": "http://jphip.com/radio.html",
+    "cros": true,
+    "stream": "http://radio.jphip.com:8800/",
+    "streams": [
+      {
+        "url": "http://radio.jphip.com:8800/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9142c884-33a5-4277-8bac-e299c0c1c18c"
+      },
+      {
+        "url": "http://radio.jphip.com:8800/listen.pls",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:9142c884-33a5-4277-8bac-e299c0c1c18c"
+  },
+  "jpopsuki-radio": {
+    "title": "JPopsuki Radio",
+    "type": "audio/mpeg",
+    "url": "https://jpopsuki.eu/",
+    "cros": true,
+    "stream": "http://65.21.170.149:8000/stream",
+    "streams": [
+      {
+        "url": "http://65.21.170.149:8000/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:4321bd6c-19e8-4f5e-ae57-bf7e62416b4b"
+      },
+      {
+        "url": "http://jpopsuki.fm:2199/tunein/jpopsuki-stream.pls",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:4321bd6c-19e8-4f5e-ae57-bf7e62416b4b"
+  },
+  "gotanno-fm-89-2": {
+    "title": "Gotanno FM 89.2",
+    "description": "indie pop, jpop",
+    "type": "audio/mpeg",
+    "url": "https://stcat.com/",
+    "cros": false,
+    "stream": "https://radio.gotanno.love/;",
+    "streams": [
+      {
+        "url": "https://radio.gotanno.love/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:fdffc27f-a096-4be8-b3bf-2c51a943a1d1"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:fdffc27f-a096-4be8-b3bf-2c51a943a1d1"
+  },
+  "radio-quran": {
+    "title": "#Radio Quran",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://jpradio.jp",
+    "cros": false,
+    "stream": "https://n0a.radiojar.com/0tpy1h0kxtzuv?rj-ttl=5&rj-tok=AAABhdgGORQA-2acfyF3_4WY2g",
+    "streams": [
+      {
+        "url": "https://n0a.radiojar.com/0tpy1h0kxtzuv?rj-ttl=5&rj-tok=AAABhdgGORQA-2acfyF3_4WY2g",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:82ba1708-15ba-424e-9697-cca597e74372"
+      }
+    ],
+    "features": "/img/asia/japan/radio-quran.webp",
+    "source": "radio-browser:82ba1708-15ba-424e-9697-cca597e74372"
+  },
+  "miku-radio": {
+    "title": "Miku Radio",
+    "type": "audio/ogg",
+    "url": "https://miku.fm/public/miku",
+    "cros": false,
+    "stream": "https://miku.fm/listen/miku/flac",
+    "streams": [
+      {
+        "url": "https://miku.fm/listen/miku/flac",
+        "type": "audio/ogg",
+        "cros": false,
+        "source": "radio-browser:9d4aa07b-f080-4d6c-87e8-15c080c72dd2"
+      },
+      {
+        "url": "https://miku.fm/public/miku/playlist.pls",
+        "type": "audio/ogg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/japan/miku-radio.png",
+    "source": "radio-browser:9d4aa07b-f080-4d6c-87e8-15c080c72dd2"
+  },
+  "rainwave-all": {
+    "title": "Rainwave All",
+    "type": "audio/mpeg",
+    "url": "https://rainwave.cc/all/",
+    "cros": false,
+    "stream": "https://relay.rainwave.cc/all.mp3?1:MF0d8GHw2d",
+    "streams": [
+      {
+        "url": "https://relay.rainwave.cc/all.mp3?1:MF0d8GHw2d",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0347b46a-91c7-4fe3-943d-a9eb02cdd9b9"
+      }
+    ],
+    "features": "/img/asia/japan/rainwave-all.jpg",
+    "source": "radio-browser:0347b46a-91c7-4fe3-943d-a9eb02cdd9b9"
+  },
+  "j-rock-powerplay": {
+    "title": "J-Rock PowerPlay",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3340/stream",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3340/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:12ac30d1-1900-4edc-baef-7c027232ee64"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:12ac30d1-1900-4edc-baef-7c027232ee64"
+  },
+  "j-pop-sakura-asia-dream-radio": {
+    "title": "J-Pop Sakura (asia DREAM radio)",
+    "description": "j-pop, japanese, jpop, oldies",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.com/",
+    "cros": false,
+    "stream": "https://quincy.torontocast.com:2070/stream.mp3",
+    "streams": [
+      {
+        "url": "https://quincy.torontocast.com:2070/stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f72771a3-cf3a-4cc5-af91-2493ca31c54d"
+      }
+    ],
+    "features": "/img/asia/japan/j-pop-sakura-asia-dream-radio.jpg",
+    "source": "radio-browser:f72771a3-cf3a-4cc5-af91-2493ca31c54d"
+  },
+  "replay-news-5": {
+    "title": "REPLAY NEWS - 日本語 5分ごとのニュースラジオ",
+    "description": "information, news",
+    "type": "audio/mpeg",
+    "url": "https://www.replaynews.net/",
+    "cros": false,
+    "stream": "https://replaynewsja.ice.infomaniak.ch/replaynewsja-128.mp3",
+    "streams": [
+      {
+        "url": "https://replaynewsja.ice.infomaniak.ch/replaynewsja-128.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:57cf528a-02be-4805-a510-6d05bb0ff996"
+      }
+    ],
+    "features": "/img/asia/japan/replay-news-5.png",
+    "source": "radio-browser:57cf528a-02be-4805-a510-6d05bb0ff996"
+  },
+  "kamakura-fm": {
+    "title": "Kamakura FM",
+    "type": "audio/mpeg",
+    "url": "https://kamakurafm.co.jp/",
+    "cros": false,
+    "stream": "https://stream.laut.fm/kamakura",
+    "streams": [
+      {
+        "url": "https://stream.laut.fm/kamakura",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:405566fa-dd30-437e-b20b-934fcdbe768f"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:405566fa-dd30-437e-b20b-934fcdbe768f"
+  },
+  "otaku-music-radio": {
+    "title": "Otaku Music Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.otakumusicradio.com/",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:2880/;?type=http&nocache=1606748882",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:2880/;?type=http&nocache=1606748882",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0bca37e5-153c-40fa-a26f-b52d46523b72"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:0bca37e5-153c-40fa-a26f-b52d46523b72"
+  },
+  "otohama-coastal-soundscape-from-the-university-of-tokyo-international-coastal-research-center-otsuchi-iwate": {
+    "title": "otohama Coastal Soundscape from The University of Tokyo International Coastal Research Center (Otsuchi, Iwate)",
+    "description": "relax",
+    "type": "audio/mpeg",
+    "url": "http://cyberforest.nenv.k.u-tokyo.ac.jp/#contact",
+    "cros": true,
+    "stream": "http://mp3s.nc.u-tokyo.ac.jp/OTSUCHI_CyberForest.mp3",
+    "streams": [
+      {
+        "url": "http://mp3s.nc.u-tokyo.ac.jp/OTSUCHI_CyberForest.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:dfaa1037-4c8b-445c-a230-fb96b812db99"
+      }
+    ],
+    "features": "/img/asia/japan/otohama-coastal-soundscape-from-the-university-of-tokyo-international-coastal-research-center-otsuchi-iwate.jpg",
+    "source": "radio-browser:dfaa1037-4c8b-445c-a230-fb96b812db99"
+  },
+  "sound-up-station-nfrs": {
+    "title": "SOUND UP STATION NFRS",
+    "description": "indie, jpop",
+    "type": "audio/mpeg",
+    "url": "https://www.nfrsradio.com/",
+    "cros": false,
+    "stream": "https://stream2.rcast.net/70945",
+    "streams": [
+      {
+        "url": "https://stream2.rcast.net/70945",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:1bca74bf-82e7-4631-87b6-1e96be3bae43"
+      }
+    ],
+    "features": "/img/asia/japan/sound-up-station-nfrs.jpg",
+    "source": "radio-browser:1bca74bf-82e7-4631-87b6-1e96be3bae43"
+  },
+  "nightwave-plaza-opus-64": {
+    "title": "Nightwave Plaza (Opus 64)",
+    "description": "future funk, synthwave, vaporwave",
+    "type": "audio/ogg",
+    "url": "https://plaza.one/",
+    "cros": true,
+    "stream": "http://radio.plaza.one/ogg_low",
+    "streams": [
+      {
+        "url": "http://radio.plaza.one/ogg_low",
+        "type": "audio/ogg",
+        "cros": true,
+        "source": "radio-browser:661c6656-d27e-45dc-b60a-7f77e2c989a5"
+      }
+    ],
+    "features": "/img/asia/japan/nightwave-plaza-opus-64.png",
+    "source": "radio-browser:661c6656-d27e-45dc-b60a-7f77e2c989a5"
+  },
+  "j-club-powerplay-hiphop": {
+    "title": "J-Club Powerplay HipHop",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3350/;",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3350/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:bc33ea37-3935-41a5-bf9f-788496ef6959"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:bc33ea37-3935-41a5-bf9f-788496ef6959"
+  },
+  "moon-mission-recordings-tokyo-deep-and-electronic": {
+    "title": "Moon Mission Recordings, Tokyo Deep and Electronic",
+    "type": "audio/mpeg",
+    "url": "https://www.moonmission.jp/",
+    "cros": false,
+    "stream": "https://uk5.internet-radio.com/proxy/mmr?mp=/stream;",
+    "streams": [
+      {
+        "url": "https://uk5.internet-radio.com/proxy/mmr?mp=/stream;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d37f6140-a3c4-4b91-9d2c-801894a4c53d"
+      }
+    ],
+    "features": "/img/asia/japan/moon-mission-recordings-tokyo-deep-and-electronic.avif",
+    "source": "radio-browser:d37f6140-a3c4-4b91-9d2c-801894a4c53d"
+  },
+  "j1-hits-090ec5aa": {
+    "title": "J1 HITS",
+    "type": "audio/mpeg",
+    "url": "https://www.j1fm.tokyo/",
+    "cros": false,
+    "stream": "https://jenny.torontocast.com:2000/stream/J1HITS?_=538100",
+    "streams": [
+      {
+        "url": "https://jenny.torontocast.com:2000/stream/J1HITS?_=538100",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:090ec5aa-54d0-4410-8442-82c5236c57b8"
+      }
+    ],
+    "features": "/img/asia/japan/j1-hits-090ec5aa.webp",
+    "source": "radio-browser:090ec5aa-54d0-4410-8442-82c5236c57b8"
+  },
+  "hitsujikai-radio-shepherd-radio": {
+    "title": "羊飼いラジオ(Hitsujikai Radio / Shepherd radio)",
+    "type": "audio/aac",
+    "url": "https://www.hitsujikai-radio.com/",
+    "cros": false,
+    "stream": "https://streaming.radio.co/se4a8e6a93/low",
+    "streams": [
+      {
+        "url": "https://streaming.radio.co/se4a8e6a93/low",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:603d37de-50aa-47f3-b8ad-10c72cff4282"
+      }
+    ],
+    "features": "/img/asia/japan/hitsujikai-radio-shepherd-radio.jpg",
+    "source": "radio-browser:603d37de-50aa-47f3-b8ad-10c72cff4282"
+  },
+  "nhk-world-radio-8": {
+    "title": "NHK WORLD RADIO 8",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www3.nhk.or.jp/nhkworld/ja/",
+    "cros": false,
+    "stream": "https://master.nhkworld.jp/nhkworld-radio/playlist/rs5/live.m3u8",
+    "streams": [
+      {
+        "url": "https://master.nhkworld.jp/nhkworld-radio/playlist/rs5/live.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a0a57bb8-21fe-45db-a3a8-7f5ae8cc7e12"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-8.png",
+    "source": "radio-browser:a0a57bb8-21fe-45db-a3a8-7f5ae8cc7e12"
+  },
+  "japan2": {
+    "title": "Japan2",
+    "type": "audio/mpeg",
+    "url": "http://quincy.torontocast.com:2070/stream.mp3",
+    "cros": true,
+    "stream": "http://quincy.torontocast.com:2070/stream.mp3",
+    "streams": [
+      {
+        "url": "http://quincy.torontocast.com:2070/stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:f2e726c1-9cae-4a1f-baa8-da29be891dec"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:f2e726c1-9cae-4a1f-baa8-da29be891dec",
+    "description": "j-pop, japanese, jpop, oldies"
+  },
+  "nonstop-casiopea": {
+    "title": "Nonstop Casiopea",
+    "type": "audio/mpeg",
+    "url": "https://nonstopcasiopea.com/",
+    "cros": false,
+    "stream": "https://nonstopcasiopea.radioca.st/",
+    "streams": [
+      {
+        "url": "https://nonstopcasiopea.radioca.st/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:21fece77-9763-4223-8f01-358adbddeac7"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:21fece77-9763-4223-8f01-358adbddeac7"
+  },
+  "quran": {
+    "title": ".quran",
+    "description": "classical",
+    "type": "audio/mpeg",
+    "url": "https://jpradio.jp",
+    "cros": false,
+    "stream": "https://backup.qurango.net/radio/ahmad_khader_altarabulsi",
+    "streams": [
+      {
+        "url": "https://backup.qurango.net/radio/ahmad_khader_altarabulsi",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0bf249cd-0bee-4b28-bef5-4803e1f9c050"
+      }
+    ],
+    "features": "/img/asia/japan/quran.webp",
+    "source": "radio-browser:0bf249cd-0bee-4b28-bef5-4803e1f9c050"
+  },
+  "stereo-anime": {
+    "title": "stereo anime",
+    "description": "anime, anime endings, anime openings, anime radio, j-pop",
+    "type": "audio/mpeg",
+    "url": "https://www.stereoanime.com/",
+    "cros": false,
+    "stream": "https://radio.stereoanime.com/listen/stereoanime/128",
+    "streams": [
+      {
+        "url": "https://radio.stereoanime.com/listen/stereoanime/128",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:138a0d94-617d-45c6-9164-fe393c140a88"
+      }
+    ],
+    "features": "/img/asia/japan/stereo-anime.png",
+    "source": "radio-browser:138a0d94-617d-45c6-9164-fe393c140a88"
+  },
+  "kawaii-anime-radio": {
+    "title": "Kawaii Anime Radio",
+    "description": "anime",
+    "type": "audio/aac",
+    "url": "https://www.150141.xyz/",
+    "cros": true,
+    "stream": "http://158.69.227.214:8137/stream",
+    "streams": [
+      {
+        "url": "http://158.69.227.214:8137/stream",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:48e7bd4a-3252-478e-af70-43f7e91d4ea5"
+      }
+    ],
+    "features": "/img/asia/japan/kawaii-anime-radio.png",
+    "source": "radio-browser:48e7bd4a-3252-478e-af70-43f7e91d4ea5"
+  },
+  "nhk-world-radio-11": {
+    "title": "NHK WORLD RADIO 11",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www3.nhk.or.jp/nhkworld/ja/",
+    "cros": false,
+    "stream": "https://master.nhkworld.jp/nhkworld-radio/playlist/gs2/live.m3u8",
+    "streams": [
+      {
+        "url": "https://master.nhkworld.jp/nhkworld-radio/playlist/gs2/live.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:813c17ee-abc0-46ce-974f-6640a3909d3c"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-11.svg",
+    "source": "radio-browser:813c17ee-abc0-46ce-974f-6640a3909d3c"
+  },
+  "gensokyo-radio-ogg": {
+    "title": "Gensokyo Radio (OGG)",
+    "type": "audio/ogg",
+    "url": "https://stream.gensokyoradio.net/",
+    "cros": false,
+    "stream": "https://stream.gensokyoradio.net/2",
+    "streams": [
+      {
+        "url": "https://stream.gensokyoradio.net/2",
+        "type": "audio/ogg",
+        "cros": false,
+        "source": "radio-browser:e0763775-fdb9-4f6d-b88e-057165cb283c"
+      }
+    ],
+    "features": "/img/asia/japan/gensokyo-radio-ogg.png",
+    "source": "radio-browser:e0763775-fdb9-4f6d-b88e-057165cb283c"
+  },
+  "hitsujikai-radio-443a5e7e": {
+    "title": "羊飼いラジオ Hitsujikai Radio",
+    "description": "christian, classical, soft",
+    "type": "audio/mpeg",
+    "url": "https://www.hitsujikai-radio.com/",
+    "cros": false,
+    "stream": "https://streaming.radio.co/se4a8e6a93/listen",
+    "streams": [
+      {
+        "url": "https://streaming.radio.co/se4a8e6a93/listen",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:443a5e7e-4392-4930-bbed-10b9af54e32e"
+      }
+    ],
+    "features": "/img/asia/japan/hitsujikai-radio-443a5e7e.png",
+    "source": "radio-browser:443a5e7e-4392-4930-bbed-10b9af54e32e"
+  },
+  "asia-dream-radio-japan-hits": {
+    "title": "asia DREAM radio - Japan Hits",
+    "description": "j-pop, japanese, jpop, pop",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.com/",
+    "cros": false,
+    "stream": "https://quincy.torontocast.com:2020/stream.mp3",
+    "streams": [
+      {
+        "url": "https://quincy.torontocast.com:2020/stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:02cf24a8-b1a6-4196-bf1c-d5553d2090bd"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:02cf24a8-b1a6-4196-bf1c-d5553d2090bd"
+  },
+  "retro-pc-game-music-streaming-radio-for-gyusyabu": {
+    "title": "Retro PC Game Music Streaming Radio for Gyusyabu",
+    "type": "audio/mpeg",
+    "url": "http://gyusyabu.ddo.jp/MP3/MP3.html",
+    "cros": true,
+    "stream": "http://gyusyabu.ddo.jp:8000/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://gyusyabu.ddo.jp:8000/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3948798a-51c0-4d38-bb58-cafc2937c287"
+      }
+    ],
+    "features": "/img/asia/japan/retro-pc-game-music-streaming-radio-for-gyusyabu.jpg",
+    "source": "radio-browser:3948798a-51c0-4d38-bb58-cafc2937c287"
+  },
+  "j-pop-powerplay-3eacb8df": {
+    "title": "J-Pop Powerplay",
+    "type": "audio/mpeg",
+    "url": "https://asiadreamradio.torontocast.stream/stations/en/index.html",
+    "cros": false,
+    "stream": "https://kathy.torontocast.com:3560/;",
+    "streams": [
+      {
+        "url": "https://kathy.torontocast.com:3560/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3eacb8df-5cc0-4c6b-9a6f-084eeadb55c5"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:3eacb8df-5cc0-4c6b-9a6f-084eeadb55c5"
+  },
+  "nhk-world-radio-3": {
+    "title": "NHK WORLD RADIO 3",
+    "description": "international",
+    "type": "audio/mpeg",
+    "url": "https://www3.nhk.or.jp/nhkworld/",
+    "cros": true,
+    "stream": "http://shoutcast.wrn.org:8025/nhk41left",
+    "streams": [
+      {
+        "url": "http://shoutcast.wrn.org:8025/nhk41left",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:61f37beb-ded9-4dfb-aef0-1715b835a155"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-3.svg",
+    "source": "radio-browser:61f37beb-ded9-4dfb-aef0-1715b835a155"
+  },
+  "nhk-world-radio-12": {
+    "title": "NHK WORLD RADIO 12",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www3.nhk.or.jp/nhkworld/",
+    "cros": false,
+    "stream": "https://master.nhkworld.jp/nhkworld-radio/playlist/kai/live.m3u8",
+    "streams": [
+      {
+        "url": "https://master.nhkworld.jp/nhkworld-radio/playlist/kai/live.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:dbc6d144-67d0-4581-a93d-6b3d69a13079"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-12.png",
+    "source": "radio-browser:dbc6d144-67d0-4581-a93d-6b3d69a13079"
+  },
+  "nhk-world-radio-5": {
+    "title": "NHK WORLD RADIO 5",
+    "description": "international",
+    "type": "audio/mpeg",
+    "url": "https://www3.nhk.or.jp/nhkworld/",
+    "cros": true,
+    "stream": "http://shoutcast.wrn.org:8025/nhk41right",
+    "streams": [
+      {
+        "url": "http://shoutcast.wrn.org:8025/nhk41right",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:0ab05ce4-de0b-4c9d-9772-a9787354c3f7"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-5.svg",
+    "source": "radio-browser:0ab05ce4-de0b-4c9d-9772-a9787354c3f7"
+  },
+  "nhk-world-radio-4": {
+    "title": "NHK WORLD RADIO 4",
+    "description": "international",
+    "type": "audio/mpeg",
+    "url": "https://www3.nhk.or.jp/nhkworld/",
+    "cros": true,
+    "stream": "http://streaming.edmradio.online:8025/nhk41left",
+    "streams": [
+      {
+        "url": "http://streaming.edmradio.online:8025/nhk41left",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3ffcb994-70f1-4040-bc24-142e680ecc96"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-4.svg",
+    "source": "radio-browser:3ffcb994-70f1-4040-bc24-142e680ecc96"
+  },
+  "chifuru": {
+    "title": "Chifuru!",
+    "description": "anime radio, japanese music, jpop",
+    "type": "audio/ogg",
+    "url": "https://157.254.194.202/rajio/nanahira/",
+    "cros": false,
+    "stream": "https://157.254.194.202/stream/nanahira@256",
+    "streams": [
+      {
+        "url": "https://157.254.194.202/stream/nanahira@256",
+        "type": "audio/ogg",
+        "cros": false,
+        "source": "radio-browser:44875c1d-b7b7-4aeb-b7ee-c02a90364509"
+      }
+    ],
+    "features": "/img/asia/japan/chifuru.png",
+    "source": "radio-browser:44875c1d-b7b7-4aeb-b7ee-c02a90364509"
+  },
+  "nightwave-plaza-hls": {
+    "title": "Nightwave Plaza (HLS)",
+    "description": "future funk, vaporwave",
+    "type": "audio/aac",
+    "url": "https://plaza.one/",
+    "cros": true,
+    "stream": "http://radio.plaza.one/hls",
+    "streams": [
+      {
+        "url": "http://radio.plaza.one/hls",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:98d8f89b-4e05-481a-8665-6b3a411d6fa3"
+      }
+    ],
+    "features": "/img/asia/japan/nightwave-plaza-hls.png",
+    "source": "radio-browser:98d8f89b-4e05-481a-8665-6b3a411d6fa3"
+  },
+  "abdulbasit-abdulsamad": {
+    "title": "Abdulbasit Abdulsamad",
+    "type": "audio/aac",
+    "url": "https://mp3islam.com/",
+    "cros": false,
+    "stream": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:7b464b92-0f29-42e8-ab50-87233f92d2c9"
+      }
+    ],
+    "features": "https://s3.eplus.dev/i/station-on-air.png",
+    "source": "radio-browser:7b464b92-0f29-42e8-ab50-87233f92d2c9"
+  },
+  "nhk-world-radio-6": {
+    "title": "NHK WORLD RADIO 6",
+    "description": "international",
+    "type": "audio/mpeg",
+    "url": "https://www3.nhk.or.jp/nhkworld/",
+    "cros": true,
+    "stream": "http://streaming.edmradio.online:8025/nhk41right",
+    "streams": [
+      {
+        "url": "http://streaming.edmradio.online:8025/nhk41right",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:db95c0e2-057b-4062-bc91-37debd447eff"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-6.svg",
+    "source": "radio-browser:db95c0e2-057b-4062-bc91-37debd447eff"
+  },
+  "nhk-world-radio-7": {
+    "title": "NHK WORLD RADIO 7",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www3.nhk.or.jp/nhkworld/",
+    "cros": false,
+    "stream": "https://master.nhkworld.jp/nhkworld-radio/playlist/rs2/live.m3u8",
+    "streams": [
+      {
+        "url": "https://master.nhkworld.jp/nhkworld-radio/playlist/rs2/live.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:49439c31-b641-4251-b3b0-ab979ab514d2"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-7.svg",
+    "source": "radio-browser:49439c31-b641-4251-b3b0-ab979ab514d2"
+  },
+  "nhk-world-radio-9": {
+    "title": "NHK WORLD RADIO 9",
+    "description": "international",
+    "type": "audio/aac",
+    "url": "https://www3.nhk.or.jp/nhkworld/ja/",
+    "cros": false,
+    "stream": "https://master.nhkworld.jp/nhkworld-radio/playlist/rs4/live.m3u8",
+    "streams": [
+      {
+        "url": "https://master.nhkworld.jp/nhkworld-radio/playlist/rs4/live.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:e93b7f21-b06d-4c2a-a3dc-cf87dbee0408"
+      }
+    ],
+    "features": "/img/asia/japan/nhk-world-radio-9.png",
+    "source": "radio-browser:e93b7f21-b06d-4c2a-a3dc-cf87dbee0408"
   }
 }

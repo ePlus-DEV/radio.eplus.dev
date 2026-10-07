@@ -105,14 +105,14 @@
       "flag": "/img/asia/flags/viet-nam.png",
       "data": "/assets/radio/asia/viet-nam.json",
       "timezone": "Asia/Ho_Chi_Minh",
-      "station": 0
+      "station": 103
     },
     "singapore": {
       "name": "world.asia.singapore",
       "flag": "/img/asia/flags/singapore.png",
       "data": "/assets/radio/asia/singapore.json",
       "timezone": "Asia/Singapore",
-      "station": 0
+      "station": 87
     },
     "korea": {
       "name": "world.asia.korea",
@@ -140,28 +140,28 @@
       "flag": "/img/asia/flags/japan.png",
       "data": "/assets/radio/asia/japan.json",
       "timezone": "Asia/Tokyo",
-      "station": 0
+      "station": 116
     },
     "malaysia": {
       "name": "world.asia.malaysia",
       "flag": "/img/asia/flags/malaysia.png",
       "data": "/assets/radio/asia/malaysia.json",
       "timezone": "Asia/Kuala_Lumpur",
-      "station": 0
+      "station": 120
     },
     "philippines": {
       "name": "world.asia.philippines",
       "flag": "/img/asia/flags/philippines.png",
       "data": "/assets/radio/asia/philippines.json",
       "timezone": "Asia/Manila",
-      "station": 0
+      "station": 126
     },
     "indonesia": {
       "name": "world.asia.indonesia",
       "flag": "/img/asia/flags/indonesia.png",
       "data": "/assets/radio/asia/indonesia.json",
       "timezone": "Asia/Jakarta",
-      "station": 0
+      "station": 124
     },
     "thailand": {
       "name": "world.asia.thailand",
@@ -182,14 +182,14 @@
       "flag": "/img/asia/flags/pakistan.png",
       "data": "/assets/radio/asia/pakistan.json",
       "timezone": "Asia/Karachi",
-      "station": 0
+      "station": 97
     },
     "india": {
       "name": "world.asia.india",
       "flag": "/img/asia/flags/india.png",
       "data": "/assets/radio/asia/india.json",
       "timezone": "Asia/Kolkata",
-      "station": 0
+      "station": 123
     },
     "taiwan": {
       "name": "world.asia.taiwan",
@@ -210,14 +210,14 @@
       "flag": "/img/asia/flags/sri-lanka.png",
       "data": "/assets/radio/asia/sri-lanka.json",
       "timezone": "Asia/Colombo",
-      "station": 0
+      "station": 89
     },
     "nepal": {
       "name": "world.asia.nepal",
       "flag": "/img/asia/flags/nepal.png",
       "data": "/assets/radio/asia/nepal.json",
       "timezone": "Asia/Kathmandu",
-      "station": 0
+      "station": 126
     }
   },
   "south_america": {
