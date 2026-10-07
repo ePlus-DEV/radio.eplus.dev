@@ -598,7 +598,7 @@ export function getMwynikiCountryPage(country, metadata = {}) {
   );
 
   return slug
-    ? `${MWYNIKI_BASE}/${slug}//druzyny/${slug}_1/`
+    ? `${MWYNIKI_BASE}/${slug}/`
     : "";
 }
 
