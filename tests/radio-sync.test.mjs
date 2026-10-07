@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 
 import {
   extractStationCandidates,
+  extractStationImageCandidates,
+  imageExtension,
   mergeStations,
   normalizeStreamIdentity,
   resolveCountryTimezone,
@@ -136,5 +138,39 @@ test("extractStationCandidates excludes reserved navigation pages outside the tr
   assert.deepEqual(
     result.map((station) => station.slug),
     ["radio-one"],
+  );
+});
+
+
+test("imageExtension supports common favicon formats", () => {
+  assert.equal(imageExtension("image/x-icon", "https://example.com/favicon.ico"), "ico");
+  assert.equal(imageExtension("image/vnd.microsoft.icon", "https://example.com/favicon"), "ico");
+  assert.equal(imageExtension("image/avif", "https://example.com/logo"), "avif");
+});
+
+test("extractStationImageCandidates prioritizes page metadata and icons", () => {
+  const html = `
+    <meta property="og:image" content="/assets/logo.png">
+    <meta name="twitter:image" content="https://cdn.example.com/radio.webp">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/favicon.ico">
+  `;
+
+  assert.deepEqual(
+    extractStationImageCandidates(html, "https://radio.example/live"),
+    [
+      "https://radio.example/assets/logo.png",
+      "https://cdn.example.com/radio.webp",
+      "https://radio.example/apple-touch-icon.png",
+      "https://radio.example/favicon.ico",
+    ],
+  );
+});
+
+test("extractStationImageCandidates handles href-before-rel link markup", () => {
+  const html = '<link href="/station-icon.png" sizes="192x192" rel="icon">';
+  assert.deepEqual(
+    extractStationImageCandidates(html, "https://radio.example/"),
+    ["https://radio.example/station-icon.png"],
   );
 });

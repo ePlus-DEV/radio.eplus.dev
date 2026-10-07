@@ -45,12 +45,13 @@ jobs:
         with:
           node-version: "24.15.0"
 
-      - name: "Validate lightweight radio crawler"
+      - name: "Install dependencies"
+        run: npm ci
+
+      - name: "Validate radio sync"
         run: |
-          node scripts/sync-instant-audio.mjs \
-            --country=latvia \
-            --max-stations=3 \
-            --dry-run
+          node --check scripts/sync-instant-audio.mjs
+          npm test
 
   sync:
     if: github.event_name != 'pull_request'
@@ -181,7 +182,7 @@ jobs:
           - updates country JSON, world metadata, localized country names, and flags
           - downloads station artwork into `public/img/<area>/<country>/` and stores local image paths in JSON
           - validates changed JSON, station stream URLs, and locally referenced station images
-          - keeps crawler validation lightweight; the full Nuxt build remains in normal pull-request CI
+          - pull-request validation runs syntax checks and unit tests only; it does not call live radio providers
 
           Review stream ownership/availability before merging. The InstantAudio endpoint is externally operated and is treated as an upstream data source, not as a guaranteed public API contract.
           EOF
