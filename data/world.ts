@@ -543,14 +543,14 @@ const world = {
     },
     "latvia": {
       "name": "world.europe.latvia",
-      "flag": "/img/europe/flags/latvia.svg",
+      "flag": "/img/europe/flags/latvia.png",
       "data": "/assets/radio/europe/latvia.json",
       "timezone": "Europe/Riga",
       "station": 78
     },
     "lithuania": {
       "name": "world.europe.lithuania",
-      "flag": "/img/europe/flags/lithuania.svg",
+      "flag": "/img/europe/flags/lithuania.png",
       "data": "/assets/radio/europe/lithuania.json",
       "timezone": "Europe/Vilnius",
       "station": 82
