@@ -1,15 +1,44 @@
 <template>
-  <div>
-    <!-- BEGIN - Breadcrumbs -->
+  <div class="space-y-6">
     <Breadcrumbs
-      :area="Array.isArray(area) ? area[0] : area"
+      :area="area"
       :level_1="i18n"
-      :level_1_slug="Array.isArray(slug) ? slug[0] : slug"
+      :level_1_slug="slug"
       :level_2="streamName"
     />
-    <!-- END - Breadcrumbs -->
 
-    <!-- BEGIN - Player -->
+    <section class="radio-surface relative overflow-hidden px-5 py-5 sm:px-6">
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.09),transparent_42%)]"></div>
+      <div class="relative flex min-w-0 items-center gap-4">
+        <div class="flex h-16 w-20 shrink-0 items-center justify-center rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/70 dark:bg-slate-950/50 dark:ring-white/10 sm:h-20 sm:w-24">
+          <img
+            :src="thumb || stationMeta?.features || config.public.placeholderStation"
+            :alt="stationName"
+            class="max-h-full max-w-full object-contain"
+          />
+        </div>
+
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 dark:bg-rose-500/10 dark:text-rose-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+              Live
+            </span>
+            <span class="text-xs text-slate-400">{{ countryName }}</span>
+          </div>
+          <h1 class="mt-2 truncate text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+            {{ stationName }}
+          </h1>
+          <p
+            v-if="stationMeta?.description"
+            class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-slate-500 dark:text-slate-400"
+          >
+            {{ stationMeta.description }}
+          </p>
+        </div>
+      </div>
+    </section>
+
     <Player
       :country="i18n"
       :song="song"
@@ -19,73 +48,62 @@
       :streamUrl="streamUrl"
       :streamUrls="streamUrls"
       :thumb="thumb"
-    ></Player>
-    <!-- END - Player -->
+    />
 
-    <!-- BEGIN - Lyric -->
-    <button
-      class="fixed left-4 bottom-2 uppercase text-sm px-4 py-3 bg-gray-900 text-white rounded-full dark:bg-red-700 z-50"
-      @click="lyric_popup = !lyric_popup"
-      v-show="slug == 'viet-nam'"
-    >
-      <fa
-        :icon="['far', 'list-music']"
-        class="text-white fill-current h-5 w-5"
-      />
-    </button>
-    <div
-      class="fixed left-0 bottom-2 z-40"
-      :class="lyric_popup ? '' : 'hidden'"
-    >
-      <div
-        class="fixed sm:left-4 bottom-20 rounded-lg bg-white shadow-2xl w-full sm:w-1/2 xl:w-1/4 max-w-[450px] overflow-hidden dark:bg-gray-700 dark:text-white"
-      >
-        <!-- Text -->
-        <div class="">
-          <div class="relative overflow-hidden px-8 pt-8">
-            <div
-              width="80"
-              height="77"
-              class="absolute -top-10 -right-10 text-yellow-500"
-            >
-              <svg
-                width="120"
-                height="119"
-                viewBox="0 0 120 119"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  opacity="0.3"
-                  d="M6.38128 49.1539C3.20326 32.893 13.809 17.1346 30.0699 13.9566L70.3846 6.07751C86.6455 2.89948 102.404 13.5052 105.582 29.7661L113.461 70.0808C116.639 86.3417 106.033 102.1 89.7724 105.278L49.4577 113.157C33.1968 116.335 17.4384 105.729 14.2604 89.4686L6.38128 49.1539Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div class="text-2xl flex flex-col pb-4">
-              <small id="song"></small>
-              <span class="text-3xl font-bold"> {{ $t("panel.lyric") }} </span>
-            </div>
-            <div class="pb-4 overflow-y-auto h-64" id="lyric">
-              <p
-                v-for="(line, index) in lyricLines"
-                :key="`${index}-${line}`"
-                class="pb-1"
-              >
-                {{ line }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- END - Lyric -->
-
-    <!-- BEGIN - PanelStation -->
     <PanelStation @updateData="handleDataFromChild" />
-    <!-- END - PanelStation -->
+
+    <button
+      v-show="slug === 'viet-nam'"
+      type="button"
+      class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-slate-950 px-4 text-sm font-semibold text-white shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
+      @click="lyric_popup = !lyric_popup"
+    >
+      <fa :icon="['fas', 'list-music']" class="h-4 w-4" />
+      <span class="hidden sm:inline">{{ $t("panel.lyric") }}</span>
+    </button>
+
+    <div
+      v-if="lyric_popup"
+      class="fixed inset-0 z-[80] flex items-end bg-slate-950/35 p-3 backdrop-blur-sm sm:items-auto sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+      @click.self="lyric_popup = false"
+    >
+      <aside
+        class="w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 dark:border-white/10 dark:bg-slate-900 sm:fixed sm:bottom-20 sm:left-4 sm:max-w-md"
+      >
+        <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-[0.16em] text-rose-500">
+              Now playing
+            </p>
+            <h2 class="mt-1 text-lg font-semibold text-slate-950 dark:text-white">
+              {{ $t("panel.lyric") }}
+            </h2>
+          </div>
+          <button
+            type="button"
+            class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+            :aria-label="$t('button.close')"
+            @click="lyric_popup = false"
+          >
+            <fa :icon="['fas', 'xmark']" />
+          </button>
+        </div>
+
+        <div id="lyric" class="max-h-[55vh] overflow-y-auto px-5 py-4 sm:max-h-80">
+          <p
+            v-for="(line, index) in lyricLines"
+            :key="`${index}-${line}`"
+            class="py-1.5 text-sm leading-6 text-slate-600 dark:text-slate-300"
+          >
+            {{ line }}
+          </p>
+        </div>
+      </aside>
+    </div>
   </div>
 </template>
+
+
 
 <script setup lang="ts">
 import type { RadioSource } from "~/types/radio";
