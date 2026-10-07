@@ -19,7 +19,10 @@ const IMAGE_EXTENSIONS = new Map([
   ["image/jpeg", "jpg"],
   ["image/webp", "webp"],
   ["image/gif", "gif"],
-  ["image/svg+xml", "svg"]
+  ["image/svg+xml", "svg"],
+  ["image/x-icon", "ico"],
+  ["image/vnd.microsoft.icon", "ico"],
+  ["image/avif", "avif"]
 ]);
 
 const args = new Map(
@@ -559,13 +562,13 @@ async function findExistingStationImage(country, stationSlug) {
   return "";
 }
 
-function imageExtension(contentType, imageUrl) {
+export function imageExtension(contentType, imageUrl) {
   const normalized = String(contentType || "").split(";")[0].trim().toLowerCase();
   if (IMAGE_EXTENSIONS.has(normalized)) return IMAGE_EXTENSIONS.get(normalized);
 
   try {
     const ext = path.extname(new URL(imageUrl).pathname).slice(1).toLowerCase();
-    if (["png", "jpg", "jpeg", "webp", "gif", "svg"].includes(ext)) {
+    if (["png", "jpg", "jpeg", "webp", "gif", "svg", "ico", "avif"].includes(ext)) {
       return ext === "jpeg" ? "jpg" : ext;
     }
   } catch {
@@ -575,19 +578,58 @@ function imageExtension(contentType, imageUrl) {
   return "";
 }
 
-async function downloadStationImage(country, stationSlug, imageUrl) {
-  if (!/^https?:\/\//i.test(String(imageUrl || ""))) {
-    return DEFAULT_STATION_IMAGE;
+export function extractStationImageCandidates(html, pageUrl) {
+  const source = String(html || "");
+  const candidates = [];
+
+  const add = (value) => {
+    const raw = String(value || "").trim();
+    if (!raw) return;
+    try {
+      const absolute = new URL(raw, pageUrl).toString();
+      if (!/^https?:\/\//i.test(absolute)) return;
+      if (!candidates.includes(absolute)) candidates.push(absolute);
+    } catch {
+      // Ignore malformed image URLs.
+    }
+  };
+
+  const metaPatterns = [
+    /<meta\b[^>]*(?:property|name)=["'](?:og:image|twitter:image|twitter:image:src)["'][^>]*content=["']([^"']+)["'][^>]*>/gi,
+    /<meta\b[^>]*content=["']([^"']+)["'][^>]*(?:property|name)=["'](?:og:image|twitter:image|twitter:image:src)["'][^>]*>/gi,
+  ];
+
+  for (const pattern of metaPatterns) {
+    let match;
+    while ((match = pattern.exec(source))) add(match[1]);
   }
 
-  const existing = await findExistingStationImage(country, stationSlug);
-  if (existing) return existing;
+  const linkPattern = /<link\b[^>]*rel=["']([^"']+)["'][^>]*href=["']([^"']+)["'][^>]*>/gi;
+  let linkMatch;
+  while ((linkMatch = linkPattern.exec(source))) {
+    if (/\b(?:icon|shortcut icon|apple-touch-icon|apple-touch-icon-precomposed)\b/i.test(linkMatch[1])) {
+      add(linkMatch[2]);
+    }
+  }
+
+  const reversedLinkPattern = /<link\b[^>]*href=["']([^"']+)["'][^>]*rel=["']([^"']+)["'][^>]*>/gi;
+  while ((linkMatch = reversedLinkPattern.exec(source))) {
+    if (/\b(?:icon|shortcut icon|apple-touch-icon|apple-touch-icon-precomposed)\b/i.test(linkMatch[2])) {
+      add(linkMatch[1]);
+    }
+  }
+
+  return candidates;
+}
+
+async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) {
+  if (!/^https?:\/\//i.test(String(imageUrl || ""))) return "";
 
   try {
     const response = await fetchWithRetry(imageUrl, {
       headers: {
         accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-        referer: country.domain + "/"
+        referer: referer || country.domain + "/"
       }
     });
 
@@ -620,10 +662,63 @@ async function downloadStationImage(country, stationSlug, imageUrl) {
     return relative;
   } catch (error) {
     console.warn(
-      `[instant.audio] Image download failed for ${country.slug}/${stationSlug}: ${error.message}`,
+      `[instant.audio] Image candidate failed for ${country.slug}/${stationSlug}: ${error.message}`,
     );
-    return DEFAULT_STATION_IMAGE;
+    return "";
   }
+}
+
+async function resolveStationImage(country, stationSlug, preferredImage, homepageUrl) {
+  const existing = await findExistingStationImage(country, stationSlug);
+  if (existing) return existing;
+
+  const homepage =
+    /^https?:\/\//i.test(String(homepageUrl || ""))
+      ? String(homepageUrl)
+      : country.domain + "/";
+
+  const preferred = await tryDownloadStationImage(
+    country,
+    stationSlug,
+    preferredImage,
+    homepage,
+  );
+  if (preferred) return preferred;
+
+  const candidates = [];
+  try {
+    const page = await fetchWithRetry(homepage, {
+      headers: {
+        accept: "text/html,application/xhtml+xml",
+        referer: country.domain + "/"
+      }
+    });
+    const html = await page.text();
+    candidates.push(...extractStationImageCandidates(html, homepage));
+  } catch (error) {
+    console.warn(
+      `[instant.audio] Unable to inspect homepage artwork for ${country.slug}/${stationSlug}: ${error.message}`,
+    );
+  }
+
+  try {
+    const favicon = new URL("/favicon.ico", homepage).toString();
+    if (!candidates.includes(favicon)) candidates.push(favicon);
+  } catch {
+    // Ignore malformed homepage URL.
+  }
+
+  for (const candidate of candidates) {
+    const local = await tryDownloadStationImage(
+      country,
+      stationSlug,
+      candidate,
+      homepage,
+    );
+    if (local) return local;
+  }
+
+  return DEFAULT_STATION_IMAGE;
 }
 
 function stationFromInstantPayload(country, candidate, apiUrl, payload) {
@@ -692,10 +787,11 @@ async function syncStation(country, countryId, candidate) {
     const payload = await response.json();
     const station = stationFromInstantPayload(country, candidate, apiUrl, payload);
     if (station) {
-      station.features = await downloadStationImage(
+      station.features = await resolveStationImage(
         country,
         candidate.slug,
         station.features,
+        station.url,
       );
     }
     return {
@@ -830,10 +926,11 @@ async function syncFromRadioBrowser(country, metadata) {
       url: String(item.homepage || country.domain),
       cros: stream.startsWith("http://"),
       stream,
-      features: await downloadStationImage(
+      features: await resolveStationImage(
         country,
         slug,
         String(item.favicon || ""),
+        String(item.homepage || country.domain),
       ),
       source: `radio-browser:${item.stationuuid || slug}`
     };
