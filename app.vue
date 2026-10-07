@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="min-h-screen w-full overflow-x-hidden">
     <AppHeader />
-    <div class="container mx-auto px-4 mt-20" scroll-container>
+    <main class="mx-auto mt-20 w-full max-w-7xl min-w-0 px-3 sm:px-4" scroll-container>
       <NuxtPage />
-    </div>
+    </main>
     <AppFooter />
   </div>
 </template>

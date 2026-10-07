@@ -1,35 +1,35 @@
 <template>
   <!-- BEGIN - Station -->
-  <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
+  <div class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700">
     <div
-      class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
+      class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
     >
-      <h2 class="text-2xl dark:text-white">{{ $t(i18n) }}</h2>
+      <h2 class="text-xl font-medium dark:text-white sm:text-2xl">{{ $t(i18n) }}</h2>
     </div>
-    <div class="flex items-center justify-center">
+    <div class="w-full p-3 sm:p-4">
       <div
-        class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
+        class="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"
       >
         <nuxt-link
           :to="`${data.url}`"
           v-for="data in results"
           :key="data.objectID"
-          class="border tooltip tooltip-left"
+          class="w-full min-w-0 overflow-hidden rounded-lg border"
           active-class="active border-red-700"
           :title="data.title"
-          :data-tip="data.title"
+          :aria-label="data.title"
           :class="[
             isRouteActive(data.objectID)
-              ? 'border-red-700'
-              : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
+              ? 'border-red-600 ring-1 ring-red-500/40'
+              : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-md',
           ]"
         >
-          <div class="flex h-24 w-24 items-center justify-center sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32">
+          <div class="flex aspect-[16/11] w-full min-w-0 items-center justify-center p-2 sm:p-3">
             <img
               loading="lazy"
               :src="data.station_image"
               :alt="data.title"
-              class="max-h-[72%] max-w-[72%] object-contain"
+              class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain"
             />
           </div>
         </nuxt-link>

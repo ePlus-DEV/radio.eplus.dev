@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div class="transform -rotate-1 pb-8">
+  <div class="w-full min-w-0 overflow-hidden">
+    <div class="w-full min-w-0 pb-6 sm:pb-8 sm:-rotate-1 sm:transform">
       <!-- BEGIN - Player -->
       <div
-        class="flex bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden mx-auto"
+        class="mx-auto flex w-full min-w-0 max-w-full overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-900"
       >
-        <div class="flex flex-col w-full">
-          <div class="flex items-center p-5 border-b dark:border-gray-600">
+        <div class="flex w-full min-w-0 flex-col">
+          <div class="flex min-w-0 items-center border-b p-4 dark:border-gray-600 sm:p-5">
             <div class="flex justify-around">
               <span class="relative inline-flex">
                 <img loading="lazy" class="w-[61px]" :src="thumb" />
@@ -21,20 +21,20 @@
               </span>
             </div>
 
-            <div class="flex flex-col px-2 w-full">
+            <div class="flex min-w-0 flex-1 flex-col px-2">
               <span
                 class="text-xs text-gray-700 dark:text-white uppercase font-medium"
               >
                 {{ $t("panel.play_from_radio") }}
               </span>
               <span
-                class="text-sm text-red-500 dark:text-white capitalize font-semibold pt-1"
+                class="truncate text-sm font-semibold capitalize text-red-500 dark:text-white pt-1"
               >
                 {{ streamName }}
               </span>
               <span class="text-xs text-gray-500 uppercase font-medium">
                 {{ $t(country) }} -
-                <span :data-tip="currentDate" class="tooltip">
+                <span :title="currentDate">
                   {{ currentTime }}</span
                 >
               </span>
@@ -51,8 +51,8 @@
           <PlayerZingOnly :song="song" />
           <!-- END - Zing - Only -->
 
-          <div class="flex flex-col sm:flex-row items-center p-5">
-            <div class="flex items-center">
+          <div class="flex min-w-0 flex-col items-stretch gap-3 p-4 sm:flex-row sm:items-center sm:p-5">
+            <div class="flex shrink-0 items-center">
               <div class="flex space-x-3 p-2">
                 <!-- BEGIN - Button Pre -->
                 <button class="focus:outline-none">
@@ -165,9 +165,9 @@
                 <!-- END - Button Next -->
               </div>
             </div>
-            <div class="relative w-full ml-2">
+            <div class="relative min-w-0 w-full sm:ml-2">
               <media-player
-                class="player"
+                class="player block w-full min-w-0 max-w-full"
                 :title="streamName"
                 :src="$src"
                 crossOrigin
