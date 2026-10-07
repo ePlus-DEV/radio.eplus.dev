@@ -321,7 +321,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git switch -C "$BRANCH"
-          git add public/radio public/img data/world.ts data/instant-audio-countries.json lang
+          git add public/radio public/img backup/station-artwork data/world.ts data/instant-audio-countries.json lang
           git commit -m "data: sync radio countries from InstantAudio"
           git push --force-with-lease origin "$BRANCH"
 
