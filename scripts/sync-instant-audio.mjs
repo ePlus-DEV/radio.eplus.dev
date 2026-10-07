@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { mkdir, readFile, writeFile, access } from "node:fs/promises";
+import { appendFile, mkdir, readFile, writeFile, access } from "node:fs/promises";
 import { constants as fsConstants } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -39,6 +39,18 @@ const maxCountries = Math.max(1, Number(args.get("max-countries") || 3));
 const maxStations = Math.max(0, Number(args.get("max-stations") || 0));
 
 let directApiBlockedForRun = false;
+
+const runStats = {
+  countriesSucceeded: 0,
+  countriesFailed: 0,
+  stationsDiscovered: 0,
+  stationsAdded: 0,
+  imagesDownloaded: 0,
+  imagesExisting: 0,
+  imagesFallback: 0,
+  imageCandidateFailures: 0,
+  homepageArtworkFailures: 0,
+};
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -659,8 +671,13 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
     const destination = path.join(ROOT, "public", relative);
     await mkdir(path.dirname(destination), { recursive: true });
     await writeFile(destination, bytes);
+    runStats.imagesDownloaded += 1;
+    console.log(
+      `[instant.audio] Image saved for ${country.slug}/${stationSlug}: ${relative}`,
+    );
     return relative;
   } catch (error) {
+    runStats.imageCandidateFailures += 1;
     console.warn(
       `[instant.audio] Image candidate failed for ${country.slug}/${stationSlug}: ${error.message}`,
     );
@@ -670,7 +687,10 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
 
 async function resolveStationImage(country, stationSlug, preferredImage, homepageUrl) {
   const existing = await findExistingStationImage(country, stationSlug);
-  if (existing) return existing;
+  if (existing) {
+    runStats.imagesExisting += 1;
+    return existing;
+  }
 
   const homepage =
     /^https?:\/\//i.test(String(homepageUrl || ""))
@@ -696,6 +716,7 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
     const html = await page.text();
     candidates.push(...extractStationImageCandidates(html, homepage));
   } catch (error) {
+    runStats.homepageArtworkFailures += 1;
     console.warn(
       `[instant.audio] Unable to inspect homepage artwork for ${country.slug}/${stationSlug}: ${error.message}`,
     );
@@ -718,6 +739,10 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
     if (local) return local;
   }
 
+  runStats.imagesFallback += 1;
+  console.warn(
+    `[instant.audio] Using fallback artwork for ${country.slug}/${stationSlug}`,
+  );
   return DEFAULT_STATION_IMAGE;
 }
 
@@ -1208,6 +1233,57 @@ async function loadCountryDirectory() {
   console.log("[instant.audio] Loaded " + registry.length + " countries from repository snapshot");
   return registry;
 }
+function imageStatsSnapshot() {
+  return {
+    downloaded: runStats.imagesDownloaded,
+    existing: runStats.imagesExisting,
+    fallback: runStats.imagesFallback,
+    candidateFailures: runStats.imageCandidateFailures,
+    homepageFailures: runStats.homepageArtworkFailures,
+  };
+}
+
+function imageStatsDelta(before) {
+  return {
+    downloaded: runStats.imagesDownloaded - before.downloaded,
+    existing: runStats.imagesExisting - before.existing,
+    fallback: runStats.imagesFallback - before.fallback,
+    candidateFailures: runStats.imageCandidateFailures - before.candidateFailures,
+    homepageFailures: runStats.homepageArtworkFailures - before.homepageFailures,
+  };
+}
+
+async function writeRunSummary() {
+  const lines = [
+    "",
+    "========== RADIO SYNC SUMMARY ==========",
+    `Countries: success ${runStats.countriesSucceeded}, failed ${runStats.countriesFailed}`,
+    `Stations: discovered ${runStats.stationsDiscovered}, added ${runStats.stationsAdded}`,
+    `Artwork: downloaded ${runStats.imagesDownloaded}, reused local ${runStats.imagesExisting}, fallback ${runStats.imagesFallback}`,
+    `Artwork attempts: candidate failures ${runStats.imageCandidateFailures}, homepage inspect failures ${runStats.homepageArtworkFailures}`,
+    `InstantAudio direct API blocked: ${directApiBlockedForRun ? "yes" : "no"}`,
+    "========================================",
+  ];
+
+  console.log(lines.join("\n"));
+
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const markdown = [
+      "## Radio sync result",
+      "",
+      `- Countries: **${runStats.countriesSucceeded} succeeded**, **${runStats.countriesFailed} failed**`,
+      `- Stations: **${runStats.stationsDiscovered} discovered**, **${runStats.stationsAdded} added**`,
+      `- Artwork: **${runStats.imagesDownloaded} downloaded**, **${runStats.imagesExisting} reused**, **${runStats.imagesFallback} fallback**`,
+      `- Failed image candidates: **${runStats.imageCandidateFailures}**`,
+      `- Homepage artwork inspection failures: **${runStats.homepageArtworkFailures}**`,
+      `- InstantAudio direct API blocked: **${directApiBlockedForRun ? "Yes" : "No"}**`,
+      "",
+    ].join("\n");
+
+    await appendFile(process.env.GITHUB_STEP_SUMMARY, markdown);
+  }
+}
+
 async function main() {
   const discovered = await loadCountryDirectory();
   const missing = [];
@@ -1255,6 +1331,7 @@ async function main() {
 
   let failedCountries = 0;
   for (const country of targets) {
+    const imageBefore = imageStatsSnapshot();
     try {
         const metadata = await getCountryMetadata(country);
         const { stations: discoveredStations, countryId, source } = await syncCountry(country, metadata);
@@ -1270,10 +1347,24 @@ async function main() {
           added = merged.added;
         }
     
+        const discoveredCount = Object.keys(discoveredStations).length;
+        runStats.countriesSucceeded += 1;
+        runStats.stationsDiscovered += discoveredCount;
+        runStats.stationsAdded += added;
+
+        const imageDelta = imageStatsDelta(imageBefore);
+
         console.log(
-          "[instant.audio] " + country.slug + ": discovered " + Object.keys(discoveredStations).length +
+          "[instant.audio] " + country.slug + ": discovered " + discoveredCount +
           ", added " + added + ", total " + Object.keys(stations).length +
           "; API country ID " + countryId + ", source " + source,
+        );
+        console.log(
+          "[instant.audio] " + country.slug + " artwork: downloaded " + imageDelta.downloaded +
+          ", reused " + imageDelta.existing +
+          ", fallback " + imageDelta.fallback +
+          ", failed candidates " + imageDelta.candidateFailures +
+          ", homepage failures " + imageDelta.homepageFailures,
         );
     
         if (!dryRun) {
@@ -1285,6 +1376,7 @@ async function main() {
         }
       } catch (error) {
       failedCountries += 1;
+      runStats.countriesFailed += 1;
       console.error(
         `[instant.audio] ${country.slug}: sync failed, skipping country: ${error.message}`,
       );
@@ -1299,6 +1391,8 @@ async function main() {
   if (dryRun) {
     console.log("[instant.audio] Dry run complete; repository files were not changed.");
   }
+
+  await writeRunSummary();
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error) => {
