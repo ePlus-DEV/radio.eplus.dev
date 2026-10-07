@@ -38,15 +38,13 @@ For endpoints such as `https://api.instant.audio/data/streams/45/radio-rebelde`,
 
 World metadata keeps the repository's existing underscore region keys (for example `north_america`) and `/assets/radio/...` data paths.
 
-## Lightweight fallback strategy
+## Fallback strategy
 
-The crawler follows the same simple idea as the original PHP grabber: read the country page, extract station slugs, call the structured stream endpoint, and write JSON plus local artwork.
-
-GitHub-hosted runners can still receive HTTP 403 from InstantAudio. To avoid turning every sync into a browser build:
+The crawler keeps the sync lightweight:
 
 1. try the structured InstantAudio API directly;
-2. stop direct requests after 3 consecutive HTTP 403 responses;
-3. fall back to Radio Browser when no InstantAudio station can be collected;
-4. browser helpers remain available in the script as an emergency directory fallback, but the normal workflow does not install Chromium/Crawlee.
+2. after 3 consecutive HTTP 403 responses, mark the direct API as blocked for the entire workflow run;
+3. use Radio Browser for the current and remaining countries instead of retrying blocked InstantAudio requests;
+4. use the repository country snapshot when the InstantAudio directory cannot be refreshed.
 
-This keeps scheduled syncs fast while retaining a repository snapshot of the InstantAudio country directory when upstream discovery is unavailable.
+There is no Playwright/Crawlee browser fallback. Pull-request validation also avoids live upstream calls and runs syntax checks plus unit tests only.
