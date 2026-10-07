@@ -25,14 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import type { AudioSrc, AudioMimeType } from "vidstack";
+import type { RadioSource } from "~/types/radio";
 const $store = useMainStore();
 const dayjs = useDayjs();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 const route = useRoute();
-const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
 const normalizeParam = (value: string | string[] | undefined): string =>
   Array.isArray(value) ? value[0] || "" : value || "";
 const slug = computed(() => normalizeParam(route.params.country));
@@ -133,7 +133,7 @@ const fetchData = async (): Promise<void> => {
       src: favoriteChannel.cros
         ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
         : favoriteChannel.stream,
-      type: favoriteChannel.type as AudioMimeType,
+      type: favoriteChannel.type,
     };
     // Fetch the schedule data if available
     if (favoriteChannel.schedule !== undefined) {

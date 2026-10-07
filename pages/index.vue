@@ -23,8 +23,8 @@
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
-import type { AudioSrc, AudioMimeType } from "vidstack";
-const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+import type { RadioSource } from "~/types/radio";
+const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
 
 const seoTitle = "Live Internet Radio Worldwide";
 const seoDescription =
@@ -77,7 +77,7 @@ const fetchData = async (): Promise<void> => {
       src: favoriteChannel.cros
         ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
         : favoriteChannel.stream,
-      type: favoriteChannel.type as AudioMimeType,
+      type: favoriteChannel.type,
     };
   } catch (error) {
     console.error("Error fetching data:", error);
