@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
+import tailwindcss from "@tailwindcss/vite";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 
 const algoliaApplicationId =
@@ -23,6 +24,11 @@ const radioSeoRoutes = getRadioSeoRoutes();
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
+  // Keep the current Nuxt 3-style root directories during the framework upgrade.
+  srcDir: ".",
+  dir: {
+    app: "app",
+  },
   site: {
     url: siteUrl,
     name: siteName,
@@ -54,8 +60,11 @@ export default defineNuxtConfig({
       defaultDescription,
     },
   },
+  css: ["~/assets/css/main.css"],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   modules: [
-    "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
@@ -115,7 +124,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    restructureDir: false,
+    restructureDir: ".",
     locales: [
       {
         code: "en",
