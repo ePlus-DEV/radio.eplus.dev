@@ -406,14 +406,14 @@ const world = {
       "flag": "/img/europe/flags/luxembourg.png",
       "data": "/assets/radio/europe/luxembourg.json",
       "timezone": "Europe/Luxembourg",
-      "station": 0
+      "station": 53
     },
     "hungary": {
       "name": "world.europe.hungary",
       "flag": "/img/europe/flags/hungary.png",
       "data": "/assets/radio/europe/hungary.json",
       "timezone": "Europe/Budapest",
-      "station": 0
+      "station": 132
     },
     "netherlands": {
       "name": "world.europe.netherlands",
