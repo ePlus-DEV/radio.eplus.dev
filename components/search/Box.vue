@@ -1,63 +1,66 @@
 <template>
-  <div>
-    <div
-      class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70"
-    >
-      <div class="relative">
-        <div
-          class="relative p-4 border-b border-gray-200 dark:border-neutral-700"
+  <div class="overflow-hidden rounded-3xl bg-white dark:bg-slate-900">
+    <div class="border-b border-slate-200 p-4 dark:border-white/10 sm:p-5">
+      <div class="flex items-center gap-3">
+        <div class="relative min-w-0 flex-1">
+          <fa
+            :icon="['fas', 'magnifying-glass']"
+            class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+          />
+          <input
+            ref="inputEl"
+            id="search-input"
+            v-model="input"
+            type="search"
+            role="combobox"
+            aria-expanded="true"
+            class="block h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-rose-300 focus:ring-4 focus:ring-rose-500/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
+            :placeholder="$t('popup.search.text')"
+          />
+        </div>
+        <button
+          type="button"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+          :aria-label="$t('button.close')"
+          @click="$emit('close')"
         >
-          <label for="search-input" class="sr-only">Search input</label>
-          <div class="relative">
-            <div
-              class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5"
-            >
-              <svg
-                class="shrink-0 size-4 text-gray-400 dark:text-white/60"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </svg>
-            </div>
-            <input
-              id="search-input"
-              class="py-3 ps-10 pe-4 block w-full bg-slate-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-              type="text"
-              role="combobox"
-              aria-expanded="false"
-              v-model="input"
-              :disabled="!algoliaConfigured"
-              :placeholder="$t('popup.search.text')"
-            />
-          </div>
-        </div>
-        <!-- BEGIN - SearchBox Modal Body -->
-        <div tabindex="-1" class="top-full mt-1">
-          <div class="h-80 p-2 overflow-hidden overflow-y-auto scrollbar">
-            <div
-              class="block text-xs text-gray-500 m-3 mb-1 dark:text-neutral-500 dark:border-neutral-700"
-            >
-              {{ $t("popup.search.popular_channels") }}
-            </div>
-            <SearchResult :result="searchResult?.hits" />
-          </div>
-        </div>
-        <!-- END - SearchBox Modal Body -->
+          <fa :icon="['fas', 'xmark']" />
+        </button>
       </div>
+
+      <p
+        v-if="!algoliaConfigured"
+        class="mt-3 text-xs leading-5 text-slate-400"
+      >
+        Search service is unavailable right now. Popular stations are still shown below.
+      </p>
+    </div>
+
+    <div class="max-h-[65vh] overflow-y-auto p-3 sm:p-4">
+      <div class="mb-2 flex items-center justify-between px-2">
+        <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+          {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
+        </span>
+        <span
+          v-if="searchResult?.hits?.length"
+          class="text-xs tabular-nums text-slate-400"
+        >
+          {{ searchResult.hits.length }}
+        </span>
+      </div>
+      <SearchResult
+        :result="searchResult?.hits"
+        @select="$emit('close')"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+defineEmits<{
+  (event: "close"): void;
+}>();
+
 const config = useRuntimeConfig();
 const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
 const { search, result: searchResult } = useAlgoliaSearch(
@@ -65,12 +68,11 @@ const { search, result: searchResult } = useAlgoliaSearch(
 );
 
 const input = ref("");
+const inputEl = ref<HTMLInputElement | null>(null);
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
 
 watch(input, (value: string) => {
-  if (typingTimeout) {
-    clearTimeout(typingTimeout);
-  }
+  if (typingTimeout) clearTimeout(typingTimeout);
   if (!algoliaConfigured.value) return;
 
   typingTimeout = setTimeout(async () => {
@@ -84,29 +86,14 @@ watch(input, (value: string) => {
     } catch (error) {
       console.error("Unable to search stations:", error);
     }
-  }, 500);
+  }, 250);
+});
+
+onMounted(() => {
+  window.setTimeout(() => inputEl.value?.focus(), 50);
 });
 
 onBeforeUnmount(() => {
   if (typingTimeout) clearTimeout(typingTimeout);
 });
 </script>
-
-<style scoped>
-.scrollbar::-webkit-scrollbar {
-  width: 2px;
-}
-.scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 9999px;
-  background-color: #d1d5db;
-}
-.scrollbar::-webkit-scrollbar-track {
-  background-color: #f3f4f6;
-}
-.dark .scrollbar::-webkit-scrollbar-thumb {
-  background-color: #6b7280;
-}
-.dark .scrollbar::-webkit-scrollbar-track {
-  background-color: #374151;
-}
-</style>
