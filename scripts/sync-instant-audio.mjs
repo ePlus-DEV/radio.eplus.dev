@@ -189,6 +189,10 @@ async function exists(file) {
 
 async function fetchWithRetry(url, options = {}, attempts = 3) {
   let lastError;
+  const timeoutMs = Number(options.timeoutMs || 12000);
+  const fetchOptions = { ...options };
+  delete fetchOptions.timeoutMs;
+
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
       const response = await fetch(url, {
@@ -196,9 +200,10 @@ async function fetchWithRetry(url, options = {}, attempts = 3) {
         headers: {
           "user-agent": USER_AGENT,
           accept: "*/*",
-          ...(options.headers || {})
+          ...(fetchOptions.headers || {})
         },
-        ...options
+        ...fetchOptions,
+        signal: fetchOptions.signal || AbortSignal.timeout(timeoutMs),
       });
 
       if (response.ok) return response;
@@ -774,11 +779,12 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
 
   try {
     const response = await fetchWithRetry(imageUrl, {
+      timeoutMs: 6000,
       headers: {
         accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
         referer: referer || country.domain + "/"
       }
-    });
+    }, 1);
 
     const contentType = response.headers.get("content-type") || "";
     if (!contentType.toLowerCase().startsWith("image/")) {
@@ -843,11 +849,12 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
   const candidates = [];
   try {
     const page = await fetchWithRetry(homepage, {
+      timeoutMs: 6000,
       headers: {
         accept: "text/html,application/xhtml+xml",
         referer: country.domain + "/"
       }
-    });
+    }, 1);
     const html = await page.text();
     candidates.push(...extractStationImageCandidates(html, homepage));
   } catch (error) {
@@ -1060,7 +1067,10 @@ async function syncFromRadioBrowser(country, metadata) {
   const payload = await response.json();
   const stations = {};
 
-  for (const item of Array.isArray(payload) ? payload : []) {
+  const items = Array.isArray(payload) ? payload : [];
+  const prepared = [];
+
+  for (const item of items) {
     const title = String(item.name || "").trim();
     const stream = String(item.url_resolved || item.url || "").trim();
 
@@ -1069,7 +1079,7 @@ async function syncFromRadioBrowser(country, metadata) {
     let slug = slugify(title);
     if (!slug) continue;
 
-    if (stations[slug]) {
+    if (prepared.some((entry) => entry.slug === slug)) {
       slug = `${slug}-${String(item.stationuuid || "").slice(0, 8)}`;
     }
 
@@ -1079,21 +1089,41 @@ async function syncFromRadioBrowser(country, metadata) {
       .filter(Boolean)
       .slice(0, 5);
 
-    stations[slug] = {
-      title,
-      ...(tags.length ? { description: tags.join(", ") } : {}),
-      type: radioBrowserMime(item.codec, stream),
-      url: String(item.homepage || country.domain),
-      cros: stream.startsWith("http://"),
-      stream,
-      features: await resolveStationImage(
-        country,
+    prepared.push({ item, title, stream, slug, tags });
+  }
+
+  const ARTWORK_CONCURRENCY = 6;
+  for (let index = 0; index < prepared.length; index += ARTWORK_CONCURRENCY) {
+    const batch = prepared.slice(index, index + ARTWORK_CONCURRENCY);
+
+    const resolved = await Promise.all(
+      batch.map(async ({ item, title, stream, slug, tags }) => ({
         slug,
-        String(item.favicon || ""),
-        String(item.homepage || country.domain),
-      ),
-      source: `radio-browser:${item.stationuuid || slug}`
-    };
+        station: {
+          title,
+          ...(tags.length ? { description: tags.join(", ") } : {}),
+          type: radioBrowserMime(item.codec, stream),
+          url: String(item.homepage || country.domain),
+          cros: stream.startsWith("http://"),
+          stream,
+          features: await resolveStationImage(
+            country,
+            slug,
+            String(item.favicon || ""),
+            String(item.homepage || country.domain),
+          ),
+          source: `radio-browser:${item.stationuuid || slug}`,
+        },
+      })),
+    );
+
+    for (const { slug, station } of resolved) {
+      stations[slug] = station;
+    }
+
+    console.log(
+      `[instant.audio] ${country.slug} artwork progress: ${Math.min(index + ARTWORK_CONCURRENCY, prepared.length)}/${prepared.length}`,
+    );
   }
 
   const keys = Object.keys(stations);
