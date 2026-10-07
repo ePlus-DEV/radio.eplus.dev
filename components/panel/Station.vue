@@ -2,10 +2,27 @@
   <!-- BEGIN - Station -->
   <div class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700">
     <div
-      class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
+      class="flex flex-col gap-3 rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900 sm:flex-row sm:items-center sm:justify-between"
     >
       <h2 class="text-xl font-medium dark:text-white sm:text-2xl">{{ $t(i18n) }}</h2>
+
+      <label
+        v-if="showLegacyDistrictFilter"
+        class="flex min-w-0 flex-col gap-1 text-sm text-gray-600 dark:text-gray-300 sm:w-64"
+      >
+        <span class="font-medium">Quận / Huyện (địa chỉ cũ)</span>
+        <select
+          v-model="selectedDistrict"
+          class="h-10 w-full rounded-lg border border-gray-300 bg-white px-3 text-gray-900 outline-none focus:border-purple-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        >
+          <option value="">Tất cả quận / huyện</option>
+          <option v-for="district in legacyDistricts" :key="district" :value="district">
+            {{ district }}
+          </option>
+        </select>
+      </label>
     </div>
+
     <div class="w-full p-3 sm:p-4">
       <div
         class="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"
@@ -16,8 +33,8 @@
           :key="data.objectID"
           class="w-full min-w-0 overflow-hidden rounded-lg border"
           active-class="active border-red-700"
-          :title="data.title"
-          :aria-label="data.title"
+          :title="stationTitle(data)"
+          :aria-label="stationTitle(data)"
           :class="[
             isRouteActive(data.objectID)
               ? 'border-red-600 ring-1 ring-red-500/40'
@@ -32,14 +49,58 @@
               class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain"
             />
           </div>
+          <div
+            v-if="getLegacyDistrict(data)"
+            class="truncate border-t border-base-200 px-2 py-1.5 text-center text-[11px] text-gray-500 dark:border-gray-600 dark:text-gray-300"
+          >
+            {{ getLegacyDistrict(data) }}
+          </div>
         </nuxt-link>
       </div>
+
+      <p
+        v-if="showLegacyDistrictFilter && results.length === 0"
+        class="py-8 text-center text-sm text-gray-500 dark:text-gray-300"
+      >
+        Không có đài nào trong quận / huyện đã chọn.
+      </p>
     </div>
   </div>
   <!-- END - Station -->
 </template>
 
 <script lang="ts" setup>
+interface StationStream {
+  url: string;
+  type?: string;
+  cros?: boolean;
+  source?: string;
+}
+
+interface AddressBoundary {
+  id?: string | number | null;
+  name?: string | null;
+}
+
+interface StructuredAddress {
+  full?: string | null;
+  name?: string | null;
+  province?: AddressBoundary | null;
+  district?: AddressBoundary | null;
+  ward?: AddressBoundary | null;
+}
+
+interface StationAddress {
+  legacy?: StructuredAddress | null;
+  current?: StructuredAddress | null;
+  source?: string;
+}
+
+interface StationLocation {
+  lat: number;
+  lng: number;
+}
+
 interface StationResult {
   objectID: string;
   title: string;
@@ -51,13 +112,8 @@ interface StationResult {
   cros: boolean;
   type: string;
   url: string;
-}
-
-interface StationStream {
-  url: string;
-  type?: string;
-  cros?: boolean;
-  source?: string;
+  location?: StationLocation;
+  address?: StationAddress;
 }
 
 interface StationCatalogEntry {
@@ -69,6 +125,8 @@ interface StationCatalogEntry {
   streams?: StationStream[];
   features?: string;
   schedule?: string;
+  location?: StationLocation;
+  address?: StationAddress;
 }
 
 const config = useRuntimeConfig();
@@ -76,7 +134,9 @@ const route = useRoute();
 const emit = defineEmits<{
   (event: "update-data", data: StationResult): void;
 }>();
-const results = ref<StationResult[]>([]);
+
+const allResults = ref<StationResult[]>([]);
+const selectedDistrict = ref("");
 let requestVersion = 0;
 
 const normalizeParam = (value: string | string[] | undefined): string =>
@@ -90,6 +150,31 @@ const i18n = computed(
     `world.${areaSlug.value.replace(/-/g, "_")}.${countrySlug.value.replace(/-/g, "_")}`,
 );
 
+const getLegacyDistrict = (station: StationResult): string =>
+  String(station.address?.legacy?.district?.name || "").trim();
+
+const legacyDistricts = computed(() =>
+  [...new Set(allResults.value.map(getLegacyDistrict).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, "vi")),
+);
+
+const showLegacyDistrictFilter = computed(
+  () => countrySlug.value === "viet-nam" && legacyDistricts.value.length > 0,
+);
+
+const results = computed(() => {
+  if (!selectedDistrict.value) return allResults.value;
+
+  return allResults.value.filter(
+    (station) => getLegacyDistrict(station) === selectedDistrict.value,
+  );
+});
+
+const stationTitle = (station: StationResult): string => {
+  const fullAddress = String(station.address?.legacy?.full || "").trim();
+  return fullAddress ? `${station.title} — ${fullAddress}` : station.title;
+};
+
 const loadStations = async (): Promise<void> => {
   if (import.meta.server) return;
 
@@ -99,7 +184,7 @@ const loadStations = async (): Promise<void> => {
   const station = stationSlug.value;
 
   if (!area || !country) {
-    results.value = [];
+    allResults.value = [];
     return;
   }
 
@@ -110,7 +195,7 @@ const loadStations = async (): Promise<void> => {
 
     if (currentVersion !== requestVersion) return;
 
-    results.value = Object.entries(catalog || {}).map(([stationKey, data]) => ({
+    allResults.value = Object.entries(catalog || {}).map(([stationKey, data]) => ({
       objectID: `${country}-${stationKey}`,
       title: data.title,
       station_name: data.title,
@@ -121,18 +206,20 @@ const loadStations = async (): Promise<void> => {
       cros: Boolean(data.cros),
       type: data.type || "audio/mpeg",
       url: `/${area}/${country}/${stationKey}`,
+      location: data.location,
+      address: data.address,
     }));
 
     if (!station) return;
 
-    const activeData = results.value.find(
+    const activeData = allResults.value.find(
       (data) => data.objectID === `${country}-${station}`,
     );
 
     if (activeData) emit("update-data", activeData);
   } catch (error) {
     if (currentVersion !== requestVersion) return;
-    results.value = [];
+    allResults.value = [];
     console.error("Unable to load local station catalog:", error);
   }
 };
@@ -140,6 +227,7 @@ const loadStations = async (): Promise<void> => {
 watch(
   () => [route.params.area, route.params.country, route.params.station],
   () => {
+    selectedDistrict.value = "";
     void loadStations();
   },
   { immediate: true },
