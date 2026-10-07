@@ -6,9 +6,9 @@
       class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
       :aria-label="$t('navmenu.language')"
     >
-      <fa :icon="['far', 'language']" class="h-4 w-4" />
+      <fa :icon="['fas', 'language']" class="h-4 w-4" />
       <span class="hidden uppercase sm:inline">{{ locale.split("-")[0] }}</span>
-      <fa :icon="['far', 'chevron-down']" class="h-3 w-3 opacity-60" />
+      <fa :icon="['fas', 'chevron-down']" class="h-3 w-3 opacity-60" />
     </button>
 
     <ul
@@ -34,7 +34,7 @@
           <span class="min-w-0 flex-1 truncate">{{ localeItem.name }}</span>
           <fa
             v-if="locale === localeItem.code"
-            :icon="['far', 'check']"
+            :icon="['fas', 'check']"
             class="h-3.5 w-3.5"
           />
         </button>
