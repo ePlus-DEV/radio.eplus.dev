@@ -1,0 +1,25 @@
+name: Delete DigitalOcean PR Preview
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    name: Delete PR preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Delete DigitalOcean preview
+        uses: digitalocean/app_action/delete@v2
+        with:
+          from_pr_preview: "true"
+          ignore_not_found: "true"
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
