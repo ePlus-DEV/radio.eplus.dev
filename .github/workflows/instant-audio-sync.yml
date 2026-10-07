@@ -155,7 +155,25 @@ jobs:
                   typeof station.stream !== "string" ||
                   !/^https?:\/\//i.test(station.stream)
                 ) {
-                  throw new Error(`${file}: station ${slug} has invalid stream`);
+                  throw new Error(`${file}: station ${slug} has invalid primary stream`);
+                }
+
+                if (station.streams !== undefined) {
+                  if (!Array.isArray(station.streams) || station.streams.length === 0) {
+                    throw new Error(`${file}: station ${slug} has invalid fallback streams`);
+                  }
+
+                  for (const [index, candidate] of station.streams.entries()) {
+                    if (
+                      !candidate ||
+                      typeof candidate.url !== "string" ||
+                      !/^https?:\/\//i.test(candidate.url)
+                    ) {
+                      throw new Error(
+                        `${file}: station ${slug} has invalid fallback stream #${index + 1}`,
+                      );
+                    }
+                  }
                 }
 
                 if (String(station.features || "").startsWith("/img/")) {
