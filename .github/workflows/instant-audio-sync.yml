@@ -45,12 +45,7 @@ jobs:
         with:
           node-version: "24.15.0"
 
-      - name: "Install browser crawler"
-        run: |
-          npm install --no-save --package-lock=false crawlee@3 playwright@1.55.0
-          npx playwright install --with-deps chromium
-
-      - name: "Validate InstantAudio API discovery"
+      - name: "Validate lightweight radio crawler"
         run: |
           node scripts/sync-instant-audio.mjs \
             --country=latvia \
@@ -106,8 +101,9 @@ jobs:
           node --check scripts/sync-instant-audio.mjs
 
           node --input-type=module <<'NODE'
-          import { readFileSync } from "node:fs";
+          import { existsSync, readFileSync } from "node:fs";
           import { execFileSync } from "node:child_process";
+          import { join } from "node:path";
 
           const changed = execFileSync(
             "git",
@@ -135,6 +131,15 @@ jobs:
                   !/^https?:\/\//i.test(station.stream)
                 ) {
                   throw new Error(`${file}: station ${slug} has invalid stream`);
+                }
+
+                if (String(station.features || "").startsWith("/img/")) {
+                  const imageFile = join("public", station.features);
+                  if (!existsSync(imageFile)) {
+                    throw new Error(
+                      `${file}: station ${slug} references missing image ${station.features}`,
+                    );
+                  }
                 }
               }
             }
@@ -174,8 +179,9 @@ jobs:
           - uses the station API pattern exposed by InstantAudio country sites
           - only imports stations with a validated stream URL
           - updates country JSON, world metadata, localized country names, and flags
-          - validates changed JSON and station stream URLs before opening/updating this PR
-          - leaves the full Nuxt build to the normal pull-request CI
+          - downloads station artwork into `public/img/<area>/<country>/` and stores local image paths in JSON
+          - validates changed JSON, station stream URLs, and locally referenced station images
+          - keeps crawler validation lightweight; the full Nuxt build remains in normal pull-request CI
 
           Review stream ownership/availability before merging. The InstantAudio endpoint is externally operated and is treated as an upstream data source, not as a guaranteed public API contract.
           EOF
