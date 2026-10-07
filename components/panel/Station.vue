@@ -24,12 +24,14 @@
               : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
           ]"
         >
-          <img
-            loading="lazy"
-            :src="data.station_image"
-            :alt="data.title"
-            class="p-0 sm:p-1 md:p-5 lg:p-10"
-          />
+          <div class="flex h-24 w-24 items-center justify-center sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32">
+            <img
+              loading="lazy"
+              :src="data.station_image"
+              :alt="data.title"
+              class="max-h-[72%] max-w-[72%] object-contain"
+            />
+          </div>
         </nuxt-link>
       </div>
     </div>
