@@ -1,65 +1,58 @@
 <template>
-  <!-- BEGIN - Zing - Only -->
-  <div
-    class="flex flex-col items-center p-5 border-b dark:border-gray-600"
+  <section
     v-if="song !== undefined && song.currentMedia !== undefined"
+    class="border-t border-white/10 p-4 sm:p-6"
   >
-    <figure
-      class="shadow-lg rounded-xl flex-none w-auto md:w-xl"
-      style="transform: rotate(1deg) translateZ(0px)"
-    >
-      <figcaption
-        class="flex items-center space-x-4 p-6 md:px-10 md:py-6 bg-gradient-to-r from-green-400 to-blue-500 rounded-t-xl leading-6 font-semibold text-white"
-      >
-        <div
-          class="flex-none w-20 h-20 bg-white rounded-full flex items-center justify-center"
-        >
-          <img
-            loading="lazy"
-            :src="
-              song.currentMedia.thumbnail !== undefined
-                ? song.currentMedia.thumbnail
-                : song.thumbnail
-            "
-            :alt="song.currentMedia.title"
-            class="w-20 h-20 rounded-full bg-orange-100"
-          />
-        </div>
-        <div class="flex-auto">
-          {{ song.currentMedia.title }}<br /><span class="text-orange-100">
-            {{ song.currentMedia.artists }}
-          </span>
-        </div>
-      </figcaption>
-    </figure>
+    <div class="flex min-w-0 items-center gap-4 rounded-2xl bg-white/[0.05] p-3 ring-1 ring-inset ring-white/10">
+      <img
+        loading="lazy"
+        :src="
+          song.currentMedia.thumbnail !== undefined
+            ? song.currentMedia.thumbnail
+            : song.thumbnail
+        "
+        :alt="song.currentMedia.title"
+        class="h-16 w-16 shrink-0 rounded-2xl object-cover"
+      />
 
-    <figure
-      class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"
+      <div class="min-w-0 flex-1">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-rose-300">
+          Now playing
+        </p>
+        <p class="mt-1 truncate font-semibold text-slate-100">
+          {{ song.currentMedia.title }}
+        </p>
+        <p class="mt-0.5 truncate text-sm text-slate-400">
+          {{ song.currentMedia.artists }}
+        </p>
+      </div>
+    </div>
+
+    <div
       v-if="song.nextMedia?.title !== undefined"
+      class="mt-3 flex min-w-0 items-center gap-3 px-2"
     >
       <img
         loading="lazy"
-        class="w-16 h-16 md:w-20 md:h-20 md:rounded-none rounded-full mx-auto"
+        class="h-10 w-10 shrink-0 rounded-xl object-cover"
         :src="
           song.nextMedia && song.nextMedia.thumbnail !== undefined
             ? song.nextMedia.thumbnail
             : song.thumbnail
         "
       />
-      <figcaption class="md:p-2 text-center md:text-left space-y-4">
-        <div class="font-medium">
-          <div class="text-sky-500 dark:text-white">
-            {{ $t("panel.next") }}: {{ song.nextMedia?.title }}
-          </div>
-          <div class="text-slate-700 dark:text-white">
-            {{ song.nextMedia?.artists }}
-          </div>
-        </div>
-      </figcaption>
-    </figure>
-  </div>
-  <!-- END - Zing - Only -->
+      <div class="min-w-0">
+        <p class="text-[11px] uppercase tracking-wide text-slate-500">
+          {{ $t("panel.next") }}
+        </p>
+        <p class="truncate text-sm text-slate-300">
+          {{ song.nextMedia?.title }} · {{ song.nextMedia?.artists }}
+        </p>
+      </div>
+    </div>
+  </section>
 </template>
+
 <script setup lang="ts">
 defineProps<{
   song?: Song;
@@ -78,6 +71,5 @@ interface Song {
   currentMedia?: CurrentMedia;
   nextMedia?: CurrentMedia;
   thumbnail?: string;
-  // Add other properties as needed
 }
 </script>
