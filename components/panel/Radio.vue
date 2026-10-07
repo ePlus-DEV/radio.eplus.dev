@@ -5,10 +5,10 @@
       <div
         v-for="i in chooseTheArea ? 1 : 7"
         :key="i"
-        class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3"
+        class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700"
       >
         <div
-          class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
+          class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
         >
           <h2 class="text-2xl dark:text-white animate-pulse">
             <div
@@ -18,12 +18,12 @@
         </div>
         <div class="flex items-center justify-center">
           <div
-            class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-4 m-4 animate-pulse"
+            class="grid w-full grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 animate-pulse"
           >
             <div
               v-for="n in 16"
               :key="n"
-              class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-600 min-w-10 w-full sm:w-20 md:w-28 mb-4 m-2"
+              class="aspect-[7/5] w-full rounded-lg bg-gray-200 dark:bg-gray-600"
             ></div>
           </div>
         </div>
@@ -33,21 +33,22 @@
 
     <!-- BEGIN - Result -->
     <div v-for="(continent, continentIndex) in world" :key="continentIndex">
-      <div class="bg-opacity-95 bg-white dark:bg-gray-700 rounded-lg my-3">
+      <div class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700">
         <div
-          class="p-4 border-b dark:bg-gray-900 dark:border-gray-600 rounded-t-lg"
+          class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
         >
-          <h2 class="text-2xl dark:text-white">
+          <h2 class="text-xl font-medium dark:text-white sm:text-2xl">
             {{ $t(`world.${continentIndex}.name`) }}
           </h2>
         </div>
-        <div class="flex items-center justify-center">
-          <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-4 m-4">
+        <div class="w-full p-3 sm:p-4">
+          <div class="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
             <nuxt-link
               v-for="country in continent"
               :key="country.url"
-              class="tooltip border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white indicator"
-              :data-tip="$t(country.name)"
+              class="indicator min-w-0 overflow-hidden rounded-lg border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white"
+              :title="$t(country.name)"
+              :aria-label="$t(country.name)"
               :to="country.url"
             >
               <div
@@ -56,7 +57,7 @@
               >
                 {{ country.station_count }}
               </div>
-              <div class="flex h-20 w-28 items-center justify-center p-2 sm:h-20 sm:w-28 md:h-24 md:w-32">
+              <div class="flex aspect-[7/5] w-full min-w-0 items-center justify-center p-3">
                 <img
                   loading="lazy"
                   :src="country.flag"
