@@ -378,21 +378,21 @@ const world = {
       "flag": "/img/europe/flags/greece.png",
       "data": "/assets/radio/europe/greece.json",
       "timezone": "Europe/Athens",
-      "station": 0
+      "station": 134
     },
     "croatia": {
       "name": "world.europe.croatia",
       "flag": "/img/europe/flags/croatia.png",
       "data": "/assets/radio/europe/croatia.json",
       "timezone": "Europe/Zagreb",
-      "station": 0
+      "station": 139
     },
     "ireland": {
       "name": "world.europe.ireland",
       "flag": "/img/europe/flags/ireland.png",
       "data": "/assets/radio/europe/ireland.json",
       "timezone": "Europe/Dublin",
-      "station": 0
+      "station": 124
     },
     "italy": {
       "name": "world.europe.italy",
