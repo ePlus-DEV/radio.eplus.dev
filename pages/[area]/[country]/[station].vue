@@ -50,7 +50,7 @@
       :thumb="thumb"
     />
 
-    <PanelStation @updateData="handleDataFromChild" />
+    <PanelStation @update-data="handleDataFromChild" />
 
     <button
       v-show="slug === 'viet-nam'"
