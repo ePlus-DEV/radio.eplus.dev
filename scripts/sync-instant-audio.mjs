@@ -516,7 +516,7 @@ async function getCountryMetadata(country) {
 
     return {
       cca2: item?.cca2 || country.cca2 || "",
-      timezone: item?.timezones?.[0] || "UTC",
+      timezone: item?.timezones?.[0] || "",
       flagPng: item?.flags?.png || "",
       commonName: item?.name?.common || country.label
     };
@@ -524,7 +524,7 @@ async function getCountryMetadata(country) {
     console.warn(`REST Countries lookup failed for ${country.slug}: ${error.message}`);
     return {
       cca2: country.cca2 || "",
-      timezone: "UTC",
+      timezone: "",
       flagPng: "",
       commonName: country.label
     };
@@ -1137,13 +1137,16 @@ async function updateWorld(country, metadata, stationCount, flagPath) {
   const world = await readJson(file);
   const areaKey = country.area.replace(/-/g, "_");
   world[areaKey] ||= {};
+  const existing = world[areaKey][country.slug] || {};
   world[areaKey][country.slug] = {
+    ...existing,
     name: `world.${areaKey}.${country.slug.replace(/-/g, "_")}`,
     flag:
       flagPath ||
+      existing.flag ||
       `/img/${country.area}/flags/${country.slug}.png`,
     data: `/assets/radio/${country.area}/${country.slug}.json`,
-    timezone: metadata.timezone || "UTC",
+    timezone: existing.timezone || metadata.timezone || "UTC",
     station: stationCount
   };
 
