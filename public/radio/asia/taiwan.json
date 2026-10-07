@@ -1,4 +1,58 @@
 {
+  "1": {
+    "title": "民本電台-1",
+    "description": "talk",
+    "type": "application/x-mpegURL",
+    "url": "https://mingpen.com.tw/",
+    "cros": false,
+    "stream": "https://streamak0134.akamaized.net/live0134lh-5gst/_definst_/am1296/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "https://streamak0134.akamaized.net/live0134lh-5gst/_definst_/am1296/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:227ebcf0-354a-4e1f-b3ec-a0ab943b3b40"
+      }
+    ],
+    "features": "/img/asia/taiwan/1.png",
+    "source": "radio-browser:227ebcf0-354a-4e1f-b3ec-a0ab943b3b40"
+  },
+  "2": {
+    "title": "民本電台-2",
+    "description": "talk",
+    "type": "application/x-mpegURL",
+    "url": "https://mingpen.com.tw/",
+    "cros": false,
+    "stream": "https://streamak0134.akamaized.net/live0134lh-5gst/_definst_/am855/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "https://streamak0134.akamaized.net/live0134lh-5gst/_definst_/am855/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:04b902cd-9f22-4466-892c-3976f7868a71"
+      }
+    ],
+    "features": "/img/asia/taiwan/2.png",
+    "source": "radio-browser:04b902cd-9f22-4466-892c-3976f7868a71"
+  },
+  "1766": {
+    "title": "1766線上電臺-百家知識",
+    "type": "audio/mpeg",
+    "url": "https://www.1766.today/",
+    "cros": true,
+    "stream": "http://livestream.1766.today:1768/live1.mp3",
+    "streams": [
+      {
+        "url": "http://livestream.1766.today:1768/live1.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:cf8f4744-c913-11e8-a54a-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/taiwan/1766.png",
+    "source": "radio-browser:cf8f4744-c913-11e8-a54a-52543be04c81",
+    "description": "news"
+  },
   "icrt": {
     "title": "ICRT",
     "type": "audio/mpeg",
@@ -7,7 +61,15 @@
     "stream": "https://live.leanstream.co/ICRTFM-MP3",
     "features": "/img/asia/taiwan/icrt.png",
     "schedule": "https://api.webrad.io/data/playlist/142/icrt?time=",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://live.leanstream.co/ICRTFM-MP3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "i-bcc-music-network": {
     "title": "中廣音樂網",
@@ -16,7 +78,15 @@
     "cros": false,
     "stream": "https://stream.rcs.revma.com/ndk05tyy2tzuv",
     "features": "/img/asia/taiwan/i-bcc-music-network.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/i-bcc-music-network?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/i-bcc-music-network?time=",
+    "streams": [
+      {
+        "url": "https://stream.rcs.revma.com/ndk05tyy2tzuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "ufo": {
     "title": "飛碟聯播網",
@@ -25,7 +95,15 @@
     "cros": false,
     "stream": "https://stream.rcs.revma.com/4yevzvbeewzuv",
     "features": "/img/asia/taiwan/ufo.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/ufo?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/ufo?time=",
+    "streams": [
+      {
+        "url": "https://stream.rcs.revma.com/4yevzvbeewzuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "super-fm-98-5-music": {
     "title": "寶島聯播網-寶島新聲",
@@ -34,7 +112,15 @@
     "cros": true,
     "stream": "http://stream.superfm99-1.com.tw:8555/",
     "features": "/img/asia/taiwan/super-fm-98-5-music.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/super-fm-98-5-music?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/super-fm-98-5-music?time=",
+    "streams": [
+      {
+        "url": "http://stream.superfm99-1.com.tw:8555/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "i-like-bcc-pop-network": {
     "title": "中廣流行網",
@@ -43,7 +129,15 @@
     "cros": false,
     "stream": "https://stream.rcs.revma.com/s1zttsg3qtzuv",
     "features": "/img/asia/taiwan/i-like-bcc-pop-network.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/i-like-bcc-pop-network?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/i-like-bcc-pop-network?time=",
+    "streams": [
+      {
+        "url": "https://stream.rcs.revma.com/s1zttsg3qtzuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "bcc-news-network": {
     "title": "中廣新聞網",
@@ -51,7 +145,15 @@
     "url": "https://www.bcc.com.tw/",
     "cros": false,
     "stream": "https://stream.rcs.revma.com/78fm9wyy2tzuv",
-    "features": "/img/asia/taiwan/bcc-news-network.png"
+    "features": "/img/asia/taiwan/bcc-news-network.png",
+    "streams": [
+      {
+        "url": "https://stream.rcs.revma.com/78fm9wyy2tzuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "news-98-fm": {
     "title": "九八新聞台",
@@ -60,7 +162,15 @@
     "cros": false,
     "stream": "https://stream.rcs.revma.com/55tyxsy4qtzuv",
     "features": "/img/asia/taiwan/news-98-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/news-98-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/news-98-fm?time=",
+    "streams": [
+      {
+        "url": "https://stream.rcs.revma.com/55tyxsy4qtzuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "super-fm": {
     "title": "大千電台",
@@ -69,7 +179,15 @@
     "cros": true,
     "stream": "http://stream.superfm99-1.com.tw:8554/",
     "features": "/img/asia/taiwan/super-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/super-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/super-fm?time=",
+    "streams": [
+      {
+        "url": "http://stream.superfm99-1.com.tw:8554/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fly": {
     "title": "飛揚調頻",
@@ -78,7 +196,15 @@
     "cros": false,
     "stream": "https://n14.rcs.revma.com/e0tdah74hv8uv",
     "features": "/img/asia/taiwan/fly.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/fly?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/fly?time=",
+    "streams": [
+      {
+        "url": "https://n14.rcs.revma.com/e0tdah74hv8uv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "classical-fm-97-7": {
     "title": "好家庭聯播網-古典音樂台",
@@ -87,7 +213,22 @@
     "cros": true,
     "stream": "http://onair.family977.com.tw:8000/live.mp3",
     "features": "/img/asia/taiwan/classical-fm-97-7.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/classical-fm-97-7?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/classical-fm-97-7?time=",
+    "streams": [
+      {
+        "url": "http://onair.family977.com.tw:8000/live.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://59.120.88.155:8000/live.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:de4271e4-74cf-4ffe-a7cf-15a11f71530f"
+      }
+    ],
+    "description": "classical music"
   },
   "ic-broadcasting": {
     "title": "IC之音竹科廣播FM97.5",
@@ -95,7 +236,15 @@
     "url": "https://www.ic975.com/",
     "cros": false,
     "stream": "https://n01a-eu.rcs.revma.com/7mnq8rt7k5zuv",
-    "features": "/img/asia/taiwan/ic-broadcasting.png"
+    "features": "/img/asia/taiwan/ic-broadcasting.png",
+    "streams": [
+      {
+        "url": "https://n01a-eu.rcs.revma.com/7mnq8rt7k5zuv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "city-fm-98-3": {
     "title": "城市廣播網-大苗栗廣播",
@@ -104,7 +253,15 @@
     "cros": true,
     "stream": "http://fm983.cityfm.tw:8080/983.mp3",
     "features": "/img/asia/taiwan/city-fm-98-3.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/city-fm-98-3?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/city-fm-98-3?time=",
+    "streams": [
+      {
+        "url": "http://fm983.cityfm.tw:8080/983.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "good-news-fm": {
     "title": "佳音廣播電台",
@@ -112,7 +269,15 @@
     "url": "http://www.goodnews.org.tw/goodnews.php",
     "cros": false,
     "stream": "https://stream.ginnet.cloud/live0119lo-p4rb/_definst_/fm909/playlist.m3u8",
-    "features": "/img/asia/taiwan/good-news-fm.png"
+    "features": "/img/asia/taiwan/good-news-fm.png",
+    "streams": [
+      {
+        "url": "https://stream.ginnet.cloud/live0119lo-p4rb/_definst_/fm909/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "smile-taiwan": {
     "title": "微微笑廣播網-高雄下港之聲",
@@ -120,7 +285,16 @@
     "url": "https://www.smileradio.com.tw/radio-list.asp?pg=1",
     "cros": true,
     "stream": "http://59.120.255.155:8081/",
-    "features": "/img/asia/taiwan/smile-taiwan.png"
+    "features": "/img/asia/taiwan/smile-taiwan.png",
+    "streams": [
+      {
+        "url": "http://59.120.255.155:8081/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ],
+    "description": "talk"
   },
   "tbs": {
     "title": "臺北廣播電臺",
@@ -128,7 +302,15 @@
     "url": "http://www.radio.gov.taipei/#",
     "cros": false,
     "stream": "https://stream.ginnet.cloud/live0130lo-yfyo/_definst_/fm/playlist.m3u8",
-    "features": "/img/asia/taiwan/tbs.png"
+    "features": "/img/asia/taiwan/tbs.png",
+    "streams": [
+      {
+        "url": "https://stream.ginnet.cloud/live0130lo-yfyo/_definst_/fm/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "national-education": {
     "title": "國立教育廣播電臺",
@@ -136,7 +318,15 @@
     "url": "https://www.ner.gov.tw/",
     "cros": true,
     "stream": "https://cast.ner.gov.tw/1",
-    "features": "/img/asia/taiwan/national-education.png"
+    "features": "/img/asia/taiwan/national-education.png",
+    "streams": [
+      {
+        "url": "https://cast.ner.gov.tw/1",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "shih-hsin-station": {
     "title": "世新廣播電台",
@@ -144,7 +334,16 @@
     "url": "https://shrs.shu.edu.tw/",
     "cros": false,
     "stream": "https://stream.ginnet.cloud/live0115lo-89xv/_definst_/am729/playlist.m3u8",
-    "features": "/img/asia/taiwan/shih-hsin-station.png"
+    "features": "/img/asia/taiwan/shih-hsin-station.png",
+    "streams": [
+      {
+        "url": "https://stream.ginnet.cloud/live0115lo-89xv/_definst_/am729/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "student"
   },
   "voice-of-fu-jen-catholic-unive": {
     "title": "輔大之聲",
@@ -152,7 +351,15 @@
     "url": "https://www.fjucomm.com/fjuvoice885/",
     "cros": true,
     "stream": "http://140.136.115.115:8000/fjuvoice885.mp3",
-    "features": "/img/asia/taiwan/voice-of-fu-jen-catholic-unive.png"
+    "features": "/img/asia/taiwan/voice-of-fu-jen-catholic-unive.png",
+    "streams": [
+      {
+        "url": "http://140.136.115.115:8000/fjuvoice885.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "city-fm-92-9": {
     "title": "城市廣播網",
@@ -161,7 +368,15 @@
     "cros": true,
     "stream": "http://fm929.cityfm.tw:8080/929.mp3",
     "features": "/img/asia/taiwan/city-fm-92-9.png",
-    "schedule": "https://api.webrad.io/data/playlist/142/city-fm-92-9?time="
+    "schedule": "https://api.webrad.io/data/playlist/142/city-fm-92-9?time=",
+    "streams": [
+      {
+        "url": "http://fm929.cityfm.tw:8080/929.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "smile-taiwan-tainan": {
     "title": "微微笑廣播網-台南凱旋電台",
@@ -169,6 +384,494 @@
     "url": "https://www.smileradio.com.tw/",
     "cros": true,
     "stream": "http://59.125.209.209:8081/",
-    "features": "/img/asia/taiwan/smile-taiwan-tainan.png"
+    "features": "/img/asia/taiwan/smile-taiwan-tainan.png",
+    "streams": [
+      {
+        "url": "http://59.125.209.209:8081/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "rti": {
+    "title": "RTI 臺灣之音",
+    "type": "application/x-mpegURL",
+    "url": "https://www.rti.org.tw/",
+    "cros": false,
+    "stream": "https://streamak0138.akamaized.net/live0138lh-mbm9/_definst_/rti3/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "https://streamak0138.akamaized.net/live0138lh-mbm9/_definst_/rti3/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:a598b0a8-6863-4dac-9a62-74ceb084f39f"
+      }
+    ],
+    "features": "/img/asia/taiwan/rti.png",
+    "source": "radio-browser:a598b0a8-6863-4dac-9a62-74ceb084f39f"
+  },
+  "hit-fm": {
+    "title": "Hit FM台北之音廣播",
+    "description": "music",
+    "type": "application/x-mpegURL",
+    "url": "https://www.hitoradio.com/newweb/onair.php",
+    "cros": true,
+    "stream": "http://202.39.43.67:1935/live/RA000036/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "http://202.39.43.67:1935/live/RA000036/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:14569b3b-271d-4a7c-a598-72323fa9469b"
+      }
+    ],
+    "features": "/img/asia/taiwan/hit-fm.png",
+    "source": "radio-browser:14569b3b-271d-4a7c-a598-72323fa9469b"
+  },
+  "am": {
+    "title": "臺北電台AM",
+    "description": "public radio",
+    "type": "audio/aac",
+    "url": "http://www.radio.gov.taipei/",
+    "cros": false,
+    "stream": "https://stream.ginnet.cloud/live0130lo-yfyo/_definst_/am/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://stream.ginnet.cloud/live0130lo-yfyo/_definst_/am/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:6be26492-2d96-444d-afa6-91fd5b374bed"
+      }
+    ],
+    "features": "/img/asia/taiwan/am.png",
+    "source": "radio-browser:6be26492-2d96-444d-afa6-91fd5b374bed"
+  },
+  "fm104": {
+    "title": "正聲廣播電台FM104",
+    "description": "music, news",
+    "type": "application/x-mpegURL",
+    "url": "https://www.csbc.com.tw/",
+    "cros": false,
+    "stream": "https://flv.ccdntech.com/live/_definst_/mp4:vod117_Live/live1/chunklist_w872521607.m3u8",
+    "streams": [
+      {
+        "url": "https://flv.ccdntech.com/live/_definst_/mp4:vod117_Live/live1/chunklist_w872521607.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:40c961b3-7c52-4da1-b956-5728759b2ad4"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm104.png",
+    "source": "radio-browser:40c961b3-7c52-4da1-b956-5728759b2ad4"
+  },
+  "fm105-5": {
+    "title": "台中歡喜之聲FM105.5",
+    "description": "talk",
+    "type": "audio/mpeg",
+    "url": "https://www.smileradio.com.tw/radio-info.asp?id=245",
+    "cros": true,
+    "stream": "http://59.125.41.65:8081/",
+    "streams": [
+      {
+        "url": "http://59.125.41.65:8081/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:278f4665-f188-4fdc-bd83-d199e762efb5"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm105-5.png",
+    "source": "radio-browser:278f4665-f188-4fdc-bd83-d199e762efb5"
+  },
+  "phate": {
+    "title": "Phate",
+    "type": "audio/mpeg",
+    "url": "http://phate.io/",
+    "cros": true,
+    "stream": "http://phate.io/listen",
+    "streams": [
+      {
+        "url": "http://phate.io/listen",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:e0401ca6-9638-11e8-a767-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/taiwan/phate.png",
+    "source": "radio-browser:e0401ca6-9638-11e8-a767-52543be04c81"
+  },
+  "go-go104-3": {
+    "title": "桃園GO GO104.3",
+    "description": "music, talk",
+    "type": "application/x-mpegURL",
+    "url": "https://stream.ginnet.cloud/live0119lo-p4rb/_definst_/fm1043/chunklist_w1108784103.m3u8",
+    "cros": false,
+    "stream": "https://stream.ginnet.cloud/live0119lo-p4rb/_definst_/fm1043/chunklist_w1108784103.m3u8",
+    "streams": [
+      {
+        "url": "https://stream.ginnet.cloud/live0119lo-p4rb/_definst_/fm1043/chunklist_w1108784103.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:b396f10e-3722-4d13-b78d-20db0f72882e"
+      }
+    ],
+    "features": "/img/asia/taiwan/go-go104-3.png",
+    "source": "radio-browser:b396f10e-3722-4d13-b78d-20db0f72882e"
+  },
+  "fm98-9": {
+    "title": "人人電台 好事聯播網FM98.9",
+    "description": "music",
+    "type": "application/x-mpegURL",
+    "url": "http://www.bestradio.com.tw/",
+    "cros": true,
+    "stream": "http://202.39.43.67:1935/live/RA000013/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "http://202.39.43.67:1935/live/RA000013/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:3c38aabd-887d-4261-8041-00e3d856a67e"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm98-9.png",
+    "source": "radio-browser:3c38aabd-887d-4261-8041-00e3d856a67e"
+  },
+  "needs-radio": {
+    "title": "Needs Radio 全球華語廣播網",
+    "description": "arts, culture, public radio",
+    "type": "application/x-mpegURL",
+    "url": "https://www.needsradio.org.tw/",
+    "cros": false,
+    "stream": "https://cdn280.ccdntech.com/live-http/_definst_/vod280_Live/needs/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "https://cdn280.ccdntech.com/live-http/_definst_/vod280_Live/needs/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:a03b8f93-540f-47d0-aa20-152b949b389f"
+      }
+    ],
+    "features": "/img/asia/taiwan/needs-radio.png",
+    "source": "radio-browser:a03b8f93-540f-47d0-aa20-152b949b389f"
+  },
+  "fm-104-9": {
+    "title": "警察廣播電臺 - 全國治安交通網 FM 104.9",
+    "description": "emergency & public safety, government, local traffic & weather, news, traffic",
+    "type": "audio/aac",
+    "url": "https://www.pbs.npa.gov.tw/",
+    "cros": false,
+    "stream": "https://stream.pbs.gov.tw/live/PBS/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://stream.pbs.gov.tw/live/PBS/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:f7a5c94a-c966-4e7f-932f-31d2020f9032"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm-104-9.png",
+    "source": "radio-browser:f7a5c94a-c966-4e7f-932f-31d2020f9032"
+  },
+  "fm92-5": {
+    "title": "屏東之聲廣播電台FM92.5",
+    "description": "talk",
+    "type": "audio/mpeg",
+    "url": "https://www.smileradio.com.tw/radio-info.asp?id=251",
+    "cros": true,
+    "stream": "http://59.120.255.169:8081/",
+    "streams": [
+      {
+        "url": "http://59.120.255.169:8081/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:20126f50-f822-4b08-916d-a19fd572b02d"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm92-5.png",
+    "source": "radio-browser:20126f50-f822-4b08-916d-a19fd572b02d"
+  },
+  "1-43892763": {
+    "title": "世新廣播電台-1",
+    "description": "education, educational",
+    "type": "application/x-mpegURL",
+    "url": "https://shrs.shu.edu.tw/",
+    "cros": false,
+    "stream": "https://stream.ginnet.cloud/live0115lo-89xv/_definst_/fm881/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://stream.ginnet.cloud/live0115lo-89xv/_definst_/fm881/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:43892763-bca1-49a5-9d64-11410c37bdbc"
+      }
+    ],
+    "features": "/img/asia/taiwan/1-43892763.png",
+    "source": "radio-browser:43892763-bca1-49a5-9d64-11410c37bdbc"
+  },
+  "am873": {
+    "title": "中國華藝廣播公司 AM873",
+    "description": "information, music",
+    "type": "audio/mpeg",
+    "url": "https://www.vos.com.cn/",
+    "cros": false,
+    "stream": "https://lhttp-hw.qtfm.cn/live/20500139/64k.mp3",
+    "streams": [
+      {
+        "url": "https://lhttp-hw.qtfm.cn/live/20500139/64k.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:e4c1345b-a989-40d7-9401-19f7da9d3d48"
+      }
+    ],
+    "features": "/img/asia/taiwan/am873.png",
+    "source": "radio-browser:e4c1345b-a989-40d7-9401-19f7da9d3d48"
+  },
+  "a-line-radio": {
+    "title": "A-Line Radio",
+    "description": "internet radio, music",
+    "type": "application/x-mpegURL",
+    "url": "https://www.apple-line.com/",
+    "cros": true,
+    "stream": "http://202.39.43.67:1935/live/RA000001/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "http://202.39.43.67:1935/live/RA000001/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:be11dee8-9ce2-4ff9-90c8-2ac8e4e36a56"
+      }
+    ],
+    "features": "/img/asia/taiwan/a-line-radio.png",
+    "source": "radio-browser:be11dee8-9ce2-4ff9-90c8-2ac8e4e36a56"
+  },
+  "https-www-csbc-com-tw": {
+    "title": "https://www.csbc.com.tw",
+    "type": "audio/aac",
+    "url": "https://www.csbc.com.tw/",
+    "cros": true,
+    "stream": "http://flv.ccdntech.com/live/_definst_/mp4:vod117_Live/live1/playlist.m3u8",
+    "streams": [
+      {
+        "url": "http://flv.ccdntech.com/live/_definst_/mp4:vod117_Live/live1/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:98e6c0ab-2458-4eb0-8400-c41b525441a7"
+      }
+    ],
+    "features": "/img/asia/taiwan/https-www-csbc-com-tw.png",
+    "source": "radio-browser:98e6c0ab-2458-4eb0-8400-c41b525441a7"
+  },
+  "asiafm": {
+    "title": "AsiaFM 亞洲電台",
+    "description": "music",
+    "type": "audio/aac",
+    "url": "https://www.asiafm.com.tw/",
+    "cros": false,
+    "stream": "https://n13.rcs.revma.com/xpgtqc74hv8uv",
+    "streams": [
+      {
+        "url": "https://n13.rcs.revma.com/xpgtqc74hv8uv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:ca368d8d-6f1e-4b5c-bab2-70e84fefe8ea"
+      }
+    ],
+    "features": "/img/asia/taiwan/asiafm.png",
+    "source": "radio-browser:ca368d8d-6f1e-4b5c-bab2-70e84fefe8ea"
+  },
+  "stars-radio": {
+    "title": "Stars RADIO星蹤之愛廣播網",
+    "type": "audio/aac",
+    "url": "http://www.needsradio.org.tw/",
+    "cros": false,
+    "stream": "https://cdn280.ccdntech.com/live-http/_definst_/vod280_Live/stars/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://cdn280.ccdntech.com/live-http/_definst_/vod280_Live/stars/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:02abdcd7-2477-46cf-8ccf-feb177d54d87"
+      }
+    ],
+    "features": "/img/asia/taiwan/stars-radio.png",
+    "source": "radio-browser:02abdcd7-2477-46cf-8ccf-feb177d54d87"
+  },
+  "fm-94-3": {
+    "title": "警察廣播電臺 - 臺北分臺 FM 94.3",
+    "description": "emergency & public safety, government, local traffic & weather, news, traffic",
+    "type": "audio/aac",
+    "url": "https://www.pbs.npa.gov.tw/",
+    "cros": false,
+    "stream": "https://stream.pbs.gov.tw/live/TPS/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://stream.pbs.gov.tw/live/TPS/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:665c3e49-f179-44d5-a33a-51fa71aceb63"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm-94-3.png",
+    "source": "radio-browser:665c3e49-f179-44d5-a33a-51fa71aceb63"
+  },
+  "2-fc9189c5": {
+    "title": "電台測試2",
+    "type": "audio/mpeg",
+    "url": "https://daairadio.tw/Page/Home/Index.aspx",
+    "cros": true,
+    "stream": "http://125.227.87.206:8000/SuperUS",
+    "streams": [
+      {
+        "url": "http://125.227.87.206:8000/SuperUS",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fc9189c5-d9c3-4199-8217-5e5ce3f7108c"
+      }
+    ],
+    "features": "/img/asia/taiwan/2-fc9189c5.png",
+    "source": "radio-browser:fc9189c5-d9c3-4199-8217-5e5ce3f7108c"
+  },
+  "b-b-radio": {
+    "title": "B&B RADIO 幫幫廣播網",
+    "description": "lifestyle",
+    "type": "audio/aac",
+    "url": "https://bbradio.pch.org.tw/",
+    "cros": false,
+    "stream": "https://cdn280.ccdntech.com/live-http/_definst_/vod280_Live/bb/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://cdn280.ccdntech.com/live-http/_definst_/vod280_Live/bb/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:0683be37-12cf-49f7-a6a2-aaa8dd5d7cbe"
+      }
+    ],
+    "features": "/img/asia/taiwan/b-b-radio.png",
+    "source": "radio-browser:0683be37-12cf-49f7-a6a2-aaa8dd5d7cbe"
+  },
+  "tr-radio-fm102-5": {
+    "title": "幸福廣播電台TR Radio FM102.5",
+    "description": "lifestyle, music",
+    "type": "audio/mpeg",
+    "url": "https://www.tr-radio.com/index.htm",
+    "cros": true,
+    "stream": "http://61.218.61.251:8080/",
+    "streams": [
+      {
+        "url": "http://61.218.61.251:8080/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:8b35b620-4f88-413b-bb69-d24a1c7ddd3b"
+      }
+    ],
+    "features": "/img/asia/taiwan/tr-radio-fm102-5.png",
+    "source": "radio-browser:8b35b620-4f88-413b-bb69-d24a1c7ddd3b"
+  },
+  "fm89-5": {
+    "title": "飛揚調頻FM89.5",
+    "description": "music, oldies",
+    "type": "audio/aac",
+    "url": "https://www.flyradio.com.tw/",
+    "cros": false,
+    "stream": "https://n13.rcs.revma.com/e0tdah74hv8uv",
+    "streams": [
+      {
+        "url": "https://n13.rcs.revma.com/e0tdah74hv8uv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:35e17586-772d-4374-bac8-b39b90519918"
+      }
+    ],
+    "features": "/img/asia/taiwan/fm89-5.png",
+    "source": "radio-browser:35e17586-772d-4374-bac8-b39b90519918"
+  },
+  "m-radio": {
+    "title": "M Radio 全國廣播",
+    "description": "entertainment, music",
+    "type": "audio/aac",
+    "url": "https://www.mradio.com.tw/",
+    "cros": false,
+    "stream": "https://n03.rcs.revma.com/044q61ha7a0uv",
+    "streams": [
+      {
+        "url": "https://n03.rcs.revma.com/044q61ha7a0uv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:0f80da62-6aec-45ae-9ab1-39df07c7d65e"
+      }
+    ],
+    "features": "/img/asia/taiwan/m-radio.png",
+    "source": "radio-browser:0f80da62-6aec-45ae-9ab1-39df07c7d65e"
+  },
+  "am756": {
+    "title": "勝利之聲AM756",
+    "type": "audio/mpeg",
+    "url": "https://e-go.org.tw/victor/index.asp",
+    "cros": true,
+    "stream": "http://test.taiwan-radio.tw:8000/PH.AM756",
+    "streams": [
+      {
+        "url": "http://test.taiwan-radio.tw:8000/PH.AM756",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:a94e9bed-c41a-405e-8d51-481b8c8245fa"
+      }
+    ],
+    "features": "/img/asia/taiwan/am756.png",
+    "source": "radio-browser:a94e9bed-c41a-405e-8d51-481b8c8245fa"
+  },
+  "boss-online-radio": {
+    "title": "Boss Online Radio",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "https://radios.tw",
+    "cros": false,
+    "stream": "https://stream.radiojar.com/ehzvurp9tv8uv",
+    "streams": [
+      {
+        "url": "https://stream.radiojar.com/ehzvurp9tv8uv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9ca3a4d5-51f7-46f7-9b8b-7ce7f3b4c655"
+      }
+    ],
+    "features": "/img/asia/taiwan/boss-online-radio.png",
+    "source": "radio-browser:9ca3a4d5-51f7-46f7-9b8b-7ce7f3b4c655"
+  },
+  "ai-radio-taiwan-ai": {
+    "title": "Ai Radio TAIWAN 台灣AI電台",
+    "description": "culture, full service, information, news, science",
+    "type": "audio/aac",
+    "url": "https://www.airadiotaiwan.com/",
+    "cros": false,
+    "stream": "https://n10.rcs.revma.com/h4ta80hbqwuvv",
+    "streams": [
+      {
+        "url": "https://n10.rcs.revma.com/h4ta80hbqwuvv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:7753621d-c051-4380-af0f-b3f8e8b825cc"
+      }
+    ],
+    "features": "/img/asia/taiwan/ai-radio-taiwan-ai.png",
+    "source": "radio-browser:7753621d-c051-4380-af0f-b3f8e8b825cc"
+  },
+  "asiafm-39619832": {
+    "title": "AsiaFM 亞太電台",
+    "description": "entertainment",
+    "type": "audio/aac",
+    "url": "https://www.asiafm.com.tw/",
+    "cros": false,
+    "stream": "https://n13.rcs.revma.com/kydend74hv8uv",
+    "streams": [
+      {
+        "url": "https://n13.rcs.revma.com/kydend74hv8uv",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:39619832-dd03-4dc3-9ddb-fca5d9a31dac"
+      }
+    ],
+    "features": "/img/asia/taiwan/asiafm-39619832.png",
+    "source": "radio-browser:39619832-dd03-4dc3-9ddb-fca5d9a31dac"
   }
 }
