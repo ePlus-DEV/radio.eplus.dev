@@ -10,6 +10,10 @@ const INSTANT_HOME = "https://instant.audio/";
 const API_BASE = "https://api.instant.audio/data/streams";
 const RADIO_BROWSER_BASE =
   "https://de1.api.radio-browser.info/json/stations/bycountrycodeexact";
+const MWYNIKI_BASE = "https://www.mwyniki.pl";
+const MWYNIKI_USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+  "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
 const USER_AGENT =
   "Radio-ePlus-Data-Sync/2.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
 const DEFAULT_STATION_IMAGE = "https://s3.eplus.dev/i/station-on-air.png";
@@ -533,7 +537,6 @@ async function getCountryMetadata(country) {
     return {
       cca2: item?.cca2 || country.cca2 || "",
       timezone: item?.timezones?.[0] || "",
-      flagPng: item?.flags?.png || "",
       commonName: item?.name?.common || country.label
     };
   } catch (error) {
@@ -541,39 +544,158 @@ async function getCountryMetadata(country) {
     return {
       cca2: country.cca2 || "",
       timezone: "",
-      flagPng: "",
       commonName: country.label
     };
   }
 }
 
-async function downloadFlag(country, flagUrl) {
-  if (!flagUrl) return "";
+export function polishSlug(value = "") {
+  const polishMap = {
+    "ą": "a",
+    "ć": "c",
+    "ę": "e",
+    "ł": "l",
+    "ń": "n",
+    "ó": "o",
+    "ś": "s",
+    "ź": "z",
+    "ż": "z",
+  };
 
+  return String(value)
+    .toLowerCase()
+    .replace(/[ąćęłńóśźż]/g, (char) => polishMap[char] || char)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function getMwynikiCountryPage(country, metadata = {}) {
+  let polishName = "";
+  const countryCode = String(metadata.cca2 || country.cca2 || "").toUpperCase();
+
+  if (countryCode) {
+    try {
+      polishName =
+        new Intl.DisplayNames(["pl"], { type: "region" }).of(countryCode) || "";
+    } catch {
+      // Fall through to the canonical country name.
+    }
+  }
+
+  const slug = polishSlug(
+    polishName ||
+    metadata.commonName ||
+    country.label ||
+    country.slug,
+  );
+
+  return slug
+    ? `${MWYNIKI_BASE}/${slug}//druzyny/${slug}_1/`
+    : "";
+}
+
+export function extractMwynikiFlagUrl(html, pageUrl) {
+  const source = String(html || "");
+  const imageRegex = /<img\b[^>]*>/gi;
+  let match;
+
+  while ((match = imageRegex.exec(source))) {
+    const tag = match[0];
+    const alt = tag.match(/\balt=["']([^"']*)["']/i)?.[1] || "";
+    if (!/^logo\s+/i.test(alt.trim())) continue;
+
+    const src =
+      tag.match(/\bsrc=["']([^"']+)["']/i)?.[1] ||
+      tag.match(/\bdata-src=["']([^"']+)["']/i)?.[1] ||
+      "";
+
+    if (!src) continue;
+
+    try {
+      return new URL(src, pageUrl).toString();
+    } catch {
+      return "";
+    }
+  }
+
+  return "";
+}
+
+async function findExistingFlag(country) {
+  const base = path.join(ROOT, "public", "img", country.area, "flags");
+  for (const extension of ["png", "svg", "webp", "jpg", "jpeg"]) {
+    const destination = path.join(base, `${country.slug}.${extension}`);
+    if (await exists(destination)) {
+      return `/img/${country.area}/flags/${country.slug}.${extension}`;
+    }
+  }
+  return "";
+}
+
+async function downloadFlag(country, metadata) {
   const relative = `/img/${country.area}/flags/${country.slug}.png`;
   const destination = path.join(ROOT, "public", relative);
 
   if (await exists(destination)) return relative;
   if (dryRun) return relative;
 
-  await mkdir(path.dirname(destination), { recursive: true });
-  const response = await fetchWithRetry(flagUrl, {
-    headers: { accept: "image/png,image/*;q=0.8" }
-  });
-  const contentType = response.headers.get("content-type") || "";
-  if (!contentType.toLowerCase().startsWith("image/")) {
-    throw new Error(`Flag download returned ${contentType || "unknown content-type"} for ${country.slug}`);
+  const existingFlag = await findExistingFlag(country);
+  const pageUrl = getMwynikiCountryPage(country, metadata);
+
+  if (!pageUrl) {
+    console.warn(`[instant.audio] Unable to build mWyniki flag page for ${country.slug}`);
+    return existingFlag;
   }
 
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (!bytes.length) {
-    throw new Error(`Flag download returned an empty image for ${country.slug}`);
+  try {
+    const pageResponse = await fetchWithRetry(pageUrl, {
+      headers: {
+        accept: "text/html,application/xhtml+xml",
+        "accept-language": "pl-PL,pl;q=0.9,en;q=0.8",
+        "user-agent": MWYNIKI_USER_AGENT,
+      }
+    });
+
+    const pageHtml = await pageResponse.text();
+    const flagUrl = extractMwynikiFlagUrl(pageHtml, pageUrl);
+
+    if (!flagUrl) {
+      throw new Error("mWyniki page did not expose a country logo");
+    }
+
+    const response = await fetchWithRetry(flagUrl, {
+      headers: {
+        accept: "image/png,image/*;q=0.8",
+        referer: pageUrl,
+        "user-agent": MWYNIKI_USER_AGENT,
+      }
+    });
+
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().startsWith("image/")) {
+      throw new Error(`mWyniki flag returned ${contentType || "unknown content-type"}`);
+    }
+
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (!bytes.length) {
+      throw new Error("mWyniki flag returned an empty image");
+    }
+
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, bytes);
+    console.log(
+      `[instant.audio] Flag saved for ${country.slug} from mWyniki: ${relative}`,
+    );
+
+    return relative;
+  } catch (error) {
+    console.warn(
+      `[instant.audio] mWyniki flag lookup failed for ${country.slug}: ${error.message}`,
+    );
+    return existingFlag;
   }
-
-  await writeFile(destination, bytes);
-  console.log(`[instant.audio] Flag saved for ${country.slug}: ${relative}`);
-
-  return relative;
 }
 
 async function findExistingStationImage(country, stationSlug) {
@@ -1379,7 +1501,7 @@ async function main() {
     try {
         const metadata = await getCountryMetadata(country);
         const { stations: discoveredStations, countryId, source } = await syncCountry(country, metadata);
-        const flagPath = await downloadFlag(country, metadata.flagPng);
+        const flagPath = await downloadFlag(country, metadata);
     
         let stations = discoveredStations;
         let added = Object.keys(discoveredStations).length;
