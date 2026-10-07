@@ -38,6 +38,7 @@ const args = new Map(
 
 const dryRun = args.get("dry-run") === "true";
 const refreshExisting = args.get("refresh-existing") === "true";
+const flagsOnly = args.get("flags-only") === "true";
 const requestedCountry = args.get("country") || "";
 const maxCountries = Math.max(1, Number(args.get("max-countries") || 3));
 const maxStations = Math.max(0, Number(args.get("max-stations") || 0));
@@ -1293,6 +1294,71 @@ export function resolveCountryTimezone(existing = {}, metadata = {}) {
   return existing.timezone || metadata.timezone || "UTC";
 }
 
+async function updateWorldFlag(country, flagPath) {
+  if (!flagPath) return;
+
+  const file = path.join(ROOT, "public", "radio", "world.json");
+  const world = await readJson(file);
+  const areaKey = country.area.replace(/-/g, "_");
+  const existing = world?.[areaKey]?.[country.slug];
+
+  if (!existing) {
+    console.warn(
+      `[instant.audio] Skipping world flag update for unknown country ${country.area}/${country.slug}`,
+    );
+    return;
+  }
+
+  if (existing.flag === flagPath) return;
+
+  world[areaKey][country.slug] = {
+    ...existing,
+    flag: flagPath,
+  };
+  await writeJson(file, world);
+
+  const tsFile = path.join(ROOT, "data", "world.ts");
+  const ts = `// Auto-generated from public/radio/world.json to avoid Vite JSON transform issues in CI\nconst world = ${JSON.stringify(world, null, 2)} as const;\n\nexport default world;\n`;
+  await writeFile(tsFile, ts);
+}
+
+async function syncFlagsOnly(targets) {
+  let success = 0;
+  let failed = 0;
+
+  console.log(
+    "[instant.audio] Flags-only mode: " +
+      targets.map((item) => item.area + "/" + item.slug).join(", "),
+  );
+
+  for (const country of targets) {
+    try {
+      const metadata = await getCountryMetadata(country);
+      const flagPath = await downloadFlag(country, metadata);
+
+      if (!flagPath) {
+        failed += 1;
+        console.warn(`[instant.audio] No flag available for ${country.slug}`);
+        continue;
+      }
+
+      await updateWorldFlag(country, flagPath);
+      success += 1;
+      console.log(`[instant.audio] Flag ready for ${country.slug}: ${flagPath}`);
+    } catch (error) {
+      failed += 1;
+      console.error(
+        `[instant.audio] Flag sync failed for ${country.slug}: ${error.message}`,
+      );
+    }
+  }
+
+  console.log(
+    `[instant.audio] Flags-only summary: success ${success}, failed ${failed}`,
+  );
+
+  if (failed > 0) process.exitCode = 1;
+}
 async function updateWorld(country, metadata, stationCount, flagPath) {
   const file = path.join(ROOT, "public", "radio", "world.json");
   const world = await readJson(file);
@@ -1543,6 +1609,11 @@ async function main() {
       item.area + "/" + item.slug + (item.isMissing ? " (missing)" : " (augment)")
     ).join(", "),
   );
+
+  if (flagsOnly) {
+    await syncFlagsOnly(targets);
+    return;
+  }
 
   let failedCountries = 0;
   for (const country of targets) {
