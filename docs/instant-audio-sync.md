@@ -34,7 +34,7 @@ node scripts/sync-instant-audio.mjs --country=cuba --refresh-existing --max-stat
 
 ## InstantAudio payload used
 
-For endpoints such as `https://api.instant.audio/data/streams/45/radio-rebelde`, the sync reads station metadata (`title`, website, signal, ACRCloud availability) and the `streams` array. Entries marked as containers or non-audio MIME types are ignored. The structured stream list is used before the generic URL heuristic.
+For endpoints such as `https://api.webrad.io/data/streams/45/radio-rebelde`, the sync reads station metadata (`title`, website, signal, ACRCloud availability) and the `streams` array. Entries marked as containers or non-audio MIME types are ignored. The structured stream list is used before the generic URL heuristic.
 
 World metadata keeps the repository's existing underscore region keys (for example `north_america`) and `/assets/radio/...` data paths.
 
@@ -44,9 +44,9 @@ The crawler intentionally follows the original PHP grabber model:
 
 1. read the country page server-side;
 2. extract the InstantAudio country ID and station slugs;
-3. call the structured InstantAudio stream API directly with a browser-like User-Agent;
+3. call the legacy Webrad stream API directly with a browser-like User-Agent, matching the original PHP grabber;
 4. download station artwork locally and write the country JSON.
 
-There is no Playwright/Crawlee browser mode and no Radio Browser station fallback. If the direct InstantAudio API is blocked or returns no playable stations, the selected country fails and the GitHub Actions job reports a real failure instead of silently switching data sources.
+There is no Playwright/Crawlee browser mode and no Radio Browser station fallback. If the direct Webrad API is blocked or returns no playable stations, the selected country fails and the GitHub Actions job reports a real failure instead of silently switching data sources.
 
 The repository country registry may still be used only as a snapshot of country URLs when the InstantAudio directory page itself cannot be refreshed; station data is never sourced from that snapshot.
