@@ -1,0 +1,97 @@
+name: DigitalOcean PR Preview
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: digitalocean-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Deploy PR preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+
+      - name: Deploy DigitalOcean preview
+        id: deploy
+        uses: digitalocean/app_action/deploy@v2
+        with:
+          app_name: radio-new
+          deploy_pr_preview: "true"
+          print_build_logs: "true"
+          print_deploy_logs: "true"
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Comment preview URL
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const app = ${{ toJson(fromJson(steps.deploy.outputs.app)) }};
+            const marker = "<!-- digitalocean-pr-preview -->";
+            const body =
+              marker +
+              "\n## 🚀 DigitalOcean Preview\n\n" +
+              "Preview is ready: " + app.live_url + "\n\n" +
+              "_Updated from commit \`${{ github.event.pull_request.head.sha }}\`._";
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(
+              (comment) =>
+                comment.user?.type === "Bot" &&
+                comment.body?.includes(marker),
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Comment deployment failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = "<!-- digitalocean-pr-preview-failed -->";
+            const body =
+              marker +
+              "\n## ❌ DigitalOcean Preview failed\n\n" +
+              "See the workflow logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}";
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
