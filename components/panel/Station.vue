@@ -14,7 +14,7 @@
           :to="`${data.url}`"
           v-for="data in results"
           :key="data.objectID"
-          class="min-w-0 overflow-hidden rounded-lg border"
+          class="w-full min-w-0 overflow-hidden rounded-lg border"
           active-class="active border-red-700"
           :title="data.title"
           :aria-label="data.title"
