@@ -31,9 +31,6 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
-      - name: Upgrade top-level npm dependencies
-        run: npx --yes npm-check-updates@latest -u
-
       - name: Refresh lockfile
         run: npm install
 
