@@ -1289,6 +1289,29 @@ export function mergeStations(existing, discovered) {
   return { stations: merged, added };
 }
 
+async function repairMissingStationImages(country, stations) {
+  for (const [slug, station] of Object.entries(stations)) {
+    const image = String(station?.features || "");
+    if (!image.startsWith("/img/")) continue;
+
+    const imageFile = path.join(ROOT, "public", image);
+    if (await exists(imageFile)) continue;
+
+    console.warn(
+      `[instant.audio] Repairing missing image reference for ${country.slug}/${slug}: ${image}`,
+    );
+
+    station.features = await resolveStationImage(
+      country,
+      slug,
+      "",
+      station?.url || country.domain,
+    );
+  }
+
+  return stations;
+}
+
 export function resolveCountryTimezone(existing = {}, metadata = {}) {
   return existing.timezone || metadata.timezone || "UTC";
 }
@@ -1562,6 +1585,8 @@ async function main() {
           added = merged.added;
         }
     
+        stations = await repairMissingStationImages(country, stations);
+
         const discoveredCount = Object.keys(discoveredStations).length;
         runStats.countriesSucceeded += 1;
         runStats.stationsDiscovered += discoveredCount;
