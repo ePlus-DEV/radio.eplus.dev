@@ -8,28 +8,30 @@
     </div>
     <div class="flex items-center justify-center">
       <div
-        class="grid grid-cols-4 gap-4 m-4 sm:grid-cols-4 md:grid-cols-8 sm:gap-1 sm:m-1"
+        class="grid w-full grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"
       >
         <nuxt-link
           :to="`${data.url}`"
           v-for="data in results"
           :key="data.objectID"
-          class="border tooltip tooltip-left"
-          active-class="active border-red-700"
+          class="group tooltip tooltip-left overflow-hidden rounded-md border bg-white/70 dark:bg-gray-800/40"
+          active-class="active border-red-600 ring-1 ring-red-600/40"
           :title="data.title"
           :data-tip="data.title"
           :class="[
             isRouteActive(data.objectID)
-              ? 'border-red-700'
-              : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-2xl hover:scale-105 transform transition-all duration-500',
+              ? 'border-red-600 shadow-sm'
+              : 'border-base-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-gray-400 hover:shadow-md transition-all duration-200',
           ]"
         >
-          <div class="flex h-24 w-24 items-center justify-center sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-32 lg:w-32">
+          <div class="flex aspect-[16/11] w-full items-center justify-center p-2">
             <img
               loading="lazy"
               :src="data.station_image"
               :alt="data.title"
-              class="max-h-[72%] max-w-[72%] object-contain"
+              width="96"
+              height="66"
+              class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain transition-transform duration-200 group-hover:scale-[1.03]"
             />
           </div>
         </nuxt-link>
