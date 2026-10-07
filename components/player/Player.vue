@@ -41,6 +41,11 @@
               >
                 Source {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
               </span>
+              <span
+                class="hidden rounded-full bg-white/8 px-2.5 py-1 text-[11px] font-medium text-slate-400 ring-1 ring-inset ring-white/10 sm:inline-flex"
+              >
+                Video.js
+              </span>
             </div>
 
             <p class="text-xs font-medium uppercase tracking-[0.15em] text-slate-400">
@@ -99,7 +104,7 @@
             </button>
 
             <button
-              v-else-if="button"
+              v-else-if="playing"
               type="button"
               class="flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-950 shadow-lg transition hover:scale-105 hover:bg-rose-50 active:scale-95"
               @click="onPause"
@@ -113,41 +118,67 @@
               type="button"
               class="flex h-14 w-14 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/30 transition hover:scale-105 hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
               @click="onPlay"
-              :disabled="streamError"
-              :aria-disabled="streamError"
-              :title="streamError ? $t('alert.stream_error') : ''"
+              :disabled="!hasPlayableSource"
               aria-label="Play radio"
             >
               <fa :icon="['fas', 'play']" class="ml-0.5 text-lg" />
             </button>
           </div>
 
-          <div class="min-w-0 flex-1">
-            <media-player
-              class="player block w-full min-w-0 max-w-full"
-              :title="streamName"
-              :src="$src"
-              crossOrigin
-              playsInline
-              @provider-change="onProviderChange"
-              @can-play="onCanPlay"
-              ref="$player"
-              autoplay
-              view-type="audio"
+          <div class="flex min-w-0 flex-1 items-center gap-3">
+            <button
+              type="button"
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-300 transition hover:bg-white/10 hover:text-white"
+              @click="toggleMute"
+              :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
             >
-              <media-provider></media-provider>
-              <media-audio-layout></media-audio-layout>
-            </media-player>
+              <fa
+                :icon="['fas', muted || volume === 0 ? 'volume-xmark' : volume < 0.5 ? 'volume-low' : 'volume-high']"
+              />
+            </button>
+
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              :value="muted ? 0 : volume"
+              @input="onVolumeInput"
+              aria-label="Volume"
+              class="radio-volume h-1.5 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-white/15"
+            />
+
+            <span class="w-9 shrink-0 text-right text-xs tabular-nums text-slate-500">
+              {{ Math.round((muted ? 0 : volume) * 100) }}%
+            </span>
+          </div>
+
+          <div class="radio-videojs-host" aria-hidden="true">
+            <video
+              ref="mediaElement"
+              class="video-js"
+              playsinline
+              preload="auto"
+            ></video>
           </div>
         </div>
 
         <div
           v-if="streamError"
-          class="mt-3 flex items-center gap-2 rounded-xl bg-rose-500/10 px-3 py-2 text-sm text-rose-200 ring-1 ring-inset ring-rose-400/20"
+          class="mt-3 flex items-center justify-between gap-3 rounded-xl bg-rose-500/10 px-3 py-2 text-sm text-rose-200 ring-1 ring-inset ring-rose-400/20"
           role="alert"
         >
-          <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
-          <span>{{ $t("alert.stream_error") }}</span>
+          <div class="flex min-w-0 items-center gap-2">
+            <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
+            <span class="truncate">{{ $t("alert.stream_error") }}</span>
+          </div>
+          <button
+            type="button"
+            class="shrink-0 rounded-lg bg-rose-400/15 px-2.5 py-1 text-xs font-semibold text-rose-100 transition hover:bg-rose-400/25"
+            @click="retryCurrentSource"
+          >
+            Retry
+          </button>
         </div>
 
         <div
@@ -177,43 +208,11 @@
 </template>
 
 <script lang="ts" setup>
-// Import styles.
-import "vidstack/player/styles/default/theme.css";
-import "vidstack/player/styles/default/layouts/audio.css";
-import "vidstack/player/styles/default/layouts/video.css";
-// Register elements.
-import "vidstack/player";
-import "vidstack/player/layouts";
-import "vidstack/player/ui";
-import "vidstack/icons";
-import {
-  isHLSProvider,
-  type MediaCanPlayEvent,
-  type MediaPlayerState,
-  type MediaProviderChangeEvent,
-} from "vidstack";
-import type { MediaPlayerElement } from "vidstack/elements";
-const online = ref(true);
-const $store = useMainStore();
-const dayjs = useDayjs();
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
+import type { RadioSource } from "~/types/radio";
 
-const $player = ref<MediaPlayerElement>(),
-  waiting = ref(true),
-  streamError = ref(false),
-  button = ref(true),
-  currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL")),
-  currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
-
-const props = defineProps<{
-  thumb: string;
-  streamName: string;
-  country: string;
-  program?: Array<object>;
-  streamUrl: MediaPlayerElement["src"];
-  streamUrls?: MediaPlayerElement["src"][];
-  song?: Song;
-  playlist?: PlaylistItem[];
-}>();
+type VideoJsPlayer = ReturnType<typeof videojs>;
 
 interface CurrentMedia {
   title: string;
@@ -228,7 +227,6 @@ interface Song {
   currentMedia?: CurrentMedia;
   nextMedia?: CurrentMedia;
   thumbnail?: string;
-  // Add other properties as needed
 }
 
 interface PlaylistItem {
@@ -238,158 +236,145 @@ interface PlaylistItem {
   track_played: number;
 }
 
-const sourceList = computed<MediaPlayerElement["src"][]>(() => {
-  const candidates = Array.isArray(props.streamUrls) && props.streamUrls.length
-    ? props.streamUrls
-    : [props.streamUrl];
-  return candidates.filter(Boolean);
-});
+const props = defineProps<{
+  thumb: string;
+  streamName: string;
+  country: string;
+  program?: Array<object>;
+  streamUrl: RadioSource;
+  streamUrls?: RadioSource[];
+  song?: Song;
+  playlist?: PlaylistItem[];
+}>();
+
+const $store = useMainStore();
+const dayjs = useDayjs();
+const mediaElement = ref<HTMLVideoElement | null>(null);
+const online = ref(true);
+const waiting = ref(false);
+const playing = ref(false);
+const streamError = ref(false);
 const activeSourceIndex = ref(0);
-const $src = ref(sourceList.value[0] || props.streamUrl);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(false);
 const reconnectAttempts = ref(0);
-const reconnectTimer = ref<ReturnType<typeof setTimeout> | null>(null);
-const removeAutoPlayUnlockListeners = ref<(() => void) | null>(null);
-const pendingAutoPlayFallback = ref<ReturnType<typeof setTimeout> | null>(null);
-let unsubscribePlayerState: (() => void) | undefined;
+const volume = ref(1);
+const muted = ref(false);
+const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
+const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
+
+let player: VideoJsPlayer | null = null;
+let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+let sourceReadyTimer: ReturnType<typeof setTimeout> | null = null;
 let timeInterval: ReturnType<typeof setInterval> | null = null;
+let sourceVersion = 0;
+let removeAutoPlayUnlockListeners: (() => void) | null = null;
+
 const MAX_RECONNECT_ATTEMPTS = 2;
 const RECONNECT_BASE_DELAY = 1500;
+const SOURCE_READY_TIMEOUT = 8000;
 
-/**
- * Updates the online status.
- */
-const updateOnlineStatus = () => {
-  const wasOffline = !online.value;
-  online.value = navigator.onLine;
+const sourceList = computed<RadioSource[]>(() => {
+  const candidates =
+    Array.isArray(props.streamUrls) && props.streamUrls.length
+      ? props.streamUrls
+      : [props.streamUrl];
 
-  if (!online.value) {
-    clearReconnectTimer();
-    waiting.value = false;
-    return;
+  return candidates.filter(
+    (source): source is RadioSource =>
+      Boolean(source && typeof source.src === "string" && source.src.trim()),
+  );
+});
+
+const hasPlayableSource = computed(() => sourceList.value.length > 0);
+
+const updateCurrentTime = (): void => {
+  currentTime.value = dayjs().tz($store.getTimezone).format("LTS");
+  currentDate.value = dayjs().tz($store.getTimezone).format("LLLL");
+};
+
+const inferMime = (url: string, fallback = "audio/mpeg"): string => {
+  const value = url.toLowerCase();
+  if (/\.m3u8(?:$|[?#])/i.test(value)) return "application/x-mpegURL";
+  if (/\.aac(?:$|[?#])/i.test(value)) return "audio/aac";
+  if (/\.ogg(?:$|[?#])/i.test(value)) return "audio/ogg";
+  if (/\.opus(?:$|[?#])/i.test(value)) return "audio/opus";
+  if (/\.mp3(?:$|[?#])/i.test(value)) return "audio/mpeg";
+  return fallback || "audio/mpeg";
+};
+
+const isTextPlaylist = (url: string): boolean =>
+  /\.pls(?:$|[?#])/i.test(url) ||
+  /(?:[?&](?:output|format)=pls(?:&|$))/i.test(url) ||
+  /\.m3u(?:$|[?#])/i.test(url);
+
+const parsePlaylistUrls = (text: string): string[] => {
+  const urls = new Set<string>();
+
+  for (const line of text.split(/\r?\n/)) {
+    const value = line.trim();
+    if (!value || value.startsWith("#")) continue;
+
+    const plsMatch = value.match(/^File\d+\s*=\s*(https?:\/\/.+)$/i);
+    const candidate = plsMatch?.[1]?.trim() || value;
+
+    if (/^https?:\/\//i.test(candidate)) {
+      urls.add(candidate);
+    }
   }
 
-  if (wasOffline && !userPaused.value) {
-    scheduleReconnect();
+  return [...urls];
+};
+
+const resolvePlaylistSource = async (
+  source: RadioSource,
+): Promise<RadioSource> => {
+  if (!isTextPlaylist(source.src)) return source;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await fetch(source.src, {
+      signal: controller.signal,
+      headers: { accept: "audio/x-scpls,audio/x-mpegurl,text/plain,*/*" },
+    });
+    if (!response.ok) return source;
+
+    const urls = parsePlaylistUrls(await response.text());
+    const first = urls[0];
+    if (!first) return source;
+
+    return {
+      src: first,
+      type: inferMime(first, source.type),
+    };
+  } catch {
+    return source;
+  } finally {
+    clearTimeout(timer);
   }
 };
 
-/**
- * Handles the play action for the player.
- * If the player is not currently waiting, it will start playing and set a waiting state.
- * The waiting state is reset after a simulated waiting time of 1 second.
- */
-function onPlay() {
-  userPaused.value = false;
+const clearReconnectTimer = (): void => {
+  if (!reconnectTimer) return;
+  clearTimeout(reconnectTimer);
+  reconnectTimer = null;
+};
 
-  // If player reports stream error (not ready), schedule an auto-play when ready
-  if (streamError.value) {
-    pendingAutoPlay.value = true;
-    waiting.value = true;
-    return;
-  }
+const clearSourceReadyTimer = (): void => {
+  if (!sourceReadyTimer) return;
+  clearTimeout(sourceReadyTimer);
+  sourceReadyTimer = null;
+};
 
-  // Try to play now (player reports can-play). Keep waiting until resolved.
-  waiting.value = true;
-  $player.value
-    ?.play()
-    .then(() => {
-      waiting.value = false;
-      pendingAutoPlay.value = false;
-      if (import.meta.client)
-        localStorage.setItem("radio_autoplay_enabled", "1");
-    })
-    .catch((err: unknown) => {
-      // If play fails because media isn't ready, set pendingAutoPlay so onCanPlay will retry
-      console.error("Playback start failed:", err);
-      registerAutoPlayUnlock();
-      // If error looks like 'media is not ready', ask to wait for can-play
-      pendingAutoPlay.value = true;
-      waiting.value = false;
-    });
-}
-
-/**
- * Pauses the player if it is not already waiting.
- *
- * This function checks if the player is currently not in a waiting state.
- * If not, it pauses the player and sets the waiting state to true.
- * After a simulated waiting time of 1 second, it resets the waiting state to false.
- */
-function onPause() {
-  // Pause should always be allowed
-  userPaused.value = true;
-  clearReconnectTimer();
-  removeAutoPlayUnlockListeners.value?.();
-  removeAutoPlayUnlockListeners.value = null;
-  $player.value?.pause();
-  waiting.value = false;
-}
-
-function clearReconnectTimer() {
-  if (reconnectTimer.value) {
-    clearTimeout(reconnectTimer.value);
-    reconnectTimer.value = null;
-  }
-}
-
-function currentStreamSource(): MediaPlayerElement["src"] {
-  return sourceList.value[activeSourceIndex.value] || props.streamUrl;
-}
-
-function refreshStreamSource() {
-  // Reset then restore the current candidate to force provider reconnect.
-  $src.value = "";
-  nextTick(() => {
-    $src.value = currentStreamSource();
-  });
-}
-
-function advanceFallbackSource(): boolean {
-  if (activeSourceIndex.value + 1 >= sourceList.value.length) return false;
-
-  activeSourceIndex.value += 1;
-  reconnectAttempts.value = 0;
-  streamError.value = false;
-  waiting.value = true;
-  pendingAutoPlay.value = true;
-
-  console.warn(
-    `Radio stream failed; switching to fallback ${activeSourceIndex.value + 1}/${sourceList.value.length}`,
-  );
-
-  refreshStreamSource();
-  return true;
-}
-
-function scheduleReconnect() {
-  if (!online.value || userPaused.value || reconnectTimer.value) return;
-  if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
-    if (advanceFallbackSource()) return;
-    waiting.value = false;
-    streamError.value = true;
-    return;
-  }
-
-  reconnectAttempts.value += 1;
-  const delay = RECONNECT_BASE_DELAY * reconnectAttempts.value;
-  waiting.value = true;
-  pendingAutoPlay.value = true;
-
-  reconnectTimer.value = setTimeout(() => {
-    reconnectTimer.value = null;
-    refreshStreamSource();
-  }, delay);
-}
-
-function registerAutoPlayUnlock() {
-  if (!import.meta.client || removeAutoPlayUnlockListeners.value) return;
+const registerAutoPlayUnlock = (): void => {
+  if (!import.meta.client || removeAutoPlayUnlockListeners) return;
 
   const unlock = () => {
-    removeAutoPlayUnlockListeners.value?.();
-    removeAutoPlayUnlockListeners.value = null;
-    onPlay();
+    removeAutoPlayUnlockListeners?.();
+    removeAutoPlayUnlockListeners = null;
+    void onPlay();
   };
 
   const events = ["pointerdown", "keydown", "touchstart"];
@@ -397,231 +382,317 @@ function registerAutoPlayUnlock() {
     window.addEventListener(eventName, unlock, { once: true });
   });
 
-  removeAutoPlayUnlockListeners.value = () => {
+  removeAutoPlayUnlockListeners = () => {
     events.forEach((eventName) => {
       window.removeEventListener(eventName, unlock);
     });
   };
-}
+};
 
-// watch stream candidates
+const tryPlay = async (): Promise<void> => {
+  if (!player || userPaused.value) return;
+
+  try {
+    await player.play();
+    pendingAutoPlay.value = false;
+    waiting.value = false;
+    playing.value = true;
+    streamError.value = false;
+    if (import.meta.client) {
+      localStorage.setItem("radio_autoplay_enabled", "1");
+    }
+  } catch (error) {
+    waiting.value = false;
+    pendingAutoPlay.value = true;
+    registerAutoPlayUnlock();
+    console.warn("Playback requires user interaction:", error);
+  }
+};
+
+const applySource = async (
+  index: number,
+  autoplay = false,
+): Promise<void> => {
+  if (!player) return;
+
+  const rawSource = sourceList.value[index];
+  if (!rawSource) {
+    waiting.value = false;
+    streamError.value = true;
+    return;
+  }
+
+  const version = ++sourceVersion;
+  activeSourceIndex.value = index;
+  waiting.value = true;
+  playing.value = false;
+  streamError.value = false;
+  pendingAutoPlay.value = autoplay && !userPaused.value;
+  clearSourceReadyTimer();
+
+  const source = await resolvePlaylistSource(rawSource);
+  if (version !== sourceVersion || !player) return;
+
+  player.src({
+    src: source.src,
+    type: inferMime(source.src, source.type),
+  });
+  player.load();
+
+  sourceReadyTimer = setTimeout(() => {
+    sourceReadyTimer = null;
+    if (waiting.value && !userPaused.value) {
+      scheduleReconnect();
+    }
+  }, SOURCE_READY_TIMEOUT);
+};
+
+const advanceFallbackSource = (): boolean => {
+  if (activeSourceIndex.value + 1 >= sourceList.value.length) return false;
+
+  reconnectAttempts.value = 0;
+  userPaused.value = false;
+  void applySource(activeSourceIndex.value + 1, true);
+  return true;
+};
+
+const scheduleReconnect = (): void => {
+  if (!online.value || userPaused.value || reconnectTimer) return;
+
+  clearSourceReadyTimer();
+
+  if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
+    if (advanceFallbackSource()) return;
+    waiting.value = false;
+    playing.value = false;
+    streamError.value = true;
+    return;
+  }
+
+  reconnectAttempts.value += 1;
+  waiting.value = true;
+  pendingAutoPlay.value = true;
+
+  reconnectTimer = setTimeout(() => {
+    reconnectTimer = null;
+    void applySource(activeSourceIndex.value, true);
+  }, RECONNECT_BASE_DELAY * reconnectAttempts.value);
+};
+
+const onPlay = async (): Promise<void> => {
+  if (!player || !hasPlayableSource.value) return;
+
+  userPaused.value = false;
+  streamError.value = false;
+  pendingAutoPlay.value = true;
+
+  if (!player.currentSrc()) {
+    await applySource(activeSourceIndex.value, true);
+    return;
+  }
+
+  await tryPlay();
+};
+
+const onPause = (): void => {
+  userPaused.value = true;
+  pendingAutoPlay.value = false;
+  clearReconnectTimer();
+  clearSourceReadyTimer();
+  removeAutoPlayUnlockListeners?.();
+  removeAutoPlayUnlockListeners = null;
+  player?.pause();
+  waiting.value = false;
+  playing.value = false;
+};
+
+const retryCurrentSource = (): void => {
+  reconnectAttempts.value = 0;
+  userPaused.value = false;
+  void applySource(activeSourceIndex.value, true);
+};
+
+const toggleMute = (): void => {
+  if (!player) return;
+  player.muted(!player.muted());
+};
+
+const onVolumeInput = (event: Event): void => {
+  if (!player) return;
+  const target = event.target as HTMLInputElement;
+  const nextVolume = Math.max(0, Math.min(1, Number(target.value)));
+  player.volume(nextVolume);
+  if (nextVolume > 0 && player.muted()) player.muted(false);
+};
+
+const updateOnlineStatus = (): void => {
+  const wasOffline = !online.value;
+  online.value = navigator.onLine;
+
+  if (!online.value) {
+    clearReconnectTimer();
+    clearSourceReadyTimer();
+    waiting.value = false;
+    return;
+  }
+
+  if (wasOffline && !userPaused.value) {
+    retryCurrentSource();
+  }
+};
+
+const bindPlayerEvents = (): void => {
+  if (!player) return;
+
+  player.on("loadstart", () => {
+    waiting.value = true;
+    streamError.value = false;
+  });
+
+  player.on("canplay", () => {
+    clearSourceReadyTimer();
+    clearReconnectTimer();
+    reconnectAttempts.value = 0;
+    waiting.value = false;
+    streamError.value = false;
+    if (pendingAutoPlay.value && !userPaused.value) {
+      void tryPlay();
+    }
+  });
+
+  player.on("playing", () => {
+    clearSourceReadyTimer();
+    waiting.value = false;
+    playing.value = true;
+    streamError.value = false;
+  });
+
+  player.on("pause", () => {
+    playing.value = false;
+  });
+
+  player.on("ended", () => {
+    playing.value = false;
+    if (!userPaused.value) scheduleReconnect();
+  });
+
+  player.on("error", () => {
+    waiting.value = false;
+    playing.value = false;
+    if (!userPaused.value) scheduleReconnect();
+  });
+
+  player.on("volumechange", () => {
+    if (!player) return;
+    volume.value = player.volume();
+    muted.value = player.muted();
+  });
+};
+
 watch(
   () => [props.streamUrl, props.streamUrls] as const,
   () => {
     activeSourceIndex.value = 0;
-    waiting.value = true;
+    reconnectAttempts.value = 0;
     streamError.value = false;
     userPaused.value = false;
-    $src.value = currentStreamSource();
-    reconnectAttempts.value = 0;
-    clearReconnectTimer();
-    pendingAutoPlay.value = true;
 
-    if (pendingAutoPlayFallback.value) {
-      clearTimeout(pendingAutoPlayFallback.value);
-      pendingAutoPlayFallback.value = null;
+    if (player && hasPlayableSource.value) {
+      const autoPlayEnabled =
+        import.meta.client &&
+        localStorage.getItem("radio_autoplay_enabled") === "1";
+      void applySource(0, Boolean(autoPlayEnabled));
     }
-
-    pendingAutoPlayFallback.value = setTimeout(() => {
-      if (pendingAutoPlay.value) {
-        if (!advanceFallbackSource()) {
-          pendingAutoPlay.value = false;
-          waiting.value = false;
-        }
-      }
-      pendingAutoPlayFallback.value = null;
-    }, 4000);
   },
   { deep: true },
 );
 
-/**
- * Updates the current time and date based on the user's timezone.
- */
-const updateCurrentTime = (): void => {
-  currentTime.value = dayjs().tz($store.getTimezone).format("LTS");
-  currentDate.value = dayjs().tz($store.getTimezone).format("LLLL");
-};
-
-// Update the current time every second
 onMounted(() => {
-  // Set the timezone based on the country.
-  const [_, area, country] = props.country.split(".");
-  $store.setTimezone(area, country.replace(/_/g, "-"));
+  const [, area, country] = props.country.split(".");
+  if (area && country) {
+    $store.setTimezone(area, country.replace(/_/g, "-"));
+  }
+
   online.value = navigator.onLine;
   updateCurrentTime();
   timeInterval = setInterval(updateCurrentTime, 1000);
 
-  // Select elements with the classes 'vds-play-button' and 'vds-button'
-  document
-    .querySelectorAll(".vds-play-button")
-    .forEach((button) => button.classList.add("hidden"));
+  if (mediaElement.value) {
+    player = videojs(mediaElement.value, {
+      controls: false,
+      autoplay: false,
+      preload: "auto",
+      responsive: false,
+      fluid: false,
+      html5: {
+        vhs: {
+          enableLowInitialPlaylist: true,
+        },
+      },
+    });
 
-  /**
-   * You can add these tracks using HTML as well.
-   *
-   * @example
-   * ```html
-   * <media-provider>
-   *   <track label="..." src="..." kind="..." srclang="..." default />
-   *   <track label="..." src="..." kind="..." srclang="..." />
-   * </media-provider>
-   * ```
-   */
+    bindPlayerEvents();
+    volume.value = player.volume();
+    muted.value = player.muted();
 
-  // Subscribe to state updates - you can connect them to Vue refs if needed.
-  unsubscribePlayerState = $player.value?.subscribe((state: Readonly<MediaPlayerState>) => {
-    const { paused, error, canPlay, ended } = state;
-    button.value = !paused;
-
-    if (error) {
-      streamError.value = true;
-      button.value = false;
-      waiting.value = false;
-      scheduleReconnect();
-    } else if (canPlay) {
-      waiting.value = false;
-      streamError.value = false;
-      reconnectAttempts.value = 0;
-      clearReconnectTimer();
+    if (hasPlayableSource.value) {
+      const autoPlayEnabled =
+        localStorage.getItem("radio_autoplay_enabled") === "1";
+      void applySource(0, autoPlayEnabled);
     }
-
-    if (ended && !userPaused.value) {
-      scheduleReconnect();
-    }
-  });
+  }
 
   window.addEventListener("online", updateOnlineStatus);
   window.addEventListener("offline", updateOnlineStatus);
-
-  const autoPlayEnabled =
-    import.meta.client &&
-    localStorage.getItem("radio_autoplay_enabled") === "1";
-
-  // Best effort autoplay when entering page.
-  // If browser blocks autoplay, retry once user interacts anywhere.
-  if (autoPlayEnabled) {
-    pendingAutoPlay.value = true;
-    waiting.value = true;
-    onPlay();
-  } else {
-    waiting.value = false;
-  }
 });
 
 onUnmounted(() => {
+  sourceVersion += 1;
   clearReconnectTimer();
+  clearSourceReadyTimer();
+
   if (timeInterval) {
     clearInterval(timeInterval);
     timeInterval = null;
   }
-  unsubscribePlayerState?.();
-  unsubscribePlayerState = undefined;
-  if (pendingAutoPlayFallback.value) {
-    clearTimeout(pendingAutoPlayFallback.value);
-    pendingAutoPlayFallback.value = null;
-  }
-  removeAutoPlayUnlockListeners.value?.();
+
+  removeAutoPlayUnlockListeners?.();
+  removeAutoPlayUnlockListeners = null;
+
   window.removeEventListener("online", updateOnlineStatus);
   window.removeEventListener("offline", updateOnlineStatus);
+
+  player?.dispose();
+  player = null;
 });
-
-/**
- * Handles the change of media provider.
- *
- * @param {MediaProviderChangeEvent} event - The event triggered when the media provider changes.
- */
-function onProviderChange(event: MediaProviderChangeEvent) {
-  const provider = event.detail;
-  if (!provider) {
-    waiting.value = true;
-    return;
-  }
-
-  // We can configure provider's here.
-  if (isHLSProvider(provider)) {
-    provider.config = {};
-  }
-
-  // If the provider has no currentSrc or media not set, mark streamError so UI disables play
-  const providerWithMedia = provider as Partial<{
-    currentSrc: string;
-    media: HTMLMediaElement | null;
-  }>;
-
-  if (!providerWithMedia.currentSrc || !providerWithMedia.media) {
-    waiting.value = true;
-    return;
-  }
-
-  streamError.value = false;
-}
-
-// We can listen for the `can-play` event to be notified when the player is ready.
-function onCanPlay(_: MediaCanPlayEvent) {
-  reconnectAttempts.value = 0;
-  clearReconnectTimer();
-
-  if (pendingAutoPlay.value) {
-    if (pendingAutoPlayFallback.value) {
-      clearTimeout(pendingAutoPlayFallback.value);
-      pendingAutoPlayFallback.value = null;
-    }
-    // attempt to play now that player reports can-play
-    $player.value
-      ?.play()
-      .then(() => {
-        waiting.value = false;
-        pendingAutoPlay.value = false;
-      })
-      .catch((err: unknown) => {
-        console.error("Playback start failed:", err);
-        waiting.value = false;
-        pendingAutoPlay.value = false;
-      });
-  }
-}
 </script>
 
 <style scoped>
-.player {
-  --brand-color: #ef4444;
-  --focus-color: #4e9cf6;
-
-  --audio-brand: var(--brand-color);
-  --audio-focus-ring-color: var(--focus-color);
-  --audio-border-radius: 2px;
-
-  --video-brand: var(--brand-color);
-  --video-focus-ring-color: var(--focus-color);
-  --video-border-radius: 2px;
-
-  /* 👉 https://vidstack.io/docs/player/components/layouts/default#css-variables for more. */
+.radio-videojs-host {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  opacity: 0;
+  pointer-events: none;
 }
 
-.player[data-view-type="audio"] media-poster {
-  display: none;
+.radio-volume::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  appearance: none;
+  border-radius: 9999px;
+  background: #fb7185;
+  box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.16);
 }
 
-.player[data-view-type="video"] {
-  aspect-ratio: 16 /9;
-}
-
-.src-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 40px;
-  margin-inline: auto;
-  max-width: 300px;
-}
-
-.vds-audio-layout {
-  border: unset !important;
-}
-
-:where(.vds-audio-layout) {
-  filter: none;
-  background-color: unset;
+.radio-volume::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 9999px;
+  background: #fb7185;
+  box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.16);
 }
 </style>
