@@ -1,53 +1,50 @@
 <template>
-  <div
-    class="flex flex-col p-5"
-    v-if="playlist !== undefined && playlist.length > 0"
-  >
-    <div
-      class="border-b dark:border-gray-600 pb-1 flex justify-between items-center mb-2"
-    >
-      <span
-        class="text-base dark:text-white font-semibold uppercase text-gray-700"
-      >
+  <section v-if="playlist !== undefined && playlist.length > 0" class="border-t border-white/10">
+    <div class="flex items-center justify-between px-4 py-3 sm:px-6">
+      <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-300">
         {{ $t("panel.playlist") }}
-      </span>
+      </h3>
+      <span class="text-xs text-slate-500">{{ playlist.length }}</span>
     </div>
-    <div class="overflow-auto h-32">
+
+    <div class="max-h-60 overflow-y-auto px-3 pb-3 sm:px-4">
       <div
-        class="flex items-center border-b dark:border-gray-600 py-3 hover:shadow-md px-2 rounded"
-        :class="index === 0 ? 'bg-gray-800 dark:bg-black' : ''"
         v-for="(item, index) in playlist"
         :key="index"
+        class="flex min-w-0 items-center gap-3 border-t border-white/8 px-2 py-3 first:border-t-0"
+        :class="index === 0 ? 'rounded-xl bg-white/[0.05]' : ''"
       >
-        <img
-          loading="lazy"
-          class="w-10 h-10 object-cover rounded-lg"
-          :alt="item.track_title + ' - ' + item.track_artist"
-          :src="item.track_image !== '' ? item.track_image : thumb"
-        />
-        <div class="flex flex-col px-2 w-4/5">
+        <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-white/10">
+          <img
+            loading="lazy"
+            class="h-full w-full object-cover"
+            :alt="item.track_title + ' - ' + item.track_artist"
+            :src="item.track_image !== '' ? item.track_image : thumb"
+          />
           <span
-            class="text-sm dark:text-white text-red-500 capitalize font-semibold pt-1 truncate"
-          >
+            v-if="index === 0"
+            class="absolute inset-x-0 bottom-0 h-1 bg-rose-500"
+          ></span>
+        </div>
+
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-sm font-medium text-slate-100">
             {{ item.track_title }}
-          </span>
-          <span
-            class="text-xs dark:text-white text-gray-500 uppercase font-medium truncate"
-          >
-            {{ item.track_artist }}
-          </span>
-        </div>
-        <div class="w-1/5 text-right">
-          <p class="text-xs text-grey-dark dark:text-white" v-if="index !== 0">
-            {{ dayjs.unix(item.track_played).fromNow() }}
           </p>
-          <div class="relative inline-flex" v-else>
-            <img loading="lazy" src="/brand/favicon.ico" alt="Logo" />
-          </div>
+          <p class="mt-0.5 truncate text-xs text-slate-400">
+            {{ item.track_artist }}
+          </p>
         </div>
+
+        <span v-if="index === 0" class="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-rose-300">
+          Live
+        </span>
+        <span v-else class="shrink-0 text-xs text-slate-500">
+          {{ dayjs.unix(item.track_played).fromNow() }}
+        </span>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
