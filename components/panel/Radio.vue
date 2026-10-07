@@ -46,7 +46,7 @@
             <nuxt-link
               v-for="country in continent"
               :key="country.url"
-              class="indicator min-w-0 overflow-hidden rounded-lg border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white"
+              class="indicator w-full min-w-0 overflow-hidden rounded-lg border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white"
               :title="$t(country.name)"
               :aria-label="$t(country.name)"
               :to="country.url"
