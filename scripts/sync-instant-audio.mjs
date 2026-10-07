@@ -21,9 +21,6 @@ const IMAGE_EXTENSIONS = new Map([
   ["image/gif", "gif"],
   ["image/svg+xml", "svg"]
 ]);
-const BROWSER_USER_AGENT =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
-  "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
 
 const args = new Map(
   process.argv.slice(2).map((arg) => {
@@ -37,6 +34,8 @@ const refreshExisting = args.get("refresh-existing") === "true";
 const requestedCountry = args.get("country") || "";
 const maxCountries = Math.max(1, Number(args.get("max-countries") || 3));
 const maxStations = Math.max(0, Number(args.get("max-stations") || 0));
+
+let directApiBlockedForRun = false;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -687,13 +686,7 @@ async function syncStation(country, countryId, candidate) {
     const response = await fetchWithRetry(apiUrl, {
       headers: {
         accept: "application/json, text/plain, */*",
-        "accept-language": "en-US,en;q=0.9",
-        origin: country.domain,
-        referer: country.domain + "/",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "cross-site",
-        "user-agent": BROWSER_USER_AGENT
+        referer: country.domain + "/"
       }
     });
     const payload = await response.json();
@@ -725,123 +718,6 @@ async function syncStation(country, countryId, candidate) {
   }
 }
 
-async function syncStationsViaBrowser(country, countryId, candidates) {
-  if (!candidates.length) return {};
-
-  let PlaywrightCrawler;
-  try {
-    ({ PlaywrightCrawler } = await import("crawlee"));
-  } catch (error) {
-    console.warn(
-      "[instant.audio] Browser fallback unavailable: " + error.message,
-    );
-    return {};
-  }
-
-  console.warn(
-    "[instant.audio] Switching to Crawlee + Playwright for " +
-      candidates.length +
-      " station(s)",
-  );
-
-  const stations = {};
-  const crawler = new PlaywrightCrawler({
-    maxConcurrency: 1,
-    maxRequestRetries: 1,
-    requestHandlerTimeoutSecs: 35,
-    navigationTimeoutSecs: 25,
-    launchContext: {
-      launchOptions: {
-        headless: true
-      }
-    },
-    preNavigationHooks: [
-      async ({ page }) => {
-        await page.route("**/*", async (route) => {
-          const type = route.request().resourceType();
-          if (["image", "font", "media"].includes(type)) {
-            await route.abort();
-            return;
-          }
-          await route.continue();
-        });
-      }
-    ],
-    requestHandler: async ({ page, request, log }) => {
-      const candidate = request.userData.candidate;
-      const apiUrl = API_BASE + "/" + countryId + "/" + candidate.slug;
-
-      const result = await page.evaluate(async (url) => {
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              accept: "application/json, text/plain, */*"
-            }
-          });
-          return {
-            status: response.status,
-            ok: response.ok,
-            text: await response.text()
-          };
-        } catch (error) {
-          return {
-            status: 0,
-            ok: false,
-            text: "",
-            error: String(error)
-          };
-        }
-      }, apiUrl);
-
-      if (!result.ok) {
-        log.warning(
-          "Browser API fetch failed for " +
-            candidate.slug +
-            ": " +
-            (result.status || result.error || "unknown"),
-        );
-        return;
-      }
-
-      let payload;
-      try {
-        payload = JSON.parse(result.text);
-      } catch {
-        log.warning("Browser API returned non-JSON for " + candidate.slug);
-        return;
-      }
-
-      const station = stationFromInstantPayload(
-        country,
-        candidate,
-        apiUrl,
-        payload,
-      );
-      if (station) {
-        station.features = await downloadStationImage(
-          country,
-          candidate.slug,
-          station.features,
-        );
-        stations[candidate.slug] = station;
-        console.log("  + " + candidate.slug + " (browser)");
-      }
-    }
-  });
-
-  await crawler.run(
-    candidates.map((candidate) => ({
-      url: candidate.pageUrl,
-      uniqueKey: country.slug + ":" + candidate.slug,
-      userData: { candidate }
-    })),
-  );
-
-  return stations;
-}
-
 async function probeCountryId(country, candidate) {
   const MAX_ID = 180;
   const BATCH_SIZE = 8;
@@ -864,13 +740,8 @@ async function probeCountryId(country, candidate) {
             redirect: "follow",
             headers: {
               accept: "application/json, text/plain, */*",
-              "accept-language": "en-US,en;q=0.9",
-              origin: country.domain,
               referer: `${country.domain}/`,
-              "sec-fetch-dest": "empty",
-              "sec-fetch-mode": "cors",
-              "sec-fetch-site": "cross-site",
-              "user-agent": BROWSER_USER_AGENT
+              "user-agent": USER_AGENT
             }
           });
           if (!response.ok) return null;
@@ -1026,35 +897,33 @@ async function syncCountry(country, metadata) {
 
   const stations = {};
   let consecutiveForbidden = 0;
-  let circuitOpen = false;
 
-  for (let index = 0; index < candidates.length; index += 1) {
-    const candidate = candidates[index];
-    const result = await syncStation(country, countryId, candidate);
+  if (!directApiBlockedForRun) {
+    for (const candidate of candidates) {
+      const result = await syncStation(country, countryId, candidate);
 
-    if (result.station) {
-      stations[candidate.slug] = result.station;
-      consecutiveForbidden = 0;
-      console.log("  + " + candidate.slug);
-    } else if (result.status === 403) {
-      consecutiveForbidden += 1;
-      if (consecutiveForbidden >= 3) {
-        circuitOpen = true;
-        console.warn(
-          "[instant.audio] 3 consecutive 403 responses; stopping direct API requests and switching to browser mode",
-        );
-        break;
+      if (result.station) {
+        stations[candidate.slug] = result.station;
+        consecutiveForbidden = 0;
+        console.log("  + " + candidate.slug);
+      } else if (result.status === 403) {
+        consecutiveForbidden += 1;
+        if (consecutiveForbidden >= 3) {
+          directApiBlockedForRun = true;
+          console.warn(
+            "[instant.audio] Direct API is blocked on this runner; remaining countries will use Radio Browser directly",
+          );
+          break;
+        }
+      } else {
+        consecutiveForbidden = 0;
       }
-    } else {
-      consecutiveForbidden = 0;
+
+      await sleep(120);
     }
-
-    await sleep(120);
-  }
-
-  if (circuitOpen) {
-    console.warn(
-      "[instant.audio] Direct API appears blocked for this runner; skipping bulk Playwright API retries",
+  } else {
+    console.log(
+      "[instant.audio] Direct API already marked blocked for this run; skipping InstantAudio stream requests",
     );
   }
 
@@ -1064,7 +933,7 @@ async function syncCountry(country, metadata) {
     return {
       stations: fallbackStations,
       countryId,
-      source: circuitOpen
+      source: directApiBlockedForRun
         ? "radio-browser-after-api-block"
         : "radio-browser-fallback"
     };
@@ -1189,86 +1058,6 @@ async function updateLocales(country, metadata) {
   }
 }
 
-async function discoverCountriesViaBrowser() {
-  let chromium;
-  try {
-    ({ chromium } = await import("playwright"));
-  } catch (error) {
-    console.warn("[instant.audio] Browser directory fallback unavailable: " + error.message);
-    return [];
-  }
-
-  console.warn("[instant.audio] Retrying country directory with Playwright");
-
-  let browser;
-  try {
-    browser = await chromium.launch({ headless: true });
-    const context = await browser.newContext({
-      userAgent: BROWSER_USER_AGENT,
-      locale: "en-US",
-    });
-    const page = await context.newPage();
-
-    await page.route("**/*", async (route) => {
-      const type = route.request().resourceType();
-      if (["image", "font", "media"].includes(type)) {
-        await route.abort();
-        return;
-      }
-      await route.continue();
-    });
-
-    const response = await page.goto(INSTANT_HOME, {
-      waitUntil: "domcontentloaded",
-      timeout: 25000,
-    });
-
-    if (!response || response.status() >= 400) {
-      console.warn("[instant.audio] Browser directory returned HTTP " + (response?.status() || "unknown"));
-      return [];
-    }
-
-    const entries = await page.evaluate(() =>
-      Array.from(document.querySelectorAll("h1,h2,h3,h4,h5,h6,a[href]")).map((element) => ({
-        tag: element.tagName.toLowerCase(),
-        text: String(element.textContent || "").trim(),
-        href: element instanceof HTMLAnchorElement ? element.href : "",
-      })),
-    );
-
-    const countries = [];
-    let area = "";
-    for (const entry of entries) {
-      if (/^h[1-6]$/.test(entry.tag)) {
-        const heading = stripTags(entry.text).toLowerCase();
-        if (AREA_ALIASES[heading]) area = AREA_ALIASES[heading];
-        continue;
-      }
-      if (entry.tag !== "a" || !area || !entry.href) continue;
-
-      let url;
-      try {
-        url = new URL(entry.href);
-      } catch {
-        continue;
-      }
-
-      if (url.hostname === "instant.audio" || url.hostname.endsWith(".instant.audio")) continue;
-      const label = stripTags(entry.text);
-      if (!label) continue;
-
-      countries.push({ area, label, slug: countrySlug(label), domain: url.origin });
-    }
-
-    return [...new Map(countries.map((item) => [item.area + "/" + item.slug, item])).values()];
-  } catch (error) {
-    console.warn("[instant.audio] Browser directory discovery failed: " + error.message);
-    return [];
-  } finally {
-    if (browser) await browser.close();
-  }
-}
-
 async function persistCountryRegistry(discovered) {
   if (dryRun || !discovered.length) return;
   const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
@@ -1306,19 +1095,12 @@ async function loadCountryDirectory() {
       return discovered;
     }
 
-    console.warn("[instant.audio] instant.audio directory is blocked or unreadable; trying browser fallback");
+    console.warn("[instant.audio] instant.audio directory is blocked or unreadable; using repository snapshot");
   } catch (error) {
-    console.warn("[instant.audio] Unable to refresh instant.audio directory directly; trying browser fallback: " + error.message);
+    console.warn("[instant.audio] Unable to refresh instant.audio directory directly; using repository snapshot: " + error.message);
   }
 
-  const browserDiscovered = await discoverCountriesViaBrowser();
-  if (browserDiscovered.length) {
-    console.log("[instant.audio] Discovered " + browserDiscovered.length + " countries via browser");
-    await persistCountryRegistry(browserDiscovered);
-    return browserDiscovered;
-  }
-
-  console.warn("[instant.audio] Browser directory discovery also failed; using repository snapshot");
+  console.warn("[instant.audio] Using repository country snapshot");
   const registryFile = path.join(ROOT, "data", "instant-audio-countries.json");
   const registry = await readJson(registryFile);
 
