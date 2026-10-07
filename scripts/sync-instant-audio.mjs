@@ -10,7 +10,16 @@ const API_BASE = "https://api.instant.audio/data/streams";
 const RADIO_BROWSER_BASE =
   "https://de1.api.radio-browser.info/json/stations/bycountrycodeexact";
 const USER_AGENT =
-  "Radio-ePlus-Data-Sync/1.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
+  "Radio-ePlus-Data-Sync/2.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
+const DEFAULT_STATION_IMAGE = "https://s3.eplus.dev/i/station-on-air.png";
+const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+const IMAGE_EXTENSIONS = new Map([
+  ["image/png", "png"],
+  ["image/jpeg", "jpg"],
+  ["image/webp", "webp"],
+  ["image/gif", "gif"],
+  ["image/svg+xml", "svg"]
+]);
 const BROWSER_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
@@ -308,10 +317,23 @@ function extractStationCandidates(source, origin) {
     if (!slug || !/^[a-z0-9-]+$/.test(slug)) return;
     if (!trustedStationList && RESERVED_PATHS.has(slug)) return;
 
+    const imageMatch = String(label || "").match(
+      /<img\b[^>]*src=["']([^"']+)["'][^>]*>/i,
+    );
+    let imageUrl = "";
+    if (imageMatch?.[1]) {
+      try {
+        imageUrl = new URL(imageMatch[1], origin).toString();
+      } catch {
+        imageUrl = "";
+      }
+    }
+
     candidates.set(slug, {
       slug,
       title: stripTags(label || "") || slug.replace(/-/g, " "),
-      pageUrl: `${origin}/${slug}/`
+      pageUrl: `${origin}/${slug}/`,
+      ...(imageUrl ? { imageUrl } : {})
     });
   };
 
@@ -526,6 +548,84 @@ async function downloadFlag(country, flagUrl) {
   return relative;
 }
 
+async function findExistingStationImage(country, stationSlug) {
+  const base = path.join(ROOT, "public", "img", country.area, country.slug);
+  for (const extension of ["png", "jpg", "webp", "gif", "svg"]) {
+    const destination = path.join(base, `${stationSlug}.${extension}`);
+    if (await exists(destination)) {
+      return `/img/${country.area}/${country.slug}/${stationSlug}.${extension}`;
+    }
+  }
+  return "";
+}
+
+function imageExtension(contentType, imageUrl) {
+  const normalized = String(contentType || "").split(";")[0].trim().toLowerCase();
+  if (IMAGE_EXTENSIONS.has(normalized)) return IMAGE_EXTENSIONS.get(normalized);
+
+  try {
+    const ext = path.extname(new URL(imageUrl).pathname).slice(1).toLowerCase();
+    if (["png", "jpg", "jpeg", "webp", "gif", "svg"].includes(ext)) {
+      return ext === "jpeg" ? "jpg" : ext;
+    }
+  } catch {
+    // Ignore malformed image URLs.
+  }
+
+  return "";
+}
+
+async function downloadStationImage(country, stationSlug, imageUrl) {
+  if (!/^https?:\/\//i.test(String(imageUrl || ""))) {
+    return DEFAULT_STATION_IMAGE;
+  }
+
+  const existing = await findExistingStationImage(country, stationSlug);
+  if (existing) return existing;
+
+  try {
+    const response = await fetchWithRetry(imageUrl, {
+      headers: {
+        accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+        referer: country.domain + "/"
+      }
+    });
+
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().startsWith("image/")) {
+      throw new Error(`unexpected content-type ${contentType || "unknown"}`);
+    }
+
+    const declaredLength = Number(response.headers.get("content-length") || 0);
+    if (declaredLength > MAX_IMAGE_BYTES) {
+      throw new Error(`image is too large (${declaredLength} bytes)`);
+    }
+
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (!bytes.length || bytes.length > MAX_IMAGE_BYTES) {
+      throw new Error(`invalid image size (${bytes.length} bytes)`);
+    }
+
+    const extension = imageExtension(contentType, imageUrl);
+    if (!extension) {
+      throw new Error(`unsupported image type ${contentType || imageUrl}`);
+    }
+
+    const relative = `/img/${country.area}/${country.slug}/${stationSlug}.${extension}`;
+    if (dryRun) return relative;
+
+    const destination = path.join(ROOT, "public", relative);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, bytes);
+    return relative;
+  } catch (error) {
+    console.warn(
+      `[instant.audio] Image download failed for ${country.slug}/${stationSlug}: ${error.message}`,
+    );
+    return DEFAULT_STATION_IMAGE;
+  }
+}
+
 function stationFromInstantPayload(country, candidate, apiUrl, payload) {
   const instantResult = payload?.result || payload || {};
   const stationMetadata = instantResult.station || {};
@@ -546,13 +646,14 @@ function stationFromInstantPayload(country, candidate, apiUrl, payload) {
     "summary",
     "profile"
   ]);
-  const image = findTextField(payload, [
-    "logo",
-    "image",
-    "image_url",
-    "station_image",
-    "artwork"
-  ]);
+  const image =
+    findTextField(payload, [
+      "logo",
+      "image",
+      "image_url",
+      "station_image",
+      "artwork"
+    ]) || candidate.imageUrl || "";
   const website =
     typeof stationMetadata.url === "string" &&
     /^https?:\/\//i.test(stationMetadata.url)
@@ -573,7 +674,7 @@ function stationFromInstantPayload(country, candidate, apiUrl, payload) {
     features:
       image && /^https?:\/\//i.test(image)
         ? image
-        : "https://s3.eplus.dev/i/station-on-air.png",
+        : DEFAULT_STATION_IMAGE,
     source: apiUrl
   };
 }
@@ -595,8 +696,16 @@ async function syncStation(country, countryId, candidate) {
       }
     });
     const payload = await response.json();
+    const station = stationFromInstantPayload(country, candidate, apiUrl, payload);
+    if (station) {
+      station.features = await downloadStationImage(
+        country,
+        candidate.slug,
+        station.features,
+      );
+    }
     return {
-      station: stationFromInstantPayload(country, candidate, apiUrl, payload),
+      station,
       status: response.status,
       via: "direct"
     };
@@ -710,6 +819,11 @@ async function syncStationsViaBrowser(country, countryId, candidates) {
         payload,
       );
       if (station) {
+        station.features = await downloadStationImage(
+          country,
+          candidate.slug,
+          station.features,
+        );
         stations[candidate.slug] = station;
         console.log("  + " + candidate.slug + " (browser)");
       }
@@ -844,10 +958,11 @@ async function syncFromRadioBrowser(country, metadata) {
       url: String(item.homepage || country.domain),
       cros: stream.startsWith("http://"),
       stream,
-      features:
-        String(item.favicon || "").startsWith("http")
-          ? item.favicon
-          : "https://s3.eplus.dev/i/station-on-air.png",
+      features: await downloadStationImage(
+        country,
+        slug,
+        String(item.favicon || ""),
+      ),
       source: `radio-browser:${item.stationuuid || slug}`
     };
   }
