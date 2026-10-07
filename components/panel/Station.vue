@@ -46,10 +46,18 @@ interface StationResult {
   station_name: string;
   station_image: string;
   station_stream: string;
+  station_streams?: StationStream[];
   station_schedule?: string;
   cros: boolean;
   type: string;
   url: string;
+}
+
+interface StationStream {
+  url: string;
+  type?: string;
+  cros?: boolean;
+  source?: string;
 }
 
 interface StationCatalogEntry {
@@ -58,6 +66,7 @@ interface StationCatalogEntry {
   type: string;
   cros: boolean;
   stream: string;
+  streams?: StationStream[];
   features?: string;
   schedule?: string;
 }
@@ -107,6 +116,7 @@ const loadStations = async (): Promise<void> => {
       station_name: data.title,
       station_image: data.features || String(config.public.placeholderStation),
       station_stream: data.stream,
+      station_streams: data.streams,
       station_schedule: data.schedule,
       cros: Boolean(data.cros),
       type: data.type || "audio/mpeg",

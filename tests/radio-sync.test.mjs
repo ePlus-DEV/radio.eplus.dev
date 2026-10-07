@@ -4,11 +4,13 @@ import assert from "node:assert/strict";
 import {
   extractStationCandidates,
   extractStationImageCandidates,
+  findInstantAudioStreams,
   imageExtension,
   getMwynikiCountryPage,
   extractMwynikiFlagUrl,
   polishSlug,
   mergeStations,
+  normalizeStationStreams,
   normalizeStreamIdentity,
   resolveCountryTimezone,
 } from "../scripts/sync-instant-audio.mjs";
@@ -61,7 +63,13 @@ test("mergeStations skips duplicate stream URLs", () => {
   const result = mergeStations(existing, discovered);
 
   assert.equal(result.added, 0);
-  assert.deepEqual(result.stations, existing);
+  assert.equal(Object.keys(result.stations).length, 1);
+  assert.equal(result.stations.alpha.stream, "https://stream.example/live/");
+  assert.equal(result.stations.alpha.favorite, true);
+  assert.deepEqual(
+    result.stations.alpha.streams.map((item) => item.url),
+    ["https://stream.example/live/"],
+  );
 });
 
 test("mergeStations does not create a second favorite", () => {
@@ -218,4 +226,76 @@ test("extractStationImageCandidates ignores favicon links and ICO files", () => 
 test("imageExtension rejects ICO artwork", () => {
   assert.equal(imageExtension("image/x-icon", "https://example.com/favicon.ico"), "");
   assert.equal(imageExtension("image/vnd.microsoft.icon", "https://example.com/favicon.ico"), "");
+});
+
+
+test("findInstantAudioStreams preserves ordered fallback candidates", () => {
+  const streams = findInstantAudioStreams({
+    result: {
+      streams: [
+        { url: "http://radio.example/a.mp3", mime: "audio/mpeg" },
+        { url: "https://radio.example/b.aac", mime: "audio/aac" },
+        { url: "https://radio.example/c.ogg", mime: "audio/ogg" },
+      ],
+    },
+  });
+
+  assert.deepEqual(
+    streams.map((item) => item.url),
+    [
+      "https://radio.example/b.aac",
+      "https://radio.example/c.ogg",
+      "http://radio.example/a.mp3",
+    ],
+  );
+});
+
+test("normalizeStationStreams keeps primary stream first and removes duplicates", () => {
+  const streams = normalizeStationStreams({
+    stream: "https://radio.example/live",
+    type: "audio/mpeg",
+    streams: [
+      { url: "https://radio.example/live", type: "audio/mpeg" },
+      { url: "https://backup.example/live.aac", type: "audio/aac" },
+    ],
+  });
+
+  assert.equal(streams.length, 2);
+  assert.equal(streams[0].url, "https://radio.example/live");
+  assert.equal(streams[1].url, "https://backup.example/live.aac");
+});
+
+test("mergeStations enriches an existing station with fallback streams", () => {
+  const existing = {
+    alpha: {
+      title: "Alpha",
+      stream: "https://primary.example/live",
+      type: "audio/mpeg",
+      cros: false,
+      favorite: true,
+    },
+  };
+
+  const discovered = {
+    alpha: {
+      title: "Alpha",
+      stream: "https://backup.example/live.aac",
+      type: "audio/aac",
+      cros: false,
+      streams: [
+        { url: "https://backup.example/live.aac", type: "audio/aac" },
+      ],
+    },
+  };
+
+  const result = mergeStations(existing, discovered);
+  assert.equal(result.added, 0);
+  assert.equal(result.enriched, 1);
+  assert.deepEqual(
+    result.stations.alpha.streams.map((item) => item.url),
+    [
+      "https://primary.example/live",
+      "https://backup.example/live.aac",
+    ],
+  );
 });

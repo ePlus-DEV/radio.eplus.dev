@@ -17,6 +17,7 @@
       :playlist="playlist"
       :streamName="streamName"
       :streamUrl="streamUrl"
+      :streamUrls="streamUrls"
       :thumb="thumb"
     ></Player>
     <!-- END - Player -->
@@ -115,10 +116,18 @@ interface Song {
 interface StationData {
   station_name: string;
   station_stream: string;
+  station_streams?: StationStream[];
   station_image: string;
   station_schedule?: string;
   cros: boolean;
   type: string;
+}
+
+interface StationStream {
+  url: string;
+  type?: string;
+  cros?: boolean;
+  source?: string;
 }
 
 interface StationCatalogEntry {
@@ -127,6 +136,7 @@ interface StationCatalogEntry {
   type: string;
   cros: boolean;
   stream: string;
+  streams?: StationStream[];
   features?: string;
   schedule?: string;
 }
@@ -222,6 +232,33 @@ const playlist = ref<Track[]>([]);
 const lyric_popup = ref(false);
 const lyricLines = ref<string[]>([t("panel.updating")]);
 const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
+const streamUrls = ref<AudioSrc[]>([]);
+
+const toAudioSrc = (
+  stream: StationStream | { url: string; type?: string; cros?: boolean },
+): AudioSrc => ({
+  src: stream.cros
+    ? `${config.public.corsServer || ""}${stream.url}`
+    : stream.url,
+  type: (stream.type || "audio/mpeg") as AudioMimeType,
+});
+
+const setStationStreams = (
+  primary: { url: string; type?: string; cros?: boolean },
+  fallbacks: StationStream[] = [],
+): void => {
+  const seen = new Set<string>();
+  const candidates = [primary, ...fallbacks].filter((item) => {
+    const url = String(item?.url || "").trim();
+    if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
+    seen.add(url);
+    return true;
+  });
+
+  streamUrls.value = candidates.map(toAudioSrc);
+  streamUrl.value =
+    streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as AudioSrc);
+};
 let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
 let requestVersion = 0;
 const POLL_INTERVAL = 60_000;
@@ -232,12 +269,10 @@ watch(
     if (!meta) return;
     streamName.value = meta.title;
     thumb.value = meta.features || String(config.public.placeholderStation);
-    streamUrl.value = {
-      src: meta.cros
-        ? `${config.public.corsServer || ""}${meta.stream}`
-        : meta.stream,
-      type: meta.type as AudioMimeType,
-    };
+    setStationStreams(
+      { url: meta.stream, type: meta.type, cros: meta.cros },
+      meta.streams || [],
+    );
   },
   { immediate: true },
 );
@@ -385,12 +420,10 @@ const handleDataFromChild = (data: StationData): void => {
   $store.setTimezone(area.value, slug.value);
 
   streamName.value = data.station_name;
-  streamUrl.value = {
-    src: data.cros
-      ? `${config.public.corsServer || ""}${data.station_stream}`
-      : data.station_stream,
-    type: data.type as AudioMimeType,
-  };
+  setStationStreams(
+    { url: data.station_stream, type: data.type, cros: data.cros },
+    data.station_streams || [],
+  );
   thumb.value = data.station_image;
   program.value = [];
   song.value = undefined;
