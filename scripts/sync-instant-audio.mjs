@@ -3,6 +3,7 @@
 import { mkdir, readFile, writeFile, access } from "node:fs/promises";
 import { constants as fsConstants } from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 const ROOT = process.cwd();
 const INSTANT_HOME = "https://instant.audio/";
@@ -297,7 +298,7 @@ function extractWebradioConfig(source = "") {
   return { countryCode, domainID, languageCode };
 }
 
-function extractStationCandidates(source, origin) {
+export function extractStationCandidates(source, origin) {
   const candidates = new Map();
 
   const addCandidate = (href, label, { trustedStationList = false } = {}) => {
@@ -1088,7 +1089,7 @@ async function writeJson(file, data) {
   await writeFile(file, `${JSON.stringify(data, null, 2)}\n`);
 }
 
-function normalizeStreamIdentity(value = "") {
+export function normalizeStreamIdentity(value = "") {
   try {
     const url = new URL(value);
     url.hash = "";
@@ -1098,7 +1099,7 @@ function normalizeStreamIdentity(value = "") {
   }
 }
 
-function mergeStations(existing, discovered) {
+export function mergeStations(existing, discovered) {
   const merged = { ...existing };
   const knownStreams = new Set(
     Object.values(existing)
@@ -1132,6 +1133,10 @@ function mergeStations(existing, discovered) {
   return { stations: merged, added };
 }
 
+export function resolveCountryTimezone(existing = {}, metadata = {}) {
+  return existing.timezone || metadata.timezone || "UTC";
+}
+
 async function updateWorld(country, metadata, stationCount, flagPath) {
   const file = path.join(ROOT, "public", "radio", "world.json");
   const world = await readJson(file);
@@ -1146,7 +1151,7 @@ async function updateWorld(country, metadata, stationCount, flagPath) {
       existing.flag ||
       `/img/${country.area}/flags/${country.slug}.png`,
     data: `/assets/radio/${country.area}/${country.slug}.json`,
-    timezone: existing.timezone || metadata.timezone || "UTC",
+    timezone: resolveCountryTimezone(existing, metadata),
     station: stationCount
   };
 
@@ -1416,7 +1421,9 @@ async function main() {
     console.log("[instant.audio] Dry run complete; repository files were not changed.");
   }
 }
-main().catch((error) => {
-  console.error("[instant.audio] Sync failed:", error);
-  process.exitCode = 1;
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error("[instant.audio] Sync failed:", error);
+    process.exitCode = 1;
+  });
+}
