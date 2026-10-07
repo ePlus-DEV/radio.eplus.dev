@@ -171,6 +171,13 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
+      - name: "Install ImageMagick"
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          convert -version
+
       - name: "Show effective sync settings"
         shell: bash
         run: |
