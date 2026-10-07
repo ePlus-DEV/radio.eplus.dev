@@ -1,0 +1,12 @@
+name: radio-preview
+
+static_sites:
+  - name: radio-preview
+    github:
+      repo: ePlus-DEV/radio.eplus.dev
+      branch: main
+      deploy_on_push: false
+    build_command: npm run generate
+    output_dir: .output/public
+    routes:
+      - path: /
