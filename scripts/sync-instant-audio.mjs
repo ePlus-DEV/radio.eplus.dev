@@ -1976,6 +1976,7 @@ async function main() {
           }
         }
     
+        const artworkMetadataAdded = tagStationArtworkMetadata(stations);
         stations = await repairStationImages(country, stations);
 
         const needsReprocess = Object.values(stations).filter(
@@ -2020,11 +2021,9 @@ async function main() {
     
         if (!dryRun) {
           const artworkChanged =
+            artworkMetadataAdded > 0 ||
             imageDelta.downloaded > 0 ||
-            imageDelta.fallback > 0 ||
-            Object.values(stations).some(
-              (station) => station?.artwork?.needs_reprocess === true,
-            );
+            imageDelta.fallback > 0;
 
           if (country.isMissing || added > 0 || artworkChanged) {
             await writeJson(country.destination, stations);
