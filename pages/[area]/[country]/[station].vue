@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AudioMimeType, AudioSrc } from "vidstack";
+import type { RadioSource } from "~/types/radio";
 
 interface ProgramItem {
   encodeId: string;
@@ -231,16 +231,16 @@ const thumb = ref("");
 const playlist = ref<Track[]>([]);
 const lyric_popup = ref(false);
 const lyricLines = ref<string[]>([t("panel.updating")]);
-const streamUrl = ref<AudioSrc>({ src: "", type: "audio/mpeg" });
-const streamUrls = ref<AudioSrc[]>([]);
+const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
+const streamUrls = ref<RadioSource[]>([]);
 
-const toAudioSrc = (
+const toRadioSource = (
   stream: StationStream | { url: string; type?: string; cros?: boolean },
-): AudioSrc => ({
+): RadioSource => ({
   src: stream.cros
     ? `${config.public.corsServer || ""}${stream.url}`
     : stream.url,
-  type: (stream.type || "audio/mpeg") as AudioMimeType,
+  type: (stream.type || "audio/mpeg"),
 });
 
 const setStationStreams = (
@@ -255,9 +255,9 @@ const setStationStreams = (
     return true;
   });
 
-  streamUrls.value = candidates.map(toAudioSrc);
+  streamUrls.value = candidates.map(toRadioSource);
   streamUrl.value =
-    streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as AudioSrc);
+    streamUrls.value[0] || ({ src: "", type: "audio/mpeg" });
 };
 let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
 let requestVersion = 0;
