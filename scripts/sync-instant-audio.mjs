@@ -461,9 +461,25 @@ function findStreamUrl(payload) {
   return candidates[0]?.url || "";
 }
 
-function findInstantAudioStream(payload) {
+export function findInstantAudioStreams(payload) {
   const result = payload?.result || payload || {};
   const streams = Array.isArray(result.streams) ? result.streams : [];
+  const candidates = [];
+  const seen = new Set();
+
+  const add = (url, mime = "", source = "instant-audio") => {
+    const value = String(url || "").trim();
+    if (!/^https?:\/\//i.test(value)) return;
+    const key = normalizeStreamIdentity(value);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    candidates.push({
+      url: value,
+      type: mime || detectMime(value),
+      cros: value.startsWith("http://"),
+      source,
+    });
+  };
 
   const playable = streams
     .filter((item) => {
@@ -484,15 +500,56 @@ function findInstantAudioStream(payload) {
       return bHttps - aHttps;
     });
 
-  if (playable[0]) {
-    return {
-      url: playable[0].url,
-      mime: playable[0].mime || detectMime(playable[0].url)
-    };
+  for (const item of playable) {
+    add(item.url, item.mime || detectMime(item.url));
   }
 
   const fallback = findStreamUrl(payload);
-  return fallback ? { url: fallback, mime: detectMime(fallback) } : null;
+  if (fallback) add(fallback, detectMime(fallback), "instant-audio-fallback");
+
+  return candidates;
+}
+
+function findInstantAudioStream(payload) {
+  const [first] = findInstantAudioStreams(payload);
+  return first
+    ? { url: first.url, mime: first.type }
+    : null;
+}
+
+export function normalizeStationStreams(station = {}) {
+  const result = [];
+  const seen = new Set();
+
+  const add = (candidate, defaultSource = "existing") => {
+    const raw = typeof candidate === "string" ? { url: candidate } : candidate || {};
+    const url = String(raw.url || "").trim();
+    if (!/^https?:\/\//i.test(url)) return;
+    const key = normalizeStreamIdentity(url);
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    result.push({
+      url,
+      type: raw.type || raw.mime || detectMime(url),
+      cros: typeof raw.cros === "boolean" ? raw.cros : url.startsWith("http://"),
+      source: raw.source || defaultSource,
+    });
+  };
+
+  if (station.stream) {
+    add({
+      url: station.stream,
+      type: station.type,
+      cros: station.cros,
+      source: station.source || "primary",
+    });
+  }
+
+  for (const candidate of Array.isArray(station.streams) ? station.streams : []) {
+    add(candidate);
+  }
+
+  return result;
 }
 
 function findTextField(payload, fieldNames) {
@@ -872,7 +929,8 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
 function stationFromInstantPayload(country, candidate, apiUrl, payload) {
   const instantResult = payload?.result || payload || {};
   const stationMetadata = instantResult.station || {};
-  const streamInfo = findInstantAudioStream(payload);
+  const streamCandidates = findInstantAudioStreams(payload);
+  const streamInfo = streamCandidates[0];
 
   if (!streamInfo) return null;
 
@@ -910,10 +968,11 @@ function stationFromInstantPayload(country, candidate, apiUrl, payload) {
     ...(typeof stationMetadata.acrCloud === "boolean"
       ? { acrCloud: stationMetadata.acrCloud }
       : {}),
-    type: streamInfo.mime || detectMime(streamInfo.url),
+    type: streamInfo.type || detectMime(streamInfo.url),
     url: website,
-    cros: streamInfo.url.startsWith("http://"),
+    cros: streamInfo.cros,
     stream: streamInfo.url,
+    streams: streamCandidates,
     features:
       image && /^https?:\/\//i.test(image)
         ? image
@@ -1070,7 +1129,26 @@ async function syncFromRadioBrowser(country, metadata) {
       .filter(Boolean)
       .slice(0, 5);
 
-    prepared.push({ item, title, stream, slug, tags });
+    const streamCandidates = normalizeStationStreams({
+      stream,
+      type: radioBrowserMime(item.codec, stream),
+      cros: stream.startsWith("http://"),
+      source: `radio-browser:${item.stationuuid || slug}`,
+      streams: [
+        {
+          url: String(item.url_resolved || "").trim(),
+          type: radioBrowserMime(item.codec, String(item.url_resolved || "")),
+          source: "radio-browser:resolved",
+        },
+        {
+          url: String(item.url || "").trim(),
+          type: radioBrowserMime(item.codec, String(item.url || "")),
+          source: "radio-browser:raw",
+        },
+      ],
+    });
+
+    prepared.push({ item, title, stream, streamCandidates, slug, tags });
   }
 
   const ARTWORK_CONCURRENCY = 6;
@@ -1078,7 +1156,7 @@ async function syncFromRadioBrowser(country, metadata) {
     const batch = prepared.slice(index, index + ARTWORK_CONCURRENCY);
 
     const resolved = await Promise.all(
-      batch.map(async ({ item, title, stream, slug, tags }) => ({
+      batch.map(async ({ item, title, stream, streamCandidates, slug, tags }) => ({
         slug,
         station: {
           title,
@@ -1087,6 +1165,7 @@ async function syncFromRadioBrowser(country, metadata) {
           url: String(item.homepage || country.domain),
           cros: stream.startsWith("http://"),
           stream,
+          streams: streamCandidates,
           features: await resolveStationImage(
             country,
             slug,
@@ -1212,7 +1291,10 @@ async function syncCountry(country, metadata) {
   return {
     stations,
     countryId,
-    source: "instant-audio"
+    source:
+      keys.length < candidates.length
+        ? "instant-audio-partial"
+        : "instant-audio"
   };
 }
 
@@ -1237,20 +1319,64 @@ export function normalizeStreamIdentity(value = "") {
 }
 
 export function mergeStations(existing, discovered) {
-  const merged = { ...existing };
-  const knownStreams = new Set(
-    Object.values(existing)
-      .map((station) => normalizeStreamIdentity(station?.stream))
-      .filter(Boolean),
+  const merged = Object.fromEntries(
+    Object.entries(existing).map(([slug, station]) => [
+      slug,
+      {
+        ...station,
+        streams: normalizeStationStreams(station),
+      },
+    ]),
   );
+
+  const streamOwner = new Map();
+  for (const [slug, station] of Object.entries(merged)) {
+    for (const candidate of normalizeStationStreams(station)) {
+      streamOwner.set(normalizeStreamIdentity(candidate.url), slug);
+    }
+  }
+
   const existingHasFavorite = Object.values(existing).some(
     (station) => station?.favorite === true,
   );
 
   let added = 0;
+  let enriched = 0;
+
   for (const [baseSlug, stationValue] of Object.entries(discovered)) {
-    const streamKey = normalizeStreamIdentity(stationValue?.stream);
-    if (!streamKey || knownStreams.has(streamKey)) continue;
+    const discoveredStreams = normalizeStationStreams(stationValue);
+    if (!discoveredStreams.length) continue;
+
+    const matchedByStream = discoveredStreams
+      .map((candidate) => streamOwner.get(normalizeStreamIdentity(candidate.url)))
+      .find(Boolean);
+    const targetSlug = merged[baseSlug] ? baseSlug : matchedByStream;
+
+    if (targetSlug) {
+      const current = merged[targetSlug];
+      const before = normalizeStationStreams(current);
+      const combined = normalizeStationStreams({
+        ...current,
+        streams: [...before, ...discoveredStreams],
+      });
+
+      if (combined.length > before.length) enriched += 1;
+
+      merged[targetSlug] = {
+        ...current,
+        ...(current.description ? {} : stationValue.description ? { description: stationValue.description } : {}),
+        ...(current.features ? {} : stationValue.features ? { features: stationValue.features } : {}),
+        streams: combined,
+        stream: combined[0].url,
+        type: combined[0].type,
+        cros: combined[0].cros,
+      };
+
+      for (const candidate of combined) {
+        streamOwner.set(normalizeStreamIdentity(candidate.url), targetSlug);
+      }
+      continue;
+    }
 
     let slug = baseSlug;
     let suffix = 2;
@@ -1259,15 +1385,23 @@ export function mergeStations(existing, discovered) {
       suffix += 1;
     }
 
-    const station = { ...stationValue };
+    const station = {
+      ...stationValue,
+      streams: discoveredStreams,
+      stream: discoveredStreams[0].url,
+      type: discoveredStreams[0].type,
+      cros: discoveredStreams[0].cros,
+    };
     if (existingHasFavorite || added > 0) delete station.favorite;
 
     merged[slug] = station;
-    knownStreams.add(streamKey);
+    for (const candidate of discoveredStreams) {
+      streamOwner.set(normalizeStreamIdentity(candidate.url), slug);
+    }
     added += 1;
   }
 
-  return { stations: merged, added };
+  return { stations: merged, added, enriched };
 }
 
 async function repairStationImages(country, stations) {
@@ -1678,6 +1812,11 @@ async function main() {
           const merged = mergeStations(existingStations, discoveredStations);
           stations = merged.stations;
           added = merged.added;
+          if (merged.enriched > 0) {
+            console.log(
+              `[instant.audio] ${country.slug}: enriched ${merged.enriched} existing station(s) with fallback stream(s)`,
+            );
+          }
         }
     
         stations = await repairStationImages(country, stations);
