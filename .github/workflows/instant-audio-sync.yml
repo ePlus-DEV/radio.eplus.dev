@@ -45,12 +45,35 @@ jobs:
         with:
           node-version: "24.15.0"
 
-      - name: "Validate lightweight radio crawler"
+      - name: "Validate direct radio crawler"
         run: |
-          node scripts/sync-instant-audio.mjs \
-            --country=latvia \
-            --max-stations=3 \
-            --dry-run
+          node --check scripts/sync-instant-audio.mjs
+
+          node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+
+          const source = readFileSync("scripts/sync-instant-audio.mjs", "utf8");
+
+          const forbidden = [
+            "PlaywrightCrawler",
+            "syncStationsViaBrowser",
+            "RADIO_BROWSER_BASE",
+            "syncFromRadioBrowser",
+            "discoverCountriesViaBrowser",
+          ];
+
+          for (const token of forbidden) {
+            if (source.includes(token)) {
+              throw new Error(`Browser/fallback code still present: ${token}`);
+            }
+          }
+
+          if (!source.includes('const API_BASE = "https://api.webrad.io/data/streams";')) {
+            throw new Error("Direct Webrad API base is missing");
+          }
+
+          console.log("Direct-only crawler validation passed");
+          NODE
 
   sync:
     if: github.event_name != 'pull_request'
