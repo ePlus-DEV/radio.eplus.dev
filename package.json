@@ -48,5 +48,9 @@
   },
   "engines": {
     "node": "24.15.0"
+  },
+  "overrides": {
+    "simple-git": "4.0.2",
+    "@simple-git/argv-parser": "2.0.1"
   }
 }
