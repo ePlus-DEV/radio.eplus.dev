@@ -11,6 +11,8 @@ const INSTANT_HOME = "https://instant.audio/";
 const API_BASE = "https://api.instant.audio/data/streams";
 const RADIO_BROWSER_BASE =
   "https://de1.api.radio-browser.info/json/stations/bycountrycodeexact";
+const VIETMAP_REVERSE_BASE = "https://maps.vietmap.vn/api/reverse/v4";
+const VIETMAP_API_KEY = String(process.env.VIETMAP_API_KEY || "").trim();
 const MWYNIKI_BASE = "https://www.mwyniki.pl";
 const MWYNIKI_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
@@ -62,6 +64,101 @@ const runStats = {
 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function vietMapBoundary(result = {}, type) {
+  const boundary = Array.isArray(result?.boundaries)
+    ? result.boundaries.find((item) => Number(item?.type) === type)
+    : null;
+
+  if (!boundary) return null;
+
+  const name = String(boundary.full_name || boundary.name || "").trim();
+  if (!name) return null;
+
+  return {
+    id: boundary.id ?? null,
+    name,
+  };
+}
+
+export function normalizeVietMapAddress(result = {}, { legacy = false } = {}) {
+  if (!result || typeof result !== "object") return null;
+
+  const full = String(result.display || result.address || "").trim();
+  const name = String(result.name || "").trim();
+  const province = vietMapBoundary(result, 0);
+  const district = legacy ? vietMapBoundary(result, 1) : null;
+  const ward = vietMapBoundary(result, 2);
+
+  if (!full && !name && !province && !district && !ward) return null;
+
+  return {
+    full: full || null,
+    name: name || null,
+    province,
+    district,
+    ward,
+  };
+}
+
+function firstVietMapResult(payload) {
+  if (Array.isArray(payload)) return payload.find(Boolean) || null;
+  if (payload?.data && Array.isArray(payload.data)) return payload.data.find(Boolean) || null;
+  if (payload && typeof payload === "object") return payload;
+  return null;
+}
+
+async function reverseVietMapAddress(lat, lng) {
+  if (!VIETMAP_API_KEY) return null;
+
+  const url = new URL(VIETMAP_REVERSE_BASE);
+  url.searchParams.set("apikey", VIETMAP_API_KEY);
+  url.searchParams.set("lat", String(lat));
+  url.searchParams.set("lng", String(lng));
+  url.searchParams.set("display_type", "6");
+
+  const response = await fetchWithRetry(url.toString(), {
+    headers: { accept: "application/json" },
+  });
+  const payload = await response.json();
+  const legacyResult = firstVietMapResult(payload);
+  if (!legacyResult) return null;
+
+  const currentResult =
+    legacyResult?.data_new && typeof legacyResult.data_new === "object"
+      ? legacyResult.data_new
+      : null;
+
+  return {
+    legacy: normalizeVietMapAddress(legacyResult, { legacy: true }),
+    current: normalizeVietMapAddress(currentResult, { legacy: false }),
+    source: "vietmap-reverse-v4",
+  };
+}
+
+async function resolveVietnamStationLocation(country, item = {}) {
+  if (country?.slug !== "viet-nam") return {};
+
+  const lat = Number(item.geo_lat);
+  const lng = Number(item.geo_long);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return {};
+
+  const location = { lat, lng };
+
+  if (!VIETMAP_API_KEY) {
+    return { location };
+  }
+
+  try {
+    const address = await reverseVietMapAddress(lat, lng);
+    return address ? { location, address } : { location };
+  } catch (error) {
+    console.warn(
+      `[vietmap] Reverse lookup failed for ${item.name || item.stationuuid || "station"}: ${error.message}`,
+    );
+    return { location };
+  }
+}
 
 const COUNTRY_ALIASES = {
   "haïti": "haiti",
@@ -1304,6 +1401,7 @@ async function syncFromRadioBrowser(country, metadata) {
           String(item.favicon || ""),
           String(item.homepage || ""),
         );
+        const locationMetadata = await resolveVietnamStationLocation(country, item);
 
         return {
           slug,
@@ -1317,6 +1415,7 @@ async function syncFromRadioBrowser(country, metadata) {
             streams: streamCandidates,
             features,
             artwork: classifyStationArtwork(features),
+            ...locationMetadata,
             source: `radio-browser:${item.stationuuid || slug}`,
           },
         };
@@ -1506,12 +1605,20 @@ export function mergeStations(existing, discovered) {
         streams: [...before, ...discoveredStreams],
       });
 
-      if (combined.length > before.length) enriched += 1;
+      const metadataAdded =
+        (!current.description && stationValue.description) ||
+        (!current.features && stationValue.features) ||
+        (!current.location && stationValue.location) ||
+        (!current.address && stationValue.address);
+
+      if (combined.length > before.length || metadataAdded) enriched += 1;
 
       merged[targetSlug] = {
         ...current,
         ...(current.description ? {} : stationValue.description ? { description: stationValue.description } : {}),
         ...(current.features ? {} : stationValue.features ? { features: stationValue.features } : {}),
+        ...(current.location ? {} : stationValue.location ? { location: stationValue.location } : {}),
+        ...(current.address ? {} : stationValue.address ? { address: stationValue.address } : {}),
         streams: combined,
         stream: combined[0].url,
         type: combined[0].type,
@@ -1963,15 +2070,17 @@ async function main() {
     
         let stations = discoveredStations;
         let added = Object.keys(discoveredStations).length;
+        let enriched = 0;
     
         if (!country.isMissing) {
           const existingStations = await readJson(country.destination);
           const merged = mergeStations(existingStations, discoveredStations);
           stations = merged.stations;
           added = merged.added;
-          if (merged.enriched > 0) {
+          enriched = merged.enriched;
+          if (enriched > 0) {
             console.log(
-              `[instant.audio] ${country.slug}: enriched ${merged.enriched} existing station(s) with fallback stream(s)`,
+              `[instant.audio] ${country.slug}: enriched ${enriched} existing station(s) with stream/location metadata`,
             );
           }
         }
@@ -2025,7 +2134,7 @@ async function main() {
             imageDelta.downloaded > 0 ||
             imageDelta.fallback > 0;
 
-          if (country.isMissing || added > 0 || artworkChanged) {
+          if (country.isMissing || added > 0 || enriched > 0 || artworkChanged) {
             await writeJson(country.destination, stations);
           }
           await updateWorld(country, metadata, Object.keys(stations).length, flagPath);
