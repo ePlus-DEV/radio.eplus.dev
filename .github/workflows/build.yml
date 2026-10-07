@@ -3,6 +3,27 @@ name: "Build Nuxt application"
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - "app.vue"
+      - "nuxt.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.json"
+      - "tailwind.config.*"
+      - "components/**"
+      - "composables/**"
+      - "layouts/**"
+      - "middleware/**"
+      - "pages/**"
+      - "plugins/**"
+      - "stores/**"
+      - "assets/**"
+      - "lang/**"
+      - "data/world.ts"
+      - "public/radio/world.json"
+      - "build/**"
+      - "server/**"
+      - ".github/workflows/build.yml"
 
 permissions:
   contents: read
