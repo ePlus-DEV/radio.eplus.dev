@@ -55,6 +55,7 @@ const runStats = {
   imagesDownloaded: 0,
   imagesExisting: 0,
   imagesFallback: 0,
+  artworkNeedsReprocess: 0,
   imageCandidateFailures: 0,
   homepageArtworkFailures: 0,
   countries: [],
@@ -966,6 +967,48 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
   }
 }
 
+export function classifyStationArtwork(imagePath = "") {
+  const image = String(imagePath || "").trim();
+
+  if (!image || image === DEFAULT_STATION_IMAGE) {
+    return {
+      status: "fallback",
+      source: "default-radio",
+      reason: image ? "no-usable-source" : "missing-artwork",
+      needs_reprocess: true,
+    };
+  }
+
+  if (image.startsWith("/img/")) {
+    return {
+      status: "local",
+      source: "repository",
+      needs_reprocess: false,
+    };
+  }
+
+  return {
+    status: "external",
+    source: "legacy-external",
+    reason: "not-normalized",
+    needs_reprocess: true,
+  };
+}
+
+function tagStationArtworkMetadata(stations = {}) {
+  let tagged = 0;
+
+  for (const station of Object.values(stations)) {
+    if (!station || typeof station !== "object") continue;
+    if (station.artwork && typeof station.artwork === "object") continue;
+
+    station.artwork = classifyStationArtwork(station.features);
+    tagged += 1;
+  }
+
+  return tagged;
+}
+
 async function resolveStationImage(country, stationSlug, preferredImage, homepageUrl) {
   const existing = await findExistingStationImage(country, stationSlug);
   if (existing) {
@@ -1097,6 +1140,7 @@ async function syncStation(country, countryId, candidate) {
         station.features,
         station.url,
       );
+      station.artwork = classifyStationArtwork(station.features);
     }
     return {
       station,
@@ -1253,25 +1297,30 @@ async function syncFromRadioBrowser(country, metadata) {
     const batch = prepared.slice(index, index + ARTWORK_CONCURRENCY);
 
     const resolved = await Promise.all(
-      batch.map(async ({ item, title, stream, streamCandidates, slug, tags }) => ({
-        slug,
-        station: {
-          title,
-          ...(tags.length ? { description: tags.join(", ") } : {}),
-          type: radioBrowserMime(item.codec, stream),
-          url: String(item.homepage || country.domain),
-          cros: stream.startsWith("http://"),
-          stream,
-          streams: streamCandidates,
-          features: await resolveStationImage(
-            country,
-            slug,
-            String(item.favicon || ""),
-            String(item.homepage || ""),
-          ),
-          source: `radio-browser:${item.stationuuid || slug}`,
-        },
-      })),
+      batch.map(async ({ item, title, stream, streamCandidates, slug, tags }) => {
+        const features = await resolveStationImage(
+          country,
+          slug,
+          String(item.favicon || ""),
+          String(item.homepage || ""),
+        );
+
+        return {
+          slug,
+          station: {
+            title,
+            ...(tags.length ? { description: tags.join(", ") } : {}),
+            type: radioBrowserMime(item.codec, stream),
+            url: String(item.homepage || country.domain),
+            cros: stream.startsWith("http://"),
+            stream,
+            streams: streamCandidates,
+            features,
+            artwork: classifyStationArtwork(features),
+            source: `radio-browser:${item.stationuuid || slug}`,
+          },
+        };
+      }),
     );
 
     for (const { slug, station } of resolved) {
@@ -1502,15 +1551,23 @@ export function mergeStations(existing, discovered) {
 }
 
 async function repairStationImages(country, stations) {
+  tagStationArtworkMetadata(stations);
+
   for (const [slug, station] of Object.entries(stations)) {
     const image = String(station?.features || "");
-    if (!image.startsWith("/img/")) continue;
+    if (!image.startsWith("/img/")) {
+      station.artwork = classifyStationArtwork(image);
+      continue;
+    }
 
     const imageFile = path.join(ROOT, "public", image);
     const missing = !(await exists(imageFile));
     const lowQuality = /\.ico$/i.test(image);
 
-    if (!missing && !lowQuality) continue;
+    if (!missing && !lowQuality) {
+      station.artwork = classifyStationArtwork(image);
+      continue;
+    }
 
     console.warn(
       `[instant.audio] Repairing ${lowQuality ? "low-quality" : "missing"} artwork for ${country.slug}/${slug}: ${image}`,
@@ -1522,6 +1579,7 @@ async function repairStationImages(country, stations) {
       "",
       station?.url || country.domain,
     );
+    station.artwork = classifyStationArtwork(station.features);
   }
 
   return stations;
@@ -1727,7 +1785,7 @@ async function writeRunSummary() {
     "========== RADIO SYNC SUMMARY ==========",
     `Countries: success ${runStats.countriesSucceeded}, failed ${runStats.countriesFailed}`,
     `Stations: discovered ${runStats.stationsDiscovered}, added ${runStats.stationsAdded}`,
-    `Artwork: downloaded ${runStats.imagesDownloaded}, reused local ${runStats.imagesExisting}, fallback ${runStats.imagesFallback}`,
+    `Artwork: downloaded ${runStats.imagesDownloaded}, reused local ${runStats.imagesExisting}, fallback ${runStats.imagesFallback}, needs reprocess ${runStats.artworkNeedsReprocess}`,
     `Artwork attempts: candidate failures ${runStats.imageCandidateFailures}, homepage inspect failures ${runStats.homepageArtworkFailures}`,
     `InstantAudio direct API blocked: ${directApiBlockedForRun ? "yes" : "no"}`,
     "========================================",
@@ -1748,6 +1806,7 @@ async function writeRunSummary() {
         Downloaded: item.downloaded,
         Reused: item.reused,
         Fallback: item.fallback,
+        "Needs reprocess": item.needsReprocess,
         "Candidate fail": item.candidateFailures,
         "Homepage fail": item.homepageFailures,
       })),
@@ -1767,10 +1826,10 @@ async function writeRunSummary() {
       "",
       "### Country breakdown",
       "",
-      "| Country | Status | Source | Discovered | Added | Total | Artwork downloaded | Reused | Fallback | Candidate failures | Homepage failures |",
-      "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+      "| Country | Status | Source | Discovered | Added | Total | Artwork downloaded | Reused | Fallback | Needs reprocess | Candidate failures | Homepage failures |",
+      "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
       ...runStats.countries.map((item) =>
-        `| ${item.country} | ${item.status} | ${item.source || "-"} | ${item.discovered} | ${item.added} | ${item.total} | ${item.downloaded} | ${item.reused} | ${item.fallback} | ${item.candidateFailures} | ${item.homepageFailures} |`
+        `| ${item.country} | ${item.status} | ${item.source || "-"} | ${item.discovered} | ${item.added} | ${item.total} | ${item.downloaded} | ${item.reused} | ${item.fallback} | ${item.needsReprocess} | ${item.candidateFailures} | ${item.homepageFailures} |`
       ),
       "",
       "### Stations",
@@ -1787,6 +1846,7 @@ async function writeRunSummary() {
       `| Downloaded | ${runStats.imagesDownloaded} |`,
       `| Reused local | ${runStats.imagesExisting} |`,
       `| Fallback | ${runStats.imagesFallback} |`,
+      `| Needs reprocess | ${runStats.artworkNeedsReprocess} |`,
       `| Failed candidates | ${runStats.imageCandidateFailures} |`,
       `| Homepage inspection failures | ${runStats.homepageArtworkFailures} |`,
       "",
@@ -1918,6 +1978,11 @@ async function main() {
     
         stations = await repairStationImages(country, stations);
 
+        const needsReprocess = Object.values(stations).filter(
+          (station) => station?.artwork?.needs_reprocess === true,
+        ).length;
+        runStats.artworkNeedsReprocess += needsReprocess;
+
         const discoveredCount = Object.keys(discoveredStations).length;
         runStats.countriesSucceeded += 1;
         runStats.stationsDiscovered += discoveredCount;
@@ -1934,6 +1999,7 @@ async function main() {
           downloaded: imageDelta.downloaded,
           reused: imageDelta.existing,
           fallback: imageDelta.fallback,
+          needsReprocess,
           candidateFailures: imageDelta.candidateFailures,
           homepageFailures: imageDelta.homepageFailures,
           status: "success",
@@ -1953,7 +2019,14 @@ async function main() {
         );
     
         if (!dryRun) {
-          if (country.isMissing || added > 0) {
+          const artworkChanged =
+            imageDelta.downloaded > 0 ||
+            imageDelta.fallback > 0 ||
+            Object.values(stations).some(
+              (station) => station?.artwork?.needs_reprocess === true,
+            );
+
+          if (country.isMissing || added > 0 || artworkChanged) {
             await writeJson(country.destination, stations);
           }
           await updateWorld(country, metadata, Object.keys(stations).length, flagPath);
@@ -1972,6 +2045,7 @@ async function main() {
         downloaded: imageDelta.downloaded,
         reused: imageDelta.existing,
         fallback: imageDelta.fallback,
+        needsReprocess: 0,
         candidateFailures: imageDelta.candidateFailures,
         homepageFailures: imageDelta.homepageFailures,
         status: "failed",
