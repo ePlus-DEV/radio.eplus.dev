@@ -50,6 +50,7 @@ const runStats = {
   imagesFallback: 0,
   imageCandidateFailures: 0,
   homepageArtworkFailures: 0,
+  countries: [],
 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -1278,6 +1279,14 @@ async function writeRunSummary() {
       `| Succeeded | ${runStats.countriesSucceeded} |`,
       `| Failed | ${runStats.countriesFailed} |`,
       "",
+      "### Country breakdown",
+      "",
+      "| Country | Status | Source | Discovered | Added | Total | Artwork downloaded | Reused | Fallback | Candidate failures | Homepage failures |",
+      "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+      ...runStats.countries.map((item) =>
+        `| ${item.country} | ${item.status} | ${item.source || "-"} | ${item.discovered} | ${item.added} | ${item.total} | ${item.downloaded} | ${item.reused} | ${item.fallback} | ${item.candidateFailures} | ${item.homepageFailures} |`
+      ),
+      "",
       "### Stations",
       "",
       "| Metric | Count |",
@@ -1377,6 +1386,20 @@ async function main() {
 
         const imageDelta = imageStatsDelta(imageBefore);
 
+        runStats.countries.push({
+          country: country.slug,
+          source,
+          discovered: discoveredCount,
+          added,
+          total: Object.keys(stations).length,
+          downloaded: imageDelta.downloaded,
+          reused: imageDelta.existing,
+          fallback: imageDelta.fallback,
+          candidateFailures: imageDelta.candidateFailures,
+          homepageFailures: imageDelta.homepageFailures,
+          status: "success",
+        });
+
         console.log(
           "[instant.audio] " + country.slug + ": discovered " + discoveredCount +
           ", added " + added + ", total " + Object.keys(stations).length +
@@ -1400,6 +1423,20 @@ async function main() {
       } catch (error) {
       failedCountries += 1;
       runStats.countriesFailed += 1;
+      const imageDelta = imageStatsDelta(imageBefore);
+      runStats.countries.push({
+        country: country.slug,
+        source: "",
+        discovered: 0,
+        added: 0,
+        total: 0,
+        downloaded: imageDelta.downloaded,
+        reused: imageDelta.existing,
+        fallback: imageDelta.fallback,
+        candidateFailures: imageDelta.candidateFailures,
+        homepageFailures: imageDelta.homepageFailures,
+        status: "failed",
+      });
       console.error(
         `[instant.audio] ${country.slug}: sync failed, skipping country: ${error.message}`,
       );
