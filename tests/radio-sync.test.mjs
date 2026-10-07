@@ -203,3 +203,21 @@ test("extractMwynikiFlagUrl finds the country logo image", () => {
     "https://www.mwyniki.pl/images/responsive/flags/118.png",
   );
 });
+
+
+test("extractStationImageCandidates ignores favicon links and ICO files", () => {
+  const html = [
+    '<meta property="og:image" content="/logo.png">',
+    '<link rel="icon" href="/favicon.ico">',
+    '<link rel="apple-touch-icon" href="/touch.png">',
+  ].join("");
+  assert.deepEqual(
+    extractStationImageCandidates(html, "https://example.com/"),
+    ["https://example.com/logo.png"],
+  );
+});
+
+test("imageExtension rejects ICO artwork", () => {
+  assert.equal(imageExtension("image/x-icon", "https://example.com/favicon.ico"), "");
+  assert.equal(imageExtension("image/vnd.microsoft.icon", "https://example.com/favicon.ico"), "");
+});
