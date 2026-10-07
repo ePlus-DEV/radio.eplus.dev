@@ -127,7 +127,7 @@ const world = {
       "flag": "/img/asia/flags/china.png",
       "data": "/assets/radio/asia/china.json",
       "timezone": "Asia/Shanghai",
-      "station": 0
+      "station": 92
     },
     "hong-kong": {
       "name": "world.asia.hong_kong",
@@ -169,7 +169,7 @@ const world = {
       "flag": "/img/asia/flags/thailand.png",
       "data": "/assets/radio/asia/thailand.json",
       "timezone": "Asia/Bangkok",
-      "station": 0
+      "station": 114
     },
     "bangladesh": {
       "name": "world.asia.bangladesh",
@@ -197,7 +197,7 @@ const world = {
       "flag": "/img/asia/flags/taiwan.png",
       "data": "/assets/radio/asia/taiwan.json",
       "timezone": "Asia/Taipei",
-      "station": 0
+      "station": 50
     },
     "israel": {
       "name": "world.asia.israel",
@@ -613,14 +613,14 @@ const world = {
       "flag": "/img/oceania/flags/australia.png",
       "data": "/assets/radio/oceania/australia.json",
       "timezone": "Australia/Sydney",
-      "station": 0
+      "station": 129
     },
     "new-zealand": {
       "name": "world.oceania.new_zealand",
       "flag": "/img/oceania/flags/new-zealand.png",
       "data": "/assets/radio/oceania/new-zealand.json",
       "timezone": "Pacific/Auckland",
-      "station": 0
+      "station": 123
     }
   }
 } as const;

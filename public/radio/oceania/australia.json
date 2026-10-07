@@ -1,357 +1,2318 @@
 {
-    "abc-newsradio": {
-        "title": "ABC News Radio",
+  "abc-newsradio": {
+    "title": "ABC News Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.abc.net.au/news/newsradio/",
+    "cros": true,
+    "stream": "https://live-radio01.mediahubaustralia.com/PBW/aac/",
+    "features": "/img/oceania/australia/abc-newsradio.png",
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://live-radio01.mediahubaustralia.com/PBW/aac/",
         "type": "audio/mpeg",
-        "url": "https://www.abc.net.au/news/newsradio/",
         "cros": true,
-        "stream": "https://live-radio01.mediahubaustralia.com/PBW/aac/",
-        "features": "/img/oceania/australia/abc-newsradio.png",
-        "favorite": true
-    },
-    "abc-national": {
-        "title": "ABC Radio National",
+        "source": "primary"
+      }
+    ]
+  },
+  "abc-national": {
+    "title": "ABC Radio National",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/radionational/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038318/rnnsw/master.m3u8",
+    "features": "/img/oceania/australia/abc-national.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038318/rnnsw/master.m3u8",
         "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/radionational/",
         "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038318/rnnsw/master.m3u8",
-        "features": "/img/oceania/australia/abc-national.png"
-    },
-    "triple-j": {
-        "title": "Triple J",
+        "source": "primary"
+      }
+    ]
+  },
+  "triple-j": {
+    "title": "Triple J",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/triplej/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038308/triplejnsw/master.m3u8",
+    "features": "/img/oceania/australia/triple-j.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038308/triplejnsw/master.m3u8",
         "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/triplej/",
         "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038308/triplejnsw/master.m3u8",
-        "features": "/img/oceania/australia/triple-j.png"
-    },
-    "triple-r": {
-        "title": "Triple R",
-        "type": "audio/mpeg",
-        "url": "https://www.rrr.org.au/",
-        "cros": false,
-        "stream": "https://realtime.rrr.org.au/p1m",
-        "features": "/img/oceania/australia/triple-r.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/triple-r?time="
-    },
-    "abc-australia": {
-        "title": "ABC Radio",
-        "type": "audio/mpeg",
-        "url": "https://www.abc.net.au/radio-australia/",
-        "cros": false,
-        "stream": "https://live-radio02.mediahubaustralia.com/RAEW/mp3/",
-        "features": "/img/oceania/australia/abc-australia.png"
-    },
-    "2sm": {
-        "title": "2SM",
-        "type": "audio/mpeg",
-        "url": "https://2smsupernetwork.com/",
+        "source": "primary"
+      },
+      {
+        "url": "http://abc.streamguys1.com/live/triplejnsw/icecast.audio",
+        "type": "audio/aac",
         "cros": true,
-        "stream": "http://s2.viastreaming.net:7100/stream/1/",
-        "features": "/img/oceania/australia/2sm.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/2sm?time="
-    },
-    "abc-brisbane": {
-        "title": "ABC Radio (Brisbane)",
-        "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/brisbane/",
-        "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038304/localbrisbane/masterhq.m3u8",
-        "features": "/img/oceania/australia/abc-brisbane.png"
-    },
-    "702-abc-sydney": {
-        "title": "702 ABC (Sydney)",
-        "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/sydney/",
-        "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038302/localsydney/master.m3u8",
-        "features": "/img/oceania/australia/702-abc-sydney.png"
-    },
-    "720-abc-perth": {
-        "title": "720 ABC (Perth)",
-        "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/perth/",
-        "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038301/localperth/master.m3u8",
-        "features": "/img/oceania/australia/720-abc-perth.png"
-    },
-    "voice-of-islam": {
-        "title": "Voice of Islam",
-        "type": "audio/mpeg",
-        "url": "https://thevoiceofislam.com.au/",
+        "source": "radio-browser:06faec0e-52eb-11e8-a4d1-52543be04c81"
+      },
+      {
+        "url": "http://www.abc.net.au/res/streaming/audio/aac/triplej.pls",
+        "type": "audio/aac",
         "cros": true,
-        "stream": "http://voiceofislam.appsunder.com:8000/voiceofislam.mp3",
-        "features": "/img/oceania/australia/voice-of-islam.png"
-    },
-    "raw-fm": {
-        "title": "Raw FM",
-        "type": "audio/mpeg",
-        "url": "https://www.rawfm.com.au/",
-        "cros": false,
-        "stream": "https://frontend.stream.rawfm.net.au/i/syd-stream-192k.aac",
-        "features": "/img/oceania/australia/raw-fm.png"
-    },
-    "hope-103-2": {
-        "title": "Hope",
-        "type": "audio/mpeg",
-        "url": "https://hope1032.com.au/",
-        "cros": false,
-        "stream": "https://stream.hopemedia.com.au/hope",
-        "features": "/img/oceania/australia/hope-103-2.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/hope-103-2?time="
-    },
-    "774-abc-melbourne": {
-        "title": "ABC Radio (Melbourne)",
-        "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/melbourne/",
-        "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038300/localmelbourne/masterhq.m3u8",
-        "features": "/img/oceania/australia/774-abc-melbourne.png"
-    },
-    "891-abc-adelaide": {
-        "title": "ABC Radio (Adelaide)",
-        "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/adelaide/",
-        "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038298/localadelaide/masterhq.m3u8",
-        "features": "/img/oceania/australia/891-abc-adelaide.png"
-    },
-    "936-abc-hobart": {
-        "title": "ABC Radio Hobart",
-        "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/hobart/",
-        "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038268/localhobart/masterhq.m3u8",
-        "features": "/img/oceania/australia/936-abc-hobart.png"
-    },
-    "fresh-92-7": {
-        "title": "Fresh",
-        "type": "audio/mpeg",
-        "url": "https://www.fresh927.com.au/",
-        "cros": false,
-        "stream": "https://live.fresh927.com.au/freshaac",
-        "features": "/img/oceania/australia/fresh-92-7.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/fresh-92-7?time="
-    },
-    "3xy-hellas": {
-        "title": "3XY Radio Hellas",
-        "type": "audio/mpeg",
-        "url": "https://tanea.com.au/en/",
-        "cros": false,
-        "stream": "https://streamer5.rightclickitservices.com:19770/stream",
-        "features": "/img/oceania/australia/3xy-hellas.png"
-    },
-    "tab": {
-        "title": "TAB Radio",
-        "type": "audio/mpeg",
-        "url": "https://www.tabtouch.com.au/",
-        "cros": false,
-        "stream": "https://racingradio.rwwa.com.au/live",
-        "features": "/img/oceania/australia/tab.png"
-    },
-    "joy-94-9": {
-        "title": "JOY",
-        "type": "audio/mpeg",
-        "url": "https://joy.org.au/",
-        "cros": false,
-        "stream": "https://stream.joy.org.au/proxy/joy949?mp=/live",
-        "features": "/img/oceania/australia/joy-94-9.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/joy-94-9?time="
-    },
-    "rsn-racing-sport": {
-        "title": "RSN Racing & Sport",
-        "type": "audio/mpeg",
-        "url": "https://www.rsn.net.au/",
-        "cros": false,
-        "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RSN_RACINGSPORT_SC",
-        "features": "/img/oceania/australia/rsn-racing-sport.png"
-    },
-    "kiss-fm": {
-        "title": "Kiss FM",
-        "type": "audio/mpeg",
-        "url": "https://kissfm.com.au/",
+        "source": "radio-browser:raw"
+      },
+      {
+        "url": "http://www.abc.net.au/res/streaming/audio/mp3/triplej.pls",
+        "type": "audio/aac",
         "cros": true,
-        "stream": "http://cc.net2streams.com:8565/kissfm.aac",
-        "features": "/img/oceania/australia/kiss-fm.png"
-    },
-    "abc-classic-fm": {
-        "title": "ABC Classic FM",
+        "source": "radio-browser:raw"
+      }
+    ],
+    "description": "folk, rock"
+  },
+  "triple-r": {
+    "title": "Triple R",
+    "type": "audio/mpeg",
+    "url": "https://www.rrr.org.au/",
+    "cros": false,
+    "stream": "https://realtime.rrr.org.au/p1m",
+    "features": "/img/oceania/australia/triple-r.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/triple-r?time=",
+    "streams": [
+      {
+        "url": "https://realtime.rrr.org.au/p1m",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "abc-australia": {
+    "title": "ABC Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.abc.net.au/radio-australia/",
+    "cros": false,
+    "stream": "https://live-radio02.mediahubaustralia.com/RAEW/mp3/",
+    "features": "/img/oceania/australia/abc-australia.png",
+    "streams": [
+      {
+        "url": "https://live-radio02.mediahubaustralia.com/RAEW/mp3/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "2sm": {
+    "title": "2SM",
+    "type": "audio/mpeg",
+    "url": "https://2smsupernetwork.com/",
+    "cros": true,
+    "stream": "http://s2.viastreaming.net:7100/stream/1/",
+    "features": "/img/oceania/australia/2sm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/2sm?time=",
+    "streams": [
+      {
+        "url": "http://s2.viastreaming.net:7100/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "abc-brisbane": {
+    "title": "ABC Radio (Brisbane)",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/brisbane/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038304/localbrisbane/masterhq.m3u8",
+    "features": "/img/oceania/australia/abc-brisbane.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038304/localbrisbane/masterhq.m3u8",
         "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/classic/",
         "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/master.m3u8",
-        "features": "/img/oceania/australia/abc-classic-fm.png"
-    },
-    "abc-classic-2": {
-        "title": "ABC Classic 2",
+        "source": "primary"
+      }
+    ]
+  },
+  "702-abc-sydney": {
+    "title": "702 ABC (Sydney)",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/sydney/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038302/localsydney/master.m3u8",
+    "features": "/img/oceania/australia/702-abc-sydney.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038302/localsydney/master.m3u8",
         "type": "application/x-mpegURL",
-        "url": "https://www.abc.net.au/listenlive/classic2",
         "cros": false,
-        "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038317/classic2/master.m3u8",
-        "features": "/img/oceania/australia/abc-classic-2.png"
-    },
-    "sunshine-fm-104-9": {
-        "title": "Sunshine FM",
-        "type": "audio/mpeg",
-        "url": "https://www.sunshinefm.com.au/",
+        "source": "primary"
+      }
+    ]
+  },
+  "720-abc-perth": {
+    "title": "720 ABC (Perth)",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/perth/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038301/localperth/master.m3u8",
+    "features": "/img/oceania/australia/720-abc-perth.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038301/localperth/master.m3u8",
+        "type": "application/x-mpegURL",
         "cros": false,
-        "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4SFM_SC",
-        "features": "/img/oceania/australia/sunshine-fm-104-9.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/sunshine-fm-104-9?time="
-    },
-    "metro": {
-        "title": "Radio Metro",
+        "source": "primary"
+      }
+    ]
+  },
+  "voice-of-islam": {
+    "title": "Voice of Islam",
+    "type": "audio/mpeg",
+    "url": "https://thevoiceofislam.com.au/",
+    "cros": true,
+    "stream": "http://voiceofislam.appsunder.com:8000/voiceofislam.mp3",
+    "features": "/img/oceania/australia/voice-of-islam.png",
+    "streams": [
+      {
+        "url": "http://voiceofislam.appsunder.com:8000/voiceofislam.mp3",
         "type": "audio/mpeg",
-        "url": "https://radiometro.com.au/",
-        "cros": false,
-        "stream": "https://stream.radiometro.com.au/index.html?sid=1",
-        "features": "/img/oceania/australia/metro.png"
-    },
-    "fbi": {
-        "title": "FBi Radio",
-        "type": "audio/mpeg",
-        "url": "https://fbiradio.com/",
-        "cros": false,
-        "stream": "https://streamer.fbiradio.com/stream",
-        "features": "/img/oceania/australia/fbi.png"
-    },
-    "4zzz": {
-        "title": "4ZZZ",
-        "type": "audio/mpeg",
-        "url": "https://4zzz.org.au/",
-        "cros": false,
-        "stream": "https://iheart.4zzz.org.au/4zzz",
-        "features": "/img/oceania/australia/4zzz.png"
-    },
-    "pbs-fm": {
-        "title": "PBS 106.7 FM",
-        "type": "audio/mpeg",
-        "url": "https://www.pbsfm.org.au/",
-        "cros": false,
-        "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/3PBS_FMAAC_SC",
-        "features": "/img/oceania/australia/pbs-fm.png"
-    },
-    "2nurfm": {
-        "title": "2NURFM",
-        "type": "audio/mpeg",
-        "url": "https://www.2nurfm.com.au/",
-        "cros": false,
-        "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NURFM_SC",
-        "features": "/img/oceania/australia/2nurfm.png"
-    },
-    "89-9-lightfm": {
-        "title": "89.9 TheLight",
-        "type": "audio/mpeg",
-        "url": "https://thelight.com.au/",
-        "cros": false,
-        "stream": "https://stream.thelight.com.au:8130/stream/1/",
-        "features": "/img/oceania/australia/89-9-lightfm.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/89-9-lightfm?time="
-    },
-    "2me-arabic": {
-        "title": "2ME Radio Arabic",
-        "type": "audio/mpeg",
-        "url": "https://www.2me.com.au/",
-        "cros": false,
-        "stream": "https://streaming.2me.com.au/2me",
-        "features": "/img/oceania/australia/2me-arabic.png"
-    },
-    "101-fm": {
-        "title": "101FM (Logan City)",
-        "type": "audio/mpeg",
-        "url": "https://101fm.com.au/",
-        "cros": false,
-        "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4CBLAAC_SC",
-        "features": "/img/oceania/australia/101-fm.png"
-    },
-    "2mm": {
-        "title": "2MM Radio",
-        "type": "audio/mpeg",
-        "url": "https://www.2mm.com.au/",
         "cros": true,
-        "stream": "http://110.175.9.78:8001/stream/1/",
-        "features": "/img/oceania/australia/2mm.png"
-    },
-    "casey": {
-        "title": "Casey Radio",
+        "source": "primary"
+      }
+    ],
+    "description": "islamic"
+  },
+  "raw-fm": {
+    "title": "Raw FM",
+    "type": "audio/mpeg",
+    "url": "https://www.rawfm.com.au/",
+    "cros": false,
+    "stream": "https://frontend.stream.rawfm.net.au/i/syd-stream-192k.aac",
+    "features": "/img/oceania/australia/raw-fm.png",
+    "streams": [
+      {
+        "url": "https://frontend.stream.rawfm.net.au/i/syd-stream-192k.aac",
         "type": "audio/mpeg",
-        "url": "https://www.caseyradio.com.au/",
         "cros": false,
-        "stream": "https://s3.radio.co/s8f8288fe9/listen",
-        "features": "/img/oceania/australia/casey.png"
-    },
-    "96five-family": {
-        "title": "96five",
+        "source": "primary"
+      }
+    ]
+  },
+  "hope-103-2": {
+    "title": "Hope",
+    "type": "audio/mpeg",
+    "url": "https://hope1032.com.au/",
+    "cros": false,
+    "stream": "https://stream.hopemedia.com.au/hope",
+    "features": "/img/oceania/australia/hope-103-2.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/hope-103-2?time=",
+    "streams": [
+      {
+        "url": "https://stream.hopemedia.com.au/hope",
         "type": "audio/mpeg",
-        "url": "https://www.96five.com/",
         "cros": false,
-        "stream": "https://stream1.cnmns.net/96five",
-        "features": "/img/oceania/australia/96five-family.png"
-    },
-    "curtin-fm": {
-        "title": "Curtin FM",
+        "source": "primary"
+      }
+    ]
+  },
+  "774-abc-melbourne": {
+    "title": "ABC Radio (Melbourne)",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/melbourne/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038300/localmelbourne/masterhq.m3u8",
+    "features": "/img/oceania/australia/774-abc-melbourne.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038300/localmelbourne/masterhq.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "news, talk"
+  },
+  "891-abc-adelaide": {
+    "title": "ABC Radio (Adelaide)",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/adelaide/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038298/localadelaide/masterhq.m3u8",
+    "features": "/img/oceania/australia/891-abc-adelaide.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038298/localadelaide/masterhq.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "936-abc-hobart": {
+    "title": "ABC Radio Hobart",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/hobart/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038268/localhobart/masterhq.m3u8",
+    "features": "/img/oceania/australia/936-abc-hobart.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038268/localhobart/masterhq.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "fresh-92-7": {
+    "title": "Fresh",
+    "type": "audio/mpeg",
+    "url": "https://www.fresh927.com.au/",
+    "cros": false,
+    "stream": "https://live.fresh927.com.au/freshaac",
+    "features": "/img/oceania/australia/fresh-92-7.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/fresh-92-7?time=",
+    "streams": [
+      {
+        "url": "https://live.fresh927.com.au/freshaac",
         "type": "audio/mpeg",
-        "url": "https://www.curtinfm.com.au/",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "community radio, music, pop"
+  },
+  "3xy-hellas": {
+    "title": "3XY Radio Hellas",
+    "type": "audio/mpeg",
+    "url": "https://tanea.com.au/en/",
+    "cros": false,
+    "stream": "https://streamer5.rightclickitservices.com:19770/stream",
+    "features": "/img/oceania/australia/3xy-hellas.png",
+    "streams": [
+      {
+        "url": "https://streamer5.rightclickitservices.com:19770/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "tab": {
+    "title": "TAB Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.tabtouch.com.au/",
+    "cros": false,
+    "stream": "https://racingradio.rwwa.com.au/live",
+    "features": "/img/oceania/australia/tab.png",
+    "streams": [
+      {
+        "url": "https://racingradio.rwwa.com.au/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "joy-94-9": {
+    "title": "JOY",
+    "type": "audio/mpeg",
+    "url": "https://joy.org.au/",
+    "cros": false,
+    "stream": "https://stream.joy.org.au/proxy/joy949?mp=/live",
+    "features": "/img/oceania/australia/joy-94-9.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/joy-94-9?time=",
+    "streams": [
+      {
+        "url": "https://stream.joy.org.au/proxy/joy949?mp=/live",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "rsn-racing-sport": {
+    "title": "RSN Racing & Sport",
+    "type": "audio/mpeg",
+    "url": "https://www.rsn.net.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/RSN_RACINGSPORT_SC",
+    "features": "/img/oceania/australia/rsn-racing-sport.png",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/RSN_RACINGSPORT_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "kiss-fm": {
+    "title": "Kiss FM",
+    "type": "audio/mpeg",
+    "url": "https://kissfm.com.au/",
+    "cros": true,
+    "stream": "http://cc.net2streams.com:8565/kissfm.aac",
+    "features": "/img/oceania/australia/kiss-fm.png",
+    "streams": [
+      {
+        "url": "http://cc.net2streams.com:8565/kissfm.aac",
+        "type": "audio/mpeg",
         "cros": true,
-        "stream": "http://usa7.fastcast4u.com:6192/stream/1/",
-        "features": "/img/oceania/australia/curtin-fm.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/curtin-fm?time="
-    },
-    "sportfm": {
-        "title": "SportFM",
-        "type": "audio/mpeg",
-        "url": "https://www.sportfm.com.au/",
+        "source": "primary"
+      }
+    ]
+  },
+  "abc-classic-fm": {
+    "title": "ABC Classic FM",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/classic/",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/master.m3u8",
+    "features": "/img/oceania/australia/abc-classic-fm.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/master.m3u8",
+        "type": "application/x-mpegURL",
         "cros": false,
-        "stream": "https://stream.lava.net.au/au_wa_6wsm_sportfm",
-        "features": "/img/oceania/australia/sportfm.png"
-    },
-    "austral": {
-        "title": "Radio Austral",
-        "type": "audio/mpeg",
-        "url": "https://radioaustral.com.au/",
+        "source": "primary"
+      }
+    ]
+  },
+  "abc-classic-2": {
+    "title": "ABC Classic 2",
+    "type": "application/x-mpegURL",
+    "url": "https://www.abc.net.au/listenlive/classic2",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038317/classic2/master.m3u8",
+    "features": "/img/oceania/australia/abc-classic-2.png",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038317/classic2/master.m3u8",
+        "type": "application/x-mpegURL",
         "cros": false,
-        "stream": "https://sslstream.online/8208/stream/1/",
-        "features": "/img/oceania/australia/austral.png"
-    },
-    "4mbs-classic-fm": {
-        "title": "4MBS Classic FM",
+        "source": "primary"
+      }
+    ]
+  },
+  "sunshine-fm-104-9": {
+    "title": "Sunshine FM",
+    "type": "audio/mpeg",
+    "url": "https://www.sunshinefm.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4SFM_SC",
+    "features": "/img/oceania/australia/sunshine-fm-104-9.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/sunshine-fm-104-9?time=",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/4SFM_SC",
         "type": "audio/mpeg",
-        "url": "https://www.4mbs.com.au/",
         "cros": false,
-        "stream": "https://stream.4mbs.com.au/4mbsclassicfm",
-        "features": "/img/oceania/australia/4mbs-classic-fm.png"
-    },
-    "puradsifm": {
-        "title": "Puradsifm",
+        "source": "primary"
+      }
+    ]
+  },
+  "metro": {
+    "title": "Radio Metro",
+    "type": "audio/mpeg",
+    "url": "https://radiometro.com.au/",
+    "cros": false,
+    "stream": "https://stream.radiometro.com.au/index.html?sid=1",
+    "features": "/img/oceania/australia/metro.png",
+    "streams": [
+      {
+        "url": "https://stream.radiometro.com.au/index.html?sid=1",
         "type": "audio/mpeg",
-        "url": "https://puradsi.com/",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "fbi": {
+    "title": "FBi Radio",
+    "type": "audio/mpeg",
+    "url": "https://fbiradio.com/",
+    "cros": false,
+    "stream": "https://streamer.fbiradio.com/stream",
+    "features": "/img/oceania/australia/fbi.png",
+    "streams": [
+      {
+        "url": "https://streamer.fbiradio.com/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "community, eclectic, sydney"
+  },
+  "4zzz": {
+    "title": "4ZZZ",
+    "type": "audio/mpeg",
+    "url": "https://4zzz.org.au/",
+    "cros": false,
+    "stream": "https://iheart.4zzz.org.au/4zzz",
+    "features": "/img/oceania/australia/4zzz.png",
+    "streams": [
+      {
+        "url": "https://iheart.4zzz.org.au/4zzz",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "pbs-fm": {
+    "title": "PBS 106.7 FM",
+    "type": "audio/mpeg",
+    "url": "https://www.pbsfm.org.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/3PBS_FMAAC_SC",
+    "features": "/img/oceania/australia/pbs-fm.png",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/3PBS_FMAAC_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "2nurfm": {
+    "title": "2NURFM",
+    "type": "audio/mpeg",
+    "url": "https://www.2nurfm.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NURFM_SC",
+    "features": "/img/oceania/australia/2nurfm.png",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NURFM_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "89-9-lightfm": {
+    "title": "89.9 TheLight",
+    "type": "audio/mpeg",
+    "url": "https://thelight.com.au/",
+    "cros": false,
+    "stream": "https://stream.thelight.com.au:8130/stream/1/",
+    "features": "/img/oceania/australia/89-9-lightfm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/89-9-lightfm?time=",
+    "streams": [
+      {
+        "url": "https://stream.thelight.com.au:8130/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "2me-arabic": {
+    "title": "2ME Radio Arabic",
+    "type": "audio/mpeg",
+    "url": "https://www.2me.com.au/",
+    "cros": false,
+    "stream": "https://streaming.2me.com.au/2me",
+    "features": "/img/oceania/australia/2me-arabic.png",
+    "streams": [
+      {
+        "url": "https://streaming.2me.com.au/2me",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "101-fm": {
+    "title": "101FM (Logan City)",
+    "type": "audio/mpeg",
+    "url": "https://101fm.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/4CBLAAC_SC",
+    "features": "/img/oceania/australia/101-fm.png",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/4CBLAAC_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "2mm": {
+    "title": "2MM Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.2mm.com.au/",
+    "cros": true,
+    "stream": "http://110.175.9.78:8001/stream/1/",
+    "features": "/img/oceania/australia/2mm.png",
+    "streams": [
+      {
+        "url": "http://110.175.9.78:8001/stream/1/",
+        "type": "audio/mpeg",
         "cros": true,
-        "stream": "http://psrlive3.listenon.in/fmpuradsi?station=puradsifm",
-        "features": "/img/oceania/australia/puradsifm.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/puradsifm?time="
-    },
-    "hobart-fm": {
-        "title": "Hobart FM",
+        "source": "primary"
+      }
+    ]
+  },
+  "casey": {
+    "title": "Casey Radio",
+    "type": "audio/mpeg",
+    "url": "https://www.caseyradio.com.au/",
+    "cros": false,
+    "stream": "https://s3.radio.co/s8f8288fe9/listen",
+    "features": "/img/oceania/australia/casey.png",
+    "streams": [
+      {
+        "url": "https://s3.radio.co/s8f8288fe9/listen",
         "type": "audio/mpeg",
-        "url": "https://hobartfm.org.au/",
         "cros": false,
-        "stream": "https://radio12.shoutcast.net.au:2020/stream/8032/stream/1/",
-        "features": "/img/oceania/australia/hobart-fm.png"
-    },
-    "northside-99-3": {
-        "title": "Northside Radio",
+        "source": "primary"
+      }
+    ]
+  },
+  "96five-family": {
+    "title": "96five",
+    "type": "audio/mpeg",
+    "url": "https://www.96five.com/",
+    "cros": false,
+    "stream": "https://stream1.cnmns.net/96five",
+    "features": "/img/oceania/australia/96five-family.png",
+    "streams": [
+      {
+        "url": "https://stream1.cnmns.net/96five",
         "type": "audio/mpeg",
-        "url": "https://northsideradio.com.au/",
         "cros": false,
-        "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NSBAAC_SC",
-        "features": "/img/oceania/australia/northside-99-3.png"
-    },
-    "mix-fm-927": {
-        "title": "Mix FM",
+        "source": "primary"
+      }
+    ]
+  },
+  "curtin-fm": {
+    "title": "Curtin FM",
+    "type": "audio/mpeg",
+    "url": "https://www.curtinfm.com.au/",
+    "cros": true,
+    "stream": "http://usa7.fastcast4u.com:6192/stream/1/",
+    "features": "/img/oceania/australia/curtin-fm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/curtin-fm?time=",
+    "streams": [
+      {
+        "url": "http://usa7.fastcast4u.com:6192/stream/1/",
         "type": "audio/mpeg",
-        "url": "https://www.mixfm.com.au/",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "sportfm": {
+    "title": "SportFM",
+    "type": "audio/mpeg",
+    "url": "https://www.sportfm.com.au/",
+    "cros": false,
+    "stream": "https://stream.lava.net.au/au_wa_6wsm_sportfm",
+    "features": "/img/oceania/australia/sportfm.png",
+    "streams": [
+      {
+        "url": "https://stream.lava.net.au/au_wa_6wsm_sportfm",
+        "type": "audio/mpeg",
         "cros": false,
-        "stream": "https://stream.rcs.revma.com/z06q4stdwhruv",
-        "features": "/img/oceania/australia/mix-fm-927.png",
-        "schedule": "https://api.webrad.io/data/playlist/127/mix-fm-927?time="
-    }
+        "source": "primary"
+      }
+    ]
+  },
+  "austral": {
+    "title": "Radio Austral",
+    "type": "audio/mpeg",
+    "url": "https://radioaustral.com.au/",
+    "cros": false,
+    "stream": "https://sslstream.online/8208/stream/1/",
+    "features": "/img/oceania/australia/austral.png",
+    "streams": [
+      {
+        "url": "https://sslstream.online/8208/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "4mbs-classic-fm": {
+    "title": "4MBS Classic FM",
+    "type": "audio/mpeg",
+    "url": "https://www.4mbs.com.au/",
+    "cros": false,
+    "stream": "https://stream.4mbs.com.au/4mbsclassicfm",
+    "features": "/img/oceania/australia/4mbs-classic-fm.png",
+    "streams": [
+      {
+        "url": "https://stream.4mbs.com.au/4mbsclassicfm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "puradsifm": {
+    "title": "Puradsifm",
+    "type": "audio/mpeg",
+    "url": "https://puradsi.com/",
+    "cros": true,
+    "stream": "http://psrlive3.listenon.in/fmpuradsi?station=puradsifm",
+    "features": "/img/oceania/australia/puradsifm.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/puradsifm?time=",
+    "streams": [
+      {
+        "url": "http://psrlive3.listenon.in/fmpuradsi?station=puradsifm",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "hobart-fm": {
+    "title": "Hobart FM",
+    "type": "audio/mpeg",
+    "url": "https://hobartfm.org.au/",
+    "cros": false,
+    "stream": "https://radio12.shoutcast.net.au:2020/stream/8032/stream/1/",
+    "features": "/img/oceania/australia/hobart-fm.png",
+    "streams": [
+      {
+        "url": "https://radio12.shoutcast.net.au:2020/stream/8032/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "northside-99-3": {
+    "title": "Northside Radio",
+    "type": "audio/mpeg",
+    "url": "https://northsideradio.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NSBAAC_SC",
+    "features": "/img/oceania/australia/northside-99-3.png",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/2NSBAAC_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "mix-fm-927": {
+    "title": "Mix FM",
+    "type": "audio/mpeg",
+    "url": "https://www.mixfm.com.au/",
+    "cros": false,
+    "stream": "https://stream.rcs.revma.com/z06q4stdwhruv",
+    "features": "/img/oceania/australia/mix-fm-927.png",
+    "schedule": "https://api.webrad.io/data/playlist/127/mix-fm-927?time=",
+    "streams": [
+      {
+        "url": "https://stream.rcs.revma.com/z06q4stdwhruv",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
+  },
+  "abc-newsradio-mp3": {
+    "title": "ABC NewsRadio MP3",
+    "description": "abc, news, newsradio, public radio",
+    "type": "audio/aac",
+    "url": "http://www.abc.net.au/newsradio/",
+    "cros": true,
+    "stream": "http://abc.streamguys1.com/live/newsradio/icecast.audio",
+    "streams": [
+      {
+        "url": "http://abc.streamguys1.com/live/newsradio/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:9615d27a-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "http://www.abc.net.au/res/streaming/audio/mp3/news_radio.pls",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      },
+      {
+        "url": "http://www.abc.net.au/res/streaming/audio/aac/news_radio.pls",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-newsradio-mp3.png",
+    "source": "radio-browser:9615d27a-0601-11e8-ae97-52543be04c81"
+  },
+  "kiss-fm-87-6-87-8-88-0-melbourne-vic": {
+    "title": "Kiss FM 87.6, 87.8 & 88.0 Melbourne, VIC",
+    "description": "dance, electronica, melbourne",
+    "type": "audio/mpeg",
+    "url": "https://kissfm.com.au/",
+    "cros": true,
+    "stream": "http://cc.net2streams.com:8565/kissfm.mp3",
+    "streams": [
+      {
+        "url": "http://cc.net2streams.com:8565/kissfm.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9629d012-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/kiss-fm-87-6-87-8-88-0-melbourne-vic.png",
+    "source": "radio-browser:9629d012-0601-11e8-ae97-52543be04c81"
+  },
+  "abc-radio-national-aac": {
+    "title": "ABC Radio National AAC+",
+    "description": "abc, features, information, news, public radio",
+    "type": "audio/aac",
+    "url": "http://www.abc.net.au/radionational/",
+    "cros": true,
+    "stream": "http://abc.streamguys1.com/live/rnnsw/icecast.audio",
+    "streams": [
+      {
+        "url": "http://abc.streamguys1.com/live/rnnsw/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:9616206e-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "http://www.abc.net.au/res/streaming/audio/aac/radio_national.pls",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-radio-national-aac.png",
+    "source": "radio-browser:9616206e-0601-11e8-ae97-52543be04c81"
+  },
+  "the-prog-rock-machine": {
+    "title": "The Prog Rock Machine",
+    "description": "progressive rock",
+    "type": "audio/mpeg",
+    "url": "https://progrockmachine.com/",
+    "cros": false,
+    "stream": "https://theproganrockmachine.out.airtime.pro/theproganrockmachine_b",
+    "streams": [
+      {
+        "url": "https://theproganrockmachine.out.airtime.pro/theproganrockmachine_b",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3af3be8d-da3e-4051-a604-d5958f410732"
+      }
+    ],
+    "features": "/img/oceania/australia/the-prog-rock-machine.png",
+    "source": "radio-browser:3af3be8d-da3e-4051-a604-d5958f410732"
+  },
+  "gold-104-3": {
+    "title": "Gold 104.3",
+    "description": "classic hits",
+    "type": "audio/aac",
+    "url": "https://www.gold1043.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_004_icy",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_004_icy",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a4c32662-98bc-42bd-b05b-dcf656272369"
+      }
+    ],
+    "features": "/img/oceania/australia/gold-104-3.png",
+    "source": "radio-browser:a4c32662-98bc-42bd-b05b-dcf656272369"
+  },
+  "sbs-chill": {
+    "title": "SBS Chill",
+    "description": "chillout",
+    "type": "audio/aac",
+    "url": "https://www.sbs.com.au/radio/chill",
+    "cros": true,
+    "stream": "http://sbs-ice.streamguys1.com/sbschill",
+    "streams": [
+      {
+        "url": "http://sbs-ice.streamguys1.com/sbschill",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:0ed4232a-a293-11e8-abb8-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/sbs-chill.png",
+    "source": "radio-browser:0ed4232a-a293-11e8-abb8-52543be04c81"
+  },
+  "discorhythm": {
+    "title": "DiscoRhythm",
+    "description": "disco, funk, soul",
+    "type": "audio/mpeg",
+    "url": "http://www.discorhythm.com/",
+    "cros": true,
+    "stream": "http://c3.radioboss.fm:8018/stream",
+    "streams": [
+      {
+        "url": "http://c3.radioboss.fm:8018/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:bbbe37c8-5306-11ea-be63-52543be04c81"
+      },
+      {
+        "url": "http://c3.radioboss.fm:8018/stream.m3u",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/discorhythm.png",
+    "source": "radio-browser:bbbe37c8-5306-11ea-be63-52543be04c81"
+  },
+  "smooth-fm-95-3": {
+    "title": "Smooth FM 95.3",
+    "description": "commercial, easy listening",
+    "type": "audio/aac",
+    "url": "https://www.smooth.com.au/smooth",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC48.aac?src=neweb",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC48.aac?src=neweb",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:964fb9c9-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/smooth-fm-95-3.png",
+    "source": "radio-browser:964fb9c9-0601-11e8-ae97-52543be04c81"
+  },
+  "sky-news-australia-radio": {
+    "title": "Sky News Australia Radio",
+    "description": "conservative, discussion, news, politics, rightwing",
+    "type": "audio/aac",
+    "url": "https://www.skynews.com.au/sky-news-radio",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_SKYNEWSAAC.aac",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_SKYNEWSAAC.aac",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:1653b791-7005-4e95-be20-4e7b626a4a20"
+      }
+    ],
+    "features": "/img/oceania/australia/sky-news-australia-radio.png",
+    "source": "radio-browser:1653b791-7005-4e95-be20-4e7b626a4a20"
+  },
+  "80s-90s-super-pop-hits": {
+    "title": "80s 90s Super Pop Hits",
+    "description": "80s, 90s, hits",
+    "type": "audio/aac",
+    "url": "https://www.radio-australia.org/",
+    "cros": false,
+    "stream": "https://s4.myradiostream.com:7344/listen.mp3?",
+    "streams": [
+      {
+        "url": "https://s4.myradiostream.com:7344/listen.mp3?",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:0d9fefee-774a-469c-9610-af4cf2615a38"
+      }
+    ],
+    "features": "/img/oceania/australia/80s-90s-super-pop-hits.png",
+    "source": "radio-browser:0d9fefee-774a-469c-9610-af4cf2615a38"
+  },
+  "gold-104-3-44d3d703": {
+    "title": "Gold 104.3",
+    "description": "classic hits",
+    "type": "audio/aac",
+    "url": "https://www.gold1043.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_004/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_004/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:44d3d703-f733-46e5-ad1f-75e9325b306f"
+      }
+    ],
+    "features": "/img/oceania/australia/gold-104-3-44d3d703.png",
+    "source": "radio-browser:44d3d703-f733-46e5-ad1f-75e9325b306f"
+  },
+  "free-fm-rock-austral": {
+    "title": "Free FM Rock Austral",
+    "description": "#free, classic rock, free fm, free fm rock, hard rock",
+    "type": "audio/mpeg",
+    "url": "http://freefmradio.net/",
+    "cros": false,
+    "stream": "https://freefmrock.radioca.st/",
+    "streams": [
+      {
+        "url": "https://freefmrock.radioca.st/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:2f1079f1-0986-4e33-99a7-009f723726b7"
+      }
+    ],
+    "features": "/img/oceania/australia/free-fm-rock-austral.png",
+    "source": "radio-browser:2f1079f1-0986-4e33-99a7-009f723726b7"
+  },
+  "kiis-106-5": {
+    "title": "KIIS 106.5",
+    "description": "adult top 40",
+    "type": "audio/aac",
+    "url": "https://www.kiis1065.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_007_icy",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_007_icy",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:ed56eecb-faf7-4e68-830a-d94fb72a5ac8"
+      }
+    ],
+    "features": "/img/oceania/australia/kiis-106-5.png",
+    "source": "radio-browser:ed56eecb-faf7-4e68-830a-d94fb72a5ac8"
+  },
+  "italiafm": {
+    "title": "ItaliaFm",
+    "description": "italian pop",
+    "type": "audio/mpeg",
+    "url": "http://www.italiafm.net/",
+    "cros": true,
+    "stream": "http://167.114.174.197:8634/stream",
+    "streams": [
+      {
+        "url": "http://167.114.174.197:8634/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:960a697b-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "https://andromeda.shoutca.st/tunein/jdiflu00-stream.pls",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/italiafm.png",
+    "source": "radio-browser:960a697b-0601-11e8-ae97-52543be04c81"
+  },
+  "radio-2moro": {
+    "title": "Radio 2Moro",
+    "type": "audio/mpeg",
+    "url": "http://www.sawtelghad.com.au/",
+    "cros": true,
+    "stream": "http://s4.voscast.com:7648/;listen.mp3",
+    "streams": [
+      {
+        "url": "http://s4.voscast.com:7648/;listen.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:960a17ac-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/radio-2moro.png",
+    "source": "radio-browser:960a17ac-0601-11e8-ae97-52543be04c81"
+  },
+  "australian-digital-radio-network-the-beatles-mp3": {
+    "title": "Australian Digital Radio Network - The Beatles (MP3)",
+    "description": "the beatles",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER142",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER142",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7aec7a3f-1409-4298-a199-2a975801bcc6"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-the-beatles-mp3.png",
+    "source": "radio-browser:7aec7a3f-1409-4298-a199-2a975801bcc6"
+  },
+  "triple-m-90s": {
+    "title": "Triple M 90s",
+    "type": "audio/aac",
+    "url": "https://www.triplem.com.au/90s",
+    "cros": true,
+    "stream": "http://legacy.scahw.com.au/290s_32",
+    "streams": [
+      {
+        "url": "http://legacy.scahw.com.au/290s_32",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:2d54dd43-4f5c-49a4-a7b7-6d93d134d46d"
+      }
+    ],
+    "features": "/img/oceania/australia/triple-m-90s.png",
+    "source": "radio-browser:2d54dd43-4f5c-49a4-a7b7-6d93d134d46d"
+  },
+  "2gb-sydney": {
+    "title": "2GB Sydney",
+    "type": "audio/mpeg",
+    "url": "https://www.2gb.com/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/2GB.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/2GB.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:6794ba90-1029-4673-8aeb-206e2b59d591"
+      }
+    ],
+    "features": "/img/oceania/australia/2gb-sydney.png",
+    "source": "radio-browser:6794ba90-1029-4673-8aeb-206e2b59d591"
+  },
+  "triple-m-sydney": {
+    "title": "Triple M Sydney",
+    "type": "audio/aac",
+    "url": "http://legacy.scahw.com.au/2mmm_128",
+    "cros": true,
+    "stream": "http://legacy.scahw.com.au/2mmm_128",
+    "streams": [
+      {
+        "url": "http://legacy.scahw.com.au/2mmm_128",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:5f80f828-c097-11e9-8502-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/triple-m-sydney.png",
+    "source": "radio-browser:5f80f828-c097-11e9-8502-52543be04c81"
+  },
+  "smooth-relax-australia-aac-320k": {
+    "title": "Smooth Relax Australia (AAC+ 320k)",
+    "description": "soft adult contemporary",
+    "type": "audio/aac",
+    "url": "https://smooth.com.au/station/smoothrelax",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTHRELAX_SYD_AAC320.aac",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTHRELAX_SYD_AAC320.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:a7749ad0-0361-462c-9f63-1734959e5f80"
+      }
+    ],
+    "features": "/img/oceania/australia/smooth-relax-australia-aac-320k.png",
+    "source": "radio-browser:a7749ad0-0361-462c-9f63-1734959e5f80"
+  },
+  "abc-radio-sydney": {
+    "title": "ABC Radio Sydney",
+    "description": "news, talk",
+    "type": "audio/aac",
+    "url": "https://www.abc.net.au/listen/live/sydney",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038302/localsydney/masterhq.m3u8",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038302/localsydney/masterhq.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:fe852cc8-1a27-4dcd-8465-917ec32d8b64"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-radio-sydney.png",
+    "source": "radio-browser:fe852cc8-1a27-4dcd-8465-917ec32d8b64"
+  },
+  "kiis-101-1": {
+    "title": "KIIS 101.1",
+    "description": "adult top 40",
+    "type": "audio/aac",
+    "url": "https://www.kiis1011.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_001_icy",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_001_icy",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:5cceea34-4a3a-4cae-ac2b-b1f8e79a70dd"
+      }
+    ],
+    "features": "/img/oceania/australia/kiis-101-1.png",
+    "source": "radio-browser:5cceea34-4a3a-4cae-ac2b-b1f8e79a70dd"
+  },
+  "abc-local-radio-91-7-gold-coast-qld-mp3": {
+    "title": "ABC Local Radio 91.7 Gold Coast, QLD (MP3)",
+    "description": "abc, gold coast, information, news, public radio",
+    "type": "audio/aac",
+    "url": "http://www.abc.net.au/goldcoast/",
+    "cros": true,
+    "stream": "http://abc.streamguys1.com/live/localgoldcoast/icecast.audio",
+    "streams": [
+      {
+        "url": "http://abc.streamguys1.com/live/localgoldcoast/icecast.audio",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:961bf53d-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "http://www.abc.net.au/res/streaming/audio/mp3/local_goldcoast.pls",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-local-radio-91-7-gold-coast-qld-mp3.png",
+    "source": "radio-browser:961bf53d-0601-11e8-ae97-52543be04c81"
+  },
+  "island-fm-whitsundays-88-0mhz-airlie-beach-central-queensland": {
+    "title": "Island FM Whitsundays 88.0MHz Airlie Beach Central Queensland",
+    "description": "classic hits, news, pop music, smooth",
+    "type": "audio/mpeg",
+    "url": "https://islandfm.com.au/",
+    "cros": false,
+    "stream": "https://onlineradiobox.com/json/au/islandwhitsundays/play?platform=web",
+    "streams": [
+      {
+        "url": "https://onlineradiobox.com/json/au/islandwhitsundays/play?platform=web",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a5ddc968-6a3e-4a63-9be7-37584f99ef99"
+      }
+    ],
+    "features": "/img/oceania/australia/island-fm-whitsundays-88-0mhz-airlie-beach-central-queensland.png",
+    "source": "radio-browser:a5ddc968-6a3e-4a63-9be7-37584f99ef99"
+  },
+  "sbs-popasia": {
+    "title": "SBS PopAsia",
+    "description": "c-pop, cantonese, chinese pop, cpop, hong kong music",
+    "type": "audio/aac",
+    "url": "https://www.sbs.com.au/popasia/",
+    "cros": false,
+    "stream": "https://sbs-ice.streamguys1.com/sbs-popasia-sbs-web",
+    "streams": [
+      {
+        "url": "https://sbs-ice.streamguys1.com/sbs-popasia-sbs-web",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:7078d270-62b8-49c3-a729-ad325d60d29c"
+      }
+    ],
+    "features": "/img/oceania/australia/sbs-popasia.png",
+    "source": "radio-browser:7078d270-62b8-49c3-a729-ad325d60d29c"
+  },
+  "australian-digital-radio-network-old-time-radio-channel-4-films-horror-sci-fi-adventure-mp3": {
+    "title": "Australian Digital Radio Network - Old Time Radio Channel 4 - Films, Horror, Sci Fi, Adventure (MP3)",
+    "description": "old time radio",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER5",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER5",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:ef42169c-4515-4011-b44a-5ae792af7424"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-old-time-radio-channel-4-films-horror-sci-fi-adventure-mp3.png",
+    "source": "radio-browser:ef42169c-4515-4011-b44a-5ae792af7424"
+  },
+  "nova-91-9": {
+    "title": "Nova 91.9",
+    "description": "hits",
+    "type": "audio/aac",
+    "url": "http://www.nova919.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_919_AAC48.aac",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_919_AAC48.aac",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:4f5d2b6c-6664-49e4-8e83-793d69adb3bc"
+      }
+    ],
+    "features": "/img/oceania/australia/nova-91-9.png",
+    "source": "radio-browser:4f5d2b6c-6664-49e4-8e83-793d69adb3bc"
+  },
+  "3rrr-triple-r-102-7-fm-melbourne-vic-low-bitrate-live-stream": {
+    "title": "3RRR \"Triple R\" 102.7 FM Melbourne, VIC (low bitrate live stream)",
+    "description": "community radio, indie, low bandwidth",
+    "type": "audio/aac",
+    "url": "http://www.rrr.org.au/",
+    "cros": true,
+    "stream": "http://realtime.rrr.org.au/p1l",
+    "streams": [
+      {
+        "url": "http://realtime.rrr.org.au/p1l",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:9649707f-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "http://ondemand.rrr.org.au/stream/ws-lq.m3u",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/3rrr-triple-r-102-7-fm-melbourne-vic-low-bitrate-live-stream.png",
+    "source": "radio-browser:9649707f-0601-11e8-ae97-52543be04c81"
+  },
+  "pure-hits-australian-made": {
+    "title": "Pure Hits Australian Made",
+    "description": "australia, pop, rock",
+    "type": "audio/aac",
+    "url": "http://www.ozmademusic.online/",
+    "cros": true,
+    "stream": "http://stream10.as.amplifystreaming.com/radio/8000/amm_128.mp3",
+    "streams": [
+      {
+        "url": "http://stream10.as.amplifystreaming.com/radio/8000/amm_128.mp3",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:8ade45f1-f163-11e9-a96c-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/pure-hits-australian-made.png",
+    "source": "radio-browser:8ade45f1-f163-11e9-a96c-52543be04c81"
+  },
+  "3aw-melbourne-693-am-mp3": {
+    "title": "3AW - Melbourne - 693 AM (MP3)",
+    "description": "news, talk radio",
+    "type": "audio/mpeg",
+    "url": "https://www.3aw.com.au/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/3AW.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/3AW.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:94ab6f5f-b684-4ca1-ae5c-c5c868ed20c6"
+      }
+    ],
+    "features": "/img/oceania/australia/3aw-melbourne-693-am-mp3.png",
+    "source": "radio-browser:94ab6f5f-b684-4ca1-ae5c-c5c868ed20c6"
+  },
+  "abc-radio-australia": {
+    "title": "ABC Radio Australia",
+    "description": "news, talk",
+    "type": "audio/aac",
+    "url": "https://www.abc.net.au/pacific/live",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038266/ramulti/masterhq.m3u8",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038266/ramulti/masterhq.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a9c5e895-0b34-4f17-9147-2b9b9747a124"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-radio-australia.png",
+    "source": "radio-browser:a9c5e895-0b34-4f17-9147-2b9b9747a124"
+  },
+  "keco-rock-ballads": {
+    "title": "=KECO=ROCK BALLADS",
+    "description": "70s rock ballads",
+    "type": "audio/mpeg",
+    "url": "http://online.radioroks.ua/RadioROKS_Ballads_HD",
+    "cros": true,
+    "stream": "http://online.radioroks.ua/RadioROKS_Ballads_HD",
+    "streams": [
+      {
+        "url": "http://online.radioroks.ua/RadioROKS_Ballads_HD",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:9aba9171-6d18-4245-b948-4802720c194d"
+      }
+    ],
+    "features": "/img/oceania/australia/keco-rock-ballads.png",
+    "source": "radio-browser:9aba9171-6d18-4245-b948-4802720c194d"
+  },
+  "harman-radio-australia": {
+    "title": "Harman Radio Australia",
+    "description": "india, indian, punjab, punjabi, punjabi radio australia",
+    "type": "audio/mpeg",
+    "url": "http://harmanradio.com/",
+    "cros": true,
+    "stream": "http://harmanradio.net:8000/main_48.mp3",
+    "streams": [
+      {
+        "url": "http://harmanradio.net:8000/main_48.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:5c72ff24-7a1b-482d-a29b-683ccb5471de"
+      }
+    ],
+    "features": "/img/oceania/australia/harman-radio-australia.png",
+    "source": "radio-browser:5c72ff24-7a1b-482d-a29b-683ccb5471de"
+  },
+  "australian-digital-radio-network-iron-maiden-mp3": {
+    "title": "Australian Digital Radio Network - Iron Maiden (MP3)",
+    "description": "iron maiden",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER174",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER174",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:04a3f928-8f5e-4645-aaf9-868f348ceff3"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-iron-maiden-mp3.png",
+    "source": "radio-browser:04a3f928-8f5e-4645-aaf9-868f348ceff3"
+  },
+  "listnr-drum-bass": {
+    "title": "LiSTNR - Drum & Bass",
+    "description": "dance, drum and bass, electronic, electronica",
+    "type": "application/x-mpegURL",
+    "url": "https://play.listnr.com/station/drum-and-bass",
+    "cros": false,
+    "stream": "https://wz0liw.scahw.com.au/live/drumnbass_128.stream/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://wz0liw.scahw.com.au/live/drumnbass_128.stream/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:c515129c-3c44-4ffa-b407-ff3158468368"
+      }
+    ],
+    "features": "/img/oceania/australia/listnr-drum-bass.png",
+    "source": "radio-browser:c515129c-3c44-4ffa-b407-ff3158468368"
+  },
+  "myfm-perth": {
+    "title": "MyFM Perth",
+    "description": "punk, ska",
+    "type": "audio/mpeg",
+    "url": "https://www.myfmperth.com/",
+    "cros": false,
+    "stream": "https://halo.streamerr.co/listen/myfmperth/radio.mp3",
+    "streams": [
+      {
+        "url": "https://halo.streamerr.co/listen/myfmperth/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:b85f1a0a-035e-4724-8b18-805e8dbcd13b"
+      }
+    ],
+    "features": "/img/oceania/australia/myfm-perth.png",
+    "source": "radio-browser:b85f1a0a-035e-4724-8b18-805e8dbcd13b"
+  },
+  "abc-country-hls": {
+    "title": "ABC Country HLS",
+    "description": "abc, country, public radio",
+    "type": "audio/aac",
+    "url": "https://www.abc.net.au/country",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038322/abccountry/index.m3u8",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038322/abccountry/index.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:3cb76cc7-fa20-4c22-b33c-5268a2437e38"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-country-hls.png",
+    "source": "radio-browser:3cb76cc7-fa20-4c22-b33c-5268a2437e38"
+  },
+  "pure-hits-australian-made-2cfaf486": {
+    "title": "Pure Hits Australian Made",
+    "type": "audio/aac",
+    "url": "http://www.ozmademusic.online/",
+    "cros": true,
+    "stream": "http://stream10.as.amplifystreaming.com/radio/8000/amm_128.aac",
+    "streams": [
+      {
+        "url": "http://stream10.as.amplifystreaming.com/radio/8000/amm_128.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:2cfaf486-f163-11e9-a96c-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/pure-hits-australian-made-2cfaf486.png",
+    "source": "radio-browser:2cfaf486-f163-11e9-a96c-52543be04c81"
+  },
+  "joy-94-9-out-loud-proud": {
+    "title": "JOY 94.9 Out Loud Proud",
+    "description": "bisexual, community radio, gay, lesbian, lgbtiqa*",
+    "type": "audio/aac",
+    "url": "http://www.joy.org.au/",
+    "cros": true,
+    "stream": "http://audio.joy.org.au/proxy/joy949/live",
+    "streams": [
+      {
+        "url": "http://audio.joy.org.au/proxy/joy949/live",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:9609bbbb-0601-11e8-ae97-52543be04c81"
+      },
+      {
+        "url": "http://audio.joy.org.au/stream/joy949.pls?mp=/live",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/joy-94-9-out-loud-proud.png",
+    "source": "radio-browser:9609bbbb-0601-11e8-ae97-52543be04c81"
+  },
+  "australian-digital-radio-network-michael-jackson-mp3": {
+    "title": "Australian Digital Radio Network - Michael Jackson (MP3)",
+    "description": "michael jackson",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER144",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER144",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:42a653f1-615f-4601-bec7-2e55da1940d0"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-michael-jackson-mp3.png",
+    "source": "radio-browser:42a653f1-615f-4601-bec7-2e55da1940d0"
+  },
+  "pure-hits-retro": {
+    "title": "Pure Hits RETRO",
+    "description": "classic hits, pop, retro, rock",
+    "type": "audio/aac",
+    "url": "http://www.purehitsretro.com/",
+    "cros": true,
+    "stream": "http://stream10.as.amplifystreaming.com/radio/8010/retro_128.aac",
+    "streams": [
+      {
+        "url": "http://stream10.as.amplifystreaming.com/radio/8010/retro_128.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:c569c427-f163-11e9-a96c-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/pure-hits-retro.png",
+    "source": "radio-browser:c569c427-f163-11e9-a96c-52543be04c81"
+  },
+  "2day-fm": {
+    "title": "2Day FM",
+    "type": "audio/aac",
+    "url": "https://www.hit.com.au/2day/",
+    "cros": true,
+    "stream": "http://legacy.scahw.com.au/2day_32",
+    "streams": [
+      {
+        "url": "http://legacy.scahw.com.au/2day_32",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:48551ed2-340a-11e8-bb9b-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/2day-fm.png",
+    "source": "radio-browser:48551ed2-340a-11e8-bb9b-52543be04c81"
+  },
+  "mix-102-3": {
+    "title": "Mix 102.3",
+    "description": "hot adult contemporary",
+    "type": "audio/aac",
+    "url": "https://www.mix1023.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_003_icy",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_003_icy",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:1ab478cb-0343-4134-99d9-e51d58531eaa"
+      }
+    ],
+    "features": "/img/oceania/australia/mix-102-3.png",
+    "source": "radio-browser:1ab478cb-0343-4134-99d9-e51d58531eaa"
+  },
+  "70s-classics-sydney-mp3": {
+    "title": "70s Classics - Sydney (MP3)",
+    "description": "1970s, 70's, 70s, 70s disco, 70s rock",
+    "type": "audio/mpeg",
+    "url": "http://www.70sclassics.com.au/",
+    "cros": true,
+    "stream": "http://stream.zeno.fm/glsntnn7et8vv",
+    "streams": [
+      {
+        "url": "http://stream.zeno.fm/glsntnn7et8vv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:655b54c2-1e92-4346-80c5-8bb2ac1168b8"
+      }
+    ],
+    "features": "/img/oceania/australia/70s-classics-sydney-mp3.png",
+    "source": "radio-browser:655b54c2-1e92-4346-80c5-8bb2ac1168b8"
+  },
+  "1029-hot-tomato": {
+    "title": "1029 Hot Tomato",
+    "type": "audio/mpeg",
+    "url": "https://www.mygc.com.au/1029-hot-tomato/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/GOL_HOTTOMATO.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/GOL_HOTTOMATO.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3f1bb8bc-1a9e-43db-a685-d9bd076d632d"
+      }
+    ],
+    "features": "/img/oceania/australia/1029-hot-tomato.png",
+    "source": "radio-browser:3f1bb8bc-1a9e-43db-a685-d9bd076d632d"
+  },
+  "indian-link-radio": {
+    "title": "Indian link radio",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "https://indianlink1.radioca.st/",
+    "cros": false,
+    "stream": "https://indianlink1.radioca.st/",
+    "streams": [
+      {
+        "url": "https://indianlink1.radioca.st/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:05e3dfae-889b-4583-81d9-93fe1a9116b4"
+      }
+    ],
+    "features": "/img/oceania/australia/indian-link-radio.png",
+    "source": "radio-browser:05e3dfae-889b-4583-81d9-93fe1a9116b4"
+  },
+  "cruise-1323": {
+    "title": "Cruise 1323",
+    "description": "classic hits",
+    "type": "audio/aac",
+    "url": "https://www.cruise1323.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_008_icy",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_008_icy",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:2cbb9bc3-79b4-46c1-9ff9-c311e1d00350"
+      }
+    ],
+    "features": "/img/oceania/australia/cruise-1323.png",
+    "source": "radio-browser:2cbb9bc3-79b4-46c1-9ff9-c311e1d00350"
+  },
+  "3aw-693-melbourne-vic-australia-talk-am-693": {
+    "title": "3AW 693  Melbourne, VIC, Australia Talk AM 693",
+    "description": "news, news talk",
+    "type": "audio/mpeg",
+    "url": "https://www.3aw.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/3AW.mp3",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/3AW.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:2a581de9-1eed-4d54-9108-a7486953e3be"
+      }
+    ],
+    "features": "/img/oceania/australia/3aw-693-melbourne-vic-australia-talk-am-693.png",
+    "source": "radio-browser:2a581de9-1eed-4d54-9108-a7486953e3be"
+  },
+  "australian-digital-radio-network-pink-floyd-mp3": {
+    "title": "Australian Digital Radio Network - Pink Floyd (MP3)",
+    "description": "pink floyd",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER148",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER148",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:80b8d79b-38bf-4c17-b8f8-bee9a4fa3bf9"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-pink-floyd-mp3.png",
+    "source": "radio-browser:80b8d79b-38bf-4c17-b8f8-bee9a4fa3bf9"
+  },
+  "1116-sen-melbourne": {
+    "title": "1116 SEN Melbourne",
+    "type": "audio/mpeg",
+    "url": "http://www.sen.com.au/",
+    "cros": true,
+    "stream": "http://13.54.221.214:8000/sen.mp3",
+    "streams": [
+      {
+        "url": "http://13.54.221.214:8000/sen.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:ca8b9df0-9933-4396-8acb-d33dbad2ace3"
+      }
+    ],
+    "features": "/img/oceania/australia/1116-sen-melbourne.png",
+    "source": "radio-browser:ca8b9df0-9933-4396-8acb-d33dbad2ace3"
+  },
+  "97-3fm-brisbane": {
+    "title": "97.3fm Brisbane",
+    "description": "hot adult contemporary",
+    "type": "audio/aac",
+    "url": "https://www.973fm.com.au/",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_011_icy",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_011_icy",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:974b7576-d06d-44cc-a44c-2f7c387add31"
+      }
+    ],
+    "features": "/img/oceania/australia/97-3fm-brisbane.png",
+    "source": "radio-browser:974b7576-d06d-44cc-a44c-2f7c387add31"
+  },
+  "skylab-radio": {
+    "title": "Skylab Radio",
+    "description": "ambient, eclectic, experimental, hip-hop, house",
+    "type": "audio/mpeg",
+    "url": "http://skylab-radio.com/",
+    "cros": true,
+    "stream": "http://stream.skylab-radio.com:8000/live",
+    "streams": [
+      {
+        "url": "http://stream.skylab-radio.com:8000/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:38c667f9-5091-11e9-a4d7-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/skylab-radio.png",
+    "source": "radio-browser:38c667f9-5091-11e9-a4d7-52543be04c81"
+  },
+  "2sm-srn-sydney": {
+    "title": "2SM SRN Sydney",
+    "description": "news talk, sport, talkback",
+    "type": "audio/aac",
+    "url": "https://2sm.com.au/",
+    "cros": false,
+    "stream": "https://cast4.asurahosting.com/proxy/2sm1269/stream",
+    "streams": [
+      {
+        "url": "https://cast4.asurahosting.com/proxy/2sm1269/stream",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:ebb7df21-bfd3-4dba-851f-ad2acc7234bc"
+      }
+    ],
+    "features": "/img/oceania/australia/2sm-srn-sydney.png",
+    "source": "radio-browser:ebb7df21-bfd3-4dba-851f-ad2acc7234bc"
+  },
+  "triple-m-80s": {
+    "title": "Triple M 80s",
+    "type": "audio/aac",
+    "url": "https://www.triplem.com.au/80s",
+    "cros": true,
+    "stream": "http://legacy.scahw.com.au/280s_32",
+    "streams": [
+      {
+        "url": "http://legacy.scahw.com.au/280s_32",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:8c94ab1f-c79d-4f18-85db-e8aed2db5450"
+      }
+    ],
+    "features": "/img/oceania/australia/triple-m-80s.png",
+    "source": "radio-browser:8c94ab1f-c79d-4f18-85db-e8aed2db5450"
+  },
+  "smooth-fm-95-3-sydney-95-3-fm-aac-320k": {
+    "title": "Smooth FM 95.3 - Sydney - 95.3 FM (AAC+ 320k)",
+    "description": "commercial, easy listening",
+    "type": "audio/aac",
+    "url": "https://smooth.com.au/station/smoothfm953",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC320.aac",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC320.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:f7c04bff-1317-478b-8f00-736b9d89dc31"
+      }
+    ],
+    "features": "/img/oceania/australia/smooth-fm-95-3-sydney-95-3-fm-aac-320k.png",
+    "source": "radio-browser:f7c04bff-1317-478b-8f00-736b9d89dc31"
+  },
+  "smooth-fm-91-5-melbourne-91-5-fm-aac-320k": {
+    "title": "Smooth FM 91.5 - Melbourne - 91.5 FM (AAC+ 320k)",
+    "description": "commercial, easy listening",
+    "type": "audio/aac",
+    "url": "https://smooth.com.au/station/smoothfm915",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH915_AAC320.aac",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH915_AAC320.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:a918d977-f3d7-48a9-889b-c0206993cebf"
+      }
+    ],
+    "features": "/img/oceania/australia/smooth-fm-91-5-melbourne-91-5-fm-aac-320k.png",
+    "source": "radio-browser:a918d977-f3d7-48a9-889b-c0206993cebf"
+  },
+  "1170-sen-sydney": {
+    "title": "1170 SEN Sydney",
+    "description": "sport",
+    "type": "audio/aac",
+    "url": "https://www.sen.com.au/listen-live-sen-sydney/",
+    "cros": false,
+    "stream": "https://d11fwwlrb0wuhh.cloudfront.net/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://d11fwwlrb0wuhh.cloudfront.net/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:08f5ceb0-9f2d-4804-b8e8-1286b67983d6"
+      }
+    ],
+    "features": "/img/oceania/australia/1170-sen-sydney.png",
+    "source": "radio-browser:08f5ceb0-9f2d-4804-b8e8-1286b67983d6"
+  },
+  "4ca-846-am-far-north-qld-classic-hits": {
+    "title": "4CA 846 AM Far North QLD Classic Hits",
+    "type": "audio/aac",
+    "url": "https://www.4ca.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAI_4CAAAC_SC",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/CAI_4CAAAC_SC",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:d3e1943f-9df4-4c6d-800d-bd3b63208afb"
+      },
+      {
+        "url": "http://www.surfmusic.de/m3u/4ca-864-am,18582.m3u",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/4ca-846-am-far-north-qld-classic-hits.png",
+    "source": "radio-browser:d3e1943f-9df4-4c6d-800d-bd3b63208afb"
+  },
+  "andrew-haug-metal-radio": {
+    "title": "Andrew Haug Metal  Radio",
+    "type": "audio/mpeg",
+    "url": "https://andrewhaug.com/",
+    "cros": true,
+    "stream": "http://streamer.radio.co/s6a349b3a2/listen",
+    "streams": [
+      {
+        "url": "http://streamer.radio.co/s6a349b3a2/listen",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:8cc275fb-f527-4cff-9539-58da50df8782"
+      }
+    ],
+    "features": "/img/oceania/australia/andrew-haug-metal-radio.png",
+    "source": "radio-browser:8cc275fb-f527-4cff-9539-58da50df8782"
+  },
+  "3rrr-melbourne": {
+    "title": "3RRR Melbourne",
+    "type": "audio/aac",
+    "url": "https://www.rrr.org.au/",
+    "cros": true,
+    "stream": "http://realtime.rrr.org.au/p1h",
+    "streams": [
+      {
+        "url": "http://realtime.rrr.org.au/p1h",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:3b1fc575-8da0-4296-9207-98a6cbaadb9f"
+      },
+      {
+        "url": "https://ondemand.rrr.org.au/stream/ws-hq.m3u",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/oceania/australia/3rrr-melbourne.png",
+    "source": "radio-browser:3b1fc575-8da0-4296-9207-98a6cbaadb9f"
+  },
+  "sbs-radio-1": {
+    "title": "澳大利亚SBS Radio 1",
+    "type": "audio/aac",
+    "url": "https://radioau.net",
+    "cros": false,
+    "stream": "https://sbs-ice.streamguys1.com/sbs1-sbs-web",
+    "streams": [
+      {
+        "url": "https://sbs-ice.streamguys1.com/sbs1-sbs-web",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:e473dd9e-fd28-407d-8519-d5bc88c1d8ac"
+      }
+    ],
+    "features": "/img/oceania/australia/sbs-radio-1.png",
+    "source": "radio-browser:e473dd9e-fd28-407d-8519-d5bc88c1d8ac"
+  },
+  "totally-radio-60s-mp3": {
+    "title": "Totally Radio - 60s (MP3)",
+    "description": "1960s, 60's, 60s",
+    "type": "audio/mpeg",
+    "url": "https://totallyradio.com.au/60S/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_60S_S01.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_60S_S01.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fb9ea259-53ff-4d94-af9b-36c190c2b2ae"
+      }
+    ],
+    "features": "/img/oceania/australia/totally-radio-60s-mp3.png",
+    "source": "radio-browser:fb9ea259-53ff-4d94-af9b-36c190c2b2ae"
+  },
+  "australian-digital-radio-network-miley-cyrus-and-taylor-swift-mp3": {
+    "title": "Australian Digital Radio Network - Miley Cyrus and Taylor Swift (MP3)",
+    "description": "miley cyrus, taylor swift",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER152",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER152",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:04efeb05-5714-4dfa-834d-79736c91e60d"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-miley-cyrus-and-taylor-swift-mp3.png",
+    "source": "radio-browser:04efeb05-5714-4dfa-834d-79736c91e60d"
+  },
+  "totally-radio-greatest-hits-mp3": {
+    "title": "Totally Radio - Greatest Hits (MP3)",
+    "description": "greatest hits",
+    "type": "audio/mpeg",
+    "url": "https://totallyradio.com.au/Greatest-Hits/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_GRTST_HITS_S01.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_GRTST_HITS_S01.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:ea1de669-b488-49b3-805a-005ea152a7ba"
+      }
+    ],
+    "features": "/img/oceania/australia/totally-radio-greatest-hits-mp3.png",
+    "source": "radio-browser:ea1de669-b488-49b3-805a-005ea152a7ba"
+  },
+  "abc-jazz-hls": {
+    "title": "ABC Jazz HLS",
+    "description": "abc, jazz, public radio",
+    "type": "audio/aac",
+    "url": "https://www.abc.net.au/jazz",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038319/abcjazz/index.m3u8",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038319/abcjazz/index.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:44161d8e-73a9-42f9-b6e6-bf6a31da81c1"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-jazz-hls.png",
+    "source": "radio-browser:44161d8e-73a9-42f9-b6e6-bf6a31da81c1"
+  },
+  "australian-digital-radio-network-britpop-best-selling-all-time-mp3": {
+    "title": "Australian Digital Radio Network - Britpop Best Selling All Time (MP3)",
+    "description": "britpop",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER32",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER32",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:cc6204a7-c8db-4e72-bebd-8c3826d76bf1"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-britpop-best-selling-all-time-mp3.png",
+    "source": "radio-browser:cc6204a7-c8db-4e72-bebd-8c3826d76bf1"
+  },
+  "australian-digital-radio-network-madonna-mp3": {
+    "title": "Australian Digital Radio Network - Madonna (MP3)",
+    "description": "madonna",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER145",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER145",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:c45aedb7-8978-46f5-ac05-c9241e12a0bb"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-madonna-mp3.png",
+    "source": "radio-browser:c45aedb7-8978-46f5-ac05-c9241e12a0bb"
+  },
+  "australian-digital-radio-network-the-rolling-stones-mp3": {
+    "title": "Australian Digital Radio Network - The Rolling Stones (MP3)",
+    "description": "the rolling stones",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER149",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER149",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:934243ce-bf5b-42e0-a472-4c952c42aec7"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-the-rolling-stones-mp3.png",
+    "source": "radio-browser:934243ce-bf5b-42e0-a472-4c952c42aec7"
+  },
+  "abc-classic-2-hls": {
+    "title": "ABC Classic 2 HLS",
+    "description": "abc, classical, public radio",
+    "type": "audio/aac",
+    "url": "https://www.abc.net.au/classic",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038317/classic2/index.m3u8",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038317/classic2/index.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:5ca4267a-2783-4b77-b521-a4936f00191e"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-classic-2-hls.png",
+    "source": "radio-browser:5ca4267a-2783-4b77-b521-a4936f00191e"
+  },
+  "6pr-perth-882-am-mp3": {
+    "title": "6PR - Perth - 882 AM (MP3)",
+    "description": "news, talk radio",
+    "type": "audio/mpeg",
+    "url": "https://www.6pr.com.au/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/6PR.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/6PR.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:421c8510-2441-4c5a-94d9-6207a0cb736a"
+      }
+    ],
+    "features": "/img/oceania/australia/6pr-perth-882-am-mp3.png",
+    "source": "radio-browser:421c8510-2441-4c5a-94d9-6207a0cb736a"
+  },
+  "buddha": {
+    "title": "Buddha",
+    "description": "00s, chill",
+    "type": "audio/aac",
+    "url": "https://www.listnr.com/stations/buddha",
+    "cros": false,
+    "stream": "https://legacy.scahw.com.au/2buddha_32",
+    "streams": [
+      {
+        "url": "https://legacy.scahw.com.au/2buddha_32",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:24c6a745-cc1a-4886-bd5e-fb8fb7b41c77"
+      }
+    ],
+    "features": "/img/oceania/australia/buddha.png",
+    "source": "radio-browser:24c6a745-cc1a-4886-bd5e-fb8fb7b41c77"
+  },
+  "2ac": {
+    "title": "2AC澳洲华人电台粤语广播",
+    "description": "full service",
+    "type": "audio/mpeg",
+    "url": "https://www.2ac.com.au/",
+    "cros": true,
+    "stream": "http://s1.voscast.com:10442/stream",
+    "streams": [
+      {
+        "url": "http://s1.voscast.com:10442/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:bfef6527-dc0c-47f3-8622-6f6598dd81dc"
+      }
+    ],
+    "features": "/img/oceania/australia/2ac.png",
+    "source": "radio-browser:bfef6527-dc0c-47f3-8622-6f6598dd81dc"
+  },
+  "abc-classic-hls": {
+    "title": "ABC Classic HLS",
+    "description": "abc, classical, public radio",
+    "type": "audio/aac",
+    "url": "https://www.abc.net.au/classic",
+    "cros": false,
+    "stream": "https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/index.m3u8",
+    "streams": [
+      {
+        "url": "https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/index.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:2ad6f6a0-977f-47fa-9a65-dc9016e602e5"
+      }
+    ],
+    "features": "/img/oceania/australia/abc-classic-hls.png",
+    "source": "radio-browser:2ad6f6a0-977f-47fa-9a65-dc9016e602e5"
+  },
+  "australian-digital-radio-network-1970s-pop-charting-mp3": {
+    "title": "Australian Digital Radio Network - 1970s Pop Charting (MP3)",
+    "description": "1970s, pop",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER82",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER82",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7302620a-95fb-472f-bff9-42fa3200d43b"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-1970s-pop-charting-mp3.png",
+    "source": "radio-browser:7302620a-95fb-472f-bff9-42fa3200d43b"
+  },
+  "totally-radio-00s-mp3": {
+    "title": "Totally Radio - 00s (MP3)",
+    "description": "00's, 00s, 2000s",
+    "type": "audio/mpeg",
+    "url": "https://totallyradio.com.au/00S/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_00S_S01.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_00S_S01.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:8d7e4527-3f3b-4f94-974d-10c5cef66ad9"
+      }
+    ],
+    "features": "/img/oceania/australia/totally-radio-00s-mp3.png",
+    "source": "radio-browser:8d7e4527-3f3b-4f94-974d-10c5cef66ad9"
+  },
+  "totally-radio-rock-aac": {
+    "title": "Totally Radio - Rock (AAC)",
+    "description": "alternative rock, blues rock, classic rock, hard rock, indie rock",
+    "type": "audio/aac",
+    "url": "https://totallyradio.com.au/Rock",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_ROCK_S01AAC.aac",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_ROCK_S01AAC.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:7386f717-eca6-4767-ab26-e65438ca6cdd"
+      }
+    ],
+    "features": "/img/oceania/australia/totally-radio-rock-aac.png",
+    "source": "radio-browser:7386f717-eca6-4767-ab26-e65438ca6cdd"
+  },
+  "4bc-brisbane-882-am-mp3": {
+    "title": "4BC - Brisbane - 882 AM (MP3)",
+    "description": "news, talk radio",
+    "type": "audio/mpeg",
+    "url": "https://www.4bc.com.au/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/4BC.mp3",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/4BC.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:35f863a6-4cf4-400b-8944-0f33d32ff974"
+      }
+    ],
+    "features": "/img/oceania/australia/4bc-brisbane-882-am-mp3.png",
+    "source": "radio-browser:35f863a6-4cf4-400b-8944-0f33d32ff974"
+  },
+  "nova-96-9": {
+    "title": "Nova 96.9",
+    "description": "hits",
+    "type": "audio/aac",
+    "url": "http://www.nova969.com.au/",
+    "cros": false,
+    "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969_AAC48.aac",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969_AAC48.aac",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:c318d02e-53f1-43a3-84ed-fa6bf0e8c637"
+      }
+    ],
+    "features": "/img/oceania/australia/nova-96-9.png",
+    "source": "radio-browser:c318d02e-53f1-43a3-84ed-fa6bf0e8c637"
+  },
+  "hit104-7-canberra": {
+    "title": "hit104.7 Canberra",
+    "type": "audio/aac",
+    "url": "https://www.hit.com.au/canberra",
+    "cros": false,
+    "stream": "https://ais-arn.streamguys1.com/au_005/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://ais-arn.streamguys1.com/au_005/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:8c936ad3-3571-473c-9e11-fbf03cc9e06b"
+      }
+    ],
+    "features": "/img/oceania/australia/hit104-7-canberra.png",
+    "source": "radio-browser:8c936ad3-3571-473c-9e11-fbf03cc9e06b"
+  },
+  "three-d-radio": {
+    "title": "Three D Radio",
+    "description": "community radio",
+    "type": "audio/mpeg",
+    "url": "http://www.threedradio.com/",
+    "cros": true,
+    "stream": "http://sounds.threedradio.com:8000/stream",
+    "streams": [
+      {
+        "url": "http://sounds.threedradio.com:8000/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:960b9025-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/oceania/australia/three-d-radio.png",
+    "source": "radio-browser:960b9025-0601-11e8-ae97-52543be04c81"
+  },
+  "sawt-sydney": {
+    "title": "Sawt Sydney كل الفرق",
+    "description": "mix",
+    "type": "audio/mpeg",
+    "url": "https://sawtsydney.com.au/",
+    "cros": false,
+    "stream": "https://usa10.fastcast4u.com/nada22",
+    "streams": [
+      {
+        "url": "https://usa10.fastcast4u.com/nada22",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:52691bbc-72f0-4b1c-93f0-2a0fd13d9018"
+      }
+    ],
+    "features": "/img/oceania/australia/sawt-sydney.png",
+    "source": "radio-browser:52691bbc-72f0-4b1c-93f0-2a0fd13d9018"
+  },
+  "australian-digital-radio-network-1970s-pop-number-1s-mp3": {
+    "title": "Australian Digital Radio Network - 1970s Pop Number 1s (MP3)",
+    "description": "1970s, pop",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER81",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER81",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:b8e1f81d-e4ba-44f5-9f65-1b0e7283f502"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-1970s-pop-number-1s-mp3.png",
+    "source": "radio-browser:b8e1f81d-e4ba-44f5-9f65-1b0e7283f502"
+  },
+  "totally-radio-90s-aac": {
+    "title": "Totally Radio - 90s (AAC+)",
+    "description": "1990s, 90's, 90s",
+    "type": "audio/aac",
+    "url": "https://totallyradio.com.au/90S/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_90S_S01AAC.aac",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/T_RAD_90S_S01AAC.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:4197ab2a-949d-44d5-a35c-b34877a4eb04"
+      }
+    ],
+    "features": "/img/oceania/australia/totally-radio-90s-aac.png",
+    "source": "radio-browser:4197ab2a-949d-44d5-a35c-b34877a4eb04"
+  },
+  "australian-digital-radio-network-foreigner-mp3": {
+    "title": "Australian Digital Radio Network - Foreigner (MP3)",
+    "description": "foreigner",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm22.com.au:8000/CONTAINER102",
+    "streams": [
+      {
+        "url": "http://abm22.com.au:8000/CONTAINER102",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fac4bb27-2064-4a8c-8417-5fa8bd6b72ee"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-foreigner-mp3.png",
+    "source": "radio-browser:fac4bb27-2064-4a8c-8417-5fa8bd6b72ee"
+  },
+  "smooth-relax": {
+    "title": "Smooth-Relax",
+    "description": "relax, smooth",
+    "type": "audio/aac",
+    "url": "https://www.smooth.com.au/relax/",
+    "cros": true,
+    "stream": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTHRELAX_SYD_AAC.aac",
+    "streams": [
+      {
+        "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTHRELAX_SYD_AAC.aac",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:db10a9b9-1efa-4e5f-a22f-c24666d0b1bf"
+      }
+    ],
+    "features": "/img/oceania/australia/smooth-relax.png",
+    "source": "radio-browser:db10a9b9-1efa-4e5f-a22f-c24666d0b1bf"
+  },
+  "australian-digital-radio-network-bob-dylan-neil-young-mp3": {
+    "title": "Australian Digital Radio Network - Bob Dylan & Neil Young (MP3)",
+    "description": "bob dylan, neil young",
+    "type": "audio/mpeg",
+    "url": "http://www.australiandigitalradio.com/",
+    "cros": true,
+    "stream": "http://abm21.com.au:8000/CONTAINER164",
+    "streams": [
+      {
+        "url": "http://abm21.com.au:8000/CONTAINER164",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:881f415d-40b7-4bca-a8ee-07a9e92cbeb8"
+      }
+    ],
+    "features": "/img/oceania/australia/australian-digital-radio-network-bob-dylan-neil-young-mp3.png",
+    "source": "radio-browser:881f415d-40b7-4bca-a8ee-07a9e92cbeb8"
+  }
 }

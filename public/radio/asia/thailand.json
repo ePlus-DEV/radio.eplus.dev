@@ -1,4 +1,22 @@
 {
+  "91": {
+    "title": "สวพ.91",
+    "description": "traffic, volunteer",
+    "type": "audio/mpeg",
+    "url": "http://fm91bkk.com/",
+    "cros": true,
+    "stream": "http://122.155.16.48:8955/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://122.155.16.48:8955/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:4ded6637-6cbb-11e8-b15b-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/thailand/91.png",
+    "source": "radio-browser:4ded6637-6cbb-11e8-b15b-52543be04c81"
+  },
   "green": {
     "title": "COOLfahrenheit (Bangkok)",
     "type": "audio/mpeg",
@@ -8,7 +26,15 @@
     "stream": "https://atimeonline3.smartclick.co.th/green",
     "features": "/img/asia/thailand/green.png",
     "schedule": "https://api.webrad.io/data/playlist/96/green?time=",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://atimeonline3.smartclick.co.th/green",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "cool": {
     "title": "COOLfahrenheit (Bangkok)",
@@ -18,7 +44,15 @@
     "cros": true,
     "stream": "http://coolism-web3rd.cdn.byteark.com:5002/stream/1/",
     "features": "/img/asia/thailand/cool.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/cool?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/cool?time=",
+    "streams": [
+      {
+        "url": "http://coolism-web3rd.cdn.byteark.com:5002/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mellow": {
     "title": "Mellow",
@@ -28,7 +62,15 @@
     "cros": false,
     "stream": "https://mcotdigital-3bgyw0.cdn.byteark.com/radiocdn_edge/fm975.stream_aac/playlist.m3u8",
     "features": "/img/asia/thailand/mellow.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/eazy-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/eazy-fm?time=",
+    "streams": [
+      {
+        "url": "https://mcotdigital-3bgyw0.cdn.byteark.com/radiocdn_edge/fm975.stream_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "eazy-fm": {
     "title": "Eazy FM (Bangkok)",
@@ -38,7 +80,15 @@
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/EAZYFM_1055AAC_SC",
     "features": "/img/asia/thailand/eazy-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/eazy-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/eazy-fm?time=",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/EAZYFM_1055AAC_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "fm95-modern": {
     "title": "FM95 Modern Radio",
@@ -47,7 +97,15 @@
     "url": "https://radio.mcot.net/",
     "cros": true,
     "stream": "http://rstream.mcot.net:8000/fm95",
-    "features": "/img/asia/thailand/fm95-modern.png"
+    "features": "/img/asia/thailand/fm95-modern.png",
+    "streams": [
+      {
+        "url": "http://rstream.mcot.net:8000/fm95",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "rr-one": {
     "title": "101 RR One (Bangkok)",
@@ -56,7 +114,15 @@
     "url": "https://fm101talk.com/",
     "cros": false,
     "stream": "https://media.login.in.th:8443/smilehost/8135",
-    "features": "/img/asia/thailand/rr-one.png"
+    "features": "/img/asia/thailand/rr-one.png",
+    "streams": [
+      {
+        "url": "https://media.login.in.th:8443/smilehost/8135",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "met": {
     "title": "Met",
@@ -65,7 +131,15 @@
     "url": "https://met107.mcot.net/",
     "cros": false,
     "stream": "https://mcotdigital-w9rpgl.cdn.byteark.com/radiocdn_edge/fm107.stream_aac/playlist.m3u8",
-    "features": "/img/asia/thailand/met.png"
+    "features": "/img/asia/thailand/met.png",
+    "streams": [
+      {
+        "url": "https://mcotdigital-w9rpgl.cdn.byteark.com/radiocdn_edge/fm107.stream_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "virginhitz": {
     "title": "HITZ",
@@ -75,7 +149,15 @@
     "cros": false,
     "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/HITZ_955AAC_SC",
     "features": "/img/asia/thailand/virginhitz.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/virginhitz?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/virginhitz?time=",
+    "streams": [
+      {
+        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/HITZ_955AAC_SC",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "chill": {
     "title": "Chill",
@@ -84,7 +166,15 @@
     "url": "https://chillfm.fm/",
     "cros": false,
     "stream": "https://atimeonline3.smartclick.co.th/chill",
-    "features": "/img/asia/thailand/chill.png"
+    "features": "/img/asia/thailand/chill.png",
+    "streams": [
+      {
+        "url": "https://atimeonline3.smartclick.co.th/chill",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "big": {
     "title": "Big FM (Bangkok)",
@@ -93,7 +183,15 @@
     "url": "http://www.bigfm.fm/",
     "cros": false,
     "stream": "https://media.login.in.th:8443/smilehost/8195",
-    "features": "/img/asia/thailand/big.png"
+    "features": "/img/asia/thailand/big.png",
+    "streams": [
+      {
+        "url": "https://media.login.in.th:8443/smilehost/8195",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mcot": {
     "title": "Mcot Radio FM",
@@ -102,7 +200,22 @@
     "url": "https://news1005.mcot.net/",
     "cros": true,
     "stream": "http://rstream.mcot.net:8000/fm1005",
-    "features": "/img/asia/thailand/mcot.png"
+    "features": "/img/asia/thailand/mcot.png",
+    "streams": [
+      {
+        "url": "http://rstream.mcot.net:8000/fm1005",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      },
+      {
+        "url": "http://rstream.mcot.net:9044/;.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:dd07e2b1-a32c-4376-aac1-8f1991aa8b6c"
+      }
+    ],
+    "description": "อสมท อุดรธานี"
   },
   "active": {
     "title": "99 Active Radio (Bangkok)",
@@ -111,7 +224,15 @@
     "url": "https://fm99activeradio.mcot.net/index",
     "cros": true,
     "stream": "https://mcotdigital-gvwieh.cdn.byteark.com/radiocdn_edge/fm99.stream_aac/playlist.m3u8",
-    "features": "/img/asia/thailand/active.png"
+    "features": "/img/asia/thailand/active.png",
+    "streams": [
+      {
+        "url": "https://mcotdigital-gvwieh.cdn.byteark.com/radiocdn_edge/fm99.stream_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "one-fm": {
     "title": "103.5 FM One",
@@ -121,7 +242,15 @@
     "cros": false,
     "stream": "https://fmone.plathong.net/7010/stream/1/",
     "features": "/img/asia/thailand/one-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/one-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/one-fm?time=",
+    "streams": [
+      {
+        "url": "https://fmone.plathong.net/7010/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "city": {
     "title": "City Radio",
@@ -131,7 +260,15 @@
     "cros": true,
     "stream": "http://n13.radiojar.com/493e3018b9quv",
     "features": "/img/asia/thailand/city.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/city?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/city?time=",
+    "streams": [
+      {
+        "url": "http://n13.radiojar.com/493e3018b9quv",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "thailand-88": {
     "title": "88 FM NBT Radio Thailand (Bangkok)",
@@ -141,7 +278,15 @@
     "cros": true,
     "stream": "http://prdonline.prd.go.th:8200/;",
     "features": "/img/asia/thailand/thailand-88.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/thailand-88?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/thailand-88?time=",
+    "streams": [
+      {
+        "url": "http://prdonline.prd.go.th:8200/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mitikao905": {
     "title": "Mitikao",
@@ -150,7 +295,15 @@
     "url": "http://www.smartbomb.co.th/",
     "cros": true,
     "stream": "http://live3.smartbomb.co.th:8624/stream/1/",
-    "features": "/img/asia/thailand/mitikao905.png"
+    "features": "/img/asia/thailand/mitikao905.png",
+    "streams": [
+      {
+        "url": "http://live3.smartbomb.co.th:8624/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fung-fung-fung": {
     "title": "Fung Fung Fung",
@@ -159,7 +312,15 @@
     "url": "https://www.onair.one/?page_id=26",
     "cros": false,
     "stream": "https://plus.onair.network/radio/8130/radio.mp3",
-    "features": "/img/asia/thailand/fung-fung-fung.png"
+    "features": "/img/asia/thailand/fung-fung-fung.png",
+    "streams": [
+      {
+        "url": "https://plus.onair.network/radio/8130/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "pongpan": {
     "title": "Pongpan Radio",
@@ -168,7 +329,15 @@
     "url": false,
     "cros": true,
     "stream": "http://radio.portradiothai.com:6010/;",
-    "features": "/img/asia/thailand/pongpan.png"
+    "features": "/img/asia/thailand/pongpan.png",
+    "streams": [
+      {
+        "url": "http://radio.portradiothai.com:6010/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "88-fm": {
     "title": "Radio Thailand FM",
@@ -178,7 +347,15 @@
     "cros": true,
     "stream": "http://prdonline.prd.go.th:8200/;",
     "features": "/img/asia/thailand/88-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/88-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/88-fm?time=",
+    "streams": [
+      {
+        "url": "http://prdonline.prd.go.th:8200/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm91": {
     "title": "FM 91",
@@ -187,7 +364,15 @@
     "url": "https://www.fm91bkk.com/",
     "cros": false,
     "stream": "https://www.fm91bkk.com:8900/stream/1/",
-    "features": "/img/asia/thailand/fm91.png"
+    "features": "/img/asia/thailand/fm91.png",
+    "streams": [
+      {
+        "url": "https://www.fm91bkk.com:8900/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "city-life": {
     "title": "City Life",
@@ -196,7 +381,15 @@
     "url": "https://www.fm91bkk.com/",
     "cros": true,
     "stream": "http://onair.onair.network:8076/stream/1/",
-    "features": "/img/asia/thailand/city-life.png"
+    "features": "/img/asia/thailand/city-life.png",
+    "streams": [
+      {
+        "url": "http://onair.onair.network:8076/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "phuket": {
     "title": "Phuket FM Radio",
@@ -206,7 +399,15 @@
     "cros": true,
     "stream": "https://stream.phuketfmradio.com/pfmMP3",
     "features": "/img/asia/thailand/phuket.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/phuket?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/phuket?time=",
+    "streams": [
+      {
+        "url": "https://stream.phuketfmradio.com/pfmMP3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "cu": {
     "title": "Cu Radio (Bangkok)",
@@ -215,7 +416,15 @@
     "url": "https://curadio.chula.ac.th/",
     "cros": true,
     "stream": "https://media.curadio.chula.ac.th/live/liveradio128/playlist.m3u8",
-    "features": "/img/asia/thailand/cu.png"
+    "features": "/img/asia/thailand/cu.png",
+    "streams": [
+      {
+        "url": "https://media.curadio.chula.ac.th/live/liveradio128/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "sunshine": {
     "title": "Sunshine Radio (Pattaya)",
@@ -224,7 +433,15 @@
     "url": "http://www.sunshinefm.com/pattaya/",
     "cros": true,
     "stream": "http://c1.hostpleng.cloud:8046/live",
-    "features": "/img/asia/thailand/sunshine.png"
+    "features": "/img/asia/thailand/sunshine.png",
+    "streams": [
+      {
+        "url": "http://c1.hostpleng.cloud:8046/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "anurak": {
     "title": "อนุรักษ์เรดิโอ",
@@ -233,7 +450,15 @@
     "url": "https://www.anurakradio.com/",
     "cros": true,
     "stream": "http://112.121.150.133:8143/live",
-    "features": "/img/asia/thailand/anurak.png"
+    "features": "/img/asia/thailand/anurak.png",
+    "streams": [
+      {
+        "url": "http://112.121.150.133:8143/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fat-93": {
     "title": "Fat (Chiang Rai)",
@@ -242,7 +467,15 @@
     "url": "https://www.fat93.com/",
     "cros": true,
     "stream": "http://112.121.151.133:8272/stream",
-    "features": "/img/asia/thailand/fat-93.png"
+    "features": "/img/asia/thailand/fat-93.png",
+    "streams": [
+      {
+        "url": "http://112.121.151.133:8272/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "96-5": {
     "title": "Radio 96.5 FM",
@@ -251,7 +484,15 @@
     "url": "https://thinkingradio.mcot.net/",
     "cros": false,
     "stream": "https://mcotdigital-9ksau4.cdn.byteark.com/radiocdn_edge/fm965.stream_aac/playlist.m3u8",
-    "features": "/img/asia/thailand/96-5.png"
+    "features": "/img/asia/thailand/96-5.png",
+    "streams": [
+      {
+        "url": "https://mcotdigital-9ksau4.cdn.byteark.com/radiocdn_edge/fm965.stream_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "modern-9875": {
     "title": "DontreeSeason Modern 9875 FM (Chiangmai)",
@@ -260,7 +501,15 @@
     "url": "https://www.dseason.net/home.php",
     "cros": true,
     "stream": "http://112.121.150.133:9102/stream/1/",
-    "features": "/img/asia/thailand/modern-9875.png"
+    "features": "/img/asia/thailand/modern-9875.png",
+    "streams": [
+      {
+        "url": "http://112.121.150.133:9102/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "chiang-mai-93-75": {
     "title": "เชียงใหม่เรดิโอ",
@@ -269,7 +518,15 @@
     "url": "https://www.chiangmairadio.com/",
     "cros": true,
     "stream": "http://112.121.151.133:8124/live",
-    "features": "/img/asia/thailand/chiang-mai-93-75.png"
+    "features": "/img/asia/thailand/chiang-mai-93-75.png",
+    "streams": [
+      {
+        "url": "http://112.121.151.133:8124/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "kiss-fm": {
     "title": "Kiss FM (Pattaya)",
@@ -279,7 +536,15 @@
     "cros": true,
     "stream": "http://s1.thailandstreaming.net:8020/stream/1/",
     "features": "/img/asia/thailand/kiss-fm.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/kiss-fm?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/kiss-fm?time=",
+    "streams": [
+      {
+        "url": "http://s1.thailandstreaming.net:8020/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "chiangmai": {
     "title": "Radio Chiangmai FM (Chiang Mai)",
@@ -288,7 +553,15 @@
     "url": "https://www.chiangmairadio.com/",
     "cros": true,
     "stream": "http://112.121.151.133:8124/live",
-    "features": "/img/asia/thailand/chiangmai.png"
+    "features": "/img/asia/thailand/chiangmai.png",
+    "streams": [
+      {
+        "url": "http://112.121.151.133:8124/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "mun-music": {
     "title": "MUNmusic",
@@ -298,7 +571,15 @@
     "cros": false,
     "stream": "https://www.radioking.com/play/munmusic",
     "features": "/img/asia/thailand/mun-music.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/mun-music?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/mun-music?time=",
+    "streams": [
+      {
+        "url": "https://www.radioking.com/play/munmusic",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "mun-forward": {
     "title": "MUNforward",
@@ -307,7 +588,15 @@
     "url": "https://munforward.com/",
     "cros": false,
     "stream": "https://cdn-th2.livestreaming.in.th/shoutcast/8730",
-    "features": "/img/asia/thailand/mun-forward.png"
+    "features": "/img/asia/thailand/mun-forward.png",
+    "streams": [
+      {
+        "url": "https://cdn-th2.livestreaming.in.th/shoutcast/8730",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "like": {
     "title": "103 Like FM (Bangkok)",
@@ -316,7 +605,15 @@
     "url": "https://www.103likefm.com/",
     "cros": false,
     "stream": "https://radio10.plathong.net/7064/stream/1/",
-    "features": "/img/asia/thailand/like.png"
+    "features": "/img/asia/thailand/like.png",
+    "streams": [
+      {
+        "url": "https://radio10.plathong.net/7064/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "love-93": {
     "title": "Love Radio (Pattani)",
@@ -325,7 +622,15 @@
     "url": "http://www.greater.co.th/page/",
     "cros": false,
     "stream": "https://radio14.plathong.net/8060/stream/1/",
-    "features": "/img/asia/thailand/love-93.png"
+    "features": "/img/asia/thailand/love-93.png",
+    "streams": [
+      {
+        "url": "https://radio14.plathong.net/8060/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "trip": {
     "title": "Radio Trip (Phuket)",
@@ -334,7 +639,15 @@
     "url": "http://www.radiotripphuket.com/",
     "cros": false,
     "stream": "https://cdn-th2.login.in.th/shoutcast/1150",
-    "features": "/img/asia/thailand/trip.png"
+    "features": "/img/asia/thailand/trip.png",
+    "streams": [
+      {
+        "url": "https://cdn-th2.login.in.th/shoutcast/1150",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "q-fm": {
     "title": "97 QFM (Bangkok)",
@@ -343,7 +656,16 @@
     "url": "http://97qfm.com/home.php?events=1",
     "cros": false,
     "stream": "https://cdn-th2.livestreaming.in.th/shoutcast/8610",
-    "features": "/img/asia/thailand/q-fm.png"
+    "features": "/img/asia/thailand/q-fm.png",
+    "streams": [
+      {
+        "url": "https://cdn-th2.livestreaming.in.th/shoutcast/8610",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ],
+    "description": "news"
   },
   "buddy": {
     "title": "Buddy Radio",
@@ -352,7 +674,15 @@
     "url": "http://www.buddyyala.com/",
     "cros": false,
     "stream": "https://apps4.mcot.net/stream579.aac",
-    "features": "/img/asia/thailand/buddy.png"
+    "features": "/img/asia/thailand/buddy.png",
+    "streams": [
+      {
+        "url": "https://apps4.mcot.net/stream579.aac",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "live-phuket": {
     "title": "LIVE (Phuket)",
@@ -361,7 +691,15 @@
     "url": "http://www.buddyyala.com/",
     "cros": false,
     "stream": "https://4118.radio4.thzhost.com/stream/1/",
-    "features": "/img/asia/thailand/live-phuket.png"
+    "features": "/img/asia/thailand/live-phuket.png",
+    "streams": [
+      {
+        "url": "https://4118.radio4.thzhost.com/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "primary"
+      }
+    ]
   },
   "ddtv": {
     "title": "DDTV (Bangkok)",
@@ -370,7 +708,15 @@
     "url": "https://www.8875fm.com",
     "cros": true,
     "stream": "http://58.82.164.201:1935/live/_definst_/ddtv/playlist.m3u8",
-    "features": "/img/asia/thailand/ddtv.png"
+    "features": "/img/asia/thailand/ddtv.png",
+    "streams": [
+      {
+        "url": "http://58.82.164.201:1935/live/_definst_/ddtv/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "chill-89": {
     "title": "Chill 89 FM (Bangkok)",
@@ -379,7 +725,15 @@
     "url": "https://chill.atimeonline.com/",
     "cros": true,
     "stream": "https://atimeonline.smartclick.co.th/chill",
-    "features": "/img/asia/thailand/chill-89.png"
+    "features": "/img/asia/thailand/chill-89.png",
+    "streams": [
+      {
+        "url": "https://atimeonline.smartclick.co.th/chill",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "fm-105": {
     "title": "Radio Thailand FM 105.00",
@@ -389,7 +743,15 @@
     "cros": true,
     "stream": "http://prdonline.prd.go.th:8210/;",
     "features": "/img/asia/thailand/fm-105.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/fm-105?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/fm-105?time=",
+    "streams": [
+      {
+        "url": "http://prdonline.prd.go.th:8210/;",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
   },
   "capitol-fm-bangkok": {
     "title": "Capitol FM (Bangkok)",
@@ -399,6 +761,1253 @@
     "cros": true,
     "stream": "http://atlanticthai.primcast.com:5898/stream/1/",
     "features": "/img/asia/thailand/capitol-fm-bangkok.png",
-    "schedule": "https://api.webrad.io/data/playlist/96/capitol-fm-bangkok?time="
+    "schedule": "https://api.webrad.io/data/playlist/96/capitol-fm-bangkok?time=",
+    "streams": [
+      {
+        "url": "http://atlanticthai.primcast.com:5898/stream/1/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "primary"
+      }
+    ]
+  },
+  "90-rakthai": {
+    "title": "90 rakthai",
+    "type": "audio/mpeg",
+    "url": "http://radio11.plathong.net:8896/;stream.mp3",
+    "cros": true,
+    "stream": "http://radio11.plathong.net:8896/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://radio11.plathong.net:8896/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:964326ca-0601-11e8-ae97-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/thailand/90-rakthai.png",
+    "source": "radio-browser:964326ca-0601-11e8-ae97-52543be04c81"
+  },
+  "90-5": {
+    "title": "มิติข่าว 90.5",
+    "description": "news, news talk",
+    "type": "audio/mpeg",
+    "url": "http://www.smartbomb.co.th/",
+    "cros": true,
+    "stream": "http://live3.smartbomb.co.th:8624/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://live3.smartbomb.co.th:8624/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:b192034c-6cbd-11e8-b15b-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/thailand/90-5.png",
+    "source": "radio-browser:b192034c-6cbd-11e8-b15b-52543be04c81"
+  },
+  "cool-fahrenheit": {
+    "title": "Cool fahrenheit",
+    "type": "audio/mpeg",
+    "url": "http://www.coolism.net/index.php",
+    "cros": false,
+    "stream": "https://coolism-web.cdn.byteark.com/;stream/1",
+    "streams": [
+      {
+        "url": "https://coolism-web.cdn.byteark.com/;stream/1",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:850723b8-24a6-4dca-add8-b0da39db7d39"
+      }
+    ],
+    "features": "/img/asia/thailand/cool-fahrenheit.png",
+    "source": "radio-browser:850723b8-24a6-4dca-add8-b0da39db7d39",
+    "description": "music"
+  },
+  "fm-106-5": {
+    "title": "ไทยลานนาเรดิโอ FM 106.5 จังหวัดตาก",
+    "description": "country, hits 90's, indie, looktung, thailanna",
+    "type": "audio/mpeg",
+    "url": "https://www.lannaradio.com/",
+    "cros": false,
+    "stream": "https://inter.lannaradio.com/radio/8000/radio.mp3",
+    "streams": [
+      {
+        "url": "https://inter.lannaradio.com/radio/8000/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:7316c4df-d61f-4ba1-9de4-f92e66b97f03"
+      },
+      {
+        "url": "https://radio.garden/api/ara/content/listen/8n_MZrpC/channel.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-106-5.png",
+    "source": "radio-browser:7316c4df-d61f-4ba1-9de4-f92e66b97f03"
+  },
+  "thai-pbs-tv": {
+    "title": "Thai PBS TV",
+    "type": "application/x-mpegURL",
+    "url": "http://www.thaipbs.or.th/",
+    "cros": true,
+    "stream": "http://thaipbs-live.cdn.byteark.com/live-en/playlist_720p/index.m3u8",
+    "streams": [
+      {
+        "url": "http://thaipbs-live.cdn.byteark.com/live-en/playlist_720p/index.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": true,
+        "source": "radio-browser:6b9d44bb-2628-11e9-a80b-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/thailand/thai-pbs-tv.png",
+    "source": "radio-browser:6b9d44bb-2628-11e9-a80b-52543be04c81"
+  },
+  "isan-fm-98": {
+    "title": "Isan FM 98",
+    "description": "pop",
+    "type": "audio/mpeg",
+    "url": "http://www.isanfm.com/",
+    "cros": true,
+    "stream": "http://radio11.plathong.net:8900/stream.mp3",
+    "streams": [
+      {
+        "url": "http://radio11.plathong.net:8900/stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:0662ca31-689c-11ea-9d09-52543be04c81"
+      }
+    ],
+    "features": "/img/asia/thailand/isan-fm-98.png",
+    "source": "radio-browser:0662ca31-689c-11ea-9d09-52543be04c81"
+  },
+  "top-news": {
+    "title": "Top News",
+    "description": "hls video, news, politics & current affairs, tv",
+    "type": "application/x-mpegURL",
+    "url": "https://www.topnews.co.th/",
+    "cros": false,
+    "stream": "https://live.topnews.co.th/hls/topnews.m3u8",
+    "streams": [
+      {
+        "url": "https://live.topnews.co.th/hls/topnews.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:7d791618-8666-4113-b788-878a0b15a06a"
+      }
+    ],
+    "features": "/img/asia/thailand/top-news.png",
+    "source": "radio-browser:7d791618-8666-4113-b788-878a0b15a06a"
+  },
+  "cool-fahrenheit-0c1aae6c": {
+    "title": "Cool fahrenheit",
+    "type": "audio/mpeg",
+    "url": "http://www.coolism.net/",
+    "cros": false,
+    "stream": "https://coolism-web3rd.cdn.byteark.com/stream/1/",
+    "streams": [
+      {
+        "url": "https://coolism-web3rd.cdn.byteark.com/stream/1/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0c1aae6c-8412-464b-91bd-bc06cd396ef9"
+      }
+    ],
+    "features": "/img/asia/thailand/cool-fahrenheit-0c1aae6c.png",
+    "source": "radio-browser:0c1aae6c-8412-464b-91bd-bc06cd396ef9"
+  },
+  "bkk-fm": {
+    "title": "BKK.FM",
+    "description": "alternative, alternative rock, dance, electronic dance music, rock",
+    "type": "audio/aac",
+    "url": "https://bkk.fm/",
+    "cros": false,
+    "stream": "https://rsas.bkk.fm/radio",
+    "streams": [
+      {
+        "url": "https://rsas.bkk.fm/radio",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:1e1113a5-7de2-4b9f-922c-ff56026f8759"
+      }
+    ],
+    "features": "/img/asia/thailand/bkk-fm.png",
+    "source": "radio-browser:1e1113a5-7de2-4b9f-922c-ff56026f8759"
+  },
+  "106-family-news-radio": {
+    "title": "106 Family News Radio",
+    "type": "audio/mpeg",
+    "url": "https://onair.one/?page_id=405",
+    "cros": false,
+    "stream": "https://radio11.plathong.net/7138/;stream.mp3",
+    "streams": [
+      {
+        "url": "https://radio11.plathong.net/7138/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:08675eea-4c22-486d-920d-1bb997ed819e"
+      }
+    ],
+    "features": "/img/asia/thailand/106-family-news-radio.png",
+    "source": "radio-browser:08675eea-4c22-486d-920d-1bb997ed819e"
+  },
+  "bluewave-97-cr": {
+    "title": "Bluewave 97 (CR)",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "https://www.bluewave97.com/",
+    "cros": true,
+    "stream": "http://112.121.151.133:8109/live",
+    "streams": [
+      {
+        "url": "http://112.121.151.133:8109/live",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:8e3840ba-a912-4aec-8e2e-54aefd5db534"
+      }
+    ],
+    "features": "/img/asia/thailand/bluewave-97-cr.png",
+    "source": "radio-browser:8e3840ba-a912-4aec-8e2e-54aefd5db534"
+  },
+  "flex-104-5": {
+    "title": "Flex 104.5",
+    "description": "เชื่อมต่อโลกออนไลน์ เป็นมากกว่าการฟังเพลง",
+    "type": "application/x-mpegURL",
+    "url": "https://www.flexconnect.net/",
+    "cros": false,
+    "stream": "https://streaming.flexconnect.net/voiceflex/voiceflex/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://streaming.flexconnect.net/voiceflex/voiceflex/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:b4880e4a-8ede-47bf-abba-0f22c14ec6c0"
+      }
+    ],
+    "features": "/img/asia/thailand/flex-104-5.png",
+    "source": "radio-browser:b4880e4a-8ede-47bf-abba-0f22c14ec6c0"
+  },
+  "best-radio-fm-89-0-mhz": {
+    "title": "Best Radio FM. 89.0 MHz.",
+    "description": "คลื่นฮิตอันดับ 1 ของชาวขอนแก่น",
+    "type": "audio/aac",
+    "url": "https://bestradio89.com/",
+    "cros": false,
+    "stream": "https://80sv2.hostpleng.com/?url=http://112.121.150.133:8198/;",
+    "streams": [
+      {
+        "url": "https://80sv2.hostpleng.com/?url=http://112.121.150.133:8198/;",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:46c93c88-147e-4bf5-9e08-ff93680984bf"
+      }
+    ],
+    "features": "/img/asia/thailand/best-radio-fm-89-0-mhz.png",
+    "source": "radio-browser:46c93c88-147e-4bf5-9e08-ff93680984bf"
+  },
+  "top-news-live1-low-240p": {
+    "title": "Top News (Live1 - Low 240p)",
+    "description": "hls video, news, political, politics, politics & current affairs",
+    "type": "application/x-mpegURL",
+    "url": "https://www.topnews.co.th/#live-section",
+    "cros": false,
+    "stream": "https://live.topnews.co.th/hls/topnews_a_240.m3u8",
+    "streams": [
+      {
+        "url": "https://live.topnews.co.th/hls/topnews_a_240.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:d8f5ee23-374a-42a3-8ba2-cb96450b27af"
+      }
+    ],
+    "features": "/img/asia/thailand/top-news-live1-low-240p.png",
+    "source": "radio-browser:d8f5ee23-374a-42a3-8ba2-cb96450b27af"
+  },
+  "bluewave-97": {
+    "title": "Bluewave 97",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "https://www.bluewave97.com/",
+    "cros": false,
+    "stream": "https://80sv2.hostpleng.com/?url=http://112.121.151.133:8109/stream",
+    "streams": [
+      {
+        "url": "https://80sv2.hostpleng.com/?url=http://112.121.151.133:8109/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:c67db859-7714-453c-95bd-d2d271939507"
+      }
+    ],
+    "features": "/img/asia/thailand/bluewave-97.png",
+    "source": "radio-browser:c67db859-7714-453c-95bd-d2d271939507"
+  },
+  "rad-radio": {
+    "title": "Rad Radio",
+    "description": "music nonstop all day all night",
+    "type": "audio/mpeg",
+    "url": "https://mytuner-radio.com/radio/rad-radio-895-483972/",
+    "cros": true,
+    "stream": "http://radio1.serverradio.net:8592/;?type=http",
+    "streams": [
+      {
+        "url": "http://radio1.serverradio.net:8592/;?type=http",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:be8e2e87-7a7c-46cd-95aa-3a5436a3b82a"
+      }
+    ],
+    "features": "/img/asia/thailand/rad-radio.png",
+    "source": "radio-browser:be8e2e87-7a7c-46cd-95aa-3a5436a3b82a"
+  },
+  "94-bangkok-smile": {
+    "title": "94 Bangkok Smile",
+    "type": "audio/mpeg",
+    "url": "https://fm94.tv5.co.th/",
+    "cros": true,
+    "stream": "http://fm94.tv5.co.th:8000/fm94ch3",
+    "streams": [
+      {
+        "url": "http://fm94.tv5.co.th:8000/fm94ch3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:76fe3193-856c-49ed-9b97-8478a042ca8a"
+      }
+    ],
+    "features": "/img/asia/thailand/94-bangkok-smile.png",
+    "source": "radio-browser:76fe3193-856c-49ed-9b97-8478a042ca8a"
+  },
+  "chili-radio-thailand": {
+    "title": "Chili Radio Thailand",
+    "description": "1980s, 2000s, 70 80 hits, 70s, 80s",
+    "type": "audio/mpeg",
+    "url": "https://chiliradio.asia/",
+    "cros": false,
+    "stream": "https://stream.chiliradio.app/chiliclassics",
+    "streams": [
+      {
+        "url": "https://stream.chiliradio.app/chiliclassics",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:df56ca27-8782-439f-bc91-806800aae834"
+      }
+    ],
+    "features": "/img/asia/thailand/chili-radio-thailand.png",
+    "source": "radio-browser:df56ca27-8782-439f-bc91-806800aae834"
+  },
+  "talay-90-25fm": {
+    "title": "talay 90.25FM",
+    "type": "audio/aac",
+    "url": "https://www.facebook.com/Talay90.25/",
+    "cros": false,
+    "stream": "https://stream.talay.asia/talay",
+    "streams": [
+      {
+        "url": "https://stream.talay.asia/talay",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a75cb53a-cb43-486c-9e58-443fdfaaa081"
+      }
+    ],
+    "features": "/img/asia/thailand/talay-90-25fm.png",
+    "source": "radio-browser:a75cb53a-cb43-486c-9e58-443fdfaaa081"
+  },
+  "js100": {
+    "title": "JS100",
+    "description": "traffic, volunteer",
+    "type": "audio/mpeg",
+    "url": "https://www.js100.com/live",
+    "cros": true,
+    "stream": "http://103.246.19.203:8004/stream?type=http&nocache=145",
+    "streams": [
+      {
+        "url": "http://103.246.19.203:8004/stream?type=http&nocache=145",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:89cd3adf-c3a8-4d56-ada6-1d539f5bfad5"
+      }
+    ],
+    "features": "/img/asia/thailand/js100.png",
+    "source": "radio-browser:89cd3adf-c3a8-4d56-ada6-1d539f5bfad5"
+  },
+  "thairadio-96-5-thinking": {
+    "title": "ThaiRadio 96.5 thinking",
+    "type": "application/x-mpegURL",
+    "url": "https://www.mcot.net/",
+    "cros": false,
+    "stream": "https://live-org-01-cdn.mcot.net/radiocdn_edge/fm965.stream_aac/chunklist.m3u8",
+    "streams": [
+      {
+        "url": "https://live-org-01-cdn.mcot.net/radiocdn_edge/fm965.stream_aac/chunklist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:b52fe37c-7991-4453-9838-aa9cd9db0700"
+      }
+    ],
+    "features": "/img/asia/thailand/thairadio-96-5-thinking.png",
+    "source": "radio-browser:b52fe37c-7991-4453-9838-aa9cd9db0700"
+  },
+  "mcot-radio-buriram-92-0-fm": {
+    "title": "Mcot Radio Buriram 92.0 FM",
+    "type": "audio/mpeg",
+    "url": "https://radio.mcot.net/",
+    "cros": true,
+    "stream": "http://rstream.mcot.net:9050/",
+    "streams": [
+      {
+        "url": "http://rstream.mcot.net:9050/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:3a857333-2d43-4207-a137-ce76e2b19ee8"
+      }
+    ],
+    "features": "/img/asia/thailand/mcot-radio-buriram-92-0-fm.png",
+    "source": "radio-browser:3a857333-2d43-4207-a137-ce76e2b19ee8"
+  },
+  "101-5-chula-radio": {
+    "title": "101.5 Chula Radio",
+    "type": "audio/mpeg",
+    "url": "https://curadio.chula.ac.th/Radio-Live.php",
+    "cros": true,
+    "stream": "http://radio11.plathong.net:7590/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://radio11.plathong.net:7590/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:153237c9-f6b1-4079-9a78-8063d7730aaf"
+      }
+    ],
+    "features": "/img/asia/thailand/101-5-chula-radio.png",
+    "source": "radio-browser:153237c9-f6b1-4079-9a78-8063d7730aaf"
+  },
+  "yesterday-106-5": {
+    "title": "Yesterday 106.5",
+    "type": "audio/aac",
+    "url": "http://www.niyamedia.com/",
+    "cros": true,
+    "stream": "http://radio4.thzhost.com:4122/",
+    "streams": [
+      {
+        "url": "http://radio4.thzhost.com:4122/",
+        "type": "audio/aac",
+        "cros": true,
+        "source": "radio-browser:8acbb7d6-4c7a-47a4-9112-34469106bf58"
+      }
+    ],
+    "features": "/img/asia/thailand/yesterday-106-5.png",
+    "source": "radio-browser:8acbb7d6-4c7a-47a4-9112-34469106bf58"
+  },
+  "91-5-fm-panzer-radio-station": {
+    "title": "91.5 FM Panzer Radio Station",
+    "type": "audio/mpeg",
+    "url": "https://thaidio.blogspot.com/2015/01/915-cool-fm.html",
+    "cros": true,
+    "stream": "http://radio.servradio.com:9398/;stream.mp3",
+    "streams": [
+      {
+        "url": "http://radio.servradio.com:9398/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:e165cba5-0b19-4318-8d45-0d497ac3bfef"
+      }
+    ],
+    "features": "/img/asia/thailand/91-5-fm-panzer-radio-station.png",
+    "source": "radio-browser:e165cba5-0b19-4318-8d45-0d497ac3bfef"
+  },
+  "fm-93-50-mhz": {
+    "title": "FM 93.50 MHz บ้านใหม่ เรดิโอ",
+    "description": "music",
+    "type": "audio/mpeg",
+    "url": "https://banmairadio.com/",
+    "cros": false,
+    "stream": "https://radio10.plathong.net/7590/;stream.mp3",
+    "streams": [
+      {
+        "url": "https://radio10.plathong.net/7590/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d54c5fa1-b129-410a-8eac-c76ec6daa734"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-93-50-mhz.png",
+    "source": "radio-browser:d54c5fa1-b129-410a-8eac-c76ec6daa734"
+  },
+  "fm-91": {
+    "title": "FM 91",
+    "type": "audio/mpeg",
+    "url": "https://www.fm91bkk.com/",
+    "cros": false,
+    "stream": "https://www.fm91bkk.com:8900/;stream.mp3",
+    "streams": [
+      {
+        "url": "https://www.fm91bkk.com:8900/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:06ed0e2b-41b5-4d08-8854-fcb339d25a35"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-91.png",
+    "source": "radio-browser:06ed0e2b-41b5-4d08-8854-fcb339d25a35"
+  },
+  "js-100": {
+    "title": "JS 100",
+    "type": "audio/mpeg",
+    "url": "https://www.js100.com/en/site/home",
+    "cros": true,
+    "stream": "http://103.246.19.203:8004/stream",
+    "streams": [
+      {
+        "url": "http://103.246.19.203:8004/stream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:57eed015-62b4-44b7-b242-f59ae39c8d0e"
+      },
+      {
+        "url": "http://103.246.19.203:8004/listen.pls?sid=1",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/thailand/js-100.png",
+    "source": "radio-browser:57eed015-62b4-44b7-b242-f59ae39c8d0e"
+  },
+  "keangun-radio": {
+    "title": "Keangun Radio เขียนกันเรดิโอ ฟังเพลงสบายสไตล์ร้านกาแฟ ร้านเหล้า ร้านนั่งชิล",
+    "description": "música pop, สตริง, เพลงร่วมสมัย, เพลงใหม่",
+    "type": "audio/mpeg",
+    "url": "https://www.keangun.com/",
+    "cros": false,
+    "stream": "https://radio9.plathong.net/7054/;stream.mp3",
+    "streams": [
+      {
+        "url": "https://radio9.plathong.net/7054/;stream.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3a87428d-5de8-4b64-8389-6cd48f868ec2"
+      }
+    ],
+    "features": "/img/asia/thailand/keangun-radio.png",
+    "source": "radio-browser:3a87428d-5de8-4b64-8389-6cd48f868ec2"
+  },
+  "smooth-105-5-rstream": {
+    "title": "Smooth 105.5 (RStream)",
+    "description": "1980's, 1990's, bossa, international hits, jazz",
+    "type": "audio/mpeg",
+    "url": "https://smoothfm.mcot.net/",
+    "cros": true,
+    "stream": "http://rstream.mcot.net:8000/fm1055",
+    "streams": [
+      {
+        "url": "http://rstream.mcot.net:8000/fm1055",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:6ef7f7ad-3d00-4230-9197-f06b0f1e4166"
+      }
+    ],
+    "features": "/img/asia/thailand/smooth-105-5-rstream.png",
+    "source": "radio-browser:6ef7f7ad-3d00-4230-9197-f06b0f1e4166"
+  },
+  "fabulous-103": {
+    "title": "Fabulous 103",
+    "description": "electronic, folk, local news, local weather",
+    "type": "audio/mpeg",
+    "url": "https://alwayspattaya.com/",
+    "cros": false,
+    "stream": "https://fabulous.thailandstreaming.net/fabulous.mp3",
+    "streams": [
+      {
+        "url": "https://fabulous.thailandstreaming.net/fabulous.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:d660e4c5-f676-422d-b535-b12691cc56b6"
+      }
+    ],
+    "features": "/img/asia/thailand/fabulous-103.png",
+    "source": "radio-browser:d660e4c5-f676-422d-b535-b12691cc56b6"
+  },
+  "mcot-100-5": {
+    "title": "MCOT 100.5",
+    "type": "application/x-mpegURL",
+    "url": "https://news1005.mcot.net/",
+    "cros": false,
+    "stream": "https://lcdn.mcot.net/RadioLive/smil:fm1005_live.smil/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://lcdn.mcot.net/RadioLive/smil:fm1005_live.smil/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:c02dba45-1182-4185-9bc2-58aef0d799b6"
+      }
+    ],
+    "features": "/img/asia/thailand/mcot-100-5.png",
+    "source": "radio-browser:c02dba45-1182-4185-9bc2-58aef0d799b6"
+  },
+  "radio-samui-online": {
+    "title": "Radio Samui Online",
+    "description": "chillout, deep house, jazz, lounge music, organic house",
+    "type": "audio/aac",
+    "url": "https://radiosamui.online/",
+    "cros": false,
+    "stream": "https://stream.mixadance.fm/radiosamui",
+    "streams": [
+      {
+        "url": "https://stream.mixadance.fm/radiosamui",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:86468748-3045-4b88-97ef-e6d266c901f5"
+      }
+    ],
+    "features": "/img/asia/thailand/radio-samui-online.png",
+    "source": "radio-browser:86468748-3045-4b88-97ef-e6d266c901f5"
+  },
+  "city-radio-pattaya": {
+    "title": "City Radio Pattaya",
+    "type": "audio/mpeg",
+    "url": "https://www.cityradiopattaya.com/",
+    "cros": false,
+    "stream": "https://media.onair.one:8200/stream/1/?v=1769497160087",
+    "streams": [
+      {
+        "url": "https://media.onair.one:8200/stream/1/?v=1769497160087",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:6b4b72d2-151a-4bf5-abd1-0f137a4465dd"
+      }
+    ],
+    "features": "/img/asia/thailand/city-radio-pattaya.png",
+    "source": "radio-browser:6b4b72d2-151a-4bf5-abd1-0f137a4465dd"
+  },
+  "phuket-live-89-5": {
+    "title": "Phuket LIVE 89.5",
+    "type": "audio/aac",
+    "url": "https://www.thephuketnews.com/",
+    "cros": false,
+    "stream": "https://4118.radio4.thzhost.com/",
+    "streams": [
+      {
+        "url": "https://4118.radio4.thzhost.com/",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:991df5bb-7a98-4dbb-a269-b016471e63b7"
+      }
+    ],
+    "features": "/img/asia/thailand/phuket-live-89-5.png",
+    "source": "radio-browser:991df5bb-7a98-4dbb-a269-b016471e63b7"
+  },
+  "mommaemradio": {
+    "title": "Mommaemradio",
+    "type": "audio/mpeg",
+    "url": "https://www.mommaem.com/",
+    "cros": true,
+    "stream": "http://112.121.150.133:9386/autodj",
+    "streams": [
+      {
+        "url": "http://112.121.150.133:9386/autodj",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:19b3fb44-5a6d-4ae7-8552-5f58db63355f"
+      },
+      {
+        "url": "https://radio.garden/api/ara/content/listen/JQQSk8M9/channel.mp3?r=1&1722272627481",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:raw"
+      }
+    ],
+    "features": "/img/asia/thailand/mommaemradio.png",
+    "source": "radio-browser:19b3fb44-5a6d-4ae7-8552-5f58db63355f"
+  },
+  "mcot-loei-fm-100-00": {
+    "title": "MCOT Loei FM 100.00",
+    "description": "local radio, regional radio",
+    "type": "audio/aac",
+    "url": "https://radio.mcot.net/",
+    "cros": false,
+    "stream": "https://lb-media.mcot.net/RegionRadio/Loei.stream_aac/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://lb-media.mcot.net/RegionRadio/Loei.stream_aac/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a9ecb07a-9e74-4669-80b8-0d3f05890090"
+      }
+    ],
+    "features": "/img/asia/thailand/mcot-loei-fm-100-00.png",
+    "source": "radio-browser:a9ecb07a-9e74-4669-80b8-0d3f05890090"
+  },
+  "banmai-radio": {
+    "title": "banmai radio",
+    "type": "audio/mpeg",
+    "url": "https://radio10.plathong.net/7590/;stream.mp3?type=http",
+    "cros": false,
+    "stream": "https://radio10.plathong.net/7590/;stream.mp3?type=http",
+    "streams": [
+      {
+        "url": "https://radio10.plathong.net/7590/;stream.mp3?type=http",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:0d100250-ad7e-47d5-9827-6b5cbbe4efb7"
+      }
+    ],
+    "features": "/img/asia/thailand/banmai-radio.png",
+    "source": "radio-browser:0d100250-ad7e-47d5-9827-6b5cbbe4efb7"
+  },
+  "mcot-chumphon-amphoe-lang-suan-fm-104-75": {
+    "title": "MCOT Chumphon (Amphoe Lang Suan) FM 104.75",
+    "description": "local radio, regional radio",
+    "type": "audio/aac",
+    "url": "https://radio.mcot.net/",
+    "cros": false,
+    "stream": "https://lb-media.mcot.net/RegionRadio/ChumphonLangsuan.stream_aac/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://lb-media.mcot.net/RegionRadio/ChumphonLangsuan.stream_aac/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:afcd0235-164b-498b-a74c-235e791d4ef2"
+      }
+    ],
+    "features": "/img/asia/thailand/mcot-chumphon-amphoe-lang-suan-fm-104-75.png",
+    "source": "radio-browser:afcd0235-164b-498b-a74c-235e791d4ef2"
+  },
+  "radio-red-phuket": {
+    "title": "Radio Red Phuket",
+    "description": "afro-pop, dance, lounge, pop",
+    "type": "audio/mpeg",
+    "url": "https://radioredphuket.com/",
+    "cros": false,
+    "stream": "https://stream.chiliradio.app/radiored",
+    "streams": [
+      {
+        "url": "https://stream.chiliradio.app/radiored",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f758776d-230e-4237-a426-93005a478ca0"
+      }
+    ],
+    "features": "/img/asia/thailand/radio-red-phuket.png",
+    "source": "radio-browser:f758776d-230e-4237-a426-93005a478ca0"
+  },
+  "abdulbasit-abdulsamad": {
+    "title": "Abdulbasit Abdulsamad",
+    "type": "audio/aac",
+    "url": "https://mp3islam.com/",
+    "cros": false,
+    "stream": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+    "streams": [
+      {
+        "url": "https://radio.mp3islam.com/listen/abdulbasit/radio.mp3",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:8f5186c5-710d-45e4-86c4-829a11213a59"
+      }
+    ],
+    "features": "/img/asia/thailand/abdulbasit-abdulsamad.png",
+    "source": "radio-browser:8f5186c5-710d-45e4-86c4-829a11213a59"
+  },
+  "krb-radio-1": {
+    "title": "KRB Radio 1",
+    "description": "blind radio, country music, news",
+    "type": "audio/mpeg",
+    "url": "https://www.nmab.or.th/radio",
+    "cros": false,
+    "stream": "https://radio1.ohmi-design.com/8086/;",
+    "streams": [
+      {
+        "url": "https://radio1.ohmi-design.com/8086/;",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:f221453e-e44d-4dbb-8409-298d65907aff"
+      }
+    ],
+    "features": "/img/asia/thailand/krb-radio-1.png",
+    "source": "radio-browser:f221453e-e44d-4dbb-8409-298d65907aff"
+  },
+  "krb-radio-2": {
+    "title": "KRB Radio 2",
+    "description": "blind radio, country music, news",
+    "type": "audio/mpeg",
+    "url": "https://www.nmab.or.th/radio",
+    "cros": false,
+    "stream": "https://nontawat3664.i234.me:8443/stream",
+    "streams": [
+      {
+        "url": "https://nontawat3664.i234.me:8443/stream",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:2a2fdb06-a846-44b9-9c05-1a92aef502a1"
+      }
+    ],
+    "features": "/img/asia/thailand/krb-radio-2.png",
+    "source": "radio-browser:2a2fdb06-a846-44b9-9c05-1a92aef502a1"
+  },
+  "gold-radio": {
+    "title": "GOLD Radio",
+    "type": "audio/mpeg",
+    "url": "https://live365.com/station/GOLD-Radio-a94344",
+    "cros": false,
+    "stream": "https://streaming.live365.com/a94344",
+    "streams": [
+      {
+        "url": "https://streaming.live365.com/a94344",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:afd4fa00-7f69-4455-9407-cf8160513547"
+      }
+    ],
+    "features": "/img/asia/thailand/gold-radio.png",
+    "source": "radio-browser:afd4fa00-7f69-4455-9407-cf8160513547"
+  },
+  "surf-radio": {
+    "title": "Surf Radio",
+    "description": "pop, pop rock",
+    "type": "audio/aac",
+    "url": "https://surf.radio/",
+    "cros": false,
+    "stream": "https://stream.surf.radio/surf1025",
+    "streams": [
+      {
+        "url": "https://stream.surf.radio/surf1025",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:28d179e1-fac8-4e9d-9cb5-e614bfabe892"
+      }
+    ],
+    "features": "/img/asia/thailand/surf-radio.png",
+    "source": "radio-browser:28d179e1-fac8-4e9d-9cb5-e614bfabe892"
+  },
+  "krb-radio-3": {
+    "title": "KRB Radio 3",
+    "description": "blind radio, country music, news",
+    "type": "audio/mpeg",
+    "url": "https://www.nmab.or.th/radio",
+    "cros": false,
+    "stream": "https://pakeefm.org/stream/300006/",
+    "streams": [
+      {
+        "url": "https://pakeefm.org/stream/300006/",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a9da7a8b-6ec1-4ada-88df-d56b04556168"
+      }
+    ],
+    "features": "/img/asia/thailand/krb-radio-3.png",
+    "source": "radio-browser:a9da7a8b-6ec1-4ada-88df-d56b04556168"
+  },
+  "am-1197-khz-stereo": {
+    "title": "สถานีวิทยุจังหวัดทหารบกลพบุรี AM 1197 KHz. Stereo",
+    "description": "country, local radio, news",
+    "type": "audio/aac",
+    "url": "https://mdr13.ddns.net/",
+    "cros": false,
+    "stream": "https://mdr13.ddns.net/radio/am1197",
+    "streams": [
+      {
+        "url": "https://mdr13.ddns.net/radio/am1197",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:a996e9f4-b01e-4881-8fc7-7e034c8ae996"
+      }
+    ],
+    "features": "/img/asia/thailand/am-1197-khz-stereo.png",
+    "source": "radio-browser:a996e9f4-b01e-4881-8fc7-7e034c8ae996"
+  },
+  "fm-88-radio-thailand-english-language-service": {
+    "title": "FM 88 radio Thailand: English language service",
+    "type": "audio/mpeg",
+    "url": "https://prdee.prd.go.th/radio",
+    "cros": false,
+    "stream": "https://cdn-th2.login.in.th/shoutcast/8420",
+    "streams": [
+      {
+        "url": "https://cdn-th2.login.in.th/shoutcast/8420",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:a16ca9f4-7b94-4fcd-9586-957aecd63d24"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-88-radio-thailand-english-language-service.png",
+    "source": "radio-browser:a16ca9f4-7b94-4fcd-9586-957aecd63d24"
+  },
+  "9-mcot-hd-digital-tv-channel-30": {
+    "title": "ช่อง 9 MCOT HD: digital TV channel 30",
+    "type": "application/x-mpegURL",
+    "url": "https://tv.mcot.net/tv/th",
+    "cros": false,
+    "stream": "https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:dd7195b4-d4bf-4680-8c2f-5d648cea887a"
+      }
+    ],
+    "features": "/img/asia/thailand/9-mcot-hd-digital-tv-channel-30.png",
+    "source": "radio-browser:dd7195b4-d4bf-4680-8c2f-5d648cea887a"
+  },
+  "fm-92-5-radio-thailand": {
+    "title": "FM 92.5 radio Thailand",
+    "type": "audio/mpeg",
+    "url": "https://prdee.prd.go.th/radio",
+    "cros": false,
+    "stream": "https://cdn-th2.login.in.th/shoutcast/8425",
+    "streams": [
+      {
+        "url": "https://cdn-th2.login.in.th/shoutcast/8425",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:05278cac-a329-4959-996c-301541134fff"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-92-5-radio-thailand.png",
+    "source": "radio-browser:05278cac-a329-4959-996c-301541134fff"
+  },
+  "95-5-metro-life": {
+    "title": "95.5 Metro life",
+    "type": "audio/mpeg",
+    "url": "https://prdee.prd.go.th/radio",
+    "cros": false,
+    "stream": "https://cdn-th2.login.in.th/shoutcast/8435",
+    "streams": [
+      {
+        "url": "https://cdn-th2.login.in.th/shoutcast/8435",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:5a56f3ee-d4b3-45a5-8989-2e4bd1cd8293"
+      }
+    ],
+    "features": "/img/asia/thailand/95-5-metro-life.png",
+    "source": "radio-browser:5a56f3ee-d4b3-45a5-8989-2e4bd1cd8293"
+  },
+  "93-5-top-radio-fm": {
+    "title": "93.5 Top Radio FM",
+    "description": "oldies",
+    "type": "audio/mpeg",
+    "url": "https://www.radio-thai.com/935-top-radio-fm",
+    "cros": false,
+    "stream": "https://a10.asurahosting.com:8250/radio.mp3",
+    "streams": [
+      {
+        "url": "https://a10.asurahosting.com:8250/radio.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:ee83c0ba-99cf-430f-80a3-c0f7a1957d81"
+      }
+    ],
+    "features": "/img/asia/thailand/93-5-top-radio-fm.png",
+    "source": "radio-browser:ee83c0ba-99cf-430f-80a3-c0f7a1957d81"
+  },
+  "93-5-mhz-radio-thailand": {
+    "title": "93.5 Mhz. radio Thailand",
+    "type": "audio/mpeg",
+    "url": "https://radiothailand.prd.go.th/radiothailand",
+    "cros": false,
+    "stream": "https://cdn-th2.login.in.th/shoutcast/8430",
+    "streams": [
+      {
+        "url": "https://cdn-th2.login.in.th/shoutcast/8430",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:3b861ec3-9a27-4498-9f20-ca07c3fb6a29"
+      }
+    ],
+    "features": "/img/asia/thailand/93-5-mhz-radio-thailand.png",
+    "source": "radio-browser:3b861ec3-9a27-4498-9f20-ca07c3fb6a29"
+  },
+  "one31-digital-tv-channel-31": {
+    "title": "One31: digital TV channel 31",
+    "type": "audio/aac",
+    "url": "https://www.one31.net/",
+    "cros": false,
+    "stream": "https://fastly.live.brightcove.com/6393158620112/ap-southeast-1/6415628290001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoicWN6dGF6LmVncmVzcy5wcHRpOHciLCJhY2NvdW50X2lkIjoiNjQxNTYyODI5MDAwMSIsImVobiI6ImZhc3RseS5saXZlLmJyaWdodGNvdmUuY29tIiwiaXNzIjoiYmxpdmUtcGxheWJhY2stc291cmNlLWFwaSIsInN1YiI6InBhdGhtYXB0b2tlbiIsImF1ZCI6WyI2NDE1NjI4MjkwMDAxIl0sImp0aSI6IjYzOTMxNTg2MjAxMTIifQ.Pv-kHDlJaV05HiJ2AQmS3PnV2ZQg7ovszKptAGg1EN0/playlist-hls.m3u8",
+    "streams": [
+      {
+        "url": "https://fastly.live.brightcove.com/6393158620112/ap-southeast-1/6415628290001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoicWN6dGF6LmVncmVzcy5wcHRpOHciLCJhY2NvdW50X2lkIjoiNjQxNTYyODI5MDAwMSIsImVobiI6ImZhc3RseS5saXZlLmJyaWdodGNvdmUuY29tIiwiaXNzIjoiYmxpdmUtcGxheWJhY2stc291cmNlLWFwaSIsInN1YiI6InBhdGhtYXB0b2tlbiIsImF1ZCI6WyI2NDE1NjI4MjkwMDAxIl0sImp0aSI6IjYzOTMxNTg2MjAxMTIifQ.Pv-kHDlJaV05HiJ2AQmS3PnV2ZQg7ovszKptAGg1EN0/playlist-hls.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:372dec04-d094-4d08-aff2-e2ebb8f1e6d2"
+      }
+    ],
+    "features": "/img/asia/thailand/one31-digital-tv-channel-31.png",
+    "source": "radio-browser:372dec04-d094-4d08-aff2-e2ebb8f1e6d2"
+  },
+  "gmm25-digital-tv-channel-25": {
+    "title": "GMM25: digital TV channel 25",
+    "type": "audio/aac",
+    "url": "https://www.gmm25.com/",
+    "cros": false,
+    "stream": "https://fastly.live.brightcove.com/6392745120112/ap-southeast-1/6415628290001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoicWN6dGF6LmVncmVzcy5wcHRpOHciLCJhY2NvdW50X2lkIjoiNjQxNTYyODI5MDAwMSIsImVobiI6ImZhc3RseS5saXZlLmJyaWdodGNvdmUuY29tIiwiaXNzIjoiYmxpdmUtcGxheWJhY2stc291cmNlLWFwaSIsInN1YiI6InBhdGhtYXB0b2tlbiIsImF1ZCI6WyI2NDE1NjI4MjkwMDAxIl0sImp0aSI6IjYzOTI3NDUxMjAxMTIifQ.w9Q_oqsE_WFClGF5tLVDtHnz5zfHHgNpumxVYNx4yYw/playlist-hls.m3u8",
+    "streams": [
+      {
+        "url": "https://fastly.live.brightcove.com/6392745120112/ap-southeast-1/6415628290001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoicWN6dGF6LmVncmVzcy5wcHRpOHciLCJhY2NvdW50X2lkIjoiNjQxNTYyODI5MDAwMSIsImVobiI6ImZhc3RseS5saXZlLmJyaWdodGNvdmUuY29tIiwiaXNzIjoiYmxpdmUtcGxheWJhY2stc291cmNlLWFwaSIsInN1YiI6InBhdGhtYXB0b2tlbiIsImF1ZCI6WyI2NDE1NjI4MjkwMDAxIl0sImp0aSI6IjYzOTI3NDUxMjAxMTIifQ.w9Q_oqsE_WFClGF5tLVDtHnz5zfHHgNpumxVYNx4yYw/playlist-hls.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:14431bb0-b877-4c78-a0d4-e28f8777379c"
+      }
+    ],
+    "features": "/img/asia/thailand/gmm25-digital-tv-channel-25.png",
+    "source": "radio-browser:14431bb0-b877-4c78-a0d4-e28f8777379c"
+  },
+  "fm-92-5-mhz": {
+    "title": "สถานีวิทยุกระจายเสียงแห่งประเทศไทย (FM 92.5 MHz)",
+    "type": "audio/aac",
+    "url": "https://nbtplus.prd.go.th/radio",
+    "cros": false,
+    "stream": "https://cdn-edge.iiptvcdn.com/radio_edge/45d4-d521-cbfc-d686-0123/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://cdn-edge.iiptvcdn.com/radio_edge/45d4-d521-cbfc-d686-0123/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:00635b1c-49b1-4b38-88f6-f924e8f45af8"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-92-5-mhz.png",
+    "source": "radio-browser:00635b1c-49b1-4b38-88f6-f924e8f45af8"
+  },
+  "fm-100-5-mhz-mcot-news-network": {
+    "title": "FM 100.5 MHz MCOT news network",
+    "description": "news",
+    "type": "application/x-mpegURL",
+    "url": "https://news1005.mcot.net/news1005/th",
+    "cros": false,
+    "stream": "https://play-fm1005.mcot.net/fm1005/fm1005.m3u8",
+    "streams": [
+      {
+        "url": "https://play-fm1005.mcot.net/fm1005/fm1005.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:9727e8fc-c905-43e9-b067-a998de4a23c9"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-100-5-mhz-mcot-news-network.png",
+    "source": "radio-browser:9727e8fc-c905-43e9-b067-a998de4a23c9"
+  },
+  "sunshine-radio-pattaya": {
+    "title": "sunshine radio Pattaya",
+    "type": "audio/mpeg",
+    "url": "https://www.sunshinefm.com/",
+    "cros": false,
+    "stream": "https://cdn-th2.login.in.th/shoutcast/8030",
+    "streams": [
+      {
+        "url": "https://cdn-th2.login.in.th/shoutcast/8030",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:2c61f382-592f-4605-82dd-1c37f14780c6"
+      }
+    ],
+    "features": "/img/asia/thailand/sunshine-radio-pattaya.png",
+    "source": "radio-browser:2c61f382-592f-4605-82dd-1c37f14780c6"
+  },
+  "nbt-north-digital-tv-channel-11": {
+    "title": "NBT North: digital TV channel 11",
+    "type": "application/x-mpegURL",
+    "url": "https://prdee.prd.go.th/live/63be96b33c46d20012856885",
+    "cros": false,
+    "stream": "https://cdn-edge.iiptvcdn.com/live_event/smil:4f6e-aa34-2034-5492-c82d.smil/playlist.m3u8?null",
+    "streams": [
+      {
+        "url": "https://cdn-edge.iiptvcdn.com/live_event/smil:4f6e-aa34-2034-5492-c82d.smil/playlist.m3u8?null",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:005e134c-bf85-4150-808a-56b4fb13d36f"
+      }
+    ],
+    "features": "/img/asia/thailand/nbt-north-digital-tv-channel-11.png",
+    "source": "radio-browser:005e134c-bf85-4150-808a-56b4fb13d36f"
+  },
+  "am-891-khz": {
+    "title": "สถานีวิทยุกระจายเสียงแห่งประเทศไทย (AM 891 KHz)",
+    "type": "audio/aac",
+    "url": "https://nbtplus.prd.go.th/radio",
+    "cros": false,
+    "stream": "https://cdn-edge.iiptvcdn.com/radio_edge/51dd-90a9-c6ae-c7f7-49d4/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://cdn-edge.iiptvcdn.com/radio_edge/51dd-90a9-c6ae-c7f7-49d4/playlist.m3u8",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:b0e78cac-b568-43a8-9315-3d8e32eefa83"
+      }
+    ],
+    "features": "/img/asia/thailand/am-891-khz.png",
+    "source": "radio-browser:b0e78cac-b568-43a8-9315-3d8e32eefa83"
+  },
+  "vybe-103-5": {
+    "title": "VYBE 103.5 ลำปาง",
+    "type": "audio/aac",
+    "url": "https://vybethailand.com/",
+    "cros": false,
+    "stream": "https://radio9.plathong.net/7076",
+    "streams": [
+      {
+        "url": "https://radio9.plathong.net/7076",
+        "type": "audio/aac",
+        "cros": false,
+        "source": "radio-browser:95bc2280-86fe-480b-9354-a4b484dc1039"
+      }
+    ],
+    "features": "/img/asia/thailand/vybe-103-5.png",
+    "source": "radio-browser:95bc2280-86fe-480b-9354-a4b484dc1039"
+  },
+  "voice-of-navy-fm-88-5-mhz": {
+    "title": "Voice of Navy FM 88.5 MHz.",
+    "type": "audio/mpeg",
+    "url": "https://www.voiceofnavy.com/",
+    "cros": true,
+    "stream": "http://rcp.plathong.net:7346/",
+    "streams": [
+      {
+        "url": "http://rcp.plathong.net:7346/",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:48bdff19-f367-409a-b965-9825393dbe2d"
+      }
+    ],
+    "features": "/img/asia/thailand/voice-of-navy-fm-88-5-mhz.png",
+    "source": "radio-browser:48bdff19-f367-409a-b965-9825393dbe2d"
+  },
+  "fm-103-mhz": {
+    "title": "FM 103 MHz คนลูกทุ่ง",
+    "type": "audio/mpeg",
+    "url": "https://xn--12cfk7di6e1gf2l.com/",
+    "cros": true,
+    "stream": "http://fm94.tv5.co.th:8000/armystream",
+    "streams": [
+      {
+        "url": "http://fm94.tv5.co.th:8000/armystream",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:7d562ace-1890-4252-9397-8da544ef00ee"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-103-mhz.png",
+    "source": "radio-browser:7d562ace-1890-4252-9397-8da544ef00ee"
+  },
+  "fm-96-mhz-zaab-news-radio": {
+    "title": "FM 96 MHz. Zaab news radio",
+    "type": "audio/mpeg",
+    "url": "https://www.zaabnews.com/",
+    "cros": false,
+    "stream": "https://sapircast.caster.fm:17039/aRsGW",
+    "streams": [
+      {
+        "url": "https://sapircast.caster.fm:17039/aRsGW",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:294a799d-00b9-40b9-a921-5c5c8ae74619"
+      }
+    ],
+    "features": "/img/asia/thailand/fm-96-mhz-zaab-news-radio.png",
+    "source": "radio-browser:294a799d-00b9-40b9-a921-5c5c8ae74619"
+  },
+  "88-5-mhz-voice-of-navy": {
+    "title": "88.5 MHz. Voice of Navy",
+    "type": "audio/mpeg",
+    "url": "https://www.voiceofnavy.com/",
+    "cros": true,
+    "stream": "http://rcp.plathong.net:7346/;?type=http&nocache=283",
+    "streams": [
+      {
+        "url": "http://rcp.plathong.net:7346/;?type=http&nocache=283",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "radio-browser:fdff2a27-bdd6-4f19-a2bd-5e7e852ae2ef"
+      }
+    ],
+    "features": "/img/asia/thailand/88-5-mhz-voice-of-navy.png",
+    "source": "radio-browser:fdff2a27-bdd6-4f19-a2bd-5e7e852ae2ef"
+  },
+  "tp-tv-channel-digital-tv-channel-10": {
+    "title": "TP TV channel: digital TV channel 10",
+    "type": "application/x-mpegURL",
+    "url": "https://www.tpchannel.org/",
+    "cros": false,
+    "stream": "https://tv-live.tpchannel.org/live/tv.m3u8",
+    "streams": [
+      {
+        "url": "https://tv-live.tpchannel.org/live/tv.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:5daccbf1-d500-434a-b39f-1e771ebebf54"
+      }
+    ],
+    "features": "/img/asia/thailand/tp-tv-channel-digital-tv-channel-10.png",
+    "source": "radio-browser:5daccbf1-d500-434a-b39f-1e771ebebf54"
+  },
+  "requestradio-alt": {
+    "title": "RequestRadio เพื่อชีวิต (Alt)",
+    "description": "country music, folk music",
+    "type": "audio/mpeg",
+    "url": "https://requestradio.in.th/forlife/",
+    "cros": false,
+    "stream": "https://ozone2.javmemory.com/Forlife.mp3",
+    "streams": [
+      {
+        "url": "https://ozone2.javmemory.com/Forlife.mp3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "radio-browser:9cd8439a-00ec-44ec-9172-eed18e86d8a2"
+      }
+    ],
+    "features": "/img/asia/thailand/requestradio-alt.png",
+    "source": "radio-browser:9cd8439a-00ec-44ec-9172-eed18e86d8a2"
+  },
+  "nbt-central-digital-tv-channel-11": {
+    "title": "NBT Central: digital TV channel 11",
+    "type": "application/x-mpegURL",
+    "url": "https://www.nbtcentral.com/",
+    "cros": false,
+    "stream": "https://cdn-edge.iiptvcdn.com/live_event/smil:6ee0-5126-0cee-7ba2-18b7.smil/playlist.m3u8?null",
+    "streams": [
+      {
+        "url": "https://cdn-edge.iiptvcdn.com/live_event/smil:6ee0-5126-0cee-7ba2-18b7.smil/playlist.m3u8?null",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:ea7f8408-e099-450b-a1bd-8ab3be516ead"
+      }
+    ],
+    "features": "/img/asia/thailand/nbt-central-digital-tv-channel-11.png",
+    "source": "radio-browser:ea7f8408-e099-450b-a1bd-8ab3be516ead"
+  },
+  "nbt2hd": {
+    "title": "NBT2HD",
+    "description": "government, news, thailand",
+    "type": "application/x-mpegURL",
+    "url": "https://nbt2hd.prd.go.th/",
+    "cros": false,
+    "stream": "https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8",
+    "streams": [
+      {
+        "url": "https://cdn-edge.iiptvcdn.com/live_event/smil:f180-054a-38d7-ce66-f7cf.smil/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:f2765c5d-4236-4b85-98aa-fcd1d8964a42"
+      }
+    ],
+    "features": "/img/asia/thailand/nbt2hd.png",
+    "source": "radio-browser:f2765c5d-4236-4b85-98aa-fcd1d8964a42"
+  },
+  "nbt-south-digital-tv-channel-11": {
+    "title": "NBT South: digital tv channel 11",
+    "type": "application/x-mpegURL",
+    "url": "https://prdee.prd.go.th/live/63be969a3c46d20012856879",
+    "cros": false,
+    "stream": "https://cdn-edge.iiptvcdn.com/live_event/smil:a834-75a7-a662-db55-5fa3.smil/playlist.m3u8?null",
+    "streams": [
+      {
+        "url": "https://cdn-edge.iiptvcdn.com/live_event/smil:a834-75a7-a662-db55-5fa3.smil/playlist.m3u8?null",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "radio-browser:f6f444c3-d48a-45de-bfb3-b2f7baa3aad2"
+      }
+    ],
+    "features": "/img/asia/thailand/nbt-south-digital-tv-channel-11.png",
+    "source": "radio-browser:f6f444c3-d48a-45de-bfb3-b2f7baa3aad2"
   }
 }
