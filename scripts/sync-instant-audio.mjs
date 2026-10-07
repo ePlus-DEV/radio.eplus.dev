@@ -6,7 +6,7 @@ import path from "node:path";
 
 const ROOT = process.cwd();
 const INSTANT_HOME = "https://instant.audio/";
-const API_BASE = "https://api.instant.audio/data/streams";
+const API_BASE = "https://api.webrad.io/data/streams";
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
@@ -277,7 +277,7 @@ function extractCountryId(response, html) {
   const linkHeader = response?.headers?.get("link") || "";
   const combined = `${linkHeader}\n${html}`;
   const match = combined.match(
-    /https:\/\/api\.instant\.audio\/data\/streams\/(\d+)\/[a-z0-9-]+/i,
+    /https:\/\/api\.(?:instant\.audio|webrad\.io)\/data\/streams\/(\d+)\/[a-z0-9-]+/i,
   );
   return match?.[1] || "";
 }
