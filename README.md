@@ -1,75 +1,211 @@
-# Nuxt 3 Minimal Starter
+# Radio ePlus
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Radio ePlus is a Nuxt-based internet radio application for browsing and listening to live radio stations from around the world.
 
-## Setup
+**Website:** https://radio.eplus.dev
 
-Make sure to install the dependencies:
+## Highlights
+
+- Live internet radio directory grouped by region and country.
+- Current repository metadata contains **87 country entries** across North America, Central America, South America, Europe, Africa, Asia, and Oceania.
+- Multilingual UI: English, Vietnamese, Japanese, Simplified Chinese, Traditional Chinese, French, and Russian.
+- Station favorites, search, theme support, and responsive UI.
+- SEO-friendly prerendered radio routes and sitemap generation.
+- Local country flags and station artwork under `public/img/`.
+- Country and station data stored as version-controlled JSON.
+
+## Tech stack
+
+- Nuxt 3
+- Vue 3
+- Node.js 24
+- Tailwind CSS
+- DaisyUI
+- Pinia
+- Vidstack
+- Nuxt i18n
+- Nuxt Image
+- Algolia
+- Font Awesome
+
+The exact dependency versions are defined in `package.json`.
+
+## Project structure
+
+```text
+radio.eplus.dev/
+├─ components/                 # Vue components
+├─ pages/                      # Application routes
+├─ stores/                     # Pinia stores
+├─ lang/                       # Translation files
+├─ public/
+│  ├─ radio/
+│  │  ├─ world.json            # World/country radio metadata
+│  │  └─ <area>/<country>.json # Station data by country
+│  └─ img/
+│     ├─ <area>/flags/         # Country flags
+│     └─ <area>/<country>/     # Local station artwork
+├─ data/
+│  └─ world.ts                 # Generated world metadata
+├─ scripts/                    # Data maintenance/sync scripts
+├─ build/                      # Build and SEO helpers
+└─ nuxt.config.ts
+```
+
+A station entry generally looks like:
+
+```json
+{
+  "station-slug": {
+    "title": "Station name",
+    "type": "audio/mpeg",
+    "url": "https://station.example",
+    "cros": false,
+    "stream": "https://stream.example/live.mp3",
+    "features": "/img/europe/example/station-slug.png",
+    "favorite": false
+  }
+}
+```
+
+## Local development
+
+### Requirements
+
+- Node.js `24.15.0`
+- npm
+
+### Install
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+Copy the environment template and fill only the values required for your environment:
 
 ```bash
-# npm
+cp .env.example .env
+```
+
+Do not commit private API keys, access tokens, or deployment credentials.
+
+### Start the development server
+
+```bash
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+The application is available at:
 
-Build the application for production:
+```text
+http://localhost:3000
+```
+
+## Build
+
+Create a production build:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+Generate the prerendered application:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+npm run generate
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Radio data
+
+Country metadata is defined in:
+
+```text
+public/radio/world.json
+```
+
+Station data is stored per country:
+
+```text
+public/radio/<area>/<country>.json
+```
+
+Examples:
+
+```text
+public/radio/asia/viet-nam.json
+public/radio/europe/belgium.json
+```
+
+Country flags:
+
+```text
+public/img/<area>/flags/<country>.<ext>
+```
+
+Station artwork:
+
+```text
+public/img/<area>/<country>/<station>.<ext>
+```
+
+When adding or updating radio data, prefer local artwork paths so the application does not depend unnecessarily on third-party hotlinks.
+
+## Internationalization
+
+Translation files are stored in `lang/`.
+
+Currently configured locales:
+
+| Code | Language |
+| --- | --- |
+| `en` | English |
+| `vi` | Tiếng Việt |
+| `ja` | 日本語 |
+| `zh-CN` | 简体中文 |
+| `zh-TW` | 繁體中文 |
+| `fr` | Français |
+| `ru` | Русский |
+
+## Search
+
+Algolia integration is optional during build and local development. When Algolia credentials are not configured, the application can still build without them.
+
+## SEO
+
+Radio ePlus generates SEO routes from the radio dataset and includes them in the sitemap. The canonical production site URL defaults to:
+
+```text
+https://radio.eplus.dev
+```
+
+Override it using `NUXT_PUBLIC_SITE_URL` when needed.
+
+## Data sync
+
+The repository contains tooling for maintaining radio data. Upstream radio providers may apply rate limits, anti-bot protection, or change undocumented APIs without notice, so automated sync results should always be reviewed before merging.
+
+See:
+
+```text
+docs/instant-audio-sync.md
+```
+
+for the current sync implementation and limitations.
+
+## Contributing
+
+1. Create a branch from `main`.
+2. Make the required code or data changes.
+3. Validate the Nuxt build and any affected radio JSON.
+4. Open a pull request.
+5. Review station streams, artwork paths, and generated metadata before merging.
+
+## License
+
+This repository is maintained by ePlus.DEV. Refer to the repository settings or project owner for licensing and redistribution terms.
