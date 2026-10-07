@@ -1,28 +1,120 @@
 name: "Radio data sync"
-run-name: "Radio sync • ${{ github.event_name }} • country=${{ inputs.country || 'auto' }} • max=${{ inputs.max_countries || '3' }}"
+run-name: "Radio sync • ${{ github.event_name }} • mode=${{ inputs.sync_mode || 'validate' }} • country=${{ inputs.country || 'Auto selection' }} • batch=${{ inputs.batch_size || '5' }}"
 
 on:
   workflow_dispatch:
     inputs:
+      sync_mode:
+        description: "What should this run update?"
+        required: true
+        default: "missing_countries"
+        type: choice
+        options:
+          - missing_countries
+          - refresh_existing
+          - missing_flags
+      batch_size:
+        description: "Countries per run. Keep batches small so artwork/stream checks finish before timeout."
+        required: true
+        default: "5"
+        type: choice
+        options:
+          - "3"
+          - "5"
+          - "10"
       country:
-        description: "Optional: sync one country only (e.g. latvia). Leave empty for automatic selection."
-        required: false
-        type: string
-      flags_only:
-        description: "Only fetch/update country flags from mWyniki. Skip station and artwork sync."
-        required: false
-        default: false
-        type: boolean
-      refresh_existing:
-        description: "Refresh existing countries instead of prioritizing missing countries."
-        required: false
-        default: false
-        type: boolean
-      max_countries:
-        description: "Max countries THIS run (default 3). Re-running before the bot PR is merged may select the same countries again."
-        required: false
-        default: "3"
-        type: string
+        description: "Choose one country, or Auto selection to use the selected batch mode."
+        required: true
+        default: "Auto selection"
+        type: choice
+        options:
+          - "Auto selection"
+          - "Algérie | algeria"
+          - "Argentina | argentina"
+          - "Australia | australia"
+          - "Bangladesh | bangladesh"
+          - "België | belgium"
+          - "Bolivia | bolivia"
+          - "Brasil | brazil"
+          - "Cameroon | cameroon"
+          - "Česká republika | czechia"
+          - "Chile | chile"
+          - "Colombia | colombia"
+          - "Congo | congo"
+          - "Costa Rica | costa-rica"
+          - "Côte d'Ivoire | cote-d-ivoire"
+          - "Cuba | cuba"
+          - "Danmark | denmark"
+          - "Deutschland | germany"
+          - "Ecuador | ecuador"
+          - "Eesti | estonia"
+          - "El Salvador | el-salvador"
+          - "España | spain"
+          - "France | france"
+          - "Ghana | ghana"
+          - "Guatemala | guatemala"
+          - "Haïti | haiti"
+          - "Hanguk | korea"
+          - "Hellas | greece"
+          - "Honduras | honduras"
+          - "Hong Kong | hong-kong"
+          - "Hrvatska | croatia"
+          - "India | india"
+          - "Indonesia | indonesia"
+          - "Ireland | ireland"
+          - "Italia | italy"
+          - "Jamaica | jamaica"
+          - "Kenya | kenya"
+          - "Latvija | latvia"
+          - "Lëtzebuerg | luxembourg"
+          - "Lietuva | lithuania"
+          - "Madagasikara | madagascar"
+          - "Magyarország | hungary"
+          - "Malaysia | malaysia"
+          - "Maroc | morocco"
+          - "México | mexico"
+          - "Misr | egypt"
+          - "Nederland | netherlands"
+          - "Nepāla | nepal"
+          - "New Zealand | new-zealand"
+          - "Nicaragua | nicaragua"
+          - "Nigeria | nigeria"
+          - "Nihon | japan"
+          - "Norge | norway"
+          - "Österreich | austria"
+          - "Pakistan | pakistan"
+          - "Panamá | panama"
+          - "Paraguay | paraguay"
+          - "Perú | peru"
+          - "Philippines | philippines"
+          - "Polska | poland"
+          - "Portugal | portugal"
+          - "Puerto Rico | puerto-rico"
+          - "República Dominicana | dominican-republic"
+          - "România | romania"
+          - "Schweiz | switzerland"
+          - "Sénégal | senegal"
+          - "Singapore | singapore"
+          - "Slovenija | slovenia"
+          - "South Africa | south-africa"
+          - "Srbija | serbia"
+          - "Sri Lankā | sri-lanka"
+          - "Suomi | finland"
+          - "Suriname | suriname"
+          - "Sverige | sweden"
+          - "Trinidad and Tobago | trinidad-and-tobago"
+          - "Tunisie | tunisia"
+          - "Uganda | uganda"
+          - "United Kingdom | united-kingdom"
+          - "Uruguay | uruguay"
+          - "Venezuela | venezuela"
+          - "Việt Nam | viet-nam"
+          - "България | bulgaria"
+          - "Україна | ukraine"
+          - "יִשְׂרָאֵל‎ | israel"
+          - "ประเทศไทย | thailand"
+          - "中国 | china"
+          - "台灣 | taiwan"
   pull_request:
     paths:
       - ".github/workflows/instant-audio-sync.yml"
@@ -59,7 +151,7 @@ jobs:
           npm test
 
   sync:
-    name: "Live sync — manual/schedule only"
+    name: "Live sync — manual"
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -86,29 +178,50 @@ jobs:
             echo "## Radio sync settings"
             echo ""
             echo "- Trigger: \`${{ github.event_name }}\`"
-            echo "- Country: \`${{ inputs.country || 'automatic selection' }}\`"
-            echo "- Max countries this run: \`${{ inputs.max_countries || '3' }}\`"
-            echo "- Refresh existing: \`${{ inputs.refresh_existing || 'false' }}\`"
+            echo "- Mode: \`${{ inputs.sync_mode || 'missing_countries' }}\`"
+            echo "- Country: \`${{ inputs.country || 'Auto selection' }}\`"
+            if [[ "${{ inputs.country || 'Auto selection' }}" == "Auto selection" ]]; then
+              echo "- Batch size: \`${{ inputs.batch_size || '5' }}\`"
+            else
+              echo "- Batch size: \`1 (single-country override)\`"
+            fi
             echo ""
-            echo "> Note: each run starts from \`main\`. If the current bot data PR has not been merged yet, another manual run can select the same countries again."
+            echo "> Safety: batch size is limited to 3, 5, or 10 countries so station artwork and fallback-stream checks can finish before the 45-minute timeout."
+            echo "> Note: each run starts from \`main\`. Merge the current bot data PR before starting another automatic batch to avoid selecting the same countries again."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: "Discover and sync radio countries"
         id: sync
         shell: bash
         run: |
-          ARGS=(--max-countries="${{ inputs.max_countries || '3' }}")
+          RAW_COUNTRY="${{ inputs.country || 'Auto selection' }}"
+          COUNTRY=""
+          BATCH_SIZE="${{ inputs.batch_size || '5' }}"
 
-          if [[ "${{ inputs.flags_only || 'false' }}" == "true" ]]; then
-            ARGS+=(--flags-only)
+          if [[ "$RAW_COUNTRY" != "Auto selection" ]]; then
+            COUNTRY="${RAW_COUNTRY##* | }"
+            BATCH_SIZE="1"
           fi
 
-          if [[ -n "${{ inputs.country || '' }}" ]]; then
-            ARGS+=(--country="${{ inputs.country }}")
-          fi
+          ARGS=(--max-countries="$BATCH_SIZE")
 
-          if [[ "${{ inputs.refresh_existing || 'false' }}" == "true" ]]; then
-            ARGS+=(--refresh-existing)
+          case "${{ inputs.sync_mode || 'missing_countries' }}" in
+            missing_countries)
+              ;;
+            refresh_existing)
+              ARGS+=(--refresh-existing)
+              ;;
+            missing_flags)
+              ARGS+=(--flags-only)
+              ;;
+            *)
+              echo "::error::Unknown sync mode: ${{ inputs.sync_mode }}"
+              exit 1
+              ;;
+          esac
+
+          if [[ -n "$COUNTRY" ]]; then
+            ARGS+=(--country="$COUNTRY")
           fi
 
           node scripts/sync-instant-audio.mjs "${ARGS[@]}"
@@ -120,7 +233,7 @@ jobs:
           fi
 
       - name: "Validate synced data"
-        if: steps.sync.outputs.changed == 'true' && inputs.flags_only != true
+        if: steps.sync.outputs.changed == 'true' && inputs.sync_mode != 'missing_flags'
         shell: bash
         run: |
           node --check scripts/sync-instant-audio.mjs
