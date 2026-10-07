@@ -966,86 +966,7 @@ async function tryDownloadStationImage(country, stationSlug, imageUrl, referer) 
   }
 }
 
-function stationInitials(title = "") {
-  const words = String(title)
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-
-  if (!words.length) return "RADIO";
-  if (words.length === 1) return words[0].slice(0, 8).toUpperCase();
-
-  return words
-    .slice(0, 3)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-}
-
-async function generateStationTextArtwork(country, stationSlug, title) {
-  if (dryRun) {
-    return `/img/${country.area}/${country.slug}/${stationSlug}.png`;
-  }
-
-  const command = imageMagickCommand();
-  if (!command) return DEFAULT_STATION_IMAGE;
-
-  const relative = `/img/${country.area}/${country.slug}/${stationSlug}.png`;
-  const destination = path.join(ROOT, "public", relative);
-  const brandLogo = path.join(ROOT, "public", "brand", "logo-white.svg");
-  await mkdir(path.dirname(destination), { recursive: true });
-
-  if (!(await exists(brandLogo))) {
-    console.warn(
-      `[instant.audio] Repo brand logo is missing; cannot generate branded artwork for ${country.slug}/${stationSlug}`,
-    );
-    return DEFAULT_STATION_IMAGE;
-  }
-
-  const label = stationInitials(title || stationSlug);
-  const pointSize = label.length > 6 ? "11" : label.length > 3 ? "14" : "17";
-
-  const result = spawnSync(
-    command,
-    [
-      "-size", "96x66",
-      "xc:#0f172a",
-      "-gravity", "north",
-      "-fill", "#f8fafc",
-      "-font", "DejaVu-Sans-Bold",
-      "-pointsize", pointSize,
-      "-annotate", "+0+10", label,
-      "(",
-        brandLogo,
-        "-background", "none",
-        "-resize", "18x18>",
-      ")",
-      "-gravity", "south",
-      "-geometry", "+0+7",
-      "-composite",
-      `PNG32:${destination}`,
-    ],
-    {
-      encoding: "utf8",
-      maxBuffer: 1024 * 1024,
-    },
-  );
-
-  if (result.status !== 0) {
-    console.warn(
-      `[instant.audio] Unable to generate branded text artwork for ${country.slug}/${stationSlug}: ${String(result.stderr || result.stdout || "ImageMagick failed").trim()}`,
-    );
-    return DEFAULT_STATION_IMAGE;
-  }
-
-  console.log(
-    `[instant.audio] Generated branded text artwork for ${country.slug}/${stationSlug}: ${relative}`,
-  );
-  return relative;
-}
-
-async function resolveStationImage(country, stationSlug, preferredImage, homepageUrl, stationTitle = "") {
+async function resolveStationImage(country, stationSlug, preferredImage, homepageUrl) {
   const existing = await findExistingStationImage(country, stationSlug);
   if (existing) {
     runStats.imagesExisting += 1;
@@ -1097,13 +1018,9 @@ async function resolveStationImage(country, stationSlug, preferredImage, homepag
 
   runStats.imagesFallback += 1;
   console.warn(
-    `[instant.audio] Using generated text artwork for ${country.slug}/${stationSlug}`,
+    `[instant.audio] Using default radio artwork for ${country.slug}/${stationSlug}`,
   );
-  return generateStationTextArtwork(
-    country,
-    stationSlug,
-    stationTitle || stationSlug,
-  );
+  return DEFAULT_STATION_IMAGE;
 }
 
 function stationFromInstantPayload(country, candidate, apiUrl, payload) {
@@ -1179,7 +1096,6 @@ async function syncStation(country, countryId, candidate) {
         candidate.slug,
         station.features,
         station.url,
-        station.title,
       );
     }
     return {
@@ -1352,7 +1268,6 @@ async function syncFromRadioBrowser(country, metadata) {
             slug,
             String(item.favicon || ""),
             String(item.homepage || ""),
-            title,
           ),
           source: `radio-browser:${item.stationuuid || slug}`,
         },
@@ -1606,7 +1521,6 @@ async function repairStationImages(country, stations) {
       slug,
       "",
       station?.url || country.domain,
-      station?.title || slug,
     );
   }
 
