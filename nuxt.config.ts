@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
+import { isStagingDeployment } from "./utils/seo-deployment.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
@@ -19,6 +20,12 @@ const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").
   /\/$/,
   "",
 );
+// Only the staging deployment's two existing NUXT_PUBLIC_* variables control
+// indexability. Never infer it from NODE_ENV, a Git checkout or a custom env.
+const noIndex = isStagingDeployment({
+  siteUrl,
+  noIndex: process.env.NUXT_PUBLIC_NO_INDEX,
+});
 const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "Radio ePlus";
 const defaultDescription =
   process.env.DESCRIPTION ||
@@ -73,6 +80,7 @@ export default defineNuxtConfig({
       siteName,
       defaultDescription,
       radioCatalogStats,
+      noIndex,
     },
   },
   css: ["~/assets/css/main.css"],
@@ -92,7 +100,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/image",
     "dayjs-nuxt",
-    "@nuxtjs/sitemap",
+    ...(!noIndex ? ["@nuxtjs/sitemap"] : []),
     "@nuxtjs/algolia",
     "@pinia/nuxt",
   ],
@@ -108,15 +116,15 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        {
-          name: "description",
-          content: defaultDescription,
-        },
+        ...(noIndex ? [{ name: "robots", content: "noindex, nofollow, noarchive" }] : []),
+        ...(!noIndex ? [{ name: "description", content: defaultDescription }] : []),
         { name: "msapplication-TileColor", content: "#603cba" },
-        { property: "article:author", content: process.env.FANPAGE },
-        { property: "article:publisher", content: process.env.FANPAGE },
-        { property: "fb:pages", content: "179495025583990" },
-        { property: "fb:app_id", content: "363745774395676" },
+        ...(!noIndex ? [
+          { property: "article:author", content: process.env.FANPAGE },
+          { property: "article:publisher", content: process.env.FANPAGE },
+          { property: "fb:pages", content: "179495025583990" },
+          { property: "fb:app_id", content: "363745774395676" },
+        ] : []),
       ],
       link: [
         {
@@ -228,12 +236,13 @@ export default defineNuxtConfig({
       routes: [
         ...radioSeoRoutes.map((route) => route.loc),
         ...staticSeoRoutes.map((route) => route.loc),
-        "/sitemap.xml",
+        "/robots.txt",
+        ...(!noIndex ? ["/sitemap.xml"] : []),
       ],
     },
   },
   sitemap: {
-    urls: [
+    urls: noIndex ? [] : [
       ...radioSeoRoutes.map((route) => ({
         ...getSitemapEntry(route),
         loc: `${siteUrl}${route.loc}`,

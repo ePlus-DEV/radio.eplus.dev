@@ -41,6 +41,7 @@ import {
 const { t } = useI18n();
 const route = useRoute();
 const config = useRuntimeConfig();
+const noIndex = Boolean(config.public.noIndex);
 const siteUrl = computed(() =>
   String(config.public.siteUrl).replace(/\/$/, ""),
 );
@@ -63,17 +64,17 @@ if (!Object.prototype.hasOwnProperty.call(worldData, areaKey.value)) {
 }
 const countryCount = computed(() => Object.keys(areaCountries.value).length);
 
-const seoTitle = computed(() => `Live Radio in ${areaName.value}`);
+const seoTitle = computed(() => t("seo.country_title", { country: areaName.value }));
 const seoDescription = computed(
   () =>
-    `Browse and listen to live internet radio stations across ${areaName.value} on Radio ePlus.`,
+    t("seo.country_description_empty", { country: areaName.value }),
 );
 
 const areaPath = computed(() => `/${area.value}`);
 const areaUrl = computed(() => `${siteUrl.value}${areaPath.value}`);
 const areaBreadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
-    { name: "Home", path: "/" },
+    { name: t("seo.home_breadcrumb"), path: "/" },
     { name: areaName.value, path: areaPath.value },
   ]),
 );
@@ -92,7 +93,7 @@ const areaCollectionSchema = computed(() =>
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "area-breadcrumb-schema",
       type: "application/ld+json",
@@ -105,7 +106,7 @@ useHead(() => ({
     },
   ],
 }));
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? {} : ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,

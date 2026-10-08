@@ -59,7 +59,16 @@ jobs:
         run: npm test
 
       - name: "Generate prerendered site"
+        # CI uses the same two public variables as the real staging host.
+        # A checkout/branch name must not change the generated SEO policy.
+        env:
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: npm run generate
+
+      - name: "Assert staging pages are noindex"
+        if: github.base_ref == 'develop'
+        run: node scripts/assert-staging-noindex.mjs
 
       - name: "Install Chromium for UI regression tests"
         run: npx playwright install --with-deps chromium

@@ -55,6 +55,46 @@ test('audio, volume and selected station survive home/region/country navigation;
   expect(await page.evaluate(() => document.querySelector('audio') === window.radioSavedAudio)).toBe(true);
 });
 
+test('Media Session publishes station artwork and switches stations with headset Next/Previous', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.radioMediaSession = { callbacks: {}, metadata: null, playbackState: 'none' };
+    Object.defineProperty(navigator, 'mediaSession', {
+      configurable: true,
+      value: {
+        setActionHandler(name, handler) { window.radioMediaSession.callbacks[name] = handler; },
+        set metadata(value) { window.radioMediaSession.metadata = value; },
+        get metadata() { return window.radioMediaSession.metadata; },
+        set playbackState(value) { window.radioMediaSession.playbackState = value; },
+        get playbackState() { return window.radioMediaSession.playbackState; },
+      },
+    });
+    window.MediaMetadata = class { constructor(data) { Object.assign(this, data); } };
+  });
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('Studio Brussel');
+  const image = await page.evaluate(() => window.radioMediaSession.metadata?.artwork?.[0]?.src);
+  expect(image).toMatch(/^https?:\/\//);
+  expect(image).toContain('/img/');
+  const supported = await page.evaluate(() => Object.keys(window.radioMediaSession.callbacks));
+  expect(supported).toEqual(expect.arrayContaining(['play', 'pause', 'nexttrack', 'previoustrack']));
+  expect(await page.evaluate(() => typeof window.radioMediaSession.callbacks.seekforward)).toBe('function');
+  expect(await page.evaluate(() => typeof window.radioMediaSession.callbacks.seekbackward)).toBe('function');
+
+  await page.evaluate(() => window.radioMediaSession.callbacks.nexttrack());
+  await expect(page).toHaveURL(/\/europe\/belgium\/mnm$/);
+  await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('MNM');
+  await page.evaluate(() => window.radioMediaSession.callbacks.previoustrack());
+  await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
+  await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('Studio Brussel');
+  // iOS frequently shows ±10s controls instead of track buttons; those
+  // should still change the live radio STATION, not attempt to skip a song.
+  await page.evaluate(() => window.radioMediaSession.callbacks.seekforward());
+  await expect(page).toHaveURL(/\/europe\/belgium\/mnm$/);
+  await page.evaluate(() => window.radioMediaSession.callbacks.seekbackward());
+  await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
+});
+
 test('station cards start the selected station while retaining real navigation links', async ({ page }) => {
   await mockMedia(page);
   await ready(page, '/europe/belgium');
@@ -187,6 +227,40 @@ test('320px mobile dock and drawer stay inside the viewport, including long RTL 
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
   await expect(dock(page).getByRole('button', { name: 'Channels & schedule', exact: true })).toBeFocused();
+});
+
+test('mobile web-volume slider has a usable touch target and changes volume', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
+  const slider = page.getByRole('dialog').getByRole('slider', { name: 'Volume', exact: true });
+  await expect(slider).toBeVisible();
+  const bounds = await slider.boundingBox();
+  expect(bounds.height).toBeGreaterThanOrEqual(40);
+  expect(bounds.width).toBeGreaterThanOrEqual(64);
+  await page.mouse.click(bounds.x + bounds.width * 0.25, bounds.y + bounds.height / 2);
+  await expect.poll(() => page.locator('audio').evaluate(media => media.volume)).toBeLessThan(0.8);
+});
+
+test('iOS volume controls show hardware instructions rather than an inoperative slider', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  });
+  try {
+    const page = await context.newPage();
+    await mockMedia(page);
+    await ready(page, '/europe/belgium/studio-brussel');
+    await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
+    const drawer = page.getByRole('dialog');
+    await expect(drawer.getByRole('slider', { name: 'Volume', exact: true })).toHaveCount(0);
+    await expect(drawer.getByRole('note')).toContainText("On iPhone or iPad");
+  } finally {
+    await context.close();
+  }
 });
 
 test('real hls.js playback waits for a local manifest, continues across pages and keeps one audio element', async ({ page }) => {

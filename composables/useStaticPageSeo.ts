@@ -13,6 +13,7 @@ export const useStaticPageSeo = ({
 }: StaticPageSeoOptions) => {
   const route = useRoute();
   const config = useRuntimeConfig();
+const noIndex = Boolean(config.public.noIndex);
   const siteUrl = computed(() =>
     String(config.public.siteUrl).replace(/\/$/, ""),
   );
@@ -23,7 +24,7 @@ export const useStaticPageSeo = ({
 
   useHead(() => ({
     title: title.value,
-    script: [
+    script: noIndex ? [] : [
       {
         key: "static-page-schema:" + route.path,
         type: "application/ld+json",
@@ -63,7 +64,7 @@ export const useStaticPageSeo = ({
     ],
   }));
 
-  useSeoMeta(() => ({
+  useSeoMeta(() => noIndex ? {} : ({
     description: description.value,
     ogTitle: title.value,
     ogDescription: description.value,

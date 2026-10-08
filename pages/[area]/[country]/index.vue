@@ -64,6 +64,7 @@ interface CountryCatalogPayload {
 const playback = usePlaybackStore();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
+const noIndex = Boolean(runtimeConfig.public.noIndex);
 const route = useRoute();
 
 const normalizeParam = (value: string | string[] | undefined): string =>
@@ -166,15 +167,15 @@ const defaultStationId = computed(() => {
 
 const activeStationId = computed(() => playback.station?.url.startsWith(`${countryPath.value}/`) ? playback.station.id : '');
 
-const seoTitle = computed(() => `Live Radio in ${countryName.value}`);
+const seoTitle = computed(() => t("seo.country_title", { country: countryName.value }));
 const seoDescription = computed(() =>
   stationCount.value > 0
-    ? `Listen to ${stationCount.value} live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`
-    : `Listen to live internet radio stations from ${countryName.value} on Radio ePlus.`,
+    ? t("seo.country_description", { count: stationCount.value, country: countryName.value })
+    : t("seo.country_description_empty", { country: countryName.value }),
 );
 const breadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
-    { name: "Home", path: "/" },
+    { name: t("seo.home_breadcrumb"), path: "/" },
     {
       name: t(`world.${area.value.replace(/-/g, "_")}.name`),
       path: `/${area.value}`,
@@ -197,7 +198,7 @@ const countryCollectionSchema = computed(() =>
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "country-breadcrumb-schema",
       type: "application/ld+json",
@@ -211,7 +212,7 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? {} : ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,

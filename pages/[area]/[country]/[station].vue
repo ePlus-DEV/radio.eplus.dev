@@ -69,6 +69,7 @@ import {
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
+const noIndex = Boolean(config.public.noIndex);
 
 const normalizeParam = (value: string | string[] | undefined): string =>
   Array.isArray(value) ? value[0] || "" : value || "";
@@ -187,12 +188,12 @@ const stationName = computed(
       .join(" "),
 );
 const seoTitle = computed(
-  () => `${stationName.value} Live Radio - ${countryName.value}`,
+  () => t("seo.station_title", { station: stationName.value, country: countryName.value }),
 );
 const seoDescription = computed(
   () =>
     stationMeta.value?.description ||
-    `Listen to ${stationName.value} live from ${countryName.value} on Radio ePlus.`,
+    t("seo.station_description", { station: stationName.value, country: countryName.value }),
 );
 const seoImage = computed(() => {
   const image = stationMeta.value?.features;
@@ -204,7 +205,7 @@ const canonicalUrl = computed(
 );
 const breadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
-    { name: "Home", path: "/" },
+    { name: t("seo.home_breadcrumb"), path: "/" },
     { name: areaName.value, path: `/${area.value}` },
     { name: countryName.value, path: `/${area.value}/${slug.value}` },
     { name: stationName.value, path: stationPath.value },
@@ -227,7 +228,7 @@ const isActive = computed(() => playback.station?.url === stationPath.value);
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "station-breadcrumb-schema",
       type: "application/ld+json",
@@ -241,7 +242,7 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? {} : ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,

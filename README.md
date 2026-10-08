@@ -227,6 +227,12 @@ Currently configured locales:
 | `fr` | Français |
 | `ru` | Русский |
 
+### Translation quality checks
+
+All user-facing text must use Nuxt i18n, including labels, accessibility text, empty states and SEO metadata. Keep translations in all seven `lang/*.json` files in sync. Use natural, context-aware wording rather than literal translations (for example, Git *commit*, player *source* and song *lyrics*).
+
+New translation keys must preserve the same structure, nonempty values and `{variable}` placeholders in every locale. The `tests/i18n-translation-quality.test.mjs` suite checks these invariants. Run `npm test` before opening a PR into `develop`.
+
 ## Search
 
 Algolia integration is optional during build and local development. When Algolia credentials are not configured, the application can still build without them.
@@ -244,6 +250,37 @@ Override it using `NUXT_PUBLIC_SITE_URL` when needed.
 See [`docs/SEO.md`](./docs/SEO.md) for the current SEO implementation and known limitations, including the current no-prefix i18n/hreflang limitation.
 
 Public site pages also include `/about`, `/statistics`, `/contact`, `/privacy-policy`, and `/terms-of-use`. They are prerendered and included in the sitemap.
+
+### Staging: noindex (develop)
+
+The `develop` deployment at **https://radio-new.eplus.dev** is **not indexed**.
+It retains functioning prerendered radio pages but does not render SEO canonical,
+social metadata or JSON-LD; its `robots.txt` allows crawlers to read
+`noindex` without advertising a sitemap. The sitemap module is disabled.
+Production `main` stays indexable.
+
+**Set these build-time environment variables in the staging host:**
+
+```env
+NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
+NUXT_PUBLIC_NO_INDEX=true
+```
+
+For production, keep `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` and leave
+`NUXT_PUBLIC_NO_INDEX` unset/false. No custom `NUXT_DEPLOY_ENV` or branch
+detection is needed; the staging hostname also triggers noindex as a safeguard.
+Set the two staging variables **at build time**, because this site is statically
+generated. Never turn on noindex unconditionally in shared source, or
+production would inherit it on promotion.
+
+Verify the staging HTML source includes `<meta name="robots" content="noindex, nofollow, noarchive">`,
+has no canonical/JSON-LD or SEO social metadata, and that `/robots.txt`
+contains `Allow: /` without a sitemap. Do **not** use `Disallow: /` in staging:
+Google needs to crawl a page to observe its `noindex` directive; blocking
+crawling can leave already-discovered staging URLs visible in search results.
+If staging must be private, require authentication or access control at the
+staging host instead. On production, verify that noindex is absent and
+robots.txt advertises the production sitemap.
 
 ## Data sync
 

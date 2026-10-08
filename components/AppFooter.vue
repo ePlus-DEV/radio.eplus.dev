@@ -20,13 +20,13 @@
                 Radio ePlus
               </span>
               <span class="block text-xs text-slate-400">
-                Live radio from around the world
+                {{ $t('footer.tagline') }}
               </span>
             </span>
           </NuxtLink>
 
           <p class="mt-4 max-w-lg text-sm leading-6 text-[var(--radio-text-muted)]">
-            Browse stations by region and country, then listen instantly from any device.
+            {{ $t('footer.description') }}
           </p>
 
           <div class="mt-5 flex items-center gap-2">
