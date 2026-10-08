@@ -3,7 +3,7 @@
     <div class="block" v-for="item in result" :key="item.objectID || item.url">
       <nuxt-link
         :to="item.url"
-        class="flex items-center gap-3 rounded-2xl px-3 py-3 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-400/40 dark:hover:bg-white/5"
+        class="flex items-center gap-3 rounded-2xl px-3 py-3 transition hover:bg-[var(--radio-hover)] focus:outline-none focus:ring-2 focus:ring-rose-400/40"
         @click="$emit('select')"
       >
         <img
@@ -11,7 +11,7 @@
           :src="item.station_image"
           :alt="item.station_name"
         />
-        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-slate-800 dark:text-slate-100">
+        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-[var(--radio-text)]">
           {{ item.station_name }}
         </span>
         <span class="hidden shrink-0 text-xs text-slate-400 sm:block">

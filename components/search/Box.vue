@@ -1,6 +1,6 @@
 <template>
   <div class="radio-themed-surface overflow-hidden rounded-3xl border border-[var(--radio-border)]">
-    <div class="border-b border-slate-200 p-4 dark:border-white/10 sm:p-5">
+    <div class="border-b border-[var(--radio-border)] p-4 sm:p-5">
       <div class="flex items-center gap-3">
         <div class="relative min-w-0 flex-1">
           <fa

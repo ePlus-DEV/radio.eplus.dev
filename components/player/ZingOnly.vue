@@ -1,9 +1,9 @@
 <template>
   <section
     v-if="song !== undefined && song.currentMedia !== undefined"
-    class="border-t border-white/10 p-4 sm:p-6"
+    class="border-t border-[var(--radio-border)] p-4 sm:p-6"
   >
-    <div class="flex min-w-0 items-center gap-4 rounded-2xl bg-white/[0.05] p-3 ring-1 ring-inset ring-white/10">
+    <div class="flex min-w-0 items-center gap-4 rounded-2xl bg-[var(--radio-hover)] p-3 ring-1 ring-inset ring-[var(--radio-border)]">
       <img
         loading="lazy"
         :src="
@@ -16,13 +16,13 @@
       />
 
       <div class="min-w-0 flex-1">
-        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-rose-300">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-rose-500">
           Now playing
         </p>
-        <p class="mt-1 truncate font-semibold text-slate-100">
+        <p dir="auto" class="mt-1 truncate font-semibold text-[var(--radio-text)]">
           {{ song.currentMedia.title }}
         </p>
-        <p class="mt-0.5 truncate text-sm text-slate-400">
+        <p dir="auto" class="mt-0.5 truncate text-sm text-[var(--radio-text-muted)]">
           {{ song.currentMedia.artists }}
         </p>
       </div>
@@ -42,10 +42,10 @@
         "
       />
       <div class="min-w-0">
-        <p class="text-[11px] uppercase tracking-wide text-slate-500">
+        <p class="text-[11px] uppercase tracking-wide text-[var(--radio-text-muted)]">
           {{ $t("panel.next") }}
         </p>
-        <p class="truncate text-sm text-slate-300">
+        <p dir="auto" class="truncate text-sm text-[var(--radio-text)]">
           {{ song.nextMedia?.title }} · {{ song.nextMedia?.artists }}
         </p>
       </div>

@@ -1,20 +1,20 @@
 <template>
-  <section v-if="playlist !== undefined && playlist.length > 0" class="border-t border-white/10">
+  <section v-if="playlist !== undefined && playlist.length > 0" class="border-t border-[var(--radio-border)]">
     <div class="flex items-center justify-between px-4 py-3 sm:px-6">
-      <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-300">
+      <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--radio-text)]">
         {{ $t("panel.playlist") }}
       </h3>
-      <span class="text-xs text-slate-500">{{ playlist.length }}</span>
+      <span class="text-xs text-[var(--radio-text-muted)]">{{ playlist.length }}</span>
     </div>
 
-    <div class="max-h-60 overflow-y-auto px-3 pb-3 sm:px-4">
+    <div class="radio-scrollbar max-h-60 overflow-y-auto px-3 pb-3 sm:px-4">
       <div
         v-for="(item, index) in playlist"
         :key="index"
-        class="flex min-w-0 items-center gap-3 border-t border-white/8 px-2 py-3 first:border-t-0"
-        :class="index === 0 ? 'rounded-xl bg-white/[0.05]' : ''"
+        class="flex min-w-0 items-center gap-3 border-t border-[var(--radio-border)] px-2 py-3 first:border-t-0"
+        :class="index === 0 ? 'rounded-xl bg-[var(--radio-hover)]' : ''"
       >
-        <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-white/10">
+        <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[var(--radio-surface-soft)]">
           <img
             loading="lazy"
             class="h-full w-full object-cover"
@@ -28,18 +28,18 @@
         </div>
 
         <div class="min-w-0 flex-1">
-          <p class="truncate text-sm font-medium text-slate-100">
+          <p dir="auto" class="truncate text-sm font-medium text-[var(--radio-text)]">
             {{ item.track_title }}
           </p>
-          <p class="mt-0.5 truncate text-xs text-slate-400">
+          <p dir="auto" class="mt-0.5 truncate text-xs text-[var(--radio-text-muted)]">
             {{ item.track_artist }}
           </p>
         </div>
 
-        <span v-if="index === 0" class="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-rose-300">
+        <span v-if="index === 0" class="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-rose-500">
           Live
         </span>
-        <span v-else class="shrink-0 text-xs text-slate-500">
+        <span v-else class="shrink-0 text-xs text-[var(--radio-text-muted)]">
           {{ dayjs.unix(item.track_played).fromNow() }}
         </span>
       </div>
