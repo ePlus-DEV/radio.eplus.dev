@@ -1,12 +1,16 @@
 <template>
   <div class="min-h-screen w-full overflow-x-hidden bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
-    <main
-      class="mx-auto w-full max-w-7xl min-w-0 px-4 pb-14 pt-24 sm:px-6 sm:pt-28"
-      scroll-container
-    >
-      <NuxtPage />
-    </main>
+    <div class="mx-auto w-full max-w-[1660px] xl:grid xl:grid-cols-[248px_minmax(0,1fr)] xl:gap-7 xl:px-6">
+      <AppSidebar />
+      <main
+        class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-24 sm:px-6 sm:pt-28 xl:px-0"
+        id="main-content"
+        scroll-container
+      >
+        <NuxtPage />
+      </main>
+    </div>
     <AppFooter />
   </div>
 </template>
