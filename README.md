@@ -12,6 +12,28 @@ Radio ePlus is a Nuxt-based internet radio application for browsing and listenin
 
 **Website:** https://radio.eplus.dev
 
+## Branches and deployment environments
+
+| Branch | Environment / purpose | URL |
+| --- | --- | --- |
+| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev |
+| `main` | Production; stable, released application (repository default branch) | https://radio.eplus.dev |
+| `master` | Legacy backup of the previous version; do not deploy or use for new development | — |
+| `feature/*` | Short-lived feature/fix branches, normally created from `develop` | PR into `develop` |
+| `hotfix/*` | Urgent production fixes, branched from `main` | PR into `main`, then sync to `develop` |
+
+**Release flow:** `feature/*` → `develop` (staging) → `main` (production).
+
+1. Create a feature branch from `develop` and open a PR targeting `develop`.
+2. Run unit tests, prerender and browser regression tests; verify the staging deployment on `radio-new.eplus.dev`.
+3. Open a promotion PR from `develop` to `main`. Review changes, ensure required CI checks pass and merge only when ready to release.
+4. Deploy `main` to `radio.eplus.dev`; create a version tag on `main` for traceability and rollback.
+5. For urgent production hotfixes, branch from `main`, validate/release via PR, then merge or cherry-pick the fix back into `develop`.
+
+**Legacy backup:** Keep `master` intact as the previous-version snapshot. Do not merge `develop` or `main` into `master`, reset it, force-push it or delete it as part of the new release workflow. `master` has a separate history from `main`.
+
+**Deployment configuration:** This table defines the intended branch-to-domain policy. Hosting/CD settings (including any DigitalOcean app source branch) must be configured to match it; modifying Git branches or this README alone does not change deployed websites. Set `NUXT_PUBLIC_SITE_URL` for each environment and validate production canonical URLs and sitemap before release.
+
 ## Highlights
 
 - Live internet radio directory grouped by region and country.
@@ -237,11 +259,12 @@ for the current sync implementation and limitations.
 
 ## Contributing
 
-1. Create a feature branch from `develop` and open the PR against `develop`.
-2. Make the required code or data changes.
-3. Validate the Nuxt build and any affected radio JSON.
-4. Open a pull request.
-5. Review station streams, artwork paths, and generated metadata before merging.
+Follow the [branch and release workflow](#branches-and-deployment-environments): create `feature/*` branches from `develop`, open PRs into `develop`, validate changes on staging, and promote reviewed releases to `main`.
+
+1. Make the required code or data changes and update relevant documentation/translations.
+2. Validate the Nuxt build, tests and any affected radio JSON.
+3. Review station streams, artwork paths, generated metadata and SEO before merging.
+4. Do not target the legacy `master` branch for new changes.
 
 ## License
 
