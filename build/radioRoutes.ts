@@ -27,13 +27,19 @@ export const getRadioSeoRoutes = (
     if (!areaEntry.isDirectory()) continue;
 
     const area = areaEntry.name;
-    routes.push({ loc: `/${area}`, level: "area" });
     const areaDir = join(radioDir, area);
-    for (const countryFile of readdirSync(areaDir, { withFileTypes: true })) {
-      if (!countryFile.isFile() || !countryFile.name.endsWith(".json")) {
-        continue;
-      }
+    const countryFiles = readdirSync(areaDir, { withFileTypes: true }).filter(
+      (entry) => entry.isFile() && entry.name.endsWith(".json"),
+    );
 
+    // Some legacy asset folders live under public/radio (for example
+    // public/radio/romania/*.png). They are not geographic areas and must not
+    // become fake routes such as /romania.
+    if (countryFiles.length === 0) continue;
+
+    routes.push({ loc: `/${area}`, level: "area" });
+
+    for (const countryFile of countryFiles) {
       const country = countryFile.name.replace(/\.json$/, "");
       const countryPath = join(areaDir, countryFile.name);
 
