@@ -3,7 +3,7 @@
     <Breadcrumbs :area="area" level_1="" :level_2="$t(i18n)" />
 
     <section
-      class="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white px-5 py-7 shadow-sm shadow-slate-200/40 dark:border-white/10 dark:bg-slate-900 dark:shadow-none sm:px-8"
+      class="radio-surface relative overflow-hidden rounded-[2rem] px-5 py-7 sm:px-8"
     >
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.10),transparent_42%)]"></div>
       <div class="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="rounded-2xl bg-slate-100 px-4 py-2 text-sm font-semibold tabular-nums text-slate-600 dark:bg-white/5 dark:text-slate-300">
+          <span class="badge h-9 border-0 bg-[var(--radio-surface-soft)] px-4 text-sm font-semibold tabular-nums text-[var(--radio-text-muted)]">
             {{ countryCount }} countries
           </span>
         </div>
