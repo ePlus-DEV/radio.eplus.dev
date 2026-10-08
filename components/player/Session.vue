@@ -32,6 +32,7 @@ import { usePlaybackStore } from '~/stores/playback';
 import type { RadioSource, RadioStationOption } from '~/types/radio';
 
 const playback = usePlaybackStore();
+useRestoreLastStation();
 const { station } = storeToRefs(playback);
 const { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation } = useStationRealtime();
 const emptySource: RadioSource = { src: '', type: 'audio/mpeg' };

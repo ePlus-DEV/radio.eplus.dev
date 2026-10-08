@@ -536,3 +536,30 @@ Nuxt devtools still imports the removed default export from Simple Git 4, while
 the repository pins Simple Git 4 for security. Devtools is disabled so `nuxt dev`
 remains usable without weakening that override. Re-enable only after devtools
 supports the named export. This does not affect the product or production build.
+
+## 19. Listening continuity and reload silence
+
+`stores/listening.ts` owns local recent/favorite lists, the last station identity,
+and the last explicit Play/Pause preference. Recent history is added on actual
+playback, not when browsing a station. Persist display identity only; restore
+stream sources from the current catalog rather than storing stale/proxied URLs.
+Corrupt or unavailable localStorage must leave playback usable in the session.
+
+Every fresh page stays silent, even if the previous session was playing or the
+legacy `radio_autoplay_enabled` flag was set. Restore the last station on general
+pages, but respect a station deep link and any new user action while restoration
+is pending. Explicit selection from the listening lists requests its target
+station, not the previous station while the target catalog is loading.
+
+The sleep timer follows the global player lifetime and uses a wall-clock deadline.
+It rechecks on visibility/pageshow, cancels on explicit pause, and does not survive
+reload. OS background suspension can delay the browser callback until wake.
+
+Country counts are part of build-time `radioCatalogStats.byCountry`; never fetch
+all country catalogs solely to count stations. Search shares a successful static
+index across modal opens and prepares normalized fields once per immutable array.
+Remote search results must match the current input generation.
+
+At the owner's request, Playwright CI steps are temporarily opt-in with repository
+variable `ENABLE_BROWSER_TESTS=true`. Keep unit/prerender/noindex checks enabled.
+See `UI_ROADMAP.md` for the current follow-up priorities.

@@ -10,6 +10,7 @@
         <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t('player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
         <span v-else class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full" :class="playing ? 'bg-emerald-500' : 'bg-[var(--radio-text-muted)]'"></span>{{ playing ? $t('player.on_air') : $t('player.ready') }}</span>
+        <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
 
       <div class="grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pb-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
@@ -29,16 +30,22 @@
         </div>
 
         <div class="flex items-center justify-center gap-0.5 sm:gap-2">
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-9 w-9 justify-center rounded-full" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-11 w-11 justify-center rounded-full" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
           <UButton class="h-11 w-11 justify-center rounded-full bg-violet-600 text-white shadow-sm shadow-violet-900/20 hover:bg-violet-500 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-9 w-9 justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-9 w-9 justify-center rounded-full sm:hidden" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-11 w-11 justify-center rounded-full sm:hidden" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
         </div>
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
+          <UButton color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 justify-center" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
+
+          <UDropdownMenu :items="sleepMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false">
+            <UButton color="neutral" :variant="sleepRemaining ? 'soft' : 'ghost'" icon="i-lucide-timer" class="h-11 min-w-11 justify-center" :disabled="!hasPlayableSource" :aria-label="$t('player.sleep_timer')" :title="$t('player.sleep_timer')" />
+          </UDropdownMenu>
+
           <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false" :ui="{ content: 'w-72' }">
             <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-radio-tower" :aria-label="$t('player.source')" class="hidden max-w-28 truncate lg:inline-flex">{{ activeSourceName }}</UButton>
           </UDropdownMenu>
@@ -70,10 +77,14 @@
   <USlideover v-model:open="mobileQueueOpen" :title="$t('player.queue')" :description="streamName" :ui="{ content: 'w-full max-w-sm', body: 'flex min-h-0 flex-1 flex-col p-0 sm:p-0' }">
     <template #body>
       <div class="flex flex-wrap items-center gap-2 border-b border-[var(--radio-border)] p-3">
+        <UButton color="neutral" variant="soft" icon="i-lucide-heart" class="min-h-11" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" @click="toggleFavorite">{{ $t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite') }}</UButton>
         <div class="flex min-w-[10rem] flex-1 items-center gap-2">
           <UButton color="neutral" variant="soft" size="xs" class="shrink-0" :icon="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted ? $t('player.unmute') : $t('player.mute')" @click="toggleMute">{{ muted ? $t('player.unmute') : $t('player.mute') }}</UButton>
           <input v-if="!systemVolumeOnly" type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume radio-volume-mobile h-11 min-w-0 flex-1 cursor-pointer appearance-none bg-transparent" />
         </div>
+        <UDropdownMenu :items="sleepMenuItems" :content="{ align: 'end' }">
+          <UButton color="neutral" variant="soft" icon="i-lucide-timer" class="min-h-11" :disabled="!hasPlayableSource">{{ $t('player.sleep_timer') }}</UButton>
+        </UDropdownMenu>
         <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end' }" :ui="{ content: 'w-64' }">
           <UButton color="neutral" variant="soft" size="xs" icon="i-lucide-radio-tower">{{ $t('player.source') }}</UButton>
         </UDropdownMenu>
@@ -90,6 +101,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useListeningStore } from "~/stores/listening";
 import { usePlaybackStore } from "~/stores/playback";
 import { usesSystemVolumeControls } from "~/utils/mobile-volume.mjs";
 import type { RadioSource, RadioStationOption } from "~/types/radio";
@@ -99,6 +111,7 @@ import {
   nextPlaybackIndex,
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
+import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
 
 interface CurrentMedia {
@@ -157,11 +170,14 @@ const emit = defineEmits<{
 
 const $store = useMainStore();
 const playback = usePlaybackStore();
+const listening = useListeningStore();
+listening.hydrate();
+const favoriteActive = computed(() => listening.library.favorites.some((item: { url: string }) => item.url === props.stationUrl));
+const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
 const { t } = useI18n();
 const wideViewport = ref(false);
 const updateViewport = () => { wideViewport.value = window.innerWidth >= 1536; if (wideViewport.value) mobileQueueOpen.value = false; };
 const toggleQueue = () => { if (wideViewport.value) playback.queueOpen = !playback.queueOpen; else mobileQueueOpen.value = !mobileQueueOpen.value; };
-const dayjs = useDayjs();
 const runtimeConfig = useRuntimeConfig();
 const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
@@ -177,15 +193,12 @@ const muted = ref(false);
 // iOS browsers reserve playback volume for the hardware/system controls.
 const systemVolumeOnly = ref(false);
 const mobileQueueOpen = ref(false);
-const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
-const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
 let hlsInstance: any = null;
 let HlsCtor: any = null;
 let hlsImportPromise: Promise<any> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
-let timeInterval: ReturnType<typeof setInterval> | null = null;
 let sourceVersion = 0;
 let playVersion = 0;
 let activeResolvedSrc = "";
@@ -330,11 +343,6 @@ const nowPlayingArtwork = computed(
     props.thumb,
 );
 
-const updateCurrentTime = (): void => {
-  currentTime.value = dayjs().tz($store.getTimezone).format("LTS");
-  currentDate.value = dayjs().tz($store.getTimezone).format("LLLL");
-};
-
 const inferMime = (url: string, fallback = "audio/mpeg"): string => {
   const value = url.toLowerCase();
   if (/\.m3u8(?:$|[?#])/i.test(value)) return "application/vnd.apple.mpegurl";
@@ -475,9 +483,6 @@ const tryPlay = async (): Promise<void> => {
     playing.value = true;
     streamError.value = false;
 
-    if (import.meta.client) {
-      localStorage.setItem("radio_autoplay_enabled", "1");
-    }
   } catch (error) {
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
     waiting.value = false;
@@ -747,6 +752,7 @@ const scheduleReconnect = (): void => {
 const onPlay = async (): Promise<void> => {
   if (!hasPlayableSource.value) return;
 
+  listening.remember(playback.station, 'play');
   userPaused.value = false;
   streamError.value = false;
   pendingAutoPlay.value = true;
@@ -761,12 +767,13 @@ const onPlay = async (): Promise<void> => {
 };
 
 const onPause = (): void => {
+  sleepTimer.cancel();
+  listening.remember(playback.station, 'pause');
   const media = mediaElement.value;
   playVersion += 1;
 
   userPaused.value = true;
   pendingAutoPlay.value = false;
-  if (import.meta.client) localStorage.setItem("radio_autoplay_enabled", "0");
   clearReconnectTimer();
   clearFallbackProbeTimer();
   removeAutoPlayUnlockListeners?.();
@@ -776,6 +783,21 @@ const onPause = (): void => {
   waiting.value = false;
   playing.value = false;
 };
+
+const sleepRemaining = ref(0);
+const sleepTimer = createSleepTimer({
+  onExpire: () => onPause(),
+  onChange: (minutes: number) => { sleepRemaining.value = minutes; },
+});
+const sleepMenuItems = computed(() => [
+  ...[15, 30, 60, 120].map(minutes => ({
+    label: t('player.sleep_minutes', { minutes }),
+    icon: 'i-lucide-timer',
+    onSelect: () => sleepTimer.start(minutes),
+  })),
+  { label: t('player.sleep_cancel'), icon: 'i-lucide-x', disabled: !sleepRemaining.value, onSelect: () => sleepTimer.cancel() },
+]);
+const checkSleepDeadline = () => { if (!document.hidden) sleepTimer.check(); };
 
 const retryCurrentSource = (): void => {
   attemptCount.value = 0;
@@ -806,10 +828,6 @@ const selectStation = (station: RadioStationOption): void => {
     }
     mobileQueueOpen.value = false;
     return;
-  }
-
-  if (import.meta.client) {
-    localStorage.setItem("radio_autoplay_enabled", "1");
   }
 
   userPaused.value = false;
@@ -919,6 +937,7 @@ const onMediaCanPlay = (): void => {
 };
 
 const onMediaPlaying = (): void => {
+  listening.remember(playback.station, 'play', true);
   clearReconnectTimer();
   clearFallbackProbeTimer();
   attemptCount.value = 0;
@@ -1043,10 +1062,11 @@ watch(
 watch(() => props.country, () => {
   const [, area, country] = props.country.split(".");
   if (area && country) $store.setTimezone(area.replace(/_/g, "-"), country.replace(/_/g, "-"));
-  updateCurrentTime();
 });
 
 onMounted(() => {
+  document.addEventListener("visibilitychange", checkSleepDeadline);
+  window.addEventListener("pageshow", checkSleepDeadline);
   systemVolumeOnly.value = usesSystemVolumeControls(navigator);
   const [, area, country] = props.country.split(".");
   if (area && country) {
@@ -1056,8 +1076,6 @@ onMounted(() => {
   updateViewport();
   window.addEventListener("resize", updateViewport);
   online.value = navigator.onLine;
-  updateCurrentTime();
-  timeInterval = setInterval(updateCurrentTime, 1000);
 
   bindMediaEvents();
   registerMediaSession();
@@ -1069,14 +1087,10 @@ onMounted(() => {
     muted.value = media.muted;
   }
 
-  // Preload hls.js while the page is idle so a later user click can start
-  // the HLS pipeline immediately without waiting for a module download.
-  if (import.meta.client) {
-    void ensureHls();
-  }
+  // hls.js is loaded on demand by configureHlsSource; plain streams need no HLS download.
 
-  const autoPlayEnabled =
-    localStorage.getItem("radio_autoplay_enabled") === "1" || Boolean(props.playRequest);
+  // Reload restores a selection, never playback. Only a click in this session can play.
+  const autoPlayEnabled = Boolean(props.playRequest);
   userPaused.value = !autoPlayEnabled;
 
   if (autoPlayEnabled && hasPlayableSource.value) {
@@ -1088,17 +1102,15 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  sleepTimer.cancel();
+  document.removeEventListener("visibilitychange", checkSleepDeadline);
+  window.removeEventListener("pageshow", checkSleepDeadline);
   clearMediaSession();
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
   unbindMediaEvents();
   destroyHls();
-
-  if (timeInterval) {
-    clearInterval(timeInterval);
-    timeInterval = null;
-  }
 
   removeAutoPlayUnlockListeners?.();
   removeAutoPlayUnlockListeners = null;

@@ -229,7 +229,11 @@
     "stream_format": "配信形式",
     "proxy": "プロキシ",
     "direct": "直接接続",
-    "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。"
+    "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。",
+    "sleep_timer": "スリープタイマー",
+    "sleep_minutes": "{minutes}分後に停止",
+    "sleep_cancel": "タイマーを解除",
+    "sleep_remaining": "あと{minutes}分で停止"
   },
   "site_pages": {
     "common": {
@@ -412,5 +416,15 @@
   "footer": {
     "tagline": "世界中のラジオをライブで",
     "description": "地域や国から放送局を探して、どの端末からでもすぐに聴けます。"
+  },
+  "library": {
+    "title": "マイラジオ",
+    "recent": "最近聴いた局",
+    "favorites": "お気に入り",
+    "recent_empty": "再生したラジオ局がここに表示されます。",
+    "favorites_empty": "ハートを押すとお気に入りに保存できます。",
+    "clear_recent": "履歴を消去",
+    "add_favorite": "お気に入りに追加",
+    "remove_favorite": "お気に入りから削除"
   }
 }

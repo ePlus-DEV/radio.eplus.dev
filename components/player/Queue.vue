@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto p-2.5">
+    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5">
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
         <button
           v-for="station in filteredStations"

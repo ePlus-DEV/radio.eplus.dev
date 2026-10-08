@@ -7,7 +7,7 @@
         @click="$emit('select')"
       >
         <img
-          loading="lazy"
+          loading="lazy" decoding="async" width="44" height="44"
           class="radio-themed-artwork h-11 w-11 shrink-0 rounded-xl object-contain p-1 ring-1 ring-[var(--radio-border)]"
           :src="item.station_image || '/brand/logo-share.png'"
           :alt="item.station_name"

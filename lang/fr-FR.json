@@ -229,7 +229,11 @@
     "stream_format": "Flux audio",
     "proxy": "Proxy",
     "direct": "Accès direct",
-    "ios_volume_hint": "Sur iPhone ou iPad, réglez le volume avec les boutons de l’appareil ou le Centre de contrôle."
+    "ios_volume_hint": "Sur iPhone ou iPad, réglez le volume avec les boutons de l’appareil ou le Centre de contrôle.",
+    "sleep_timer": "Minuterie de sommeil",
+    "sleep_minutes": "Arrêter dans {minutes} minutes",
+    "sleep_cancel": "Annuler la minuterie",
+    "sleep_remaining": "Arrêt dans {minutes} min"
   },
   "site_pages": {
     "common": {
@@ -412,5 +416,15 @@
   "footer": {
     "tagline": "Des radios en direct du monde entier",
     "description": "Trouvez des stations par région ou pays et écoutez-les instantanément sur tous vos appareils."
+  },
+  "library": {
+    "title": "Votre radio",
+    "recent": "Écoutées récemment",
+    "favorites": "Favoris",
+    "recent_empty": "Écoutez une station pour la retrouver ici.",
+    "favorites_empty": "Touchez le cœur pour ajouter une station aux favoris.",
+    "clear_recent": "Effacer l’historique récent",
+    "add_favorite": "Ajouter aux favoris",
+    "remove_favorite": "Retirer des favoris"
   }
 }

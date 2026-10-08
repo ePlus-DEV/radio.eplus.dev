@@ -57,7 +57,7 @@ test('UI has featured carousel, compact country cards, and fallback search', asy
   assert.match(featured, /sm:grid/);
   assert.match(countries, /aspect-\[7\/4\]/);
   assert.match(box, /searchLocalStations/);
-  assert.match(box, /\/search\/stations\.json/);
+  assert.match(await readFile('composables/useStationSearchIndex.ts', 'utf8'), /\/search\/stations\.json/);
   assert.doesNotMatch(result, /Xone FM 96MHz/, 'search must not render mock results');
   const pkg = JSON.parse(packageSource);
   for (const script of ['pregenerate','prebuild','predev']) assert.match(pkg.scripts[script], /build-station-search-index/);

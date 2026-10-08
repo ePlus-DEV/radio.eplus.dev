@@ -10,7 +10,7 @@
           @click="mobileOpen = false"
         >
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)] shadow-md ring-1 ring-[var(--radio-border)]"
+            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)] shadow-md ring-1 ring-[var(--radio-border)]"
           >
             <img
               src="/brand/logo-white.svg"
@@ -70,7 +70,7 @@
       <div class="flex items-center gap-1">
         <button
           type="button"
-          class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:px-3"
+          class="flex h-11 min-w-11 items-center gap-2 rounded-xl px-2.5 text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:px-3"
           :aria-label="$t('popup.search.text')"
           @click="openSearch"
         >
@@ -90,7 +90,7 @@
 
         <button
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-xl text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] lg:hidden"
+          class="flex h-11 w-11 items-center justify-center rounded-xl text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] lg:hidden"
           :aria-label="mobileOpen ? $t('button.close') : 'Menu'"
           :aria-expanded="mobileOpen"
           @click="mobileOpen = !mobileOpen"

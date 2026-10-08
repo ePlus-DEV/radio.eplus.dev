@@ -32,3 +32,16 @@ test('revisiting a selected station preserves source identity; explicit play sti
   playback.activate(station('first'), [], { autoplay: true });
   assert.equal(playback.playRequest, 1);
 });
+
+test('a library selection waits for its target instead of playing the old station', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  playback.activate(station('first'), []);
+  playback.requestStation('/asia/viet-nam/second');
+  assert.equal(playback.playRequest, 0);
+  playback.activate(station('second'), []);
+  assert.equal(playback.playRequest, 1);
+  assert.equal(playback.requestedStationUrl, '');
+  playback.requestStation('/asia/viet-nam/second');
+  assert.equal(playback.playRequest, 2, 'selecting the current station can resume it');
+});

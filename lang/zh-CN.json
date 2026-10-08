@@ -229,7 +229,11 @@
     "stream_format": "音频流",
     "proxy": "代理",
     "direct": "直连",
-    "ios_volume_hint": "在 iPhone 或 iPad 上，请使用设备音量键或控制中心调节音量。"
+    "ios_volume_hint": "在 iPhone 或 iPad 上，请使用设备音量键或控制中心调节音量。",
+    "sleep_timer": "睡眠定时器",
+    "sleep_minutes": "{minutes}分钟后停止",
+    "sleep_cancel": "取消定时器",
+    "sleep_remaining": "{minutes}分钟后停止"
   },
   "site_pages": {
     "common": {
@@ -412,5 +416,15 @@
   "footer": {
     "tagline": "畅听世界各地的直播电台",
     "description": "按地区和国家寻找电台，在任何设备上即刻收听。"
+  },
+  "library": {
+    "title": "我的电台",
+    "recent": "最近收听",
+    "favorites": "收藏电台",
+    "recent_empty": "播放电台后会显示在这里。",
+    "favorites_empty": "点击爱心即可收藏电台。",
+    "clear_recent": "清除收听记录",
+    "add_favorite": "添加到收藏",
+    "remove_favorite": "取消收藏"
   }
 }
