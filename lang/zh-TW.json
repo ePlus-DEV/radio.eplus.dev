@@ -404,5 +404,12 @@
     "country_description_empty": "在 Radio ePlus 收聽來自 {country} 的線上直播電台。",
     "station_title": "{station} 線上直播 – {country}",
     "station_description": "在 Radio ePlus 收聽來自 {country} 的 {station} 直播。"
+  },
+  "brand": {
+    "live_radio": "直播電台"
+  },
+  "footer": {
+    "tagline": "暢聽世界各地的直播電台",
+    "description": "依地區與國家尋找電台，隨時在任何裝置上收聽。"
   }
 }

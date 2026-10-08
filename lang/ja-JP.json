@@ -404,5 +404,12 @@
     "country_description_empty": "Radio ePlus で {country} のインターネットラジオをライブで聴きましょう。",
     "station_title": "{station} ライブ ラジオ – {country}",
     "station_description": "Radio ePlus で {country} の {station} をライブで聴きましょう。"
+  },
+  "brand": {
+    "live_radio": "ライブ ラジオ"
+  },
+  "footer": {
+    "tagline": "世界中のラジオをライブで",
+    "description": "地域や国から放送局を探して、どの端末からでもすぐに聴けます。"
   }
 }

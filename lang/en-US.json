@@ -404,5 +404,12 @@
     "country_description_empty": "Listen to live internet radio stations from {country} on Radio ePlus.",
     "station_title": "{station} Live Radio - {country}",
     "station_description": "Listen to {station} live from {country} on Radio ePlus."
+  },
+  "brand": {
+    "live_radio": "Live radio"
+  },
+  "footer": {
+    "tagline": "Live radio from around the world",
+    "description": "Browse stations by region and country, then listen instantly from any device."
   }
 }

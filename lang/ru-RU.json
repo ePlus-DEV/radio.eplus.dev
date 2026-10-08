@@ -404,5 +404,12 @@
     "country_description_empty": "Слушайте интернет-радиостанции в {country} на Radio ePlus.",
     "station_title": "{station} — радио в прямом эфире, {country}",
     "station_description": "Слушайте {station} из {country} в прямом эфире на Radio ePlus."
+  },
+  "brand": {
+    "live_radio": "Радио в эфире"
+  },
+  "footer": {
+    "tagline": "Радио со всего мира в прямом эфире",
+    "description": "Находите станции по странам и регионам и слушайте их сразу на любом устройстве."
   }
 }

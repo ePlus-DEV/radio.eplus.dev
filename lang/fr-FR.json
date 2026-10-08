@@ -404,5 +404,12 @@
     "country_description_empty": "Écoutez les stations de radio en direct en {country} sur Radio ePlus.",
     "station_title": "{station} en direct – {country}",
     "station_description": "Écoutez {station} en direct depuis {country} sur Radio ePlus."
+  },
+  "brand": {
+    "live_radio": "Radio en direct"
+  },
+  "footer": {
+    "tagline": "Des radios en direct du monde entier",
+    "description": "Trouvez des stations par région ou pays et écoutez-les instantanément sur tous vos appareils."
   }
 }

@@ -404,5 +404,12 @@
     "country_description_empty": "Nghe các đài radio trực tuyến tại {country} trên Radio ePlus.",
     "station_title": "{station} – Radio trực tiếp tại {country}",
     "station_description": "Nghe trực tiếp {station} từ {country} trên Radio ePlus."
+  },
+  "brand": {
+    "live_radio": "Radio trực tiếp"
+  },
+  "footer": {
+    "tagline": "Radio trực tiếp từ khắp thế giới",
+    "description": "Tìm đài theo khu vực và quốc gia, rồi nghe ngay trên mọi thiết bị."
   }
 }

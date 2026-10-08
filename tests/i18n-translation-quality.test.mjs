@@ -23,7 +23,7 @@ test("all seven locales contain the same nonempty translation keys and interpola
     }),
   );
   const reference = entries[0].values;
-  assert.ok(reference.size >= 280, "the current UI should have at least 280 i18n leaves");
+  assert.ok(reference.size >= 283, "the current UI should have at least 283 i18n leaves");
 
   for (const { locale, values } of entries) {
     assert.deepEqual([...values.keys()].sort(), [...reference.keys()].sort(), `${locale} translation keys differ`);
@@ -38,6 +38,8 @@ test("all seven locales contain the same nonempty translation keys and interpola
 test("visible navigation, player, search and chat copy use localized keys", async () => {
   const files = {
     "pages/index.vue": ["home.title", "home.start_listening", "home.browse_country"],
+    "components/AppHeader.vue": ["brand.live_radio"],
+    "components/AppFooter.vue": ["footer.tagline", "footer.description"],
     "components/AppSidebar.vue": ["sidebar.browse_radio", "sidebar.description"],
     "components/search/Box.vue": ["search.unavailable"],
     "components/player/Queue.vue": ["player.sidebar_label", "player.live"],
