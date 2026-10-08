@@ -1,0 +1,83 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFile, readdir } from "node:fs/promises";
+import { join } from "node:path";
+
+const ROOT = process.cwd();
+const VUE_ROOTS = ["components", "pages"];
+
+async function collectVueFiles(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await collectVueFiles(path)));
+    } else if (entry.isFile() && entry.name.endsWith(".vue")) {
+      files.push(path);
+    }
+  }
+
+  return files;
+}
+
+test("theme CSS keeps Nuxt Color Mode and daisyUI in sync", async () => {
+  const css = await readFile(join(ROOT, "assets/css/main.css"), "utf8");
+
+  for (const required of [
+    'html.light',
+    'html[data-theme="light"]',
+    'html.dark',
+    'html[data-theme="dark"]',
+    '--radio-page-bg',
+    '--radio-surface',
+    '--radio-text',
+    '--color-base-100',
+    '--color-base-content',
+    'body,',
+    '#__nuxt',
+  ]) {
+    assert.ok(css.includes(required), `missing theme primitive: ${required}`);
+  }
+});
+
+test("Vue templates do not reintroduce legacy light/dark utility pairs", async () => {
+  const vueFiles = [
+    join(ROOT, "app.vue"),
+    ...(
+      await Promise.all(
+        VUE_ROOTS.map((dir) => collectVueFiles(join(ROOT, dir))),
+      )
+    ).flat(),
+  ];
+
+  const forbidden = [
+    /dark:bg-white(?:\b|\/)/,
+    /dark:bg-slate-/,
+    /dark:text-white\b/,
+    /dark:text-slate-/,
+    /dark:border-white(?:\b|\/)/,
+    /\bbg-gray-/,
+    /\btext-gray-/,
+    /\bborder-gray-/,
+    /(?:bg|text|border)-\[#[0-9a-fA-F]{3,8}\]/,
+  ];
+
+  const violations = [];
+
+  for (const file of vueFiles) {
+    const source = await readFile(file, "utf8");
+    for (const pattern of forbidden) {
+      if (pattern.test(source)) {
+        violations.push(`${file.replace(ROOT, ".")}: ${pattern}`);
+      }
+    }
+  }
+
+  assert.deepEqual(
+    violations,
+    [],
+    `Theme regressions found:\n${violations.join("\n")}`,
+  );
+});
