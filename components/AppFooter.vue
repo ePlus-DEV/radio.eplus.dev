@@ -1,11 +1,11 @@
 <template>
-  <footer class="border-t border-slate-200/80 bg-white/70 dark:border-white/10 dark:bg-slate-950">
+  <footer class="border-t border-[var(--radio-border)] bg-[var(--radio-surface)]">
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end">
         <div>
           <NuxtLink to="/" class="inline-flex items-center gap-3">
             <span
-              class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 dark:bg-white"
+              class="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)]"
             >
               <img
                 src="/brand/logo-white.svg"
@@ -16,7 +16,7 @@
               />
             </span>
             <span>
-              <span class="block text-sm font-bold text-slate-950 dark:text-white">
+              <span class="block text-sm font-bold text-[var(--radio-text)]">
                 Radio ePlus
               </span>
               <span class="block text-xs text-slate-400">
@@ -25,7 +25,7 @@
             </span>
           </NuxtLink>
 
-          <p class="mt-4 max-w-lg text-sm leading-6 text-slate-500 dark:text-slate-400">
+          <p class="mt-4 max-w-lg text-sm leading-6 text-[var(--radio-text-muted)]">
             Browse stations by region and country, then listen instantly from any device.
           </p>
 
@@ -36,7 +36,7 @@
               :href="socialLink.href"
               target="_blank"
               rel="external nofollow noopener noreferrer"
-              class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-400 transition hover:border-slate-300 hover:bg-slate-100 hover:text-slate-700 dark:border-white/10 dark:hover:bg-white/5 dark:hover:text-white"
+              class="radio-interactive flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--radio-border)] text-slate-400 hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
             >
               <span class="sr-only">{{ socialLink.name }}</span>
               <fa :icon="['fab', socialLink.icon]" class="h-4 w-4" />
@@ -50,7 +50,7 @@
               v-for="link in links"
               :key="link.id"
               :to="link.to"
-              class="text-sm font-medium text-slate-500 transition hover:text-slate-950 dark:text-slate-400 dark:hover:text-white"
+              class="text-sm font-medium text-[var(--radio-text-muted)] transition hover:text-[var(--radio-text)]"
             >
               {{ $t(link.text) }}
             </NuxtLink>
@@ -58,7 +58,7 @@
               href="https://old-radio.eplus.dev"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm font-medium text-slate-400 transition hover:text-slate-950 dark:hover:text-white"
+              class="text-sm font-medium text-[var(--radio-text-muted)] transition hover:text-[var(--radio-text)]"
             >
               {{ $t("navmenu.old_version") }}
             </a>
@@ -70,7 +70,7 @@
               :href="config.public.copyright"
               target="_blank"
               rel="external nofollow noopener noreferrer"
-              class="font-medium text-slate-500 hover:text-slate-950 dark:hover:text-white"
+              class="font-medium text-[var(--radio-text-muted)] hover:text-[var(--radio-text)]"
             >
               ePlus.DEV
             </a>
@@ -82,7 +82,7 @@
     <button
       v-show="showTop"
       type="button"
-      class="fixed bottom-5 right-5 z-30 hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white/90 text-slate-600 shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:text-slate-950 dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:text-white sm:flex"
+      class="radio-themed-elevated fixed bottom-5 right-5 z-30 hidden h-11 w-11 items-center justify-center rounded-2xl border border-[var(--radio-border)] text-[var(--radio-text-muted)] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:flex"
       :aria-label="$t('button.back')"
       @click="scrollToTop"
     >

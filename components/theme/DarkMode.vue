@@ -3,7 +3,7 @@
     <button
       tabindex="0"
       type="button"
-      class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+      class="btn btn-ghost btn-square h-10 min-h-10 w-10 rounded-xl border-0 text-[var(--radio-text-muted)] shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
       :aria-label="$t('text.darkmode.' + $colorMode.preference)"
     >
       <fa :icon="['fas', icon]" class="h-4 w-4" />
@@ -11,7 +11,7 @@
 
     <div
       tabindex="0"
-      class="dropdown-content z-[70] mt-3 w-40 rounded-2xl border border-slate-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900"
+      class="menu dropdown-content z-[70] mt-3 w-40 rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] p-1.5 text-sm text-[var(--radio-text)] shadow-xl shadow-slate-900/10"
     >
       <button
         v-for="option in options"
@@ -20,8 +20,8 @@
         class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition"
         :class="
           $colorMode.preference === option.value
-            ? 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-300'
-            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5'
+            ? 'bg-rose-500/10 text-rose-600 dark:text-rose-300'
+            : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
         "
         @click="$colorMode.preference = option.value"
       >

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-7">
     <section
-      class="radio-themed-surface relative overflow-hidden rounded-[2rem] border px-5 py-8 shadow-sm shadow-slate-200/40 dark:shadow-none sm:px-8 sm:py-10 lg:px-10"
+      class="radio-surface relative overflow-hidden rounded-[2rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10"
     >
       <div
         class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.13),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.10),transparent_38%)]"
@@ -13,10 +13,10 @@
           Live internet radio
         </div>
 
-        <h1 class="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
+        <h1 class="text-3xl font-bold tracking-tight text-[var(--radio-text)] sm:text-4xl lg:text-5xl">
           Live radio from around the world
         </h1>
-        <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-500 dark:text-slate-400 sm:text-base">
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--radio-text-muted)] sm:text-base">
           Browse stations by region and country, discover local radio, and start listening instantly.
         </p>
 
@@ -25,10 +25,10 @@
             v-for="areaItem in areaItems"
             :key="areaItem.slug"
             :to="`/${areaItem.slug}`"
-            class="radio-themed-soft group inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium text-slate-600 transition hover:-translate-y-0.5 hover:border-rose-200 hover:text-slate-950 hover:shadow-sm dark:text-slate-300 dark:hover:border-rose-400/30 dark:hover:text-white"
+            class="radio-themed-soft group inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium text-[var(--radio-text-muted)] transition hover:-translate-y-0.5 hover:border-rose-200 hover:text-[var(--radio-text)] hover:shadow-sm dark:hover:border-rose-400/30"
           >
             <span>{{ $t(`world.${areaItem.key}.name`) }}</span>
-            <span class="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-400 dark:bg-white/5">
+            <span class="rounded-md bg-[var(--radio-hover)] px-1.5 py-0.5 text-[10px] tabular-nums text-[var(--radio-text-muted)]">
               {{ areaItem.count }}
             </span>
             <fa
@@ -39,24 +39,24 @@
         </div>
       </div>
 
-      <div class="relative mt-7 grid grid-cols-3 gap-3 border-t border-slate-200/70 pt-5 dark:border-white/10 sm:max-w-xl">
+      <div class="relative mt-7 grid grid-cols-3 gap-3 border-t border-[var(--radio-border)] pt-5  sm:max-w-xl">
         <div>
-          <p class="text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+          <p class="text-xl font-bold tracking-tight text-[var(--radio-text)]">
             {{ totalCountries }}
           </p>
-          <p class="mt-1 text-xs text-slate-400">Countries</p>
+          <p class="mt-1 text-xs text-[var(--radio-text-muted)]">Countries</p>
         </div>
         <div>
-          <p class="text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+          <p class="text-xl font-bold tracking-tight text-[var(--radio-text)]">
             {{ areaItems.length }}
           </p>
-          <p class="mt-1 text-xs text-slate-400">Regions</p>
+          <p class="mt-1 text-xs text-[var(--radio-text-muted)]">Regions</p>
         </div>
         <div>
-          <p class="text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+          <p class="text-xl font-bold tracking-tight text-[var(--radio-text)]">
             24/7
           </p>
-          <p class="mt-1 text-xs text-slate-400">Streaming</p>
+          <p class="mt-1 text-xs text-[var(--radio-text-muted)]">Streaming</p>
         </div>
       </div>
     </section>
@@ -67,7 +67,7 @@
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
             Featured
           </p>
-          <h2 class="mt-1 text-lg font-semibold tracking-tight text-slate-950 dark:text-white">
+          <h2 class="mt-1 text-lg font-semibold tracking-tight text-[var(--radio-text)]">
             Start listening
           </h2>
         </div>
@@ -87,7 +87,7 @@
         <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
           Explore
         </p>
-        <h2 class="mt-1 text-xl font-semibold tracking-tight text-slate-950 dark:text-white">
+        <h2 class="mt-1 text-xl font-semibold tracking-tight text-[var(--radio-text)]">
           Browse by country
         </h2>
       </div>

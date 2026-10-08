@@ -6,15 +6,15 @@
         :key="i"
         class="radio-surface overflow-hidden"
       >
-        <div class="flex items-center justify-between border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5">
-          <div class="h-5 w-36 animate-pulse rounded-full bg-slate-200 dark:bg-white/10"></div>
-          <div class="h-4 w-12 animate-pulse rounded-full bg-slate-100 dark:bg-white/5"></div>
+        <div class="flex items-center justify-between border-b border-[var(--radio-border)] px-4 py-4  sm:px-5">
+          <div class="h-5 w-36 animate-pulse rounded-full bg-[var(--radio-border-strong)]"></div>
+          <div class="h-4 w-12 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
         </div>
         <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           <div
             v-for="n in 12"
             :key="n"
-            class="aspect-[4/3] animate-pulse rounded-2xl bg-slate-100 dark:bg-white/5"
+            class="aspect-[4/3] animate-pulse rounded-2xl bg-[var(--radio-surface-soft)]"
           ></div>
         </div>
       </section>
@@ -26,18 +26,18 @@
       class="radio-surface overflow-hidden"
     >
       <div
-        class="flex items-center justify-between gap-3 border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5"
+        class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4  sm:px-5"
       >
         <div class="min-w-0">
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
             {{ $t("panel.country") }}
           </p>
-          <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
+          <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-[var(--radio-text)] sm:text-xl">
             {{ $t(`world.${continentIndex}.name`) }}
           </h2>
         </div>
         <span
-          class="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium tabular-nums text-slate-500 dark:bg-white/5 dark:text-slate-400"
+          class="badge badge-sm h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
         >
           {{ continent.length }}
         </span>
@@ -48,7 +48,7 @@
           v-for="country in continent"
           :key="country.url"
           :to="country.url"
-          class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-rose-400/30"
+          class="card radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-rose-400/30"
           :title="$t(country.name)"
           :aria-label="$t(country.name)"
         >
@@ -61,19 +61,19 @@
             />
             <span
               v-if="country.station_count !== null"
-              class="absolute right-2 top-2 rounded-full bg-slate-950/80 px-2 py-1 text-[10px] font-semibold text-white backdrop-blur dark:bg-white/10"
+              class="absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
             >
               {{ country.station_count }}
             </span>
           </div>
 
           <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-3">
-            <span class="min-w-0 flex-1 truncate text-sm font-semibold text-slate-700 dark:text-slate-200">
+            <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
               {{ $t(country.name) }}
             </span>
             <fa
               :icon="['fas', 'arrow-right']"
-              class="h-3 w-3 shrink-0 -translate-x-1 text-slate-300 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 dark:text-slate-500"
+              class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
             />
           </div>
         </NuxtLink>

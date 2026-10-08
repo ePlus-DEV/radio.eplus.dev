@@ -9,8 +9,8 @@
 
     <section class="radio-surface relative overflow-hidden px-5 py-5 sm:px-6">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.09),transparent_42%)]"></div>
-      <div class="relative flex min-w-0 items-center gap-4">
-        <div class="flex h-16 w-20 shrink-0 items-center justify-center rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/70 dark:bg-slate-950/50 dark:ring-white/10 sm:h-20 sm:w-24">
+      <div class="relative flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <div class="radio-themed-artwork flex h-16 w-20 shrink-0 items-center justify-center rounded-2xl border border-[var(--radio-border)] p-2 sm:h-20 sm:w-24">
           <img
             :src="thumb || stationMeta?.features || config.public.placeholderStation"
             :alt="stationName"
@@ -26,12 +26,13 @@
             </span>
             <span class="text-xs text-slate-400">{{ countryName }}</span>
           </div>
-          <h1 class="mt-2 truncate text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          <h1 dir="auto" class="mt-2 line-clamp-2 text-2xl font-bold tracking-tight text-[var(--radio-text)] sm:text-3xl">
             {{ stationName }}
           </h1>
           <p
             v-if="stationMeta?.description"
-            class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-slate-500 dark:text-slate-400"
+            dir="auto"
+            class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]"
           >
             {{ stationMeta.description }}
           </p>
@@ -60,7 +61,7 @@
     <button
       v-show="slug === 'viet-nam'"
       type="button"
-      class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-slate-950 px-4 text-sm font-semibold text-white shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
+      class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-[var(--radio-inverse-bg)] px-4 text-sm font-semibold text-[var(--radio-inverse-text)] shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5"
       @click="lyric_popup = !lyric_popup"
     >
       <fa :icon="['fas', 'list-music']" class="h-4 w-4" />
@@ -69,24 +70,24 @@
 
     <div
       v-if="lyric_popup"
-      class="fixed inset-0 z-[80] flex items-end bg-slate-950/35 p-3 backdrop-blur-sm sm:items-auto sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+      class="fixed inset-0 z-[80] flex items-end bg-[var(--radio-overlay)] p-3 backdrop-blur-sm sm:items-auto sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
       @click.self="lyric_popup = false"
     >
       <aside
-        class="w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 dark:border-white/10 dark:bg-slate-900 sm:fixed sm:bottom-20 sm:left-4 sm:max-w-md"
+        class="radio-themed-elevated w-full overflow-hidden rounded-3xl border border-[var(--radio-border)] shadow-2xl shadow-slate-950/20 sm:fixed sm:bottom-20 sm:left-4 sm:max-w-md"
       >
-        <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-white/10">
+        <div class="flex items-center justify-between border-b border-[var(--radio-border)] px-5 py-4">
           <div>
             <p class="text-[10px] font-semibold uppercase tracking-[0.16em] text-rose-500">
               Now playing
             </p>
-            <h2 class="mt-1 text-lg font-semibold text-slate-950 dark:text-white">
+            <h2 class="mt-1 text-lg font-semibold text-[var(--radio-text)]">
               {{ $t("panel.lyric") }}
             </h2>
           </div>
           <button
             type="button"
-            class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 transition hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+            class="flex h-9 w-9 items-center justify-center rounded-xl text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
             :aria-label="$t('button.close')"
             @click="lyric_popup = false"
           >
@@ -94,11 +95,11 @@
           </button>
         </div>
 
-        <div id="lyric" class="max-h-[55vh] overflow-y-auto px-5 py-4 sm:max-h-80">
+        <div id="lyric" class="radio-scrollbar max-h-[55vh] overflow-y-auto px-5 py-4 sm:max-h-80">
           <p
             v-for="(line, index) in lyricLines"
             :key="`${index}-${line}`"
-            class="py-1.5 text-sm leading-6 text-slate-600 dark:text-slate-300"
+            class="py-1.5 text-sm leading-6 text-[var(--radio-text-muted)]"
           >
             {{ line }}
           </p>
