@@ -437,7 +437,7 @@ Current foundation:
 - radio hierarchy is prerendered;
 - country pages expose station links during SSR rather than waiting for client JavaScript;
 - unknown area/country/station URLs return 404 rather than soft-404 content;
-- sitemap routes use catalog modification times as `lastmod`;
+- sitemap avoids synthetic `lastmod` until a trustworthy content timestamp exists;
 - JSON-LD coverage includes WebSite, Organization, BreadcrumbList, CollectionPage/ItemList, and RadioStation as appropriate;
 - realtime schedule/song/lyric APIs remain client-only and are excluded from crawl-time dependencies.
 
