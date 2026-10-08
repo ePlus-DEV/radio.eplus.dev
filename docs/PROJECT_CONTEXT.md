@@ -75,6 +75,17 @@ The design direction is:
 
 DaisyUI should **not** be allowed to become an independent visual theme that conflicts with Nuxt Color Mode.
 
+### Player schedule/sidebar color rule
+
+The player sidebar uses Radio ePlus structural surfaces for tabs and schedule rows. Rose is an accent/status color only.
+
+- Do not use a full `bg-rose-500` fill for active schedule/channel tabs.
+- Do not style the current schedule row like an error/alert block with a large rose-tinted surface.
+- Use `--radio-surface`, `--radio-surface-soft`, `--radio-border`, and `--radio-text` for the main block.
+- Use rose for small active dots, badges, left rails, and live indicators.
+
+Regression guard: `tests/player-schedule-style.test.mjs`.
+
 ### Navigation controls
 
 Breadcrumbs are route-semantic rather than placeholder-level based:
