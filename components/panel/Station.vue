@@ -20,13 +20,13 @@
 
     <div
       v-if="stations.length"
-      class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+      class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5"
     >
       <NuxtLink
         v-for="station in stations"
         :key="station.id"
         :to="station.url"
-        class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
+        class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
         :class="
           station.id === activeStationId
             ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
@@ -35,12 +35,12 @@
         :title="station.title"
         :aria-label="station.title"
       >
-        <div class="radio-themed-artwork relative flex aspect-[4/3] items-center justify-center overflow-hidden p-3">
+        <div class="radio-themed-artwork relative flex aspect-square items-center justify-center overflow-hidden p-4">
           <img
             loading="lazy"
             :src="station.image"
             :alt="station.title"
-            class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain transition duration-200 group-hover:scale-[1.04]"
+            class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
           />
 
           <span
@@ -52,13 +52,13 @@
           </span>
 
           <span
-            class="absolute bottom-2 right-2 flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] opacity-0 shadow transition group-hover:scale-100 group-hover:opacity-100"
+            class="absolute bottom-3 right-3 flex h-10 w-10 scale-90 items-center justify-center rounded-full bg-violet-600 text-white opacity-0 shadow-lg shadow-violet-900/30 transition group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
           >
             <fa :icon="['fas', 'play']" class="ml-0.5 h-3 w-3" />
           </span>
         </div>
 
-        <div class="border-t border-[var(--radio-border)] px-3 py-3">
+        <div class="border-t border-[var(--radio-border)] px-3 py-3.5">
           <p
             dir="auto"
             class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-[var(--radio-text)]"
