@@ -29,7 +29,7 @@ Current application architecture:
 | i18n | `@nuxtjs/i18n` |
 | Images | `@nuxt/image` |
 | Search | Algolia |
-| Icons | Font Awesome Free + Pro mix |
+| Icons | Font Awesome Free |
 | SEO | prerendered radio routes + sitemap |
 
 Exact versions belong in `package.json`.
@@ -83,6 +83,30 @@ Breadcrumbs are route-semantic rather than placeholder-level based:
 - do not pass empty fake breadcrumb levels just to force a label.
 
 The Back-to-top control is available on mobile and desktop after scrolling, and its arrow is an inline SVG rather than a Font Awesome dependency.
+
+### Language dropdown lifecycle
+
+A 2026-10-08 regression exposed a problem with using DaisyUI's CSS-only `dropdown` + `tabindex/focus-within` state for the header language selector.
+
+Observed class of failures:
+
+- menu remains open after changing locale;
+- locale rerender retains focus inside the dropdown and the menu appears to reopen;
+- stale focus makes click/keyboard behavior inconsistent;
+- small-screen positioning can become difficult to reason about because visibility is controlled by CSS focus rather than Vue state.
+
+Current rule for `components/lang/LangSwitcher.vue`:
+
+- Vue owns an explicit boolean `open` state;
+- choose locale → close first, then call `setLocale`;
+- click outside closes;
+- Escape closes and restores trigger focus;
+- ArrowDown opens and focuses the first option;
+- route changes close the menu;
+- menu is explicitly anchored with `absolute right-0 top-full`;
+- accessibility state uses `aria-expanded`, `aria-haspopup="menu"`, `role="menu"` and `menuitemradio`.
+
+Do not regress this component back to DaisyUI focus-driven visibility. Regression test: `tests/language-dropdown.test.mjs`.
 
 ## 5. Dark-mode architecture
 
@@ -333,6 +357,7 @@ Regression test: `tests/fontawesome-icons.test.mjs`.
 Important current guards:
 
 - `theme-consistency.test.mjs`
+- `language-dropdown.test.mjs`
 - `player-hls-startup.test.mjs`
 - `radio-source-plan.test.mjs`
 - `radio-sync.test.mjs`
