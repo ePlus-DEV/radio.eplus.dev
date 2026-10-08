@@ -89,6 +89,24 @@ npm test
 
 before changing the player.
 
+## Station routing, schedules and Zing invariants
+
+Nuxt can reuse the station page component when only route params change. Treat station-specific async data as **route-scoped state**.
+
+- The station detail page is the source of truth for the country catalog and active station metadata.
+- Do not add a second catalog fetch inside `PanelStation`; it is presentational.
+- On area/country/station route changes, invalidate old requests and clear polling, schedule, song, playlist, lyric popup/lines and transient stream state before activating the new station.
+- Async schedule/detail/lyric responses must verify the current request version before mutating UI state.
+- Zing behavior must be detected from the Zing schedule provider URL, not from `country === viet-nam`.
+- The lyric control is Zing-specific; do not show it for every Vietnamese station.
+- `schedule` is legacy data and can contain non-URL values such as booleans. Normalize and fetch only valid HTTP(S) URLs.
+- Keep schedule/search tab state route-aware so a previous station's UI does not leak into the next station.
+
+Regression guards:
+
+- `tests/station-route-lifecycle.test.mjs`
+- `tests/station-schedule.test.mjs`
+
 ## Radio data invariants
 
 - World metadata: `public/radio/world.json`
