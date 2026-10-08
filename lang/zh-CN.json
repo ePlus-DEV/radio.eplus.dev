@@ -332,6 +332,11 @@
       "coverage_description": "每张卡片显示该地区当前存储的国家目录数量和电台条目数量。",
       "method_title": "这些数字如何计算",
       "method_body": "这些数据在网站构建时从仓库中受版本控制的 JSON 目录统计得出，表示目录条目数量，不等于当前在线音频流、独立广播机构或听众数量。"
+    },
+    "error": {
+      "not_found_title": "找不到页面",
+      "generic_title": "发生错误",
+      "generic_body": "无法加载此页面。请返回首页后重试。"
     }
   }
 }
