@@ -429,6 +429,25 @@ The workflow name exposed in GitHub Actions is **Radio data sync**.
 
 ## 12. Search, SEO and canonical URLs
 
+Detailed SEO architecture and the current audit live in [`SEO.md`](./SEO.md).
+
+Current foundation:
+
+- production canonical origin: `https://radio.eplus.dev`;
+- radio hierarchy is prerendered;
+- country pages expose station links during SSR rather than waiting for client JavaScript;
+- unknown area/country/station URLs return 404 rather than soft-404 content;
+- sitemap routes use catalog modification times as `lastmod`;
+- JSON-LD coverage includes WebSite, Organization, BreadcrumbList, CollectionPage/ItemList, and RadioStation as appropriate;
+- realtime schedule/song/lyric APIs remain client-only and are excluded from crawl-time dependencies.
+
+Two known blockers are intentional and documented rather than hidden:
+
+1. i18n still uses `strategy: "no_prefix"`, so true multilingual hreflang SEO requires a dedicated URL migration.
+2. sitewide navigation currently references `/about`, `/privacy-policy`, `/terms-of-use`, and `/statistics` without matching pages. Privacy/Terms must not be fabricated; add owner-approved content or remove the links.
+
+
+
 Production canonical URL:
 
 `https://radio.eplus.dev`
