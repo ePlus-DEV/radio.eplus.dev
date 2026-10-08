@@ -57,7 +57,7 @@
             {{ $t("popup.search.text") }}
           </span>
           <kbd
-            class="kbd kbd-xs hidden border-[var(--radio-border)] bg-[var(--radio-surface-soft)] font-medium text-[var(--radio-text-muted)] xl:inline"
+            class="rounded border px-1.5 py-0.5 text-[10px] hidden border-[var(--radio-border)] bg-[var(--radio-surface-soft)] font-medium text-[var(--radio-text-muted)] xl:inline"
           >
             /
           </kbd>
