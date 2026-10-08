@@ -37,7 +37,7 @@
           </h2>
         </div>
         <span
-          class="badge badge-sm h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
+          class="inline-flex items-center rounded-full h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
         >
           {{ continent.length }}
         </span>
@@ -48,7 +48,7 @@
           v-for="country in continent"
           :key="country.url"
           :to="country.url"
-          class="card radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-rose-400/30"
+          class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-rose-400/30"
           :title="$t(country.name)"
           :aria-label="$t(country.name)"
         >
