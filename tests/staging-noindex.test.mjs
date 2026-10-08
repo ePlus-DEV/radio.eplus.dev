@@ -35,7 +35,9 @@ test("Nuxt SEO output is guarded but radio routes remain prerenderable", async (
   assert.match(app, /robots: "noindex, nofollow, noarchive"/);
   assert.match(app, /link: noIndex \? \[\] : \[/);
   assert.match(app, /script: noIndex \? \[\] : \[/);
-  assert.match(robots, /Disallow: \/\\n/);
+  assert.match(robots, /if \(config.public.noIndex\)/);
+  assert.match(robots, /return "User-agent: \*\\nAllow: \/\\n"/);
+  assert.doesNotMatch(robots, /return "User-agent: \*\\nDisallow: \/\\n"/);
   assert.match(robots, /Sitemap:/);
   assert.match(staticSeo, /script: noIndex \? \[\] : \[/);
   for (const path of ["pages/index.vue", "pages/[area]/index.vue", "pages/[area]/[country]/index.vue", "pages/[area]/[country]/[station].vue"]) {

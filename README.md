@@ -255,8 +255,9 @@ Public site pages also include `/about`, `/statistics`, `/contact`, `/privacy-po
 
 The `develop` deployment at **https://radio-new.eplus.dev** is **not indexed**.
 It retains functioning prerendered radio pages but does not render SEO canonical,
-social metadata or JSON-LD; its `robots.txt` disallows all crawling, and the
-sitemap module is disabled. Production `main` stays indexable.
+social metadata or JSON-LD; its `robots.txt` allows crawlers to read
+`noindex` without advertising a sitemap. The sitemap module is disabled.
+Production `main` stays indexable.
 
 **Set these build-time environment variables in the staging host:**
 
@@ -275,7 +276,12 @@ unconditionally in source, or production would inherit it on promotion.
 
 Verify the staging HTML source includes `<meta name="robots" content="noindex, nofollow, noarchive">`,
 has no canonical/JSON-LD or SEO social metadata, and that `/robots.txt`
-contains `Disallow: /` without a sitemap. On production verify the opposite.
+contains `Allow: /` without a sitemap. Do **not** use `Disallow: /` in staging:
+Google needs to crawl a page to observe its `noindex` directive; blocking
+crawling can leave already-discovered staging URLs visible in search results.
+If staging must be private, require authentication or access control at the
+staging host instead. On production, verify that noindex is absent and
+robots.txt advertises the production sitemap.
 
 ## Data sync
 
