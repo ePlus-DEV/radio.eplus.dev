@@ -46,14 +46,6 @@
 
         <div class="lg:text-right">
           <nav class="flex flex-wrap gap-x-5 gap-y-3 lg:justify-end">
-            <NuxtLink
-              v-for="link in links"
-              :key="link.id"
-              :to="link.to"
-              class="text-sm font-medium text-[var(--radio-text-muted)] transition hover:text-[var(--radio-text)]"
-            >
-              {{ $t(link.text) }}
-            </NuxtLink>
             <a
               href="https://old-radio.eplus.dev"
               target="_blank"
@@ -105,13 +97,6 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const showTop = ref(false);
-
-const links = [
-  { id: 1, to: "/about", text: "navmenu.about" },
-  { id: 2, to: "/privacy-policy", text: "navmenu.privacy" },
-  { id: 3, to: "/terms-of-use", text: "navmenu.terms" },
-  { id: 4, to: "/statistics", text: "navmenu.statistics" },
-];
 
 const socialLinks = computed(() => [
   {
