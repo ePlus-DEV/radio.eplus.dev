@@ -6,8 +6,8 @@
       <div
         class="grid min-w-0"
         :class="
-          hasQueuePanel
-            ? 'lg:grid-cols-[minmax(0,1fr)_360px]'
+          queueCount > 0
+            ? 'lg:grid-cols-[minmax(0,1fr)_340px]'
             : 'lg:grid-cols-1'
         "
       >
@@ -34,7 +34,7 @@
               </div>
 
               <button
-                v-if="hasQueuePanel"
+                v-if="queueCount > 0"
                 type="button"
                 class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 lg:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 :aria-expanded="mobileQueueOpen"
@@ -45,7 +45,7 @@
                   <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
                   <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
                 </svg>
-                <span>{{ queueCount || "…" }}</span>
+                <span>{{ queueCount }}</span>
               </button>
             </div>
 
@@ -221,7 +221,7 @@
             </div>
 
             <div
-              v-if="mobileQueueOpen && hasQueuePanel"
+              v-if="mobileQueueOpen && queueCount > 0"
               class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 lg:hidden dark:border-white/10 dark:bg-slate-950/35"
             >
               <PlayerQueue
@@ -230,6 +230,14 @@
                 :thumb="thumb"
                 :station-name="streamName || $t(country)"
               />
+            </div>
+
+            <div
+              v-if="queueExpected && queueCount === 0"
+              class="mt-4 flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50/70 px-3 py-2.5 text-xs text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
+            >
+              <span class="h-2 w-2 animate-pulse rounded-full bg-slate-400 dark:bg-slate-500"></span>
+              <span>Loading playlist metadata…</span>
             </div>
 
             <div
@@ -291,7 +299,7 @@
         </div>
 
         <aside
-          v-if="hasQueuePanel"
+          v-if="queueCount > 0"
           class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 lg:block dark:border-white/10 dark:bg-slate-950/30"
         >
           <PlayerQueue
