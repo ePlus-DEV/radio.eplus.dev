@@ -333,6 +333,11 @@ const clearPolling = (): void => {
 const currentTimestamp = (): number =>
   dayjs().tz($store.getTimezone).unix();
 
+const scheduleRequestUrl = (url: string): string =>
+  /[?&](?:time|timestamp)=$/i.test(url)
+    ? `${url}${currentTimestamp()}`
+    : url;
+
 const fetchLyric = async (id: string, version: number): Promise<void> => {
   try {
     const resData = await $fetch(
@@ -360,7 +365,7 @@ const fetchLyric = async (id: string, version: number): Promise<void> => {
 
 const fetchDetail = async (url: string, version: number): Promise<void> => {
   try {
-    const resData = await $fetch(`${url}${currentTimestamp()}`);
+    const resData = await $fetch(scheduleRequestUrl(url));
     if (version !== requestVersion) return;
 
     const value = resData as { err: number; data?: Song };
