@@ -24,8 +24,14 @@
           <h1 class="mt-1 line-clamp-2 text-2xl font-bold tracking-tight text-[var(--radio-text)] sm:text-3xl">
             {{ countryName }}
           </h1>
-          <p class="mt-2 text-sm text-[var(--radio-text-muted)]">
-            {{ stationCount ? stationCount + " stations" : seoDescription }}
+          <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]">
+            {{ seoDescription }}
+          </p>
+          <p
+            v-if="stationCount"
+            class="mt-2 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
+          >
+            {{ stationCount }} stations
           </p>
         </div>
       </div>
