@@ -332,6 +332,11 @@
       "coverage_description": "Mỗi thẻ hiển thị số catalog quốc gia và số mục đài hiện được lưu trong khu vực đó.",
       "method_title": "Các con số được tính như thế nào",
       "method_body": "Số liệu được đếm từ các catalog JSON được quản lý phiên bản trong repository tại thời điểm build website. Đây là số mục trong catalog, không phải số luồng chắc chắn đang online, số broadcaster duy nhất hay lượng người nghe."
+    },
+    "error": {
+      "not_found_title": "Không tìm thấy trang",
+      "generic_title": "Đã xảy ra lỗi",
+      "generic_body": "Không thể tải trang này. Vui lòng quay về trang chủ và thử lại."
     }
   }
 }
