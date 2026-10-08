@@ -14,7 +14,7 @@
             type="search"
             role="combobox"
             aria-expanded="true"
-            class="input input-bordered block h-12 min-h-12 w-full rounded-2xl border-[var(--radio-border)] bg-[var(--radio-surface-soft)] pl-11 pr-4 text-sm text-[var(--radio-text)] shadow-none outline-none placeholder:text-slate-400 focus:border-rose-300 focus:outline-none focus:ring-4 focus:ring-rose-500/10"
+            class="block h-12 min-h-12 w-full rounded-2xl border-[var(--radio-border)] bg-[var(--radio-surface-soft)] pl-11 pr-4 text-sm text-[var(--radio-text)] shadow-none outline-none placeholder:text-slate-400 focus:border-rose-300 focus:outline-none focus:ring-4 focus:ring-rose-500/10"
             :placeholder="$t('popup.search.text')"
           />
         </div>
