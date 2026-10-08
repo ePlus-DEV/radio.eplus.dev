@@ -151,7 +151,10 @@
     "next": "次",
     "lyric": "歌詞",
     "no_lyric": "歌詞なし",
-    "updating": "更新中..."
+    "updating": "更新中...",
+    "channels": "すべての局",
+    "search_channels": "局を検索...",
+    "no_channels": "局が見つかりません"
   },
   "button": {
     "back": "戻る",
