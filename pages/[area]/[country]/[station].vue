@@ -41,6 +41,7 @@
 
     <Player
       :country="i18n"
+      :country-name="countryName"
       :song="song"
       :program="program"
       :playlist="playlist"
@@ -48,7 +49,10 @@
       :streamUrl="streamUrl"
       :streamUrls="streamUrls"
       :thumb="thumb"
+      :stations="stations"
+      :active-station-id="stationSlug"
       :queue-loading="queueLoading"
+      @select-station="selectStation"
     />
 
     <PanelStation @update-data="handleDataFromChild" />
@@ -107,7 +111,7 @@
 
 
 <script setup lang="ts">
-import type { RadioSource } from "~/types/radio";
+import type { RadioSource, RadioStationOption } from "~/types/radio";
 
 interface ProgramItem {
   encodeId: string;
@@ -216,6 +220,16 @@ const { data: stationCatalog } = await useAsyncData<
 );
 const stationMeta = computed(
   () => stationCatalog.value?.[stationSlug.value],
+);
+
+const stations = computed<RadioStationOption[]>(() =>
+  Object.entries(stationCatalog.value || {}).map(([stationId, station]) => ({
+    id: stationId,
+    title: station.title,
+    image:
+      station.features || String(config.public.placeholderStation),
+    url: `/${area.value}/${slug.value}/${stationId}`,
+  })),
 );
 
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
@@ -475,6 +489,14 @@ const handleDataFromChild = (data: StationData): void => {
   if (data.station_schedule) {
     void pollSchedule(data.station_schedule, version);
   }
+};
+
+const selectStation = (station: RadioStationOption): void => {
+  if (station.id === stationSlug.value) return;
+
+  void navigateTo(
+    station.url || `/${area.value}/${slug.value}/${station.id}`,
+  );
 };
 
 onBeforeUnmount(() => {
