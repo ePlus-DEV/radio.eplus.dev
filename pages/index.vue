@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-7">
     <section
-      class="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white px-5 py-8 shadow-sm shadow-slate-200/40 dark:border-white/10 dark:bg-slate-900 dark:shadow-none sm:px-8 sm:py-10 lg:px-10"
+      class="radio-themed-surface relative overflow-hidden rounded-[2rem] border px-5 py-8 shadow-sm shadow-slate-200/40 dark:shadow-none sm:px-8 sm:py-10 lg:px-10"
     >
       <div
         class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.13),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.10),transparent_38%)]"
@@ -25,7 +25,7 @@
             v-for="areaItem in areaItems"
             :key="areaItem.slug"
             :to="`/${areaItem.slug}`"
-            class="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 transition hover:-translate-y-0.5 hover:border-rose-200 hover:text-slate-950 hover:shadow-sm dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 dark:hover:border-rose-400/30 dark:hover:text-white"
+            class="radio-themed-soft group inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium text-slate-600 transition hover:-translate-y-0.5 hover:border-rose-200 hover:text-slate-950 hover:shadow-sm dark:text-slate-300 dark:hover:border-rose-400/30 dark:hover:text-white"
           >
             <span>{{ $t(`world.${areaItem.key}.name`) }}</span>
             <span class="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-400 dark:bg-white/5">
