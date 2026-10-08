@@ -1,13 +1,13 @@
 <template>
   <section class="w-full min-w-0 pb-4 sm:pb-8">
     <div
-      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)] dark:border-white/10 dark:bg-slate-900"
+      class="radio-themed-surface overflow-hidden rounded-[28px] border shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)]"
     >
       <div
         class="grid min-w-0"
         :class="
-          queueCount > 0
-            ? 'lg:grid-cols-[minmax(0,1fr)_340px]'
+          hasSidebar
+            ? 'xl:grid-cols-[minmax(0,1fr)_380px]'
             : 'lg:grid-cols-1'
         "
       >
@@ -18,110 +18,61 @@
 
           <div class="relative">
             <div class="flex items-center justify-between gap-3">
-              <div class="flex min-w-0 items-center gap-2">
+              <div class="flex min-w-0 flex-1 items-center gap-2">
                 <span
                   class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-400/20"
                 >
                   <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
                   Live
                 </span>
-                <details
+                <label
                   v-if="sourceList.length > 1"
-                  ref="sourceDetails"
-                  class="group/source relative"
+                  class="relative inline-flex min-w-0 items-center"
                 >
-                  <summary
-                    class="flex cursor-pointer list-none items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10"
+                  <span class="sr-only">Select stream source</span>
+                  <select
+                    :value="activeSourceIndex"
+                    class="h-7 max-w-[120px] cursor-pointer appearance-none rounded-full border-0 bg-slate-100 py-1 pl-2.5 pr-7 text-[11px] font-semibold text-slate-600 outline-none transition hover:bg-slate-200 focus:ring-2 focus:ring-rose-400/30 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10 sm:max-w-[240px]"
                     aria-label="Select stream source"
+                    @change="onSourceChange"
                   >
-                    <span class="max-w-28 truncate">{{ activeSourceName }}</span>
-                    <span class="text-slate-400 dark:text-slate-500">
-                      {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
-                    </span>
-                    <svg
-                      viewBox="0 0 20 20"
-                      class="h-3 w-3 fill-current transition group-open/source:rotate-180"
-                      aria-hidden="true"
-                    >
-                      <path d="m5.5 7.5 4.5 4 4.5-4H5.5Z"></path>
-                    </svg>
-                  </summary>
-
-                  <div
-                    class="absolute left-0 top-full z-40 mt-2 w-[min(320px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-950/10 dark:border-white/10 dark:bg-slate-900"
-                  >
-                    <button
+                    <option
                       v-for="(source, index) in sourceList"
                       :key="`${source.src}-${index}`"
-                      type="button"
-                      class="flex w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition"
-                      :class="
-                        index === activeSourceIndex
-                          ? 'bg-rose-50 dark:bg-rose-500/10'
-                          : 'hover:bg-slate-100 dark:hover:bg-white/[0.05]'
-                      "
-                      @click="selectSource(index)"
+                      :value="index"
                     >
-                      <span
-                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold"
-                        :class="
-                          index === activeSourceIndex
-                            ? 'bg-rose-500 text-white'
-                            : 'bg-slate-100 text-slate-500 dark:bg-white/[0.06] dark:text-slate-400'
-                        "
-                      >
-                        {{ index + 1 }}
-                      </span>
-
-                      <span class="min-w-0 flex-1">
-                        <span
-                          class="block truncate text-sm font-semibold"
-                          :class="
-                            index === activeSourceIndex
-                              ? 'text-rose-700 dark:text-rose-200'
-                              : 'text-slate-700 dark:text-slate-200'
-                          "
-                        >
-                          {{ sourceName(source, index) }}
-                        </span>
-                        <span class="mt-0.5 flex min-w-0 items-center gap-1.5 text-[10px] text-slate-400 dark:text-slate-500">
-                          <span>{{ sourceFormat(source) }}</span>
-                          <span aria-hidden="true">•</span>
-                          <span>{{ source.proxied ? "Proxy" : "Direct" }}</span>
-                          <span aria-hidden="true">•</span>
-                          <span class="truncate">{{ sourceHost(source) }}</span>
-                        </span>
-                      </span>
-
-                      <span
-                        v-if="index === activeSourceIndex"
-                        class="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
-                        aria-label="Active source"
-                      ></span>
-                    </button>
-                  </div>
-                </details>
+                      {{ index + 1 }}. {{ sourceName(source, index) }} · {{ sourceFormat(source) }} · {{ source.proxied ? "Proxy" : "Direct" }}
+                    </option>
+                  </select>
+                  <svg
+                    viewBox="0 0 20 20"
+                    class="pointer-events-none absolute right-2 h-3 w-3 fill-current text-slate-400 dark:text-slate-500"
+                    aria-hidden="true"
+                  >
+                    <path d="m5.5 7.5 4.5 4 4.5-4H5.5Z"></path>
+                  </svg>
+                </label>
               </div>
 
               <button
-                v-if="queueCount > 0"
+                v-if="hasSidebar"
                 type="button"
-                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 lg:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 xl:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 :aria-expanded="mobileQueueOpen"
-                aria-label="Toggle playlist"
+                aria-label="Toggle channels and schedule"
                 @click="mobileQueueOpen = !mobileQueueOpen"
               >
                 <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" aria-hidden="true">
                   <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
                   <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
                 </svg>
-                <span>{{ queueCount }}</span>
+                <span>{{ sidebarCount }}</span>
               </button>
             </div>
 
             <div class="mt-4 flex min-w-0 items-center gap-4 sm:mt-5 sm:gap-5">
               <div
-                class="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[24px] border border-slate-200 bg-white p-2.5 shadow-md shadow-slate-950/5 sm:h-32 sm:w-32 dark:border-white/10"
+                class="radio-themed-artwork relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[24px] border border-[var(--radio-border)] p-2.5 shadow-md shadow-slate-950/5 sm:h-32 sm:w-32"
               >
                 <img
                   loading="lazy"
@@ -291,23 +242,27 @@
             </div>
 
             <div
-              v-if="mobileQueueOpen && queueCount > 0"
-              class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 lg:hidden dark:border-white/10 dark:bg-slate-950/35"
+              v-if="mobileQueueOpen && hasSidebar"
+              class="radio-themed-muted mt-5 h-[min(420px,60vh)] overflow-hidden rounded-2xl border border-[var(--radio-border)] xl:hidden"
             >
               <PlayerQueue
                 :playlist="playlist || []"
                 :program="program || []"
+                :stations="stations || []"
+                :active-station-id="activeStationId"
+                :country-name="countryName || $t(country)"
                 :thumb="thumb"
                 :station-name="streamName || $t(country)"
+                @select-station="selectStation"
               />
             </div>
 
             <div
-              v-if="queueExpected && queueCount === 0"
+              v-if="queueLoading && scheduleCount === 0 && stationCount === 0"
               class="mt-4 flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50/70 px-3 py-2.5 text-xs text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
             >
               <span class="h-2 w-2 animate-pulse rounded-full bg-slate-400 dark:bg-slate-500"></span>
-              <span>Loading playlist metadata…</span>
+              <span>{{ $t("panel.updating") }}</span>
             </div>
 
             <div
@@ -317,7 +272,12 @@
             >
               <div class="flex min-w-0 items-center gap-2">
                 <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
-                <span class="truncate">{{ $t("alert.stream_error") }}</span>
+                <span class="truncate">
+                  {{ $t("alert.stream_error") }}
+                  <span v-if="attemptCount >= MAX_STREAM_ATTEMPTS" class="opacity-70">
+                    · {{ attemptCount }}/{{ MAX_STREAM_ATTEMPTS }}
+                  </span>
+                </span>
               </div>
               <button
                 type="button"
@@ -369,14 +329,18 @@
         </div>
 
         <aside
-          v-if="queueCount > 0"
-          class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 lg:block dark:border-white/10 dark:bg-slate-950/30"
+          v-if="hasSidebar"
+          class="radio-themed-muted hidden h-[380px] overflow-hidden border-l border-[var(--radio-border)] xl:block"
         >
           <PlayerQueue
             :playlist="playlist || []"
             :program="program || []"
+            :stations="stations || []"
+            :active-station-id="activeStationId"
+            :country-name="countryName || $t(country)"
             :thumb="thumb"
             :station-name="streamName || $t(country)"
+            @select-station="selectStation"
           />
         </aside>
       </div>
@@ -385,7 +349,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { RadioSource } from "~/types/radio";
+import type { RadioSource, RadioStationOption } from "~/types/radio";
+import {
+  MAX_STREAM_ATTEMPTS,
+  buildPlaybackSources,
+  nextPlaybackIndex,
+} from "~/utils/radio-source-plan.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -426,11 +395,19 @@ const props = defineProps<{
   streamUrls?: RadioSource[];
   song?: Song;
   playlist?: PlaylistItem[];
-  queueExpected?: boolean;
+  stations?: RadioStationOption[];
+  activeStationId?: string;
+  countryName?: string;
+  queueLoading?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (event: "select-station", station: RadioStationOption): void;
 }>();
 
 const $store = useMainStore();
 const dayjs = useDayjs();
+const runtimeConfig = useRuntimeConfig();
 const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
 const waiting = ref(false);
@@ -439,11 +416,10 @@ const streamError = ref(false);
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
-const reconnectAttempts = ref(0);
+const attemptCount = ref(0);
 const volume = ref(1);
 const muted = ref(false);
 const mobileQueueOpen = ref(false);
-const sourceDetails = ref<HTMLDetailsElement | null>(null);
 const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
 const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
@@ -457,8 +433,7 @@ let sourceVersion = 0;
 let activeResolvedSrc = "";
 let removeAutoPlayUnlockListeners: (() => void) | null = null;
 
-const MAX_RECONNECT_ATTEMPTS = 1;
-const RECONNECT_BASE_DELAY = 1500;
+const RECONNECT_BASE_DELAY = 1200;
 const FALLBACK_PROBE_TIMEOUT = 4000;
 
 const sourceList = computed<RadioSource[]>(() => {
@@ -467,13 +442,13 @@ const sourceList = computed<RadioSource[]>(() => {
       ? props.streamUrls
       : [props.streamUrl];
 
-  const seen = new Set<string>();
-  return candidates.filter((source): source is RadioSource => {
-    const src = String(source?.src || "").trim();
-    if (!src || seen.has(src)) return false;
-    seen.add(src);
-    return true;
-  });
+  return buildPlaybackSources(
+    candidates.filter(
+      (source): source is RadioSource =>
+        Boolean(source && String(source.src || "").trim()),
+    ),
+    runtimeConfig.public.corsServer,
+  ) as RadioSource[];
 });
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
@@ -525,8 +500,15 @@ const activeSourceName = computed(() =>
   ),
 );
 
-const queueCount = computed(
+const scheduleCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
+);
+const stationCount = computed(() => props.stations?.length || 0);
+const hasSidebar = computed(
+  () => stationCount.value > 0 || scheduleCount.value > 0,
+);
+const sidebarCount = computed(
+  () => stationCount.value || scheduleCount.value,
 );
 
 const nowPlayingTitle = computed(() => {
@@ -795,7 +777,6 @@ const configureHlsSource = async (
 
   hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
     if (version !== sourceVersion) return;
-    reconnectAttempts.value = 0;
     streamError.value = false;
 
     if (autoplay && !userPaused.value) {
@@ -819,6 +800,21 @@ const configureHlsSource = async (
   }
 };
 
+const stopPlaybackFailure = (): void => {
+  clearReconnectTimer();
+  clearFallbackProbeTimer();
+  destroyHls();
+
+  const media = mediaElement.value;
+  media?.pause();
+
+  waiting.value = false;
+  playing.value = false;
+  pendingAutoPlay.value = false;
+  streamError.value = true;
+  userPaused.value = true;
+};
+
 const applySource = async (
   index: number,
   autoplay = false,
@@ -831,9 +827,16 @@ const applySource = async (
     return;
   }
 
+  if (autoplay && !userPaused.value) {
+    if (attemptCount.value >= MAX_STREAM_ATTEMPTS) {
+      stopPlaybackFailure();
+      return;
+    }
+    attemptCount.value += 1;
+  }
+
   const version = ++sourceVersion;
   activeSourceIndex.value = index;
-  reconnectAttempts.value = 0;
   streamError.value = false;
   playing.value = false;
   pendingAutoPlay.value = autoplay && !userPaused.value;
@@ -856,17 +859,25 @@ const applySource = async (
 };
 
 const advanceFallbackSource = (): boolean => {
-  if (activeSourceIndex.value + 1 >= sourceList.value.length) {
-    waiting.value = false;
-    playing.value = false;
-    streamError.value = true;
-    pendingAutoPlay.value = false;
+  if (
+    sourceList.value.length === 0 ||
+    attemptCount.value >= MAX_STREAM_ATTEMPTS
+  ) {
+    stopPlaybackFailure();
     return false;
   }
 
-  reconnectAttempts.value = 0;
+  const nextIndex = nextPlaybackIndex(
+    activeSourceIndex.value,
+    sourceList.value.length,
+  );
+  if (nextIndex < 0) {
+    stopPlaybackFailure();
+    return false;
+  }
+
   userPaused.value = false;
-  void applySource(activeSourceIndex.value + 1, true);
+  void applySource(nextIndex, true);
   return true;
 };
 
@@ -875,19 +886,18 @@ const scheduleReconnect = (): void => {
 
   clearFallbackProbeTimer();
 
-  if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
-    advanceFallbackSource();
+  if (attemptCount.value >= MAX_STREAM_ATTEMPTS) {
+    stopPlaybackFailure();
     return;
   }
 
-  reconnectAttempts.value += 1;
   waiting.value = true;
   pendingAutoPlay.value = true;
 
   reconnectTimer = setTimeout(() => {
     reconnectTimer = null;
-    void applySource(activeSourceIndex.value, true);
-  }, RECONNECT_BASE_DELAY * reconnectAttempts.value);
+    advanceFallbackSource();
+  }, RECONNECT_BASE_DELAY);
 };
 
 const onPlay = async (): Promise<void> => {
@@ -922,7 +932,7 @@ const onPause = (): void => {
 };
 
 const retryCurrentSource = (): void => {
-  reconnectAttempts.value = 0;
+  attemptCount.value = 0;
   userPaused.value = false;
   void applySource(activeSourceIndex.value, true);
 };
@@ -930,13 +940,36 @@ const retryCurrentSource = (): void => {
 const selectSource = (index: number): void => {
   if (!sourceList.value[index]) return;
 
-  sourceDetails.value?.removeAttribute("open");
-  reconnectAttempts.value = 0;
+  attemptCount.value = 0;
   streamError.value = false;
   userPaused.value = false;
   pendingAutoPlay.value = true;
   activeResolvedSrc = "";
   void applySource(index, true);
+};
+
+const onSourceChange = (event: Event): void => {
+  const target = event.target as HTMLSelectElement;
+  selectSource(Number(target.value));
+};
+
+const selectStation = (station: RadioStationOption): void => {
+  if (station.id === props.activeStationId) {
+    if (!playing.value && hasPlayableSource.value) {
+      void onPlay();
+    }
+    mobileQueueOpen.value = false;
+    return;
+  }
+
+  if (import.meta.client) {
+    localStorage.setItem("radio_autoplay_enabled", "1");
+  }
+
+  userPaused.value = false;
+  pendingAutoPlay.value = true;
+  mobileQueueOpen.value = false;
+  emit("select-station", station);
 };
 
 const toggleMute = (): void => {
@@ -977,7 +1010,6 @@ const updateOnlineStatus = (): void => {
 const onMediaCanPlay = (): void => {
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  reconnectAttempts.value = 0;
   streamError.value = false;
 
   if (pendingAutoPlay.value && !userPaused.value && !playing.value) {
@@ -988,7 +1020,7 @@ const onMediaCanPlay = (): void => {
 const onMediaPlaying = (): void => {
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  reconnectAttempts.value = 0;
+  attemptCount.value = 0;
   pendingAutoPlay.value = false;
   waiting.value = false;
   playing.value = true;
@@ -998,6 +1030,7 @@ const onMediaPlaying = (): void => {
 const onMediaWaiting = (): void => {
   if (!userPaused.value) {
     waiting.value = true;
+    startFallbackProbe();
   }
 };
 
@@ -1060,7 +1093,7 @@ watch(
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
     mobileQueueOpen.value = false;
-    reconnectAttempts.value = 0;
+    attemptCount.value = 0;
     streamError.value = false;
     clearReconnectTimer();
     clearFallbackProbeTimer();

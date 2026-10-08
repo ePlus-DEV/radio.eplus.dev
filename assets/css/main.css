@@ -7,6 +7,31 @@
 @plugin "daisyui";
 
 @layer base {
+  :root,
+  html.light,
+  html[data-theme="light"] {
+    --radio-page-bg: #f8fafc;
+    --radio-surface: #ffffff;
+    --radio-surface-soft: #f1f5f9;
+    --radio-surface-muted: #f8fafc;
+    --radio-artwork-bg: #ffffff;
+    --radio-border: rgb(226 232 240 / 0.9);
+    --radio-text: #0f172a;
+    --radio-text-muted: #64748b;
+  }
+
+  html.dark,
+  html[data-theme="dark"] {
+    --radio-page-bg: #020617;
+    --radio-surface: #0f172a;
+    --radio-surface-soft: #111827;
+    --radio-surface-muted: #0b1220;
+    --radio-artwork-bg: #1e293b;
+    --radio-border: rgb(255 255 255 / 0.1);
+    --radio-text: #f8fafc;
+    --radio-text-muted: #94a3b8;
+  }
+
   html {
     scroll-behavior: smooth;
     background: #f8fafc;
@@ -37,10 +62,35 @@
 
 @layer utilities {
   .radio-surface {
-    @apply rounded-3xl border border-slate-200/80 bg-white shadow-sm shadow-slate-200/40 dark:border-white/10 dark:bg-slate-900 dark:shadow-none;
+    border-color: var(--radio-border);
+    background: var(--radio-surface);
+    color: var(--radio-text);
+    @apply rounded-3xl border shadow-sm shadow-slate-200/40 dark:shadow-none;
   }
 
   .radio-surface-soft {
-    @apply rounded-2xl border border-slate-200/70 bg-slate-100/70 dark:border-white/10 dark:bg-white/[0.04];
+    border-color: var(--radio-border);
+    background: var(--radio-surface-soft);
+    color: var(--radio-text);
+    @apply rounded-2xl border;
+  }
+
+  .radio-themed-surface {
+    border-color: var(--radio-border);
+    background: var(--radio-surface);
+    color: var(--radio-text);
+  }
+
+  .radio-themed-soft {
+    border-color: var(--radio-border);
+    background: var(--radio-surface-soft);
+  }
+
+  .radio-themed-muted {
+    background: var(--radio-surface-muted);
+  }
+
+  .radio-themed-artwork {
+    background: var(--radio-artwork-bg);
   }
 }

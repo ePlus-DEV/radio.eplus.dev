@@ -26,7 +26,7 @@
         v-for="data in results"
         :key="data.objectID"
         :to="data.url"
-        class="group min-w-0 overflow-hidden rounded-2xl border bg-white transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5 dark:bg-white/[0.03]"
+        class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
         :class="
           isRouteActive(data.objectID)
             ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
@@ -35,7 +35,7 @@
         :title="data.title"
         :aria-label="data.title"
       >
-        <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-slate-50 p-3 dark:bg-slate-950/50">
+        <div class="radio-themed-artwork relative flex aspect-[4/3] items-center justify-center overflow-hidden p-3">
           <img
             loading="lazy"
             :src="data.station_image"
@@ -58,7 +58,7 @@
           </span>
         </div>
 
-        <div class="border-t border-slate-200/70 px-3 py-3 dark:border-white/10">
+        <div class="border-t border-[var(--radio-border)] px-3 py-3">
           <p class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-slate-700 dark:text-slate-200">
             {{ data.title }}
           </p>

@@ -151,7 +151,10 @@
     "next": "下一個",
     "lyric": "歌詞",
     "no_lyric": "無歌詞",
-    "updating": "更新中..."
+    "updating": "更新中...",
+    "channels": "所有電台",
+    "search_channels": "搜尋電台...",
+    "no_channels": "找不到電台"
   },
   "button": {
     "back": "返回",

@@ -151,7 +151,10 @@
     "next": "Next",
     "lyric": "Lyric",
     "no_lyric": "No lyric",
-    "updating": "Updating..."
+    "updating": "Updating...",
+    "channels": "All channels",
+    "search_channels": "Search channels...",
+    "no_channels": "No channels found"
   },
   "button": {
     "back": "Back",

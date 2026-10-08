@@ -48,11 +48,11 @@
           v-for="country in continent"
           :key="country.url"
           :to="country.url"
-          class="group min-w-0 overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-rose-400/30 dark:hover:bg-white/[0.05]"
+          class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-rose-400/30"
           :title="$t(country.name)"
           :aria-label="$t(country.name)"
         >
-          <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-slate-50 p-4 dark:bg-slate-950/50">
+          <div class="radio-themed-artwork relative flex aspect-[4/3] items-center justify-center overflow-hidden p-4">
             <img
               loading="lazy"
               :src="country.flag"
@@ -67,7 +67,7 @@
             </span>
           </div>
 
-          <div class="flex min-w-0 items-center gap-2 border-t border-slate-200/70 px-3 py-3 dark:border-white/10">
+          <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-3">
             <span class="min-w-0 flex-1 truncate text-sm font-semibold text-slate-700 dark:text-slate-200">
               {{ $t(country.name) }}
             </span>

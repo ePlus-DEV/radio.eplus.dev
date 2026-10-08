@@ -151,7 +151,10 @@
     "next": "Kế tiếp",
     "lyric": "Lời bài hát",
     "no_lyric": "Không có lời",
-    "updating": "Đang cập nhật..."
+    "updating": "Đang cập nhật...",
+    "channels": "Tất cả kênh",
+    "search_channels": "Tìm kênh...",
+    "no_channels": "Không tìm thấy kênh"
   },
   "button": {
     "back": "Quay lại",

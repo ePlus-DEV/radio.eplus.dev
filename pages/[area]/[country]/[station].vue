@@ -41,6 +41,7 @@
 
     <Player
       :country="i18n"
+      :country-name="countryName"
       :song="song"
       :program="program"
       :playlist="playlist"
@@ -48,7 +49,10 @@
       :streamUrl="streamUrl"
       :streamUrls="streamUrls"
       :thumb="thumb"
-      :queue-expected="Boolean(stationMeta?.schedule)"
+      :stations="stations"
+      :active-station-id="stationSlug"
+      :queue-loading="queueLoading"
+      @select-station="selectStation"
     />
 
     <PanelStation @update-data="handleDataFromChild" />
@@ -107,7 +111,7 @@
 
 
 <script setup lang="ts">
-import type { RadioSource } from "~/types/radio";
+import type { RadioSource, RadioStationOption } from "~/types/radio";
 
 interface ProgramItem {
   encodeId: string;
@@ -218,6 +222,16 @@ const stationMeta = computed(
   () => stationCatalog.value?.[stationSlug.value],
 );
 
+const stations = computed<RadioStationOption[]>(() =>
+  Object.entries(stationCatalog.value || {}).map(([stationId, station]) => ({
+    id: stationId,
+    title: station.title,
+    image:
+      station.features || String(config.public.placeholderStation),
+    url: `/${area.value}/${slug.value}/${stationId}`,
+  })),
+);
+
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
 const stationName = computed(
   () =>
@@ -250,6 +264,7 @@ const program = ref<ProgramItem[]>([]);
 const song = ref<Song>();
 const thumb = ref("");
 const playlist = ref<Track[]>([]);
+const queueLoading = ref(false);
 const lyric_popup = ref(false);
 const lyricLines = ref<string[]>([t("panel.updating")]);
 const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
@@ -437,6 +452,10 @@ const fetchSchedule = async (url: string, version: number): Promise<void> => {
     if (version === requestVersion) {
       console.error("Unable to load station schedule:", error);
     }
+  } finally {
+    if (version === requestVersion) {
+      queueLoading.value = false;
+    }
   }
 };
 
@@ -466,9 +485,18 @@ const handleDataFromChild = (data: StationData): void => {
   song.value = undefined;
   playlist.value = [];
   lyricLines.value = [t("panel.updating")];
+  queueLoading.value = Boolean(data.station_schedule);
   if (data.station_schedule) {
     void pollSchedule(data.station_schedule, version);
   }
+};
+
+const selectStation = (station: RadioStationOption): void => {
+  if (station.id === stationSlug.value) return;
+
+  void navigateTo(
+    station.url || `/${area.value}/${slug.value}/${station.id}`,
+  );
 };
 
 onBeforeUnmount(() => {
