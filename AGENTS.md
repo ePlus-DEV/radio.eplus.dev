@@ -16,7 +16,7 @@ For deeper history and rationale, read [`docs/PROJECT_CONTEXT.md`](./docs/PROJEC
 - Nuxt 4 / Vue 3
 - Node.js 24.15.0
 - Tailwind CSS 4
-- DaisyUI 5
+- Tailwind-native primitives (DaisyUI removed)
 - Pinia
 - Native HTML5 `<audio>` + `hls.js`
 - Nuxt Color Mode
@@ -45,14 +45,14 @@ Always check `package.json` before assuming exact versions.
 The site previously mixed three independent styling systems:
 
 1. Tailwind `dark:` utilities;
-2. DaisyUI `data-theme`;
+2. legacy DaisyUI `data-theme`;
 3. component-specific hard-coded light/dark colors.
 
 That caused partially themed pages. The current rule is:
 
 - semantic site colors belong in `assets/css/main.css` as `--radio-*` tokens;
-- Nuxt Color Mode classes and DaisyUI `data-theme` must resolve to the same palette;
-- DaisyUI is a control/component primitive layer, not a separate visual theme;
+- Nuxt Color Mode classes must drive the shared --radio-* palette;
+- Tailwind-native controls must use --radio-* tokens;
 - use `--radio-surface`, `--radio-surface-soft`, `--radio-text`, `--radio-text-muted`, `--radio-border`, etc. for structural colors;
 - intentional status/accent colors such as rose/amber/emerald are allowed;
 - do not reintroduce one-off combinations such as `bg-white dark:bg-slate-*` across the app.
