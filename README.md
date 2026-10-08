@@ -30,7 +30,7 @@ Radio ePlus is a Nuxt-based internet radio application for browsing and listenin
 - Tailwind CSS
 - DaisyUI
 - Pinia
-- Video.js
+- Native HTML5 Audio + hls.js
 - Nuxt i18n
 - Nuxt Image
 - Algolia

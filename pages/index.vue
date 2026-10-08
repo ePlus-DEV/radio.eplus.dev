@@ -78,6 +78,7 @@
         thumb="/img/asia/flags/viet-nam.png"
         :streamName="streamName"
         :streamUrl="streamUrl"
+        :streamUrls="streamUrls"
       />
     </section>
 
@@ -102,6 +103,7 @@ import type { RadioSource } from "~/types/radio";
 const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
+const streamUrls = ref<RadioSource[]>([]);
 
 const areaItems = computed(() =>
   Object.entries(worldData).map(([key, countries]) => ({
@@ -135,10 +137,20 @@ const fetchData = async (): Promise<void> => {
     );
     const data = await response.json();
 
+    interface ChannelStream {
+      url: string;
+      type?: string;
+      cros?: boolean;
+      source?: string;
+      label?: string;
+    }
+
     interface Channel {
       favorite: boolean;
       title: string;
       stream: string;
+      streams?: ChannelStream[];
+      stream_alternative?: string;
       type: string;
       cros: boolean;
     }
@@ -150,12 +162,38 @@ const fetchData = async (): Promise<void> => {
     if (!favoriteChannel) return;
 
     streamName.value = favoriteChannel.title;
-    streamUrl.value = {
-      src: favoriteChannel.cros
-        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
-        : favoriteChannel.stream,
-      type: favoriteChannel.type,
-    };
+
+    const seen = new Set<string>();
+    const candidates: ChannelStream[] = [
+      {
+        url: favoriteChannel.stream,
+        type: favoriteChannel.type,
+        cros: favoriteChannel.cros,
+        source: "primary",
+      },
+      ...(favoriteChannel.streams || []),
+      ...(favoriteChannel.stream_alternative
+        ? [{ url: favoriteChannel.stream_alternative, source: "alternative" }]
+        : []),
+    ].filter((item) => {
+      const url = String(item.url || "").trim();
+      if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
+      seen.add(url);
+      return true;
+    });
+
+    streamUrls.value = candidates.map((item) => ({
+      src: item.cros
+        ? `${runtimeConfig.public.corsServer}${item.url}`
+        : item.url,
+      type: item.type,
+      source: item.source,
+      label: item.label,
+      proxied: Boolean(item.cros),
+    }));
+
+    streamUrl.value =
+      streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as RadioSource);
   } catch (error) {
     console.error("Error fetching featured radio:", error);
   }

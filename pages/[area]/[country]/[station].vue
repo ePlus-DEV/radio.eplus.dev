@@ -147,6 +147,7 @@ interface StationStream {
   type?: string;
   cros?: boolean;
   source?: string;
+  label?: string;
 }
 
 interface StationCatalogEntry {
@@ -156,6 +157,7 @@ interface StationCatalogEntry {
   cros: boolean;
   stream: string;
   streams?: StationStream[];
+  stream_alternative?: string;
   features?: string;
   schedule?: string;
 }
@@ -260,14 +262,24 @@ const toRadioSource = (
     ? `${config.public.corsServer || ""}${stream.url}`
     : stream.url,
   type: (stream.type || "audio/mpeg"),
+  source: stream.source,
+  label: stream.label,
+  proxied: Boolean(stream.cros),
 });
 
 const setStationStreams = (
-  primary: { url: string; type?: string; cros?: boolean },
+  primary: StationStream,
   fallbacks: StationStream[] = [],
+  alternative = "",
 ): void => {
   const seen = new Set<string>();
-  const candidates = [primary, ...fallbacks].filter((item) => {
+  const candidates: StationStream[] = [
+    primary,
+    ...fallbacks,
+    ...(alternative
+      ? [{ url: alternative, source: "legacy-alternative" }]
+      : []),
+  ].filter((item) => {
     const url = String(item?.url || "").trim();
     if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
     seen.add(url);
@@ -289,8 +301,9 @@ watch(
     streamName.value = meta.title;
     thumb.value = meta.features || String(config.public.placeholderStation);
     setStationStreams(
-      { url: meta.stream, type: meta.type, cros: meta.cros },
+      { url: meta.stream, type: meta.type, cros: meta.cros, source: "primary" },
       meta.streams || [],
+      meta.stream_alternative || "",
     );
   },
   { immediate: true },
@@ -391,7 +404,7 @@ const fetchDetail = async (url: string, version: number): Promise<void> => {
 
 const fetchSchedule = async (url: string, version: number): Promise<void> => {
   try {
-    const resData = await $fetch(`${url}${currentTimestamp()}`);
+    const resData = await $fetch(scheduleRequestUrl(url));
     if (version !== requestVersion) return;
 
     const value = resData as {
@@ -445,7 +458,7 @@ const handleDataFromChild = (data: StationData): void => {
 
   streamName.value = data.station_name;
   setStationStreams(
-    { url: data.station_stream, type: data.type, cros: data.cros },
+    { url: data.station_stream, type: data.type, cros: data.cros, source: "primary" },
     data.station_streams || [],
   );
   thumb.value = data.station_image;

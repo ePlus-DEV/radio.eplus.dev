@@ -38,6 +38,7 @@
       :thumb="thumb"
       :streamName="streamName"
       :streamUrl="streamUrl"
+      :streamUrls="streamUrls"
       :playlist="playlist"
       :queue-expected="queueExpected"
     />
@@ -57,6 +58,7 @@ const runtimeConfig = useRuntimeConfig();
 const streamName = ref<string>("");
 const route = useRoute();
 const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
+const streamUrls = ref<RadioSource[]>([]);
 const normalizeParam = (value: string | string[] | undefined): string =>
   Array.isArray(value) ? value[0] || "" : value || "";
 const slug = computed(() => normalizeParam(route.params.country));
@@ -144,10 +146,20 @@ const fetchData = async (): Promise<void> => {
 
     stationCount.value = Object.keys(data).length;
 
+    interface ChannelStream {
+      url: string;
+      type?: string;
+      cros?: boolean;
+      source?: string;
+      label?: string;
+    }
+
     interface Channel {
       favorite: boolean;
       title: string;
       stream: string;
+      streams?: ChannelStream[];
+      stream_alternative?: string;
       type: string;
       cros: boolean;
       schedule?: string;
@@ -162,12 +174,38 @@ const fetchData = async (): Promise<void> => {
     }
 
     streamName.value = favoriteChannel.title;
-    streamUrl.value = {
-      src: favoriteChannel.cros
-        ? `${runtimeConfig.public.corsServer}${favoriteChannel.stream}`
-        : favoriteChannel.stream,
-      type: favoriteChannel.type,
-    };
+
+    const seen = new Set<string>();
+    const candidates: ChannelStream[] = [
+      {
+        url: favoriteChannel.stream,
+        type: favoriteChannel.type,
+        cros: favoriteChannel.cros,
+        source: "primary",
+      },
+      ...(favoriteChannel.streams || []),
+      ...(favoriteChannel.stream_alternative
+        ? [{ url: favoriteChannel.stream_alternative, source: "alternative" }]
+        : []),
+    ].filter((item) => {
+      const url = String(item.url || "").trim();
+      if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
+      seen.add(url);
+      return true;
+    });
+
+    streamUrls.value = candidates.map((item) => ({
+      src: item.cros
+        ? `${runtimeConfig.public.corsServer}${item.url}`
+        : item.url,
+      type: item.type,
+      source: item.source,
+      label: item.label,
+      proxied: Boolean(item.cros),
+    }));
+
+    streamUrl.value =
+      streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as RadioSource);
     // Fetch the schedule data if available
     queueExpected.value = Boolean(favoriteChannel.schedule);
     if (favoriteChannel.schedule !== undefined) {
