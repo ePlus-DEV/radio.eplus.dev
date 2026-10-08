@@ -1,4 +1,4 @@
-name: "Unit tests"
+name: "CI"
 
 on:
   pull_request:
@@ -30,12 +30,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: unit-tests-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   test:
-    name: "Run unit tests"
+    name: "Test and prerender"
     if: github.event.pull_request.head.ref != 'bot/instant-audio-sync'
     runs-on: ubuntu-latest
 
@@ -53,3 +53,6 @@ jobs:
 
       - name: "Run unit tests"
         run: npm test
+
+      - name: "Generate prerendered site"
+        run: npm run generate
