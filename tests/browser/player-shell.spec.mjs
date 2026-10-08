@@ -78,8 +78,8 @@ test('Media Session publishes station artwork and switches stations with headset
   expect(image).toContain('/img/');
   const supported = await page.evaluate(() => Object.keys(window.radioMediaSession.callbacks));
   expect(supported).toEqual(expect.arrayContaining(['play', 'pause', 'nexttrack', 'previoustrack']));
-  expect(await page.evaluate(() => window.radioMediaSession.callbacks.seekforward)).toBeNull();
-  expect(await page.evaluate(() => window.radioMediaSession.callbacks.seekbackward)).toBeNull();
+  expect(await page.evaluate(() => typeof window.radioMediaSession.callbacks.seekforward)).toBe('function');
+  expect(await page.evaluate(() => typeof window.radioMediaSession.callbacks.seekbackward)).toBe('function');
 
   await page.evaluate(() => window.radioMediaSession.callbacks.nexttrack());
   await expect(page).toHaveURL(/\/europe\/belgium\/mnm$/);
@@ -87,6 +87,12 @@ test('Media Session publishes station artwork and switches stations with headset
   await page.evaluate(() => window.radioMediaSession.callbacks.previoustrack());
   await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
   await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('Studio Brussel');
+  // iOS frequently shows ±10s controls instead of track buttons; those
+  // should still change the live radio STATION, not attempt to skip a song.
+  await page.evaluate(() => window.radioMediaSession.callbacks.seekforward());
+  await expect(page).toHaveURL(/\/europe\/belgium\/mnm$/);
+  await page.evaluate(() => window.radioMediaSession.callbacks.seekbackward());
+  await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
 });
 
 test('station cards start the selected station while retaining real navigation links', async ({ page }) => {
