@@ -138,11 +138,14 @@ interface CurrentMedia {
   artists: string;
   hasLyric: boolean;
   encodeId: string;
+  thumbnail?: string;
 }
 
 interface Song {
   encodeId: string;
   currentMedia?: CurrentMedia;
+  nextMedia?: CurrentMedia;
+  thumbnail?: string;
 }
 
 interface StationStream {
