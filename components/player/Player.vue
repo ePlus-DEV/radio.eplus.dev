@@ -315,11 +315,7 @@
 </template>
 
 <script lang="ts" setup>
-import videojs from "video.js";
-import "video.js/dist/video-js.css";
 import type { RadioSource } from "~/types/radio";
-
-type VideoJsPlayer = ReturnType<typeof videojs>;
 
 interface CurrentMedia {
   title: string;
@@ -372,7 +368,7 @@ const playing = ref(false);
 const streamError = ref(false);
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
-const userPaused = ref(false);
+const userPaused = ref(true);
 const reconnectAttempts = ref(0);
 const volume = ref(1);
 const muted = ref(false);
@@ -380,17 +376,18 @@ const mobileQueueOpen = ref(false);
 const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
 const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
-let player: VideoJsPlayer | null = null;
+let hlsInstance: any = null;
+let HlsCtor: any = null;
+let hlsImportPromise: Promise<any> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
-let sourceReadyTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let timeInterval: ReturnType<typeof setInterval> | null = null;
 let sourceVersion = 0;
+let activeResolvedSrc = "";
 let removeAutoPlayUnlockListeners: (() => void) | null = null;
 
-const MAX_RECONNECT_ATTEMPTS = 2;
+const MAX_RECONNECT_ATTEMPTS = 1;
 const RECONNECT_BASE_DELAY = 1500;
-const SOURCE_READY_TIMEOUT = 8000;
 const FALLBACK_PROBE_TIMEOUT = 4000;
 
 const sourceList = computed<RadioSource[]>(() => {
@@ -399,10 +396,13 @@ const sourceList = computed<RadioSource[]>(() => {
       ? props.streamUrls
       : [props.streamUrl];
 
-  return candidates.filter(
-    (source): source is RadioSource =>
-      Boolean(source && typeof source.src === "string" && source.src.trim()),
-  );
+  const seen = new Set<string>();
+  return candidates.filter((source): source is RadioSource => {
+    const src = String(source?.src || "").trim();
+    if (!src || seen.has(src)) return false;
+    seen.add(src);
+    return true;
+  });
 });
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
@@ -410,6 +410,7 @@ const hasPlayableSource = computed(() => sourceList.value.length > 0);
 const queueCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
 );
+
 const nowPlayingTitle = computed(() => {
   const songTitle = props.song?.currentMedia?.title?.trim();
   if (songTitle) return songTitle;
@@ -445,12 +446,21 @@ const updateCurrentTime = (): void => {
 
 const inferMime = (url: string, fallback = "audio/mpeg"): string => {
   const value = url.toLowerCase();
-  if (/\.m3u8(?:$|[?#])/i.test(value)) return "application/x-mpegURL";
+  if (/\.m3u8(?:$|[?#])/i.test(value)) return "application/vnd.apple.mpegurl";
   if (/\.aac(?:$|[?#])/i.test(value)) return "audio/aac";
   if (/\.ogg(?:$|[?#])/i.test(value)) return "audio/ogg";
   if (/\.opus(?:$|[?#])/i.test(value)) return "audio/opus";
   if (/\.mp3(?:$|[?#])/i.test(value)) return "audio/mpeg";
   return fallback || "audio/mpeg";
+};
+
+const isHlsSource = (source: RadioSource): boolean => {
+  const type = String(source.type || "").toLowerCase();
+  return (
+    /\.m3u8(?:$|[?#])/i.test(source.src) ||
+    type.includes("mpegurl") ||
+    type.includes("m3u8")
+  );
 };
 
 const isTextPlaylist = (url: string): boolean =>
@@ -506,16 +516,27 @@ const resolvePlaylistSource = async (
   }
 };
 
+const ensureHls = async (): Promise<any> => {
+  if (HlsCtor) return HlsCtor;
+
+  hlsImportPromise ||= import("hls.js").then((module) => {
+    HlsCtor = module.default;
+    return HlsCtor;
+  });
+
+  return await hlsImportPromise;
+};
+
+const destroyHls = (): void => {
+  if (!hlsInstance) return;
+  hlsInstance.destroy();
+  hlsInstance = null;
+};
+
 const clearReconnectTimer = (): void => {
   if (!reconnectTimer) return;
   clearTimeout(reconnectTimer);
   reconnectTimer = null;
-};
-
-const clearSourceReadyTimer = (): void => {
-  if (!sourceReadyTimer) return;
-  clearTimeout(sourceReadyTimer);
-  sourceReadyTimer = null;
 };
 
 const clearFallbackProbeTimer = (): void => {
@@ -546,22 +567,137 @@ const registerAutoPlayUnlock = (): void => {
 };
 
 const tryPlay = async (): Promise<void> => {
-  if (!player || userPaused.value) return;
+  const media = mediaElement.value;
+  if (!media || userPaused.value) return;
+
+  waiting.value = true;
 
   try {
-    await player.play();
+    await media.play();
     pendingAutoPlay.value = false;
     waiting.value = false;
     playing.value = true;
     streamError.value = false;
+
     if (import.meta.client) {
       localStorage.setItem("radio_autoplay_enabled", "1");
     }
   } catch (error) {
     waiting.value = false;
-    pendingAutoPlay.value = true;
-    registerAutoPlayUnlock();
-    console.warn("Playback requires user interaction:", error);
+    playing.value = false;
+
+    const name =
+      error && typeof error === "object" && "name" in error
+        ? String((error as { name?: string }).name || "")
+        : "";
+
+    if (name === "NotAllowedError") {
+      pendingAutoPlay.value = true;
+      registerAutoPlayUnlock();
+      return;
+    }
+
+    scheduleReconnect();
+  }
+};
+
+const startFallbackProbe = (): void => {
+  clearFallbackProbeTimer();
+
+  if (
+    activeSourceIndex.value + 1 >= sourceList.value.length ||
+    userPaused.value
+  ) {
+    return;
+  }
+
+  fallbackProbeTimer = setTimeout(() => {
+    fallbackProbeTimer = null;
+
+    if (!playing.value && pendingAutoPlay.value && !userPaused.value) {
+      advanceFallbackSource();
+    }
+  }, FALLBACK_PROBE_TIMEOUT);
+};
+
+const configureNativeSource = (
+  source: RadioSource,
+  autoplay: boolean,
+): void => {
+  const media = mediaElement.value;
+  if (!media) return;
+
+  destroyHls();
+  media.src = source.src;
+  media.load();
+
+  if (autoplay && !userPaused.value) {
+    void tryPlay();
+  }
+};
+
+const configureHlsSource = async (
+  source: RadioSource,
+  autoplay: boolean,
+  version: number,
+): Promise<void> => {
+  const media = mediaElement.value;
+  if (!media) return;
+
+  destroyHls();
+
+  const nativeHls =
+    media.canPlayType("application/vnd.apple.mpegurl") ||
+    media.canPlayType("application/x-mpegURL");
+
+  if (nativeHls) {
+    if (version !== sourceVersion) return;
+    media.src = source.src;
+    media.load();
+
+    if (autoplay && !userPaused.value) {
+      void tryPlay();
+    }
+    return;
+  }
+
+  const Hls = await ensureHls();
+  if (version !== sourceVersion || !mediaElement.value) return;
+
+  if (!Hls.isSupported()) {
+    scheduleReconnect();
+    return;
+  }
+
+  hlsInstance = new Hls();
+  hlsInstance.on(Hls.Events.MEDIA_ATTACHED, () => {
+    if (version !== sourceVersion || !hlsInstance) return;
+    hlsInstance.loadSource(source.src);
+  });
+
+  hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+    if (version !== sourceVersion) return;
+    reconnectAttempts.value = 0;
+    streamError.value = false;
+
+    if (autoplay && !userPaused.value) {
+      void tryPlay();
+    }
+  });
+
+  hlsInstance.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
+    if (version !== sourceVersion || !data?.fatal) return;
+
+    waiting.value = false;
+    playing.value = false;
+    scheduleReconnect();
+  });
+
+  hlsInstance.attachMedia(media);
+  startFallbackProbe();
+
+  if (autoplay && !userPaused.value) {
+    void tryPlay();
   }
 };
 
@@ -569,10 +705,9 @@ const applySource = async (
   index: number,
   autoplay = false,
 ): Promise<void> => {
-  if (!player) return;
-
+  const media = mediaElement.value;
   const rawSource = sourceList.value[index];
-  if (!rawSource) {
+  if (!media || !rawSource) {
     waiting.value = false;
     streamError.value = true;
     return;
@@ -580,54 +715,36 @@ const applySource = async (
 
   const version = ++sourceVersion;
   activeSourceIndex.value = index;
-  waiting.value = autoplay && !userPaused.value;
-  playing.value = false;
+  reconnectAttempts.value = 0;
   streamError.value = false;
+  playing.value = false;
   pendingAutoPlay.value = autoplay && !userPaused.value;
-  clearSourceReadyTimer();
+  waiting.value = autoplay && !userPaused.value;
+
+  clearReconnectTimer();
   clearFallbackProbeTimer();
 
   const source = await resolvePlaylistSource(rawSource);
-  if (version !== sourceVersion || !player) return;
+  if (version !== sourceVersion || !mediaElement.value) return;
 
-  player.src({
-    src: source.src,
-    type: inferMime(source.src, source.type),
-  });
-  player.load();
+  activeResolvedSrc = source.src;
+  startFallbackProbe();
 
-  if (
-    autoplay &&
-    !userPaused.value &&
-    activeSourceIndex.value + 1 < sourceList.value.length
-  ) {
-    fallbackProbeTimer = setTimeout(() => {
-      fallbackProbeTimer = null;
-      if (
-        pendingAutoPlay.value &&
-        !playing.value &&
-        !userPaused.value
-      ) {
-        console.warn(
-          `Radio source ${activeSourceIndex.value + 1} did not become playable within ${FALLBACK_PROBE_TIMEOUT}ms; trying fallback.`,
-        );
-        advanceFallbackSource();
-      }
-    }, FALLBACK_PROBE_TIMEOUT);
-  }
-
-  if (autoplay && !userPaused.value) {
-    sourceReadyTimer = setTimeout(() => {
-      sourceReadyTimer = null;
-      if (waiting.value && !userPaused.value) {
-        scheduleReconnect();
-      }
-    }, SOURCE_READY_TIMEOUT);
+  if (isHlsSource(source)) {
+    await configureHlsSource(source, autoplay, version);
+  } else {
+    configureNativeSource(source, autoplay);
   }
 };
 
 const advanceFallbackSource = (): boolean => {
-  if (activeSourceIndex.value + 1 >= sourceList.value.length) return false;
+  if (activeSourceIndex.value + 1 >= sourceList.value.length) {
+    waiting.value = false;
+    playing.value = false;
+    streamError.value = true;
+    pendingAutoPlay.value = false;
+    return false;
+  }
 
   reconnectAttempts.value = 0;
   userPaused.value = false;
@@ -638,13 +755,10 @@ const advanceFallbackSource = (): boolean => {
 const scheduleReconnect = (): void => {
   if (!online.value || userPaused.value || reconnectTimer) return;
 
-  clearSourceReadyTimer();
+  clearFallbackProbeTimer();
 
   if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
-    if (advanceFallbackSource()) return;
-    waiting.value = false;
-    playing.value = false;
-    streamError.value = true;
+    advanceFallbackSource();
     return;
   }
 
@@ -659,29 +773,32 @@ const scheduleReconnect = (): void => {
 };
 
 const onPlay = async (): Promise<void> => {
-  if (!player || !hasPlayableSource.value) return;
+  if (!hasPlayableSource.value) return;
 
   userPaused.value = false;
   streamError.value = false;
   pendingAutoPlay.value = true;
 
-  if (!player.currentSrc()) {
-    await applySource(activeSourceIndex.value, true);
+  if (activeResolvedSrc && mediaElement.value) {
+    startFallbackProbe();
+    await tryPlay();
     return;
   }
 
-  await tryPlay();
+  await applySource(activeSourceIndex.value, true);
 };
 
 const onPause = (): void => {
+  const media = mediaElement.value;
+
   userPaused.value = true;
   pendingAutoPlay.value = false;
   clearReconnectTimer();
-  clearSourceReadyTimer();
   clearFallbackProbeTimer();
   removeAutoPlayUnlockListeners?.();
   removeAutoPlayUnlockListeners = null;
-  player?.pause();
+
+  media?.pause();
   waiting.value = false;
   playing.value = false;
 };
@@ -693,16 +810,22 @@ const retryCurrentSource = (): void => {
 };
 
 const toggleMute = (): void => {
-  if (!player) return;
-  player.muted(!player.muted());
+  const media = mediaElement.value;
+  if (!media) return;
+  media.muted = !media.muted;
 };
 
 const onVolumeInput = (event: Event): void => {
-  if (!player) return;
+  const media = mediaElement.value;
+  if (!media) return;
+
   const target = event.target as HTMLInputElement;
   const nextVolume = Math.max(0, Math.min(1, Number(target.value)));
-  player.volume(nextVolume);
-  if (nextVolume > 0 && player.muted()) player.muted(false);
+  media.volume = nextVolume;
+
+  if (nextVolume > 0 && media.muted) {
+    media.muted = false;
+  }
 };
 
 const updateOnlineStatus = (): void => {
@@ -711,7 +834,7 @@ const updateOnlineStatus = (): void => {
 
   if (!online.value) {
     clearReconnectTimer();
-    clearSourceReadyTimer();
+    clearFallbackProbeTimer();
     waiting.value = false;
     return;
   }
@@ -721,73 +844,113 @@ const updateOnlineStatus = (): void => {
   }
 };
 
-const bindPlayerEvents = (): void => {
-  if (!player) return;
+const onMediaCanPlay = (): void => {
+  clearReconnectTimer();
+  clearFallbackProbeTimer();
+  reconnectAttempts.value = 0;
+  streamError.value = false;
 
-  player.on("loadstart", () => {
-    waiting.value = pendingAutoPlay.value && !userPaused.value;
-    streamError.value = false;
-  });
+  if (pendingAutoPlay.value && !userPaused.value && !playing.value) {
+    void tryPlay();
+  }
+};
 
-  player.on("canplay", () => {
-    clearSourceReadyTimer();
-    clearFallbackProbeTimer();
-    clearReconnectTimer();
-    reconnectAttempts.value = 0;
-    waiting.value = false;
-    streamError.value = false;
-    if (pendingAutoPlay.value && !userPaused.value) {
-      void tryPlay();
-    }
-  });
+const onMediaPlaying = (): void => {
+  clearReconnectTimer();
+  clearFallbackProbeTimer();
+  reconnectAttempts.value = 0;
+  pendingAutoPlay.value = false;
+  waiting.value = false;
+  playing.value = true;
+  streamError.value = false;
+};
 
-  player.on("playing", () => {
-    clearSourceReadyTimer();
-    clearFallbackProbeTimer();
-    waiting.value = false;
-    playing.value = true;
-    streamError.value = false;
-  });
+const onMediaWaiting = (): void => {
+  if (!userPaused.value) {
+    waiting.value = true;
+  }
+};
 
-  player.on("pause", () => {
-    playing.value = false;
-  });
+const onMediaPause = (): void => {
+  playing.value = false;
+};
 
-  player.on("ended", () => {
-    playing.value = false;
-    if (!userPaused.value) scheduleReconnect();
-  });
+const onMediaEnded = (): void => {
+  playing.value = false;
+  if (!userPaused.value) scheduleReconnect();
+};
 
-  player.on("error", () => {
-    waiting.value = false;
-    playing.value = false;
+const onMediaError = (): void => {
+  if (!activeResolvedSrc || userPaused.value) return;
 
-    if (!userPaused.value) {
-      scheduleReconnect();
-    }
-  });
+  waiting.value = false;
+  playing.value = false;
+  scheduleReconnect();
+};
 
-  player.on("volumechange", () => {
-    if (!player) return;
-    volume.value = player.volume();
-    muted.value = player.muted();
-  });
+const onVolumeChange = (): void => {
+  const media = mediaElement.value;
+  if (!media) return;
+  volume.value = media.volume;
+  muted.value = media.muted;
+};
+
+const bindMediaEvents = (): void => {
+  const media = mediaElement.value;
+  if (!media) return;
+
+  media.addEventListener("canplay", onMediaCanPlay);
+  media.addEventListener("playing", onMediaPlaying);
+  media.addEventListener("waiting", onMediaWaiting);
+  media.addEventListener("stalled", onMediaWaiting);
+  media.addEventListener("pause", onMediaPause);
+  media.addEventListener("ended", onMediaEnded);
+  media.addEventListener("error", onMediaError);
+  media.addEventListener("volumechange", onVolumeChange);
+};
+
+const unbindMediaEvents = (): void => {
+  const media = mediaElement.value;
+  if (!media) return;
+
+  media.removeEventListener("canplay", onMediaCanPlay);
+  media.removeEventListener("playing", onMediaPlaying);
+  media.removeEventListener("waiting", onMediaWaiting);
+  media.removeEventListener("stalled", onMediaWaiting);
+  media.removeEventListener("pause", onMediaPause);
+  media.removeEventListener("ended", onMediaEnded);
+  media.removeEventListener("error", onMediaError);
+  media.removeEventListener("volumechange", onVolumeChange);
 };
 
 watch(
   () => [props.streamUrl, props.streamUrls] as const,
   () => {
+    sourceVersion += 1;
     activeSourceIndex.value = 0;
+    activeResolvedSrc = "";
     mobileQueueOpen.value = false;
     reconnectAttempts.value = 0;
     streamError.value = false;
+    clearReconnectTimer();
+    clearFallbackProbeTimer();
+    destroyHls();
 
-    if (player && hasPlayableSource.value) {
-      const autoPlayEnabled =
-        import.meta.client &&
-        localStorage.getItem("radio_autoplay_enabled") === "1";
-      userPaused.value = !autoPlayEnabled;
-      void applySource(0, Boolean(autoPlayEnabled));
+    const media = mediaElement.value;
+    if (media) {
+      media.pause();
+      media.removeAttribute("src");
+      media.load();
+    }
+
+    const autoPlayEnabled =
+      import.meta.client &&
+      localStorage.getItem("radio_autoplay_enabled") === "1";
+
+    userPaused.value = !autoPlayEnabled;
+
+    if (autoPlayEnabled && hasPlayableSource.value) {
+      void applySource(0, true);
     }
   },
   { deep: true },
@@ -803,32 +966,26 @@ onMounted(() => {
   updateCurrentTime();
   timeInterval = setInterval(updateCurrentTime, 1000);
 
-  if (mediaElement.value) {
-    player = videojs(mediaElement.value, {
-      controls: false,
-      autoplay: false,
-      preload: "none",
-      audioOnlyMode: true,
-      responsive: false,
-      fluid: false,
-      html5: {
-        // Keep Video.js/VHS defaults. The pre-refactor player did not force
-        // a low initial rendition and some audio-only HLS radios stall when
-        // that tuning is applied.
-        vhs: {},
-      },
-    });
+  bindMediaEvents();
 
-    bindPlayerEvents();
-    volume.value = player.volume();
-    muted.value = player.muted();
+  const media = mediaElement.value;
+  if (media) {
+    volume.value = media.volume;
+    muted.value = media.muted;
+  }
 
-    if (hasPlayableSource.value) {
-      const autoPlayEnabled =
-        localStorage.getItem("radio_autoplay_enabled") === "1";
-      userPaused.value = !autoPlayEnabled;
-      void applySource(0, autoPlayEnabled);
-    }
+  // Preload hls.js while the page is idle so a later user click can start
+  // the HLS pipeline immediately without waiting for a module download.
+  if (import.meta.client) {
+    void ensureHls();
+  }
+
+  const autoPlayEnabled =
+    localStorage.getItem("radio_autoplay_enabled") === "1";
+  userPaused.value = !autoPlayEnabled;
+
+  if (autoPlayEnabled && hasPlayableSource.value) {
+    void applySource(0, true);
   }
 
   window.addEventListener("online", updateOnlineStatus);
@@ -838,8 +995,9 @@ onMounted(() => {
 onUnmounted(() => {
   sourceVersion += 1;
   clearReconnectTimer();
-  clearSourceReadyTimer();
   clearFallbackProbeTimer();
+  unbindMediaEvents();
+  destroyHls();
 
   if (timeInterval) {
     clearInterval(timeInterval);
@@ -851,9 +1009,6 @@ onUnmounted(() => {
 
   window.removeEventListener("online", updateOnlineStatus);
   window.removeEventListener("offline", updateOnlineStatus);
-
-  player?.dispose();
-  player = null;
 });
 </script>
 
