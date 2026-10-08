@@ -1,6 +1,6 @@
 <template>
   <UApp :locale="uiLocale" :toaster="null">
-  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen }" class="radio-shell min-h-screen w-full overflow-x-hidden bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
+  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen }" class="radio-shell min-h-screen w-full overflow-x-clip bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
     <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
       <AppSidebar />
@@ -11,6 +11,7 @@
       >
         <NuxtPage />
       </main>
+      <div id="radio-queue-slot" class="radio-queue-slot hidden min-h-0 min-w-0 pb-14 pt-24"></div>
     </div>
     <AppFooter />
     <ClientOnly>

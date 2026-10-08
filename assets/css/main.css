@@ -83,7 +83,7 @@
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -117,12 +117,16 @@
 
   .radio-right-panel {
     top: 96px;
-    bottom: calc(var(--radio-player-height) + env(safe-area-inset-bottom) + 16px);
+    height: calc(100dvh - 112px - var(--radio-player-height) - env(safe-area-inset-bottom));
   }
 
   @media (min-width: 1536px) {
     .radio-shell-queue .radio-app-content {
-      padding-right: 352px;
+      grid-template-columns: 224px minmax(0, 1fr) 320px;
+    }
+
+    .radio-shell-queue .radio-queue-slot {
+      display: block;
     }
   }
 

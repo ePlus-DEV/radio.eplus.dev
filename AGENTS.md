@@ -127,6 +127,7 @@ before changing the player.
 - Client-only mounting is intentional: async page setup seeds Pinia after the app shell has rendered during SSR. Rendering controls earlier can leave stale `disabled` attributes after hydration.
 - Main content's queue spacing also waits until mounting. Catalog/SEO content stays prerendered.
 - Reserve the global player's height plus safe-area inset in the shell and floating controls.
+- Keep the desktop Schedule/Channels panel sticky inside the app content's queue column so it stops before the footer. Use horizontal overflow `clip` on its ancestors to preserve viewport sticky positioning.
 - Keep `dir="auto"` on provider titles and make menu/drawer widths viewport-safe.
 
 Regression guards include `tests/playback-store.test.mjs`, `tests/station-polling.test.mjs`,

@@ -64,6 +64,65 @@ test('station cards start the selected station while retaining real navigation l
   await expect(dock(page).getByRole('button', { name: 'Pause radio', exact: true })).toBeVisible();
 });
 
+test('desktop queue stays beside the catalog while scrolling and stops before the footer', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 920 });
+  await mockMedia(page);
+  await page.route(/zing\.eplus\.dev\/api\//, route => route.fulfill({
+    json: { err: 0, data: { items: [{ title: 'EDM schedule fixture', startTime: 1791446400, endTime: 1791450000 }] } },
+    headers: { 'access-control-allow-origin': '*' },
+  }));
+  await ready(page, '/asia/viet-nam/edm-radio-zing-mp3');
+  const panel = page.locator('.radio-right-panel');
+  const footer = page.locator('footer');
+  await expect(panel).toBeVisible();
+  await expect(panel.getByRole('tab', { name: /Schedule/ })).toBeVisible();
+  await page.locator('header a[href="/"]').first().click();
+  await expect(page).toHaveURL(/\/$/);
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 500);
+  });
+  await expect.poll(async () => (await panel.boundingBox()).y).toBeCloseTo(96, 0);
+
+  for (const [theme, tab] of [['Light', /Schedule/], ['Dark', /All channels/]]) {
+    await panel.getByRole('tab', { name: tab }).click();
+    await page.locator('header').getByRole('button', { name: /^(System|Light|Dark)$/ }).click();
+    await page.getByRole('menuitemcheckbox', { name: theme, exact: true }).click();
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(async () => {
+      const panelBounds = await panel.boundingBox();
+      const footerBounds = await footer.boundingBox();
+      return panelBounds.y + panelBounds.height <= footerBounds.y;
+    }).toBe(true);
+    const footerLink = footer.locator('nav a').first();
+    await expect(footerLink).toBeInViewport();
+    expect(await footerLink.evaluate(link => {
+      const bounds = link.getBoundingClientRect();
+      const target = document.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+      return link.contains(target);
+    })).toBe(true);
+  }
+
+  await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
+  await expect(panel).toBeHidden();
+  await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
+  await expect(panel).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const panelBounds = await panel.boundingBox();
+  const footerBounds = await footer.boundingBox();
+  expect(panelBounds.y + panelBounds.height).toBeLessThanOrEqual(footerBounds.y);
+  await page.locator('header a[href="/"]').first().click();
+  await page.locator('main a[href="/europe"]').first().click();
+  await expect(page).toHaveURL(/\/europe$/);
+  await page.setViewportSize({ width: 1536, height: 900 });
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect.poll(async () => {
+    const panelBounds = await panel.boundingBox();
+    const footerBounds = await footer.boundingBox();
+    return panelBounds.y + panelBounds.height <= footerBounds.y;
+  }).toBe(true);
+});
+
 test('pausing during a pending play request ignores its late completion', async ({ page }) => {
   await mockMedia(page);
   await ready(page, '/europe/belgium/studio-brussel');

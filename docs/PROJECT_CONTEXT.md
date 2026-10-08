@@ -369,8 +369,13 @@ fallback. Main content's queue spacing waits for mounting too. Indexable catalog
 content and all page metadata remain server rendered.
 
 The shell and Back to top reserve `--radio-player-height` plus the bottom safe
-area. At wide desktop widths the queue is a fixed right panel with matching
-content spacing; smaller screens use a Nuxt UI drawer with focus containment.
+area. At wide desktop widths the queue is teleported into a dedicated column
+inside `.radio-app-content`. Its sticky panel stops at the content boundary
+before the footer, with a viewport-height limit and internal list scrolling.
+Keep the shell/body horizontal overflow set to `clip`: `hidden` creates a scroll
+container that prevents viewport sticky positioning. Smaller screens use a
+Nuxt UI drawer with focus containment. The audio session remains outside
+`NuxtPage`; moving the visual queue must never remount it.
 
 A late native play promise is also version-checked. Pausing while connecting
 must not be undone when an older `play()` promise later resolves/rejects.

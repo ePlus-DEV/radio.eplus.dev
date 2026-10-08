@@ -52,18 +52,20 @@
     <div class="radio-audio-host" aria-hidden="true"><audio ref="mediaElement" playsinline preload="none"></audio></div>
   </section>
 
-  <aside v-if="hasSidebar" v-show="playback.queueOpen" class="radio-right-panel fixed right-6 z-30 hidden w-80 min-h-0 flex-col overflow-hidden rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] 2xl:flex" :aria-label="$t('player.queue')">
-    <div class="flex items-center justify-between border-b border-[var(--radio-border)] p-4">
-      <div class="min-w-0"><p class="text-xs font-semibold">{{ $t('player.queue') }}</p><p dir="auto" class="mt-1 truncate text-[11px] text-[var(--radio-text-muted)]">{{ streamName }}</p></div>
-      <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-panel-right-close" :aria-label="$t('button.close')" @click="playback.queueOpen = false" />
-    </div>
-    <div v-if="song?.nextMedia?.title" class="border-b border-[var(--radio-border)] p-4">
-      <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t("panel.next") }}</p>
-      <p dir="auto" class="truncate text-sm font-semibold">{{ song.nextMedia.title }}</p>
-      <p dir="auto" class="mt-1 truncate text-xs text-[var(--radio-text-muted)]">{{ song.nextMedia.artists }}</p>
-    </div>
-    <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
-  </aside>
+  <Teleport to="#radio-queue-slot">
+    <aside v-if="hasSidebar" v-show="playback.queueOpen" class="radio-right-panel sticky z-30 flex w-full min-h-0 flex-col overflow-hidden rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)]" :aria-label="$t('player.queue')">
+      <div class="flex items-center justify-between border-b border-[var(--radio-border)] p-4">
+        <div class="min-w-0"><p class="text-xs font-semibold">{{ $t('player.queue') }}</p><p dir="auto" class="mt-1 truncate text-[11px] text-[var(--radio-text-muted)]">{{ streamName }}</p></div>
+        <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-panel-right-close" :aria-label="$t('button.close')" @click="playback.queueOpen = false" />
+      </div>
+      <div v-if="song?.nextMedia?.title" class="border-b border-[var(--radio-border)] p-4">
+        <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t("panel.next") }}</p>
+        <p dir="auto" class="truncate text-sm font-semibold">{{ song.nextMedia.title }}</p>
+        <p dir="auto" class="mt-1 truncate text-xs text-[var(--radio-text-muted)]">{{ song.nextMedia.artists }}</p>
+      </div>
+      <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
+    </aside>
+  </Teleport>
 
   <USlideover v-model:open="mobileQueueOpen" :title="$t('player.queue')" :description="streamName" :ui="{ content: 'w-full max-w-sm', body: 'flex min-h-0 flex-1 flex-col p-0 sm:p-0' }">
     <template #body>
