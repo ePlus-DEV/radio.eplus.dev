@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
+  <div class="min-h-screen w-full overflow-x-hidden bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
     <main
       class="mx-auto w-full max-w-7xl min-w-0 px-3 pb-10 pt-24 sm:px-5 sm:pt-28 lg:px-6"
