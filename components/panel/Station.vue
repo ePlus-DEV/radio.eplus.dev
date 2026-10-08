@@ -12,7 +12,7 @@
         </h2>
       </div>
       <span
-        class="badge badge-sm h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
+        class="inline-flex items-center rounded-full h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
       >
         {{ stations.length }}
       </span>
@@ -26,7 +26,7 @@
         v-for="station in stations"
         :key="station.id"
         :to="station.url"
-        class="card radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
+        class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
         :class="
           station.id === activeStationId
             ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
