@@ -141,6 +141,8 @@ const fetchData = async (): Promise<void> => {
       url: string;
       type?: string;
       cros?: boolean;
+      source?: string;
+      label?: string;
     }
 
     interface Channel {
@@ -167,10 +169,11 @@ const fetchData = async (): Promise<void> => {
         url: favoriteChannel.stream,
         type: favoriteChannel.type,
         cros: favoriteChannel.cros,
+        source: "primary",
       },
       ...(favoriteChannel.streams || []),
       ...(favoriteChannel.stream_alternative
-        ? [{ url: favoriteChannel.stream_alternative }]
+        ? [{ url: favoriteChannel.stream_alternative, source: "alternative" }]
         : []),
     ].filter((item) => {
       const url = String(item.url || "").trim();
@@ -184,6 +187,9 @@ const fetchData = async (): Promise<void> => {
         ? `${runtimeConfig.public.corsServer}${item.url}`
         : item.url,
       type: item.type,
+      source: item.source,
+      label: item.label,
+      proxied: Boolean(item.cros),
     }));
 
     streamUrl.value =
