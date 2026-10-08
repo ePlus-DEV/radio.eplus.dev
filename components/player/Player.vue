@@ -7,7 +7,7 @@
         class="grid min-w-0"
         :class="
           queueCount > 0
-            ? 'lg:grid-cols-[minmax(0,1fr)_340px]'
+            ? 'xl:grid-cols-[minmax(0,1fr)_340px]'
             : 'lg:grid-cols-1'
         "
       >
@@ -25,88 +25,39 @@
                   <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
                   Live
                 </span>
-                <details
+                <label
                   v-if="sourceList.length > 1"
-                  ref="sourceDetails"
-                  class="group/source relative"
+                  class="relative inline-flex min-w-0 items-center"
                 >
-                  <summary
-                    class="flex cursor-pointer list-none items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10"
+                  <span class="sr-only">Select stream source</span>
+                  <select
+                    :value="activeSourceIndex"
+                    class="h-7 max-w-[190px] cursor-pointer appearance-none rounded-full border-0 bg-slate-100 py-1 pl-2.5 pr-7 text-[11px] font-semibold text-slate-600 outline-none transition hover:bg-slate-200 focus:ring-2 focus:ring-rose-400/30 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10 sm:max-w-[240px]"
                     aria-label="Select stream source"
+                    @change="onSourceChange"
                   >
-                    <span class="max-w-28 truncate">{{ activeSourceName }}</span>
-                    <span class="text-slate-400 dark:text-slate-500">
-                      {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
-                    </span>
-                    <svg
-                      viewBox="0 0 20 20"
-                      class="h-3 w-3 fill-current transition group-open/source:rotate-180"
-                      aria-hidden="true"
-                    >
-                      <path d="m5.5 7.5 4.5 4 4.5-4H5.5Z"></path>
-                    </svg>
-                  </summary>
-
-                  <div
-                    class="absolute left-0 top-full z-40 mt-2 w-[min(320px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-950/10 dark:border-white/10 dark:bg-slate-900"
-                  >
-                    <button
+                    <option
                       v-for="(source, index) in sourceList"
                       :key="`${source.src}-${index}`"
-                      type="button"
-                      class="flex w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition"
-                      :class="
-                        index === activeSourceIndex
-                          ? 'bg-rose-50 dark:bg-rose-500/10'
-                          : 'hover:bg-slate-100 dark:hover:bg-white/[0.05]'
-                      "
-                      @click="selectSource(index)"
+                      :value="index"
                     >
-                      <span
-                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold"
-                        :class="
-                          index === activeSourceIndex
-                            ? 'bg-rose-500 text-white'
-                            : 'bg-slate-100 text-slate-500 dark:bg-white/[0.06] dark:text-slate-400'
-                        "
-                      >
-                        {{ index + 1 }}
-                      </span>
-
-                      <span class="min-w-0 flex-1">
-                        <span
-                          class="block truncate text-sm font-semibold"
-                          :class="
-                            index === activeSourceIndex
-                              ? 'text-rose-700 dark:text-rose-200'
-                              : 'text-slate-700 dark:text-slate-200'
-                          "
-                        >
-                          {{ sourceName(source, index) }}
-                        </span>
-                        <span class="mt-0.5 flex min-w-0 items-center gap-1.5 text-[10px] text-slate-400 dark:text-slate-500">
-                          <span>{{ sourceFormat(source) }}</span>
-                          <span aria-hidden="true">•</span>
-                          <span>{{ source.proxied ? "Proxy" : "Direct" }}</span>
-                          <span aria-hidden="true">•</span>
-                          <span class="truncate">{{ sourceHost(source) }}</span>
-                        </span>
-                      </span>
-
-                      <span
-                        v-if="index === activeSourceIndex"
-                        class="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
-                        aria-label="Active source"
-                      ></span>
-                    </button>
-                  </div>
-                </details>
+                      {{ index + 1 }}. {{ sourceName(source, index) }} · {{ sourceFormat(source) }} · {{ source.proxied ? "Proxy" : "Direct" }}
+                    </option>
+                  </select>
+                  <svg
+                    viewBox="0 0 20 20"
+                    class="pointer-events-none absolute right-2 h-3 w-3 fill-current text-slate-400 dark:text-slate-500"
+                    aria-hidden="true"
+                  >
+                    <path d="m5.5 7.5 4.5 4 4.5-4H5.5Z"></path>
+                  </svg>
+                </label>
               </div>
 
               <button
                 v-if="queueCount > 0"
                 type="button"
-                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 lg:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 xl:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 :aria-expanded="mobileQueueOpen"
                 aria-label="Toggle playlist"
                 @click="mobileQueueOpen = !mobileQueueOpen"
@@ -292,7 +243,7 @@
 
             <div
               v-if="mobileQueueOpen && queueCount > 0"
-              class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 lg:hidden dark:border-white/10 dark:bg-slate-950/35"
+              class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 xl:hidden dark:border-white/10 dark:bg-slate-950/35"
             >
               <PlayerQueue
                 :playlist="playlist || []"
@@ -303,7 +254,7 @@
             </div>
 
             <div
-              v-if="queueExpected && queueCount === 0"
+              v-if="queueLoading && queueCount === 0"
               class="mt-4 flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50/70 px-3 py-2.5 text-xs text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
             >
               <span class="h-2 w-2 animate-pulse rounded-full bg-slate-400 dark:bg-slate-500"></span>
@@ -370,7 +321,7 @@
 
         <aside
           v-if="queueCount > 0"
-          class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 lg:block dark:border-white/10 dark:bg-slate-950/30"
+          class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 xl:block dark:border-white/10 dark:bg-slate-950/30"
         >
           <PlayerQueue
             :playlist="playlist || []"
@@ -426,7 +377,7 @@ const props = defineProps<{
   streamUrls?: RadioSource[];
   song?: Song;
   playlist?: PlaylistItem[];
-  queueExpected?: boolean;
+  queueLoading?: boolean;
 }>();
 
 const $store = useMainStore();
@@ -443,7 +394,6 @@ const reconnectAttempts = ref(0);
 const volume = ref(1);
 const muted = ref(false);
 const mobileQueueOpen = ref(false);
-const sourceDetails = ref<HTMLDetailsElement | null>(null);
 const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
 const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
@@ -930,13 +880,17 @@ const retryCurrentSource = (): void => {
 const selectSource = (index: number): void => {
   if (!sourceList.value[index]) return;
 
-  sourceDetails.value?.removeAttribute("open");
   reconnectAttempts.value = 0;
   streamError.value = false;
   userPaused.value = false;
   pendingAutoPlay.value = true;
   activeResolvedSrc = "";
   void applySource(index, true);
+};
+
+const onSourceChange = (event: Event): void => {
+  const target = event.target as HTMLSelectElement;
+  selectSource(Number(target.value));
 };
 
 const toggleMute = (): void => {
