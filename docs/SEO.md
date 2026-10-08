@@ -130,18 +130,19 @@ That change affects canonical URLs, sitemap entries, internal links, redirects a
 
 ## Static navigation pages
 
-As of 2026-10-08, the repository still does not contain:
+The public site includes:
 
 - `/about`
+- `/statistics`
+- `/contact`
 - `/privacy-policy`
 - `/terms-of-use`
-- `/statistics`
 
-A prerender regression exposed that sitewide Header/Footer links to these missing routes were being crawled and treated as hard prerender failures after the new 404 guards were introduced.
+These routes are explicit prerender targets and sitemap entries, and Header/Footer navigation must only expose them while matching page files exist.
 
-Those links are now removed until real pages exist.
+All supported locales provide their static-page copy under `site_pages`.
 
-Do not invent Privacy Policy or Terms content. Re-add these navigation items only when matching owner-approved pages exist. `/about` and `/statistics` can be implemented separately with factual product/data content.
+The Statistics page reads a build-time snapshot from `build/radioStats.ts`, which counts the repository's current country catalogs and station entries. Do not hard-code these totals or present them as guaranteed-online streams/audience counts.
 
 ## Search-result enhancement decisions
 
