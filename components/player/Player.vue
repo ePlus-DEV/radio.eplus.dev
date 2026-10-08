@@ -287,7 +287,7 @@
               class="mt-4 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-inset ring-amber-200 dark:bg-amber-400/10 dark:text-amber-100 dark:ring-amber-300/20"
               role="alert"
             >
-              <fa :icon="['fas', 'wifi-slash']" class="shrink-0" />
+              <fa :icon="['fas', 'wifi']" class="shrink-0" />
               <span>{{ $t("text.offline") }}</span>
             </div>
 

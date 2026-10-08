@@ -1,6 +1,10 @@
 import { defineNuxtConfig } from "nuxt/config";
 import tailwindcss from "@tailwindcss/vite";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
+import {
+  brandIcons,
+  freeSolidIcons,
+} from "./config/fontawesome-icons.mjs";
 
 const algoliaApplicationId =
   process.env.NUXT_PUBLIC_ALGOLIA_APPLICATION_ID ||
@@ -177,21 +181,8 @@ export default defineNuxtConfig({
   fontawesome: {
     component: "fa",
     icons: {
-      brands: ["facebook-f", "github", "x-twitter"],
-    },
-    proIcons: {
-      solid: [
-        "signal-stream",
-        "xmark-large",
-        "sun-bright",
-        "moon",
-        "desktop",
-        "wifi-slash",
-      ],
-      regular: ["magnifying-glass-music", "house", "list-music"],
-      light: ["sun-bright", "moon", "desktop", "bookmark", "up"],
-      thin: [],
-      duotone: ["snooze"],
+      solid: freeSolidIcons,
+      brands: brandIcons,
     },
   },
   dayjs: {

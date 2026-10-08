@@ -72,6 +72,18 @@ The design direction is:
 
 DaisyUI should **not** be allowed to become an independent visual theme that conflicts with Nuxt Color Mode.
 
+### Navigation controls
+
+Breadcrumbs are route-semantic rather than placeholder-level based:
+
+- area page: `Home > Area`;
+- country page: `Home > Area > Country`;
+- station page: `Home > Area > Country > Station`;
+- only ancestors are links; the current crumb uses `aria-current="page"`;
+- do not pass empty fake breadcrumb levels just to force a label.
+
+The Back-to-top control is available on mobile and desktop after scrolling, and its arrow is an inline SVG rather than a Font Awesome dependency.
+
 ## 5. Dark-mode architecture
 
 ### Problem that existed
@@ -299,17 +311,20 @@ For dynamic station names/descriptions:
 
 ## 13. Font Awesome state
 
-The project is **not currently Font Awesome Free-only**.
+The visible application UI is **Font Awesome Free-only**.
 
-Current package/config state contains Free plus Pro families. `nuxt.config.ts` has a `proIcons` section.
+The 2026-10-08 icon audit moved the remaining UI uses away from Pro-only icons, centralized registration in `config/fontawesome-icons.mjs`, removed `proIcons` configuration, and removed direct Pro/Sharp Font Awesome package dependencies.
 
-Implications:
+Important rules:
 
-- do not label the icon stack “free-only” without auditing it;
-- deployment/build environments need whatever entitlement/package access the Pro dependencies require;
-- to remove Pro, replace every Pro icon first, then remove Pro package dependencies and `proIcons` config, and run the full validation/build.
+- all `fas`/brand icons used by Vue templates must be registered centrally;
+- theme icons use Free Solid `sun`, `moon`, and `desktop`;
+- the lyric action uses Free Solid `music`;
+- the offline state uses Free Solid `wifi`;
+- the Back-to-top control uses an inline SVG so this critical navigation action cannot render blank because of an icon-registry regression;
+- private Font Awesome registry auth tokens must never be committed.
 
-This should be revisited if the project goal changes to avoid all Pro dependencies.
+Regression test: `tests/fontawesome-icons.test.mjs`.
 
 ## 14. Testing and CI
 
@@ -344,6 +359,8 @@ For large UI/framework changes, unit tests alone are not a substitute for manual
 Do not paste secrets into durable docs.
 
 Environment documentation should list variable names and purposes only.
+
+Do not commit private npm registry tokens. A previously committed Font Awesome registry token in `.npmrc` was removed during the Free-only icon migration and must be revoked/rotated outside the repository.
 
 If an environment/example file contains credential-looking values, treat them as sensitive and do not repeat them into README, AGENTS, issue bodies, PR bodies, or AI prompts.
 
