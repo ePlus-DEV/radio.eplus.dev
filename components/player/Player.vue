@@ -1,7 +1,7 @@
 <template>
   <section class="w-full min-w-0 pb-4 sm:pb-8">
     <div
-      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)] dark:border-white/10 dark:bg-slate-900"
+      class="radio-themed-surface overflow-hidden rounded-[28px] border shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)]"
     >
       <div
         class="grid min-w-0"
@@ -72,7 +72,7 @@
 
             <div class="mt-4 flex min-w-0 items-center gap-4 sm:mt-5 sm:gap-5">
               <div
-                class="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[24px] border border-slate-200 bg-white p-2.5 shadow-md shadow-slate-950/5 sm:h-32 sm:w-32 dark:border-white/10"
+                class="radio-themed-artwork relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[24px] border border-[var(--radio-border)] p-2.5 shadow-md shadow-slate-950/5 sm:h-32 sm:w-32"
               >
                 <img
                   loading="lazy"
@@ -243,7 +243,7 @@
 
             <div
               v-if="mobileQueueOpen && queueCount > 0"
-              class="mt-5 h-[min(420px,60vh)] overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 xl:hidden dark:border-white/10 dark:bg-slate-950/35"
+              class="radio-themed-muted mt-5 h-[min(420px,60vh)] overflow-hidden rounded-2xl border border-[var(--radio-border)] xl:hidden"
             >
               <PlayerQueue
                 :playlist="playlist || []"
@@ -321,7 +321,7 @@
 
         <aside
           v-if="queueCount > 0"
-          class="hidden h-[380px] overflow-hidden border-l border-slate-200/80 bg-slate-50/60 xl:block dark:border-white/10 dark:bg-slate-950/30"
+          class="radio-themed-muted hidden h-[380px] overflow-hidden border-l border-[var(--radio-border)] xl:block"
         >
           <PlayerQueue
             :playlist="playlist || []"
