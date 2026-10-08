@@ -269,7 +269,7 @@ const setStationStreams = (
   alternative = "",
 ): void => {
   const seen = new Set<string>();
-  const candidates = [
+  const candidates: StationStream[] = [
     primary,
     ...fallbacks,
     ...(alternative
