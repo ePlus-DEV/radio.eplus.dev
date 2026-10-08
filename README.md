@@ -38,6 +38,17 @@ Radio ePlus is a Nuxt-based internet radio application for browsing and listenin
 
 The exact dependency versions are defined in `package.json`.
 
+> [!TIP]
+> **Maintainer / AI context**
+>
+> Before changing the UI, player, theme, radio data, or sync logic, read:
+>
+> - [`AGENTS.md`](./AGENTS.md) — short, enforceable rules for coding agents and contributors.
+> - [`docs/PROJECT_CONTEXT.md`](./docs/PROJECT_CONTEXT.md) — architecture decisions, known regressions, debugging notes, and project history that should survive individual PRs/chats.
+> - [`docs/instant-audio-sync.md`](./docs/instant-audio-sync.md) — radio-data sync behavior and safety model.
+>
+> These files are the durable project memory. Update them whenever a change introduces a new architectural rule, important workaround, provider limitation, or debugging lesson.
+
 ## Project structure
 
 ```text

@@ -1,0 +1,364 @@
+# Radio ePlus — Project Context and Architecture Decisions
+
+Last updated: **2026-10-08**
+
+This document is the durable technical memory for Radio ePlus. It records decisions and failure modes that are easy to lose when work is spread across GitHub PRs, chats, and multiple coding assistants.
+
+For short operational rules, see [`../AGENTS.md`](../AGENTS.md).
+
+## 1. Canonical project
+
+- Repository: `ePlus-DEV/radio.eplus.dev`
+- Production: `https://radio.eplus.dev`
+- `ePlus-DEV/get-radio` is legacy PHP crawler/history only and is not the active application.
+- A preview/testing hostname such as `https://new-radio.eplus.dev` may be used during rollout, but it is not the canonical public URL unless project configuration is explicitly changed.
+
+## 2. Application stack
+
+Current application architecture:
+
+| Layer | Technology |
+| --- | --- |
+| Framework | Nuxt 4 / Vue 3 |
+| Runtime | Node.js 24.15.0 |
+| Styling | Tailwind CSS 4 |
+| UI primitives | DaisyUI 5 |
+| State | Pinia |
+| Audio | Native HTML5 Audio + hls.js |
+| Theme state | `@nuxtjs/color-mode` |
+| i18n | `@nuxtjs/i18n` |
+| Images | `@nuxt/image` |
+| Search | Algolia |
+| Icons | Font Awesome Free + Pro mix |
+| SEO | prerendered radio routes + sitemap |
+
+Exact versions belong in `package.json`.
+
+## 3. Important project paths
+
+```text
+assets/css/main.css                  Theme tokens and shared visual utilities
+components/AppHeader.vue             Global header
+components/AppFooter.vue             Global footer
+components/player/Player.vue         Main audio/HLS player
+components/player/Queue.vue          Schedule/channel side panel
+utils/radio-source-plan.mjs          Playback source/fallback ordering
+pages/[area]/[country]/[station].vue Station detail page
+public/radio/world.json              World/country metadata
+public/radio/<area>/<country>.json   Station catalog per country
+public/img/<area>/<country>/         Local station artwork
+data/world.ts                        Generated world metadata
+scripts/sync-instant-audio.mjs       Radio-data sync
+docs/instant-audio-sync.md           Sync design and safety model
+tests/theme-consistency.test.mjs     Dark/light regression guard
+tests/player-hls-startup.test.mjs    HLS lifecycle regression guard
+tests/radio-source-plan.test.mjs     Source-plan regression guard
+.github/workflows/build.yml          Pull-request unit-test workflow
+.github/workflows/instant-audio-sync.yml Radio data sync/validation workflow
+```
+
+## 4. UI direction
+
+The current Radio ePlus UI was reviewed site-wide rather than component-by-component.
+
+The design direction is:
+
+- dark navy/slate Radio ePlus surfaces;
+- rose accent for live/primary actions;
+- consistent cards, menus, badges, inputs and selects;
+- responsive layouts that avoid fixed empty columns;
+- DaisyUI for stable primitives such as buttons, tabs, inputs, selects, badges and menus;
+- custom Radio ePlus semantic tokens for the actual product palette.
+
+DaisyUI should **not** be allowed to become an independent visual theme that conflicts with Nuxt Color Mode.
+
+## 5. Dark-mode architecture
+
+### Problem that existed
+
+Dark mode previously depended on three independent mechanisms:
+
+1. Tailwind `dark:`;
+2. DaisyUI `data-theme`;
+3. manually hard-coded light/dark colors per component.
+
+This produced pages where most of the UI was dark but individual controls, menus, select elements, overlays, or legacy components stayed light.
+
+### Current solution
+
+`assets/css/main.css` is the source of truth for structural colors.
+
+The theme defines semantic variables for both light and dark modes, including values such as:
+
+- `--radio-page-bg`
+- `--radio-surface`
+- `--radio-surface-elevated`
+- `--radio-surface-soft`
+- `--radio-surface-muted`
+- `--radio-artwork-bg`
+- `--radio-hover`
+- `--radio-border`
+- `--radio-border-strong`
+- `--radio-text`
+- `--radio-text-muted`
+- `--radio-inverse-bg`
+- `--radio-inverse-text`
+- `--radio-track`
+- `--radio-overlay`
+
+DaisyUI `--color-base-*` values are synchronized to the same resolved light/dark state.
+
+Nuxt Color Mode and `data-theme` must remain synchronized.
+
+The background/text are also applied at the root/document level so portals, dialogs, empty page regions, and browser-rendered controls do not expose white gaps in dark mode.
+
+### Theme anti-patterns
+
+Avoid returning to site-wide patterns such as:
+
+```text
+bg-white + dark:bg-slate-*
+text-slate-* + dark:text-white
+border-slate-* + dark:border-white/*
+hard-coded structural hex colors inside Vue templates
+```
+
+Status colors such as rose/amber/emerald are intentional and are not the same as structural theme colors.
+
+Regression test:
+
+```text
+tests/theme-consistency.test.mjs
+```
+
+## 6. Audio player architecture
+
+### Historical change
+
+The application previously used Video.js. It was replaced by Native HTML5 Audio + hls.js.
+
+Do not casually revert to Video.js just because older commits contain a working implementation. If a reversion is proposed, compare bundle size, HLS behavior, mobile/Safari behavior, CORS, fallback logic, and maintenance cost first.
+
+### Current playback flow
+
+1. Build ordered playback candidates from station metadata.
+2. Deduplicate URLs.
+3. For HLS:
+   - prefer hls.js when `Hls.isSupported()`;
+   - use native HLS only if hls.js/MSE is unavailable;
+   - attach media;
+   - load the HLS source;
+   - wait for HLS manifest/media readiness before attempting playback.
+4. For plain audio streams, use the native `<audio>` source path.
+5. Recover bounded HLS network/media failures when possible.
+6. Advance to the next candidate only when the current candidate actually fails.
+7. Stop after the global retry budget.
+
+### Critical HLS regression discovered on 2026-10-08
+
+Regression page:
+
+`https://radio.eplus.dev/asia/viet-nam/edm-radio-zing-mp3`
+
+Observed symptom in the redesigned player:
+
+- DevTools showed `.m3u8` requests continuing successfully;
+- the UI still reported `6/6` and “stream cannot play”;
+- the source selector exposed an auto-generated “Primary · HLS · Proxy” candidate even though the catalog only defined a direct HLS source.
+
+Root causes:
+
+1. Chromium may report a positive/“maybe” result for `canPlayType(...mpegurl)`, but that must not be treated as proof that native HLS is the best engine for the current stream.
+2. The player attempted `media.play()` too early, immediately around HLS attachment rather than waiting for manifest/media readiness.
+3. Early media/HLS errors could both schedule retries.
+4. The source planner generated a generic CORS-proxy duplicate for an HLS manifest.
+5. The fallback probe was aggressive enough to switch away while the HLS pipeline was still starting.
+
+Fixes now considered architectural rules:
+
+- hls.js/MSE first;
+- native HLS only as fallback;
+- no immediate `play()` directly after `attachMedia()`;
+- wait for `MANIFEST_PARSED`/readiness;
+- HLS.js handles HLS recovery;
+- do not duplicate retry scheduling from raw media errors while hls.js owns the MediaSource;
+- current startup probe window is 10 seconds;
+- no automatically generated generic-proxy variant for HLS manifests;
+- explicitly proxied catalog sources remain supported.
+
+Regression tests:
+
+```text
+tests/player-hls-startup.test.mjs
+tests/radio-source-plan.test.mjs
+```
+
+## 7. CORS and fallback-source policy
+
+There are two different concepts that must not be confused.
+
+### Explicit catalog proxy
+
+A radio entry can be marked `cros: true`.
+
+That means the application intentionally constructs a proxied URL using the configured CORS service before the source reaches the player.
+
+This behavior must remain supported.
+
+### Automatic fallback proxy
+
+`utils/radio-source-plan.mjs` can generate a proxy fallback for suitable direct streams.
+
+Current rule:
+
+- plain audio streams can receive an automatic proxy fallback;
+- HLS manifests should not receive a generic automatic proxy duplicate.
+
+Why: an HLS master/media playlist can reference relative child playlists, keys, and media fragments. A generic proxy wrapped around only the top-level manifest can break those child requests.
+
+## 8. Retry behavior
+
+`MAX_STREAM_ATTEMPTS` is defined centrally in `utils/radio-source-plan.mjs`.
+
+The retry budget is global/bounded. It should represent meaningful playback attempts, not every harmless intermediate HLS event.
+
+Do not reset/consume the budget merely because a manifest starts downloading. Successful playback is the meaningful recovery point.
+
+The UI may display the current exhausted count, so changing retry semantics also changes user-visible behavior.
+
+## 9. Station data model
+
+Country station files live under:
+
+`public/radio/<area>/<country>.json`
+
+Typical primary fields:
+
+```json
+{
+  "station-slug": {
+    "title": "Station name",
+    "type": "audio/mpeg",
+    "url": "https://station.example",
+    "cros": false,
+    "stream": "https://stream.example/live.mp3",
+    "features": "/img/europe/example/station-slug.png",
+    "favorite": false
+  }
+}
+```
+
+Some stations can also include:
+
+- `streams` — ordered fallback candidates;
+- `stream_alternative` — legacy alternative stream;
+- `schedule`;
+- provider-specific metadata.
+
+Do not destructively replace existing stations merely because a sync provider returns a different result.
+
+## 10. Data sync
+
+Radio sync is documented separately in `docs/instant-audio-sync.md`.
+
+Important principles:
+
+- sync changes go through PRs, not direct `main` writes;
+- missing countries can be added;
+- existing countries are augmented non-destructively;
+- local artwork is preferred;
+- changed data is validated;
+- upstream APIs can rate-limit, block, or change without notice;
+- PR validation must not depend on live upstream providers.
+
+The workflow name exposed in GitHub Actions is **Radio data sync**.
+
+## 11. Search, SEO and canonical URLs
+
+Production canonical URL:
+
+`https://radio.eplus.dev`
+
+The application generates radio SEO routes/sitemap from repository data.
+
+When working on previews, do not accidentally change canonical production metadata to a temporary preview domain.
+
+Algolia is optional for local/build scenarios where credentials are unavailable.
+
+## 12. Internationalization and RTL
+
+Configured languages include English, Vietnamese, Japanese, Simplified Chinese, Traditional Chinese, French, and Russian.
+
+Station/provider text can include languages not represented by the site UI locales, including Arabic.
+
+For dynamic station names/descriptions:
+
+- prefer `dir="auto"`;
+- avoid assumptions about Latin text width/direction;
+- test long names and RTL names in player/sidebar/card layouts.
+
+## 13. Font Awesome state
+
+The project is **not currently Font Awesome Free-only**.
+
+Current package/config state contains Free plus Pro families. `nuxt.config.ts` has a `proIcons` section.
+
+Implications:
+
+- do not label the icon stack “free-only” without auditing it;
+- deployment/build environments need whatever entitlement/package access the Pro dependencies require;
+- to remove Pro, replace every Pro icon first, then remove Pro package dependencies and `proIcons` config, and run the full validation/build.
+
+This should be revisited if the project goal changes to avoid all Pro dependencies.
+
+## 14. Testing and CI
+
+`npm test` runs Node test files in `tests/*.test.mjs`.
+
+Important current guards:
+
+- `theme-consistency.test.mjs`
+- `player-hls-startup.test.mjs`
+- `radio-source-plan.test.mjs`
+- `radio-sync.test.mjs`
+
+Pull-request workflow:
+
+`.github/workflows/build.yml`
+
+Despite the filename, its current GitHub Actions display name is **Unit tests**.
+
+For large UI/framework changes, unit tests alone are not a substitute for manually validating:
+
+- desktop/mobile layout;
+- light/dark mode;
+- one MP3/plain stream;
+- one HLS stream;
+- a country with stations but no schedule;
+- a station with schedule;
+- Arabic/RTL station text;
+- search/dialog/dropdown surfaces.
+
+## 15. Security/documentation rule
+
+Do not paste secrets into durable docs.
+
+Environment documentation should list variable names and purposes only.
+
+If an environment/example file contains credential-looking values, treat them as sensitive and do not repeat them into README, AGENTS, issue bodies, PR bodies, or AI prompts.
+
+## 16. How future AI/contributors should update this file
+
+Update this document in the same PR when any of the following changes:
+
+- framework/player/theme architecture;
+- canonical URLs;
+- stream fallback/CORS policy;
+- important provider limitation;
+- CI/test expectations;
+- data schema;
+- sync safety rules;
+- icon/licensing strategy;
+- a production regression reveals a new rule that future refactors must preserve.
+
+Prefer documenting the **reason** for a rule, not only the final code, so later refactors do not accidentally recreate the same bug.

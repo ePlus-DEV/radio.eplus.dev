@@ -1,0 +1,150 @@
+# AGENTS.md
+
+This file is the short operational guide for coding agents and contributors working on **Radio ePlus**.
+
+For deeper history and rationale, read [`docs/PROJECT_CONTEXT.md`](./docs/PROJECT_CONTEXT.md).
+
+## Repository identity
+
+- Canonical repository: `ePlus-DEV/radio.eplus.dev`
+- Canonical production site: `https://radio.eplus.dev`
+- Do not use `ePlus-DEV/get-radio` for new work; it is legacy reference code.
+- Treat `main` as the source of truth. Create a branch and PR for normal code/data changes.
+
+## Current stack
+
+- Nuxt 4 / Vue 3
+- Node.js 24.15.0
+- Tailwind CSS 4
+- DaisyUI 5
+- Pinia
+- Native HTML5 `<audio>` + `hls.js`
+- Nuxt Color Mode
+- Nuxt i18n
+- Nuxt Image
+- Algolia
+- Font Awesome
+
+Always check `package.json` before assuming exact versions.
+
+## Files to read before major changes
+
+- `README.md`
+- `docs/PROJECT_CONTEXT.md`
+- `assets/css/main.css` for theme architecture
+- `components/player/Player.vue` for playback lifecycle
+- `utils/radio-source-plan.mjs` for fallback-source planning
+- `tests/theme-consistency.test.mjs`
+- `tests/player-hls-startup.test.mjs`
+- `tests/radio-source-plan.test.mjs`
+- `docs/instant-audio-sync.md` when changing radio data or sync automation
+
+## UI and dark-mode invariants
+
+The site previously mixed three independent styling systems:
+
+1. Tailwind `dark:` utilities;
+2. DaisyUI `data-theme`;
+3. component-specific hard-coded light/dark colors.
+
+That caused partially themed pages. The current rule is:
+
+- semantic site colors belong in `assets/css/main.css` as `--radio-*` tokens;
+- Nuxt Color Mode classes and DaisyUI `data-theme` must resolve to the same palette;
+- DaisyUI is a control/component primitive layer, not a separate visual theme;
+- use `--radio-surface`, `--radio-surface-soft`, `--radio-text`, `--radio-text-muted`, `--radio-border`, etc. for structural colors;
+- intentional status/accent colors such as rose/amber/emerald are allowed;
+- do not reintroduce one-off combinations such as `bg-white dark:bg-slate-*` across the app.
+
+Run `npm test`; `tests/theme-consistency.test.mjs` exists specifically to catch theme regressions.
+
+## Player / HLS invariants
+
+The current player is intentionally **Native Audio + hls.js**, not Video.js.
+
+Important rules:
+
+- Prefer `Hls.isSupported()` / Media Source Extensions first.
+- Use browser-native HLS only as fallback when hls.js/MSE is unavailable.
+- Do not call `media.play()` immediately after `hls.attachMedia()`.
+- For hls.js playback, wait for manifest/media readiness; the current code starts playback from the `MANIFEST_PARSED` path.
+- Let hls.js own HLS network/media recovery. Do not simultaneously schedule duplicate retries from the raw `<audio>` error handler.
+- Keep retries bounded. `MAX_STREAM_ATTEMPTS` is defined in `utils/radio-source-plan.mjs`.
+- Do **not** automatically wrap HLS `.m3u8` URLs in a generic CORS proxy. HLS manifests often contain relative child playlists/segments that generic proxies break.
+- A station explicitly marked `cros: true` is different: its URL is intentionally proxied before reaching the player and must continue to work.
+- Plain non-HLS streams may still receive a generated proxy fallback.
+- Preserve fallback order and deduplication.
+
+The Zing MP3 EDM station is a useful regression case:
+
+`/asia/viet-nam/edm-radio-zing-mp3`
+
+A valid HLS stream must not download successfully in DevTools while the UI prematurely cycles to `6/6` and reports failure.
+
+Run:
+
+```bash
+npm test
+```
+
+before changing the player.
+
+## Radio data invariants
+
+- World metadata: `public/radio/world.json`
+- Per-country stations: `public/radio/<area>/<country>.json`
+- Generated world data: `data/world.ts`
+- Prefer local station artwork under `public/img/<area>/<country>/`
+- Preserve existing stations when sync automation discovers new data.
+- Validate primary and fallback stream URLs before writing data.
+- Do not assume upstream radio-provider APIs are stable or documented.
+
+See `docs/instant-audio-sync.md`.
+
+## i18n and text direction
+
+Station names/descriptions may use Arabic or other RTL/mixed scripts.
+
+- Preserve `dir="auto"` on user/provider-supplied station text where present.
+- Do not assume all station titles use Latin characters.
+- Keep translations in `lang/`.
+
+## Font Awesome licensing state
+
+The repository currently uses a **mixed Free + Pro Font Awesome setup**.
+
+- `package.json` includes Free and Pro Font Awesome packages.
+- `nuxt.config.ts` contains a `proIcons` configuration.
+- Do not assume the project is already free-only.
+- If removing Pro usage, first replace every configured/used Pro icon with a Free equivalent, then remove Pro packages/config and verify the build.
+
+## CI and validation
+
+Primary PR CI is `.github/workflows/build.yml`, currently named **Unit tests**.
+
+At minimum:
+
+```bash
+npm ci
+npm test
+```
+
+For substantial Nuxt/SEO/layout changes, also run the appropriate build/generate command locally when practical:
+
+```bash
+npm run build
+# or
+npm run generate
+```
+
+Data-sync PR validation intentionally avoids live provider calls.
+
+## Security
+
+- Never add API keys, tokens, passwords, cookies, or private credentials to README, AGENTS, project-context docs, issue bodies, or PR bodies.
+- Treat credential-looking values in environment files as secrets even if they are already present in repository history.
+- Documentation should name environment-variable keys, not copy their values.
+
+## Durable-memory rule
+
+When a bug or refactor reveals a project-wide rule that a future contributor/AI could accidentally break again, update `docs/PROJECT_CONTEXT.md` in the same PR.
