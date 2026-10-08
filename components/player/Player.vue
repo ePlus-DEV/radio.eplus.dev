@@ -293,8 +293,8 @@
             </div>
           </div>
 
-          <div class="radio-videojs-host" aria-hidden="true">
-            <audio ref="mediaElement" class="video-js" playsinline preload="none"></audio>
+          <div class="radio-audio-host" aria-hidden="true">
+            <audio ref="mediaElement" playsinline preload="none"></audio>
           </div>
         </div>
 
@@ -1013,7 +1013,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.radio-videojs-host {
+.radio-audio-host {
   position: absolute;
   width: 1px;
   height: 1px;
