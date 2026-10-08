@@ -243,7 +243,7 @@
 
             <div
               v-if="mobileQueueOpen && queueCount > 0"
-              class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 xl:hidden dark:border-white/10 dark:bg-slate-950/35"
+              class="mt-5 h-[min(420px,60vh)] overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 xl:hidden dark:border-white/10 dark:bg-slate-950/35"
             >
               <PlayerQueue
                 :playlist="playlist || []"
@@ -321,7 +321,7 @@
 
         <aside
           v-if="queueCount > 0"
-          class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 xl:block dark:border-white/10 dark:bg-slate-950/30"
+          class="hidden h-[380px] overflow-hidden border-l border-slate-200/80 bg-slate-50/60 xl:block dark:border-white/10 dark:bg-slate-950/30"
         >
           <PlayerQueue
             :playlist="playlist || []"
