@@ -204,12 +204,10 @@ let clientReady = false;
 const POLL_INTERVAL = 60_000;
 
 const seoTitle = computed(() => `Live Radio in ${countryName.value}`);
-const seoDescription = computed(
-  () =>
-    `Listen to ${stationCount.value || ""} live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`.replace(
-      "to  live",
-      "to live",
-    ),
+const seoDescription = computed(() =>
+  stationCount.value > 0
+    ? `Listen to ${stationCount.value} live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`
+    : `Listen to live internet radio stations from ${countryName.value} on Radio ePlus.`,
 );
 const breadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
