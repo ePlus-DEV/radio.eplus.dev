@@ -168,7 +168,7 @@ Read `docs/SEO.md` before changing route/data-loading behavior.
 - Realtime schedule/song/lyric providers remain client-only and must not affect prerender.
 - Unknown area/country/station routes must return real 404 responses instead of soft-404 pages.
 - Canonical origin is `https://radio.eplus.dev` unless explicitly overridden for a real production migration.
-- Sitemap `lastmod` comes from catalog file mtimes; never set every route to the current deployment time.
+- Do not emit sitemap `lastmod` from CI filesystem mtimes; they are checkout times, not trustworthy content-update times.
 - Keep BreadcrumbList + CollectionPage/ItemList + RadioStation structured data aligned with visible route content.
 - Do not generate fake hreflang tags while i18n uses `strategy: "no_prefix"`; proper multilingual SEO requires distinct locale URLs.
 - Do not invent Privacy Policy or Terms content merely to eliminate a 404. Use owner-approved content or remove the links.
