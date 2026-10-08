@@ -31,6 +31,7 @@ Always check `package.json` before assuming exact versions.
 
 - `README.md`
 - `docs/PROJECT_CONTEXT.md`
+- `docs/SEO.md` before changing routes, SSR/prerender behavior, metadata, sitemap, or i18n URL strategy
 - `assets/css/main.css` for theme architecture
 - `components/player/Player.vue` for playback lifecycle
 - `utils/radio-source-plan.mjs` for fallback-source planning
@@ -158,6 +159,24 @@ The application UI is **Font Awesome Free-only**.
 - Do not commit Font Awesome registry auth tokens or a private-registry `.npmrc`.
 - Prefer a small inline SVG for critical navigation controls when it avoids an unnecessary icon-runtime dependency (for example Back to top).
 - Run `tests/fontawesome-icons.test.mjs` when adding/changing icons.
+
+## SEO invariants
+
+Read `docs/SEO.md` before changing route/data-loading behavior.
+
+- Country and station discovery links must exist in SSR/prerendered HTML; do not move catalog discovery behind `onMounted()`.
+- Realtime schedule/song/lyric providers remain client-only and must not affect prerender.
+- Unknown area/country/station routes must return real 404 responses instead of soft-404 pages.
+- Canonical origin is `https://radio.eplus.dev` unless explicitly overridden for a real production migration.
+- Sitemap `lastmod` comes from catalog file mtimes; never set every route to the current deployment time.
+- Keep BreadcrumbList + CollectionPage/ItemList + RadioStation structured data aligned with visible route content.
+- Do not generate fake hreflang tags while i18n uses `strategy: "no_prefix"`; proper multilingual SEO requires distinct locale URLs.
+- Do not invent Privacy Policy or Terms content merely to eliminate a 404. Use owner-approved content or remove the links.
+
+Regression guards:
+
+- `tests/seo-page-foundation.test.mjs`
+- `tests/seo-structured-data.test.mjs`
 
 ## CI and validation
 
