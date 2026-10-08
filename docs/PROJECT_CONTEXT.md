@@ -441,10 +441,17 @@ Current foundation:
 - JSON-LD coverage includes WebSite, Organization, BreadcrumbList, CollectionPage/ItemList, and RadioStation as appropriate;
 - realtime schedule/song/lyric APIs remain client-only and are excluded from crawl-time dependencies.
 
-Two known blockers are intentional and documented rather than hidden:
+Known SEO limitation:
 
 1. i18n still uses `strategy: "no_prefix"`, so true multilingual hreflang SEO requires a dedicated URL migration.
-2. sitewide navigation currently references `/about`, `/privacy-policy`, `/terms-of-use`, and `/statistics` without matching pages. Privacy/Terms must not be fabricated; add owner-approved content or remove the links.
+
+Prerender hard-404 regression fixed on 2026-10-08:
+
+- Header/Footer previously linked to `/about`, `/privacy-policy`, `/terms-of-use`, and `/statistics` even though those pages did not exist;
+- Nitro crawled those links during `npm run generate` and correctly failed on the new hard 404 guards;
+- the invalid sitewide links were removed until real pages exist;
+- `build/radioRoutes.ts` now ignores asset-only folders under `public/radio`;
+- legacy Romania artwork was moved from `public/radio/romania/` to the canonical `public/img/europe/romania/` tree so it can no longer masquerade as a geographic area.
 
 
 
