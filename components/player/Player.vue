@@ -1030,6 +1030,7 @@ const onMediaPlaying = (): void => {
 const onMediaWaiting = (): void => {
   if (!userPaused.value) {
     waiting.value = true;
+    startFallbackProbe();
   }
 };
 
