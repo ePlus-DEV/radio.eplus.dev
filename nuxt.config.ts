@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from "nuxt/config";
 import tailwindcss from "@tailwindcss/vite";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
+import { getRadioCatalogStats } from "./build/radioStats";
 import {
   brandIcons,
   freeSolidIcons,
@@ -24,6 +25,14 @@ const defaultDescription =
   process.env.DESCRIPTION ||
   "Listen to live internet radio stations from around the world on Radio ePlus.";
 const radioSeoRoutes = getRadioSeoRoutes();
+const radioCatalogStats = getRadioCatalogStats();
+const staticSeoRoutes = [
+  { loc: "/about", priority: 0.5, changefreq: "monthly" as const },
+  { loc: "/statistics", priority: 0.6, changefreq: "daily" as const },
+  { loc: "/contact", priority: 0.4, changefreq: "monthly" as const },
+  { loc: "/privacy-policy", priority: 0.3, changefreq: "yearly" as const },
+  { loc: "/terms-of-use", priority: 0.3, changefreq: "yearly" as const },
+];
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -62,6 +71,7 @@ export default defineNuxtConfig({
       siteUrl,
       siteName,
       defaultDescription,
+      radioCatalogStats,
     },
   },
   css: ["~/assets/css/main.css"],
@@ -209,15 +219,22 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: [
         ...radioSeoRoutes.map((route) => route.loc),
+        ...staticSeoRoutes.map((route) => route.loc),
         "/sitemap.xml",
       ],
     },
   },
   sitemap: {
-    urls: radioSeoRoutes.map((route) => ({
-      ...getSitemapEntry(route),
-      loc: `${siteUrl}${route.loc}`,
-    })),
+    urls: [
+      ...radioSeoRoutes.map((route) => ({
+        ...getSitemapEntry(route),
+        loc: `${siteUrl}${route.loc}`,
+      })),
+      ...staticSeoRoutes.map((route) => ({
+        ...route,
+        loc: `${siteUrl}${route.loc}`,
+      })),
+    ],
   },
   vue: {
     compilerOptions: {

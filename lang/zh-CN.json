@@ -201,5 +201,142 @@
       "system": "系统模式"
     },
     "offline": "网络连接失败，请检查您的网络连接。"
+  },
+  "site_pages": {
+    "common": {
+      "last_updated": "最后更新"
+    },
+    "about": {
+      "eyebrow": "关于",
+      "title": "关于 Radio ePlus",
+      "description": "一个轻量的互联网直播电台目录和播放器，可按地区和国家发现电台。",
+      "sections": {
+        "discover": {
+          "title": "发现电台",
+          "body": "Radio ePlus 按地区和国家整理互联网电台，让你可以在统一界面中查找本地和国际电台。"
+        },
+        "playback": {
+          "title": "直接播放",
+          "body": "播放器会将浏览器连接到电台或服务提供商的音频流，并支持常见音频格式与 HLS，以及有限度的回退处理。"
+        },
+        "availability": {
+          "title": "实时数据会变化",
+          "body": "电台流、节目表、图片和当前歌曲信息来自不断变化的目录和第三方提供商，因此可能随时改变或不可用。"
+        }
+      },
+      "open_source": {
+        "title": "开放项目",
+        "body": "Radio ePlus 由 ePlus.DEV 维护。应用源码、Issue 和持续改进内容均公开在 GitHub 上。"
+      }
+    },
+    "privacy": {
+      "eyebrow": "隐私",
+      "title": "隐私政策",
+      "description": "说明 Radio ePlus 如何处理站点偏好、搜索、播放请求和第三方服务。",
+      "sections": {
+        "accounts": {
+          "title": "账户与付款",
+          "body": "Radio ePlus 不要求用户注册，也不在本站提供付款或结账流程。请不要通过公开项目渠道提交敏感个人信息。"
+        },
+        "preferences": {
+          "title": "本地偏好",
+          "body": "主题、语言等界面偏好可能由浏览器或框架通过 Cookie／本地存储保存，以便记住你的选择。"
+        },
+        "search": {
+          "title": "搜索服务",
+          "body": "启用站内搜索时，搜索词可能由已配置的服务商（例如 Algolia）处理，并适用其自己的隐私条款。"
+        },
+        "streams": {
+          "title": "电台流与第三方",
+          "body": "开始播放后，浏览器会连接到电台、流媒体主机、节目表提供商或已配置的中继服务。这些第三方可能收到 IP 地址、User Agent 等正常网络信息。"
+        },
+        "logs": {
+          "title": "托管与技术日志",
+          "body": "托管、CDN 和安全基础设施可能处理用于传输、保护和排障的标准请求信息，例如 IP、浏览器信息、访问路径和时间戳。"
+        },
+        "sharing": {
+          "title": "数据出售与共享",
+          "body": "Radio ePlus 不出售个人数据。信息仅在运营网站所需范围内处理，或由你通过搜索、播放和外部链接直接使用的第三方服务处理。"
+        },
+        "changes": {
+          "title": "政策变更",
+          "body": "当网站、服务提供商或数据处理方式发生变化时，本政策可能更新。当前版本和更新时间会公布在本页。"
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "条款",
+      "title": "使用条款",
+      "description": "使用 Radio ePlus 及其第三方电台服务链接时适用的条件。",
+      "sections": {
+        "service": {
+          "title": "服务使用",
+          "body": "Radio ePlus 作为免费的电台发现和播放界面提供。你可以为合法的个人用途访问公开可用的电台服务。"
+        },
+        "third_party": {
+          "title": "第三方音频流",
+          "body": "Radio ePlus 收录并链接由第三方运营的音频流。内容、可用性、地区限制、广告和条款由各服务自行控制，Radio ePlus 不保证任何音频流持续可用。"
+        },
+        "copyright": {
+          "title": "版权与商标",
+          "body": "电台名称、标志、音频及其他第三方材料归各自权利人所有。如权利人认为某项内容应更正或删除，请提供相关 URL 和足以核实请求的信息。"
+        },
+        "acceptable_use": {
+          "title": "合理使用",
+          "body": "不得利用 Radio ePlus 滥用服务商、绕过访问控制、干扰服务、进行有害频率的抓取、传播恶意软件或违反法律及第三方权利。"
+        },
+        "availability": {
+          "title": "可用性与保证",
+          "body": "网站和目录按现状及可用状态提供。音频质量、节目表、元数据和提供商 API 都可能独立于 Radio ePlus 发生变化或故障。"
+        },
+        "changes": {
+          "title": "条款变更",
+          "body": "随着项目或支持服务的发展，本条款可能更新。更新后继续使用即表示按当前公布的条款使用服务。"
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "联系",
+      "title": "联系 Radio ePlus",
+      "description": "报告错误、请求更新电台，或就涉及权利的收录内容联系项目。",
+      "sections": {
+        "bug": {
+          "title": "错误或播放问题",
+          "body": "请提供受影响页面 URL、浏览器／设备、预期结果和实际结果。遇到播放失败时，Network 或 Console 信息会很有帮助。"
+        },
+        "station": {
+          "title": "更新电台",
+          "body": "新增电台或修正元数据时，请提供电台名称、官方网站、国家以及可用的已验证公开音频流 URL。"
+        },
+        "copyright": {
+          "title": "版权或删除请求",
+          "body": "权利人可以通过指出相关电台／页面并提供足够核实信息，请求更正或删除。"
+        }
+      },
+      "github": {
+        "title": "创建 GitHub Issue",
+        "body": "公开开发、错误报告和目录修正均在 Radio ePlus 的 GitHub 仓库中跟踪。",
+        "action": "创建 Issue"
+      }
+    },
+    "statistics": {
+      "eyebrow": "目录",
+      "title": "电台统计",
+      "description": "Radio ePlus 当前目录中地区、国家和电台条目的构建时快照。",
+      "metrics": {
+        "areas": "地区",
+        "countries": "国家",
+        "stations": "电台"
+      },
+      "coverage_title": "按地区覆盖",
+      "coverage_description": "每张卡片显示该地区当前存储的国家目录数量和电台条目数量。",
+      "method_title": "这些数字如何计算",
+      "method_body": "这些数据在网站构建时从仓库中受版本控制的 JSON 目录统计得出，表示目录条目数量，不等于当前在线音频流、独立广播机构或听众数量。"
+    },
+    "error": {
+      "not_found_title": "找不到页面",
+      "generic_title": "发生错误",
+      "generic_body": "无法加载此页面。请返回首页后重试。"
+    }
   }
 }

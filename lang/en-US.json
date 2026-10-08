@@ -201,5 +201,142 @@
       "system": "System"
     },
     "offline": "Network connection failed, please check your network connection."
+  },
+  "site_pages": {
+    "common": {
+      "last_updated": "Last updated"
+    },
+    "about": {
+      "eyebrow": "About",
+      "title": "About Radio ePlus",
+      "description": "A lightweight directory and player for discovering live internet radio by region and country.",
+      "sections": {
+        "discover": {
+          "title": "Discover radio",
+          "body": "Radio ePlus organizes internet radio stations by region and country so listeners can find local and international stations from one consistent interface."
+        },
+        "playback": {
+          "title": "Direct playback",
+          "body": "The player connects your browser to station or provider streams and supports common audio and HLS sources with bounded fallback handling."
+        },
+        "availability": {
+          "title": "Live data changes",
+          "body": "Station streams, schedules, artwork and current-song data come from changing catalogs and third-party providers, so availability can change without notice."
+        }
+      },
+      "open_source": {
+        "title": "Open project",
+        "body": "Radio ePlus is maintained by ePlus.DEV. The application source, issues and ongoing improvements are available publicly on GitHub."
+      }
+    },
+    "privacy": {
+      "eyebrow": "Privacy",
+      "title": "Privacy Policy",
+      "description": "How Radio ePlus handles site preferences, search, playback requests and third-party services.",
+      "sections": {
+        "accounts": {
+          "title": "Accounts and payments",
+          "body": "Radio ePlus does not require a user account and does not provide a payment or checkout flow on this website. Please do not submit sensitive personal information through public project channels."
+        },
+        "preferences": {
+          "title": "Local preferences",
+          "body": "Theme, language and similar interface preferences may be stored by your browser or by framework cookies/local storage so the site can remember your choices."
+        },
+        "search": {
+          "title": "Search services",
+          "body": "When site search is enabled, search queries may be processed by the configured search provider such as Algolia. Their own privacy terms apply to that processing."
+        },
+        "streams": {
+          "title": "Radio streams and third parties",
+          "body": "Starting playback connects your browser to radio stations, streaming hosts, schedule providers or configured relay services. Those third parties can receive normal network information such as your IP address and user agent."
+        },
+        "logs": {
+          "title": "Hosting and technical logs",
+          "body": "Hosting, CDN and security infrastructure may process standard request metadata needed to deliver, secure and troubleshoot the website, such as IP address, browser information, requested path and timestamps."
+        },
+        "sharing": {
+          "title": "Sale and sharing of data",
+          "body": "Radio ePlus does not sell personal data. Information is only processed as needed to operate the website or by the third-party services you directly use through search, playback or external links."
+        },
+        "changes": {
+          "title": "Changes to this policy",
+          "body": "This policy may be updated when the website, providers or data practices change. The current version and update date are published on this page."
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "Terms",
+      "title": "Terms of Use",
+      "description": "The conditions for using Radio ePlus and its links to third-party radio services.",
+      "sections": {
+        "service": {
+          "title": "Use of the service",
+          "body": "Radio ePlus is provided as a free radio discovery and playback interface. You may use the website for lawful personal access to publicly reachable radio services."
+        },
+        "third_party": {
+          "title": "Third-party streams",
+          "body": "Radio ePlus catalogs and links to streams operated by third parties. Those services control their own content, availability, geographic restrictions, advertising and terms. Radio ePlus does not guarantee that any stream will remain available."
+        },
+        "copyright": {
+          "title": "Copyright and trademarks",
+          "body": "Station names, logos, audio and other third-party materials remain the property of their respective owners. If you are a rights holder and believe a listing should be corrected or removed, contact the project with the affected URL and supporting information."
+        },
+        "acceptable_use": {
+          "title": "Acceptable use",
+          "body": "Do not use Radio ePlus to abuse providers, bypass access controls, disrupt the service, scrape at harmful rates, distribute malware or violate applicable law or third-party rights."
+        },
+        "availability": {
+          "title": "Availability and warranty",
+          "body": "The website and catalog are provided on an as-is and as-available basis. Stream quality, schedules, metadata and provider APIs can change or fail independently of Radio ePlus."
+        },
+        "changes": {
+          "title": "Changes to these terms",
+          "body": "These terms may be updated as the project or supported services evolve. Continued use after an update means you are using the service under the current published terms."
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Contact Radio ePlus",
+      "description": "Report a bug, request a station update or contact the project about a rights-related listing.",
+      "sections": {
+        "bug": {
+          "title": "Bug or playback problem",
+          "body": "Include the affected page URL, browser/device, what you expected and what happened. Network or console details are helpful when a stream fails."
+        },
+        "station": {
+          "title": "Station update",
+          "body": "For a new station or metadata correction, provide the station name, official website, country and a verified public stream URL when available."
+        },
+        "copyright": {
+          "title": "Copyright or removal",
+          "body": "Rights holders can request a correction or removal by identifying the affected station/page and providing enough information for the project to verify the request."
+        }
+      },
+      "github": {
+        "title": "Open a GitHub issue",
+        "body": "Public development, bug reports and catalog corrections are tracked in the Radio ePlus GitHub repository.",
+        "action": "Create issue"
+      }
+    },
+    "statistics": {
+      "eyebrow": "Catalog",
+      "title": "Radio statistics",
+      "description": "A build-time snapshot of the regions, countries and station entries currently available in the Radio ePlus catalog.",
+      "metrics": {
+        "areas": "Regions",
+        "countries": "Countries",
+        "stations": "Stations"
+      },
+      "coverage_title": "Coverage by region",
+      "coverage_description": "Each card shows how many country catalogs and station entries are currently stored for that region.",
+      "method_title": "How these numbers are calculated",
+      "method_body": "These figures are counted from the version-controlled JSON catalogs in the repository during the site build. They describe catalog entries, not guaranteed currently-online streams, unique broadcasters or audience size."
+    },
+    "error": {
+      "not_found_title": "Page not found",
+      "generic_title": "Something went wrong",
+      "generic_body": "The page could not be loaded. Please return to the homepage and try again."
+    }
   }
 }
