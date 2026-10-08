@@ -99,8 +99,13 @@
 <script setup lang="ts">
 import worldData from "~/data/world";
 import type { RadioSource } from "~/types/radio";
+import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
+const { t } = useI18n();
+const siteUrl = computed(() =>
+  String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
+);
 const streamName = ref<string>("");
 const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
 const streamUrls = ref<RadioSource[]>([]);
@@ -121,7 +126,29 @@ const seoTitle = "Live Internet Radio Worldwide";
 const seoDescription =
   "Listen to live internet radio from around the world. Browse stations by region and country and stream radio online with Radio ePlus.";
 
-useHead({ title: seoTitle });
+const homeCollectionSchema = computed(() =>
+  buildCollectionPageSchema({
+    siteUrl: siteUrl.value,
+    path: "/",
+    name: seoTitle,
+    description: seoDescription,
+    items: areaItems.value.map((item) => ({
+      name: t(`world.${item.key}.name`),
+      path: `/${item.slug}`,
+    })),
+  }),
+);
+
+useHead(() => ({
+  title: seoTitle,
+  script: [
+    {
+      key: "home-collection-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(homeCollectionSchema.value),
+    },
+  ],
+}));
 useSeoMeta({
   description: seoDescription,
   ogTitle: seoTitle,
