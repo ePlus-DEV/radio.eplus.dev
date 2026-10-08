@@ -10,7 +10,7 @@
           <div class="h-5 w-36 animate-pulse rounded-full bg-[var(--radio-border-strong)]"></div>
           <div class="h-4 w-12 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
         </div>
-        <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
           <div
             v-for="n in 12"
             :key="n"
@@ -43,21 +43,21 @@
         </span>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
         <NuxtLink
           v-for="country in continent"
           :key="country.url"
           :to="country.url"
-          class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-rose-400/30"
+          class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-violet-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           :title="$t(country.name)"
           :aria-label="$t(country.name)"
         >
-          <div class="radio-themed-artwork relative flex aspect-[4/3] items-center justify-center overflow-hidden p-4">
+          <div class="radio-themed-artwork relative flex aspect-square items-center justify-center overflow-hidden p-5">
             <img
               loading="lazy"
               :src="country.flag"
               :alt="$t(country.name)"
-              class="max-h-[72%] max-w-[78%] object-contain drop-shadow-sm transition duration-200 group-hover:scale-[1.04]"
+              class="max-h-[70%] max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
             />
             <span
               v-if="country.station_count !== null"
