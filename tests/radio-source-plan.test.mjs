@@ -7,10 +7,14 @@ import {
   nextPlaybackIndex,
 } from "../utils/radio-source-plan.mjs";
 
-test("inserts CORS fallback immediately after each direct source", () => {
+test("does not auto-proxy HLS manifests but keeps proxy fallback for plain streams", () => {
   const result = buildPlaybackSources(
     [
-      { src: "https://radio.example/live.m3u8", source: "primary" },
+      {
+        src: "https://radio.example/live.m3u8",
+        type: "application/x-mpegURL",
+        source: "primary",
+      },
       { src: "https://backup.example/live.mp3", source: "alternative" },
     ],
     "https://cors.example/",
@@ -20,7 +24,6 @@ test("inserts CORS fallback immediately after each direct source", () => {
     result.map((item) => [item.src, Boolean(item.proxied)]),
     [
       ["https://radio.example/live.m3u8", false],
-      ["https://cors.example/https://radio.example/live.m3u8", true],
       ["https://backup.example/live.mp3", false],
       ["https://cors.example/https://backup.example/live.mp3", true],
     ],
@@ -51,6 +54,27 @@ test("deduplicates sources and proxy variants", () => {
   );
 
   assert.equal(result.length, 2);
+});
+
+test("keeps a single direct HLS candidate when the catalog marks it direct", () => {
+  const result = buildPlaybackSources(
+    [
+      {
+        src: "https://multi-playlist.example/live/index.m3u8",
+        type: "application/x-mpegURL",
+        proxied: false,
+      },
+    ],
+    "https://cors.example/",
+  );
+
+  assert.deepEqual(result, [
+    {
+      src: "https://multi-playlist.example/live/index.m3u8",
+      type: "application/x-mpegURL",
+      proxied: false,
+    },
+  ]);
 });
 
 test("cycles playback candidates while the global retry budget remains", () => {

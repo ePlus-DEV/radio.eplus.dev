@@ -24,8 +24,15 @@ export const buildPlaybackSources = (sources, corsServer) => {
 
     push(source);
 
+    const type = String(source?.type || "").toLowerCase();
+    const isHls =
+      /\.m3u8(?:$|[?#])/i.test(src) ||
+      type.includes("mpegurl") ||
+      type.includes("m3u8");
+
     const canProxy =
       proxyBase &&
+      !isHls &&
       !source.proxied &&
       /^https?:\/\//i.test(src) &&
       !src.startsWith(proxyBase);

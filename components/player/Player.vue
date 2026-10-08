@@ -428,7 +428,10 @@ let activeResolvedSrc = "";
 let removeAutoPlayUnlockListeners: (() => void) | null = null;
 
 const RECONNECT_BASE_DELAY = 1200;
-const FALLBACK_PROBE_TIMEOUT = 4000;
+const FALLBACK_PROBE_TIMEOUT = 10_000;
+
+let hlsNetworkRecoveryCount = 0;
+let hlsMediaRecoveryCount = 0;
 
 const sourceList = computed<RadioSource[]>(() => {
   const candidates =
@@ -625,6 +628,8 @@ const destroyHls = (): void => {
   if (!hlsInstance) return;
   hlsInstance.destroy();
   hlsInstance = null;
+  hlsNetworkRecoveryCount = 0;
+  hlsMediaRecoveryCount = 0;
 };
 
 const clearReconnectTimer = (): void => {
@@ -691,6 +696,16 @@ const tryPlay = async (): Promise<void> => {
       return;
     }
 
+    if (
+      name === "AbortError" ||
+      (hlsInstance && name === "NotSupportedError" && media.readyState === 0)
+    ) {
+      pendingAutoPlay.value = true;
+      waiting.value = true;
+      startFallbackProbe();
+      return;
+    }
+
     scheduleReconnect();
   }
 };
@@ -726,6 +741,7 @@ const configureNativeSource = (
   media.load();
 
   if (autoplay && !userPaused.value) {
+    startFallbackProbe();
     void tryPlay();
   }
 };
@@ -750,7 +766,15 @@ const configureHlsSource = async (
     media.load();
 
     if (autoplay && !userPaused.value) {
-      void tryPlay();
+      startFallbackProbe();
+      media.addEventListener(
+        "loadedmetadata",
+        () => {
+          if (version !== sourceVersion || userPaused.value) return;
+          void tryPlay();
+        },
+        { once: true },
+      );
     }
     return;
   }
@@ -771,27 +795,53 @@ const configureHlsSource = async (
 
   hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
     if (version !== sourceVersion) return;
+
+    clearReconnectTimer();
     streamError.value = false;
 
     if (autoplay && !userPaused.value) {
+      startFallbackProbe();
       void tryPlay();
     }
   });
 
   hlsInstance.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
-    if (version !== sourceVersion || !data?.fatal) return;
+    if (version !== sourceVersion || !data?.fatal || !hlsInstance) return;
 
     waiting.value = false;
     playing.value = false;
+
+    if (
+      data.type === Hls.ErrorTypes.NETWORK_ERROR &&
+      hlsNetworkRecoveryCount < 1
+    ) {
+      hlsNetworkRecoveryCount += 1;
+      waiting.value = true;
+      hlsInstance.startLoad();
+      startFallbackProbe();
+      return;
+    }
+
+    if (
+      data.type === Hls.ErrorTypes.MEDIA_ERROR &&
+      hlsMediaRecoveryCount < 1
+    ) {
+      hlsMediaRecoveryCount += 1;
+      waiting.value = true;
+      hlsInstance.recoverMediaError();
+      startFallbackProbe();
+      return;
+    }
+
+    console.warn("Fatal HLS playback error", {
+      type: data.type,
+      details: data.details,
+      source: source.src,
+    });
     scheduleReconnect();
   });
 
   hlsInstance.attachMedia(media);
-  startFallbackProbe();
-
-  if (autoplay && !userPaused.value) {
-    void tryPlay();
-  }
 };
 
 const stopPlaybackFailure = (): void => {
@@ -843,7 +893,6 @@ const applySource = async (
   if (version !== sourceVersion || !mediaElement.value) return;
 
   activeResolvedSrc = source.src;
-  startFallbackProbe();
 
   if (isHlsSource(source)) {
     await configureHlsSource(source, autoplay, version);
@@ -1039,6 +1088,11 @@ const onMediaEnded = (): void => {
 
 const onMediaError = (): void => {
   if (!activeResolvedSrc || userPaused.value) return;
+
+  // hls.js reports richer network/media failures through Hls.Events.ERROR.
+  // Handling the media element error as well can schedule a duplicate retry
+  // while the MediaSource is still attaching.
+  if (hlsInstance) return;
 
   waiting.value = false;
   playing.value = false;
