@@ -73,18 +73,20 @@ const { t } = useI18n();
 const statusCode = computed(() => props.error?.statusCode || 500);
 const isNotFound = computed(() => statusCode.value === 404);
 const heading = computed(() =>
-  isNotFound.value ? "Page not found" : "Something went wrong",
+  isNotFound.value
+    ? t("site_pages.error.not_found_title")
+    : t("site_pages.error.generic_title"),
 );
 const message = computed(() =>
   isNotFound.value
     ? t("404.content")
     : props.error?.statusMessage ||
       props.error?.message ||
-      "The page could not be loaded. Please return to the homepage and try again.",
+      t("site_pages.error.generic_body"),
 );
 
 useHead(() => ({
-  title: isNotFound.value ? "Page not found" : "Application error",
+  title: heading.value,
   meta: [{ name: "robots", content: "noindex, nofollow" }],
 }));
 
