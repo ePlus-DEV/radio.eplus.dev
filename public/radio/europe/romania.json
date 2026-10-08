@@ -5,7 +5,7 @@
         "url": "https://radiozu.ro/",
         "cros": false,
         "stream": "https://ivm.antenaplay.ro/liveaudio/radiozu/playlist.m3u8",
-        "features": "/img/europe/romania/zu.png",
+        "features": "/radio/romania/zu.png",
         "favorite": true,
         "schedule": "https://api.webrad.io/data/playlist/82/zu?time="
     },
@@ -15,7 +15,7 @@
         "url": "https://www.kissfm.ro/",
         "cros": false,
         "stream": "https://live.kissfm.ro/kissfm.aacp",
-        "features": "/img/europe/romania/kiss-fm.png",
+        "features": "/radio/romania/kiss-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/kiss-fm?time="
     },
@@ -25,7 +25,7 @@
         "url": "https://www.europafm.ro/",
         "cros": false,
         "stream": "https://astreaming.edi.ro:8443/EuropaFM_aac",
-        "features": "/img/europe/romania/europa-fm.png",
+        "features": "/radio/romania/europa-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/europa-fm?time="
     },
@@ -35,7 +35,7 @@
         "url": "https://www.magicfm.ro/",
         "cros": true,
         "stream": "http://live.magicfm.ro:9128/magicfm.aacp",
-        "features": "/img/europe/romania/magic-fm.png",
+        "features": "/radio/romania/magic-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/magic-fm?time="
     },
@@ -45,7 +45,7 @@
         "url": "https://www.profm.ro/",
         "cros": false,
         "stream": "https://edge126.rcs-rds.ro/profm/profm.mp3",
-        "features": "/img/europe/romania/pro-fm.png",
+        "features": "/radio/romania/pro-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/pro-fm?time="
     },
@@ -55,7 +55,7 @@
         "url": "https://virginradio.ro/",
         "cros": false,
         "stream": "https://astreaming.edi.ro:8443/VirginRadio_aac",
-        "features": "/img/europe/romania/virgin.png",
+        "features": "/radio/romania/virgin.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/virgin?time="
     },
@@ -65,7 +65,7 @@
         "url": "https://www.rockfm.ro/",
         "cros": true,
         "stream": "http://live.rockfm.ro:9128/rockfm.aacp",
-        "features": "/img/europe/romania/rock-fm.png",
+        "features": "/radio/romania/rock-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/rock-fm?time="
     },
@@ -75,7 +75,7 @@
         "url": "https://www.guerrillaradio.ro/",
         "cros": true,
         "stream": "http://live.guerrillaradio.ro:8010/guerrilla.aac",
-        "features": "/img/europe/romania/guerrilla-bucuresti.png",
+        "features": "/radio/romania/guerrilla-bucuresti.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/guerrilla-bucuresti?time="
     },
@@ -85,7 +85,7 @@
         "url": "https://www.dancefm.ro/",
         "cros": true,
         "stream": "http://edge126.rdsnet.ro:84/profm/dancefm.mp3",
-        "features": "/img/europe/romania/dance-fm.png",
+        "features": "/radio/romania/dance-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/dance-fm?time="
     },
@@ -95,7 +95,7 @@
         "url": "https://radioprahova.ro/",
         "cros": false,
         "stream": "https://streamx.rph.ro:8100/stream/2/",
-        "features": "/img/europe/romania/prahova.png",
+        "features": "/radio/romania/prahova.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/prahova?time="
     },
@@ -105,7 +105,7 @@
         "url": "https://www.antenasatelor.ro/",
         "cros": false,
         "stream": "https://stream.zeno.fm/smm1h8ds0y5tv.aac",
-        "features": "/img/europe/romania/romania-antena-satelor.png",
+        "features": "/radio/romania/romania-antena-satelor.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/romania-antena-satelor?time="
     },
@@ -115,7 +115,7 @@
         "url": "https://www.romania-actualitati.ro/",
         "cros": true,
         "stream": "http://stream2.srr.ro:8002/stream/1/",
-        "features": "/img/europe/romania/romania-actualitati.png",
+        "features": "/radio/romania/romania-actualitati.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/romania-actualitati?time="
     },
@@ -125,7 +125,7 @@
         "url": "",
         "cros": true,
         "stream": "http://live.tananana.ro:8010/stream-48.aac",
-        "features": "/img/europe/romania/tananana.png",
+        "features": "/radio/romania/tananana.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/tananana?time="
     },
@@ -135,7 +135,7 @@
         "url": "https://www.onefm.ro/",
         "cros": true,
         "stream": "http://live.onefm.ro/onefm.aacp",
-        "features": "/img/europe/romania/one-fm.png",
+        "features": "/radio/romania/one-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/one-fm?time="
     },
@@ -145,7 +145,7 @@
         "url": "https://radiogoldfm.ro/",
         "cros": true,
         "stream": "http://80.86.106.110:8020/radiogoldfm-32.aac",
-        "features": "/img/europe/romania/gold-fm.png",
+        "features": "/radio/romania/gold-fm.png",
         "favorite": false
     },
     "manele": {
@@ -154,7 +154,7 @@
         "url": "https://fmradiomanele.ro/",
         "cros": false,
         "stream": "https://ssl.servereradio.ro/8054/stream",
-        "features": "/img/europe/romania/manele.png",
+        "features": "/radio/romania/manele.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/manele?time="
     },
@@ -164,7 +164,7 @@
         "url": "https://www.radioromaniacultural.ro/",
         "cros": false,
         "stream": "https://stream.zeno.fm/wg87zyqbyvduv.aac",
-        "features": "/img/europe/romania/romania-cultural.png",
+        "features": "/radio/romania/romania-cultural.png",
         "favorite": false
     },
     "one-world-radio": {
@@ -173,7 +173,7 @@
         "url": "",
         "cros": false,
         "stream": "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP_SC",
-        "features": "/img/europe/romania/one-world-radio.png",
+        "features": "/radio/romania/one-world-radio.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/one-world-radio?time="
     },
@@ -183,7 +183,7 @@
         "url": "https://www.radioimpuls.ro/",
         "cros": false,
         "stream": "https://live.radio-impuls.ro/stream",
-        "features": "/img/europe/romania/impuls-cluj-napoca.png",
+        "features": "/radio/romania/impuls-cluj-napoca.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/impuls-cluj-napoca?time="
     },
@@ -193,7 +193,7 @@
         "url": "https://www.focusfm.ro/",
         "cros": true,
         "stream": "http://live.focusfm.ro:8000/stream/1/",
-        "features": "/img/europe/romania/focus-fm.png",
+        "features": "/radio/romania/focus-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/focus-fm?time="
     },
@@ -203,7 +203,7 @@
         "url": "https://superfm.ro/",
         "cros": false,
         "stream": "https://live.superfm.ro/stream.mp3",
-        "features": "/img/europe/romania/super-fm.png",
+        "features": "/radio/romania/super-fm.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/super-fm?time="
     },
@@ -213,7 +213,7 @@
         "url": "https://www.romania-muzical.ro/",
         "cros": true,
         "stream": "http://stream2.srr.ro:8022/stream/1/",
-        "features": "/img/europe/romania/romania-muzical.png",
+        "features": "/radio/romania/romania-muzical.png",
         "favorite": false
     },
     "smart": {
@@ -222,7 +222,7 @@
         "url": "https://www.smartradio.ro/",
         "cros": true,
         "stream": "http://live.smartradio.ro:9128/live",
-        "features": "/img/europe/romania/smart.png",
+        "features": "/radio/romania/smart.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/smart?time="
     },
@@ -232,7 +232,7 @@
         "url": "https://www.radiotrinitas.ro/",
         "cros": false,
         "stream": "https://live.radiotrinitas.ro:8003/stream/1/",
-        "features": "/img/europe/romania/trinitas.png",
+        "features": "/radio/romania/trinitas.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/trinitas?time="
     },
@@ -242,7 +242,7 @@
         "url": "https://ciresarii.ro/",
         "cros": false,
         "stream": "https://s3.radio.co/s6c0a773ad/listen",
-        "features": "/img/europe/romania/ciresarii.png",
+        "features": "/radio/romania/ciresarii.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/ciresarii?time="
     },
@@ -252,7 +252,7 @@
         "url": "https://www.radioresita.ro/",
         "cros": true,
         "stream": "http://streams.euroweb.ro:8344/stream/1/",
-        "features": "/img/europe/romania/resita.png",
+        "features": "/radio/romania/resita.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/resita?time="
     },
@@ -262,7 +262,7 @@
         "url": "https://sptfm.ro/",
         "cros": false,
         "stream": "https://livesptfm.com/SPTFM/Live/playlist.m3u8",
-        "features": "/img/europe/romania/sport-total.png",
+        "features": "/radio/romania/sport-total.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/sport-total?time="
     },
@@ -272,7 +272,7 @@
         "url": "https://fmradiomanele.ro/",
         "cros": true,
         "stream": "http://b.fmradiomanele.ro:8054/stream/1/",
-        "features": "/img/europe/romania/fm-manele.png",
+        "features": "/radio/romania/fm-manele.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/fm-manele?time="
     },
@@ -282,7 +282,7 @@
         "url": "https://www.radioiasi.ro/",
         "cros": true,
         "stream": "http://streams.euroweb.ro:8202/;",
-        "features": "/img/europe/romania/romania-iasi.png",
+        "features": "/radio/romania/romania-iasi.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/romania-iasi?time="
     },
@@ -292,7 +292,7 @@
         "url": "https://www.paprikaradio.ro/",
         "cros": true,
         "stream": "http://stream1.paprikaradio.ro:8000/;",
-        "features": "/img/europe/romania/paprika.png",
+        "features": "/radio/romania/paprika.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/paprika?time="
     },
@@ -302,7 +302,7 @@
         "url": "https://www.city-radio.ro/",
         "cros": false,
         "stream": "https://mscp1.gazduireradio.ro/cityradio",
-        "features": "/img/europe/romania/city-satu-mare.png",
+        "features": "/radio/romania/city-satu-mare.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/city-satu-mare?time="
     },
@@ -312,7 +312,7 @@
         "url": "https://rve-oradea.ro/",
         "cros": true,
         "stream": "http://38.96.148.39:6700/stream/1/",
-        "features": "/img/europe/romania/vocea-evangheliei-oradea.png",
+        "features": "/radio/romania/vocea-evangheliei-oradea.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/vocea-evangheliei-oradea?time="
     },
@@ -322,7 +322,7 @@
         "url": "https://www.nationalfm.ro/",
         "cros": true,
         "stream": "http://live3.nationalfm.ro:8001/;",
-        "features": "/img/europe/romania/national-bucuresti.png",
+        "features": "/radio/romania/national-bucuresti.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/national-bucuresti?time="
     },
@@ -332,7 +332,7 @@
         "url": "https://www.radiotimisoara.ro/",
         "cros": true,
         "stream": "http://streams.euroweb.ro:8350/stream/1/",
-        "features": "/img/europe/romania/timisoara.png",
+        "features": "/radio/romania/timisoara.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/timisoara?time="
     },
@@ -342,7 +342,7 @@
         "url": "http://www.radioconstanta.ro/",
         "cros": true,
         "stream": "http://streams.euroweb.ro:8330/stream/1/",
-        "features": "/img/europe/romania/constanta.png",
+        "features": "/radio/romania/constanta.png",
         "favorite": false
     },
     "rfi": {
@@ -351,7 +351,7 @@
         "url": "https://www.rfi.fr/en/",
         "cros": false,
         "stream": "https://asculta.radiorfi.ro/live.aac",
-        "features": "/img/europe/romania/rfi.png",
+        "features": "/radio/romania/rfi.png",
         "favorite": false
     },
     "bucuresti": {
@@ -360,7 +360,7 @@
         "url": "https://www.bucurestifm.ro/",
         "cros": true,
         "stream": "http://stream2.srr.ro:8030/stream/1/",
-        "features": "/img/europe/romania/bucuresti.png",
+        "features": "/radio/romania/bucuresti.png",
         "favorite": false
     },
     "deea": {
@@ -369,7 +369,7 @@
         "url": "https://radiodeea.ro/",
         "cros": false,
         "stream": "https://radiocdn.nxthost.com/radio-deea",
-        "features": "/img/europe/romania/deea.png",
+        "features": "/radio/romania/deea.png",
         "favorite": false
     },
     "intens": {
@@ -378,7 +378,7 @@
         "url": "https://www.radiointens.ro/",
         "cros": false,
         "stream": "https://stream.radiointens.ro/stream/1/",
-        "features": "/img/europe/romania/intens.png",
+        "features": "/radio/romania/intens.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/intens?time="
     },
@@ -388,7 +388,7 @@
         "url": "https://www.radiogaga.ro/",
         "cros": false,
         "stream": "https://a3.my-control-panel.com:6660/radio.mp3",
-        "features": "/img/europe/romania/gaga.png",
+        "features": "/radio/romania/gaga.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/gaga?time="
     },
@@ -398,7 +398,7 @@
         "url": "https://www.radiocluj.ro/",
         "cros": true,
         "stream": "http://streams.euroweb.ro:8384/stream/1/",
-        "features": "/img/europe/romania/cluj.png",
+        "features": "/radio/romania/cluj.png",
         "favorite": false,
         "schedule": "https://api.webrad.io/data/playlist/82/cluj?time="
     },
@@ -408,7 +408,7 @@
         "url": "https://www.radiooltenia.ro/",
         "cros": true,
         "stream": "http://stream2.srr.ro:8370/stream/1/",
-        "features": "/img/europe/romania/oltenia-craiova.png",
+        "features": "/radio/romania/oltenia-craiova.png",
         "favorite": false
     },
     "favorit-fm": {
@@ -417,7 +417,7 @@
         "url": "http://www.radiofavoritfm.ro/",
         "cros": true,
         "stream": "http://91.250.252.251:8001/;",
-        "features": "/img/europe/romania/favorit-fm.png",
+        "features": "/radio/romania/favorit-fm.png",
         "favorite": false
     }
 }
