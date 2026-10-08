@@ -103,6 +103,7 @@ interface StationCatalogEntry {
   cros: boolean;
   stream: string;
   streams?: StationStream[];
+  stream_alternative?: string;
   features?: string;
   schedule?: string;
 }
@@ -152,7 +153,12 @@ const loadStations = async (): Promise<void> => {
       station_name: data.title,
       station_image: data.features || String(config.public.placeholderStation),
       station_stream: data.stream,
-      station_streams: data.streams,
+      station_streams: [
+        ...(data.streams || []),
+        ...(data.stream_alternative
+          ? [{ url: data.stream_alternative, source: "legacy-alternative" }]
+          : []),
+      ],
       station_schedule: data.schedule,
       cros: Boolean(data.cros),
       type: data.type || "audio/mpeg",
