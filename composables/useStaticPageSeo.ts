@@ -38,6 +38,28 @@ export const useStaticPageSeo = ({
           },
         }),
       },
+      {
+        key: "static-page-breadcrumb-schema:" + route.path,
+        type: "application/ld+json",
+        innerHTML: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Radio ePlus",
+              item: siteUrl.value + "/",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: title.value,
+              item: canonicalUrl.value,
+            },
+          ],
+        }),
+      },
     ],
   }));
 
