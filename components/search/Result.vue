@@ -7,11 +7,11 @@
         @click="$emit('select')"
       >
         <img
-          class="h-11 w-11 shrink-0 rounded-xl bg-white object-contain p-1 ring-1 ring-slate-200 dark:ring-white/10"
+          class="radio-themed-artwork h-11 w-11 shrink-0 rounded-xl object-contain p-1 ring-1 ring-[var(--radio-border)]"
           :src="item.station_image"
           :alt="item.station_name"
         />
-        <span class="min-w-0 flex-1 truncate text-sm font-medium text-slate-800 dark:text-slate-100">
+        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-slate-800 dark:text-slate-100">
           {{ item.station_name }}
         </span>
         <span class="hidden shrink-0 text-xs text-slate-400 sm:block">
