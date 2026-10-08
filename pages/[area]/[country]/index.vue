@@ -40,7 +40,7 @@
       :streamUrl="streamUrl"
       :streamUrls="streamUrls"
       :playlist="playlist"
-      :queue-expected="queueExpected"
+      :queue-loading="queueLoading"
     />
 
     <PanelStation />
@@ -75,7 +75,7 @@ const i18n = computed(
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const playlist = ref<Track[]>([]);
 const stationCount = ref(0);
-const queueExpected = ref(false);
+const queueLoading = ref(false);
 
 const scheduleRequestUrl = (url: string): string =>
   /[?&](?:time|timestamp)=$/i.test(url)
@@ -206,10 +206,12 @@ const fetchData = async (): Promise<void> => {
 
     streamUrl.value =
       streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as RadioSource);
-    // Fetch the schedule data if available
-    queueExpected.value = Boolean(favoriteChannel.schedule);
+    // Fetch the initial playlist metadata without changing the player layout.
     if (favoriteChannel.schedule !== undefined) {
-      fetchSchedule(favoriteChannel.schedule);
+      queueLoading.value = true;
+      void fetchSchedule(favoriteChannel.schedule).finally(() => {
+        queueLoading.value = false;
+      });
     }
   } catch (error) {
     console.error("Error fetching data:", error);
