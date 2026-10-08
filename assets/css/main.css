@@ -1,10 +1,25 @@
 @import "tailwindcss";
+
+/* Tailwind 4 defaults dark: to prefers-color-scheme. Nuxt Color Mode
+   toggles a .dark class, so make dark: follow that class explicitly. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @plugin "daisyui";
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background: #f8fafc;
+  }
+
+  html.dark {
+    color-scheme: dark;
     background: #020617;
+  }
+
+  html.light {
+    color-scheme: light;
+    background: #f8fafc;
   }
 
   body {
