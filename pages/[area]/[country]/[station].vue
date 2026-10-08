@@ -26,13 +26,13 @@
             </span>
             <span class="text-xs text-slate-400">{{ countryName }}</span>
           </div>
-          <h1 dir="auto" class="mt-2 line-clamp-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          <h1 dir="auto" class="mt-2 line-clamp-2 text-2xl font-bold tracking-tight text-[var(--radio-text)] sm:text-3xl">
             {{ stationName }}
           </h1>
           <p
             v-if="stationMeta?.description"
             dir="auto"
-            class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-slate-500 dark:text-slate-400"
+            class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]"
           >
             {{ stationMeta.description }}
           </p>
@@ -61,7 +61,7 @@
     <button
       v-show="slug === 'viet-nam'"
       type="button"
-      class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-slate-950 px-4 text-sm font-semibold text-white shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5 dark:bg-white dark:text-slate-950"
+      class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-[var(--radio-inverse-bg)] px-4 text-sm font-semibold text-[var(--radio-inverse-text)] shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5"
       @click="lyric_popup = !lyric_popup"
     >
       <fa :icon="['fas', 'list-music']" class="h-4 w-4" />
@@ -70,7 +70,7 @@
 
     <div
       v-if="lyric_popup"
-      class="fixed inset-0 z-[80] flex items-end bg-slate-950/35 p-3 backdrop-blur-sm sm:items-auto sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
+      class="fixed inset-0 z-[80] flex items-end bg-[var(--radio-overlay)] p-3 backdrop-blur-sm sm:items-auto sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
       @click.self="lyric_popup = false"
     >
       <aside

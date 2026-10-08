@@ -161,8 +161,8 @@
             class="grid grid-cols-[68px_minmax(0,1fr)] gap-3 rounded-xl px-2.5 py-2.5 transition"
             :class="
               index === 0
-                ? 'bg-rose-50 ring-1 ring-inset ring-rose-100 dark:bg-rose-500/10 dark:ring-rose-400/10'
-                : 'hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
+                : 'hover:bg-[var(--radio-hover)]'
             "
           >
             <div class="text-xs font-semibold tabular-nums text-[var(--radio-text-muted)]">
@@ -184,8 +184,8 @@
                 class="truncate text-sm font-semibold"
                 :class="
                   index === 0
-                    ? 'text-rose-700 dark:text-rose-200'
-                    : 'text-slate-800 dark:text-slate-100'
+                    ? 'text-rose-600 dark:text-rose-300'
+                    : 'text-[var(--radio-text)]'
                 "
               >
                 {{ item.title || $t("panel.updating") }}
@@ -208,8 +208,8 @@
             class="group flex min-w-0 items-center gap-3 rounded-xl px-2.5 py-2.5 transition"
             :class="
               index === 0
-                ? 'bg-rose-50 ring-1 ring-inset ring-rose-100 dark:bg-rose-500/10 dark:ring-rose-400/10'
-                : 'hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+                ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
+                : 'hover:bg-[var(--radio-hover)]'
             "
           >
             <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[var(--radio-surface-soft)]">
@@ -226,8 +226,8 @@
                 class="truncate text-sm font-semibold"
                 :class="
                   index === 0
-                    ? 'text-rose-700 dark:text-rose-200'
-                    : 'text-slate-800 dark:text-slate-100'
+                    ? 'text-rose-600 dark:text-rose-300'
+                    : 'text-[var(--radio-text)]'
                 "
               >
                 {{ item.track_title || $t("panel.updating") }}

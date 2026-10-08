@@ -5,7 +5,7 @@
         <div>
           <NuxtLink to="/" class="inline-flex items-center gap-3">
             <span
-              class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 dark:bg-white"
+              class="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)]"
             >
               <img
                 src="/brand/logo-white.svg"

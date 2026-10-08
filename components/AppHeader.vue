@@ -10,7 +10,7 @@
           @click="mobileOpen = false"
         >
           <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-950 shadow-md ring-1 ring-white/10 dark:bg-white"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)] shadow-md ring-1 ring-[var(--radio-border)]"
           >
             <img
               src="/brand/logo-white.svg"
@@ -21,7 +21,7 @@
             />
           </span>
           <span class="hidden min-w-0 sm:block">
-            <span class="block truncate text-sm font-bold tracking-tight text-slate-950 dark:text-white">
+            <span class="block truncate text-sm font-bold tracking-tight text-[var(--radio-text)]">
               Radio ePlus
             </span>
             <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-500">
@@ -98,7 +98,7 @@
       </NuxtLink>
       <NuxtLink
         to="/statistics"
-        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/5"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
         @click="mobileOpen = false"
       >
         <fa :icon="['fas', 'chart-simple']" class="w-4 text-slate-400" />

@@ -201,7 +201,7 @@
               <div class="ml-auto flex items-center gap-1.5 sm:ml-0">
                 <button
                   type="button"
-                  class="flex h-10 w-10 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 sm:hidden dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
+                  class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:hidden"
                   @click="toggleMute"
                   :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
                 >
