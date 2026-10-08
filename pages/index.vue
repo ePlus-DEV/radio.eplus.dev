@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-7">
     <section
-      class="radio-themed-surface relative overflow-hidden rounded-[2rem] border px-5 py-8 shadow-sm shadow-slate-200/40 dark:shadow-none sm:px-8 sm:py-10 lg:px-10"
+      class="radio-surface relative overflow-hidden rounded-[2rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10"
     >
       <div
         class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.13),transparent_36%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.10),transparent_38%)]"
