@@ -57,7 +57,7 @@ tests/player-hls-startup.test.mjs    HLS lifecycle regression guard
 tests/radio-source-plan.test.mjs     Source-plan regression guard
 tests/station-route-lifecycle.test.mjs Station-router state regression guard
 tests/station-schedule.test.mjs       Schedule-provider regression guard
-.github/workflows/build.yml          Pull-request unit-test workflow
+.github/workflows/build.yml          Pull-request test + prerender workflow
 .github/workflows/instant-audio-sync.yml Radio data sync/validation workflow
 ```
 
@@ -507,9 +507,9 @@ Pull-request workflow:
 
 `.github/workflows/build.yml`
 
-Despite the filename, its current GitHub Actions display name is **Unit tests**.
+Its current GitHub Actions display name is **CI** and it runs `npm test` followed by `npm run generate`.
 
-For large UI/framework changes, unit tests alone are not a substitute for manually validating:
+The prerender step catches SSR/generation failures, but automated checks are still not a substitute for manually validating:
 
 - desktop/mobile layout;
 - light/dark mode;
