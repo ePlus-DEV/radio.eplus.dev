@@ -96,6 +96,25 @@
     box-shadow: 0 26px 64px -38px rgb(79 46 167 / 0.6);
   }
 
+  .radio-station-card {
+    border-color: var(--radio-border);
+    background: var(--radio-surface);
+    color: var(--radio-text);
+  }
+
+  .radio-station-card:hover {
+    border-color: rgb(139 92 246 / 0.46);
+    box-shadow: 0 18px 38px -28px rgb(88 54 165 / 0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .radio-station-card,
+    .radio-station-card img {
+      transition-duration: 0.01ms;
+      transform: none;
+    }
+  }
+
   .radio-surface {
     border-color: var(--radio-border);
     background: var(--radio-surface);
