@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 export type RadioSeoLevel = "home" | "area" | "country" | "station";
@@ -9,7 +9,6 @@ export interface RadioSeoRoute {
   title?: string;
   description?: string;
   image?: string;
-  lastmod?: string;
 }
 
 interface StationRecord {
@@ -22,18 +21,13 @@ export const getRadioSeoRoutes = (
   rootDir: string = process.cwd(),
 ): RadioSeoRoute[] => {
   const radioDir = join(rootDir, "public", "radio");
-  const homeRoute: RadioSeoRoute = { loc: "/", level: "home" };
-  const routes: RadioSeoRoute[] = [homeRoute];
-  let latestSiteMtime = 0;
+  const routes: RadioSeoRoute[] = [{ loc: "/", level: "home" }];
 
   for (const areaEntry of readdirSync(radioDir, { withFileTypes: true })) {
     if (!areaEntry.isDirectory()) continue;
 
     const area = areaEntry.name;
-    const areaRoute: RadioSeoRoute = { loc: `/${area}`, level: "area" };
-    routes.push(areaRoute);
-
-    let latestAreaMtime = 0;
+    routes.push({ loc: `/${area}`, level: "area" });
     const areaDir = join(radioDir, area);
     for (const countryFile of readdirSync(areaDir, { withFileTypes: true })) {
       if (!countryFile.isFile() || !countryFile.name.endsWith(".json")) {
@@ -42,16 +36,10 @@ export const getRadioSeoRoutes = (
 
       const country = countryFile.name.replace(/\.json$/, "");
       const countryPath = join(areaDir, countryFile.name);
-      const mtime = statSync(countryPath).mtimeMs;
-      const lastmod = new Date(mtime).toISOString();
-
-      latestAreaMtime = Math.max(latestAreaMtime, mtime);
-      latestSiteMtime = Math.max(latestSiteMtime, mtime);
 
       routes.push({
         loc: `/${area}/${country}`,
         level: "country",
-        lastmod,
       });
 
       try {
@@ -66,7 +54,6 @@ export const getRadioSeoRoutes = (
             title: data.title,
             description: data.description,
             image: data.features,
-            lastmod,
           });
         }
       } catch (error) {
@@ -77,29 +64,20 @@ export const getRadioSeoRoutes = (
       }
     }
 
-    if (latestAreaMtime > 0) {
-      areaRoute.lastmod = new Date(latestAreaMtime).toISOString();
-    }
-  }
-
-  if (latestSiteMtime > 0) {
-    homeRoute.lastmod = new Date(latestSiteMtime).toISOString();
   }
 
   return routes;
 };
 
 export const getSitemapEntry = (route: RadioSeoRoute) => {
-  const freshness = route.lastmod ? { lastmod: route.lastmod } : {};
-
   switch (route.level) {
     case "home":
-      return { loc: route.loc, priority: 1, changefreq: "daily" as const, ...freshness };
+      return { loc: route.loc, priority: 1, changefreq: "daily" as const };
     case "area":
-      return { loc: route.loc, priority: 0.8, changefreq: "weekly" as const, ...freshness };
+      return { loc: route.loc, priority: 0.8, changefreq: "weekly" as const };
     case "country":
-      return { loc: route.loc, priority: 0.9, changefreq: "daily" as const, ...freshness };
+      return { loc: route.loc, priority: 0.9, changefreq: "daily" as const };
     default:
-      return { loc: route.loc, priority: 0.8, changefreq: "daily" as const, ...freshness };
+      return { loc: route.loc, priority: 0.8, changefreq: "daily" as const };
   }
 };
