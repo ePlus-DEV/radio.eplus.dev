@@ -69,6 +69,7 @@ import {
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
+const noIndex = Boolean(config.public.noIndex);
 
 const normalizeParam = (value: string | string[] | undefined): string =>
   Array.isArray(value) ? value[0] || "" : value || "";
@@ -227,7 +228,7 @@ const isActive = computed(() => playback.station?.url === stationPath.value);
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "station-breadcrumb-schema",
       type: "application/ld+json",
@@ -241,7 +242,7 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? {} : ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,

@@ -1,4 +1,6 @@
 import { defineNuxtConfig } from "nuxt/config";
+import { execFileSync } from "node:child_process";
+import { isStagingDeployment } from "./utils/seo-deployment.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
@@ -19,6 +21,17 @@ const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").
   /\/$/,
   "",
 );
+// Prefer explicit hosting settings; CI and a checked-out develop branch are
+// recognized as staging even when the public SITE_URL is not set.
+const deployBranch = process.env.NUXT_DEPLOY_BRANCH || process.env.DEPLOY_BRANCH ||
+  process.env.GITHUB_BASE_REF || process.env.GITHUB_REF_NAME ||
+  (() => { try { return execFileSync("git", ["symbolic-ref", "--quiet", "--short", "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return ""; } })();
+const noIndex = isStagingDeployment({
+  siteUrl,
+  noIndex: process.env.NUXT_PUBLIC_NO_INDEX,
+  environment: process.env.NUXT_DEPLOY_ENV,
+  branch: deployBranch,
+});
 const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "Radio ePlus";
 const defaultDescription =
   process.env.DESCRIPTION ||
@@ -73,6 +86,7 @@ export default defineNuxtConfig({
       siteName,
       defaultDescription,
       radioCatalogStats,
+      noIndex,
     },
   },
   css: ["~/assets/css/main.css"],
@@ -92,7 +106,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/image",
     "dayjs-nuxt",
-    "@nuxtjs/sitemap",
+    ...(!noIndex ? ["@nuxtjs/sitemap"] : []),
     "@nuxtjs/algolia",
     "@pinia/nuxt",
   ],
@@ -108,15 +122,14 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        {
-          name: "description",
-          content: defaultDescription,
-        },
+        ...(!noIndex ? [{ name: "description", content: defaultDescription }] : []),
         { name: "msapplication-TileColor", content: "#603cba" },
-        { property: "article:author", content: process.env.FANPAGE },
-        { property: "article:publisher", content: process.env.FANPAGE },
-        { property: "fb:pages", content: "179495025583990" },
-        { property: "fb:app_id", content: "363745774395676" },
+        ...(!noIndex ? [
+          { property: "article:author", content: process.env.FANPAGE },
+          { property: "article:publisher", content: process.env.FANPAGE },
+          { property: "fb:pages", content: "179495025583990" },
+          { property: "fb:app_id", content: "363745774395676" },
+        ] : []),
       ],
       link: [
         {
@@ -228,12 +241,13 @@ export default defineNuxtConfig({
       routes: [
         ...radioSeoRoutes.map((route) => route.loc),
         ...staticSeoRoutes.map((route) => route.loc),
-        "/sitemap.xml",
+        "/robots.txt",
+        ...(!noIndex ? ["/sitemap.xml"] : []),
       ],
     },
   },
   sitemap: {
-    urls: [
+    urls: noIndex ? [] : [
       ...radioSeoRoutes.map((route) => ({
         ...getSitemapEntry(route),
         loc: `${siteUrl}${route.loc}`,

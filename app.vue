@@ -32,6 +32,7 @@ const clientReady = ref(false);
 onMounted(() => { clientReady.value = true; });
 const route = useRoute();
 const config = useRuntimeConfig();
+const noIndex = Boolean(config.public.noIndex);
 const { locale } = useI18n();
 const uiLocales = { en, vi, ja, 'zh-CN': zh_cn, 'zh-TW': zh_tw, fr, ru };
 const uiLocale = computed(() => uiLocales[locale.value as keyof typeof uiLocales] || en);
@@ -64,13 +65,13 @@ useHead(() => ({
   htmlAttrs: {
     lang: locale.value,
   },
-  link: [
+  link: noIndex ? [] : [
     {
       rel: "canonical",
       href: canonicalUrl.value,
     },
   ],
-  script: [
+  script: noIndex ? [] : [
     {
       key: "website-schema",
       type: "application/ld+json",
@@ -105,7 +106,7 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? { robots: "noindex, nofollow, noarchive" } : ({
   description: defaultDescription.value,
   robots: "index, follow",
   ogType: "website",

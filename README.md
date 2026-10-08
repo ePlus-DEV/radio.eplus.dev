@@ -251,6 +251,32 @@ See [`docs/SEO.md`](./docs/SEO.md) for the current SEO implementation and known 
 
 Public site pages also include `/about`, `/statistics`, `/contact`, `/privacy-policy`, and `/terms-of-use`. They are prerendered and included in the sitemap.
 
+### Staging: noindex (develop)
+
+The `develop` deployment at **https://radio-new.eplus.dev** is **not indexed**.
+It retains functioning prerendered radio pages but does not render SEO canonical,
+social metadata or JSON-LD; its `robots.txt` disallows all crawling, and the
+sitemap module is disabled. Production `main` stays indexable.
+
+**Set these build-time environment variables in the staging host:**
+
+```env
+NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
+NUXT_PUBLIC_NO_INDEX=true
+NUXT_DEPLOY_ENV=staging
+```
+
+For production, set `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`, leave
+`NUXT_PUBLIC_NO_INDEX` unset/false and `NUXT_DEPLOY_ENV=production`.
+The build additionally detects branch `develop` and the staging hostname to
+prevent accidental indexing. These settings must be applied **at build time**
+because this site is statically generated. Never apply staging robots/noindex
+unconditionally in source, or production would inherit it on promotion.
+
+Verify the staging HTML source includes `<meta name="robots" content="noindex, nofollow, noarchive">`,
+has no canonical/JSON-LD or SEO social metadata, and that `/robots.txt`
+contains `Disallow: /` without a sitemap. On production verify the opposite.
+
 ## Data sync
 
 The repository contains tooling for maintaining radio data. Upstream radio providers may apply rate limits, anti-bot protection, or change undocumented APIs without notice, so automated sync results should always be reviewed before merging.
