@@ -264,15 +264,14 @@ Production `main` stays indexable.
 ```env
 NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
 NUXT_PUBLIC_NO_INDEX=true
-NUXT_DEPLOY_ENV=staging
 ```
 
-For production, set `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`, leave
-`NUXT_PUBLIC_NO_INDEX` unset/false and `NUXT_DEPLOY_ENV=production`.
-The build additionally detects branch `develop` and the staging hostname to
-prevent accidental indexing. These settings must be applied **at build time**
-because this site is statically generated. Never apply staging robots/noindex
-unconditionally in source, or production would inherit it on promotion.
+For production, keep `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` and leave
+`NUXT_PUBLIC_NO_INDEX` unset/false. No custom `NUXT_DEPLOY_ENV` or branch
+detection is needed; the staging hostname also triggers noindex as a safeguard.
+Set the two staging variables **at build time**, because this site is statically
+generated. Never turn on noindex unconditionally in shared source, or
+production would inherit it on promotion.
 
 Verify the staging HTML source includes `<meta name="robots" content="noindex, nofollow, noarchive">`,
 has no canonical/JSON-LD or SEO social metadata, and that `/robots.txt`
