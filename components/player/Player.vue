@@ -6,8 +6,8 @@
       <div
         class="grid min-w-0"
         :class="
-          queueCount > 0
-            ? 'xl:grid-cols-[minmax(0,1fr)_340px]'
+          hasSidebar
+            ? 'xl:grid-cols-[minmax(0,1fr)_380px]'
             : 'lg:grid-cols-1'
         "
       >
@@ -55,7 +55,7 @@
               </div>
 
               <button
-                v-if="queueCount > 0"
+                v-if="hasSidebar"
                 type="button"
                 class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 xl:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 :aria-expanded="mobileQueueOpen"
@@ -66,7 +66,7 @@
                   <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
                   <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
                 </svg>
-                <span>{{ queueCount }}</span>
+                <span>{{ sidebarCount }}</span>
               </button>
             </div>
 
@@ -242,19 +242,23 @@
             </div>
 
             <div
-              v-if="mobileQueueOpen && queueCount > 0"
+              v-if="mobileQueueOpen && hasSidebar"
               class="radio-themed-muted mt-5 h-[min(420px,60vh)] overflow-hidden rounded-2xl border border-[var(--radio-border)] xl:hidden"
             >
               <PlayerQueue
                 :playlist="playlist || []"
                 :program="program || []"
+                :stations="stations || []"
+                :active-station-id="activeStationId"
+                :country-name="countryName || $t(country)"
                 :thumb="thumb"
                 :station-name="streamName || $t(country)"
+                @select-station="selectStation"
               />
             </div>
 
             <div
-              v-if="queueLoading && queueCount === 0"
+              v-if="queueLoading && scheduleCount === 0 && stationCount === 0"
               class="mt-4 flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50/70 px-3 py-2.5 text-xs text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
             >
               <span class="h-2 w-2 animate-pulse rounded-full bg-slate-400 dark:bg-slate-500"></span>
@@ -320,14 +324,18 @@
         </div>
 
         <aside
-          v-if="queueCount > 0"
+          v-if="hasSidebar"
           class="radio-themed-muted hidden h-[380px] overflow-hidden border-l border-[var(--radio-border)] xl:block"
         >
           <PlayerQueue
             :playlist="playlist || []"
             :program="program || []"
+            :stations="stations || []"
+            :active-station-id="activeStationId"
+            :country-name="countryName || $t(country)"
             :thumb="thumb"
             :station-name="streamName || $t(country)"
+            @select-station="selectStation"
           />
         </aside>
       </div>
@@ -336,7 +344,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { RadioSource } from "~/types/radio";
+import type { RadioSource, RadioStationOption } from "~/types/radio";
 
 interface CurrentMedia {
   title: string;
@@ -377,7 +385,14 @@ const props = defineProps<{
   streamUrls?: RadioSource[];
   song?: Song;
   playlist?: PlaylistItem[];
+  stations?: RadioStationOption[];
+  activeStationId?: string;
+  countryName?: string;
   queueLoading?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (event: "select-station", station: RadioStationOption): void;
 }>();
 
 const $store = useMainStore();
@@ -475,8 +490,15 @@ const activeSourceName = computed(() =>
   ),
 );
 
-const queueCount = computed(
+const scheduleCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
+);
+const stationCount = computed(() => props.stations?.length || 0);
+const hasSidebar = computed(
+  () => stationCount.value > 0 || scheduleCount.value > 0,
+);
+const sidebarCount = computed(
+  () => stationCount.value || scheduleCount.value,
 );
 
 const nowPlayingTitle = computed(() => {
@@ -891,6 +913,25 @@ const selectSource = (index: number): void => {
 const onSourceChange = (event: Event): void => {
   const target = event.target as HTMLSelectElement;
   selectSource(Number(target.value));
+};
+
+const selectStation = (station: RadioStationOption): void => {
+  if (station.id === props.activeStationId) {
+    if (!playing.value && hasPlayableSource.value) {
+      void onPlay();
+    }
+    mobileQueueOpen.value = false;
+    return;
+  }
+
+  if (import.meta.client) {
+    localStorage.setItem("radio_autoplay_enabled", "1");
+  }
+
+  userPaused.value = false;
+  pendingAutoPlay.value = true;
+  mobileQueueOpen.value = false;
+  emit("select-station", station);
 };
 
 const toggleMute = (): void => {
