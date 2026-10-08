@@ -14,6 +14,7 @@
       <div id="radio-queue-slot" class="radio-queue-slot hidden min-h-0 min-w-0 pb-14 pt-24"></div>
     </div>
     <AppFooter />
+    <MobileNavigation />
     <ClientOnly>
       <PlayerSession />
       <template #fallback>

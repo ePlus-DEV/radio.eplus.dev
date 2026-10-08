@@ -16,11 +16,19 @@
 - Remove the invisible one-second player clock and defer HLS module loading until playback needs it.
 - Browser tests stay available but are opt-in in CI through `ENABLE_BROWSER_TESTS=true`. Unit tests, prerender, and staging noindex checks remain enabled.
 
+## App redesign
+
+- Compact discovery heading and search header; violet desktop navigation with favorite/recent shortcuts.
+- Resume card and favorite/recent sections, with a dedicated noindex `/library` page and filters.
+- Mobile Discover / Search / Library navigation beneath the persistent mini player.
+- Fullscreen Now Playing with artwork, actual paused/playing status, transport, favorites, sleep timer, sources, lyrics and queue access; no fabricated live seek timeline.
+- Presentation changes preserve one audio engine; provider next-song and next-station labels remain distinct.
+- Compact country rows retain static discovery links and build-time counts. Artwork in personal/full-player views has a stable fallback.
+
 ## Follow-up priorities
 
 | Priority | Improvement | Acceptance criteria |
 | --- | --- | --- |
-| P1 | Dedicated mobile Now Playing view | Large artwork/title, transport, favorite, sleep timer and source tools remain usable in portrait/landscape and with long or RTL station names. |
 | P1 | Stream health reporting | Distinguish offline network, unsupported source and exhausted retries; provide a clear retry action without treating temporary buffering as failure. |
 | P1 | Real-device Safari/iOS review | Check background playback, headset/lock-screen actions, keyboard viewport, safe areas and reload silence on an iPhone. |
 | P1 | Playback module extraction | Separate audio lifecycle, retry recovery, Media Session and UI from the large player component while preserving route persistence. |
@@ -28,7 +36,7 @@
 | P2 | Favorites in the channel drawer | Add a favorites-only filter and consistent accent-insensitive filtering while keeping the original country order for Previous/Next. |
 | P2 | Metadata polling efficiency | Suspend unnecessary work when hidden and paused/offline, retain lock-screen metadata during playback, and avoid refetching unchanged lyrics. |
 | P2 | Large-country catalogs | Measure scroll/render cost first; add pagination or windowing without removing SSR discovery links. |
-| P2 | Artwork resilience | Validate local image paths, show a stable fallback on failed loads, and reserve image space to prevent layout shifts. |
+| P2 | Catalog artwork resilience | Extend the fallback component to catalog/search cards and validate local image paths; personal and fullscreen artwork already has a fallback. |
 | P2 | Performance measurements | Compare real LCP, INP, CLS, transferred bytes and request counts on mobile before choosing additional optimization. |
 | P3 | Favorites export/import | Validate a versioned JSON format and let users move their lists without an account. |
 

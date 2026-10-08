@@ -426,5 +426,20 @@
     "clear_recent": "Очистить историю",
     "add_favorite": "Добавить в избранное",
     "remove_favorite": "Удалить из избранного"
+  },
+  "redesign": {
+    "navigation": "Навигация",
+    "discover": "Обзор",
+    "search": "Поиск",
+    "library": "Библиотека",
+    "continue_listening": "Продолжить слушать",
+    "paused": "На паузе",
+    "now_playing": "Плеер",
+    "timer": "Таймер",
+    "channel_list": "Станции",
+    "next_station": "Следующая станция",
+    "library_description": "Избранное и история прослушивания хранятся на этом устройстве.",
+    "all": "Все",
+    "see_all": "Показать все"
   }
 }

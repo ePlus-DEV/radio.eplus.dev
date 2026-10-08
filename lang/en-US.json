@@ -426,5 +426,20 @@
     "clear_recent": "Clear recent history",
     "add_favorite": "Add to favorites",
     "remove_favorite": "Remove from favorites"
+  },
+  "redesign": {
+    "navigation": "Navigation",
+    "discover": "Discover",
+    "search": "Search",
+    "library": "Library",
+    "continue_listening": "Continue listening",
+    "paused": "Paused",
+    "now_playing": "Now playing",
+    "timer": "Timer",
+    "channel_list": "Channels",
+    "next_station": "Next station",
+    "library_description": "Your favorite stations and listening history, saved on this device.",
+    "all": "All",
+    "see_all": "See all"
   }
 }

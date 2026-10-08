@@ -1,101 +1,21 @@
 <template>
-  <div class="space-y-7">
-    <section
-      class="radio-hero relative isolate overflow-hidden rounded-[2rem] px-5 py-8 text-white sm:px-8 sm:py-10 lg:px-10 lg:py-12"
-    >
-      <div
-        class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_22%,rgba(236,72,153,0.50),transparent_35%),radial-gradient(circle_at_20%_90%,rgba(59,130,246,0.26),transparent_42%)]"
-      ></div>
-
-      <div class="pointer-events-none absolute -right-16 top-1/2 hidden h-72 w-72 -translate-y-1/2 rounded-full border-[32px] border-white/10 opacity-70 blur-[1px] lg:block" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute right-7 top-1/2 hidden h-44 w-44 -translate-y-1/2 items-end justify-center gap-2 opacity-50 lg:flex" aria-hidden="true">
-        <span v-for="bar in 17" :key="bar" class="w-1.5 rounded-full bg-gradient-to-t from-violet-300 to-pink-300" :style="{ height: `${14 + (bar * 37 % 80)}%` }"></span>
-      </div>
-      <div class="relative max-w-3xl">
-        <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm">
-          <span class="h-2 w-2 animate-pulse rounded-full bg-rose-500"></span>
-          {{ $t('home.live_badge') }}
-        </div>
-
-        <h1 class="max-w-xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-          {{ $t('home.title') }}
-        </h1>
-        <p class="mt-4 max-w-xl text-sm leading-7 text-slate-200 sm:text-base">
-          {{ $t('home.description') }}
-        </p>
-
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#featured-radio" class="radio-interactive inline-flex items-center gap-2 rounded-full bg-violet-500 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-950/20 transition hover:bg-violet-400"><fa :icon="['fas', 'play']" /> {{ $t('home.start_listening') }}</a>
-          <a href="#explore-radio" class="radio-interactive inline-flex items-center rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20">{{ $t('home.explore_countries') }}</a>
-        </div>
-        <div class="mt-6 flex flex-wrap gap-2">
-          <NuxtLink
-            v-for="areaItem in areaItems"
-            :key="areaItem.slug"
-            :to="`/${areaItem.slug}`"
-            class="radio-interactive group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-sm"
-          >
-            <span>{{ $t(`world.${areaItem.key}.name`) }}</span>
-            <span class="rounded-md bg-white/15 px-1.5 py-0.5 text-[10px] tabular-nums text-slate-200">
-              {{ areaItem.count }}
-            </span>
-            <fa
-              :icon="['fas', 'arrow-right']"
-              class="h-3 w-3 text-slate-200 transition group-hover:translate-x-0.5 group-hover:text-white"
-            />
-          </NuxtLink>
-        </div>
-      </div>
-
-      <div class="relative mt-7 grid grid-cols-3 gap-3 border-t border-white/20 pt-5 sm:max-w-xl">
-        <div>
-          <p class="text-xl font-bold tracking-tight text-white">
-            {{ totalCountries }}
-          </p>
-          <p class="mt-1 text-xs text-slate-200">{{ $t('home.countries') }}</p>
-        </div>
-        <div>
-          <p class="text-xl font-bold tracking-tight text-white">
-            {{ areaItems.length }}
-          </p>
-          <p class="mt-1 text-xs text-slate-200">{{ $t('home.regions') }}</p>
-        </div>
-        <div>
-          <p class="text-xl font-bold tracking-tight text-white">
-            24/7
-          </p>
-          <p class="mt-1 text-xs text-slate-200">{{ $t('home.streaming') }}</p>
-        </div>
+  <div class="space-y-7 sm:space-y-8">
+    <section class="radio-hero rounded-2xl">
+      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{{ $t('home.title') }}</h1>
+      <p class="mt-2 max-w-2xl text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('home.description') }}</p>
+      <div class="mt-4 flex flex-wrap gap-4 text-xs font-medium text-violet-500">
+        <a href="#featured-radio" class="radio-interactive rounded-lg py-2">{{ $t('home.start_listening') }}</a>
+        <a href="#explore-radio" class="radio-interactive rounded-lg py-2">{{ $t('home.explore_countries') }} · {{ totalCountries }}</a>
       </div>
     </section>
-
-    <ClientOnly><PanelListeningLibrary /></ClientOnly>
-
+    <ClientOnly><PanelResumeCard /><PanelListeningLibrary compact /></ClientOnly>
     <section id="featured-radio" class="scroll-mt-24">
-      <div class="mb-3 flex items-center justify-between px-1">
-        <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
-            {{ $t('home.featured') }}
-          </p>
-          <h2 class="mt-1 text-lg font-semibold tracking-tight text-[var(--radio-text)]">
-            {{ $t('home.start_listening') }}
-          </h2>
-        </div>
-      </div>
-
+      <div class="mb-4 flex items-center justify-between"><h2 class="text-lg font-semibold">{{ $t('home.featured') }}</h2><span class="text-xs text-[var(--radio-text-muted)]">{{ $t('home.start_listening') }}</span></div>
       <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-id="playback.station?.id" />
     </section>
-
     <section id="explore-radio" class="scroll-mt-24">
-      <div class="mb-3 px-1">
-        <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
-          {{ $t('home.explore') }}
-        </p>
-        <h2 class="mt-1 text-xl font-semibold tracking-tight text-[var(--radio-text)]">
-          {{ $t('home.browse_country') }}
-        </h2>
-      </div>
-      <PanelRadio />
+      <h2 class="mb-4 text-lg font-semibold">{{ $t('home.browse_country') }}</h2>
+      <PanelRadio compact />
     </section>
   </div>
 </template>

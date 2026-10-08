@@ -24,6 +24,7 @@
       v-for="(continent, continentIndex) in world"
       :key="continentIndex"
       class="radio-surface overflow-hidden"
+      :class="compact ? 'radio-country-compact' : ''"
     >
       <div
         class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4  sm:px-5"
@@ -71,6 +72,7 @@
             <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
               {{ $t(country.name) }}
             </span>
+            <span v-if="compact && country.station_count !== null" class="shrink-0 text-[10px] tabular-nums text-[var(--radio-text-muted)]">{{ country.station_count }}</span>
             <fa
               :icon="['fas', 'arrow-right']"
               class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
@@ -87,6 +89,7 @@ import worldData from "~/data/world";
 
 const props = defineProps<{
   chooseTheArea?: string;
+  compact?: boolean;
 }>();
 
 interface Country {

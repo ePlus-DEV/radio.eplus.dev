@@ -426,5 +426,20 @@
     "clear_recent": "清除收听记录",
     "add_favorite": "添加到收藏",
     "remove_favorite": "取消收藏"
+  },
+  "redesign": {
+    "navigation": "导航",
+    "discover": "发现",
+    "search": "搜索",
+    "library": "资料库",
+    "continue_listening": "继续收听",
+    "paused": "已暂停",
+    "now_playing": "播放界面",
+    "timer": "定时",
+    "channel_list": "频道列表",
+    "next_station": "下一个电台",
+    "library_description": "收藏和收听记录保存在此设备上。",
+    "all": "全部",
+    "see_all": "查看全部"
   }
 }

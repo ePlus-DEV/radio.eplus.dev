@@ -1,5 +1,5 @@
 <template>
-  <section class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :aria-label="$t('player.title')">
+  <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :aria-label="$t('player.title')">
     <div class="mx-auto max-w-[1920px] px-3 sm:px-6">
       <div class="flex h-6 min-w-0 items-center justify-center gap-2 text-[10px] text-[var(--radio-text-muted)]" aria-live="polite">
         <template v-if="streamError">
@@ -14,7 +14,7 @@
       </div>
 
       <div class="grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pb-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
-        <div class="flex min-w-0 items-center gap-2.5 sm:gap-3">
+        <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
           <div class="radio-themed-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
             <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
             <UIcon v-else name="i-lucide-radio" class="h-5 w-5 text-[var(--radio-text-muted)]" />
@@ -22,6 +22,7 @@
               <span class="radio-bar is-playing h-1 w-px bg-current"></span><span class="radio-bar is-playing h-2 w-px bg-current"></span><span class="radio-bar is-playing h-1.5 w-px bg-current"></span>
             </span>
           </div>
+          <button type="button" class="absolute inset-0 z-10 rounded-xl sm:hidden" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true"></button>
           <div class="min-w-0 flex-1">
             <p dir="auto" class="truncate text-xs font-semibold sm:text-sm" :title="nowPlayingTitle">{{ nowPlayingTitle }}</p>
             <p v-if="nowPlayingArtist" dir="auto" class="mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
@@ -30,16 +31,17 @@
         </div>
 
         <div class="flex items-center justify-center gap-0.5 sm:gap-2">
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-11 w-11 justify-center rounded-full" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="hidden h-11 w-11 justify-center rounded-full sm:inline-flex" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
           <UButton class="h-11 w-11 justify-center rounded-full bg-violet-600 text-white shadow-sm shadow-violet-900/20 hover:bg-violet-500 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
           <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-11 w-11 justify-center rounded-full sm:hidden" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="hidden h-11 w-11 justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
         </div>
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
+          <UButton color="neutral" variant="ghost" icon="i-lucide-maximize-2" class="h-11 w-11 shrink-0 justify-center" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true" />
           <UButton color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 justify-center" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
 
           <UDropdownMenu :items="sleepMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false">
@@ -98,6 +100,11 @@
       <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
     </template>
   </USlideover>
+  <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
+    <template #content>
+      <PlayerNowPlaying :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+    </template>
+  </UModal>
 </template>
 
 <script lang="ts" setup>
@@ -175,6 +182,11 @@ listening.hydrate();
 const favoriteActive = computed(() => listening.library.favorites.some((item: { url: string }) => item.url === props.stationUrl));
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
 const { t } = useI18n();
+const nowPlayingOpen = ref(false);
+const playerStatus = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
+let pendingPlayerAction: 'queue' | 'lyrics' | null = null;
+const deferPlayerAction = (action: 'queue' | 'lyrics') => { pendingPlayerAction = action; nowPlayingOpen.value = false; };
+const finishPlayerAction = () => { const action = pendingPlayerAction; pendingPlayerAction = null; if (action === 'queue') { if (wideViewport.value) playback.queueOpen = true; else mobileQueueOpen.value = true; } else if (action === 'lyrics') emit('open-lyrics'); };
 const wideViewport = ref(false);
 const updateViewport = () => { wideViewport.value = window.innerWidth >= 1536; if (wideViewport.value) mobileQueueOpen.value = false; };
 const toggleQueue = () => { if (wideViewport.value) playback.queueOpen = !playback.queueOpen; else mobileQueueOpen.value = !mobileQueueOpen.value; };

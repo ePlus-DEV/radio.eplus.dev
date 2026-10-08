@@ -48,8 +48,8 @@
             v-if="station.id === activeStationId"
             class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
           >
-            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
-            Live
+            <span v-if="playback.playing" class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+            {{ $t(playback.playing ? 'player.on_air' : 'redesign.paused') }}
           </span>
 
           <span
@@ -80,6 +80,8 @@
 </template>
 
 <script lang="ts" setup>
+import { usePlaybackStore } from '~/stores/playback';
+const playback = usePlaybackStore();
 import type { RadioStationOption } from "~/types/radio";
 
 const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
