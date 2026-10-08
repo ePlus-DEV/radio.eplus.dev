@@ -109,7 +109,11 @@ Current rule for `components/lang/LangSwitcher.vue`:
 - menu is explicitly anchored with `absolute right-0 top-full`;
 - accessibility state uses `aria-expanded`, `aria-haspopup="menu"`, `role="menu"` and `menuitemradio`.
 
-Do not regress this component back to DaisyUI focus-driven visibility. Regression test: `tests/language-dropdown.test.mjs`.
+Do not regress this component back to DaisyUI focus-driven visibility.
+
+The dropdown list also owns its own layout. Do not add DaisyUI `menu` / `dropdown-content` classes back to this controlled menu: they can introduce child sizing/layout rules that, combined with vertical overflow, produce horizontal scrolling and displaced locale items on narrow screens. Keep the list `flex-col`, `overflow-x-hidden`, and constrain it with a viewport-aware max width.
+
+Regression test: `tests/language-dropdown.test.mjs`.
 
 ## 5. Dark-mode architecture
 

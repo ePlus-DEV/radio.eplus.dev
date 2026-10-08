@@ -37,3 +37,15 @@ test("language dropdown is anchored to the header trigger and keyboard accessibl
   assert.match(source, /role="menuitemradio"/);
   assert.match(source, /@keydown\.down\.prevent="openAndFocusFirst"/);
 });
+
+
+test("language dropdown list does not inherit DaisyUI menu layout or horizontal scrolling", async () => {
+  const source = await readFile(file, "utf8");
+
+  assert.doesNotMatch(source, /class="menu\b/);
+  assert.match(source, /flex-col/);
+  assert.match(source, /overflow-x-hidden/);
+  assert.match(source, /max-w-\[calc\(100vw-1rem\)\]/);
+  assert.match(source, /class="w-full min-w-0 list-none"/);
+  assert.match(source, /class="flex w-full min-w-0 items-center/);
+});
