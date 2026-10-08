@@ -397,6 +397,7 @@ import {
   buildPlaybackSources,
   nextPlaybackIndex,
 } from "~/utils/radio-source-plan.mjs";
+import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -551,21 +552,12 @@ const scheduleCount = computed(
 const stationList = computed<RadioStationOption[]>(() => props.stations || []);
 const stationCount = computed(() => stationList.value.length);
 const canNavigateStations = computed(() => stationCount.value > 1);
-const activeStationIndex = computed(() =>
-  stationList.value.findIndex((station) => station.id === props.activeStationId),
-);
-
-const adjacentStation = (offset: -1 | 1): RadioStationOption | undefined => {
-  const list = stationList.value;
-  if (list.length < 2) return undefined;
-
-  const currentIndex = activeStationIndex.value;
-  const baseIndex =
-    currentIndex >= 0 ? currentIndex : offset > 0 ? -1 : 0;
-  const index = (baseIndex + offset + list.length) % list.length;
-
-  return list[index];
-};
+const adjacentStation = (offset: -1 | 1): RadioStationOption | undefined =>
+  getAdjacentStation(
+    stationList.value,
+    props.activeStationId,
+    offset,
+  ) as RadioStationOption | undefined;
 
 const previousStation = computed(() => adjacentStation(-1));
 const nextStation = computed(() => adjacentStation(1));
