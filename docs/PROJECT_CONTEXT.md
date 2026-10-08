@@ -22,7 +22,7 @@ Current application architecture:
 | Framework | Nuxt 4 / Vue 3 |
 | Runtime | Node.js 24.15.0 |
 | Styling | Tailwind CSS 4 |
-| UI primitives | DaisyUI 5 |
+| UI primitives | Tailwind-native primitives (DaisyUI removed) |
 | State | Pinia |
 | Audio | Native HTML5 Audio + hls.js |
 | Theme state | `@nuxtjs/color-mode` |
@@ -71,7 +71,7 @@ The design direction is:
 - rose accent for live/primary actions;
 - consistent cards, menus, badges, inputs and selects;
 - responsive layouts that avoid fixed empty columns;
-- DaisyUI for stable primitives such as buttons, tabs, inputs, selects, badges and menus;
+- Tailwind-native controls, ready for Nuxt UI migration;
 - custom Radio ePlus semantic tokens for the actual product palette.
 
 DaisyUI should **not** be allowed to become an independent visual theme that conflicts with Nuxt Color Mode.
@@ -134,7 +134,7 @@ Regression test: `tests/language-dropdown.test.mjs`.
 Dark mode previously depended on three independent mechanisms:
 
 1. Tailwind `dark:`;
-2. DaisyUI `data-theme`;
+2. legacy DaisyUI `data-theme`;
 3. manually hard-coded light/dark colors per component.
 
 This produced pages where most of the UI was dark but individual controls, menus, select elements, overlays, or legacy components stayed light.
@@ -161,9 +161,9 @@ The theme defines semantic variables for both light and dark modes, including va
 - `--radio-track`
 - `--radio-overlay`
 
-DaisyUI `--color-base-*` values are synchronized to the same resolved light/dark state.
+The previous DaisyUI `--color-base-*` duplicate palette was removed; Nuxt Color Mode and `--radio-*` tokens are the source of truth.
 
-Nuxt Color Mode and `data-theme` must remain synchronized.
+Nuxt Color Mode drives the semantic tokens; avoid adding a second theme system.
 
 The background/text are also applied at the root/document level so portals, dialogs, empty page regions, and browser-rendered controls do not expose white gaps in dark mode.
 
