@@ -43,6 +43,7 @@ components/AppFooter.vue             Global footer
 components/player/Player.vue         Main audio/HLS player
 components/player/Queue.vue          Schedule/channel side panel
 utils/radio-source-plan.mjs          Playback source/fallback ordering
+utils/station-schedule.mjs            Schedule URL/provider normalization
 pages/[area]/[country]/[station].vue Station detail page
 public/radio/world.json              World/country metadata
 public/radio/<area>/<country>.json   Station catalog per country
@@ -53,6 +54,8 @@ docs/instant-audio-sync.md           Sync design and safety model
 tests/theme-consistency.test.mjs     Dark/light regression guard
 tests/player-hls-startup.test.mjs    HLS lifecycle regression guard
 tests/radio-source-plan.test.mjs     Source-plan regression guard
+tests/station-route-lifecycle.test.mjs Station-router state regression guard
+tests/station-schedule.test.mjs       Schedule-provider regression guard
 .github/workflows/build.yml          Pull-request unit-test workflow
 .github/workflows/instant-audio-sync.yml Radio data sync/validation workflow
 ```
@@ -293,7 +296,64 @@ Some stations can also include:
 
 Do not destructively replace existing stations merely because a sync provider returns a different result.
 
-## 10. Data sync
+## 10. Station route lifecycle and schedule providers
+
+### Router regression discovered on 2026-10-08
+
+Nuxt reuses the station detail component when navigating between compatible station routes. The old implementation accidentally treated several pieces of state as component-lifetime state instead of route-lifetime state.
+
+Observed/possible symptoms when navigating without a full page reload:
+
+- previous station schedule remains visible briefly on the next station;
+- previous Zing song/lyrics remain visible after route navigation;
+- lyric popup stays open while the station route changes;
+- an old schedule/detail/lyric request returns later and mutates the new station;
+- country/station catalog UI and player metadata can update from different fetches at different times;
+- schedule tab/search state from the previous station carries into the new station.
+
+### Root causes
+
+1. The station page loaded the country catalog, while `PanelStation` independently loaded the same catalog again and emitted active-station data back to the parent.
+2. Schedule/song/playlist/lyric state was reset only after that child fetch completed.
+3. Route-derived catalog async state did not explicitly guard the returned payload against the currently active area/country.
+4. Zing handling was selected with `country === "viet-nam"` rather than by schedule provider.
+5. The lyric action was shown for all Vietnamese stations.
+6. Some legacy entries use non-URL schedule values such as `true`.
+
+### Current rules
+
+- `pages/[area]/[country]/[station].vue` owns the country catalog and active station state.
+- `components/panel/Station.vue` is presentational and must not independently fetch/emit station catalog state.
+- The catalog async key is route-reactive, and returned catalog data is accepted only when its identity matches the active area/country.
+- Route changes immediately:
+  - increment the request version;
+  - stop the previous polling timer;
+  - clear program/song/playlist/lyric/loading state;
+  - close the lyric popup;
+  - clear transient stream state before activating the new station.
+- Every async schedule/detail/lyric response must check the request version before changing UI state.
+- Schedule values must pass `normalizeScheduleUrl` before fetching. Boolean/invalid legacy values are not URLs and must not be fetched.
+- Zing-specific behavior is selected by `isZingScheduleUrl`, based on the provider endpoint (`zing.eplus.dev/api/live-stream-program-list`), not the country.
+- The lyric action is Zing-only.
+- Queue search/tab state is station-route-scoped. If a new station has a schedule that finishes loading asynchronously, the schedule tab can become active after loading instead of leaving stale navigation state.
+
+Regression tests:
+
+```text
+tests/station-route-lifecycle.test.mjs
+tests/station-schedule.test.mjs
+```
+
+Useful manual route test:
+
+1. open a Zing station such as `/asia/viet-nam/edm-radio-zing-mp3`;
+2. open lyrics/schedule;
+3. navigate through the in-player station list to another Zing station;
+4. navigate to a non-Zing Vietnam station such as `/asia/viet-nam/vov1`;
+5. verify old Zing song/schedule/lyrics disappear immediately and the lyric control is no longer shown;
+6. navigate to a station in another country and verify the station catalog changes with the route.
+
+## 11. Data sync
 
 Radio sync is documented separately in `docs/instant-audio-sync.md`.
 
@@ -309,7 +369,7 @@ Important principles:
 
 The workflow name exposed in GitHub Actions is **Radio data sync**.
 
-## 11. Search, SEO and canonical URLs
+## 12. Search, SEO and canonical URLs
 
 Production canonical URL:
 
@@ -321,7 +381,7 @@ When working on previews, do not accidentally change canonical production metada
 
 Algolia is optional for local/build scenarios where credentials are unavailable.
 
-## 12. Internationalization and RTL
+## 13. Internationalization and RTL
 
 Configured languages include English, Vietnamese, Japanese, Simplified Chinese, Traditional Chinese, French, and Russian.
 
@@ -333,7 +393,7 @@ For dynamic station names/descriptions:
 - avoid assumptions about Latin text width/direction;
 - test long names and RTL names in player/sidebar/card layouts.
 
-## 13. Font Awesome state
+## 14. Font Awesome state
 
 The visible application UI is **Font Awesome Free-only**.
 
@@ -350,7 +410,7 @@ Important rules:
 
 Regression test: `tests/fontawesome-icons.test.mjs`.
 
-## 14. Testing and CI
+## 15. Testing and CI
 
 `npm test` runs Node test files in `tests/*.test.mjs`.
 
@@ -360,6 +420,8 @@ Important current guards:
 - `language-dropdown.test.mjs`
 - `player-hls-startup.test.mjs`
 - `radio-source-plan.test.mjs`
+- `station-route-lifecycle.test.mjs`
+- `station-schedule.test.mjs`
 - `radio-sync.test.mjs`
 
 Pull-request workflow:
@@ -379,7 +441,7 @@ For large UI/framework changes, unit tests alone are not a substitute for manual
 - Arabic/RTL station text;
 - search/dialog/dropdown surfaces.
 
-## 15. Security/documentation rule
+## 16. Security/documentation rule
 
 Do not paste secrets into durable docs.
 
@@ -389,7 +451,7 @@ Do not commit private npm registry tokens. A previously committed Font Awesome r
 
 If an environment/example file contains credential-looking values, treat them as sensitive and do not repeat them into README, AGENTS, issue bodies, PR bodies, or AI prompts.
 
-## 16. How future AI/contributors should update this file
+## 17. How future AI/contributors should update this file
 
 Update this document in the same PR when any of the following changes:
 
