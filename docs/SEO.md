@@ -70,6 +70,8 @@ Do not mark realtime schedule/song/lyric data as static structured data unless i
 
 `@nuxtjs/sitemap` receives all radio routes from `build/radioRoutes.ts`.
 
+Route discovery only treats a `public/radio/<area>/` directory as an area when it contains country JSON catalogs. Asset-only folders must never become sitemap/prerender routes.
+
 The sitemap intentionally does **not** emit `lastmod` yet.
 
 Filesystem mtimes from CI/deployment checkouts are not reliable content-modification timestamps; using them would effectively tell crawlers that every page changed on every deployment. Add `lastmod` only when the catalog has a durable update timestamp or the build has a trustworthy per-file history source.
@@ -126,25 +128,20 @@ Do not generate multiple `hreflang` entries that all point to the same URL merel
 
 That change affects canonical URLs, sitemap entries, internal links, redirects and historical indexing, so it must be handled as a dedicated migration.
 
-## Known broken internal-link blocker
+## Static navigation pages
 
-As of 2026-10-08, navigation references these paths:
+As of 2026-10-08, the repository still does not contain:
 
 - `/about`
 - `/privacy-policy`
 - `/terms-of-use`
 - `/statistics`
 
-but the repository does not currently contain corresponding pages.
+A prerender regression exposed that sitewide Header/Footer links to these missing routes were being crawled and treated as hard prerender failures after the new 404 guards were introduced.
 
-This is an SEO/UX issue because crawlers and users can reach 404s from sitewide navigation.
+Those links are now removed until real pages exist.
 
-Do not invent Privacy Policy or Terms content. Resolve this by either:
-
-1. adding owner-approved pages, or
-2. removing the links until valid content exists.
-
-`/about` and `/statistics` can be implemented separately with factual product/data content.
+Do not invent Privacy Policy or Terms content. Re-add these navigation items only when matching owner-approved pages exist. `/about` and `/statistics` can be implemented separately with factual product/data content.
 
 ## Search-result enhancement decisions
 
