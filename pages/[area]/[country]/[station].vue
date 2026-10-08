@@ -30,11 +30,10 @@
             {{ stationName }}
           </h1>
           <p
-            v-if="stationMeta?.description"
             dir="auto"
             class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]"
           >
-            {{ stationMeta.description }}
+            {{ seoDescription }}
           </p>
         </div>
       </div>
