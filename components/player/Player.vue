@@ -32,7 +32,7 @@
                   <span class="sr-only">Select stream source</span>
                   <select
                     :value="activeSourceIndex"
-                    class="select select-xs h-7 min-h-7 w-auto max-w-[132px] cursor-pointer rounded-full border-[var(--radio-border)] bg-[var(--radio-surface-soft)] py-0 pl-2.5 pr-7 text-[11px] font-semibold text-[var(--radio-text-muted)] shadow-none outline-none transition hover:border-rose-300 hover:bg-[var(--radio-surface)] focus:border-rose-400 focus:outline-none sm:max-w-[260px]"
+                    class="h-7 min-h-7 w-auto max-w-[132px] cursor-pointer rounded-full border-[var(--radio-border)] bg-[var(--radio-surface-soft)] py-0 pl-2.5 pr-7 text-[11px] font-semibold text-[var(--radio-text-muted)] shadow-none outline-none transition hover:border-rose-300 hover:bg-[var(--radio-surface)] focus:border-rose-400 focus:outline-none sm:max-w-[260px]"
                     aria-label="Select stream source"
                     @change="onSourceChange"
                   >
