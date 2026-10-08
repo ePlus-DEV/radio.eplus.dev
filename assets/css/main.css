@@ -93,4 +93,34 @@
   .radio-themed-artwork {
     background: var(--radio-artwork-bg);
   }
+
+  .radio-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(148 163 184 / 0.45) transparent;
+  }
+
+  .radio-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .radio-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .radio-scrollbar::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: rgb(148 163 184 / 0.4);
+    background-clip: padding-box;
+  }
+
+  .radio-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgb(100 116 139 / 0.55);
+    background-clip: padding-box;
+  }
+
+  .radio-interactive {
+    @apply transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+  }
 }
