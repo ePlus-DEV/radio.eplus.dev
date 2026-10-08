@@ -20,8 +20,8 @@
         class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition"
         :class="
           $colorMode.preference === option.value
-            ? 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-300'
-            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5'
+            ? 'bg-rose-500/10 text-rose-600 dark:text-rose-300'
+            : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
         "
         @click="$colorMode.preference = option.value"
       >

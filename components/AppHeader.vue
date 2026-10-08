@@ -1,7 +1,7 @@
 <template>
   <header class="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6">
     <nav
-      class="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-white/70 bg-white/85 px-3 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80 dark:shadow-black/20 sm:px-4"
+      class="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-[var(--radio-border)] bg-[color:var(--radio-surface)]/90 px-3 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:shadow-black/20 sm:px-4"
     >
       <div class="flex min-w-0 items-center gap-2">
         <NuxtLink
@@ -36,15 +36,15 @@
             class="rounded-xl px-3 py-2 text-sm font-medium transition"
             :class="
               route.path === '/'
-                ? 'bg-slate-100 text-slate-950 dark:bg-white/10 dark:text-white'
-                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white'
+                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
+                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
             "
           >
             {{ $t("navmenu.homepage") }}
           </NuxtLink>
           <NuxtLink
             to="/statistics"
-            class="rounded-xl px-3 py-2 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white"
+            class="rounded-xl px-3 py-2 text-sm font-medium text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
           >
             {{ $t("navmenu.statistics") }}
           </NuxtLink>
@@ -54,7 +54,7 @@
       <div class="flex items-center gap-1">
         <button
           type="button"
-          class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white sm:px-3"
+          class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:px-3"
           :aria-label="$t('popup.search.text')"
           @click="openSearch"
         >
@@ -74,7 +74,7 @@
 
         <button
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white lg:hidden"
+          class="flex h-10 w-10 items-center justify-center rounded-xl text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] lg:hidden"
           :aria-label="mobileOpen ? $t('button.close') : 'Menu'"
           :aria-expanded="mobileOpen"
           @click="mobileOpen = !mobileOpen"
@@ -90,7 +90,7 @@
     >
       <NuxtLink
         to="/"
-        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/5"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
         @click="mobileOpen = false"
       >
         <fa :icon="['fas', 'house']" class="w-4 text-slate-400" />
@@ -108,7 +108,7 @@
         href="https://old-radio.eplus.dev"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
       >
         <fa :icon="['fas', 'clock-rotate-left']" class="w-4 text-slate-400" />
         {{ $t("navmenu.old_version") }}
@@ -119,7 +119,7 @@
   <Teleport to="body">
     <div
       v-if="searchOpen"
-      class="fixed inset-0 z-[100] flex items-start justify-center bg-slate-950/60 p-3 pt-[8vh] backdrop-blur-sm sm:p-6 sm:pt-[12vh]"
+      class="fixed inset-0 z-[100] flex items-start justify-center bg-[var(--radio-overlay)] p-3 pt-[8vh] backdrop-blur-sm sm:p-6 sm:pt-[12vh]"
       role="dialog"
       aria-modal="true"
       @click.self="closeSearch"

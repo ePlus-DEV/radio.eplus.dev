@@ -5,7 +5,7 @@
   >
     <NuxtLink
       to="/"
-      class="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+      class="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
     >
       <fa :icon="['fas', 'house']" class="h-3 w-3" />
       <span class="hidden sm:inline">{{ $t("navmenu.homepage") }}</span>
@@ -15,7 +15,7 @@
       <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
       <NuxtLink
         :to="`/${area}`"
-        class="shrink-0 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+        class="shrink-0 rounded-lg px-2 py-1.5 transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
       >
         {{ $t(`world.${area.replace(/-/g, "_")}.name`) }}
       </NuxtLink>
@@ -24,7 +24,7 @@
         <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
         <NuxtLink
           :to="`/${area}/${level_1_slug}`"
-          class="shrink-0 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+          class="shrink-0 rounded-lg px-2 py-1.5 transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
         >
           {{ $t(level_1) }}
         </NuxtLink>
@@ -32,7 +32,7 @@
 
       <template v-else>
         <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
-        <span class="shrink-0 px-2 py-1.5 text-slate-600 dark:text-slate-300">
+        <span class="shrink-0 px-2 py-1.5 text-[var(--radio-text-muted)]">
           {{ $t(level_1) }}
         </span>
       </template>
@@ -40,7 +40,7 @@
 
     <template v-if="level_2 !== undefined">
       <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
-      <span class="max-w-[220px] truncate px-2 py-1.5 text-slate-600 dark:text-slate-300 sm:max-w-md">
+      <span class="max-w-[220px] truncate px-2 py-1.5 text-[var(--radio-text-muted)] sm:max-w-md">
         {{ level_2 }}
       </span>
     </template>

@@ -16,6 +16,9 @@ const route = useRoute();
 const config = useRuntimeConfig();
 const { locale } = useI18n();
 const colorMode = useColorMode();
+const resolvedTheme = computed(() =>
+  colorMode.value === "dark" ? "dark" : "light",
+);
 
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
 const siteName = computed(() => String(config.public.siteName));
@@ -31,7 +34,7 @@ const shareImage = computed(() => `${siteUrl.value}/brand/logo-share.png`);
 useHead(() => ({
   htmlAttrs: {
     lang: locale.value,
-    "data-theme": colorMode.value === "dark" ? "dark" : "light",
+    "data-theme": resolvedTheme.value,
   },
   link: [
     {
