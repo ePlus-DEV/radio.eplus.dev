@@ -4,7 +4,6 @@
    toggles a .dark class, so make dark: follow that class explicitly. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-@plugin "daisyui";
 
 @layer base {
   :root,
@@ -29,15 +28,6 @@
     --radio-header-bg: rgb(255 255 255 / 0.9);
     --radio-overlay: rgb(15 23 42 / 0.55);
 
-    /* Keep daisyUI controls on the exact same theme as Nuxt Color Mode. */
-    --color-base-100: #ffffff;
-    --color-base-200: #f1f5f9;
-    --color-base-300: #e2e8f0;
-    --color-base-content: #0f172a;
-    --color-primary: #f43f5e;
-    --color-primary-content: #ffffff;
-    --color-neutral: #0f172a;
-    --color-neutral-content: #ffffff;
   }
 
   html.dark,
@@ -61,14 +51,6 @@
     --radio-header-bg: rgb(2 6 23 / 0.86);
     --radio-overlay: rgb(2 6 23 / 0.72);
 
-    --color-base-100: #0f172a;
-    --color-base-200: #111827;
-    --color-base-300: #1e293b;
-    --color-base-content: #f8fafc;
-    --color-primary: #fb7185;
-    --color-primary-content: #020617;
-    --color-neutral: #f8fafc;
-    --color-neutral-content: #020617;
   }
 
   html {
