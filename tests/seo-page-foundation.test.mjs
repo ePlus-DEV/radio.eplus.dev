@@ -67,23 +67,32 @@ test("route discovery ignores asset-only folders under public/radio", async () =
   assert.match(source, /if \(countryFiles\.length === 0\) continue;/);
 });
 
-test("sitewide navigation does not crawl missing static pages", async () => {
-  const [header, footer] = await Promise.all([
+test("sitewide static navigation points to implemented pages", async () => {
+  const [header, footer, config] = await Promise.all([
     read("components/AppHeader.vue"),
     read("components/AppFooter.vue"),
+    read("nuxt.config.ts"),
   ]);
   const navigation = `${header}\n${footer}`;
+  const pages = {
+    "/about": "pages/about.vue",
+    "/statistics": "pages/statistics.vue",
+    "/contact": "pages/contact.vue",
+    "/privacy-policy": "pages/privacy-policy.vue",
+    "/terms-of-use": "pages/terms-of-use.vue",
+  };
 
-  for (const path of [
-    "/about",
-    "/privacy-policy",
-    "/terms-of-use",
-    "/statistics",
-  ]) {
-    assert.doesNotMatch(
+  for (const [route, file] of Object.entries(pages)) {
+    await access(join(ROOT, file));
+    assert.match(
       navigation,
-      new RegExp(`(?:to|href)=["']${path.replaceAll("/", "\\/")}["']`),
-      `sitewide navigation must not link to missing page ${path}`,
+      new RegExp(`(?:to|href)=["']${route.replaceAll("/", "\\/")}["']`),
+      `sitewide navigation should expose implemented page ${route}`,
+    );
+    assert.match(
+      config,
+      new RegExp(`loc: ["']${route.replaceAll("/", "\\/")}["']`),
+      `static page ${route} should be explicitly prerendered and indexed`,
     );
   }
 });
