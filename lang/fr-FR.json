@@ -220,7 +220,8 @@
     "listen_country": "Écouter une station",
     "explore": "Explorer les régions",
     "previous": "Station précédente : {name}",
-    "next": "Station suivante : {name}"
+    "next": "Station suivante : {name}",
+    "ios_volume_hint": "Sur iPhone ou iPad, réglez le volume avec les boutons de l’appareil ou le Centre de contrôle."
   },
   "site_pages": {
     "common": {

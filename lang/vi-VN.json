@@ -220,7 +220,8 @@
     "listen_country": "Nghe một đài",
     "explore": "Khám phá khu vực",
     "previous": "Đài trước: {name}",
-    "next": "Đài tiếp theo: {name}"
+    "next": "Đài tiếp theo: {name}",
+    "ios_volume_hint": "Trên iPhone hoặc iPad, hãy dùng nút âm lượng trên thiết bị hoặc Trung tâm điều khiển để chỉnh âm lượng."
   },
   "site_pages": {
     "common": {

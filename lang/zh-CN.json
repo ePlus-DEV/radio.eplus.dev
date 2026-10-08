@@ -220,7 +220,8 @@
     "listen_country": "收听电台",
     "explore": "探索地区",
     "previous": "上一个电台：{name}",
-    "next": "下一个电台：{name}"
+    "next": "下一个电台：{name}",
+    "ios_volume_hint": "在 iPhone 或 iPad 上，请使用设备音量键或控制中心调节音量。"
   },
   "site_pages": {
     "common": {

@@ -220,7 +220,8 @@
     "listen_country": "放送局を聴く",
     "explore": "地域を探す",
     "previous": "前の放送局: {name}",
-    "next": "次の放送局: {name}"
+    "next": "次の放送局: {name}",
+    "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。"
   },
   "site_pages": {
     "common": {
