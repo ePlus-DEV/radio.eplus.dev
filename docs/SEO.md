@@ -70,14 +70,9 @@ Do not mark realtime schedule/song/lyric data as static structured data unless i
 
 `@nuxtjs/sitemap` receives all radio routes from `build/radioRoutes.ts`.
 
-The route builder reads the version-controlled radio catalogs and assigns `lastmod` from the country JSON file modification time:
+The sitemap intentionally does **not** emit `lastmod` yet.
 
-- country route → country catalog mtime
-- station route → parent country catalog mtime
-- area route → newest catalog mtime in the area
-- home route → newest radio catalog mtime in the site
-
-This is preferred over fake `lastmod: now()`, which tells crawlers every page changed on every deployment.
+Filesystem mtimes from CI/deployment checkouts are not reliable content-modification timestamps; using them would effectively tell crawlers that every page changed on every deployment. Add `lastmod` only when the catalog has a durable update timestamp or the build has a trustworthy per-file history source.
 
 ## Robots and agent discovery
 
@@ -180,7 +175,7 @@ Manual production checks after deployment:
 - page source contains expected canonical/title/description
 - country page source contains station links without executing JS
 - invalid area/country/station URL returns 404
-- `/sitemap.xml` contains expected routes and `lastmod`
+- `/sitemap.xml` contains the expected canonical routes
 - `/robots.txt` references the production sitemap
 - JSON-LD parses correctly
 - social preview image resolves publicly
