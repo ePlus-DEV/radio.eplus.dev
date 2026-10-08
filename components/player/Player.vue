@@ -95,6 +95,7 @@ import {
   nextPlaybackIndex,
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
+import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -818,6 +819,54 @@ const navigateStation = (offset: -1 | 1): void => {
   selectStation(station);
 };
 
+// Media Session integrates live radio with iOS lock-screen / Control Center
+// metadata and headset controls. Track controls switch STATIONS, never songs:
+// an individual song cannot be skipped in a linear live broadcast.
+const mediaSessionActions = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'] as const;
+const updateMediaSession = (): void => {
+  if (!import.meta.client || !('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
+  const details = buildRadioMediaMetadata({
+    title: nowPlayingTitle.value,
+    artist: nowPlayingArtist.value,
+    station: props.streamName,
+    artwork: nowPlayingArtwork.value,
+    fallbackArtwork: props.thumb,
+  }, window.location.origin);
+  navigator.mediaSession.metadata = new MediaMetadata(details);
+  navigator.mediaSession.playbackState = playing.value ? 'playing' : 'paused';
+};
+
+const registerMediaSession = (): void => {
+  if (!('mediaSession' in navigator)) return;
+  const handlers = {
+    play: () => { void onPlay(); },
+    pause: () => onPause(),
+    nexttrack: () => navigateStation(1),
+    previoustrack: () => navigateStation(-1),
+    // iOS may expose ±10s controls for live audio instead of track buttons.
+    // They cannot seek the station stream, so use them to switch stations too.
+    seekforward: () => navigateStation(1),
+    seekbackward: () => navigateStation(-1),
+  } as const;
+  for (const action of mediaSessionActions) {
+    try {
+      navigator.mediaSession.setActionHandler(action, handlers[action]);
+    } catch {
+      // WebKit versions may support metadata but not every hardware action.
+    }
+  }
+  // Linear live streams do not have a meaningful timeline to seek to.
+  try { navigator.mediaSession.setActionHandler('seekto', null); } catch { /* unsupported */ }
+};
+
+const clearMediaSession = (): void => {
+  if (!('mediaSession' in navigator)) return;
+  for (const action of mediaSessionActions) {
+    try { navigator.mediaSession.setActionHandler(action, null); } catch { /* unsupported */ }
+  }
+  navigator.mediaSession.metadata = null;
+};
+
 const toggleMute = (): void => {
   const media = mediaElement.value;
   if (!media) return;
@@ -942,6 +991,14 @@ watch([playing, waiting], ([isPlaying, isWaiting]) => {
   playback.waiting = isWaiting;
 });
 
+// Track/station images and song titles can update asynchronously via Zing;
+// keep lock-screen metadata synchronized without restarting playback.
+watch(
+  [nowPlayingTitle, nowPlayingArtist, nowPlayingArtwork, () => props.streamName, playing],
+  updateMediaSession,
+  { flush: 'post' },
+);
+
 const sourceSignature = computed(() => JSON.stringify([props.stationUrl, sourceList.value]));
 watch(
   [sourceSignature, () => props.playRequest, () => props.pauseRequest],
@@ -996,6 +1053,8 @@ onMounted(() => {
   timeInterval = setInterval(updateCurrentTime, 1000);
 
   bindMediaEvents();
+  registerMediaSession();
+  updateMediaSession();
 
   const media = mediaElement.value;
   if (media) {
@@ -1022,6 +1081,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  clearMediaSession();
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
