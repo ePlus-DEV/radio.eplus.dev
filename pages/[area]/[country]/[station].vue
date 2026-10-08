@@ -199,7 +199,8 @@ interface StationCatalogPayload {
   stations: Record<string, StationCatalogEntry>;
 }
 
-const { data: stationCatalogPayload } = await useAsyncData<StationCatalogPayload>(
+const { data: stationCatalogPayload, error: stationCatalogError } =
+  await useAsyncData<StationCatalogPayload>(
   stationCatalogKey,
   async () => {
     const key = stationCatalogKey.value;
@@ -240,6 +241,13 @@ const { data: stationCatalogPayload } = await useAsyncData<StationCatalogPayload
     default: () => ({ key: "", stations: {} }),
   },
 );
+
+if (stationCatalogError.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Radio country not found",
+  });
+}
 
 const stationCatalog = computed<Record<string, StationCatalogEntry>>(() =>
   stationCatalogPayload.value?.key === stationCatalogKey.value
