@@ -3,7 +3,7 @@
     <button
       ref="triggerRef"
       type="button"
-      class="btn btn-ghost h-10 min-h-10 gap-2 rounded-xl border-0 px-2.5 text-sm font-medium text-[var(--radio-text-muted)] shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
+      class="inline-flex items-center h-10 min-h-10 gap-2 rounded-xl border-0 px-2.5 text-sm font-medium text-[var(--radio-text-muted)] shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
       :aria-label="$t('navmenu.language')"
       aria-haspopup="menu"
       :aria-expanded="open"
