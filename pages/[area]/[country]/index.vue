@@ -39,6 +39,7 @@
       :streamName="streamName"
       :streamUrl="streamUrl"
       :playlist="playlist"
+      :queue-expected="queueExpected"
     />
 
     <PanelStation />
@@ -72,6 +73,7 @@ const i18n = computed(
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const playlist = ref<Track[]>([]);
 const stationCount = ref(0);
+const queueExpected = ref(false);
 
 const scheduleRequestUrl = (url: string): string =>
   /[?&](?:time|timestamp)=$/i.test(url)
@@ -167,6 +169,7 @@ const fetchData = async (): Promise<void> => {
       type: favoriteChannel.type,
     };
     // Fetch the schedule data if available
+    queueExpected.value = Boolean(favoriteChannel.schedule);
     if (favoriteChannel.schedule !== undefined) {
       fetchSchedule(favoriteChannel.schedule);
     }
