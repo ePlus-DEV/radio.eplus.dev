@@ -202,6 +202,26 @@
     },
     "offline": "La connexion réseau a échoué, veuillez vérifier votre connexion réseau."
   },
+  "player": {
+    "title": "Lecteur radio",
+    "choose_station": "Choisissez une station pour commencer",
+    "play": "Écouter la radio",
+    "pause": "Mettre en pause",
+    "retry": "Réessayer",
+    "connecting": "Connexion…",
+    "on_air": "En direct",
+    "ready": "Prêt à écouter",
+    "queue": "Stations et programmes",
+    "source": "Source audio",
+    "volume": "Volume",
+    "mute": "Couper le son",
+    "unmute": "Activer le son",
+    "keep_listening": "Continuez à écouter en parcourant le site",
+    "listen_country": "Écouter une station",
+    "explore": "Explorer les régions",
+    "previous": "Station précédente : {name}",
+    "next": "Station suivante : {name}"
+  },
   "site_pages": {
     "common": {
       "last_updated": "Dernière mise à jour"

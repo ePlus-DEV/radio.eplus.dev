@@ -28,7 +28,7 @@ Radio ePlus is a Nuxt-based internet radio application for browsing and listenin
 - Vue 3
 - Node.js 24
 - Tailwind CSS
-- DaisyUI
+- Nuxt UI 4 (DaisyUI removed)
 - Pinia
 - Native HTML5 Audio + hls.js
 - Nuxt i18n
@@ -122,6 +122,19 @@ http://localhost:3000
 ```
 
 ## Build
+
+Run the UI regression suite against generated output:
+
+```bash
+npm test
+npm run generate
+npx playwright install chromium
+npm run test:ui
+```
+
+The browser suite uses local audio fixtures and intercepted providers. It checks
+persistent MP3/HLS playback, station navigation, cancellation, language/theme
+menus, and a 320px layout without depending on live streams.
 
 Create a production build:
 
@@ -224,7 +237,7 @@ for the current sync implementation and limitations.
 
 ## Contributing
 
-1. Create a branch from `main`.
+1. Create a feature branch from `develop` and open the PR against `develop`.
 2. Make the required code or data changes.
 3. Validate the Nuxt build and any affected radio JSON.
 4. Open a pull request.
@@ -233,3 +246,4 @@ for the current sync implementation and limitations.
 ## License
 
 This repository is maintained by ePlus.DEV. Refer to the repository settings or project owner for licensing and redistribution terms.
+

@@ -202,6 +202,26 @@
     },
     "offline": "網絡連接失敗，請檢查您的網絡連接。"
   },
+  "player": {
+    "title": "電台播放器",
+    "choose_station": "選擇電台開始收聽",
+    "play": "播放電台",
+    "pause": "暫停播放",
+    "retry": "重試",
+    "connecting": "正在連線…",
+    "on_air": "正在播放",
+    "ready": "準備就緒",
+    "queue": "電台與節目表",
+    "source": "播放來源",
+    "volume": "音量",
+    "mute": "靜音",
+    "unmute": "取消靜音",
+    "keep_listening": "瀏覽其他頁面時繼續收聽",
+    "listen_country": "收聽電台",
+    "explore": "探索地區",
+    "previous": "上一個電台：{name}",
+    "next": "下一個電台：{name}"
+  },
   "site_pages": {
     "common": {
       "last_updated": "最後更新"

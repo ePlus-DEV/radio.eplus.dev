@@ -35,23 +35,11 @@
           </p>
         </div>
       </div>
+      <UButton icon="i-lucide-play" size="lg" class="relative mt-5 rounded-full px-5" :disabled="!defaultStationId" @click="listenDefault(true)">{{ $t('player.listen_country') }}</UButton>
     </section>
 
-    <Player
-      :country="i18n"
-      :country-name="countryName"
-      :thumb="playerThumb"
-      :stream-name="streamName"
-      :stream-url="streamUrl"
-      :stream-urls="streamUrls"
-      :playlist="playlist"
-      :stations="stations"
-      :active-station-id="activeStationId"
-      :queue-loading="queueLoading"
-      @select-station="selectStation"
-    />
-
     <PanelStation
+      @select-station="playSelected"
       :stations="stations"
       :active-station-id="activeStationId"
       :country-name="countryName"
@@ -60,48 +48,20 @@
 </template>
 
 <script setup lang="ts">
-import type { RadioSource, RadioStationOption } from "~/types/radio";
-import { normalizeScheduleUrl } from "~/utils/station-schedule.mjs";
+import type { RadioCatalogEntry as Channel, RadioStationOption } from "~/types/radio";
+import { usePlaybackStore } from "~/stores/playback";
+import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import {
   buildBreadcrumbSchema,
   buildCollectionPageSchema,
 } from "~/utils/seo-structured-data.mjs";
-
-interface ChannelStream {
-  url: string;
-  type?: string;
-  cros?: boolean;
-  source?: string;
-  label?: string;
-}
-
-interface Channel {
-  favorite?: boolean;
-  title: string;
-  description?: string;
-  stream: string;
-  streams?: ChannelStream[];
-  stream_alternative?: string;
-  type?: string;
-  cros?: boolean;
-  schedule?: string | boolean;
-  features?: string;
-}
-
-interface Track {
-  track_title: string;
-  track_artist: string;
-  track_image: string;
-  track_played: number;
-}
 
 interface CountryCatalogPayload {
   key: string;
   stations: Record<string, Channel>;
 }
 
-const $store = useMainStore();
-const dayjs = useDayjs();
+const playback = usePlaybackStore();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
@@ -204,18 +164,7 @@ const defaultStationId = computed(() => {
   return favorite?.[0] || stationEntries.value[0]?.[0] || "";
 });
 
-const streamName = ref("");
-const playerThumb = ref(String(runtimeConfig.public.placeholderStation));
-const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
-const streamUrls = ref<RadioSource[]>([]);
-const activeStationId = ref("");
-const playlist = ref<Track[]>([]);
-const queueLoading = ref(false);
-
-let scheduleTimer: ReturnType<typeof setTimeout> | null = null;
-let scheduleVersion = 0;
-let clientReady = false;
-const POLL_INTERVAL = 60_000;
+const activeStationId = computed(() => playback.station?.url.startsWith(`${countryPath.value}/`) ? playback.station.id : '');
 
 const seoTitle = computed(() => `Live Radio in ${countryName.value}`);
 const seoDescription = computed(() =>
@@ -275,155 +224,29 @@ useSeoMeta(() => ({
   twitterImageAlt: `${countryName.value} flag`,
 }));
 
-const scheduleRequestUrl = (url: string): string =>
-  /[?&](?:time|timestamp)=$/i.test(url)
-    ? `${url}${dayjs().tz($store.getTimezone).unix()}`
-    : url;
-
-const clearSchedule = (): void => {
-  scheduleVersion += 1;
-  if (scheduleTimer) {
-    clearTimeout(scheduleTimer);
-    scheduleTimer = null;
-  }
-  queueLoading.value = false;
+const listenDefault = (autoplay = false): void => {
+  const id = defaultStationId.value;
+  const meta = catalog.value[id];
+  if (!meta) return;
+  playback.activate(createPlaybackStation({
+    area: area.value, country: slug.value, id, meta,
+    corsServer: String(runtimeConfig.public.corsServer || ''),
+    placeholder: String(runtimeConfig.public.placeholderStation),
+  }), stations.value, { autoplay, onlyIfIdle: !autoplay });
 };
 
-const resetPlayer = (): void => {
-  activeStationId.value = "";
-  streamName.value = "";
-  playerThumb.value = String(runtimeConfig.public.placeholderStation);
-  streamUrls.value = [];
-  streamUrl.value = { src: "", type: "audio/mpeg" };
-  playlist.value = [];
+const playSelected = (station: RadioStationOption): void => {
+  const meta = catalog.value[station.id];
+  if (!meta) return;
+  playback.activate(createPlaybackStation({
+    area: area.value, country: slug.value, id: station.id, meta,
+    corsServer: String(runtimeConfig.public.corsServer || ''),
+    placeholder: String(runtimeConfig.public.placeholderStation),
+  }), stations.value, { autoplay: true });
 };
 
-const toSources = (channel: Channel): RadioSource[] => {
-  const seen = new Set<string>();
-  const candidates: ChannelStream[] = [
-    {
-      url: channel.stream,
-      type: channel.type || "audio/mpeg",
-      cros: Boolean(channel.cros),
-      source: "primary",
-    },
-    ...(channel.streams || []),
-    ...(channel.stream_alternative
-      ? [{ url: channel.stream_alternative, source: "alternative" }]
-      : []),
-  ].filter((item) => {
-    const url = String(item.url || "").trim();
-    if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
-    seen.add(url);
-    return true;
-  });
-
-  return candidates.map((item) => ({
-    src: item.cros
-      ? `${runtimeConfig.public.corsServer || ""}${item.url}`
-      : item.url,
-    type: item.type || "audio/mpeg",
-    source: item.source,
-    label: item.label,
-    proxied: Boolean(item.cros),
-  }));
-};
-
-const fetchSchedule = async (
-  url: string,
-  version: number,
-  initial = false,
-): Promise<void> => {
-  if (!import.meta.client || !clientReady) return;
-  if (initial) queueLoading.value = true;
-
-  try {
-    const resData = await $fetch(scheduleRequestUrl(url));
-    if (version !== scheduleVersion) return;
-
-    const value = resData as { success?: boolean; result?: Track[] };
-    playlist.value =
-      value.success && Array.isArray(value.result) ? value.result : [];
-  } catch (error) {
-    if (version === scheduleVersion) {
-      playlist.value = [];
-      console.error("Unable to load station schedule:", error);
-    }
-  } finally {
-    if (version === scheduleVersion && initial) {
-      queueLoading.value = false;
-    }
-  }
-
-  if (version !== scheduleVersion || !clientReady) return;
-  scheduleTimer = setTimeout(() => {
-    void fetchSchedule(url, version);
-  }, POLL_INTERVAL);
-};
-
-const applyChannel = (stationId: string, channel: Channel): void => {
-  clearSchedule();
-  $store.setTimezone(area.value, slug.value);
-
-  activeStationId.value = stationId;
-  streamName.value = channel.title;
-  playerThumb.value =
-    channel.features || String(runtimeConfig.public.placeholderStation);
-  streamUrls.value = toSources(channel);
-  streamUrl.value =
-    streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as RadioSource);
-  playlist.value = [];
-
-  const scheduleUrl = normalizeScheduleUrl(channel.schedule);
-  if (import.meta.client && clientReady && scheduleUrl) {
-    const version = scheduleVersion;
-    void fetchSchedule(scheduleUrl, version, true);
-  }
-};
-
-const activateDefaultStation = (): void => {
-  const stationId = defaultStationId.value;
-  const channel = stationId ? catalog.value[stationId] : undefined;
-
-  if (!stationId || !channel) {
-    clearSchedule();
-    resetPlayer();
-    return;
-  }
-
-  applyChannel(stationId, channel);
-};
-
-const selectStation = (station: RadioStationOption): void => {
-  const channel = catalog.value[station.id];
-  if (!channel) return;
-  applyChannel(station.id, channel);
-};
-
-watch(
-  () => [catalogPayload.value?.key, area.value, slug.value] as const,
-  () => {
-    activateDefaultStation();
-  },
-  { immediate: true },
-);
-
-onMounted(() => {
-  clientReady = true;
-
-  const current =
-    catalog.value[activeStationId.value] ||
-    catalog.value[defaultStationId.value];
-  if (current) {
-    applyChannel(
-      activeStationId.value || defaultStationId.value,
-      current,
-    );
-  }
-});
-
-onBeforeUnmount(() => {
-  clientReady = false;
-  clearSchedule();
-});
+// A fresh entry can prepare this country's featured station. Browsing another
+// country while listening keeps the selected station and its queue intact.
+watch(catalog, () => listenDefault(), { immediate: true });
 </script>
+

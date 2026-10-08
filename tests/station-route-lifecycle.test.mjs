@@ -1,40 +1,22 @@
-import test from "node:test";
-import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 
-const root = process.cwd();
-
-test("station route owns one catalog source and resets route-scoped async state", async () => {
-  const page = await readFile(
-    join(root, "pages/[area]/[country]/[station].vue"),
-    "utf8",
-  );
-  const panel = await readFile(
-    join(root, "components/panel/Station.vue"),
-    "utf8",
-  );
-
+test('station page owns the static catalog and the application owns playback lifetime', async () => {
+  const page = await readFile('pages/[area]/[country]/[station].vue', 'utf8');
+  const panel = await readFile('components/panel/Station.vue', 'utf8');
+  const app = await readFile('app.vue', 'utf8');
   assert.match(page, /const stationCatalogKey = computed/);
   assert.match(page, /stationCatalogPayload\.value\?\.key === stationCatalogKey\.value/);
-  assert.match(page, /const resetRouteScopedState = \(\): void =>/);
-  assert.match(page, /lyric_popup\.value = false/);
-  assert.match(page, /requestVersion \+= 1/);
-  assert.match(page, /clearPolling\(\)/);
-
-  assert.doesNotMatch(page, /@update-data=/);
-  assert.doesNotMatch(page, /handleDataFromChild/);
-  assert.doesNotMatch(panel, /\$fetch</);
-  assert.doesNotMatch(panel, /emit\("update-data"/);
+  assert.doesNotMatch(page, /<Player\s|@update-data=|pollSchedule|onBeforeUnmount/);
+  assert.doesNotMatch(panel, /\$fetch<|emit\("update-data"/);
+  assert.match(app, /<PlayerSession\s*\/>/);
+});
+test('Zing metadata belongs to the selected provider and is reset on station changes', async () => {
+  const realtime = await readFile('composables/useStationRealtime.ts', 'utf8');
+  assert.match(realtime, /if \(isZingScheduleUrl\(url\)\)/);
+  assert.match(realtime, /watch\(\(\) => playback\.station\?\.url, activate\)/);
+  assert.match(realtime, /lyricsOpen\.value = false/);
+  assert.doesNotMatch(realtime, /useRoute|viet-nam/);
 });
 
-test("Zing-only behavior is provider-scoped and not Vietnam-scoped", async () => {
-  const page = await readFile(
-    join(root, "pages/[area]/[country]/[station].vue"),
-    "utf8",
-  );
-
-  assert.match(page, /v-if="isZingStation"/);
-  assert.match(page, /if \(isZingScheduleUrl\(url\)\)/);
-  assert.doesNotMatch(page, /slug\.value === "viet-nam"/);
-});

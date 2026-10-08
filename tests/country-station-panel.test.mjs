@@ -3,16 +3,15 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-test("country page feeds the same station list to Player and PanelStation", async () => {
+test("country page feeds its catalog to shared playback and PanelStation", async () => {
   const source = await readFile(
     join(process.cwd(), "pages/[area]/[country]/index.vue"),
     "utf8",
   );
 
-  assert.match(
-    source,
-    /<Player[\s\S]*?:stations="stations"[\s\S]*?:active-station-id="activeStationId"/,
-  );
+  assert.match(source, /playback\.activate\(createPlaybackStation\(/);
+  assert.match(source, /stations\.value, \{ autoplay, onlyIfIdle: !autoplay \}/);
+  assert.doesNotMatch(source, /<Player\s/);
 
   assert.match(
     source,
@@ -25,3 +24,4 @@ test("country page feeds the same station list to Player and PanelStation", asyn
     "PanelStation must not fall back to an empty station list on the country page",
   );
 });
+

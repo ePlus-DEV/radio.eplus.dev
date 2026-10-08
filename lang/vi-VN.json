@@ -202,6 +202,26 @@
     },
     "offline": "Kết nối mạng thất bại, vui lòng kiểm tra kết nối mạng của bạn."
   },
+  "player": {
+    "title": "Trình phát radio",
+    "choose_station": "Chọn một đài để bắt đầu nghe",
+    "play": "Phát radio",
+    "pause": "Tạm dừng",
+    "retry": "Thử lại",
+    "connecting": "Đang kết nối…",
+    "on_air": "Đang phát",
+    "ready": "Sẵn sàng phát",
+    "queue": "Kênh & lịch phát sóng",
+    "source": "Nguồn phát",
+    "volume": "Âm lượng",
+    "mute": "Tắt tiếng",
+    "unmute": "Bật tiếng",
+    "keep_listening": "Tiếp tục nghe khi khám phá các trang khác",
+    "listen_country": "Nghe một đài",
+    "explore": "Khám phá khu vực",
+    "previous": "Đài trước: {name}",
+    "next": "Đài tiếp theo: {name}"
+  },
   "site_pages": {
     "common": {
       "last_updated": "Cập nhật lần cuối"

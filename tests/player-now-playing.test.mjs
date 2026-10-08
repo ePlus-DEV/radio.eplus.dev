@@ -23,14 +23,7 @@ test("player palette keeps structural surfaces neutral and rose as the primary a
   const source = await readFile(playerFile, "utf8");
 
   assert.doesNotMatch(source, /rgba\(56,189,248/);
-  assert.match(
-    source,
-    /bg-\[radial-gradient\(circle_at_top_left,rgba\(244,63,94,0\.07\),transparent_48%\)\]/,
-  );
-
-  const pauseIndex = source.indexOf('aria-label="Pause radio"');
-  assert.ok(pauseIndex > 0);
-  const pauseBlock = source.slice(Math.max(0, pauseIndex - 700), pauseIndex + 100);
-  assert.match(pauseBlock, /bg-rose-500/);
-  assert.doesNotMatch(pauseBlock, /bg-\[var\(--radio-inverse-bg\)\]/);
+  assert.match(source, /bg-\[var\(--radio-surface-elevated\)\]/);
+  assert.match(source, /bg-rose-500 text-white hover:bg-rose-600/);
+  assert.match(source, /\$t\('player\.pause'\)/);
 });

@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from "nuxt/config";
-import tailwindcss from "@tailwindcss/vite";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
@@ -46,7 +45,9 @@ export default defineNuxtConfig({
     url: siteUrl,
     name: siteName,
   },
-  devtools: { enabled: process.env.NODE_ENV !== "production" },
+  // Devtools still imports Simple Git's removed default export; retain the
+  // security override and keep the development server usable until it updates.
+  devtools: { enabled: false },
   ssr: true,
   pages: true,
   runtimeConfig: {
@@ -75,10 +76,17 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
-  vite: {
-    plugins: [tailwindcss()],
+  ui: {
+    fonts: false,
+    experimental: { componentDetection: true },
+  },
+  // Client-only player controls must also work on the prerendered static host.
+  icon: {
+    provider: "none",
+    clientBundle: { scan: true },
   },
   modules: [
+    "@nuxt/ui",
     "@nuxtjs/color-mode",
     "@vesp/nuxt-fontawesome",
     "@nuxtjs/i18n",
@@ -242,3 +250,4 @@ export default defineNuxtConfig({
     },
   },
 });
+

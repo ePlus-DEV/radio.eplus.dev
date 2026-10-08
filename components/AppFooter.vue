@@ -82,7 +82,7 @@
     <button
       v-show="showTop"
       type="button"
-      class="radio-themed-elevated fixed bottom-4 right-4 z-40 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--radio-border)] text-[var(--radio-text-muted)] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:bottom-5 sm:right-5"
+      class="radio-themed-elevated fixed bottom-[calc(var(--radio-player-height)+env(safe-area-inset-bottom)+1rem)] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--radio-border)] text-[var(--radio-text-muted)] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:right-5"
       :aria-label="$t('button.back')"
       @click="scrollToTop"
     >
@@ -152,3 +152,4 @@ onBeforeUnmount(() => {
   window.removeEventListener("scroll", handleScroll);
 });
 </script>
+

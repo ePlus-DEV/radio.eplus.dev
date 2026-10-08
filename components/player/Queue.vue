@@ -1,72 +1,15 @@
 <template>
   <section class="flex h-full min-h-0 flex-col">
     <div class="border-b border-[var(--radio-border)] p-3">
-      <div
+      <UTabs
         v-if="hasSchedule && hasStations"
-        role="tablist"
-        class="tabs tabs-box grid w-full grid-cols-2 gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1"
+        v-model="activeTab"
+        :items="tabs"
+        :content="false"
+        size="sm"
+        :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-[var(--radio-border)] shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:text-[var(--radio-text)]' }"
         aria-label="Player sidebar"
-      >
-        <button
-          type="button"
-          role="tab"
-          class="tab h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
-          :class="
-            activeTab === 'schedule'
-              ? 'tab-active !bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
-              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-          "
-          :aria-selected="activeTab === 'schedule'"
-          @click="activeTab = 'schedule'"
-        >
-          <span
-            v-if="activeTab === 'schedule'"
-            class="h-1.5 w-1.5 rounded-full bg-rose-500"
-            aria-hidden="true"
-          ></span>
-          {{ $t("panel.schedule") }}
-          <span
-            class="ml-1 rounded-full px-1.5 py-0.5 text-[10px] tabular-nums"
-            :class="
-              activeTab === 'schedule'
-                ? 'bg-rose-500/10 text-rose-500'
-                : 'bg-[var(--radio-hover)] text-[var(--radio-text-muted)]'
-            "
-          >
-            {{ scheduleCount }}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          class="tab h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
-          :class="
-            activeTab === 'stations'
-              ? 'tab-active !bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
-              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-          "
-          :aria-selected="activeTab === 'stations'"
-          @click="activeTab = 'stations'"
-        >
-          <span
-            v-if="activeTab === 'stations'"
-            class="h-1.5 w-1.5 rounded-full bg-rose-500"
-            aria-hidden="true"
-          ></span>
-          {{ $t("panel.channels") }}
-          <span
-            class="ml-1 rounded-full px-1.5 py-0.5 text-[10px] tabular-nums"
-            :class="
-              activeTab === 'stations'
-                ? 'bg-rose-500/10 text-rose-500'
-                : 'bg-[var(--radio-hover)] text-[var(--radio-text-muted)]'
-            "
-          >
-            {{ stations.length }}
-          </span>
-        </button>
-      </div>
+      />
 
       <div
         v-else
@@ -75,10 +18,12 @@
         <span class="truncate text-xs font-semibold text-[var(--radio-text)]">
           {{ hasStations ? $t("panel.channels") : $t("panel.schedule") }}
         </span>
-        <span class="badge badge-sm border-0 bg-rose-500/10 text-[10px] font-bold text-rose-500">
+        <span class="inline-flex items-center rounded-full border-0 bg-rose-500/10 text-[10px] font-bold text-rose-500">
           {{ hasStations ? stations.length : scheduleCount }}
         </span>
       </div>
+
+      <p v-if="scheduleLoading" class="mt-2 text-[11px] text-[var(--radio-text-muted)]" aria-live="polite">{{ $t('panel.updating') }}</p>
 
       <div
         v-if="activeTab === 'stations' && hasStations"
@@ -86,13 +31,13 @@
       >
         <span
           v-if="countryName"
-          class="badge badge-outline hidden h-9 shrink-0 border-[var(--radio-border)] bg-[var(--radio-surface)] px-2.5 text-[11px] font-semibold text-[var(--radio-text-muted)] sm:inline-flex"
+          class="hidden items-center rounded-full border h-9 shrink-0 border-[var(--radio-border)] bg-[var(--radio-surface)] px-2.5 text-[11px] font-semibold text-[var(--radio-text-muted)] sm:inline-flex"
         >
           {{ countryName }}
         </span>
 
         <label
-          class="input input-sm flex h-9 min-h-9 min-w-0 flex-1 items-center gap-2 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface)] px-3 shadow-none outline-none transition focus-within:border-rose-300 focus-within:ring-2 focus-within:ring-rose-400/15"
+          class="flex h-9 min-h-9 min-w-0 flex-1 items-center gap-2 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface)] px-3 shadow-none outline-none transition focus-within:border-rose-300 focus-within:ring-2 focus-within:ring-rose-400/15"
         >
           <span class="sr-only">{{ $t("panel.search_channels") }}</span>
           <svg
@@ -291,6 +236,7 @@
 import type { RadioStationOption } from "~/types/radio";
 
 const dayjs = useDayjs();
+const { t } = useI18n();
 
 interface PlaylistItem {
   track_title: string;
@@ -340,6 +286,10 @@ const hasSchedule = computed(
 const scheduleCount = computed(
   () => props.program.length || props.playlist.length,
 );
+const tabs = computed(() => [
+  { label: t('panel.schedule'), value: 'schedule', badge: scheduleCount.value },
+  { label: t('panel.channels'), value: 'stations', badge: props.stations.length },
+]);
 const activeTab = ref<"stations" | "schedule">(
   hasStations.value ? "stations" : "schedule",
 );
@@ -401,3 +351,4 @@ const playlistKey = (item: PlaylistItem, index: number): string =>
 const programKey = (item: ProgramItem, index: number): string =>
   [item.encodeId, item.startTime, item.title, index].join("-");
 </script>
+
