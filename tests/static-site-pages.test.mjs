@@ -27,6 +27,10 @@ test("all supported locales include complete static page copy", async () => {
       json.site_pages?.statistics?.title,
       locale + " missing statistics copy",
     );
+    assert.ok(
+      json.site_pages?.error?.not_found_title,
+      locale + " missing error page copy",
+    );
   }
 });
 
@@ -65,4 +69,13 @@ test("static pages share the canonical static-page SEO helper", async () => {
   assert.match(seo, /application\/ld\+json/);
   assert.match(seo, /#website/);
   assert.match(seo, /"@type": "BreadcrumbList"/);
+});
+
+
+test("custom error page is branded and excluded from indexing", async () => {
+  const source = await read("error.vue");
+
+  assert.match(source, /site_pages\.error\.not_found_title/);
+  assert.match(source, /noindex, nofollow/);
+  assert.match(source, /clearError\(\{ redirect: "\/" \}\)/);
 });
