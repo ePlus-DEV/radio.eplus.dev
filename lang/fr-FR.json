@@ -426,5 +426,20 @@
     "clear_recent": "Effacer l’historique récent",
     "add_favorite": "Ajouter aux favoris",
     "remove_favorite": "Retirer des favoris"
+  },
+  "redesign": {
+    "navigation": "Navigation",
+    "discover": "Découvrir",
+    "search": "Rechercher",
+    "library": "Bibliothèque",
+    "continue_listening": "Continuer l’écoute",
+    "paused": "En pause",
+    "now_playing": "Lecture",
+    "timer": "Minuteur",
+    "channel_list": "Stations",
+    "next_station": "Station suivante",
+    "library_description": "Vos favoris et votre historique sont enregistrés sur cet appareil.",
+    "all": "Tout",
+    "see_all": "Voir tout"
   }
 }

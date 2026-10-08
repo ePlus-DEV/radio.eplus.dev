@@ -426,5 +426,20 @@
     "clear_recent": "Xóa lịch sử nghe",
     "add_favorite": "Thêm vào yêu thích",
     "remove_favorite": "Bỏ yêu thích"
+  },
+  "redesign": {
+    "navigation": "Điều hướng",
+    "discover": "Khám phá",
+    "search": "Tìm kiếm",
+    "library": "Thư viện",
+    "continue_listening": "Tiếp tục nghe",
+    "paused": "Đã tạm dừng",
+    "now_playing": "Đang nghe",
+    "timer": "Hẹn giờ",
+    "channel_list": "Danh sách kênh",
+    "next_station": "Kênh tiếp theo",
+    "library_description": "Kênh yêu thích và lịch sử nghe được lưu trên thiết bị này.",
+    "all": "Tất cả",
+    "see_all": "Xem tất cả"
   }
 }

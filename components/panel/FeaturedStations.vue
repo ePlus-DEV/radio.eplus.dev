@@ -24,7 +24,7 @@
             v-if="station.id === activeStationId"
             class="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-violet-600 px-2 py-1 text-[10px] font-semibold text-white"
           >
-            <span class="h-1.5 w-1.5 rounded-full bg-white"></span> {{ $t('player.live') }}
+            <span class="h-1.5 w-1.5 rounded-full bg-white"></span> {{ $t(playback.playing ? 'player.on_air' : 'redesign.paused') }}
           </span>
           <span class="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-full bg-violet-600 text-white shadow-md transition group-hover:scale-105" aria-hidden="true">
             <UIcon name="i-lucide-play" class="h-4 w-4" />
@@ -39,6 +39,8 @@
 </template>
 
 <script setup lang="ts">
+import { usePlaybackStore } from '~/stores/playback';
+const playback = usePlaybackStore();
 import type { RadioStationOption } from '~/types/radio';
 
 defineProps<{ stations: RadioStationOption[]; activeStationId?: string }>();

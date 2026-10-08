@@ -563,3 +563,18 @@ Remote search results must match the current input generation.
 At the owner's request, Playwright CI steps are temporarily opt-in with repository
 variable `ENABLE_BROWSER_TESTS=true`. Keep unit/prerender/noindex checks enabled.
 See `UI_ROADMAP.md` for the current follow-up priorities.
+
+## 20. App layout and personal library
+
+The app redesign uses a compact discovery header, violet navigation, a resume
+card, personal favorite/recent grids, compact country rows, and a mobile bottom
+navigation. `/library` is prerendered but excluded from the public sitemap;
+its device-local content is client-only and its page is always noindex.
+
+`PlayerNowPlaying` is presentation only. The existing persistent `Player` owns
+one native audio element and all source/retry/session logic. Opening the modal
+hides the compact dock without unmounting the audio. Queue/lyrics open after the
+full player exits so their focus traps do not overlap. Mobile navigation and
+player heights are reserved in the page/footer together with the bottom safe area.
+No elapsed/remaining seek bar is shown for live radio. Next track is shown only
+when supplied by the provider; otherwise the UI explicitly labels next station.

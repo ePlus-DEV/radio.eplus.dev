@@ -236,6 +236,7 @@ export default defineNuxtConfig({
       routes: [
         ...radioSeoRoutes.map((route) => route.loc),
         ...staticSeoRoutes.map((route) => route.loc),
+        "/library",
         "/robots.txt",
         ...(!noIndex ? ["/sitemap.xml"] : []),
       ],
