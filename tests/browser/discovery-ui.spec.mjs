@@ -33,7 +33,7 @@ test('local search works when Algolia is not configured, including diacritics', 
   const input = page.getByRole('searchbox', { name: 'Search...', exact: true });
   await expect(input).toBeVisible();
   await input.fill('rap viet');
-  const hit = page.locator('a[href="/asia/viet-nam/rap-viet-radio-zing-mp3"]');
+  const hit = page.getByRole('dialog').locator('a[href="/asia/viet-nam/rap-viet-radio-zing-mp3"]');
   await expect(hit).toBeVisible();
   await expect(hit).toContainText(/Rap Việt/);
   await hit.click();
