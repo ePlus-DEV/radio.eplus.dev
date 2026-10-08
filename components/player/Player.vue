@@ -18,7 +18,7 @@
 
           <div class="relative">
             <div class="flex items-center justify-between gap-3">
-              <div class="flex min-w-0 items-center gap-2">
+              <div class="flex min-w-0 flex-1 items-center gap-2">
                 <span
                   class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-400/20"
                 >
@@ -32,7 +32,7 @@
                   <span class="sr-only">Select stream source</span>
                   <select
                     :value="activeSourceIndex"
-                    class="h-7 max-w-[190px] cursor-pointer appearance-none rounded-full border-0 bg-slate-100 py-1 pl-2.5 pr-7 text-[11px] font-semibold text-slate-600 outline-none transition hover:bg-slate-200 focus:ring-2 focus:ring-rose-400/30 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10 sm:max-w-[240px]"
+                    class="h-7 max-w-[120px] cursor-pointer appearance-none rounded-full border-0 bg-slate-100 py-1 pl-2.5 pr-7 text-[11px] font-semibold text-slate-600 outline-none transition hover:bg-slate-200 focus:ring-2 focus:ring-rose-400/30 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10 sm:max-w-[240px]"
                     aria-label="Select stream source"
                     @change="onSourceChange"
                   >
