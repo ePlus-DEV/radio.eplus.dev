@@ -156,6 +156,7 @@ interface StationCatalogEntry {
   cros: boolean;
   stream: string;
   streams?: StationStream[];
+  stream_alternative?: string;
   features?: string;
   schedule?: string;
 }
@@ -265,9 +266,16 @@ const toRadioSource = (
 const setStationStreams = (
   primary: { url: string; type?: string; cros?: boolean },
   fallbacks: StationStream[] = [],
+  alternative = "",
 ): void => {
   const seen = new Set<string>();
-  const candidates = [primary, ...fallbacks].filter((item) => {
+  const candidates = [
+    primary,
+    ...fallbacks,
+    ...(alternative
+      ? [{ url: alternative, source: "legacy-alternative" }]
+      : []),
+  ].filter((item) => {
     const url = String(item?.url || "").trim();
     if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
     seen.add(url);
@@ -291,6 +299,7 @@ watch(
     setStationStreams(
       { url: meta.stream, type: meta.type, cros: meta.cros },
       meta.streams || [],
+      meta.stream_alternative || "",
     );
   },
   { immediate: true },
@@ -391,7 +400,7 @@ const fetchDetail = async (url: string, version: number): Promise<void> => {
 
 const fetchSchedule = async (url: string, version: number): Promise<void> => {
   try {
-    const resData = await $fetch(`${url}${currentTimestamp()}`);
+    const resData = await $fetch(scheduleRequestUrl(url));
     if (version !== requestVersion) return;
 
     const value = resData as {
