@@ -1,72 +1,15 @@
 <template>
   <section class="flex h-full min-h-0 flex-col">
     <div class="border-b border-[var(--radio-border)] p-3">
-      <div
+      <UTabs
         v-if="hasSchedule && hasStations"
-        role="tablist"
-        class="grid w-full grid-cols-2 gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1"
+        v-model="activeTab"
+        :items="tabs"
+        :content="false"
+        size="sm"
+        :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-[var(--radio-border)] shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:text-[var(--radio-text)]' }"
         aria-label="Player sidebar"
-      >
-        <button
-          type="button"
-          role="tab"
-          class="flex items-center justify-center h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
-          :class="
-            activeTab === 'schedule'
-              ? 'bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
-              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-          "
-          :aria-selected="activeTab === 'schedule'"
-          @click="activeTab = 'schedule'"
-        >
-          <span
-            v-if="activeTab === 'schedule'"
-            class="h-1.5 w-1.5 rounded-full bg-rose-500"
-            aria-hidden="true"
-          ></span>
-          {{ $t("panel.schedule") }}
-          <span
-            class="ml-1 rounded-full px-1.5 py-0.5 text-[10px] tabular-nums"
-            :class="
-              activeTab === 'schedule'
-                ? 'bg-rose-500/10 text-rose-500'
-                : 'bg-[var(--radio-hover)] text-[var(--radio-text-muted)]'
-            "
-          >
-            {{ scheduleCount }}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          class="flex items-center justify-center h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
-          :class="
-            activeTab === 'stations'
-              ? 'bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
-              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-          "
-          :aria-selected="activeTab === 'stations'"
-          @click="activeTab = 'stations'"
-        >
-          <span
-            v-if="activeTab === 'stations'"
-            class="h-1.5 w-1.5 rounded-full bg-rose-500"
-            aria-hidden="true"
-          ></span>
-          {{ $t("panel.channels") }}
-          <span
-            class="ml-1 rounded-full px-1.5 py-0.5 text-[10px] tabular-nums"
-            :class="
-              activeTab === 'stations'
-                ? 'bg-rose-500/10 text-rose-500'
-                : 'bg-[var(--radio-hover)] text-[var(--radio-text-muted)]'
-            "
-          >
-            {{ stations.length }}
-          </span>
-        </button>
-      </div>
+      />
 
       <div
         v-else
@@ -79,6 +22,8 @@
           {{ hasStations ? stations.length : scheduleCount }}
         </span>
       </div>
+
+      <p v-if="scheduleLoading" class="mt-2 text-[11px] text-[var(--radio-text-muted)]" aria-live="polite">{{ $t('panel.updating') }}</p>
 
       <div
         v-if="activeTab === 'stations' && hasStations"
@@ -291,6 +236,7 @@
 import type { RadioStationOption } from "~/types/radio";
 
 const dayjs = useDayjs();
+const { t } = useI18n();
 
 interface PlaylistItem {
   track_title: string;
@@ -340,6 +286,10 @@ const hasSchedule = computed(
 const scheduleCount = computed(
   () => props.program.length || props.playlist.length,
 );
+const tabs = computed(() => [
+  { label: t('panel.schedule'), value: 'schedule', badge: scheduleCount.value },
+  { label: t('panel.channels'), value: 'stations', badge: props.stations.length },
+]);
 const activeTab = ref<"stations" | "schedule">(
   hasStations.value ? "stations" : "schedule",
 );
@@ -401,3 +351,4 @@ const playlistKey = (item: PlaylistItem, index: number): string =>
 const programKey = (item: ProgramItem, index: number): string =>
   [item.encodeId, item.startTime, item.title, index].join("-");
 </script>
+

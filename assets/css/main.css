@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
 
 /* Tailwind 4 defaults dark: to prefers-color-scheme. Nuxt Color Mode
    toggles a .dark class, so make dark: follow that class explicitly. */
@@ -6,6 +7,20 @@
 
 
 @layer base {
+  :root, html.light, html.dark {
+    --radio-player-height: 96px;
+    --ui-bg: var(--radio-surface);
+    --ui-bg-muted: var(--radio-surface-muted);
+    --ui-bg-elevated: var(--radio-surface-elevated);
+    --ui-bg-accented: var(--radio-surface-soft);
+    --ui-border: var(--radio-border);
+    --ui-border-muted: var(--radio-border);
+    --ui-border-accented: var(--radio-border-strong);
+    --ui-text: var(--radio-text);
+    --ui-text-muted: var(--radio-text-muted);
+    --ui-text-dimmed: var(--radio-text-muted);
+    --ui-text-highlighted: var(--radio-text);
+  }
   :root,
   html.light,
   html[data-theme="light"] {
@@ -91,6 +106,31 @@
 }
 
 @layer utilities {
+  .radio-shell {
+    padding-bottom: calc(var(--radio-player-height) + env(safe-area-inset-bottom));
+  }
+
+  .radio-player-dock {
+    min-height: calc(var(--radio-player-height) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .radio-right-panel {
+    top: 96px;
+    bottom: calc(var(--radio-player-height) + env(safe-area-inset-bottom) + 16px);
+  }
+
+  @media (min-width: 1536px) {
+    .radio-shell-queue .radio-app-content {
+      padding-right: 352px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .radio-bar, .radio-player-dock .animate-spin, .radio-player-dock .animate-pulse { animation: none; }
+  }
+
   .radio-hero {
     background: linear-gradient(115deg, #10276d 0%, #25146d 48%, #782eae 78%, #a93890 100%);
     box-shadow: 0 26px 64px -38px rgb(79 46 167 / 0.6);
@@ -195,3 +235,4 @@
     @apply transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
   }
 }
+

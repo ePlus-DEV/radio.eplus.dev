@@ -1,7 +1,8 @@
 <template>
-  <div class="min-h-screen w-full overflow-x-hidden bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
+  <UApp :locale="uiLocale" :toaster="null">
+  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen }" class="radio-shell min-h-screen w-full overflow-x-hidden bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
-    <div class="mx-auto w-full max-w-[1660px] xl:grid xl:grid-cols-[248px_minmax(0,1fr)] xl:gap-7 xl:px-6">
+    <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
       <AppSidebar />
       <main
         class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-24 sm:px-6 sm:pt-28 xl:px-0"
@@ -12,13 +13,27 @@
       </main>
     </div>
     <AppFooter />
+    <ClientOnly>
+      <PlayerSession />
+      <template #fallback>
+        <div class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)]"></div>
+      </template>
+    </ClientOnly>
   </div>
+  </UApp>
 </template>
 
 <script setup lang="ts">
+import { en, vi, ja, zh_cn, zh_tw, fr, ru } from '@nuxt/ui/locale';
+import { usePlaybackStore } from '~/stores/playback';
+const playback = usePlaybackStore();
+const clientReady = ref(false);
+onMounted(() => { clientReady.value = true; });
 const route = useRoute();
 const config = useRuntimeConfig();
 const { locale } = useI18n();
+const uiLocales = { en, vi, ja, 'zh-CN': zh_cn, 'zh-TW': zh_tw, fr, ru };
+const uiLocale = computed(() => uiLocales[locale.value as keyof typeof uiLocales] || en);
 const colorMode = useColorMode();
 
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
@@ -107,3 +122,4 @@ useSeoMeta(() => ({
   twitterImageAlt: `${siteName.value} logo`,
 }));
 </script>
+

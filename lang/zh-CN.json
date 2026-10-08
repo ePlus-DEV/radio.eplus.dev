@@ -201,5 +201,25 @@
       "system": "系统模式"
     },
     "offline": "网络连接失败，请检查您的网络连接。"
+  },
+  "player": {
+    "title": "电台播放器",
+    "choose_station": "选择电台开始收听",
+    "play": "播放电台",
+    "pause": "暂停播放",
+    "retry": "重试",
+    "connecting": "正在连接…",
+    "on_air": "正在播放",
+    "ready": "准备就绪",
+    "queue": "电台与节目表",
+    "source": "播放源",
+    "volume": "音量",
+    "mute": "静音",
+    "unmute": "取消静音",
+    "keep_listening": "浏览其他页面时继续收听",
+    "listen_country": "收听电台",
+    "explore": "探索地区",
+    "previous": "上一个电台：{name}",
+    "next": "下一个电台：{name}"
   }
 }

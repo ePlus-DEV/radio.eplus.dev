@@ -201,5 +201,25 @@
       "system": "System"
     },
     "offline": "Network connection failed, please check your network connection."
+  },
+  "player": {
+    "title": "Radio player",
+    "choose_station": "Choose a station to start listening",
+    "play": "Play radio",
+    "pause": "Pause radio",
+    "retry": "Retry",
+    "connecting": "Connecting…",
+    "on_air": "On air",
+    "ready": "Ready to listen",
+    "queue": "Channels & schedule",
+    "source": "Stream source",
+    "volume": "Volume",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "keep_listening": "Keep listening while you explore",
+    "listen_country": "Listen to a station",
+    "explore": "Explore regions",
+    "previous": "Previous station: {name}",
+    "next": "Next station: {name}"
   }
 }

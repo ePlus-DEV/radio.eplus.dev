@@ -1,413 +1,91 @@
 <template>
-  <section class="w-full min-w-0 pb-4 sm:pb-8">
-    <div
-      class="radio-themed-surface overflow-hidden rounded-[28px] border shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)]"
-    >
-      <div
-        class="grid min-w-0"
-        :class="
-          hasSidebar
-            ? 'xl:grid-cols-[minmax(0,1fr)_360px]'
-            : 'lg:grid-cols-1'
-        "
-      >
-        <div class="relative min-w-0 overflow-hidden p-4 sm:p-6">
-          <div
-            class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.07),transparent_48%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.08),transparent_48%)]"
-          ></div>
+  <section class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :aria-label="$t('player.title')">
+    <div class="mx-auto max-w-[1920px] px-3 sm:px-6">
+      <div class="flex h-6 min-w-0 items-center justify-center gap-2 text-[10px] text-[var(--radio-text-muted)]" aria-live="polite">
+        <template v-if="streamError">
+          <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
+          <UButton size="xs" variant="link" class="shrink-0 p-0 text-[10px]" @click="retryCurrentSource">{{ $t('player.retry') }}</UButton>
+        </template>
+        <span v-else-if="!online">{{ $t('text.offline') }}</span>
+        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t('player.connecting') }}</span>
+        <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
+        <span v-else class="inline-flex items-center gap-1.5"><span class="h-1 w-1 rounded-full" :class="playing ? 'bg-emerald-500' : 'bg-[var(--radio-text-muted)]'"></span>{{ playing ? $t('player.on_air') : $t('player.ready') }}</span>
+      </div>
 
-          <div class="relative">
-            <div class="flex items-center justify-between gap-3">
-              <div class="flex min-w-0 flex-1 items-center gap-2">
-                <span
-                  class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-400/20"
-                >
-                  <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-                  Live
-                </span>
-                <label
-                  v-if="sourceList.length > 1"
-                  class="inline-flex min-w-0 items-center"
-                >
-                  <span class="sr-only">Select stream source</span>
-                  <select
-                    :value="activeSourceIndex"
-                    class="h-7 min-h-7 w-auto max-w-[132px] cursor-pointer rounded-full border-[var(--radio-border)] bg-[var(--radio-surface-soft)] py-0 pl-2.5 pr-7 text-[11px] font-semibold text-[var(--radio-text-muted)] shadow-none outline-none transition hover:border-rose-300 hover:bg-[var(--radio-surface)] focus:border-rose-400 focus:outline-none sm:max-w-[260px]"
-                    aria-label="Select stream source"
-                    @change="onSourceChange"
-                  >
-                    <option
-                      v-for="(source, index) in sourceList"
-                      :key="`${source.src}-${index}`"
-                      :value="index"
-                    >
-                      {{ index + 1 }}. {{ sourceName(source, index) }} · {{ sourceFormat(source) }} · {{ source.proxied ? "Proxy" : "Direct" }}
-                    </option>
-                  </select>
-                </label>
-              </div>
-
-              <button
-                v-if="hasSidebar"
-                type="button"
-                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-[var(--radio-surface-soft)] px-3 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] xl:hidden"
-                :aria-expanded="mobileQueueOpen"
-                aria-label="Toggle channels and schedule"
-                @click="mobileQueueOpen = !mobileQueueOpen"
-              >
-                <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current" aria-hidden="true">
-                  <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
-                  <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                </svg>
-                <span>{{ sidebarCount }}</span>
-              </button>
-            </div>
-
-            <div class="mt-4 flex min-w-0 items-center gap-4 sm:mt-5 sm:gap-5">
-              <div
-                class="radio-themed-artwork relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[24px] border border-[var(--radio-border)] p-2.5 shadow-md shadow-slate-950/5 sm:h-32 sm:w-32"
-              >
-                <img
-                  loading="lazy"
-                  :src="nowPlayingArtwork"
-                  :alt="nowPlayingTitle"
-                  class="max-h-full max-w-full object-contain"
-                />
-                <span
-                  v-if="playing"
-                  class="absolute bottom-2.5 right-2.5 flex h-7 w-7 items-end justify-center gap-[2px] rounded-full bg-[var(--radio-inverse-bg)] pb-2 text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
-                  aria-hidden="true"
-                >
-                  <span class="radio-bar h-1 w-[2px] rounded-full bg-current is-playing"></span>
-                  <span class="radio-bar h-2.5 w-[2px] rounded-full bg-current is-playing"></span>
-                  <span class="radio-bar h-1.5 w-[2px] rounded-full bg-current is-playing"></span>
-                </span>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <p dir="auto" class="truncate text-xs font-medium text-[var(--radio-text-muted)]">
-                  {{ streamName || $t(country) }}
-                </p>
-
-                <h2 dir="auto" class="mt-1.5 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-[var(--radio-text)] sm:text-2xl">
-                  {{ nowPlayingTitle }}
-                </h2>
-
-                <p
-                  v-if="nowPlayingArtist"
-                  dir="auto"
-                  class="mt-1.5 truncate text-sm text-[var(--radio-text-muted)]"
-                >
-                  {{ nowPlayingArtist }}
-                </p>
-
-                <div class="mt-2 flex min-w-0 items-center gap-2 text-xs text-[var(--radio-text-muted)]">
-                  <span class="truncate">{{ $t(country) }}</span>
-                  <span aria-hidden="true">•</span>
-                  <span :title="currentDate" class="shrink-0 tabular-nums">{{ currentTime }}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-5 flex items-center gap-3 sm:mt-6">
-              <div class="flex shrink-0 items-center gap-2">
-                <button
-                  v-if="canNavigateStations"
-                  type="button"
-                  class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] transition hover:border-rose-300 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] active:scale-95 sm:h-11 sm:w-11"
-                  :aria-label="previousStationLabel"
-                  :title="previousStationLabel"
-                  @click="navigateStation(-1)"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-4.5 w-4.5 fill-none stroke-current"
-                  >
-                    <path
-                      d="m14.5 7-5 5 5 5M8 7v10"
-                      stroke-width="1.9"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-
-                <button
-                  v-if="waiting"
-                  type="button"
-                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] shadow-sm ring-1 ring-[var(--radio-border)] sm:h-16 sm:w-16"
-                  aria-label="Loading stream"
-                  disabled
-                >
-                  <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle class="opacity-20" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"></circle>
-                    <path class="opacity-80" fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  v-else-if="playing"
-                  type="button"
-                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 sm:h-16 sm:w-16"
-                  @click="onPause"
-                  aria-label="Pause radio"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-current">
-                    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
-                    <rect x="14" y="5" width="4" height="14" rx="1"></rect>
-                  </svg>
-                </button>
-
-                <button
-                  v-else
-                  type="button"
-                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/25 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-16 sm:w-16"
-                  @click="onPlay"
-                  :disabled="!hasPlayableSource"
-                  aria-label="Play radio"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" class="ml-0.5 h-6 w-6 fill-current">
-                    <path d="M8 5.7v12.6c0 .85.92 1.38 1.66.95l9.85-6.3a1.1 1.1 0 0 0 0-1.9l-9.85-6.3A1.1 1.1 0 0 0 8 5.7Z"></path>
-                  </svg>
-                </button>
-
-                <button
-                  v-if="canNavigateStations"
-                  type="button"
-                  class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] transition hover:border-rose-300 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] active:scale-95 sm:h-11 sm:w-11"
-                  :aria-label="nextStationLabel"
-                  :title="nextStationLabel"
-                  @click="navigateStation(1)"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-4.5 w-4.5 fill-none stroke-current"
-                  >
-                    <path
-                      d="m9.5 7 5 5-5 5M16 7v10"
-                      stroke-width="1.9"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              <div class="hidden min-w-0 flex-1 items-center gap-3 sm:flex">
-                <button
-                  type="button"
-                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
-                  @click="toggleMute"
-                  :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
-                >
-                  <svg
-                    v-if="muted || volume === 0"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-5 w-5 fill-none stroke-current"
-                  >
-                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                    <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
-                  </svg>
-                  <svg
-                    v-else
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-5 w-5 fill-none stroke-current"
-                  >
-                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                    <path
-                      v-if="volume >= 0.5"
-                      d="M16 8.2c1.25 1 2 2.33 2 3.8s-.75 2.8-2 3.8"
-                      stroke-width="1.8"
-                      stroke-linecap="round"
-                    ></path>
-                    <path d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8" stroke-width="1.8" stroke-linecap="round"></path>
-                  </svg>
-                </button>
-
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  :value="muted ? 0 : volume"
-                  @input="onVolumeInput"
-                  aria-label="Volume"
-                  class="radio-volume h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-[var(--radio-track)]"
-                />
-
-                <span class="w-8 shrink-0 text-right text-[11px] tabular-nums text-[var(--radio-text-muted)]">
-                  {{ Math.round((muted ? 0 : volume) * 100) }}%
-                </span>
-              </div>
-
-              <div class="ml-auto flex items-center gap-1.5 sm:ml-0">
-                <button
-                  type="button"
-                  class="flex h-10 w-10 items-center justify-center rounded-full text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:hidden"
-                  @click="toggleMute"
-                  :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
-                >
-                  <svg
-                    v-if="muted || volume === 0"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-5 w-5 fill-none stroke-current"
-                  >
-                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                    <path d="m16 9 5 5m0-5-5 5" stroke-width="1.8" stroke-linecap="round"></path>
-                  </svg>
-                  <svg
-                    v-else
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-5 w-5 fill-none stroke-current"
-                  >
-                    <path d="M11 6 7.5 9H5v6h2.5L11 18V6Z" stroke-width="1.8" stroke-linejoin="round"></path>
-                    <path d="M14.2 10.2c.55.5.8 1.1.8 1.8s-.25 1.3-.8 1.8" stroke-width="1.8" stroke-linecap="round"></path>
-                  </svg>
-                </button>
-
-                <span
-                  class="hidden items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 text-[11px] font-semibold text-emerald-700 lg:inline-flex dark:bg-emerald-400/10 dark:text-emerald-300"
-                  :class="{ 'opacity-50': !playing }"
-                >
-                  <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
-                  {{ playing ? "On air" : waiting ? "Connecting" : "Ready" }}
-                </span>
-              </div>
-            </div>
-
-            <div
-              v-if="mobileQueueOpen && hasSidebar"
-              class="radio-themed-muted mt-5 h-[min(420px,60vh)] overflow-hidden rounded-2xl border border-[var(--radio-border)] xl:hidden"
-            >
-              <PlayerQueue
-                :playlist="playlist || []"
-                :program="program || []"
-                :stations="stations || []"
-                :active-station-id="activeStationId"
-                :country-name="countryName || $t(country)"
-                :schedule-loading="queueLoading"
-                :thumb="thumb"
-                :station-name="streamName || $t(country)"
-                @select-station="selectStation"
-              />
-            </div>
-
-            <div
-              v-if="queueLoading && scheduleCount === 0 && stationCount === 0"
-              class="mt-4 flex items-center gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2.5 text-xs text-[var(--radio-text-muted)]"
-            >
-              <span class="h-2 w-2 animate-pulse rounded-full bg-[var(--radio-text-muted)]"></span>
-              <span>{{ $t("panel.updating") }}</span>
-            </div>
-
-            <div
-              v-if="streamError"
-              class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-700 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-200 dark:ring-rose-400/20"
-              role="alert"
-            >
-              <div class="flex min-w-0 items-center gap-2">
-                <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
-                <span class="truncate">
-                  {{ $t("alert.stream_error") }}
-                  <span v-if="attemptCount >= MAX_STREAM_ATTEMPTS" class="opacity-70">
-                    · {{ attemptCount }}/{{ MAX_STREAM_ATTEMPTS }}
-                  </span>
-                </span>
-              </div>
-              <button
-                type="button"
-                class="shrink-0 rounded-lg bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-200 dark:bg-rose-400/15 dark:text-rose-100 dark:hover:bg-rose-400/25"
-                @click="retryCurrentSource"
-              >
-                Retry
-              </button>
-            </div>
-
-            <div
-              v-if="!online"
-              class="mt-4 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-inset ring-amber-200 dark:bg-amber-400/10 dark:text-amber-100 dark:ring-amber-300/20"
-              role="alert"
-            >
-              <fa :icon="['fas', 'wifi']" class="shrink-0" />
-              <span>{{ $t("text.offline") }}</span>
-            </div>
-
-            <div
-              v-if="song?.nextMedia?.title"
-              class="mt-4 border-t border-[var(--radio-border)] pt-4"
-            >
-              <div
-                class="flex min-w-0 items-center gap-3 rounded-2xl bg-[var(--radio-surface-soft)] px-3 py-2.5 ring-1 ring-inset ring-[var(--radio-border)]"
-              >
-                <img
-                  v-if="song.nextMedia.thumbnail || song.thumbnail"
-                  :src="song.nextMedia.thumbnail || song.thumbnail"
-                  :alt="song.nextMedia.title"
-                  class="h-11 w-11 shrink-0 rounded-xl object-cover"
-                />
-                <div class="min-w-0 flex-1">
-                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-rose-500">
-                    {{ $t("panel.next") }}
-                  </p>
-                  <p dir="auto" class="mt-0.5 truncate text-sm font-medium text-[var(--radio-text)]">
-                    {{ song.nextMedia.title }}
-                    <span
-                      v-if="song.nextMedia.artists"
-                      class="font-normal text-[var(--radio-text-muted)]"
-                    >
-                      · {{ song.nextMedia.artists }}
-                    </span>
-                  </p>
-                </div>
-                <svg
-                  viewBox="0 0 24 24"
-                  class="hidden h-4 w-4 shrink-0 fill-none stroke-[var(--radio-text-muted)] sm:block"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="m9 6 6 6-6 6"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
+      <div class="grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pb-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
+        <div class="flex min-w-0 items-center gap-2.5 sm:gap-3">
+          <div class="radio-themed-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
+            <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
+            <UIcon v-else name="i-lucide-radio" class="h-5 w-5 text-[var(--radio-text-muted)]" />
+            <span v-if="playing" class="absolute bottom-1 right-1 flex h-4 w-4 items-end justify-center gap-px rounded-full bg-[var(--radio-inverse-bg)] pb-1 text-[var(--radio-inverse-text)]" aria-hidden="true">
+              <span class="radio-bar is-playing h-1 w-px bg-current"></span><span class="radio-bar is-playing h-2 w-px bg-current"></span><span class="radio-bar is-playing h-1.5 w-px bg-current"></span>
+            </span>
           </div>
-
-          <div class="radio-audio-host" aria-hidden="true">
-            <audio ref="mediaElement" playsinline preload="none"></audio>
+          <div class="min-w-0 flex-1">
+            <p dir="auto" class="truncate text-xs font-semibold sm:text-sm" :title="nowPlayingTitle">{{ nowPlayingTitle }}</p>
+            <p v-if="nowPlayingArtist" dir="auto" class="mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
+            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
           </div>
         </div>
 
-        <aside
-          v-if="hasSidebar"
-          class="radio-themed-muted hidden h-[360px] overflow-hidden border-l border-[var(--radio-border)] xl:block"
-        >
-          <PlayerQueue
-            :playlist="playlist || []"
-            :program="program || []"
-            :stations="stations || []"
-            :active-station-id="activeStationId"
-            :country-name="countryName || $t(country)"
-            :schedule-loading="queueLoading"
-            :thumb="thumb"
-            :station-name="streamName || $t(country)"
-            @select-station="selectStation"
-          />
-        </aside>
+        <div class="flex items-center justify-center gap-0.5 sm:gap-2">
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-9 w-9 justify-center rounded-full" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
+          <UButton class="h-11 w-11 justify-center rounded-full bg-rose-500 text-white hover:bg-rose-600 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
+            <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
+            <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
+          </UButton>
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-9 w-9 justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-9 w-9 justify-center rounded-full sm:hidden" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+        </div>
+
+        <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
+          <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false" :ui="{ content: 'w-72' }">
+            <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-radio-tower" :aria-label="$t('player.source')" class="hidden max-w-28 truncate lg:inline-flex">{{ activeSourceName }}</UButton>
+          </UDropdownMenu>
+          <UButton color="neutral" variant="ghost" size="sm" :icon="muted || volume === 0 ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted || volume === 0 ? $t('player.unmute') : $t('player.mute')" @click="toggleMute" />
+          <input type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume hidden h-1 w-20 cursor-pointer appearance-none rounded-full bg-[var(--radio-track)] md:block xl:w-24" />
+          <UButton v-if="lyricsAvailable" color="neutral" variant="ghost" size="sm" icon="i-lucide-mic-vocal" :aria-label="$t('panel.lyric')" @click="$emit('open-lyrics')" />
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" :aria-label="$t('player.queue')" :aria-expanded="wideViewport ? playback.queueOpen : mobileQueueOpen" @click="toggleQueue" />
+        </div>
       </div>
     </div>
+    <div class="radio-audio-host" aria-hidden="true"><audio ref="mediaElement" playsinline preload="none"></audio></div>
   </section>
+
+  <aside v-if="hasSidebar" v-show="playback.queueOpen" class="radio-right-panel fixed right-6 z-30 hidden w-80 min-h-0 flex-col overflow-hidden rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] 2xl:flex" :aria-label="$t('player.queue')">
+    <div class="flex items-center justify-between border-b border-[var(--radio-border)] p-4">
+      <div class="min-w-0"><p class="text-xs font-semibold">{{ $t('player.queue') }}</p><p dir="auto" class="mt-1 truncate text-[11px] text-[var(--radio-text-muted)]">{{ streamName }}</p></div>
+      <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-panel-right-close" :aria-label="$t('button.close')" @click="playback.queueOpen = false" />
+    </div>
+    <div v-if="song?.nextMedia?.title" class="border-b border-[var(--radio-border)] p-4">
+      <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t("panel.next") }}</p>
+      <p dir="auto" class="truncate text-sm font-semibold">{{ song.nextMedia.title }}</p>
+      <p dir="auto" class="mt-1 truncate text-xs text-[var(--radio-text-muted)]">{{ song.nextMedia.artists }}</p>
+    </div>
+    <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
+  </aside>
+
+  <USlideover v-model:open="mobileQueueOpen" :title="$t('player.queue')" :description="streamName" :ui="{ content: 'w-full max-w-sm', body: 'flex min-h-0 flex-1 flex-col p-0 sm:p-0' }">
+    <template #body>
+      <div class="flex flex-wrap gap-2 border-b border-[var(--radio-border)] p-3">
+        <UButton color="neutral" variant="soft" size="xs" :icon="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted ? $t('player.unmute') : $t('player.mute')" @click="toggleMute">{{ $t('player.volume') }}</UButton>
+        <input type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume my-auto h-1 w-20 appearance-none rounded-full bg-[var(--radio-track)]" />
+        <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end' }" :ui="{ content: 'w-64' }">
+          <UButton color="neutral" variant="soft" size="xs" icon="i-lucide-radio-tower">{{ $t('player.source') }}</UButton>
+        </UDropdownMenu>
+        <UButton v-if="lyricsAvailable" color="neutral" variant="soft" size="xs" icon="i-lucide-mic-vocal" @click="mobileQueueOpen = false; $emit('open-lyrics')">{{ $t('panel.lyric') }}</UButton>
+      </div>
+      <div v-if="song?.nextMedia?.title" class="border-b border-[var(--radio-border)] p-4">
+        <p class="text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t('panel.next') }}</p>
+        <p dir="auto" class="mt-2 truncate text-sm">{{ song.nextMedia.title }}</p>
+      </div>
+      <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
+    </template>
+  </USlideover>
 </template>
 
 <script lang="ts" setup>
+import { usePlaybackStore } from "~/stores/playback";
 import type { RadioSource, RadioStationOption } from "~/types/radio";
 import {
   MAX_STREAM_ATTEMPTS,
@@ -419,7 +97,7 @@ import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 interface CurrentMedia {
   title: string;
   artists: string;
-  hasLyric: boolean;
+  hasLyric?: boolean;
   encodeId: string;
   thumbnail?: string;
 }
@@ -459,13 +137,23 @@ const props = defineProps<{
   activeStationId?: string;
   countryName?: string;
   queueLoading?: boolean;
+  stationUrl?: string;
+  lyricsAvailable?: boolean;
+  playRequest?: number;
+  pauseRequest?: number;
 }>();
 
 const emit = defineEmits<{
   (event: "select-station", station: RadioStationOption): void;
+  (event: "open-lyrics"): void;
 }>();
 
 const $store = useMainStore();
+const playback = usePlaybackStore();
+const { t } = useI18n();
+const wideViewport = ref(false);
+const updateViewport = () => { wideViewport.value = window.innerWidth >= 1536; if (wideViewport.value) mobileQueueOpen.value = false; };
+const toggleQueue = () => { if (wideViewport.value) playback.queueOpen = !playback.queueOpen; else mobileQueueOpen.value = !mobileQueueOpen.value; };
 const dayjs = useDayjs();
 const runtimeConfig = useRuntimeConfig();
 const mediaElement = ref<HTMLAudioElement | null>(null);
@@ -490,6 +178,7 @@ let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let timeInterval: ReturnType<typeof setInterval> | null = null;
 let sourceVersion = 0;
+let playVersion = 0;
 let activeResolvedSrc = "";
 let removeAutoPlayUnlockListeners: (() => void) | null = null;
 
@@ -556,6 +245,14 @@ const sourceHost = (source: RadioSource): string => {
   }
 };
 
+const sourceMenuItems = computed(() => sourceList.value.map((source, index) => ({
+  label: `${index + 1}. ${sourceName(source, index)} · ${sourceFormat(source)}`,
+  description: source.proxied ? 'Proxy' : sourceHost(source),
+  type: 'checkbox' as const,
+  checked: index === activeSourceIndex.value,
+  onSelect: () => selectSource(index),
+})));
+
 const activeSourceName = computed(() =>
   sourceName(
     sourceList.value[activeSourceIndex.value] || props.streamUrl,
@@ -580,12 +277,12 @@ const previousStation = computed(() => adjacentStation(-1));
 const nextStation = computed(() => adjacentStation(1));
 const previousStationLabel = computed(() =>
   previousStation.value
-    ? `Previous station: ${previousStation.value.title}`
+    ? t("player.previous", { name: previousStation.value.title })
     : "Previous station",
 );
 const nextStationLabel = computed(() =>
   nextStation.value
-    ? `Next station: ${nextStation.value.title}`
+    ? t("player.next", { name: nextStation.value.title })
     : "Next station",
 );
 
@@ -756,11 +453,14 @@ const registerAutoPlayUnlock = (): void => {
 const tryPlay = async (): Promise<void> => {
   const media = mediaElement.value;
   if (!media || userPaused.value) return;
+  const version = sourceVersion;
+  const request = ++playVersion;
 
   waiting.value = true;
 
   try {
     await media.play();
+    if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
     pendingAutoPlay.value = false;
     waiting.value = false;
     playing.value = true;
@@ -770,6 +470,7 @@ const tryPlay = async (): Promise<void> => {
       localStorage.setItem("radio_autoplay_enabled", "1");
     }
   } catch (error) {
+    if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
     waiting.value = false;
     playing.value = false;
 
@@ -1052,9 +753,11 @@ const onPlay = async (): Promise<void> => {
 
 const onPause = (): void => {
   const media = mediaElement.value;
+  playVersion += 1;
 
   userPaused.value = true;
   pendingAutoPlay.value = false;
+  if (import.meta.client) localStorage.setItem("radio_autoplay_enabled", "0");
   clearReconnectTimer();
   clearFallbackProbeTimer();
   removeAutoPlayUnlockListeners?.();
@@ -1232,45 +935,60 @@ const unbindMediaEvents = (): void => {
   media.removeEventListener("volumechange", onVolumeChange);
 };
 
+watch([playing, waiting], ([isPlaying, isWaiting]) => {
+  playback.playing = isPlaying;
+  playback.waiting = isWaiting;
+});
+
+const sourceSignature = computed(() => JSON.stringify([props.stationUrl, sourceList.value]));
 watch(
-  () => [props.streamUrl, props.streamUrls] as const,
-  () => {
+  [sourceSignature, () => props.playRequest, () => props.pauseRequest],
+  ([signature, request, pause], [previousSignature, previousRequest, previousPause]) => {
+    if (pause !== previousPause) onPause();
+    if (signature === previousSignature) {
+      if (request !== previousRequest) void onPlay();
+      return;
+    }
+    const autoplay = !userPaused.value || request !== previousRequest;
     sourceVersion += 1;
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
-    mobileQueueOpen.value = false;
     attemptCount.value = 0;
     streamError.value = false;
+    playing.value = false;
+    waiting.value = false;
+    pendingAutoPlay.value = false;
     clearReconnectTimer();
     clearFallbackProbeTimer();
+    removeAutoPlayUnlockListeners?.();
+    removeAutoPlayUnlockListeners = null;
     destroyHls();
-
     const media = mediaElement.value;
     if (media) {
       media.pause();
       media.removeAttribute("src");
       media.load();
     }
-
-    const autoPlayEnabled =
-      import.meta.client &&
-      localStorage.getItem("radio_autoplay_enabled") === "1";
-
-    userPaused.value = !autoPlayEnabled;
-
-    if (autoPlayEnabled && hasPlayableSource.value) {
-      void applySource(0, true);
-    }
+    userPaused.value = !autoplay;
+    if (autoplay && hasPlayableSource.value) void applySource(0, true);
   },
-  { deep: true },
+  { flush: "post" },
 );
+
+watch(() => props.country, () => {
+  const [, area, country] = props.country.split(".");
+  if (area && country) $store.setTimezone(area.replace(/_/g, "-"), country.replace(/_/g, "-"));
+  updateCurrentTime();
+});
 
 onMounted(() => {
   const [, area, country] = props.country.split(".");
   if (area && country) {
-    $store.setTimezone(area, country.replace(/_/g, "-"));
+    $store.setTimezone(area.replace(/_/g, "-"), country.replace(/_/g, "-"));
   }
 
+  updateViewport();
+  window.addEventListener("resize", updateViewport);
   online.value = navigator.onLine;
   updateCurrentTime();
   timeInterval = setInterval(updateCurrentTime, 1000);
@@ -1290,7 +1008,7 @@ onMounted(() => {
   }
 
   const autoPlayEnabled =
-    localStorage.getItem("radio_autoplay_enabled") === "1";
+    localStorage.getItem("radio_autoplay_enabled") === "1" || Boolean(props.playRequest);
   userPaused.value = !autoPlayEnabled;
 
   if (autoPlayEnabled && hasPlayableSource.value) {
@@ -1316,6 +1034,7 @@ onUnmounted(() => {
   removeAutoPlayUnlockListeners?.();
   removeAutoPlayUnlockListeners = null;
 
+  window.removeEventListener("resize", updateViewport);
   window.removeEventListener("online", updateOnlineStatus);
   window.removeEventListener("offline", updateOnlineStatus);
 });
@@ -1367,3 +1086,4 @@ onUnmounted(() => {
   box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.16);
 }
 </style>
+

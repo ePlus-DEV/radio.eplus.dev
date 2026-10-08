@@ -81,13 +81,7 @@
         </div>
       </div>
 
-      <Player
-        country="world.asia.viet_nam"
-        thumb="/img/asia/flags/viet-nam.png"
-        :streamName="streamName"
-        :streamUrl="streamUrl"
-        :streamUrls="streamUrls"
-      />
+      <PanelStation @select-station="playFeatured" :stations="featuredStations" :active-station-id="playback.station?.id" :country-name="$t('world.asia.' + featuredCountry.replace(/-/g, '_'))" />
     </section>
 
     <section id="explore-radio" class="scroll-mt-28">
@@ -106,7 +100,9 @@
 
 <script setup lang="ts">
 import worldData from "~/data/world";
-import type { RadioSource } from "~/types/radio";
+import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
+import { usePlaybackStore } from "~/stores/playback";
+import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
@@ -114,9 +110,20 @@ const { t } = useI18n();
 const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
 );
-const streamName = ref<string>("");
-const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
-const streamUrls = ref<RadioSource[]>([]);
+const playback = usePlaybackStore();
+const featuredCountry = String(runtimeConfig.public.pinChannelFavorites || 'viet-nam');
+const { data: featuredCatalog } = await useAsyncData('featured-catalog', async () => {
+  if (import.meta.server) {
+    const { readFile } = await import('node:fs/promises');
+    const { join } = await import('node:path');
+    return JSON.parse(await readFile(join(process.cwd(), 'public/radio/asia', `${featuredCountry}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
+  }
+  return await $fetch<Record<string, RadioCatalogEntry>>(`/radio/asia/${featuredCountry}.json`);
+});
+const featuredEntries = computed(() => Object.entries(featuredCatalog.value || {}).sort((a, b) => Number(Boolean(b[1].favorite)) - Number(Boolean(a[1].favorite))));
+const featuredStations = computed(() => featuredEntries.value.slice(0, 8).map(([id, station]) => ({
+  id, title: station.title, image: station.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${id}`,
+})));
 
 const areaItems = computed(() =>
   Object.entries(worldData).map(([key, countries]) => ({
@@ -165,76 +172,27 @@ useSeoMeta({
   twitterDescription: seoDescription,
 });
 
-const fetchData = async (): Promise<void> => {
-  try {
-    const response = await fetch(
-      `/radio/asia/${runtimeConfig.public.pinChannelFavorites}.json`,
-    );
-    const data = await response.json();
-
-    interface ChannelStream {
-      url: string;
-      type?: string;
-      cros?: boolean;
-      source?: string;
-      label?: string;
-    }
-
-    interface Channel {
-      favorite: boolean;
-      title: string;
-      stream: string;
-      streams?: ChannelStream[];
-      stream_alternative?: string;
-      type: string;
-      cros: boolean;
-    }
-
-    const favoriteChannel = Object.values(data as Record<string, Channel>).find(
-      (channel) => channel.favorite,
-    );
-
-    if (!favoriteChannel) return;
-
-    streamName.value = favoriteChannel.title;
-
-    const seen = new Set<string>();
-    const candidates: ChannelStream[] = [
-      {
-        url: favoriteChannel.stream,
-        type: favoriteChannel.type,
-        cros: favoriteChannel.cros,
-        source: "primary",
-      },
-      ...(favoriteChannel.streams || []),
-      ...(favoriteChannel.stream_alternative
-        ? [{ url: favoriteChannel.stream_alternative, source: "alternative" }]
-        : []),
-    ].filter((item) => {
-      const url = String(item.url || "").trim();
-      if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
-      seen.add(url);
-      return true;
-    });
-
-    streamUrls.value = candidates.map((item) => ({
-      src: item.cros
-        ? `${runtimeConfig.public.corsServer}${item.url}`
-        : item.url,
-      type: item.type,
-      source: item.source,
-      label: item.label,
-      proxied: Boolean(item.cros),
-    }));
-
-    streamUrl.value =
-      streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as RadioSource);
-  } catch (error) {
-    console.error("Error fetching featured radio:", error);
-  }
+const playFeatured = (station: RadioStationOption): void => {
+  const meta = featuredCatalog.value?.[station.id];
+  if (!meta) return;
+  const stations = featuredEntries.value.map(([id, entry]) => ({ id, title: entry.title, image: entry.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${id}` }));
+  playback.activate(createPlaybackStation({
+    area: 'asia', country: featuredCountry, id: station.id, meta,
+    corsServer: String(runtimeConfig.public.corsServer || ''), placeholder: String(runtimeConfig.public.placeholderStation),
+  }), stations, { autoplay: true });
 };
 
-onMounted(() => {
-  void fetchData();
-});
+watch(featuredCatalog, () => {
+  const [id, meta] = featuredEntries.value[0] || [];
+  if (!id || !meta) return;
+  const stations = featuredEntries.value.map(([stationId, station]) => ({
+    id: stationId, title: station.title, image: station.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${stationId}`,
+  }));
+  playback.activate(createPlaybackStation({
+    area: 'asia', country: featuredCountry, id, meta,
+    corsServer: String(runtimeConfig.public.corsServer || ''),
+    placeholder: String(runtimeConfig.public.placeholderStation),
+  }), stations, { onlyIfIdle: true });
+}, { immediate: true });
 </script>
+

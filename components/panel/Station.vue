@@ -34,6 +34,7 @@
         "
         :title="station.title"
         :aria-label="station.title"
+        @click="onSelect($event, station)"
       >
         <div class="radio-themed-artwork relative flex aspect-square items-center justify-center overflow-hidden p-4">
           <img
@@ -81,6 +82,12 @@
 <script lang="ts" setup>
 import type { RadioStationOption } from "~/types/radio";
 
+const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
+const onSelect = (event: MouseEvent, station: RadioStationOption) => {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+  emit('select-station', station);
+};
+
 withDefaults(
   defineProps<{
     stations?: RadioStationOption[];
@@ -94,3 +101,4 @@ withDefaults(
   },
 );
 </script>
+

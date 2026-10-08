@@ -1,6 +1,6 @@
 <template>
-  <aside class="hidden min-w-0 xl:block" aria-label="Browse radio">
-    <div class="sticky top-28 max-h-[calc(100vh-8rem)] space-y-6 overflow-y-auto pb-8 pr-2 radio-scrollbar">
+  <aside :class="mobile ? 'block' : 'hidden xl:block'" class="min-w-0" aria-label="Browse radio">
+    <div :class="mobile ? 'space-y-6' : 'sticky top-28 max-h-[calc(100dvh-9rem-var(--radio-player-height))] space-y-6 overflow-y-auto pb-8 pr-2 radio-scrollbar'">
       <div class="space-y-1">
         <NuxtLink to="/" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/' ? 'bg-rose-500/10 text-rose-500' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
@@ -13,7 +13,7 @@
         </button>
       </div>
       <div class="border-t border-[var(--radio-border)] pt-5">
-        <p class="mb-3 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--radio-text-muted)]">Explore regions</p>
+        <p class="mb-3 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--radio-text-muted)]">{{ $t('player.explore') }}</p>
         <nav class="space-y-1" aria-label="Radio regions">
           <NuxtLink v-for="item in areas" :key="item.slug" :to="`/${item.slug}`"
             class="radio-interactive flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-sm transition"
@@ -37,6 +37,7 @@
 <script setup lang="ts">
 import worldData from "~/data/world";
 
+defineProps<{ mobile?: boolean }>();
 const route = useRoute();
 const areas = Object.entries(worldData).map(([key, countries]) => ({
   key,
@@ -48,3 +49,4 @@ const focusSearch = () => {
   window.dispatchEvent(new CustomEvent("radio:open-search"));
 };
 </script>
+
