@@ -1,7 +1,10 @@
 <template>
-  <div class="min-h-screen w-full overflow-x-hidden">
+  <div class="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
     <AppHeader />
-    <main class="mx-auto mt-20 w-full max-w-7xl min-w-0 px-3 sm:px-4" scroll-container>
+    <main
+      class="mx-auto w-full max-w-7xl min-w-0 px-3 pb-10 pt-24 sm:px-5 sm:pt-28 lg:px-6"
+      scroll-container
+    >
       <NuxtPage />
     </main>
     <AppFooter />

@@ -1,42 +1,78 @@
 <template>
-  <!-- BEGIN - Station -->
-  <div class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700">
+  <section class="radio-surface my-6 overflow-hidden">
     <div
-      class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
+      class="flex items-center justify-between gap-3 border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5"
     >
-      <h2 class="text-xl font-medium dark:text-white sm:text-2xl">{{ $t(i18n) }}</h2>
-    </div>
-    <div class="w-full p-3 sm:p-4">
-      <div
-        class="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"
-      >
-        <nuxt-link
-          :to="`${data.url}`"
-          v-for="data in results"
-          :key="data.objectID"
-          class="w-full min-w-0 overflow-hidden rounded-lg border"
-          active-class="active border-red-700"
-          :title="data.title"
-          :aria-label="data.title"
-          :class="[
-            isRouteActive(data.objectID)
-              ? 'border-red-600 ring-1 ring-red-500/40'
-              : 'border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white hover:shadow-md',
-          ]"
-        >
-          <div class="flex aspect-[16/11] w-full min-w-0 items-center justify-center p-2 sm:p-3">
-            <img
-              loading="lazy"
-              :src="data.station_image"
-              :alt="data.title"
-              class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain"
-            />
-          </div>
-        </nuxt-link>
+      <div class="min-w-0">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
+          {{ $t("panel.play_from_radio") }}
+        </p>
+        <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
+          {{ $t(i18n) }}
+        </h2>
       </div>
+      <span
+        class="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium tabular-nums text-slate-500 dark:bg-white/5 dark:text-slate-400"
+      >
+        {{ results.length }}
+      </span>
     </div>
-  </div>
-  <!-- END - Station -->
+
+    <div
+      v-if="results.length"
+      class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+    >
+      <NuxtLink
+        v-for="data in results"
+        :key="data.objectID"
+        :to="data.url"
+        class="group min-w-0 overflow-hidden rounded-2xl border bg-white transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5 dark:bg-white/[0.03]"
+        :class="
+          isRouteActive(data.objectID)
+            ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
+            : 'border-slate-200/80 hover:border-rose-200 dark:border-white/10 dark:hover:border-rose-400/30'
+        "
+        :title="data.title"
+        :aria-label="data.title"
+      >
+        <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-slate-50 p-3 dark:bg-slate-950/50">
+          <img
+            loading="lazy"
+            :src="data.station_image"
+            :alt="data.title"
+            class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain transition duration-200 group-hover:scale-[1.04]"
+          />
+
+          <span
+            v-if="isRouteActive(data.objectID)"
+            class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
+          >
+            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+            Live
+          </span>
+
+          <span
+            class="absolute bottom-2 right-2 flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-slate-950/80 text-white opacity-0 shadow transition group-hover:scale-100 group-hover:opacity-100 dark:bg-white dark:text-slate-950"
+          >
+            <fa :icon="['fas', 'play']" class="ml-0.5 h-3 w-3" />
+          </span>
+        </div>
+
+        <div class="border-t border-slate-200/70 px-3 py-3 dark:border-white/10">
+          <p class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-slate-700 dark:text-slate-200">
+            {{ data.title }}
+          </p>
+        </div>
+      </NuxtLink>
+    </div>
+
+    <div
+      v-else
+      class="px-5 py-10 text-center text-sm text-slate-400"
+    >
+      {{ $t("panel.updating") }}
+    </div>
+  </section>
 </template>
 
 <script lang="ts" setup>

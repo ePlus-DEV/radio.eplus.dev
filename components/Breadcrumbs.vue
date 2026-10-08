@@ -1,39 +1,50 @@
 <template>
-  <div class="text-sm breadcrumbs dark:text-white">
-    <ul>
-      <li class="font-medium">
-        <nuxt-link to="/" class="hover:no-underline">
-          <fa :icon="['far', 'house']" class="w-5 h-5 mr-2.5" />
-          {{ $t("navmenu.homepage") }}
-        </nuxt-link>
-      </li>
+  <nav
+    aria-label="Breadcrumb"
+    class="mb-4 flex min-w-0 items-center gap-1.5 overflow-x-auto py-1 text-xs font-medium text-slate-400 sm:mb-5"
+  >
+    <NuxtLink
+      to="/"
+      class="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+    >
+      <fa :icon="['fas', 'house']" class="h-3 w-3" />
+      <span class="hidden sm:inline">{{ $t("navmenu.homepage") }}</span>
+    </NuxtLink>
 
-      <template v-if="level_1 !== undefined && level_1_slug !== undefined">
-        <li class="font-medium">
-          <nuxt-link :to="`/${area}`" class="hover:no-underline">
-            {{ $t(`world.${area.replace(/-/g, "_")}.name`) }}
-          </nuxt-link>
-        </li>
-        <template v-if="level_2 !== undefined">
-          <li class="font-medium">
-            <nuxt-link
-              :to="`/${area}/${level_1_slug}`"
-              class="hover:no-underline"
-            >
-              {{ $t(level_1) }}
-            </nuxt-link>
-          </li>
-        </template>
-        <template v-else>
-          <li>{{ $t(level_1) }}</li>
-        </template>
-      </template>
+    <template v-if="level_1 !== undefined && level_1_slug !== undefined">
+      <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
+      <NuxtLink
+        :to="`/${area}`"
+        class="shrink-0 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+      >
+        {{ $t(`world.${area.replace(/-/g, "_")}.name`) }}
+      </NuxtLink>
 
       <template v-if="level_2 !== undefined">
-        <li>{{ level_2 }}</li>
+        <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
+        <NuxtLink
+          :to="`/${area}/${level_1_slug}`"
+          class="shrink-0 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+        >
+          {{ $t(level_1) }}
+        </NuxtLink>
       </template>
-    </ul>
-  </div>
+
+      <template v-else>
+        <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
+        <span class="shrink-0 px-2 py-1.5 text-slate-600 dark:text-slate-300">
+          {{ $t(level_1) }}
+        </span>
+      </template>
+    </template>
+
+    <template v-if="level_2 !== undefined">
+      <fa :icon="['fas', 'chevron-right']" class="h-2.5 w-2.5 shrink-0 opacity-40" />
+      <span class="max-w-[220px] truncate px-2 py-1.5 text-slate-600 dark:text-slate-300 sm:max-w-md">
+        {{ level_2 }}
+      </span>
+    </template>
+  </nav>
 </template>
 
 <script lang="ts">

@@ -1,28 +1,51 @@
 <template>
-  <div>
-    <!-- BEGIN - Breadcrumbs -->
+  <div class="space-y-6">
     <Breadcrumbs
-      :area="Array.isArray(area) ? area[0] : area"
+      :area="area"
       :level_1="i18n"
-      :level_1_slug="Array.isArray(slug) ? slug[0] : slug"
+      :level_1_slug="slug"
     />
-    <!-- END - Breadcrumbs -->
 
-    <!-- BEGIN - Player -->
+    <section
+      class="radio-surface relative overflow-hidden px-5 py-6 sm:px-7"
+    >
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.10),transparent_42%)]"></div>
+      <div class="relative flex items-center gap-4 sm:gap-5">
+        <div class="flex h-20 w-24 shrink-0 items-center justify-center rounded-2xl bg-slate-50 p-3 ring-1 ring-slate-200/70 dark:bg-slate-950/50 dark:ring-white/10 sm:h-24 sm:w-28">
+          <img
+            :src="thumb"
+            :alt="countryName"
+            class="max-h-full max-w-full object-contain"
+          />
+        </div>
+
+        <div class="min-w-0 flex-1">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
+            {{ $t("panel.radio_in", { name: countryName }) }}
+          </p>
+          <h1 class="mt-1 truncate text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+            {{ countryName }}
+          </h1>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            {{ stationCount ? stationCount + " stations" : seoDescription }}
+          </p>
+        </div>
+      </div>
+    </section>
+
     <Player
       :country="i18n"
       :thumb="thumb"
       :streamName="streamName"
       :streamUrl="streamUrl"
       :playlist="playlist"
-    ></Player>
-    <!-- END - Player -->
+    />
 
-    <!-- BEGIN - PanelStation -->
     <PanelStation />
-    <!-- END - PanelStation -->
   </div>
 </template>
+
+
 
 <script setup lang="ts">
 import type { RadioSource } from "~/types/radio";
@@ -48,6 +71,7 @@ const i18n = computed(
 );
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const playlist = ref<Track[]>([]);
+const stationCount = ref(0);
 interface Track {
   track_title: string;
   track_artist: string;
@@ -110,6 +134,8 @@ const fetchData = async (): Promise<void> => {
     if (!data) {
       throw new Error("No data returned from fetch");
     }
+
+    stationCount.value = Object.keys(data).length;
 
     interface Channel {
       favorite: boolean;

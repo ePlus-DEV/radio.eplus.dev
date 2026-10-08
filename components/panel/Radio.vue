@@ -1,76 +1,84 @@
 <template>
-  <div>
-    <!-- BEGIN - Skeleton -->
-    <div v-if="loading">
-      <div
-        v-for="i in chooseTheArea ? 1 : 7"
+  <div class="space-y-6">
+    <div v-if="loading" class="space-y-6">
+      <section
+        v-for="i in chooseTheArea ? 1 : 3"
         :key="i"
-        class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700"
+        class="radio-surface overflow-hidden"
       >
-        <div
-          class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
-        >
-          <h2 class="text-2xl dark:text-white animate-pulse">
-            <div
-              class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"
-            ></div>
-          </h2>
+        <div class="flex items-center justify-between border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5">
+          <div class="h-5 w-36 animate-pulse rounded-full bg-slate-200 dark:bg-white/10"></div>
+          <div class="h-4 w-12 animate-pulse rounded-full bg-slate-100 dark:bg-white/5"></div>
         </div>
-        <div class="flex items-center justify-center">
+        <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           <div
-            class="grid w-full grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 animate-pulse"
-          >
-            <div
-              v-for="n in 16"
-              :key="n"
-              class="aspect-[7/5] w-full rounded-lg bg-gray-200 dark:bg-gray-600"
-            ></div>
-          </div>
+            v-for="n in 12"
+            :key="n"
+            class="aspect-[4/3] animate-pulse rounded-2xl bg-slate-100 dark:bg-white/5"
+          ></div>
         </div>
-      </div>
+      </section>
     </div>
-    <!-- END - Skeleton -->
 
-    <!-- BEGIN - Result -->
-    <div v-for="(continent, continentIndex) in world" :key="continentIndex">
-      <div class="my-3 w-full min-w-0 overflow-hidden rounded-lg bg-white dark:bg-gray-700">
-        <div
-          class="rounded-t-lg border-b p-4 dark:border-gray-600 dark:bg-gray-900"
-        >
-          <h2 class="text-xl font-medium dark:text-white sm:text-2xl">
+    <section
+      v-for="(continent, continentIndex) in world"
+      :key="continentIndex"
+      class="radio-surface overflow-hidden"
+    >
+      <div
+        class="flex items-center justify-between gap-3 border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5"
+      >
+        <div class="min-w-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
+            {{ $t("panel.country") }}
+          </p>
+          <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
             {{ $t(`world.${continentIndex}.name`) }}
           </h2>
         </div>
-        <div class="w-full p-3 sm:p-4">
-          <div class="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
-            <nuxt-link
-              v-for="country in continent"
-              :key="country.url"
-              class="indicator w-full min-w-0 overflow-hidden rounded-lg border border-base-300 dark:border-gray-600 hover:border-purple-700 dark:hover:border-white"
-              :title="$t(country.name)"
-              :aria-label="$t(country.name)"
-              :to="country.url"
-            >
-              <div
-                v-if="country.station_count !== null"
-                class="indicator-item text-white badge badge-accent"
-              >
-                {{ country.station_count }}
-              </div>
-              <div class="flex aspect-[7/5] w-full min-w-0 items-center justify-center p-3">
-                <img
-                  loading="lazy"
-                  :src="country.flag"
-                  :alt="$t(country.name)"
-                  class="max-h-full max-w-full object-contain"
-                />
-              </div>
-            </nuxt-link>
-          </div>
-        </div>
+        <span
+          class="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium tabular-nums text-slate-500 dark:bg-white/5 dark:text-slate-400"
+        >
+          {{ continent.length }}
+        </span>
       </div>
-    </div>
-    <!-- END - Result -->
+
+      <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <NuxtLink
+          v-for="country in continent"
+          :key="country.url"
+          :to="country.url"
+          class="group min-w-0 overflow-hidden rounded-2xl border border-slate-200/80 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg hover:shadow-slate-900/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-rose-400/30 dark:hover:bg-white/[0.05]"
+          :title="$t(country.name)"
+          :aria-label="$t(country.name)"
+        >
+          <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-slate-50 p-4 dark:bg-slate-950/50">
+            <img
+              loading="lazy"
+              :src="country.flag"
+              :alt="$t(country.name)"
+              class="max-h-[72%] max-w-[78%] object-contain drop-shadow-sm transition duration-200 group-hover:scale-[1.04]"
+            />
+            <span
+              v-if="country.station_count !== null"
+              class="absolute right-2 top-2 rounded-full bg-slate-950/80 px-2 py-1 text-[10px] font-semibold text-white backdrop-blur dark:bg-white/10"
+            >
+              {{ country.station_count }}
+            </span>
+          </div>
+
+          <div class="flex min-w-0 items-center gap-2 border-t border-slate-200/70 px-3 py-3 dark:border-white/10">
+            <span class="min-w-0 flex-1 truncate text-sm font-semibold text-slate-700 dark:text-slate-200">
+              {{ $t(country.name) }}
+            </span>
+            <fa
+              :icon="['fas', 'arrow-right']"
+              class="h-3 w-3 shrink-0 -translate-x-1 text-slate-300 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 dark:text-slate-500"
+            />
+          </div>
+        </NuxtLink>
+      </div>
+    </section>
   </div>
 </template>
 

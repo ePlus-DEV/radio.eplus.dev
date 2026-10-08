@@ -1,80 +1,43 @@
 <template>
   <div class="dropdown dropdown-end">
-    <label
+    <button
       tabindex="0"
-      role="button"
-      class="flex flex-row items-center gap-1 normal-case"
+      type="button"
+      class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+      :aria-label="$t('navmenu.language')"
     >
-      <svg
-        class="inline-block h-8 w-8 fill-current text-white cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 512 512"
-        tabindex="0"
-      >
-        <path
-          d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"
-        ></path>
-        <path
-          d="M272,320c-.25-.19-20.59-15.77-45.42-42.67,39.58-53.64,62-114.61,71.15-143.33H352V90H214V48H170V90H32v44H251.25c-9.52,26.95-27.05,69.5-53.79,108.36-32.68-43.44-47.14-75.88-47.33-76.22L143,152l-38,22,6.87,13.86c.89,1.56,17.19,37.9,54.71,86.57.92,1.21,1.85,2.39,2.78,3.57-49.72,56.86-89.15,79.09-89.66,79.47L64,368l23,36,19.3-11.47c2.2-1.67,41.33-24,92-80.78,24.52,26.28,43.22,40.83,44.3,41.67L255,362Z"
-        ></path>
-      </svg>
-      <svg
-        width="12px"
-        height="12px"
-        class="ml-1 h-3 w-3 fill-current text-white cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 2048 2048"
-        tabindex="0"
-      >
-        <path
-          d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"
-        ></path>
-      </svg>
-    </label>
+      <fa :icon="['fas', 'language']" class="h-4 w-4" />
+      <span class="hidden uppercase sm:inline">{{ locale.split("-")[0] }}</span>
+      <fa :icon="['fas', 'chevron-down']" class="h-3 w-3 opacity-60" />
+    </button>
+
     <ul
       tabindex="0"
-      class="menu dropdown-content p-2 shadow bg-base-100 dark:bg-gray-800 dark:text-white rounded-box w-52 mt-2 gap-1"
+      class="dropdown-content z-[70] mt-3 max-h-80 w-56 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900"
     >
-      <li
-        v-for="localeItem in locales"
-        :key="localeItem.code"
-        class="flex flex-row items-center dropdown-hover rounded"
-        :class="{
-          'bg-red-600 opacity-75 text-white p-1 cursor-not-allowed':
-            locale === localeItem.code,
-          'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-400':
-            locale !== localeItem.code,
-        }"
-        @click.prevent.stop="setLocale(localeItem.code)"
-      >
-        <span
-          class="cursor-not-allowed w-full rounded"
-          :class="{
-            'bg-red-600 opacity-75 text-white hover:bg-red-600':
-              locale === localeItem.code,
-            'hover:bg-slate-50 dark:hover:bg-slate-400':
-              locale !== localeItem.code,
-          }"
+      <li v-for="localeItem in locales" :key="localeItem.code">
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition"
+          :class="
+            locale === localeItem.code
+              ? 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-300'
+              : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5'
+          "
+          @click="setLocale(localeItem.code)"
         >
           <span
-            class="badge badge-sm badge-outline !pl-1.5 !pr-1 pt-px font-mono !text-[.6rem] font-bold tracking-widest opacity-50 uppercase"
-            :class="{
-              'text-white cursor-not-allowed': locale === localeItem.code,
-            }"
+            class="flex h-7 min-w-8 items-center justify-center rounded-lg bg-slate-100 px-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:bg-white/5 dark:text-slate-400"
           >
             {{ localeItem.code.split("-").pop() }}
           </span>
-          <span
-            class="ml-1"
-            :class="{
-              'text-white cursor-not-allowed': locale === localeItem.code,
-            }"
-          >
-            {{ localeItem.name }}
-          </span>
-        </span>
+          <span class="min-w-0 flex-1 truncate">{{ localeItem.name }}</span>
+          <fa
+            v-if="locale === localeItem.code"
+            :icon="['fas', 'check']"
+            class="h-3.5 w-3.5"
+          />
+        </button>
       </li>
     </ul>
   </div>
@@ -82,8 +45,8 @@
 
 <script lang="ts" setup>
 const { locale, locales, setLocale } = useI18n();
-
 const dayjs = useDayjs();
+
 watch(
   locale,
   (newLocale: string) => {

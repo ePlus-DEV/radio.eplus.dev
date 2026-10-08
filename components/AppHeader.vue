@@ -1,234 +1,188 @@
 <template>
-  <div>
-    <nav class="w-full bg-gray-800 shadow fixed top-0 z-50">
-      <div
-        class="container px-6 h-16 flex justify-between items-center lg:items-stretch mx-auto"
-      >
-        <div class="flex items-center">
-          <div class="mr-10 flex items-center">
-            <nuxt-link to="/">
-              <img
-                loading="lazy"
-                src="/brand/logo-white.svg"
-                width="43"
-                alt="Radio.ePlus.DEV"
-              />
-            </nuxt-link>
-            <h3
-              class="text-base text-white font-bold tracking-normal leading-tight ml-3 hidden lg:block"
-            >
-              <nuxt-link to="/">Radio.ePlus.DEV</nuxt-link>
-            </h3>
-          </div>
-          <ul class="hidden xl:flex items-center h-full">
-            <nuxt-link to="/">
-              <li
-                class="cursor-pointer h-full flex items-center text-sm text-red-500 tracking-normal transition duration-150 ease-in-out"
-              >
-                <span class="mr-2">
-                  <fa :icon="['fas', 'signal-stream']" />
-                </span>
-                {{ $t("navmenu.homepage") }}
-              </li>
-            </nuxt-link>
-            <li
-              class="cursor-pointer h-full flex items-center text-sm hover:text-red-500 text-white mx-10 tracking-normal transition duration-150 ease-in-out"
-            >
-              <span class="mr-2">
-                <fa :icon="['fad', 'snooze']" />
-              </span>
-              <a
-                href="https://old-radio.eplus.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {{ $t("navmenu.old_version") }}
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="h-full hidden xl:flex items-center justify-end">
-          <div class="h-full flex">
-            <div
-              class="px-6 h-full justify-center border-l border-gray-700 text-gray-400 flex items-center"
-            >
-              <!-- BEGIN - Button Search -->
-              <fa
-                @click="search()"
-                :icon="['far', 'magnifying-glass-music']"
-                class="icon icon-tabler icon-tabler-search cursor-pointer text-white w-6 h-6"
-              />
-              <!-- END - Button Search -->
-            </div>
-            <div
-              class="w-20 h-full flex items-center justify-center border-l border-r border-gray-700 text-gray-400"
-            >
-              <ThemeDarkMode />
-            </div>
-            <!-- BEGIN - Language - Desktop -->
-            <div class="flex items-center pl-8 relative">
-              <LangSwitcher />
-            </div>
-            <!-- END - Language - Desktop -->
-          </div>
-        </div>
-        <div class="flex items-center xl:hidden">
-          <ul
-            class="p-2 border-r bg-white absolute rounded top-0 left-0 right-0 shadow mt-16 md:mt-16 hidden"
+  <header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+    <nav
+      class="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-white/70 bg-white/85 px-3 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80 dark:shadow-black/20 sm:px-4"
+    >
+      <div class="flex min-w-0 items-center gap-2">
+        <NuxtLink
+          to="/"
+          class="group flex min-w-0 items-center gap-3 rounded-xl pr-2 focus:outline-none focus:ring-2 focus:ring-rose-400/40"
+          @click="mobileOpen = false"
+        >
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-950 shadow-md ring-1 ring-white/10 dark:bg-white"
           >
-            <li
-              class="flex md:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-            >
-              <div class="flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="icon icon-tabler icon-tabler-grid"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z"></path>
-                  <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                  <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                  <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                  <rect x="14" y="14" width="6" height="6" rx="1"></rect>
-                </svg>
-                <span class="ml-2 font-bold">{{ $t("navmenu.homepage") }}</span>
-              </div>
-            </li>
-            <li
-              class="flex md:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
-            >
-              <span class="mr-2"> </span>
-              <a
-                class="ml-2 font-bold"
-                href="https://old-radio.eplus.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {{ $t("navmenu.old_version") }}
-              </a>
-            </li>
-          </ul>
-          <!-- BEGIN - Toggle Language - Mobile -->
-          <LangSwitcher />
-          <!-- BEGIN - Toggle Language - Mobile -->
-          <!-- BEGIN - Search - Mobile -->
-          <button
-            class="h-10 w-10 flex justify-center items-center text-yellow-500"
-            @click="search()"
-          >
-            <!-- BEGIN - Button Search -->
-            <fa
-              :icon="['far', 'magnifying-glass-music']"
-              class="icon icon-tabler icon-tabler-search cursor-pointer text-white w-6 h-6"
+            <img
+              src="/brand/logo-white.svg"
+              width="30"
+              height="30"
+              alt="Radio ePlus"
+              class="h-7 w-7 object-contain dark:brightness-0"
             />
-            <!-- END - Button Search -->
-          </button>
-          <!-- END - Search - Mobile -->
-          <!-- BEGIN - Dark Mode - Mobile -->
-          <ThemeDarkMode />
-          <!-- END - Dark Mode - Mobile -->
-          <svg
-            @click="menuHandler($event, true)"
-            aria-haspopup="true"
-            aria-label="Main Menu"
-            xmlns="http://www.w3.org/2000/svg"
-            class="visible xl:hidden icon icon-tabler text-white icon-tabler-menu show-m-menu"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+          </span>
+          <span class="hidden min-w-0 sm:block">
+            <span class="block truncate text-sm font-bold tracking-tight text-slate-950 dark:text-white">
+              Radio ePlus
+            </span>
+            <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-500">
+              Live radio
+            </span>
+          </span>
+        </NuxtLink>
+
+        <div class="ml-2 hidden items-center gap-1 lg:flex">
+          <NuxtLink
+            to="/"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition"
+            :class="
+              route.path === '/'
+                ? 'bg-slate-100 text-slate-950 dark:bg-white/10 dark:text-white'
+                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white'
+            "
           >
-            <path stroke="none" d="M0 0h24v24H0z" />
-            <line x1="4" y1="8" x2="20" y2="8" />
-            <line x1="4" y1="16" x2="20" y2="16" />
-          </svg>
-          <div
-            @click="menuHandler($event, false)"
-            class="hidden text-white close-m-menu p-1"
+            {{ $t("navmenu.homepage") }}
+          </NuxtLink>
+          <NuxtLink
+            to="/statistics"
+            class="rounded-xl px-3 py-2 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white"
           >
-            <svg
-              aria-label="Close"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" />
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </div>
+            {{ $t("navmenu.statistics") }}
+          </NuxtLink>
         </div>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <button
+          type="button"
+          class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white sm:px-3"
+          :aria-label="$t('popup.search.text')"
+          @click="openSearch"
+        >
+          <fa :icon="['fas', 'magnifying-glass']" class="h-4 w-4" />
+          <span class="hidden text-sm font-medium md:inline">
+            {{ $t("popup.search.text") }}
+          </span>
+          <kbd
+            class="hidden rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-400 dark:border-white/10 dark:bg-white/5 xl:inline"
+          >
+            /
+          </kbd>
+        </button>
+
+        <ThemeDarkMode />
+        <LangSwitcher />
+
+        <button
+          type="button"
+          class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white lg:hidden"
+          :aria-label="mobileOpen ? $t('button.close') : 'Menu'"
+          :aria-expanded="mobileOpen"
+          @click="mobileOpen = !mobileOpen"
+        >
+          <fa :icon="['fas', mobileOpen ? 'xmark' : 'bars']" />
+        </button>
       </div>
     </nav>
-    <!-- BEGIN - SearchBox -->
-    <label for="search-modal" class="modal-button"></label>
-    <input type="checkbox" id="search-modal" class="modal-toggle" />
-    <div class="modal" role="dialog">
-      <div class="modal-box bg-white dark:bg-gray-800 dark:border-gray-800">
-        <SearchBox />
-      </div>
-      <label class="modal-backdrop" for="search-modal">{{
-        $t("button.close")
-      }}</label>
+
+    <div
+      v-if="mobileOpen"
+      class="mx-auto mt-2 max-w-7xl rounded-2xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900 lg:hidden"
+    >
+      <NuxtLink
+        to="/"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/5"
+        @click="mobileOpen = false"
+      >
+        <fa :icon="['fas', 'house']" class="w-4 text-slate-400" />
+        {{ $t("navmenu.homepage") }}
+      </NuxtLink>
+      <NuxtLink
+        to="/statistics"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/5"
+        @click="mobileOpen = false"
+      >
+        <fa :icon="['fas', 'chart-simple']" class="w-4 text-slate-400" />
+        {{ $t("navmenu.statistics") }}
+      </NuxtLink>
+      <a
+        href="https://old-radio.eplus.dev"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5"
+      >
+        <fa :icon="['fas', 'clock-rotate-left']" class="w-4 text-slate-400" />
+        {{ $t("navmenu.old_version") }}
+      </a>
     </div>
-    <!-- END - SearchBox -->
-  </div>
+  </header>
+
+  <Teleport to="body">
+    <div
+      v-if="searchOpen"
+      class="fixed inset-0 z-[100] flex items-start justify-center bg-slate-950/60 p-3 pt-[8vh] backdrop-blur-sm sm:p-6 sm:pt-[12vh]"
+      role="dialog"
+      aria-modal="true"
+      @click.self="closeSearch"
+    >
+      <div class="w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl shadow-black/30">
+        <SearchBox @close="closeSearch" />
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
-/**
- * Toggles the visibility of the search modal.
- */
-const search = () => {
-  const modalButton = document.querySelector(".modal-button") as HTMLElement;
-  if (modalButton) {
-    modalButton.click();
+const route = useRoute();
+const searchOpen = ref(false);
+const mobileOpen = ref(false);
+
+const openSearch = (): void => {
+  searchOpen.value = true;
+};
+
+const closeSearch = (): void => {
+  searchOpen.value = false;
+};
+
+const onKeydown = (event: KeyboardEvent): void => {
+  if (event.key === "Escape") {
+    closeSearch();
+    mobileOpen.value = false;
+    return;
+  }
+
+  if (
+    event.key === "/" &&
+    !event.metaKey &&
+    !event.ctrlKey &&
+    !event.altKey &&
+    !(event.target instanceof HTMLInputElement) &&
+    !(event.target instanceof HTMLTextAreaElement)
+  ) {
+    event.preventDefault();
+    openSearch();
   }
 };
 
-/**
- * Handles the menu toggle functionality.
- * @param {Event} el - The event object.
- * @param {boolean} val - The value indicating whether to show or hide the menu.
- */
-const menuHandler = (el: Event, val: boolean) => {
-  const parentElement = (el.currentTarget as HTMLElement).parentElement;
-  if (parentElement) {
-    const MainList = parentElement.getElementsByTagName("ul")[0];
-    const closeIcon = parentElement.getElementsByClassName("close-m-menu")[0];
-    const showIcon = parentElement.getElementsByClassName("show-m-menu")[0];
-    if (val) {
-      MainList.classList.remove("hidden");
-      (el.currentTarget as HTMLElement).classList.add("hidden");
-      closeIcon.classList.remove("hidden");
-    } else {
-      showIcon.classList.remove("hidden");
-      MainList.classList.add("hidden");
-      (el.currentTarget as HTMLElement).classList.add("hidden");
-    }
-  }
-};
+watch(searchOpen, (open) => {
+  if (!import.meta.client) return;
+  document.body.style.overflow = open ? "hidden" : "";
+});
+
+watch(
+  () => route.fullPath,
+  () => {
+    mobileOpen.value = false;
+    searchOpen.value = false;
+  },
+);
 
 onMounted(() => {
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark");
-  }
+  window.addEventListener("keydown", onKeydown);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("keydown", onKeydown);
+  document.body.style.overflow = "";
 });
 </script>
