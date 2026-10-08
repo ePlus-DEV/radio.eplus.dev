@@ -91,6 +91,11 @@
 }
 
 @layer utilities {
+  .radio-hero {
+    background: linear-gradient(115deg, #10276d 0%, #25146d 48%, #782eae 78%, #a93890 100%);
+    box-shadow: 0 26px 64px -38px rgb(79 46 167 / 0.6);
+  }
+
   .radio-surface {
     border-color: var(--radio-border);
     background: var(--radio-surface);
