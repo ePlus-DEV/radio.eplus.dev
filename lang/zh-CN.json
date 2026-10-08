@@ -1,17 +1,17 @@
 {
   "404": {
-    "content": "我们想告诉您，您正在寻找的页面不存在！"
+    "content": "抱歉，找不到您要访问的页面。"
   },
   "navmenu": {
     "homepage": "主页",
-    "about": "关于",
+    "about": "关于我们",
     "blog": "博客",
     "group": "群组",
     "terms": "使用条款",
     "privacy": "隐私政策",
     "contact": "联系我们",
     "language": "语言：",
-    "old_version": "#旧版本",
+    "old_version": "旧版网站",
     "statistics": "统计",
     "changelog": "更新日志"
   },
@@ -141,16 +141,16 @@
   "panel": {
     "most_popular": "最受欢迎的 {name}",
     "frequency": "频率",
-    "play_from_radio": "从广播播放",
+    "play_from_radio": "收听电台",
     "country": "国家",
     "radio_in": "{name} 的广播",
     "description": "描述",
     "category": "分类",
-    "schedule": "时间表",
+    "schedule": "节目表",
     "playlist": "播放列表",
     "next": "下一个",
     "lyric": "歌词",
-    "no_lyric": "无歌词",
+    "no_lyric": "暂无歌词",
     "updating": "更新中...",
     "channels": "全部电台",
     "search_channels": "搜索电台...",
@@ -170,16 +170,16 @@
   },
   "notify": {
     "success": "成功",
-    "success_content": "可以播放广播：{radio}",
+    "success_content": "正在播放：{radio}",
     "error": "错误",
-    "error_content": "无法播放广播：{radio}"
+    "error_content": "无法播放：{radio}"
   },
   "statistics_tooltip": {
     "text": "事件：{num} | 停机时间：{time} 分钟 | {response}ms"
   },
   "table": {
     "status": "状态",
-    "commit": "提交",
+    "commit": "提交记录",
     "created": "创建时间",
     "updated": "更新时间",
     "published": "发布时间",
@@ -220,7 +220,15 @@
     "listen_country": "收听电台",
     "explore": "探索地区",
     "previous": "上一个电台：{name}",
-    "next": "下一个电台：{name}"
+    "next": "下一个电台：{name}",
+    "sidebar_label": "电台与节目表",
+    "live": "直播",
+    "primary_source": "主音源",
+    "alternative_source": "备用音源",
+    "source_number": "音源 {number}",
+    "stream_format": "音频流",
+    "proxy": "代理",
+    "direct": "直连"
   },
   "site_pages": {
     "common": {
@@ -302,7 +310,7 @@
           "body": "电台名称、标志、音频及其他第三方材料归各自权利人所有。如权利人认为某项内容应更正或删除，请提供相关 URL 和足以核实请求的信息。"
         },
         "acceptable_use": {
-          "title": "合理使用",
+          "title": "允许的使用方式",
           "body": "不得利用 Radio ePlus 滥用服务商、绕过访问控制、干扰服务、进行有害频率的抓取、传播恶意软件或违反法律及第三方权利。"
         },
         "availability": {
@@ -358,5 +366,43 @@
       "generic_title": "发生错误",
       "generic_body": "无法加载此页面。请返回首页后重试。"
     }
+  },
+  "home": {
+    "live_badge": "在线直播电台",
+    "title": "畅听全球直播电台",
+    "description": "按地区和国家探索电台，发现本地节目，即刻开始收听。",
+    "start_listening": "立即收听",
+    "explore_countries": "探索国家和地区",
+    "countries": "国家和地区",
+    "regions": "区域",
+    "streaming": "直播中",
+    "featured": "精选推荐",
+    "explore": "探索",
+    "browse_country": "按国家和地区浏览"
+  },
+  "sidebar": {
+    "browse_radio": "浏览电台",
+    "radio_regions": "电台地区",
+    "live_badge": "直播电台",
+    "description": "随时探索全球各地的直播电台。"
+  },
+  "search": {
+    "unavailable": "搜索服务暂时不可用，下方仍显示热门电台。"
+  },
+  "chat": {
+    "open": "打开聊天助手",
+    "title": "聊天助手",
+    "powered_by": "由 Mendable 和 Vercel 提供支持",
+    "greeting": "你好！今天有什么可以帮你？",
+    "placeholder": "输入消息",
+    "send": "发送"
+  },
+  "seo": {
+    "home_breadcrumb": "首页",
+    "country_title": "{country} 直播电台",
+    "country_description": "收听来自 {country} 的 {count} 家在线直播电台，在 Radio ePlus 探索本地节目。",
+    "country_description_empty": "在 Radio ePlus 收听来自 {country} 的在线直播电台。",
+    "station_title": "{station} 在线直播 – {country}",
+    "station_description": "在 Radio ePlus 收听来自 {country} 的 {station} 直播。"
   }
 }

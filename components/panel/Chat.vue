@@ -6,7 +6,7 @@
     aria-expanded="false"
     data-state="closed"
   >
-    <span class="sr-only">Open chatbot</span>
+    <span class="sr-only">{{ $t('chat.open') }}</span>
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -23,14 +23,14 @@
 
   <section
     class="radio-themed-elevated fixed bottom-24 right-4 z-50 hidden h-[min(634px,calc(100vh-7rem))] w-[min(440px,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-[var(--radio-border)] shadow-2xl shadow-slate-950/20"
-    aria-label="Chatbot"
+    :aria-label="$t('chat.title')"
   >
     <header class="border-b border-[var(--radio-border)] px-5 py-4">
       <h2 class="text-lg font-semibold tracking-tight text-[var(--radio-text)]">
-        Chatbot
+        {{ $t('chat.title') }}
       </h2>
       <p class="mt-1 text-sm text-[var(--radio-text-muted)]">
-        Powered by Mendable and Vercel
+        {{ $t('chat.powered_by') }}
       </p>
     </header>
 
@@ -43,7 +43,7 @@
         </span>
         <p class="leading-6">
           <span class="block font-semibold text-[var(--radio-text)]">AI</span>
-          Hi, how can I help you today?
+          {{ $t('chat.greeting') }}
         </p>
       </div>
     </div>
@@ -51,13 +51,13 @@
     <form class="flex gap-2 border-t border-[var(--radio-border)] p-4">
       <input
         class="h-10 min-h-10 min-w-0 flex-1 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-sm text-[var(--radio-text)] shadow-none placeholder:text-[var(--radio-text-muted)] focus:border-rose-300 focus:outline-none"
-        placeholder="Type your message"
+        :placeholder="$t('chat.placeholder')"
       />
       <button
         type="submit"
         class="inline-flex items-center justify-center h-10 min-h-10 rounded-xl border-0 bg-rose-500 px-4 text-white shadow-none hover:bg-rose-600"
       >
-        Send
+        {{ $t('chat.send') }}
       </button>
     </form>
   </section>

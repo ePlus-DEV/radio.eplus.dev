@@ -8,7 +8,7 @@
         :content="false"
         size="sm"
         :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-[var(--radio-border)] shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:text-[var(--radio-text)]' }"
-        aria-label="Player sidebar"
+        :aria-label="$t('player.sidebar_label')"
       />
 
       <div
@@ -105,7 +105,7 @@
             class="inline-flex shrink-0 items-center gap-1 text-[9px] font-bold uppercase tracking-[0.12em] text-rose-500"
           >
             <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
-            Live
+            {{ $t('player.live') }}
           </span>
           <span
             v-else
@@ -217,7 +217,7 @@
               class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-rose-500"
             >
               <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
-              Live
+              {{ $t('player.live') }}
             </span>
             <span
               v-else-if="item.track_played"

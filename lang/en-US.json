@@ -1,6 +1,6 @@
 {
   "404": {
-    "content": "We would like to inform that the page you are looking for, does not exist!"
+    "content": "Sorry, the page you are looking for does not exist."
   },
   "navmenu": {
     "homepage": "Homepage",
@@ -11,7 +11,7 @@
     "privacy": "Privacy Policy",
     "contact": "Contact",
     "language": "Language:",
-    "old_version": "#oldversion",
+    "old_version": "Previous version",
     "statistics": "Statistics",
     "changelog": "Changelog"
   },
@@ -141,7 +141,7 @@
   "panel": {
     "most_popular": "Most popular in {name}",
     "frequency": "Frequency",
-    "play_from_radio": "Play from Radio",
+    "play_from_radio": "Listen to radio",
     "country": "Country",
     "radio_in": "Radio in {name}",
     "description": "Description",
@@ -149,8 +149,8 @@
     "schedule": "Schedule",
     "playlist": "Playlist",
     "next": "Next",
-    "lyric": "Lyric",
-    "no_lyric": "No lyric",
+    "lyric": "Lyrics",
+    "no_lyric": "Lyrics unavailable",
     "updating": "Updating...",
     "channels": "All channels",
     "search_channels": "Search channels...",
@@ -170,9 +170,9 @@
   },
   "notify": {
     "success": "Success",
-    "success_content": "Can play radio: {radio}",
+    "success_content": "Now playing: {radio}",
     "error": "Error",
-    "error_content": "Unable to play radio: {radio}"
+    "error_content": "Unable to play: {radio}"
   },
   "statistics_tooltip": {
     "text": "Incidents: {num} | Downtime: {time} mins | {response}ms"
@@ -186,7 +186,7 @@
     "view": "View"
   },
   "alert": {
-    "play_button": "By default of the browser, you need to press the ▶ button to start listening to the Radio.",
+    "play_button": "To start listening, press the ▶ play button.",
     "stream_error": "This stream cannot be played right now."
   },
   "text": {
@@ -220,7 +220,15 @@
     "listen_country": "Listen to a station",
     "explore": "Explore regions",
     "previous": "Previous station: {name}",
-    "next": "Next station: {name}"
+    "next": "Next station: {name}",
+    "sidebar_label": "Stations and schedule",
+    "live": "Live",
+    "primary_source": "Primary",
+    "alternative_source": "Alternative",
+    "source_number": "Source {number}",
+    "stream_format": "Stream",
+    "proxy": "Proxy",
+    "direct": "Direct"
   },
   "site_pages": {
     "common": {
@@ -358,5 +366,43 @@
       "generic_title": "Something went wrong",
       "generic_body": "The page could not be loaded. Please return to the homepage and try again."
     }
+  },
+  "home": {
+    "live_badge": "Live internet radio",
+    "title": "Live radio from around the world",
+    "description": "Browse stations by region and country, discover local radio, and start listening instantly.",
+    "start_listening": "Start listening",
+    "explore_countries": "Explore countries",
+    "countries": "Countries",
+    "regions": "Regions",
+    "streaming": "Streaming",
+    "featured": "Featured",
+    "explore": "Explore",
+    "browse_country": "Browse by country"
+  },
+  "sidebar": {
+    "browse_radio": "Browse radio",
+    "radio_regions": "Radio regions",
+    "live_badge": "LIVE RADIO",
+    "description": "Explore live stations around the world, any time."
+  },
+  "search": {
+    "unavailable": "Search is temporarily unavailable. Popular stations are shown below."
+  },
+  "chat": {
+    "open": "Open chatbot",
+    "title": "Chatbot",
+    "powered_by": "Powered by Mendable and Vercel",
+    "greeting": "Hi, how can I help you today?",
+    "placeholder": "Type your message",
+    "send": "Send"
+  },
+  "seo": {
+    "home_breadcrumb": "Home",
+    "country_title": "Live Radio in {country}",
+    "country_description": "Listen to {count} live internet radio stations from {country}. Browse local stations and stream radio online on Radio ePlus.",
+    "country_description_empty": "Listen to live internet radio stations from {country} on Radio ePlus.",
+    "station_title": "{station} Live Radio - {country}",
+    "station_description": "Listen to {station} live from {country} on Radio ePlus."
   }
 }

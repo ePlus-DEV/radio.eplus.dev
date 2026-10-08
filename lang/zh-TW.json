@@ -1,17 +1,17 @@
 {
   "404": {
-    "content": "很抱歉，您要查找的頁面不存在！"
+    "content": "抱歉，找不到您要瀏覽的頁面。"
   },
   "navmenu": {
     "homepage": "首頁",
-    "about": "關於",
+    "about": "關於我們",
     "blog": "部落格",
     "group": "群組",
     "terms": "使用條款",
     "privacy": "隱私政策",
     "contact": "聯絡我們",
     "language": "語言：",
-    "old_version": "#舊版本",
+    "old_version": "舊版網站",
     "statistics": "統計",
     "changelog": "更新日誌"
   },
@@ -141,16 +141,16 @@
   "panel": {
     "most_popular": "最受歡迎的 {name}",
     "frequency": "頻率",
-    "play_from_radio": "從廣播播放",
+    "play_from_radio": "收聽電台",
     "country": "國家",
     "radio_in": "{name} 的廣播",
     "description": "描述",
     "category": "類別",
-    "schedule": "時間表",
+    "schedule": "節目表",
     "playlist": "播放清單",
     "next": "下一個",
     "lyric": "歌詞",
-    "no_lyric": "無歌詞",
+    "no_lyric": "目前沒有歌詞",
     "updating": "更新中...",
     "channels": "所有電台",
     "search_channels": "搜尋電台...",
@@ -170,20 +170,20 @@
   },
   "notify": {
     "success": "成功",
-    "success_content": "可以播放廣播：{radio}",
+    "success_content": "正在播放：{radio}",
     "error": "錯誤",
-    "error_content": "無法播放廣播：{radio}"
+    "error_content": "無法播放：{radio}"
   },
   "statistics_tooltip": {
     "text": "事件：{num} | 停機時間：{time} 分鐘 | {response}ms"
   },
   "table": {
     "status": "狀態",
-    "commit": "提交",
+    "commit": "提交紀錄",
     "created": "創建時間",
     "updated": "更新時間",
     "published": "發布時間",
-    "view": "查看"
+    "view": "檢視"
   },
   "alert": {
     "play_button": "根據瀏覽器的默認設置，您需要按下 ▶ 按鈕開始收聽廣播。",
@@ -220,7 +220,15 @@
     "listen_country": "收聽電台",
     "explore": "探索地區",
     "previous": "上一個電台：{name}",
-    "next": "下一個電台：{name}"
+    "next": "下一個電台：{name}",
+    "sidebar_label": "電台與節目表",
+    "live": "直播",
+    "primary_source": "主要音源",
+    "alternative_source": "備用音源",
+    "source_number": "音源 {number}",
+    "stream_format": "串流",
+    "proxy": "代理伺服器",
+    "direct": "直接連線"
   },
   "site_pages": {
     "common": {
@@ -302,7 +310,7 @@
           "body": "電台名稱、標誌、音訊及其他第三方素材均屬各自權利人。如權利人認為某項內容應修正或移除，請提供相關 URL 與足以驗證請求的資訊。"
         },
         "acceptable_use": {
-          "title": "合理使用",
+          "title": "允許的使用方式",
           "body": "不得利用 Radio ePlus 濫用供應商、繞過存取控制、干擾服務、以有害頻率爬取、散布惡意軟體或違反法律及第三方權利。"
         },
         "availability": {
@@ -358,5 +366,43 @@
       "generic_title": "發生錯誤",
       "generic_body": "無法載入此頁面。請返回首頁後再試一次。"
     }
+  },
+  "home": {
+    "live_badge": "線上直播電台",
+    "title": "暢聽全球直播電台",
+    "description": "依地區與國家探索電台、發掘在地節目，立即開始收聽。",
+    "start_listening": "立即收聽",
+    "explore_countries": "探索國家與地區",
+    "countries": "國家與地區",
+    "regions": "區域",
+    "streaming": "直播中",
+    "featured": "精選推薦",
+    "explore": "探索",
+    "browse_country": "依國家與地區瀏覽"
+  },
+  "sidebar": {
+    "browse_radio": "瀏覽電台",
+    "radio_regions": "電台地區",
+    "live_badge": "直播電台",
+    "description": "隨時探索全球各地的直播電台。"
+  },
+  "search": {
+    "unavailable": "搜尋服務暫時無法使用，下方仍會顯示熱門電台。"
+  },
+  "chat": {
+    "open": "開啟聊天助理",
+    "title": "聊天助理",
+    "powered_by": "由 Mendable 與 Vercel 提供支援",
+    "greeting": "你好！今天有什麼可以幫你的？",
+    "placeholder": "輸入訊息",
+    "send": "傳送"
+  },
+  "seo": {
+    "home_breadcrumb": "首頁",
+    "country_title": "{country} 直播電台",
+    "country_description": "收聽來自 {country} 的 {count} 家線上直播電台，在 Radio ePlus 探索在地節目。",
+    "country_description_empty": "在 Radio ePlus 收聽來自 {country} 的線上直播電台。",
+    "station_title": "{station} 線上直播 – {country}",
+    "station_description": "在 Radio ePlus 收聽來自 {country} 的 {station} 直播。"
   }
 }

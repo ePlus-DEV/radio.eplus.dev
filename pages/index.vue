@@ -137,16 +137,15 @@ const totalCountries = computed(() =>
   areaItems.value.reduce((total, area) => total + area.count, 0),
 );
 
-const seoTitle = "Live Internet Radio Worldwide";
-const seoDescription =
-  "Listen to live internet radio from around the world. Browse stations by region and country and stream radio online with Radio ePlus.";
+const seoTitle = computed(() => t("home.title"));
+const seoDescription = computed(() => t("home.description"));
 
 const homeCollectionSchema = computed(() =>
   buildCollectionPageSchema({
     siteUrl: siteUrl.value,
     path: "/",
-    name: seoTitle,
-    description: seoDescription,
+    name: seoTitle.value,
+    description: seoDescription.value,
     items: areaItems.value.map((item) => ({
       name: t(`world.${item.key}.name`),
       path: `/${item.slug}`,
@@ -155,7 +154,7 @@ const homeCollectionSchema = computed(() =>
 );
 
 useHead(() => ({
-  title: seoTitle,
+  title: seoTitle.value,
   script: [
     {
       key: "home-collection-schema",
@@ -165,11 +164,11 @@ useHead(() => ({
   ],
 }));
 useSeoMeta({
-  description: seoDescription,
-  ogTitle: seoTitle,
-  ogDescription: seoDescription,
-  twitterTitle: seoTitle,
-  twitterDescription: seoDescription,
+  description: () => seoDescription.value,
+  ogTitle: () => seoTitle.value,
+  ogDescription: () => seoDescription.value,
+  twitterTitle: () => seoTitle.value,
+  twitterDescription: () => seoDescription.value,
 });
 
 const playFeatured = (station: RadioStationOption): void => {

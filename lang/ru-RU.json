@@ -1,17 +1,17 @@
 {
   "404": {
-    "content": "Сообщаем Вам, что страница, которую Вы ищете, не существует!"
+    "content": "К сожалению, запрошенная страница не найдена."
   },
   "navmenu": {
     "homepage": "Домашняя страница",
-    "about": "О",
+    "about": "О проекте",
     "blog": "Блог",
     "group": "Группа",
     "terms": "Условия эксплуатации",
-    "privacy": "политика конфиденциальности",
+    "privacy": "Политика конфиденциальности",
     "contact": "Контакт",
     "language": "Язык:",
-    "old_version": "#стараяверсия",
+    "old_version": "Старая версия",
     "statistics": "Статистика",
     "changelog": "Журнал изменений"
   },
@@ -141,24 +141,24 @@
   "panel": {
     "most_popular": "Самый популярный в {name}",
     "frequency": "Частота",
-    "play_from_radio": "Воспроизведение с радио",
+    "play_from_radio": "Слушать радио",
     "country": "Страна",
     "radio_in": "Радио в {name}",
     "description": "Описание",
     "category": "Категория",
-    "schedule": "Расписание",
+    "schedule": "Программа передач",
     "playlist": "Плейлист",
     "next": "Следующий",
-    "lyric": "Лирический",
-    "no_lyric": "Нет лирики",
+    "lyric": "Текст песни",
+    "no_lyric": "Текст песни недоступен",
     "updating": "Обновление...",
-    "channels": "Все станции",
-    "search_channels": "Поиск станций...",
+    "channels": "Все радиостанции",
+    "search_channels": "Поиск радиостанций…",
     "no_channels": "Станции не найдены"
   },
   "button": {
     "back": "Назад",
-    "close": "Закрывать"
+    "close": "Закрыть"
   },
   "popup": {
     "search": {
@@ -170,20 +170,20 @@
   },
   "notify": {
     "success": "Успех",
-    "success_content": "Может воспроизводить радио: {radio}",
+    "success_content": "Сейчас играет: {radio}",
     "error": "Ошибка",
-    "error_content": "Невозможно воспроизвести радио: {radio}"
+    "error_content": "Не удалось воспроизвести: {radio}"
   },
   "statistics_tooltip": {
     "text": "Инциденты: {num} | Время простоя: {time} мин | {response} мс"
   },
   "table": {
     "status": "Статус",
-    "commit": "Совершить",
-    "created": "Созданный",
+    "commit": "Коммит",
+    "created": "Создано",
     "updated": "Обновлено",
     "published": "Опубликовано",
-    "view": "Вид"
+    "view": "Просмотр"
   },
   "alert": {
     "play_button": "По умолчанию в браузере для начала прослушивания радио необходимо нажать кнопку ▶.",
@@ -220,7 +220,15 @@
     "listen_country": "Слушать станцию",
     "explore": "Выбрать регион",
     "previous": "Предыдущая станция: {name}",
-    "next": "Следующая станция: {name}"
+    "next": "Следующая станция: {name}",
+    "sidebar_label": "Станции и программа",
+    "live": "В эфире",
+    "primary_source": "Основной источник",
+    "alternative_source": "Резервный источник",
+    "source_number": "Источник {number}",
+    "stream_format": "Аудиопоток",
+    "proxy": "Прокси",
+    "direct": "Прямое подключение"
   },
   "site_pages": {
     "common": {
@@ -358,5 +366,43 @@
       "generic_title": "Произошла ошибка",
       "generic_body": "Не удалось загрузить страницу. Вернитесь на главную и попробуйте снова."
     }
+  },
+  "home": {
+    "live_badge": "Интернет-радио в прямом эфире",
+    "title": "Слушайте радио со всего мира",
+    "description": "Находите станции по странам и регионам, открывайте местное радио и слушайте сразу.",
+    "start_listening": "Начать прослушивание",
+    "explore_countries": "Выбрать страну",
+    "countries": "Страны",
+    "regions": "Регионы",
+    "streaming": "В эфире",
+    "featured": "Рекомендуем",
+    "explore": "Исследовать",
+    "browse_country": "Радио по странам"
+  },
+  "sidebar": {
+    "browse_radio": "Выбор радиостанций",
+    "radio_regions": "Регионы радио",
+    "live_badge": "ПРЯМОЙ ЭФИР",
+    "description": "Открывайте радиостанции со всего мира в любое время."
+  },
+  "search": {
+    "unavailable": "Поиск временно недоступен. Популярные станции по-прежнему показаны ниже."
+  },
+  "chat": {
+    "open": "Открыть чат-помощник",
+    "title": "Чат-помощник",
+    "powered_by": "На базе Mendable и Vercel",
+    "greeting": "Здравствуйте! Чем я могу помочь?",
+    "placeholder": "Введите сообщение",
+    "send": "Отправить"
+  },
+  "seo": {
+    "home_breadcrumb": "Главная",
+    "country_title": "Радио в прямом эфире — {country}",
+    "country_description": "Слушайте {count} интернет-радиостанций в {country}. Открывайте местное радио на Radio ePlus.",
+    "country_description_empty": "Слушайте интернет-радиостанции в {country} на Radio ePlus.",
+    "station_title": "{station} — радио в прямом эфире, {country}",
+    "station_description": "Слушайте {station} из {country} в прямом эфире на Radio ePlus."
   }
 }

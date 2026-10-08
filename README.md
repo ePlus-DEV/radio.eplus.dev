@@ -227,6 +227,12 @@ Currently configured locales:
 | `fr` | Français |
 | `ru` | Русский |
 
+### Translation quality checks
+
+All user-facing text must use Nuxt i18n, including labels, accessibility text, empty states and SEO metadata. Keep translations in all seven `lang/*.json` files in sync. Use natural, context-aware wording rather than literal translations (for example, Git *commit*, player *source* and song *lyrics*).
+
+New translation keys must preserve the same structure, nonempty values and `{variable}` placeholders in every locale. The `tests/i18n-translation-quality.test.mjs` suite checks these invariants. Run `npm test` before opening a PR into `develop`.
+
 ## Search
 
 Algolia integration is optional during build and local development. When Algolia credentials are not configured, the application can still build without them.
