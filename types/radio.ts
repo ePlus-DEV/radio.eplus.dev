@@ -5,3 +5,10 @@ export interface RadioSource {
   label?: string;
   proxied?: boolean;
 }
+
+export interface RadioStationOption {
+  id: string;
+  title: string;
+  image: string;
+  url?: string;
+}
