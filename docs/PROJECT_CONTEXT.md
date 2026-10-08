@@ -337,6 +337,34 @@ Observed/possible symptoms when navigating without a full page reload:
 - The lyric action is Zing-only.
 - Queue search/tab state is station-route-scoped. If a new station has a schedule that finishes loading asynchronously, the schedule tab can become active after loading instead of leaving stale navigation state.
 
+### SSR/prerender realtime-fetch regression discovered on 2026-10-08
+
+DigitalOcean logs showed Nuxt prerender executing:
+
+```text
+fetchSchedule → pollSchedule → external schedule URL
+```
+
+and timing out on providers such as `api.webrad.io:443`.
+
+Root cause: the station page used an immediate `watch(stationMeta)` that called `activateStation()`; `activateStation()` started schedule polling even during SSR/prerender. Because Nuxt prerenders the radio SEO routes, builds could accidentally make many external realtime requests.
+
+This is architecturally incorrect because schedule/current-song/lyrics are realtime data and should not determine whether a static station route can build.
+
+Current rule:
+
+- SSR/prerender may load local station JSON and static metadata for SEO and initial markup.
+- Realtime schedule/current-song/lyric requests are client-only.
+- Realtime polling starts after `onMounted`/hydration.
+- `fetchSchedule`, `fetchDetail`, `fetchLyric`, and polling functions explicitly refuse server execution.
+- External provider outages must not block or slow prerender/deployment.
+
+Regression test:
+
+```text
+tests/station-realtime-ssr.test.mjs
+```
+
 Regression tests:
 
 ```text
@@ -422,6 +450,7 @@ Important current guards:
 - `radio-source-plan.test.mjs`
 - `station-route-lifecycle.test.mjs`
 - `station-schedule.test.mjs`
+- `station-realtime-ssr.test.mjs`
 - `radio-sync.test.mjs`
 
 Pull-request workflow:
