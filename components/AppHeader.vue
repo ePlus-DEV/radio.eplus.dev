@@ -42,12 +42,6 @@
           >
             {{ $t("navmenu.homepage") }}
           </NuxtLink>
-          <NuxtLink
-            to="/statistics"
-            class="rounded-xl px-3 py-2 text-sm font-medium text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
-          >
-            {{ $t("navmenu.statistics") }}
-          </NuxtLink>
         </div>
       </div>
 
@@ -95,14 +89,6 @@
       >
         <fa :icon="['fas', 'house']" class="w-4 text-slate-400" />
         {{ $t("navmenu.homepage") }}
-      </NuxtLink>
-      <NuxtLink
-        to="/statistics"
-        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
-        @click="mobileOpen = false"
-      >
-        <fa :icon="['fas', 'chart-simple']" class="w-4 text-slate-400" />
-        {{ $t("navmenu.statistics") }}
       </NuxtLink>
       <a
         href="https://old-radio.eplus.dev"
