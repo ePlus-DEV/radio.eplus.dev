@@ -375,6 +375,7 @@ const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 let player: VideoJsPlayer | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let sourceReadyTimer: ReturnType<typeof setTimeout> | null = null;
+let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let timeInterval: ReturnType<typeof setInterval> | null = null;
 let sourceVersion = 0;
 let removeAutoPlayUnlockListeners: (() => void) | null = null;
@@ -382,6 +383,7 @@ let removeAutoPlayUnlockListeners: (() => void) | null = null;
 const MAX_RECONNECT_ATTEMPTS = 2;
 const RECONNECT_BASE_DELAY = 1500;
 const SOURCE_READY_TIMEOUT = 8000;
+const FALLBACK_PROBE_TIMEOUT = 4000;
 
 const sourceList = computed<RadioSource[]>(() => {
   const candidates =
@@ -512,6 +514,12 @@ const clearSourceReadyTimer = (): void => {
   sourceReadyTimer = null;
 };
 
+const clearFallbackProbeTimer = (): void => {
+  if (!fallbackProbeTimer) return;
+  clearTimeout(fallbackProbeTimer);
+  fallbackProbeTimer = null;
+};
+
 const registerAutoPlayUnlock = (): void => {
   if (!import.meta.client || removeAutoPlayUnlockListeners) return;
 
@@ -573,6 +581,7 @@ const applySource = async (
   streamError.value = false;
   pendingAutoPlay.value = autoplay && !userPaused.value;
   clearSourceReadyTimer();
+  clearFallbackProbeTimer();
 
   const source = await resolvePlaylistSource(rawSource);
   if (version !== sourceVersion || !player) return;
@@ -582,6 +591,26 @@ const applySource = async (
     type: inferMime(source.src, source.type),
   });
   player.load();
+
+  if (
+    autoplay &&
+    !userPaused.value &&
+    activeSourceIndex.value + 1 < sourceList.value.length
+  ) {
+    fallbackProbeTimer = setTimeout(() => {
+      fallbackProbeTimer = null;
+      if (
+        pendingAutoPlay.value &&
+        !playing.value &&
+        !userPaused.value
+      ) {
+        console.warn(
+          `Radio source ${activeSourceIndex.value + 1} did not become playable within ${FALLBACK_PROBE_TIMEOUT}ms; trying fallback.`,
+        );
+        advanceFallbackSource();
+      }
+    }, FALLBACK_PROBE_TIMEOUT);
+  }
 
   if (autoplay && !userPaused.value) {
     sourceReadyTimer = setTimeout(() => {
@@ -645,6 +674,7 @@ const onPause = (): void => {
   pendingAutoPlay.value = false;
   clearReconnectTimer();
   clearSourceReadyTimer();
+  clearFallbackProbeTimer();
   removeAutoPlayUnlockListeners?.();
   removeAutoPlayUnlockListeners = null;
   player?.pause();
@@ -697,6 +727,7 @@ const bindPlayerEvents = (): void => {
 
   player.on("canplay", () => {
     clearSourceReadyTimer();
+    clearFallbackProbeTimer();
     clearReconnectTimer();
     reconnectAttempts.value = 0;
     waiting.value = false;
@@ -708,6 +739,7 @@ const bindPlayerEvents = (): void => {
 
   player.on("playing", () => {
     clearSourceReadyTimer();
+    clearFallbackProbeTimer();
     waiting.value = false;
     playing.value = true;
     streamError.value = false;
@@ -803,6 +835,7 @@ onUnmounted(() => {
   sourceVersion += 1;
   clearReconnectTimer();
   clearSourceReadyTimer();
+  clearFallbackProbeTimer();
 
   if (timeInterval) {
     clearInterval(timeInterval);
