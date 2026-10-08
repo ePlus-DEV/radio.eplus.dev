@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+  <header class="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6">
     <nav
       class="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl border border-white/70 bg-white/85 px-3 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80 dark:shadow-black/20 sm:px-4"
     >
@@ -63,7 +63,7 @@
             {{ $t("popup.search.text") }}
           </span>
           <kbd
-            class="hidden rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-400 dark:border-white/10 dark:bg-white/5 xl:inline"
+            class="kbd kbd-xs hidden border-[var(--radio-border)] bg-[var(--radio-surface-soft)] font-medium text-[var(--radio-text-muted)] xl:inline"
           >
             /
           </kbd>
@@ -86,7 +86,7 @@
 
     <div
       v-if="mobileOpen"
-      class="mx-auto mt-2 max-w-7xl rounded-2xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900 lg:hidden"
+      class="radio-themed-surface mx-auto mt-2 max-w-7xl rounded-2xl border border-[var(--radio-border)] p-2 shadow-xl shadow-slate-900/10 lg:hidden"
     >
       <NuxtLink
         to="/"
