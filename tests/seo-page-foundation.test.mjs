@@ -51,11 +51,10 @@ test("global metadata includes canonical social and organization identity", asyn
   assert.match(source, /twitterImageAlt:/);
 });
 
-test("sitemap routes carry catalog modification timestamps", async () => {
+test("sitemap avoids fake deployment-time lastmod values", async () => {
   const source = await read("build/radioRoutes.ts");
 
-  assert.match(source, /statSync/);
-  assert.match(source, /lastmod\?: string/);
-  assert.match(source, /mtimeMs/);
-  assert.match(source, /const freshness = route\.lastmod/);
+  assert.doesNotMatch(source, /statSync/);
+  assert.doesNotMatch(source, /mtimeMs/);
+  assert.doesNotMatch(source, /lastmod:\s*new Date/);
 });
