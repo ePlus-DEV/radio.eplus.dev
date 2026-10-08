@@ -27,12 +27,12 @@
                 </span>
                 <label
                   v-if="sourceList.length > 1"
-                  class="relative inline-flex min-w-0 items-center"
+                  class="inline-flex min-w-0 items-center"
                 >
                   <span class="sr-only">Select stream source</span>
                   <select
                     :value="activeSourceIndex"
-                    class="h-7 max-w-[120px] cursor-pointer appearance-none rounded-full border-0 bg-slate-100 py-1 pl-2.5 pr-7 text-[11px] font-semibold text-slate-600 outline-none transition hover:bg-slate-200 focus:ring-2 focus:ring-rose-400/30 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10 sm:max-w-[240px]"
+                    class="select select-xs h-7 min-h-7 w-auto max-w-[132px] cursor-pointer rounded-full border-[var(--radio-border)] bg-[var(--radio-surface-soft)] py-0 pl-2.5 pr-7 text-[11px] font-semibold text-[var(--radio-text-muted)] shadow-none outline-none transition hover:border-rose-300 hover:bg-[var(--radio-surface)] focus:border-rose-400 focus:outline-none sm:max-w-[260px]"
                     aria-label="Select stream source"
                     @change="onSourceChange"
                   >
@@ -44,13 +44,6 @@
                       {{ index + 1 }}. {{ sourceName(source, index) }} · {{ sourceFormat(source) }} · {{ source.proxied ? "Proxy" : "Direct" }}
                     </option>
                   </select>
-                  <svg
-                    viewBox="0 0 20 20"
-                    class="pointer-events-none absolute right-2 h-3 w-3 fill-current text-slate-400 dark:text-slate-500"
-                    aria-hidden="true"
-                  >
-                    <path d="m5.5 7.5 4.5 4 4.5-4H5.5Z"></path>
-                  </svg>
                 </label>
               </div>
 
