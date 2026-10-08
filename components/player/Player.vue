@@ -25,12 +25,82 @@
                   <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
                   Live
                 </span>
-                <span
+                <details
                   v-if="sourceList.length > 1"
-                  class="truncate text-[11px] font-medium text-slate-400 dark:text-slate-500"
+                  ref="sourceDetails"
+                  class="group/source relative"
                 >
-                  Source {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
-                </span>
+                  <summary
+                    class="flex cursor-pointer list-none items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/10"
+                    aria-label="Select stream source"
+                  >
+                    <span class="max-w-28 truncate">{{ activeSourceName }}</span>
+                    <span class="text-slate-400 dark:text-slate-500">
+                      {{ activeSourceIndex + 1 }}/{{ sourceList.length }}
+                    </span>
+                    <svg
+                      viewBox="0 0 20 20"
+                      class="h-3 w-3 fill-current transition group-open/source:rotate-180"
+                      aria-hidden="true"
+                    >
+                      <path d="m5.5 7.5 4.5 4 4.5-4H5.5Z"></path>
+                    </svg>
+                  </summary>
+
+                  <div
+                    class="absolute left-0 top-full z-40 mt-2 w-[min(320px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-950/10 dark:border-white/10 dark:bg-slate-900"
+                  >
+                    <button
+                      v-for="(source, index) in sourceList"
+                      :key="`${source.src}-${index}`"
+                      type="button"
+                      class="flex w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition"
+                      :class="
+                        index === activeSourceIndex
+                          ? 'bg-rose-50 dark:bg-rose-500/10'
+                          : 'hover:bg-slate-100 dark:hover:bg-white/[0.05]'
+                      "
+                      @click="selectSource(index)"
+                    >
+                      <span
+                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold"
+                        :class="
+                          index === activeSourceIndex
+                            ? 'bg-rose-500 text-white'
+                            : 'bg-slate-100 text-slate-500 dark:bg-white/[0.06] dark:text-slate-400'
+                        "
+                      >
+                        {{ index + 1 }}
+                      </span>
+
+                      <span class="min-w-0 flex-1">
+                        <span
+                          class="block truncate text-sm font-semibold"
+                          :class="
+                            index === activeSourceIndex
+                              ? 'text-rose-700 dark:text-rose-200'
+                              : 'text-slate-700 dark:text-slate-200'
+                          "
+                        >
+                          {{ sourceName(source, index) }}
+                        </span>
+                        <span class="mt-0.5 flex min-w-0 items-center gap-1.5 text-[10px] text-slate-400 dark:text-slate-500">
+                          <span>{{ sourceFormat(source) }}</span>
+                          <span aria-hidden="true">•</span>
+                          <span>{{ source.proxied ? "Proxy" : "Direct" }}</span>
+                          <span aria-hidden="true">•</span>
+                          <span class="truncate">{{ sourceHost(source) }}</span>
+                        </span>
+                      </span>
+
+                      <span
+                        v-if="index === activeSourceIndex"
+                        class="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
+                        aria-label="Active source"
+                      ></span>
+                    </button>
+                  </div>
+                </details>
               </div>
 
               <button
@@ -373,6 +443,7 @@ const reconnectAttempts = ref(0);
 const volume = ref(1);
 const muted = ref(false);
 const mobileQueueOpen = ref(false);
+const sourceDetails = ref<HTMLDetailsElement | null>(null);
 const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
 const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
 
@@ -406,6 +477,53 @@ const sourceList = computed<RadioSource[]>(() => {
 });
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
+
+const sourceName = (source: RadioSource, index: number): string => {
+  if (source.label?.trim()) return source.label.trim();
+
+  const sourceKey = String(source.source || "").trim().toLowerCase();
+  if (sourceKey === "primary" || index === 0) return "Primary";
+  if (sourceKey.includes("alternative")) return "Alternative";
+  if (sourceKey) {
+    return sourceKey
+      .split(/[-_]/g)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  return `Source ${index + 1}`;
+};
+
+const sourceFormat = (source: RadioSource): string => {
+  const type = String(source.type || "").toLowerCase();
+  const src = source.src.toLowerCase();
+
+  if (type.includes("mpegurl") || /\.m3u8(?:$|[?#])/i.test(src)) return "HLS";
+  if (type.includes("aac") || /\.aac(?:$|[?#])/i.test(src)) return "AAC";
+  if (type.includes("ogg") || /\.ogg(?:$|[?#])/i.test(src)) return "OGG";
+  if (type.includes("opus") || /\.opus(?:$|[?#])/i.test(src)) return "OPUS";
+  if (type.includes("mpeg") || /\.mp3(?:$|[?#])/i.test(src)) return "MP3";
+  if (/\.pls(?:$|[?#])/i.test(src)) return "PLS";
+  if (/\.m3u(?:$|[?#])/i.test(src)) return "M3U";
+
+  return "Stream";
+};
+
+const sourceHost = (source: RadioSource): string => {
+  try {
+    return new URL(source.src).hostname.replace(/^www\./, "");
+  } catch {
+    return source.proxied ? "Proxy" : "Direct";
+  }
+};
+
+const activeSourceName = computed(() =>
+  sourceName(
+    sourceList.value[activeSourceIndex.value] || props.streamUrl,
+    activeSourceIndex.value,
+  ),
+);
 
 const queueCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
@@ -807,6 +925,18 @@ const retryCurrentSource = (): void => {
   reconnectAttempts.value = 0;
   userPaused.value = false;
   void applySource(activeSourceIndex.value, true);
+};
+
+const selectSource = (index: number): void => {
+  if (!sourceList.value[index]) return;
+
+  sourceDetails.value?.removeAttribute("open");
+  reconnectAttempts.value = 0;
+  streamError.value = false;
+  userPaused.value = false;
+  pendingAutoPlay.value = true;
+  activeResolvedSrc = "";
+  void applySource(index, true);
 };
 
 const toggleMute = (): void => {
