@@ -3,7 +3,7 @@
     <button
       tabindex="0"
       type="button"
-      class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+      class="btn btn-ghost h-10 min-h-10 gap-2 rounded-xl border-0 px-2.5 text-sm font-medium text-[var(--radio-text-muted)] shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
       :aria-label="$t('navmenu.language')"
     >
       <fa :icon="['fas', 'language']" class="h-4 w-4" />
@@ -13,7 +13,7 @@
 
     <ul
       tabindex="0"
-      class="dropdown-content z-[70] mt-3 max-h-80 w-56 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900"
+      class="menu radio-scrollbar dropdown-content z-[70] mt-3 max-h-80 w-56 overflow-y-auto rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] p-1.5 text-sm text-[var(--radio-text)] shadow-xl shadow-slate-900/10"
     >
       <li v-for="localeItem in locales" :key="localeItem.code">
         <button
