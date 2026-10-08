@@ -18,4 +18,11 @@
 - /`area`/`country` — browse radio stations in a country
 - /`area`/`country`/`station` — listen to a specific station
 
+## Public catalog data
+
+- World/country metadata: https://radio.eplus.dev/radio/world.json
+- Country station catalog: https://radio.eplus.dev/radio/{area}/{country}.json
+
+The JSON catalogs are read-only discovery data. Stream URLs and realtime schedule/current-song/lyric data can change independently of the static catalog.
+
 Station pages may include live program, track, schedule, and lyric data when available.
