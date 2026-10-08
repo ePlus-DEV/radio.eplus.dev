@@ -151,7 +151,10 @@
     "next": "Suivant",
     "lyric": "Lyrique",
     "no_lyric": "Pas de paroles",
-    "updating": "Mise à jour..."
+    "updating": "Mise à jour...",
+    "channels": "Toutes les stations",
+    "search_channels": "Rechercher une station...",
+    "no_channels": "Aucune station trouvée"
   },
   "button": {
     "back": "Dos",
