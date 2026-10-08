@@ -1,5 +1,5 @@
 <template>
-  <footer class="border-t border-slate-200/80 bg-white/70 dark:border-white/10 dark:bg-slate-950">
+  <footer class="border-t border-[var(--radio-border)] bg-[var(--radio-surface)]">
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end">
         <div>
@@ -36,7 +36,7 @@
               :href="socialLink.href"
               target="_blank"
               rel="external nofollow noopener noreferrer"
-              class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-400 transition hover:border-slate-300 hover:bg-slate-100 hover:text-slate-700 dark:border-white/10 dark:hover:bg-white/5 dark:hover:text-white"
+              class="radio-interactive flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--radio-border)] text-slate-400 hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
             >
               <span class="sr-only">{{ socialLink.name }}</span>
               <fa :icon="['fab', socialLink.icon]" class="h-4 w-4" />
