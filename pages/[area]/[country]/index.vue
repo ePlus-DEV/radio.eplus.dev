@@ -8,7 +8,7 @@
 
     <section class="radio-surface relative overflow-hidden px-5 py-6 sm:px-7">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.10),transparent_42%)]"></div>
-      <div class="relative flex items-center gap-4 sm:gap-5">
+      <div class="relative flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
         <div class="radio-themed-artwork flex h-20 w-24 shrink-0 items-center justify-center rounded-2xl border border-[var(--radio-border)] p-3 sm:h-24 sm:w-28">
           <img
             :src="countryFlag"
@@ -21,7 +21,7 @@
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
             {{ $t("panel.radio_in", { name: countryName }) }}
           </p>
-          <h1 class="mt-1 truncate text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          <h1 class="mt-1 line-clamp-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
             {{ countryName }}
           </h1>
           <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
