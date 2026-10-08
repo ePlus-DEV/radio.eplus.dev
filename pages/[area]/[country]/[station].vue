@@ -147,6 +147,7 @@ interface StationStream {
   type?: string;
   cros?: boolean;
   source?: string;
+  label?: string;
 }
 
 interface StationCatalogEntry {
@@ -261,10 +262,13 @@ const toRadioSource = (
     ? `${config.public.corsServer || ""}${stream.url}`
     : stream.url,
   type: (stream.type || "audio/mpeg"),
+  source: stream.source,
+  label: stream.label,
+  proxied: Boolean(stream.cros),
 });
 
 const setStationStreams = (
-  primary: { url: string; type?: string; cros?: boolean },
+  primary: StationStream,
   fallbacks: StationStream[] = [],
   alternative = "",
 ): void => {
@@ -297,7 +301,7 @@ watch(
     streamName.value = meta.title;
     thumb.value = meta.features || String(config.public.placeholderStation);
     setStationStreams(
-      { url: meta.stream, type: meta.type, cros: meta.cros },
+      { url: meta.stream, type: meta.type, cros: meta.cros, source: "primary" },
       meta.streams || [],
       meta.stream_alternative || "",
     );
@@ -454,7 +458,7 @@ const handleDataFromChild = (data: StationData): void => {
 
   streamName.value = data.station_name;
   setStationStreams(
-    { url: data.station_stream, type: data.type, cros: data.cros },
+    { url: data.station_stream, type: data.type, cros: data.cros, source: "primary" },
     data.station_streams || [],
   );
   thumb.value = data.station_image;
