@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from "nuxt/config";
-import { execFileSync } from "node:child_process";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
@@ -21,16 +20,11 @@ const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").
   /\/$/,
   "",
 );
-// Prefer explicit hosting settings; CI and a checked-out develop branch are
-// recognized as staging even when the public SITE_URL is not set.
-const deployBranch = process.env.NUXT_DEPLOY_BRANCH || process.env.DEPLOY_BRANCH ||
-  process.env.GITHUB_BASE_REF || process.env.GITHUB_REF_NAME ||
-  (() => { try { return execFileSync("git", ["symbolic-ref", "--quiet", "--short", "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { return ""; } })();
+// Only the staging deployment's two existing NUXT_PUBLIC_* variables control
+// indexability. Never infer it from NODE_ENV, a Git checkout or a custom env.
 const noIndex = isStagingDeployment({
   siteUrl,
   noIndex: process.env.NUXT_PUBLIC_NO_INDEX,
-  environment: process.env.NUXT_DEPLOY_ENV,
-  branch: deployBranch,
 });
 const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "Radio ePlus";
 const defaultDescription =

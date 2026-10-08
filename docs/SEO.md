@@ -7,10 +7,15 @@ This file is the durable SEO checklist for Radio ePlus. It records what is imple
 ## Staging branch noindex policy
 
 `develop` is staged at `https://radio-new.eplus.dev` and must **not** be indexed.
-Build-time guards use `NUXT_PUBLIC_NO_INDEX=true`, `NUXT_DEPLOY_ENV=staging`,
-the `develop` branch, or the exact staging hostname. Set
-`NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev` on the hosting service.
-Do not rely on the branch guard alone if hosting performs a detached checkout.
+Build-time configuration for **staging only**:
+```env
+NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
+NUXT_PUBLIC_NO_INDEX=true
+```
+There is no dependency on a custom deploy environment or checkout branch.
+The exact staging hostname also activates noindex as a safety fallback.
+On production, keep `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` and do
+not enable `NUXT_PUBLIC_NO_INDEX`.
 
 Staging output:
 - `<meta name="robots" content="noindex, nofollow, noarchive">` in prerendered HTML

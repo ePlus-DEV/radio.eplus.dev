@@ -5,20 +5,26 @@ import { isStagingDeployment } from "../utils/seo-deployment.mjs";
 
 const read = path => readFile(path, "utf8");
 
-test("staging detection covers explicit flags, develop branch and exact preview domain", () => {
+test("staging is noindex with the two NUXT_PUBLIC environment variables", () => {
+  assert.equal(isStagingDeployment({ siteUrl: "https://radio-new.eplus.dev", noIndex: "true" }), true);
+  assert.equal(isStagingDeployment({ siteUrl: "https://radio-new.eplus.dev" }), true);
   assert.equal(isStagingDeployment({ noIndex: "true" }), true);
   assert.equal(isStagingDeployment({ noIndex: "1" }), true);
-  assert.equal(isStagingDeployment({ environment: "staging" }), true);
-  assert.equal(isStagingDeployment({ branch: "develop" }), true);
-  assert.equal(isStagingDeployment({ branch: "refs/heads/develop" }), true);
-  assert.equal(isStagingDeployment({ siteUrl: "https://radio-new.eplus.dev" }), true);
+  assert.equal(isStagingDeployment({ siteUrl: "https://radio-new.eplus.dev", noIndex: "false" }), true);
 });
 
-test("production is always indexable by default after branch promotion", () => {
-  assert.equal(isStagingDeployment({ environment: "production", branch: "main", siteUrl: "https://radio.eplus.dev" }), false);
-  assert.equal(isStagingDeployment({ environment: "production", branch: "master", siteUrl: "https://radio.eplus.dev" }), false);
+test("production retains indexing without staging environment variables", () => {
+  assert.equal(isStagingDeployment({ siteUrl: "https://radio.eplus.dev" }), false);
+  assert.equal(isStagingDeployment({ siteUrl: "https://radio.eplus.dev", noIndex: "false" }), false);
   assert.equal(isStagingDeployment({ siteUrl: "https://maliciousradio-new.eplus.dev" }), false);
   assert.equal(isStagingDeployment({ siteUrl: "" }), false);
+});
+
+test("Nuxt config does not depend on nonstandard deploy environment or branch checks", async () => {
+  const config = await read("nuxt.config.ts");
+  assert.doesNotMatch(config, /NUXT_DEPLOY_ENV|NUXT_DEPLOY_BRANCH|GITHUB_BASE_REF|GITHUB_REF_NAME|execFileSync/);
+  assert.match(config, /noIndex: process\.env\.NUXT_PUBLIC_NO_INDEX/);
+  assert.match(config, /siteUrl,/);
 });
 
 test("Nuxt SEO output is guarded but radio routes remain prerenderable", async () => {
