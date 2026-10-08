@@ -776,9 +776,10 @@ onMounted(() => {
       responsive: false,
       fluid: false,
       html5: {
-        vhs: {
-          enableLowInitialPlaylist: true,
-        },
+        // Keep Video.js/VHS defaults. The pre-refactor player did not force
+        // a low initial rendition and some audio-only HLS radios stall when
+        // that tuning is applied.
+        vhs: {},
       },
     });
 
