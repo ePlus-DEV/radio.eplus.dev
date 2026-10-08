@@ -122,6 +122,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        ...(noIndex ? [{ name: "robots", content: "noindex, nofollow, noarchive" }] : []),
         ...(!noIndex ? [{ name: "description", content: defaultDescription }] : []),
         { name: "msapplication-TileColor", content: "#603cba" },
         ...(!noIndex ? [
