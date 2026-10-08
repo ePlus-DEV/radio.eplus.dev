@@ -756,12 +756,23 @@ const configureHlsSource = async (
 
   destroyHls();
 
-  const nativeHls =
-    media.canPlayType("application/vnd.apple.mpegurl") ||
-    media.canPlayType("application/x-mpegURL");
+  // Prefer hls.js anywhere Media Source Extensions are available. Modern
+  // Chromium can report native HLS support via canPlayType("...mpegurl")
+  // while still failing on some manifests. Native HLS is the fallback for
+  // browsers where hls.js/MSE is unavailable (notably Safari/iOS cases).
+  const Hls = await ensureHls();
+  if (version !== sourceVersion || !mediaElement.value) return;
 
-  if (nativeHls) {
-    if (version !== sourceVersion) return;
+  if (!Hls.isSupported()) {
+    const nativeHls =
+      media.canPlayType("application/vnd.apple.mpegurl") ||
+      media.canPlayType("application/x-mpegURL");
+
+    if (!nativeHls) {
+      scheduleReconnect();
+      return;
+    }
+
     media.src = source.src;
     media.load();
 
@@ -776,14 +787,6 @@ const configureHlsSource = async (
         { once: true },
       );
     }
-    return;
-  }
-
-  const Hls = await ensureHls();
-  if (version !== sourceVersion || !mediaElement.value) return;
-
-  if (!Hls.isSupported()) {
-    scheduleReconnect();
     return;
   }
 
