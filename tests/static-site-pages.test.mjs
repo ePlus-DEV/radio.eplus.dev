@@ -64,4 +64,5 @@ test("static pages share the canonical static-page SEO helper", async () => {
   assert.match(seo, /ogUrl: canonicalUrl\.value/);
   assert.match(seo, /application\/ld\+json/);
   assert.match(seo, /#website/);
+  assert.match(seo, /"@type": "BreadcrumbList"/);
 });
