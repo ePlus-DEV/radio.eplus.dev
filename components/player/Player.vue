@@ -149,7 +149,7 @@
                 <button
                   v-else-if="playing"
                   type="button"
-                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16"
+                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 sm:h-16 sm:w-16"
                   @click="onPause"
                   aria-label="Pause radio"
                 >
@@ -365,11 +365,18 @@
                     </span>
                   </p>
                 </div>
-                <span
-                  class="hidden shrink-0 rounded-full bg-[var(--radio-surface)] px-2.5 py-1 text-[10px] font-semibold text-[var(--radio-text-muted)] ring-1 ring-inset ring-[var(--radio-border)] sm:inline-flex"
+                <svg
+                  viewBox="0 0 24 24"
+                  class="hidden h-4 w-4 shrink-0 fill-none stroke-[var(--radio-text-muted)] sm:block"
+                  aria-hidden="true"
                 >
-                  Up next
-                </span>
+                  <path
+                    d="m9 6 6 6-6 6"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </div>
             </div>
           </div>
