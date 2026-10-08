@@ -42,7 +42,7 @@ export const buildCollectionPageSchema = ({
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      url: absoluteUrl(siteUrl, item.path),
+      item: absoluteUrl(siteUrl, item.path),
     })),
   },
 });
