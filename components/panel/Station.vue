@@ -1,50 +1,50 @@
 <template>
   <section class="radio-surface overflow-hidden">
     <div
-      class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4  sm:px-5"
+      class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4 sm:px-5"
     >
       <div class="min-w-0">
         <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
           {{ $t("panel.play_from_radio") }}
         </p>
         <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-[var(--radio-text)] sm:text-xl">
-          {{ $t(i18n) }}
+          {{ countryName }}
         </h2>
       </div>
       <span
         class="badge badge-sm h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
       >
-        {{ results.length }}
+        {{ stations.length }}
       </span>
     </div>
 
     <div
-      v-if="results.length"
+      v-if="stations.length"
       class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:p-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
     >
       <NuxtLink
-        v-for="data in results"
-        :key="data.objectID"
-        :to="data.url"
+        v-for="station in stations"
+        :key="station.id"
+        :to="station.url"
         class="card radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
         :class="
-          isRouteActive(data.objectID)
+          station.id === activeStationId
             ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
             : 'border-[var(--radio-border)] hover:border-rose-200 dark:hover:border-rose-400/30'
         "
-        :title="data.title"
-        :aria-label="data.title"
+        :title="station.title"
+        :aria-label="station.title"
       >
         <div class="radio-themed-artwork relative flex aspect-[4/3] items-center justify-center overflow-hidden p-3">
           <img
             loading="lazy"
-            :src="data.station_image"
-            :alt="data.title"
+            :src="station.image"
+            :alt="station.title"
             class="h-auto max-h-[66px] w-auto max-w-[96px] object-contain transition duration-200 group-hover:scale-[1.04]"
           />
 
           <span
-            v-if="isRouteActive(data.objectID)"
+            v-if="station.id === activeStationId"
             class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
           >
             <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
@@ -59,8 +59,11 @@
         </div>
 
         <div class="border-t border-[var(--radio-border)] px-3 py-3">
-          <p dir="auto" class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-[var(--radio-text)]">
-            {{ data.title }}
+          <p
+            dir="auto"
+            class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-[var(--radio-text)]"
+          >
+            {{ station.title }}
           </p>
         </div>
       </NuxtLink>
@@ -76,121 +79,18 @@
 </template>
 
 <script lang="ts" setup>
-interface StationResult {
-  objectID: string;
-  title: string;
-  station_name: string;
-  station_image: string;
-  station_stream: string;
-  station_streams?: StationStream[];
-  station_schedule?: string;
-  cros: boolean;
-  type: string;
-  url: string;
-}
+import type { RadioStationOption } from "~/types/radio";
 
-interface StationStream {
-  url: string;
-  type?: string;
-  cros?: boolean;
-  source?: string;
-}
-
-interface StationCatalogEntry {
-  title: string;
-  description?: string;
-  type: string;
-  cros: boolean;
-  stream: string;
-  streams?: StationStream[];
-  stream_alternative?: string;
-  features?: string;
-  schedule?: string;
-}
-
-const config = useRuntimeConfig();
-const route = useRoute();
-const emit = defineEmits<{
-  (event: "update-data", data: StationResult): void;
-}>();
-const results = ref<StationResult[]>([]);
-let requestVersion = 0;
-
-const normalizeParam = (value: string | string[] | undefined): string =>
-  Array.isArray(value) ? value[0] || "" : value || "";
-
-const areaSlug = computed(() => normalizeParam(route.params.area));
-const countrySlug = computed(() => normalizeParam(route.params.country));
-const stationSlug = computed(() => normalizeParam(route.params.station));
-const i18n = computed(
-  () =>
-    `world.${areaSlug.value.replace(/-/g, "_")}.${countrySlug.value.replace(/-/g, "_")}`,
-);
-
-const loadStations = async (): Promise<void> => {
-  if (import.meta.server) return;
-
-  const currentVersion = ++requestVersion;
-  const area = areaSlug.value;
-  const country = countrySlug.value;
-  const station = stationSlug.value;
-
-  if (!area || !country) {
-    results.value = [];
-    return;
-  }
-
-  try {
-    const catalog = await $fetch<Record<string, StationCatalogEntry>>(
-      `/radio/${area}/${country}.json`,
-    );
-
-    if (currentVersion !== requestVersion) return;
-
-    results.value = Object.entries(catalog || {}).map(([stationKey, data]) => ({
-      objectID: `${country}-${stationKey}`,
-      title: data.title,
-      station_name: data.title,
-      station_image: data.features || String(config.public.placeholderStation),
-      station_stream: data.stream,
-      station_streams: [
-        ...(data.streams || []),
-        ...(data.stream_alternative
-          ? [{ url: data.stream_alternative, source: "legacy-alternative" }]
-          : []),
-      ],
-      station_schedule: data.schedule,
-      cros: Boolean(data.cros),
-      type: data.type || "audio/mpeg",
-      url: `/${area}/${country}/${stationKey}`,
-    }));
-
-    if (!station) return;
-
-    const activeData = results.value.find(
-      (data) => data.objectID === `${country}-${station}`,
-    );
-
-    if (activeData) emit("update-data", activeData);
-  } catch (error) {
-    if (currentVersion !== requestVersion) return;
-    results.value = [];
-    console.error("Unable to load local station catalog:", error);
-  }
-};
-
-watch(
-  () => [route.params.area, route.params.country, route.params.station],
-  () => {
-    void loadStations();
+withDefaults(
+  defineProps<{
+    stations?: RadioStationOption[];
+    activeStationId?: string;
+    countryName?: string;
+  }>(),
+  {
+    stations: () => [],
+    activeStationId: "",
+    countryName: "",
   },
-  { immediate: true },
 );
-
-onBeforeUnmount(() => {
-  requestVersion += 1;
-});
-
-const isRouteActive = (path: string): boolean =>
-  path === `${countrySlug.value}-${stationSlug.value}`;
 </script>

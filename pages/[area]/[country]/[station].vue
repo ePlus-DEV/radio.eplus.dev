@@ -56,10 +56,14 @@
       @select-station="selectStation"
     />
 
-    <PanelStation @update-data="handleDataFromChild" />
+    <PanelStation
+      :stations="stations"
+      :active-station-id="stationSlug"
+      :country-name="countryName"
+    />
 
     <button
-      v-show="slug === 'viet-nam'"
+      v-if="isZingStation"
       type="button"
       class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-[var(--radio-inverse-bg)] px-4 text-sm font-semibold text-[var(--radio-inverse-text)] shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5"
       @click="lyric_popup = !lyric_popup"
@@ -113,6 +117,10 @@
 
 <script setup lang="ts">
 import type { RadioSource, RadioStationOption } from "~/types/radio";
+import {
+  isZingScheduleUrl,
+  normalizeScheduleUrl,
+} from "~/utils/station-schedule.mjs";
 
 interface ProgramItem {
   encodeId: string;
@@ -137,16 +145,6 @@ interface Song {
   currentMedia?: CurrentMedia;
 }
 
-interface StationData {
-  station_name: string;
-  station_stream: string;
-  station_streams?: StationStream[];
-  station_image: string;
-  station_schedule?: string;
-  cros: boolean;
-  type: string;
-}
-
 interface StationStream {
   url: string;
   type?: string;
@@ -164,7 +162,7 @@ interface StationCatalogEntry {
   streams?: StationStream[];
   stream_alternative?: string;
   features?: string;
-  schedule?: string;
+  schedule?: string | boolean;
 }
 
 const $store = useMainStore();
@@ -188,12 +186,21 @@ const countryName = computed(() => t(i18n.value));
 const stationCatalogUrl = computed(
   () => `/radio/${area.value}/${slug.value}.json`,
 );
+const stationCatalogKey = computed(
+  () => `station-catalog:${area.value}:${slug.value}`,
+);
 
-const { data: stationCatalog } = await useAsyncData<
-  Record<string, StationCatalogEntry>
->(
-  `station-catalog:${area.value}:${slug.value}`,
+interface StationCatalogPayload {
+  key: string;
+  stations: Record<string, StationCatalogEntry>;
+}
+
+const { data: stationCatalogPayload } = await useAsyncData<StationCatalogPayload>(
+  stationCatalogKey,
   async () => {
+    const key = stationCatalogKey.value;
+    let stations: Record<string, StationCatalogEntry>;
+
     if (import.meta.server) {
       const [{ readFile }, { join }] = await Promise.all([
         import("node:fs/promises"),
@@ -206,21 +213,29 @@ const { data: stationCatalog } = await useAsyncData<
         area.value,
         `${slug.value}.json`,
       );
-      return JSON.parse(
+      stations = JSON.parse(
         await readFile(file, "utf8"),
       ) as Record<string, StationCatalogEntry>;
+    } else {
+      stations = await $fetch<Record<string, StationCatalogEntry>>(
+        stationCatalogUrl.value,
+      );
     }
 
-    return await $fetch<Record<string, StationCatalogEntry>>(
-      stationCatalogUrl.value,
-    );
+    return { key, stations };
   },
   {
-    default: () => ({}),
+    default: () => ({ key: "", stations: {} }),
   },
 );
+
+const stationCatalog = computed<Record<string, StationCatalogEntry>>(() =>
+  stationCatalogPayload.value?.key === stationCatalogKey.value
+    ? stationCatalogPayload.value.stations
+    : {},
+);
 const stationMeta = computed(
-  () => stationCatalog.value?.[stationSlug.value],
+  () => stationCatalog.value[stationSlug.value],
 );
 
 const stations = computed<RadioStationOption[]>(() =>
@@ -231,6 +246,13 @@ const stations = computed<RadioStationOption[]>(() =>
       station.features || String(config.public.placeholderStation),
     url: `/${area.value}/${slug.value}/${stationId}`,
   })),
+);
+
+const stationScheduleUrl = computed(() =>
+  normalizeScheduleUrl(stationMeta.value?.schedule),
+);
+const isZingStation = computed(() =>
+  isZingScheduleUrl(stationScheduleUrl.value),
 );
 
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
@@ -310,21 +332,6 @@ let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
 let requestVersion = 0;
 const POLL_INTERVAL = 60_000;
 
-watch(
-  stationMeta,
-  (meta) => {
-    if (!meta) return;
-    streamName.value = meta.title;
-    thumb.value = meta.features || String(config.public.placeholderStation);
-    setStationStreams(
-      { url: meta.stream, type: meta.type, cros: meta.cros, source: "primary" },
-      meta.streams || [],
-      meta.stream_alternative || "",
-    );
-  },
-  { immediate: true },
-);
-
 useHead(() => ({
   title: seoTitle.value,
   script: [
@@ -360,6 +367,34 @@ const clearPolling = (): void => {
   }
 };
 
+const resetStationAsyncState = (): void => {
+  program.value = [];
+  song.value = undefined;
+  playlist.value = [];
+  lyricLines.value = [t("panel.updating")];
+  queueLoading.value = false;
+};
+
+const resetRouteScopedState = (): void => {
+  requestVersion += 1;
+  clearPolling();
+  resetStationAsyncState();
+  lyric_popup.value = false;
+
+  streamName.value = "";
+  thumb.value = "";
+  streamUrls.value = [];
+  streamUrl.value = { src: "", type: "audio/mpeg" };
+};
+
+watch(
+  () => [area.value, slug.value, stationSlug.value] as const,
+  () => {
+    resetRouteScopedState();
+  },
+  { flush: "sync" },
+);
+
 const currentTimestamp = (): number =>
   dayjs().tz($store.getTimezone).unix();
 
@@ -387,10 +422,14 @@ const fetchLyric = async (id: string, version: number): Promise<void> => {
       return;
     }
   } catch (error) {
-    console.error("Unable to load lyrics:", error);
+    if (version === requestVersion) {
+      console.error("Unable to load lyrics:", error);
+    }
   }
 
-  if (version === requestVersion) lyricLines.value = [t("panel.no_lyric")];
+  if (version === requestVersion) {
+    lyricLines.value = [t("panel.no_lyric")];
+  }
 };
 
 const fetchDetail = async (url: string, version: number): Promise<void> => {
@@ -399,12 +438,18 @@ const fetchDetail = async (url: string, version: number): Promise<void> => {
     if (version !== requestVersion) return;
 
     const value = resData as { err: number; data?: Song };
-    if (value.err !== 0 || !value.data) return;
+    if (value.err !== 0 || !value.data) {
+      song.value = undefined;
+      lyricLines.value = [t("panel.no_lyric")];
+      return;
+    }
 
     song.value = value.data;
     const currentMedia = value.data.currentMedia;
-    if (!currentMedia) return;
-
+    if (!currentMedia) {
+      lyricLines.value = [t("panel.no_lyric")];
+      return;
+    }
 
     if (currentMedia.hasLyric) {
       await fetchLyric(currentMedia.encodeId, version);
@@ -430,24 +475,35 @@ const fetchSchedule = async (url: string, version: number): Promise<void> => {
       result?: Track[];
     };
 
-    if (value.err === 0 && slug.value === "viet-nam") {
+    if (isZingScheduleUrl(url)) {
+      if (value.err !== 0) {
+        program.value = [];
+        song.value = undefined;
+        lyricLines.value = [t("panel.no_lyric")];
+        return;
+      }
+
       const items = value.data?.items || [];
       program.value = items;
       const firstProgram = items[0];
-      if (firstProgram?.encodeId && config.public.apiZingLiveStreamProgramDetail) {
+
+      if (
+        firstProgram?.encodeId &&
+        config.public.apiZingLiveStreamProgramDetail
+      ) {
         await fetchDetail(
           `${config.public.apiZingLiveStreamProgramDetail}${firstProgram.encodeId}&time=`,
           version,
         );
+      } else {
+        song.value = undefined;
+        lyricLines.value = [t("panel.no_lyric")];
       }
       return;
     }
 
     if (value.success && Array.isArray(value.result)) {
       playlist.value = value.result;
-      const firstTrack = value.result[0];
-      if (firstTrack) {
-      }
     }
   } catch (error) {
     if (version === requestVersion) {
@@ -469,28 +525,39 @@ const pollSchedule = async (url: string, version: number): Promise<void> => {
   }, POLL_INTERVAL);
 };
 
-const handleDataFromChild = (data: StationData): void => {
+const activateStation = (meta: StationCatalogEntry | undefined): void => {
   requestVersion += 1;
   const version = requestVersion;
   clearPolling();
+  resetStationAsyncState();
+
+  if (!meta) return;
 
   $store.setTimezone(area.value, slug.value);
 
-  streamName.value = data.station_name;
+  streamName.value = meta.title;
+  thumb.value = meta.features || String(config.public.placeholderStation);
   setStationStreams(
-    { url: data.station_stream, type: data.type, cros: data.cros, source: "primary" },
-    data.station_streams || [],
+    { url: meta.stream, type: meta.type, cros: meta.cros, source: "primary" },
+    meta.streams || [],
+    meta.stream_alternative || "",
   );
-  thumb.value = data.station_image;
-  program.value = [];
-  song.value = undefined;
-  playlist.value = [];
-  lyricLines.value = [t("panel.updating")];
-  queueLoading.value = Boolean(data.station_schedule);
-  if (data.station_schedule) {
-    void pollSchedule(data.station_schedule, version);
+
+  const scheduleUrl = normalizeScheduleUrl(meta.schedule);
+  queueLoading.value = Boolean(scheduleUrl);
+
+  if (scheduleUrl) {
+    void pollSchedule(scheduleUrl, version);
   }
 };
+
+watch(
+  stationMeta,
+  (meta) => {
+    activateStation(meta);
+  },
+  { immediate: true },
+);
 
 const selectStation = (station: RadioStationOption): void => {
   if (station.id === stationSlug.value) return;

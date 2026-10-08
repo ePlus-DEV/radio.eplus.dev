@@ -285,6 +285,7 @@ const props = withDefaults(
     thumb: string;
     stationName: string;
     countryName?: string;
+    scheduleLoading?: boolean;
   }>(),
   {
     playlist: () => [],
@@ -292,6 +293,7 @@ const props = withDefaults(
     stations: () => [],
     activeStationId: "",
     countryName: "",
+    scheduleLoading: false,
   },
 );
 
@@ -310,6 +312,7 @@ const scheduleCount = computed(
 const activeTab = ref<"stations" | "schedule">(
   hasStations.value ? "stations" : "schedule",
 );
+const preferScheduleAfterLoad = ref(false);
 
 const filteredStations = computed(() => {
   const keyword = query.value.trim().toLocaleLowerCase();
@@ -319,6 +322,35 @@ const filteredStations = computed(() => {
     station.title.toLocaleLowerCase().includes(keyword),
   );
 });
+
+watch(
+  () => props.activeStationId,
+  () => {
+    query.value = "";
+    preferScheduleAfterLoad.value = false;
+    activeTab.value = hasStations.value ? "stations" : "schedule";
+  },
+  { flush: "sync" },
+);
+
+watch(
+  () => props.scheduleLoading,
+  (loading, wasLoading) => {
+    if (loading) {
+      preferScheduleAfterLoad.value = true;
+      return;
+    }
+
+    if (
+      wasLoading &&
+      preferScheduleAfterLoad.value &&
+      hasSchedule.value
+    ) {
+      activeTab.value = "schedule";
+      preferScheduleAfterLoad.value = false;
+    }
+  },
+);
 
 watch([hasStations, hasSchedule], ([stationsReady, scheduleReady]) => {
   if (activeTab.value === "stations" && !stationsReady && scheduleReady) {
