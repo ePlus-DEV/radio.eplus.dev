@@ -10,8 +10,10 @@ test("Back to top is not hidden on mobile and does not rely on Font Awesome", as
   const block = source.slice(start, end);
 
   assert.ok(start >= 0 && end > start);
-  assert.match(block, /\bflex\b/);
-  assert.doesNotMatch(block, /\bhidden\b/);
+  const classMatch = block.match(/class="([^"]+)"/);
+  assert.ok(classMatch, "Back-to-top button class not found");
+  assert.match(classMatch[1], /\bflex\b/);
+  assert.doesNotMatch(classMatch[1], /(?:^|\s)hidden(?:\s|$)/);
   assert.match(block, /<svg/);
   assert.doesNotMatch(block, /<fa\b/);
 });
