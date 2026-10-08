@@ -19,11 +19,11 @@ test("player does not duplicate current song below the main now-playing area", a
   assert.match(source, /song\.nextMedia\.artists/);
 });
 
-test("player palette keeps structural surfaces neutral and rose as the primary action accent", async () => {
+test("player palette keeps structural surfaces neutral and violet as the primary action accent", async () => {
   const source = await readFile(playerFile, "utf8");
 
   assert.doesNotMatch(source, /rgba\(56,189,248/);
   assert.match(source, /bg-\[var\(--radio-surface-elevated\)\]/);
-  assert.match(source, /bg-rose-500 text-white hover:bg-rose-600/);
+  assert.match(source, /bg-violet-600 text-white[\s\S]*hover:bg-violet-500/);
   assert.match(source, /\$t\('player\.pause'\)/);
 });

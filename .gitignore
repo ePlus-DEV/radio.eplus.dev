@@ -26,3 +26,6 @@ logs
 
 playwright-report/
 test-results/
+
+# Generated from public/radio/* catalogs for offline/Algolia fallback search
+/public/search/stations.json

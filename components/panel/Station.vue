@@ -36,7 +36,7 @@
         :aria-label="station.title"
         @click="onSelect($event, station)"
       >
-        <div class="radio-themed-artwork relative flex aspect-square items-center justify-center overflow-hidden p-4">
+        <div class="radio-themed-artwork relative flex aspect-[5/4] items-center justify-center overflow-hidden p-3 sm:aspect-square sm:p-4">
           <img
             loading="lazy"
             :src="station.image"
@@ -59,7 +59,7 @@
           </span>
         </div>
 
-        <div class="border-t border-[var(--radio-border)] px-3 py-3.5">
+        <div class="border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3.5">
           <p
             dir="auto"
             class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-[var(--radio-text)]"

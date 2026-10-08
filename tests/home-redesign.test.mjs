@@ -12,7 +12,7 @@ test("home discovery actions link to real on-page sections", async () => {
   assert.match(page, /radio-hero/);
   assert.match(css, /\.radio-hero\s*\{/);
   assert.match(await readFile("app.vue", "utf8"), /<PlayerSession\s*\/>/);
-  assert.match(page, /<PanelStation\s/);
+  assert.match(page, /<PanelFeaturedStations\s/);
   assert.match(page, /<PanelRadio\s*\/>/);
 });
 
