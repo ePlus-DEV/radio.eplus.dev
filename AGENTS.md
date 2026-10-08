@@ -111,12 +111,14 @@ Station names/descriptions may use Arabic or other RTL/mixed scripts.
 
 ## Font Awesome licensing state
 
-The repository currently uses a **mixed Free + Pro Font Awesome setup**.
+The application UI is **Font Awesome Free-only**.
 
-- `package.json` includes Free and Pro Font Awesome packages.
-- `nuxt.config.ts` contains a `proIcons` configuration.
-- Do not assume the project is already free-only.
-- If removing Pro usage, first replace every configured/used Pro icon with a Free equivalent, then remove Pro packages/config and verify the build.
+- Register visible UI icons centrally in `config/fontawesome-icons.mjs`.
+- `nuxt.config.ts` must not reintroduce `proIcons`.
+- Do not add `@fortawesome/pro-*` or `@fortawesome/sharp-*` packages without an explicit architecture/licensing decision.
+- Do not commit Font Awesome registry auth tokens or a private-registry `.npmrc`.
+- Prefer a small inline SVG for critical navigation controls when it avoids an unnecessary icon-runtime dependency (for example Back to top).
+- Run `tests/fontawesome-icons.test.mjs` when adding/changing icons.
 
 ## CI and validation
 

@@ -25,7 +25,7 @@
         "
         @click="$colorMode.preference = option.value"
       >
-        <fa :icon="['fal', option.icon]" class="h-4 w-4" />
+        <fa :icon="['fas', option.icon]" class="h-4 w-4" />
         <span>{{ $t(option.label) }}</span>
       </button>
     </div>
@@ -36,14 +36,14 @@
 const colorMode = useColorMode();
 
 const options = [
-  { value: "light", icon: "sun-bright", label: "text.darkmode.light" },
+  { value: "light", icon: "sun", label: "text.darkmode.light" },
   { value: "dark", icon: "moon", label: "text.darkmode.dark" },
   { value: "system", icon: "desktop", label: "text.darkmode.system" },
 ] as const;
 
 const icons = {
   system: "desktop",
-  light: "sun-bright",
+  light: "sun",
   dark: "moon",
 };
 

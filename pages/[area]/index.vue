@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-6">
-    <Breadcrumbs :area="area" level_1="" :level_2="$t(i18n)" />
+    <Breadcrumbs :area="area" />
 
     <section
       class="radio-surface relative overflow-hidden rounded-[2rem] px-5 py-7 sm:px-8"

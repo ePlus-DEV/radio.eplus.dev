@@ -64,7 +64,7 @@
       class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-[var(--radio-inverse-bg)] px-4 text-sm font-semibold text-[var(--radio-inverse-text)] shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5"
       @click="lyric_popup = !lyric_popup"
     >
-      <fa :icon="['fas', 'list-music']" class="h-4 w-4" />
+      <fa :icon="['fas', 'music']" class="h-4 w-4" />
       <span class="hidden sm:inline">{{ $t("panel.lyric") }}</span>
     </button>
 
