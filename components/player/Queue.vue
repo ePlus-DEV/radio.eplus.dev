@@ -13,14 +13,28 @@
           class="tab h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
           :class="
             activeTab === 'schedule'
-              ? 'tab-active !bg-rose-500 !text-white shadow-sm'
-              : 'text-[var(--radio-text-muted)] hover:text-[var(--radio-text)]'
+              ? 'tab-active !bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
+              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
           "
           :aria-selected="activeTab === 'schedule'"
           @click="activeTab = 'schedule'"
         >
+          <span
+            v-if="activeTab === 'schedule'"
+            class="h-1.5 w-1.5 rounded-full bg-rose-500"
+            aria-hidden="true"
+          ></span>
           {{ $t("panel.schedule") }}
-          <span class="ml-1 opacity-70">{{ scheduleCount }}</span>
+          <span
+            class="ml-1 rounded-full px-1.5 py-0.5 text-[10px] tabular-nums"
+            :class="
+              activeTab === 'schedule'
+                ? 'bg-rose-500/10 text-rose-500'
+                : 'bg-[var(--radio-hover)] text-[var(--radio-text-muted)]'
+            "
+          >
+            {{ scheduleCount }}
+          </span>
         </button>
 
         <button
@@ -29,14 +43,28 @@
           class="tab h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
           :class="
             activeTab === 'stations'
-              ? 'tab-active !bg-rose-500 !text-white shadow-sm'
-              : 'text-[var(--radio-text-muted)] hover:text-[var(--radio-text)]'
+              ? 'tab-active !bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
+              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
           "
           :aria-selected="activeTab === 'stations'"
           @click="activeTab = 'stations'"
         >
+          <span
+            v-if="activeTab === 'stations'"
+            class="h-1.5 w-1.5 rounded-full bg-rose-500"
+            aria-hidden="true"
+          ></span>
           {{ $t("panel.channels") }}
-          <span class="ml-1 opacity-70">{{ stations.length }}</span>
+          <span
+            class="ml-1 rounded-full px-1.5 py-0.5 text-[10px] tabular-nums"
+            :class="
+              activeTab === 'stations'
+                ? 'bg-rose-500/10 text-rose-500'
+                : 'bg-[var(--radio-hover)] text-[var(--radio-text-muted)]'
+            "
+          >
+            {{ stations.length }}
+          </span>
         </button>
       </div>
 
@@ -158,14 +186,22 @@
           <div
             v-for="(item, index) in program"
             :key="programKey(item, index)"
-            class="grid grid-cols-[68px_minmax(0,1fr)] gap-3 rounded-xl px-2.5 py-2.5 transition"
+            class="relative grid grid-cols-[72px_minmax(0,1fr)] gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
               index === 0
-                ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
+                ? 'bg-[var(--radio-surface-soft)] ring-1 ring-inset ring-[var(--radio-border)]'
                 : 'hover:bg-[var(--radio-hover)]'
             "
           >
-            <div class="text-xs font-semibold tabular-nums text-[var(--radio-text-muted)]">
+            <span
+              v-if="index === 0"
+              class="absolute inset-y-2 left-0 w-0.5 rounded-full bg-rose-500"
+              aria-hidden="true"
+            ></span>
+
+            <div
+              class="rounded-lg bg-[var(--radio-surface)] px-2 py-1.5 text-xs font-semibold tabular-nums text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)]"
+            >
               <template v-if="item.startTime">
                 <div>{{ dayjs.unix(item.startTime).format("HH:mm") }}</div>
                 <div
@@ -181,12 +217,7 @@
             <div class="min-w-0">
               <p
                 dir="auto"
-                class="truncate text-sm font-semibold"
-                :class="
-                  index === 0
-                    ? 'text-rose-600 dark:text-rose-300'
-                    : 'text-[var(--radio-text)]'
-                "
+                class="truncate text-sm font-semibold text-[var(--radio-text)]"
               >
                 {{ item.title || $t("panel.updating") }}
               </p>
@@ -205,14 +236,20 @@
           <div
             v-for="(item, index) in playlist"
             :key="playlistKey(item, index)"
-            class="group flex min-w-0 items-center gap-3 rounded-xl px-2.5 py-2.5 transition"
+            class="group relative flex min-w-0 items-center gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
               index === 0
-                ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
+                ? 'bg-[var(--radio-surface-soft)] ring-1 ring-inset ring-[var(--radio-border)]'
                 : 'hover:bg-[var(--radio-hover)]'
             "
           >
-            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[var(--radio-surface-soft)]">
+            <span
+              v-if="index === 0"
+              class="absolute inset-y-2 left-0 w-0.5 rounded-full bg-rose-500"
+              aria-hidden="true"
+            ></span>
+
+            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[var(--radio-surface)] ring-1 ring-inset ring-[var(--radio-border)]">
               <img
                 loading="lazy"
                 :src="item.track_image || thumb"
@@ -222,14 +259,7 @@
             </div>
 
             <div class="min-w-0 flex-1">
-              <p
-                class="truncate text-sm font-semibold"
-                :class="
-                  index === 0
-                    ? 'text-rose-600 dark:text-rose-300'
-                    : 'text-[var(--radio-text)]'
-                "
-              >
+              <p class="truncate text-sm font-semibold text-[var(--radio-text)]">
                 {{ item.track_title || $t("panel.updating") }}
               </p>
               <p class="mt-0.5 truncate text-xs text-[var(--radio-text-muted)]">
@@ -239,8 +269,9 @@
 
             <span
               v-if="index === 0"
-              class="shrink-0 text-[9px] font-bold uppercase tracking-[0.12em] text-rose-500"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-rose-500"
             >
+              <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
               Live
             </span>
             <span
