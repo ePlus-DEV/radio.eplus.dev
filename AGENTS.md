@@ -91,6 +91,9 @@ Important rules:
 - Previous/Next controls navigate the country station list; they are not source-fallback controls.
 - Previous/Next station navigation wraps around at the beginning/end of the list and keeps autoplay behavior consistent with selecting a station from the queue.
 - Keep station navigation logic in `utils/station-navigation.mjs` and cover it with `tests/station-navigation.test.mjs`.
+- The large player metadata area is the single source of truth for the current track. Do not render `currentMedia` a second time in a lower "Now playing" strip.
+- When a provider supplies a trustworthy `nextMedia` value (for example Zing), the lower strip may show that as `panel.next`; do not infer a future track from generic playlist/history arrays.
+- In the player surface, structural colors stay neutral/theme-based. Rose is the primary playback/live accent; avoid strong competing cyan/blue structural gradients in light mode.
 
 The Zing MP3 EDM station is a useful regression case:
 

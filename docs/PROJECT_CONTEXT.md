@@ -209,6 +209,30 @@ Do not casually revert to Video.js just because older commits contain a working 
 6. Advance to the next candidate only when the current candidate actually fails.
 7. Stop after the global retry budget.
 
+### Current track vs. Up next
+
+The main artwork/title/artist area is the player's **single current-track presentation**.
+
+A previous redesigned-player regression rendered `song.currentMedia` again below the transport controls under another "Now playing" label. That duplicated the same title/artwork twice.
+
+Current rule:
+
+- main metadata area = current track;
+- do not repeat `currentMedia` in a secondary strip;
+- if the provider returns `song.nextMedia`, the secondary strip can display it as `panel.next`;
+- Zing program detail is known to expose `nextMedia`;
+- generic Webrad-style playlist arrays must not be assumed to contain future tracks because they can represent current/history data;
+- if there is no trustworthy next track, omit the secondary strip.
+
+Player color hierarchy:
+
+- structural surface/background = Radio ePlus theme tokens;
+- rose = primary Play/Pause, Live and small current/next accents;
+- emerald = playback status such as On air;
+- avoid large competing rose + cyan split gradients in light mode.
+
+Regression guard: `tests/player-now-playing.test.mjs`.
+
 ### Previous / Next station navigation
 
 The main transport controls include Previous and Next station actions.

@@ -13,7 +13,7 @@
       >
         <div class="relative min-w-0 overflow-hidden p-4 sm:p-6">
           <div
-            class="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.13),transparent_42%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.10),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.12),transparent_42%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.07),transparent_38%)]"
+            class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.07),transparent_48%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.08),transparent_48%)]"
           ></div>
 
           <div class="relative">
@@ -149,7 +149,7 @@
                 <button
                   v-else-if="playing"
                   type="button"
-                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16"
+                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 sm:h-16 sm:w-16"
                   @click="onPause"
                   aria-label="Pause radio"
                 >
@@ -339,27 +339,44 @@
             </div>
 
             <div
-              v-if="song?.currentMedia"
+              v-if="song?.nextMedia?.title"
               class="mt-4 border-t border-[var(--radio-border)] pt-4"
             >
-              <div class="flex min-w-0 items-center gap-3">
+              <div
+                class="flex min-w-0 items-center gap-3 rounded-2xl bg-[var(--radio-surface-soft)] px-3 py-2.5 ring-1 ring-inset ring-[var(--radio-border)]"
+              >
                 <img
-                  v-if="song.currentMedia.thumbnail || song.thumbnail"
-                  :src="song.currentMedia.thumbnail || song.thumbnail"
-                  :alt="song.currentMedia.title"
+                  v-if="song.nextMedia.thumbnail || song.thumbnail"
+                  :src="song.nextMedia.thumbnail || song.thumbnail"
+                  :alt="song.nextMedia.title"
                   class="h-11 w-11 shrink-0 rounded-xl object-cover"
                 />
-                <div class="min-w-0">
-                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--radio-text-muted)]">
-                    Now playing
+                <div class="min-w-0 flex-1">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-rose-500">
+                    {{ $t("panel.next") }}
                   </p>
-                  <p class="mt-0.5 truncate text-sm font-medium text-[var(--radio-text)]">
-                    {{ song.currentMedia.title }}
-                    <span v-if="song.currentMedia.artists" class="font-normal text-[var(--radio-text-muted)]">
-                      · {{ song.currentMedia.artists }}
+                  <p dir="auto" class="mt-0.5 truncate text-sm font-medium text-[var(--radio-text)]">
+                    {{ song.nextMedia.title }}
+                    <span
+                      v-if="song.nextMedia.artists"
+                      class="font-normal text-[var(--radio-text-muted)]"
+                    >
+                      · {{ song.nextMedia.artists }}
                     </span>
                   </p>
                 </div>
+                <svg
+                  viewBox="0 0 24 24"
+                  class="hidden h-4 w-4 shrink-0 fill-none stroke-[var(--radio-text-muted)] sm:block"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m9 6 6 6-6 6"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </div>
             </div>
           </div>
