@@ -332,6 +332,11 @@
       "coverage_description": "每張卡片顯示該地區目前保存的國家目錄數與電台項目數。",
       "method_title": "數字如何計算",
       "method_body": "這些數字於網站建置時從儲存庫中受版本控制的 JSON 目錄統計得出，表示目錄項目數，不等於目前上線串流、獨立廣播機構或聽眾數。"
+    },
+    "error": {
+      "not_found_title": "找不到頁面",
+      "generic_title": "發生錯誤",
+      "generic_body": "無法載入此頁面。請返回首頁後再試一次。"
     }
   }
 }
