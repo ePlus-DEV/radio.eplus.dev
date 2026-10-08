@@ -9,7 +9,7 @@
 
     <section class="radio-surface relative overflow-hidden px-5 py-5 sm:px-6">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.09),transparent_42%)]"></div>
-      <div class="relative flex min-w-0 items-center gap-4">
+      <div class="relative flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center">
         <div class="flex h-16 w-20 shrink-0 items-center justify-center rounded-2xl bg-slate-50 p-2 ring-1 ring-slate-200/70 dark:bg-slate-950/50 dark:ring-white/10 sm:h-20 sm:w-24">
           <img
             :src="thumb || stationMeta?.features || config.public.placeholderStation"
@@ -26,11 +26,12 @@
             </span>
             <span class="text-xs text-slate-400">{{ countryName }}</span>
           </div>
-          <h1 class="mt-2 truncate text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          <h1 dir="auto" class="mt-2 line-clamp-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
             {{ stationName }}
           </h1>
           <p
             v-if="stationMeta?.description"
+            dir="auto"
             class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-slate-500 dark:text-slate-400"
           >
             {{ stationMeta.description }}
