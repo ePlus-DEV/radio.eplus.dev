@@ -58,6 +58,20 @@ That caused partially themed pages. The current rule is:
 
 Run `npm test`; `tests/theme-consistency.test.mjs` exists specifically to catch theme regressions.
 
+### Header dropdowns
+
+Do not rely on DaisyUI `dropdown` + `tabindex/focus-within` as the source of truth for interactive header menus that mutate app state (language/theme/account-style controls).
+
+For the language selector:
+
+- Vue owns an explicit `open` state;
+- selection closes the menu before i18n rerenders;
+- outside click, Escape, Tab and route changes close it;
+- keyboard focus must be restored or advanced intentionally;
+- keep `aria-expanded`, `aria-haspopup`, `role=menu` and menu-item roles synchronized with behavior.
+
+Regression guard: `tests/language-dropdown.test.mjs`.
+
 ## Player / HLS invariants
 
 The current player is intentionally **Native Audio + hls.js**, not Video.js.
