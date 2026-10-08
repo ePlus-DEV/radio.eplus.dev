@@ -72,6 +72,11 @@ const i18n = computed(
 const polling_schedule = ref<ReturnType<typeof setInterval> | null>(null);
 const playlist = ref<Track[]>([]);
 const stationCount = ref(0);
+
+const scheduleRequestUrl = (url: string): string =>
+  /[?&](?:time|timestamp)=$/i.test(url)
+    ? `${url}${dayjs().tz(timeZone.value).unix()}`
+    : url;
 interface Track {
   track_title: string;
   track_artist: string;
@@ -105,7 +110,7 @@ useSeoMeta(() => ({
  */
 const fetchSchedule = async (url: string) => {
   try {
-    const resData = await $fetch(url + dayjs().tz(timeZone.value).unix());
+    const resData = await $fetch(scheduleRequestUrl(url));
 
     const resDataSuccess = resData as { success: boolean };
     if (resDataSuccess.success) {
