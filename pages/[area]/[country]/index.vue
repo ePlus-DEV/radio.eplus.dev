@@ -127,7 +127,8 @@ const catalogKey = computed(
   () => `country-catalog:${area.value}:${slug.value}`,
 );
 
-const { data: catalogPayload } = await useAsyncData<CountryCatalogPayload>(
+const { data: catalogPayload, error: catalogError } =
+  await useAsyncData<CountryCatalogPayload>(
   catalogKey,
   async () => {
     const key = catalogKey.value;
@@ -167,6 +168,13 @@ const { data: catalogPayload } = await useAsyncData<CountryCatalogPayload>(
     default: () => ({ key: "", stations: {} }),
   },
 );
+
+if (catalogError.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Radio country not found",
+  });
+}
 
 const catalog = computed<Record<string, Channel>>(() =>
   catalogPayload.value?.key === catalogKey.value
