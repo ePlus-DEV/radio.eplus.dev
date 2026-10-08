@@ -48,7 +48,7 @@
       :streamUrl="streamUrl"
       :streamUrls="streamUrls"
       :thumb="thumb"
-      :queue-expected="Boolean(stationMeta?.schedule)"
+      :queue-loading="queueLoading"
     />
 
     <PanelStation @update-data="handleDataFromChild" />
@@ -250,6 +250,7 @@ const program = ref<ProgramItem[]>([]);
 const song = ref<Song>();
 const thumb = ref("");
 const playlist = ref<Track[]>([]);
+const queueLoading = ref(false);
 const lyric_popup = ref(false);
 const lyricLines = ref<string[]>([t("panel.updating")]);
 const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
@@ -437,6 +438,10 @@ const fetchSchedule = async (url: string, version: number): Promise<void> => {
     if (version === requestVersion) {
       console.error("Unable to load station schedule:", error);
     }
+  } finally {
+    if (version === requestVersion) {
+      queueLoading.value = false;
+    }
   }
 };
 
@@ -466,6 +471,7 @@ const handleDataFromChild = (data: StationData): void => {
   song.value = undefined;
   playlist.value = [];
   lyricLines.value = [t("panel.updating")];
+  queueLoading.value = Boolean(data.station_schedule);
   if (data.station_schedule) {
     void pollSchedule(data.station_schedule, version);
   }
