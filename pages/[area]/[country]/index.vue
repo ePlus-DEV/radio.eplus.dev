@@ -174,7 +174,7 @@ const fetchData = async (): Promise<void> => {
     streamName.value = favoriteChannel.title;
 
     const seen = new Set<string>();
-    const candidates = [
+    const candidates: ChannelStream[] = [
       {
         url: favoriteChannel.stream,
         type: favoriteChannel.type,
