@@ -48,6 +48,7 @@
       :streamUrl="streamUrl"
       :streamUrls="streamUrls"
       :thumb="thumb"
+      :queue-expected="Boolean(stationMeta?.schedule)"
     />
 
     <PanelStation @update-data="handleDataFromChild" />
