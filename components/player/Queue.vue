@@ -78,7 +78,7 @@
           <input
             v-model="query"
             type="search"
-            class="min-w-0 grow bg-transparent p-0 text-xs text-[var(--radio-text)] outline-none placeholder:text-slate-400"
+            class="min-w-0 grow bg-transparent p-0 text-xs text-[var(--radio-text)] outline-none placeholder:text-[var(--radio-text-muted)]"
             :placeholder="$t('panel.search_channels')"
           />
         </label>
@@ -94,8 +94,8 @@
           class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition"
           :class="
             station.id === activeStationId
-              ? 'bg-rose-50 ring-1 ring-inset ring-rose-100 dark:bg-rose-500/10 dark:ring-rose-400/10'
-              : 'hover:bg-slate-100 dark:hover:bg-white/[0.04]'
+              ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
+              : 'hover:bg-[var(--radio-hover)]'
           "
           @click="$emit('select-station', station)"
         >
@@ -116,13 +116,13 @@
               class="block truncate text-sm font-semibold"
               :class="
                 station.id === activeStationId
-                  ? 'text-rose-700 dark:text-rose-200'
-                  : 'text-slate-800 dark:text-slate-100'
+                  ? 'text-rose-600 dark:text-rose-300'
+                  : 'text-[var(--radio-text)]'
               "
             >
               {{ station.title }}
             </span>
-            <span class="mt-0.5 block truncate text-[11px] text-slate-400 dark:text-slate-500">
+            <span class="mt-0.5 block truncate text-[11px] text-[var(--radio-text-muted)]">
               {{ countryName || stationName }}
             </span>
           </span>
@@ -136,7 +136,7 @@
           </span>
           <span
             v-else
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--radio-border)] text-slate-500 transition group-hover:border-rose-200 group-hover:text-rose-500 dark:text-slate-400"
+            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--radio-border)] text-[var(--radio-text-muted)] transition group-hover:border-rose-200 group-hover:text-rose-500"
             aria-hidden="true"
           >
             <svg viewBox="0 0 24 24" class="ml-0.5 h-3.5 w-3.5 fill-current">
@@ -147,7 +147,7 @@
 
         <div
           v-if="filteredStations.length === 0"
-          class="flex min-h-32 items-center justify-center px-5 text-center text-xs text-slate-400"
+          class="flex min-h-32 items-center justify-center px-5 text-center text-xs text-[var(--radio-text-muted)]"
         >
           {{ $t("panel.no_channels") }}
         </div>
@@ -165,12 +165,12 @@
                 : 'hover:bg-slate-100 dark:hover:bg-white/[0.04]'
             "
           >
-            <div class="text-xs font-semibold tabular-nums text-slate-500 dark:text-slate-400">
+            <div class="text-xs font-semibold tabular-nums text-[var(--radio-text-muted)]">
               <template v-if="item.startTime">
                 <div>{{ dayjs.unix(item.startTime).format("HH:mm") }}</div>
                 <div
                   v-if="item.endTime"
-                  class="mt-0.5 text-[10px] font-normal text-slate-400 dark:text-slate-500"
+                  class="mt-0.5 text-[10px] font-normal text-[var(--radio-text-muted)]"
                 >
                   {{ dayjs.unix(item.endTime).format("HH:mm") }}
                 </div>
@@ -193,7 +193,7 @@
               <p
                 v-if="item.description"
                 dir="auto"
-                class="mt-0.5 line-clamp-2 text-xs leading-5 text-slate-400 dark:text-slate-500"
+                class="mt-0.5 line-clamp-2 text-xs leading-5 text-[var(--radio-text-muted)]"
               >
                 {{ item.description }}
               </p>
@@ -212,7 +212,7 @@
                 : 'hover:bg-slate-100 dark:hover:bg-white/[0.04]'
             "
           >
-            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-white/10">
+            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[var(--radio-surface-soft)]">
               <img
                 loading="lazy"
                 :src="item.track_image || thumb"
@@ -232,7 +232,7 @@
               >
                 {{ item.track_title || $t("panel.updating") }}
               </p>
-              <p class="mt-0.5 truncate text-xs text-slate-400 dark:text-slate-500">
+              <p class="mt-0.5 truncate text-xs text-[var(--radio-text-muted)]">
                 {{ item.track_artist || stationName }}
               </p>
             </div>
@@ -245,7 +245,7 @@
             </span>
             <span
               v-else-if="item.track_played"
-              class="shrink-0 text-[10px] text-slate-400 dark:text-slate-500"
+              class="shrink-0 text-[10px] text-[var(--radio-text-muted)]"
             >
               {{ dayjs.unix(item.track_played).fromNow(true) }}
             </span>

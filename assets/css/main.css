@@ -23,6 +23,9 @@
     --radio-border-strong: rgb(203 213 225 / 0.95);
     --radio-text: #0f172a;
     --radio-text-muted: #64748b;
+    --radio-inverse-bg: #0f172a;
+    --radio-inverse-text: #ffffff;
+    --radio-track: #e2e8f0;
     --radio-overlay: rgb(15 23 42 / 0.55);
 
     /* Keep daisyUI controls on the exact same theme as Nuxt Color Mode. */
@@ -51,6 +54,9 @@
     --radio-border-strong: rgb(255 255 255 / 0.16);
     --radio-text: #f8fafc;
     --radio-text-muted: #94a3b8;
+    --radio-inverse-bg: #f8fafc;
+    --radio-inverse-text: #020617;
+    --radio-track: rgb(255 255 255 / 0.15);
     --radio-overlay: rgb(2 6 23 / 0.72);
 
     --color-base-100: #0f172a;

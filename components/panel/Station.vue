@@ -1,13 +1,13 @@
 <template>
   <section class="radio-surface overflow-hidden">
     <div
-      class="flex items-center justify-between gap-3 border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5"
+      class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4  sm:px-5"
     >
       <div class="min-w-0">
         <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
           {{ $t("panel.play_from_radio") }}
         </p>
-        <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-slate-950 dark:text-white sm:text-xl">
+        <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-[var(--radio-text)] sm:text-xl">
           {{ $t(i18n) }}
         </h2>
       </div>
@@ -30,7 +30,7 @@
         :class="
           isRouteActive(data.objectID)
             ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
-            : 'border-slate-200/80 hover:border-rose-200 dark:border-white/10 dark:hover:border-rose-400/30'
+            : 'border-[var(--radio-border)] hover:border-rose-200 dark:hover:border-rose-400/30'
         "
         :title="data.title"
         :aria-label="data.title"
@@ -52,14 +52,14 @@
           </span>
 
           <span
-            class="absolute bottom-2 right-2 flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-slate-950/80 text-white opacity-0 shadow transition group-hover:scale-100 group-hover:opacity-100 dark:bg-white dark:text-slate-950"
+            class="absolute bottom-2 right-2 flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] opacity-0 shadow transition group-hover:scale-100 group-hover:opacity-100"
           >
             <fa :icon="['fas', 'play']" class="ml-0.5 h-3 w-3" />
           </span>
         </div>
 
         <div class="border-t border-[var(--radio-border)] px-3 py-3">
-          <p dir="auto" class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-slate-700 dark:text-slate-200">
+          <p dir="auto" class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-[var(--radio-text)]">
             {{ data.title }}
           </p>
         </div>
@@ -68,7 +68,7 @@
 
     <div
       v-else
-      class="px-5 py-10 text-center text-sm text-slate-400"
+      class="px-5 py-10 text-center text-sm text-[var(--radio-text-muted)]"
     >
       {{ $t("panel.updating") }}
     </div>

@@ -50,7 +50,7 @@
               <button
                 v-if="hasSidebar"
                 type="button"
-                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 xl:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-[var(--radio-surface-soft)] px-3 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] xl:hidden"
                 :aria-expanded="mobileQueueOpen"
                 aria-label="Toggle channels and schedule"
                 @click="mobileQueueOpen = !mobileQueueOpen"
@@ -75,7 +75,7 @@
                 />
                 <span
                   v-if="playing"
-                  class="absolute bottom-2.5 right-2.5 flex h-7 w-7 items-end justify-center gap-[2px] rounded-full bg-slate-950/80 pb-2 text-white backdrop-blur dark:bg-white/90 dark:text-slate-950"
+                  class="absolute bottom-2.5 right-2.5 flex h-7 w-7 items-end justify-center gap-[2px] rounded-full bg-[var(--radio-inverse-bg)] pb-2 text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
                   aria-hidden="true"
                 >
                   <span class="radio-bar h-1 w-[2px] rounded-full bg-current is-playing"></span>
@@ -85,23 +85,23 @@
               </div>
 
               <div class="min-w-0 flex-1">
-                <p dir="auto" class="truncate text-xs font-medium text-slate-400 dark:text-slate-500">
+                <p dir="auto" class="truncate text-xs font-medium text-[var(--radio-text-muted)]">
                   {{ streamName || $t(country) }}
                 </p>
 
-                <h2 dir="auto" class="mt-1.5 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-slate-950 sm:text-2xl dark:text-white">
+                <h2 dir="auto" class="mt-1.5 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-[var(--radio-text)] sm:text-2xl">
                   {{ nowPlayingTitle }}
                 </h2>
 
                 <p
                   v-if="nowPlayingArtist"
                   dir="auto"
-                  class="mt-1.5 truncate text-sm text-slate-500 dark:text-slate-400"
+                  class="mt-1.5 truncate text-sm text-[var(--radio-text-muted)]"
                 >
                   {{ nowPlayingArtist }}
                 </p>
 
-                <div class="mt-2 flex min-w-0 items-center gap-2 text-xs text-slate-400 dark:text-slate-500">
+                <div class="mt-2 flex min-w-0 items-center gap-2 text-xs text-[var(--radio-text-muted)]">
                   <span class="truncate">{{ $t(country) }}</span>
                   <span aria-hidden="true">•</span>
                   <span :title="currentDate" class="shrink-0 tabular-nums">{{ currentTime }}</span>
@@ -113,7 +113,7 @@
               <button
                 v-if="waiting"
                 type="button"
-                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-600 shadow-sm ring-1 ring-slate-200 sm:h-16 sm:w-16 dark:bg-white/10 dark:text-white dark:ring-white/10"
+                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] shadow-sm ring-1 ring-[var(--radio-border)] sm:h-16 sm:w-16"
                 aria-label="Loading stream"
                 disabled
               >
@@ -126,7 +126,7 @@
               <button
                 v-else-if="playing"
                 type="button"
-                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-slate-950 text-white shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16 dark:bg-white dark:text-slate-950"
+                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16"
                 @click="onPause"
                 aria-label="Pause radio"
               >
@@ -152,7 +152,7 @@
               <div class="hidden min-w-0 flex-1 items-center gap-3 sm:flex">
                 <button
                   type="button"
-                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
                   @click="toggleMute"
                   :aria-label="muted || volume === 0 ? 'Unmute' : 'Mute'"
                 >
@@ -190,10 +190,10 @@
                   :value="muted ? 0 : volume"
                   @input="onVolumeInput"
                   aria-label="Volume"
-                  class="radio-volume h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-slate-200 dark:bg-white/15"
+                  class="radio-volume h-1 min-w-0 flex-1 cursor-pointer appearance-none rounded-full bg-[var(--radio-track)]"
                 />
 
-                <span class="w-8 shrink-0 text-right text-[11px] tabular-nums text-slate-400 dark:text-slate-500">
+                <span class="w-8 shrink-0 text-right text-[11px] tabular-nums text-[var(--radio-text-muted)]">
                   {{ Math.round((muted ? 0 : volume) * 100) }}%
                 </span>
               </div>
@@ -253,9 +253,9 @@
 
             <div
               v-if="queueLoading && scheduleCount === 0 && stationCount === 0"
-              class="mt-4 flex items-center gap-2 rounded-xl border border-slate-200/80 bg-slate-50/70 px-3 py-2.5 text-xs text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400"
+              class="mt-4 flex items-center gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2.5 text-xs text-[var(--radio-text-muted)]"
             >
-              <span class="h-2 w-2 animate-pulse rounded-full bg-slate-400 dark:bg-slate-500"></span>
+              <span class="h-2 w-2 animate-pulse rounded-full bg-[var(--radio-text-muted)]"></span>
               <span>{{ $t("panel.updating") }}</span>
             </div>
 
@@ -293,7 +293,7 @@
 
             <div
               v-if="song?.currentMedia"
-              class="mt-4 border-t border-slate-100 pt-4 dark:border-white/10"
+              class="mt-4 border-t border-[var(--radio-border)] pt-4"
             >
               <div class="flex min-w-0 items-center gap-3">
                 <img
@@ -303,12 +303,12 @@
                   class="h-11 w-11 shrink-0 rounded-xl object-cover"
                 />
                 <div class="min-w-0">
-                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--radio-text-muted)]">
                     Now playing
                   </p>
-                  <p class="mt-0.5 truncate text-sm font-medium text-slate-700 dark:text-slate-200">
+                  <p class="mt-0.5 truncate text-sm font-medium text-[var(--radio-text)]">
                     {{ song.currentMedia.title }}
-                    <span v-if="song.currentMedia.artists" class="font-normal text-slate-400 dark:text-slate-500">
+                    <span v-if="song.currentMedia.artists" class="font-normal text-[var(--radio-text-muted)]">
                       · {{ song.currentMedia.artists }}
                     </span>
                   </p>

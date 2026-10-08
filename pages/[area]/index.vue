@@ -11,10 +11,10 @@
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
             {{ $t("panel.country") }}
           </p>
-          <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+          <h1 class="mt-2 text-3xl font-bold tracking-tight text-[var(--radio-text)] sm:text-4xl">
             {{ areaName }}
           </h1>
-          <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
+          <p class="mt-3 max-w-2xl text-sm leading-6 text-[var(--radio-text-muted)]">
             {{ seoDescription }}
           </p>
         </div>

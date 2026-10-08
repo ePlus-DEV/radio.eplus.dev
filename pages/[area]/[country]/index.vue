@@ -21,10 +21,10 @@
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
             {{ $t("panel.radio_in", { name: countryName }) }}
           </p>
-          <h1 class="mt-1 line-clamp-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          <h1 class="mt-1 line-clamp-2 text-2xl font-bold tracking-tight text-[var(--radio-text)] sm:text-3xl">
             {{ countryName }}
           </h1>
-          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <p class="mt-2 text-sm text-[var(--radio-text-muted)]">
             {{ stationCount ? stationCount + " stations" : seoDescription }}
           </p>
         </div>
