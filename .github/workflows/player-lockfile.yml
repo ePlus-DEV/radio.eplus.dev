@@ -1,0 +1,46 @@
+name: "Refresh radio player lockfile"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/player-lockfile.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/player-hls-fallback'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: "npm"
+
+      - name: Refresh lockfile
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Commit lockfile
+        shell: bash
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "chore: refresh lockfile for hls.js player"
+          git push origin "HEAD:${{ github.head_ref }}"
