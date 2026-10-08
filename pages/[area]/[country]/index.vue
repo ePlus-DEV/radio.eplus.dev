@@ -64,6 +64,7 @@ interface CountryCatalogPayload {
 const playback = usePlaybackStore();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
+const noIndex = Boolean(runtimeConfig.public.noIndex);
 const route = useRoute();
 
 const normalizeParam = (value: string | string[] | undefined): string =>
@@ -197,7 +198,7 @@ const countryCollectionSchema = computed(() =>
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "country-breadcrumb-schema",
       type: "application/ld+json",
@@ -211,7 +212,7 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? {} : ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,

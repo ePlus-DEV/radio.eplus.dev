@@ -107,6 +107,7 @@ import { selectVietnamFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
+const noIndex = Boolean(runtimeConfig.public.noIndex);
 const { t } = useI18n();
 const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
@@ -158,7 +159,7 @@ const homeCollectionSchema = computed(() =>
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "home-collection-schema",
       type: "application/ld+json",
@@ -166,7 +167,7 @@ useHead(() => ({
     },
   ],
 }));
-useSeoMeta({
+if (!noIndex) useSeoMeta({
   description: () => seoDescription.value,
   ogTitle: () => seoTitle.value,
   ogDescription: () => seoDescription.value,

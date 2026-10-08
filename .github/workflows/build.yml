@@ -61,6 +61,10 @@ jobs:
       - name: "Generate prerendered site"
         run: npm run generate
 
+      - name: "Assert staging pages are noindex"
+        if: github.base_ref == 'develop'
+        run: node scripts/assert-staging-noindex.mjs
+
       - name: "Install Chromium for UI regression tests"
         run: npx playwright install --with-deps chromium
 

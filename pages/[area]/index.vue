@@ -41,6 +41,7 @@ import {
 const { t } = useI18n();
 const route = useRoute();
 const config = useRuntimeConfig();
+const noIndex = Boolean(config.public.noIndex);
 const siteUrl = computed(() =>
   String(config.public.siteUrl).replace(/\/$/, ""),
 );
@@ -92,7 +93,7 @@ const areaCollectionSchema = computed(() =>
 
 useHead(() => ({
   title: seoTitle.value,
-  script: [
+  script: noIndex ? [] : [
     {
       key: "area-breadcrumb-schema",
       type: "application/ld+json",
@@ -105,7 +106,7 @@ useHead(() => ({
     },
   ],
 }));
-useSeoMeta(() => ({
+useSeoMeta(() => noIndex ? {} : ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,
