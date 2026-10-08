@@ -88,6 +88,9 @@ Important rules:
 - A station explicitly marked `cros: true` is different: its URL is intentionally proxied before reaching the player and must continue to work.
 - Plain non-HLS streams may still receive a generated proxy fallback.
 - Preserve fallback order and deduplication.
+- Previous/Next controls navigate the country station list; they are not source-fallback controls.
+- Previous/Next station navigation wraps around at the beginning/end of the list and keeps autoplay behavior consistent with selecting a station from the queue.
+- Keep station navigation logic in `utils/station-navigation.mjs` and cover it with `tests/station-navigation.test.mjs`.
 
 The Zing MP3 EDM station is a useful regression case:
 

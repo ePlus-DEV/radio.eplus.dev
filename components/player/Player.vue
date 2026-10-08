@@ -110,44 +110,90 @@
             </div>
 
             <div class="mt-5 flex items-center gap-3 sm:mt-6">
-              <button
-                v-if="waiting"
-                type="button"
-                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] shadow-sm ring-1 ring-[var(--radio-border)] sm:h-16 sm:w-16"
-                aria-label="Loading stream"
-                disabled
-              >
-                <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle class="opacity-20" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"></circle>
-                  <path class="opacity-80" fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3z"></path>
-                </svg>
-              </button>
+              <div class="flex shrink-0 items-center gap-2">
+                <button
+                  v-if="canNavigateStations"
+                  type="button"
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] transition hover:border-rose-300 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] active:scale-95 sm:h-11 sm:w-11"
+                  :aria-label="previousStationLabel"
+                  :title="previousStationLabel"
+                  @click="navigateStation(-1)"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="h-4.5 w-4.5 fill-none stroke-current"
+                  >
+                    <path
+                      d="m14.5 7-5 5 5 5M8 7v10"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
 
-              <button
-                v-else-if="playing"
-                type="button"
-                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16"
-                @click="onPause"
-                aria-label="Pause radio"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-current">
-                  <rect x="6" y="5" width="4" height="14" rx="1"></rect>
-                  <rect x="14" y="5" width="4" height="14" rx="1"></rect>
-                </svg>
-              </button>
+                <button
+                  v-if="waiting"
+                  type="button"
+                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] shadow-sm ring-1 ring-[var(--radio-border)] sm:h-16 sm:w-16"
+                  aria-label="Loading stream"
+                  disabled
+                >
+                  <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle class="opacity-20" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3"></circle>
+                    <path class="opacity-80" fill="currentColor" d="M12 3a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6V3z"></path>
+                  </svg>
+                </button>
 
-              <button
-                v-else
-                type="button"
-                class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/25 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-16 sm:w-16"
-                @click="onPlay"
-                :disabled="!hasPlayableSource"
-                aria-label="Play radio"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true" class="ml-0.5 h-6 w-6 fill-current">
-                  <path d="M8 5.7v12.6c0 .85.92 1.38 1.66.95l9.85-6.3a1.1 1.1 0 0 0 0-1.9l-9.85-6.3A1.1 1.1 0 0 0 8 5.7Z"></path>
-                </svg>
-              </button>
+                <button
+                  v-else-if="playing"
+                  type="button"
+                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--radio-inverse-bg)] text-[var(--radio-inverse-text)] shadow-lg shadow-slate-950/15 transition hover:scale-[1.04] active:scale-95 sm:h-16 sm:w-16"
+                  @click="onPause"
+                  aria-label="Pause radio"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-current">
+                    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                    <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+                  </svg>
+                </button>
+
+                <button
+                  v-else
+                  type="button"
+                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/25 transition hover:scale-[1.04] hover:bg-rose-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-16 sm:w-16"
+                  @click="onPlay"
+                  :disabled="!hasPlayableSource"
+                  aria-label="Play radio"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" class="ml-0.5 h-6 w-6 fill-current">
+                    <path d="M8 5.7v12.6c0 .85.92 1.38 1.66.95l9.85-6.3a1.1 1.1 0 0 0 0-1.9l-9.85-6.3A1.1 1.1 0 0 0 8 5.7Z"></path>
+                  </svg>
+                </button>
+
+                <button
+                  v-if="canNavigateStations"
+                  type="button"
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)] transition hover:border-rose-300 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] active:scale-95 sm:h-11 sm:w-11"
+                  :aria-label="nextStationLabel"
+                  :title="nextStationLabel"
+                  @click="navigateStation(1)"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    class="h-4.5 w-4.5 fill-none stroke-current"
+                  >
+                    <path
+                      d="m9.5 7 5 5-5 5M16 7v10"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
 
               <div class="hidden min-w-0 flex-1 items-center gap-3 sm:flex">
                 <button
@@ -351,6 +397,7 @@ import {
   buildPlaybackSources,
   nextPlaybackIndex,
 } from "~/utils/radio-source-plan.mjs";
+import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -502,7 +549,29 @@ const activeSourceName = computed(() =>
 const scheduleCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
 );
-const stationCount = computed(() => props.stations?.length || 0);
+const stationList = computed<RadioStationOption[]>(() => props.stations || []);
+const stationCount = computed(() => stationList.value.length);
+const canNavigateStations = computed(() => stationCount.value > 1);
+const adjacentStation = (offset: -1 | 1): RadioStationOption | undefined =>
+  getAdjacentStation(
+    stationList.value,
+    props.activeStationId,
+    offset,
+  ) as RadioStationOption | undefined;
+
+const previousStation = computed(() => adjacentStation(-1));
+const nextStation = computed(() => adjacentStation(1));
+const previousStationLabel = computed(() =>
+  previousStation.value
+    ? `Previous station: ${previousStation.value.title}`
+    : "Previous station",
+);
+const nextStationLabel = computed(() =>
+  nextStation.value
+    ? `Next station: ${nextStation.value.title}`
+    : "Next station",
+);
+
 const hasSidebar = computed(
   () => stationCount.value > 0 || scheduleCount.value > 0,
 );
@@ -1018,6 +1087,13 @@ const selectStation = (station: RadioStationOption): void => {
   pendingAutoPlay.value = true;
   mobileQueueOpen.value = false;
   emit("select-station", station);
+};
+
+const navigateStation = (offset: -1 | 1): void => {
+  const station = adjacentStation(offset);
+  if (!station) return;
+
+  selectStation(station);
 };
 
 const toggleMute = (): void => {

@@ -43,6 +43,7 @@ components/AppFooter.vue             Global footer
 components/player/Player.vue         Main audio/HLS player
 components/player/Queue.vue          Schedule/channel side panel
 utils/radio-source-plan.mjs          Playback source/fallback ordering
+utils/station-navigation.mjs         Previous/next station ordering
 utils/station-schedule.mjs            Schedule URL/provider normalization
 pages/[area]/[country]/[station].vue Station detail page
 public/radio/world.json              World/country metadata
@@ -207,6 +208,19 @@ Do not casually revert to Video.js just because older commits contain a working 
 5. Recover bounded HLS network/media failures when possible.
 6. Advance to the next candidate only when the current candidate actually fails.
 7. Stop after the global retry budget.
+
+### Previous / Next station navigation
+
+The main transport controls include Previous and Next station actions.
+
+- These controls navigate the current country station list, not the current station's stream/source fallbacks.
+- Navigation wraps around: Previous on the first station selects the last, Next on the last selects the first.
+- If the current station is temporarily missing from the list, Next falls back to the first station and Previous to the last.
+- Changing station follows the same autoplay path as selecting a station from the sidebar.
+- The target station name is included in the button title/ARIA label.
+- Station-order selection belongs in `utils/station-navigation.mjs`.
+
+Regression test: `tests/station-navigation.test.mjs`.
 
 ### Critical HLS regression discovered on 2026-10-08
 
@@ -463,6 +477,7 @@ Important current guards:
 - `language-dropdown.test.mjs`
 - `player-hls-startup.test.mjs`
 - `radio-source-plan.test.mjs`
+- `station-navigation.test.mjs`
 - `station-route-lifecycle.test.mjs`
 - `station-schedule.test.mjs`
 - `station-realtime-ssr.test.mjs`
