@@ -265,6 +265,7 @@ const fetchData = async (): Promise<void> => {
 watch(
   () => [area.value, slug.value],
   () => {
+    if (!import.meta.client) return;
     clearSchedule();
     void fetchData();
   },
