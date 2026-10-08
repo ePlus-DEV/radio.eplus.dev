@@ -165,10 +165,12 @@ watch(
 
 onMounted(() => {
   window.addEventListener("keydown", onKeydown);
+  window.addEventListener("radio:open-search", openSearch);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown);
+  window.removeEventListener("radio:open-search", openSearch);
   document.body.style.overflow = "";
 });
 </script>
