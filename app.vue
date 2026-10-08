@@ -5,7 +5,7 @@
     <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
       <AppSidebar />
       <main
-        class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-24 sm:px-6 sm:pt-28 xl:px-0"
+        class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-20 sm:px-6 sm:pt-28 xl:px-0"
         id="main-content"
         scroll-container
       >

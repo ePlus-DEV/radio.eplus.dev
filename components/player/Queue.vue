@@ -7,7 +7,7 @@
         :items="tabs"
         :content="false"
         size="sm"
-        :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-[var(--radio-border)] shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:text-[var(--radio-text)]' }"
+        :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-violet-500/25 shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:font-semibold data-[state=active]:text-violet-600 dark:data-[state=active]:text-violet-300' }"
         :aria-label="$t('player.sidebar_label')"
       />
 
@@ -64,10 +64,10 @@
           v-for="station in filteredStations"
           :key="station.id"
           type="button"
-          class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition"
+          class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left transition"
           :class="
             station.id === activeStationId
-              ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
+              ? 'bg-violet-500/10 ring-1 ring-inset ring-violet-500/15'
               : 'hover:bg-[var(--radio-hover)]'
           "
           @click="$emit('select-station', station)"
@@ -89,7 +89,7 @@
               class="block truncate text-sm font-semibold"
               :class="
                 station.id === activeStationId
-                  ? 'text-rose-600 dark:text-rose-300'
+                  ? 'text-violet-600 dark:text-violet-300'
                   : 'text-[var(--radio-text)]'
               "
             >

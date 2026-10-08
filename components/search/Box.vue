@@ -28,10 +28,10 @@
         </button>
       </div>
 
-      <p
-        v-if="!algoliaConfigured"
-        class="mt-3 text-xs leading-5 text-slate-400"
-      >
+      <p v-if="usingLocal && localLoading" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
+        {{ $t('panel.updating') }}
+      </p>
+      <p v-else-if="usingLocal && localError" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
         {{ $t('search.unavailable') }}
       </p>
     </div>
@@ -42,21 +42,24 @@
           {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
         </span>
         <span
-          v-if="searchResult?.hits?.length"
+          v-if="displayHits.length"
           class="text-xs tabular-nums text-slate-400"
         >
-          {{ searchResult.hits.length }}
+          {{ displayHits.length }}
         </span>
       </div>
-      <SearchResult
-        :result="searchResult?.hits"
-        @select="$emit('close')"
-      />
+      <SearchResult :result="displayHits" @select="$emit('close')" />
+      <p v-if="!localLoading && !localError && !displayHits.length"
+        class="px-3 py-8 text-center text-sm text-[var(--radio-text-muted)]" role="status">
+        {{ $t('panel.no_channels') }}
+      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { searchLocalStations } from "~/utils/station-search.mjs";
+
 defineEmits<{
   (event: "close"): void;
 }>();
@@ -67,29 +70,57 @@ const { search, result: searchResult } = useAlgoliaSearch(
   config.public.algoliaIndexStation,
 );
 
+interface StationSearchItem {
+  objectID: string;
+  station_name: string;
+  station_country: string;
+  country_label?: string;
+  station_image: string;
+  url: string;
+  featured?: boolean;
+}
 const input = ref("");
 const inputEl = useTemplateRef("inputEl");
+const localIndex = ref<StationSearchItem[]>([]);
+const localLoading = ref(true);
+const localError = ref(false);
+const algoliaFailed = ref(false);
+const usingLocal = computed(() => !algoliaConfigured.value || algoliaFailed.value || !input.value.trim());
+const displayHits = computed(() =>
+  usingLocal.value
+    ? searchLocalStations(localIndex.value, input.value)
+    : (searchResult.value?.hits || [])
+);
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const loadLocalIndex = async () => {
+  try {
+    const items = await $fetch<StationSearchItem[]>("/search/stations.json", { timeout: 10_000 });
+    if (!Array.isArray(items)) throw new Error("Invalid station search index");
+    localIndex.value = items;
+  } catch (error) {
+    localError.value = true;
+    console.error("Unable to load local radio catalog:", error);
+  } finally {
+    localLoading.value = false;
+  }
+};
 
 watch(input, (value: string) => {
   if (typingTimeout) clearTimeout(typingTimeout);
-  if (!algoliaConfigured.value) return;
-
+  if (!algoliaConfigured.value || algoliaFailed.value || !value.trim()) return;
   typingTimeout = setTimeout(async () => {
     try {
-      await search({
-        query: value,
-        requestOptions: {
-          hitsPerPage: 20,
-        },
-      });
-    } catch (error) {
-      console.error("Unable to search stations:", error);
+      await search({ query: value, requestOptions: { hitsPerPage: 20 } });
+    } catch {
+      // Do not strand the search modal when a third-party service is down.
+      algoliaFailed.value = true;
     }
   }, 250);
 });
 
 onMounted(() => {
+  void loadLocalIndex();
   window.setTimeout(() => inputEl.value?.inputRef?.focus(), 50);
 });
 

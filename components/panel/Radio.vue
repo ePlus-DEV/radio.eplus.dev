@@ -10,11 +10,11 @@
           <div class="h-5 w-36 animate-pulse rounded-full bg-[var(--radio-border-strong)]"></div>
           <div class="h-4 w-12 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
         </div>
-        <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
+        <div class="grid grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
           <div
             v-for="n in 12"
             :key="n"
-            class="aspect-[4/3] animate-pulse rounded-2xl bg-[var(--radio-surface-soft)]"
+            class="aspect-[7/4] animate-pulse rounded-2xl bg-[var(--radio-surface-soft)] sm:aspect-[5/4] lg:aspect-square"
           ></div>
         </div>
       </section>
@@ -43,7 +43,7 @@
         </span>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
+      <div class="grid grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
         <NuxtLink
           v-for="country in continent"
           :key="country.url"
@@ -52,12 +52,12 @@
           :title="$t(country.name)"
           :aria-label="$t(country.name)"
         >
-          <div class="radio-themed-artwork relative flex aspect-square items-center justify-center overflow-hidden p-5">
+          <div class="radio-themed-artwork relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square">
             <img
               loading="lazy"
               :src="country.flag"
               :alt="$t(country.name)"
-              class="max-h-[70%] max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
+              class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
             />
             <span
               v-if="country.station_count !== null"
@@ -67,7 +67,7 @@
             </span>
           </div>
 
-          <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-3">
+          <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3">
             <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
               {{ $t(country.name) }}
             </span>

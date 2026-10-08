@@ -30,7 +30,7 @@
 
         <div class="flex items-center justify-center gap-0.5 sm:gap-2">
           <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-9 w-9 justify-center rounded-full" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
-          <UButton class="h-11 w-11 justify-center rounded-full bg-rose-500 text-white hover:bg-rose-600 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
+          <UButton class="h-11 w-11 justify-center rounded-full bg-violet-600 text-white shadow-sm shadow-violet-900/20 hover:bg-violet-500 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>

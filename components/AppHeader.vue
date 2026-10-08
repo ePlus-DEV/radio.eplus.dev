@@ -1,7 +1,7 @@
 <template>
-  <header class="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6">
+  <header class="fixed inset-x-0 top-0 z-50 px-3 pt-2 sm:px-6 sm:pt-3">
     <nav
-      class="mx-auto flex h-16 max-w-[1920px] items-center justify-between rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-header-bg)] px-3 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:shadow-black/20 sm:px-4"
+      class="mx-auto flex h-14 max-w-[1920px] items-center justify-between rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-header-bg)] px-2.5 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:shadow-black/20 sm:h-16 sm:px-4"
     >
       <div class="flex min-w-0 items-center gap-2">
         <NuxtLink

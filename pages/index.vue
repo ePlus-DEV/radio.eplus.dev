@@ -69,7 +69,7 @@
       </div>
     </section>
 
-    <section id="featured-radio" class="scroll-mt-28">
+    <section id="featured-radio" class="scroll-mt-24">
       <div class="mb-3 flex items-center justify-between px-1">
         <div>
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
@@ -81,10 +81,10 @@
         </div>
       </div>
 
-      <PanelStation @select-station="playFeatured" :stations="featuredStations" :active-station-id="playback.station?.id" :country-name="$t('world.asia.' + featuredCountry.replace(/-/g, '_'))" />
+      <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-id="playback.station?.id" />
     </section>
 
-    <section id="explore-radio" class="scroll-mt-28">
+    <section id="explore-radio" class="scroll-mt-24">
       <div class="mb-3 px-1">
         <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
           {{ $t('home.explore') }}
