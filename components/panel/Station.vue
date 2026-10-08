@@ -1,5 +1,5 @@
 <template>
-  <section class="radio-surface my-6 overflow-hidden">
+  <section class="radio-surface overflow-hidden">
     <div
       class="flex items-center justify-between gap-3 border-b border-slate-200/70 px-4 py-4 dark:border-white/10 sm:px-5"
     >
@@ -12,7 +12,7 @@
         </h2>
       </div>
       <span
-        class="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium tabular-nums text-slate-500 dark:bg-white/5 dark:text-slate-400"
+        class="badge badge-sm h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
       >
         {{ results.length }}
       </span>
@@ -26,7 +26,7 @@
         v-for="data in results"
         :key="data.objectID"
         :to="data.url"
-        class="radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
+        class="card radio-themed-soft group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5"
         :class="
           isRouteActive(data.objectID)
             ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
@@ -59,7 +59,7 @@
         </div>
 
         <div class="border-t border-[var(--radio-border)] px-3 py-3">
-          <p class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-slate-700 dark:text-slate-200">
+          <p dir="auto" class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-slate-700 dark:text-slate-200">
             {{ data.title }}
           </p>
         </div>
