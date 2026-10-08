@@ -154,6 +154,10 @@ npx playwright install chromium
 npm run test:ui
 ```
 
+Browser checks are temporarily optional. CI runs them only when the repository
+variable `ENABLE_BROWSER_TESTS` is `true`; unit tests, generation and staging
+noindex checks remain enabled.
+
 The browser suite uses local audio fixtures and intercepted providers. It checks
 persistent MP3/HLS playback, station navigation, cancellation, language/theme
 menus, and a 320px layout without depending on live streams.
