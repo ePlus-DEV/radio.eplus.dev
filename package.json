@@ -26,7 +26,6 @@
     "@pinia/nuxt": "^1.0.2",
     "@tailwindcss/vite": "^4.3.3",
     "@vesp/nuxt-fontawesome": "^2.0.0",
-    "daisyui": "^5.7.47",
     "dayjs-nuxt": "^2.1.11",
     "hls.js": "^1.7.3",
     "moment": "^2.31.0",
