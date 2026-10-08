@@ -172,6 +172,8 @@ Read `docs/SEO.md` before changing route/data-loading behavior.
 - Keep BreadcrumbList + CollectionPage/ItemList + RadioStation structured data aligned with visible route content.
 - Do not generate fake hreflang tags while i18n uses `strategy: "no_prefix"`; proper multilingual SEO requires distinct locale URLs.
 - Do not invent Privacy Policy or Terms content merely to eliminate a 404. Use owner-approved content or remove the links.
+- Do not add sitewide Header/Footer links to routes that do not exist; Nitro's prerender crawler will follow them and hard 404s should remain build failures.
+- Route discovery must ignore non-catalog/asset-only directories under `public/radio`; a directory is not an area merely because it exists.
 
 Regression guards:
 
