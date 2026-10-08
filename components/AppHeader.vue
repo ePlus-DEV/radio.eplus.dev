@@ -42,6 +42,28 @@
           >
             {{ $t("navmenu.homepage") }}
           </NuxtLink>
+          <NuxtLink
+            to="/statistics"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition"
+            :class="
+              route.path === '/statistics'
+                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
+                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
+            "
+          >
+            {{ $t("navmenu.statistics") }}
+          </NuxtLink>
+          <NuxtLink
+            to="/about"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition"
+            :class="
+              route.path === '/about'
+                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
+                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
+            "
+          >
+            {{ $t("navmenu.about") }}
+          </NuxtLink>
         </div>
       </div>
 
@@ -89,6 +111,29 @@
       >
         <fa :icon="['fas', 'house']" class="w-4 text-slate-400" />
         {{ $t("navmenu.homepage") }}
+      </NuxtLink>
+      <NuxtLink
+        to="/statistics"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
+        @click="mobileOpen = false"
+      >
+        <fa :icon="['fas', 'chart-simple']" class="w-4 text-slate-400" />
+        {{ $t("navmenu.statistics") }}
+      </NuxtLink>
+      <NuxtLink
+        to="/about"
+        class="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
+        @click="mobileOpen = false"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="h-4 w-4 fill-none stroke-slate-400"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="9" stroke-width="1.8" />
+          <path d="M12 10v6M12 7h.01" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        {{ $t("navmenu.about") }}
       </NuxtLink>
       <a
         href="https://old-radio.eplus.dev"
