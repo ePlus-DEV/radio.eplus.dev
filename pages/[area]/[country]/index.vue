@@ -45,7 +45,11 @@
       @select-station="selectStation"
     />
 
-    <PanelStation />
+    <PanelStation
+      :stations="stations"
+      :active-station-id="activeStationId"
+      :country-name="countryName"
+    />
   </div>
 </template>
 

@@ -353,6 +353,7 @@ Observed/possible symptoms when navigating without a full page reload:
 
 - `pages/[area]/[country]/[station].vue` owns the country catalog and active station state.
 - `components/panel/Station.vue` is presentational and must not independently fetch/emit station catalog state.
+- Both country and station-detail pages must pass their current station list into `PanelStation`. A bare `<PanelStation />` renders its safe default empty array and therefore shows `0 / updating` even if the Player sidebar already has stations.
 - The catalog async key is route-reactive, and returned catalog data is accepted only when its identity matches the active area/country.
 - Route changes immediately:
   - increment the request version;

@@ -111,7 +111,8 @@ before changing the player.
 Nuxt can reuse the station page component when only route params change. Treat station-specific async data as **route-scoped state**.
 
 - The station detail page is the source of truth for the country catalog and active station metadata.
-- Do not add a second catalog fetch inside `PanelStation`; it is presentational.
+- `PanelStation` is presentational and never fetches its own catalog.
+- Every page that renders `PanelStation` must pass the same `stations` list and active station identity used by the player. Do not render a bare `<PanelStation />`, or it will intentionally fall back to an empty list.
 - On area/country/station route changes, invalidate old requests and clear polling, schedule, song, playlist, lyric popup/lines and transient stream state before activating the new station.
 - Async schedule/detail/lyric responses must verify the current request version before mutating UI state.
 - Zing behavior must be detected from the Zing schedule provider URL, not from `country === viet-nam`.
