@@ -115,6 +115,9 @@ Nuxt can reuse the station page component when only route params change. Treat s
 - The lyric control is Zing-specific; do not show it for every Vietnamese station.
 - `schedule` is legacy data and can contain non-URL values such as booleans. Normalize and fetch only valid HTTP(S) URLs.
 - Keep schedule/search tab state route-aware so a previous station's UI does not leak into the next station.
+- Station catalog/static metadata may run during SSR/prerender, but realtime provider calls must not.
+- Schedule, current-song/detail and lyric requests are browser-only and must be guarded with `import.meta.client`.
+- Do not start realtime polling until the station page is mounted/hydrated; prerendering must never depend on external schedule providers such as Webrad.io or Zing endpoints.
 
 Regression guards:
 
