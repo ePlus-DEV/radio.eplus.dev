@@ -2,7 +2,7 @@
   <div class="min-h-screen w-full overflow-x-hidden bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
     <main
-      class="mx-auto w-full max-w-7xl min-w-0 px-3 pb-10 pt-24 sm:px-5 sm:pt-28 lg:px-6"
+      class="mx-auto w-full max-w-7xl min-w-0 px-4 pb-14 pt-24 sm:px-6 sm:pt-28"
       scroll-container
     >
       <NuxtPage />
