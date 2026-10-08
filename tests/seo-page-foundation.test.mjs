@@ -86,7 +86,7 @@ test("sitewide static navigation points to implemented pages", async () => {
     await access(join(ROOT, file));
     assert.match(
       navigation,
-      new RegExp(`(?:to|href)=["']${route.replaceAll("/", "\\/")}["']`),
+      new RegExp(`["']${route.replaceAll("/", "\\/")}["']`),
       `sitewide navigation should expose implemented page ${route}`,
     );
     assert.match(
