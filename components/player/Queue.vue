@@ -4,16 +4,16 @@
       <div
         v-if="hasSchedule && hasStations"
         role="tablist"
-        class="tabs tabs-box grid w-full grid-cols-2 gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1"
+        class="grid w-full grid-cols-2 gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1"
         aria-label="Player sidebar"
       >
         <button
           type="button"
           role="tab"
-          class="tab h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
+          class="flex items-center justify-center h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
           :class="
             activeTab === 'schedule'
-              ? 'tab-active !bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
+              ? 'bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
               : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
           "
           :aria-selected="activeTab === 'schedule'"
@@ -40,10 +40,10 @@
         <button
           type="button"
           role="tab"
-          class="tab h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
+          class="flex items-center justify-center h-8 min-h-8 rounded-lg px-3 text-xs font-semibold transition"
           :class="
             activeTab === 'stations'
-              ? 'tab-active !bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
+              ? 'bg-[var(--radio-surface)] !text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)] shadow-sm'
               : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
           "
           :aria-selected="activeTab === 'stations'"
@@ -75,7 +75,7 @@
         <span class="truncate text-xs font-semibold text-[var(--radio-text)]">
           {{ hasStations ? $t("panel.channels") : $t("panel.schedule") }}
         </span>
-        <span class="badge badge-sm border-0 bg-rose-500/10 text-[10px] font-bold text-rose-500">
+        <span class="inline-flex items-center rounded-full border-0 bg-rose-500/10 text-[10px] font-bold text-rose-500">
           {{ hasStations ? stations.length : scheduleCount }}
         </span>
       </div>
@@ -86,13 +86,13 @@
       >
         <span
           v-if="countryName"
-          class="badge badge-outline hidden h-9 shrink-0 border-[var(--radio-border)] bg-[var(--radio-surface)] px-2.5 text-[11px] font-semibold text-[var(--radio-text-muted)] sm:inline-flex"
+          class="hidden items-center rounded-full border h-9 shrink-0 border-[var(--radio-border)] bg-[var(--radio-surface)] px-2.5 text-[11px] font-semibold text-[var(--radio-text-muted)] sm:inline-flex"
         >
           {{ countryName }}
         </span>
 
         <label
-          class="input input-sm flex h-9 min-h-9 min-w-0 flex-1 items-center gap-2 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface)] px-3 shadow-none outline-none transition focus-within:border-rose-300 focus-within:ring-2 focus-within:ring-rose-400/15"
+          class="flex h-9 min-h-9 min-w-0 flex-1 items-center gap-2 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface)] px-3 shadow-none outline-none transition focus-within:border-rose-300 focus-within:ring-2 focus-within:ring-rose-400/15"
         >
           <span class="sr-only">{{ $t("panel.search_channels") }}</span>
           <svg
