@@ -211,8 +211,8 @@ const sourceName = (source: RadioSource, index: number): string => {
   if (source.label?.trim()) return source.label.trim();
 
   const sourceKey = String(source.source || "").trim().toLowerCase();
-  if (sourceKey === "primary" || index === 0) return "Primary";
-  if (sourceKey.includes("alternative")) return "Alternative";
+  if (sourceKey === "primary" || index === 0) return t('player.primary_source');
+  if (sourceKey.includes("alternative")) return t('player.alternative_source');
   if (sourceKey) {
     return sourceKey
       .split(/[-_]/g)
@@ -221,7 +221,7 @@ const sourceName = (source: RadioSource, index: number): string => {
       .join(" ");
   }
 
-  return `Source ${index + 1}`;
+  return t('player.source_number', { number: index + 1 });
 };
 
 const sourceFormat = (source: RadioSource): string => {
@@ -236,20 +236,20 @@ const sourceFormat = (source: RadioSource): string => {
   if (/\.pls(?:$|[?#])/i.test(src)) return "PLS";
   if (/\.m3u(?:$|[?#])/i.test(src)) return "M3U";
 
-  return "Stream";
+  return t('player.stream_format');
 };
 
 const sourceHost = (source: RadioSource): string => {
   try {
     return new URL(source.src).hostname.replace(/^www\./, "");
   } catch {
-    return source.proxied ? "Proxy" : "Direct";
+    return source.proxied ? t('player.proxy') : t('player.direct');
   }
 };
 
 const sourceMenuItems = computed(() => sourceList.value.map((source, index) => ({
   label: `${index + 1}. ${sourceName(source, index)} · ${sourceFormat(source)}`,
-  description: source.proxied ? 'Proxy' : sourceHost(source),
+  description: source.proxied ? t('player.proxy') : sourceHost(source),
   type: 'checkbox' as const,
   checked: index === activeSourceIndex.value,
   onSelect: () => selectSource(index),

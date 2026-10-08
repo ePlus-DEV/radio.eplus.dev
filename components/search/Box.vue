@@ -32,7 +32,7 @@
         v-if="!algoliaConfigured"
         class="mt-3 text-xs leading-5 text-slate-400"
       >
-        Search service is unavailable right now. Popular stations are still shown below.
+        {{ $t('search.unavailable') }}
       </p>
     </div>
 

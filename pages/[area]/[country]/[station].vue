@@ -187,12 +187,12 @@ const stationName = computed(
       .join(" "),
 );
 const seoTitle = computed(
-  () => `${stationName.value} Live Radio - ${countryName.value}`,
+  () => t("seo.station_title", { station: stationName.value, country: countryName.value }),
 );
 const seoDescription = computed(
   () =>
     stationMeta.value?.description ||
-    `Listen to ${stationName.value} live from ${countryName.value} on Radio ePlus.`,
+    t("seo.station_description", { station: stationName.value, country: countryName.value }),
 );
 const seoImage = computed(() => {
   const image = stationMeta.value?.features;
@@ -204,7 +204,7 @@ const canonicalUrl = computed(
 );
 const breadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
-    { name: "Home", path: "/" },
+    { name: t("seo.home_breadcrumb"), path: "/" },
     { name: areaName.value, path: `/${area.value}` },
     { name: countryName.value, path: `/${area.value}/${slug.value}` },
     { name: stationName.value, path: stationPath.value },

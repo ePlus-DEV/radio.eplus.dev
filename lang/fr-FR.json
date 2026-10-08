@@ -1,6 +1,6 @@
 {
   "404": {
-    "content": "Nous tenons à vous informer que la page que vous recherchez n'existe pas !"
+    "content": "Désolé, la page demandée est introuvable."
   },
   "navmenu": {
     "homepage": "Page d'accueil",
@@ -8,10 +8,10 @@
     "blog": "Blog",
     "group": "Groupe",
     "terms": "Conditions d'utilisation",
-    "privacy": "politique de confidentialité",
+    "privacy": "Politique de confidentialité",
     "contact": "Contact",
     "language": "Langue:",
-    "old_version": "#ancienneversion",
+    "old_version": "Ancienne version",
     "statistics": "Statistiques",
     "changelog": "Journal des modifications"
   },
@@ -141,23 +141,23 @@
   "panel": {
     "most_popular": "Le plus populaire à {name}",
     "frequency": "Fréquence",
-    "play_from_radio": "Écouter à la radio",
+    "play_from_radio": "Écouter la radio",
     "country": "Pays",
     "radio_in": "Radio à {name}",
     "description": "Description",
     "category": "Catégorie",
-    "schedule": "Calendrier",
+    "schedule": "Programme",
     "playlist": "Liste de lecture",
     "next": "Suivant",
-    "lyric": "Lyrique",
-    "no_lyric": "Pas de paroles",
+    "lyric": "Paroles",
+    "no_lyric": "Paroles indisponibles",
     "updating": "Mise à jour...",
     "channels": "Toutes les stations",
-    "search_channels": "Rechercher une station...",
+    "search_channels": "Rechercher des stations…",
     "no_channels": "Aucune station trouvée"
   },
   "button": {
-    "back": "Dos",
+    "back": "Retour",
     "close": "Fermer"
   },
   "popup": {
@@ -170,18 +170,18 @@
   },
   "notify": {
     "success": "Succès",
-    "success_content": "Peut écouter la radio : {radio}",
+    "success_content": "Lecture en cours : {radio}",
     "error": "Erreur",
-    "error_content": "Impossible d'écouter la radio : {radio}"
+    "error_content": "Lecture impossible : {radio}"
   },
   "statistics_tooltip": {
     "text": "Incidents : {num} | Temps d'arrêt : {time} min | {response} ms"
   },
   "table": {
     "status": "Statut",
-    "commit": "Commettre",
-    "created": "Créé",
-    "updated": "Mis à jour",
+    "commit": "Commit Git",
+    "created": "Créé le",
+    "updated": "Mis à jour le",
     "published": "Publié",
     "view": "Voir"
   },
@@ -220,7 +220,15 @@
     "listen_country": "Écouter une station",
     "explore": "Explorer les régions",
     "previous": "Station précédente : {name}",
-    "next": "Station suivante : {name}"
+    "next": "Station suivante : {name}",
+    "sidebar_label": "Stations et programmes",
+    "live": "En direct",
+    "primary_source": "Source principale",
+    "alternative_source": "Source secondaire",
+    "source_number": "Source {number}",
+    "stream_format": "Flux audio",
+    "proxy": "Proxy",
+    "direct": "Accès direct"
   },
   "site_pages": {
     "common": {
@@ -358,5 +366,50 @@
       "generic_title": "Une erreur s'est produite",
       "generic_body": "Impossible de charger cette page. Revenez à l'accueil puis réessayez."
     }
+  },
+  "home": {
+    "live_badge": "Radio internet en direct",
+    "title": "Écoutez les radios du monde entier",
+    "description": "Parcourez les stations par région et par pays, découvrez des radios locales et écoutez-les en un clic.",
+    "start_listening": "Écouter maintenant",
+    "explore_countries": "Explorer les pays",
+    "countries": "Pays",
+    "regions": "Régions",
+    "streaming": "En direct",
+    "featured": "À la une",
+    "explore": "Découvrir",
+    "browse_country": "Parcourir par pays"
+  },
+  "sidebar": {
+    "browse_radio": "Explorer les radios",
+    "radio_regions": "Régions radio",
+    "live_badge": "RADIO EN DIRECT",
+    "description": "Découvrez des stations en direct du monde entier à tout moment."
+  },
+  "search": {
+    "unavailable": "La recherche est momentanément indisponible. Les stations populaires restent affichées ci-dessous."
+  },
+  "chat": {
+    "open": "Ouvrir l'assistant",
+    "title": "Assistant",
+    "powered_by": "Propulsé par Mendable et Vercel",
+    "greeting": "Bonjour ! Comment puis-je vous aider ?",
+    "placeholder": "Saisissez votre message",
+    "send": "Envoyer"
+  },
+  "seo": {
+    "home_breadcrumb": "Accueil",
+    "country_title": "Radio en direct en {country}",
+    "country_description": "Écoutez {count} stations de radio en direct en {country}. Découvrez les stations locales sur Radio ePlus.",
+    "country_description_empty": "Écoutez les stations de radio en direct en {country} sur Radio ePlus.",
+    "station_title": "{station} en direct – {country}",
+    "station_description": "Écoutez {station} en direct depuis {country} sur Radio ePlus."
+  },
+  "brand": {
+    "live_radio": "Radio en direct"
+  },
+  "footer": {
+    "tagline": "Des radios en direct du monde entier",
+    "description": "Trouvez des stations par région ou pays et écoutez-les instantanément sur tous vos appareils."
   }
 }
