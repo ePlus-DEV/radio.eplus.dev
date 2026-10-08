@@ -20,7 +20,7 @@
         </div>
         <button
           type="button"
-          class="btn btn-ghost btn-square h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-slate-400 shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
+          class="inline-flex items-center justify-center h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-slate-400 shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
           :aria-label="$t('button.close')"
           @click="$emit('close')"
         >
