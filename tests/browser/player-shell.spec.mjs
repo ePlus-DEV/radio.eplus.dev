@@ -55,6 +55,40 @@ test('audio, volume and selected station survive home/region/country navigation;
   expect(await page.evaluate(() => document.querySelector('audio') === window.radioSavedAudio)).toBe(true);
 });
 
+test('Media Session publishes station artwork and switches stations with headset Next/Previous', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.radioMediaSession = { callbacks: {}, metadata: null, playbackState: 'none' };
+    Object.defineProperty(navigator, 'mediaSession', {
+      configurable: true,
+      value: {
+        setActionHandler(name, handler) { window.radioMediaSession.callbacks[name] = handler; },
+        set metadata(value) { window.radioMediaSession.metadata = value; },
+        get metadata() { return window.radioMediaSession.metadata; },
+        set playbackState(value) { window.radioMediaSession.playbackState = value; },
+        get playbackState() { return window.radioMediaSession.playbackState; },
+      },
+    });
+    window.MediaMetadata = class { constructor(data) { Object.assign(this, data); } };
+  });
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('Studio Brussel');
+  const image = await page.evaluate(() => window.radioMediaSession.metadata?.artwork?.[0]?.src);
+  expect(image).toMatch(/^https?:\/\//);
+  expect(image).toContain('/img/');
+  const supported = await page.evaluate(() => Object.keys(window.radioMediaSession.callbacks));
+  expect(supported).toEqual(expect.arrayContaining(['play', 'pause', 'nexttrack', 'previoustrack']));
+  expect(await page.evaluate(() => window.radioMediaSession.callbacks.seekforward)).toBeNull();
+  expect(await page.evaluate(() => window.radioMediaSession.callbacks.seekbackward)).toBeNull();
+
+  await page.evaluate(() => window.radioMediaSession.callbacks.nexttrack());
+  await expect(page).toHaveURL(/\/europe\/belgium\/mnm$/);
+  await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('MNM');
+  await page.evaluate(() => window.radioMediaSession.callbacks.previoustrack());
+  await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
+  await expect.poll(() => page.evaluate(() => window.radioMediaSession.metadata?.album)).toBe('Studio Brussel');
+});
+
 test('station cards start the selected station while retaining real navigation links', async ({ page }) => {
   await mockMedia(page);
   await ready(page, '/europe/belgium');

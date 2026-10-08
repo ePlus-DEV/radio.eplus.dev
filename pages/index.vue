@@ -103,6 +103,7 @@ import worldData from "~/data/world";
 import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
+import { selectVietnamFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
@@ -111,7 +112,9 @@ const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
 );
 const playback = usePlaybackStore();
-const featuredCountry = String(runtimeConfig.public.pinChannelFavorites || 'viet-nam');
+// This homepage curation is intentionally Vietnam-specific; do not derive it
+// from the configurable country favorite or an unverified alphabetic catalog.
+const featuredCountry = 'viet-nam';
 const { data: featuredCatalog } = await useAsyncData('featured-catalog', async () => {
   if (import.meta.server) {
     const { readFile } = await import('node:fs/promises');
@@ -120,8 +123,8 @@ const { data: featuredCatalog } = await useAsyncData('featured-catalog', async (
   }
   return await $fetch<Record<string, RadioCatalogEntry>>(`/radio/asia/${featuredCountry}.json`);
 });
-const featuredEntries = computed(() => Object.entries(featuredCatalog.value || {}).sort((a, b) => Number(Boolean(b[1].favorite)) - Number(Boolean(a[1].favorite))));
-const featuredStations = computed(() => featuredEntries.value.slice(0, 8).map(([id, station]) => ({
+const featuredEntries = computed(() => selectVietnamFeaturedStations(featuredCatalog.value || {}));
+const featuredStations = computed(() => featuredEntries.value.map(([id, station]) => ({
   id, title: station.title, image: station.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${id}`,
 })));
 
