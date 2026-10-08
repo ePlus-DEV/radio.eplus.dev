@@ -221,5 +221,142 @@
     "explore": "Explorer les régions",
     "previous": "Station précédente : {name}",
     "next": "Station suivante : {name}"
+  },
+  "site_pages": {
+    "common": {
+      "last_updated": "Dernière mise à jour"
+    },
+    "about": {
+      "eyebrow": "À propos",
+      "title": "À propos de Radio ePlus",
+      "description": "Un annuaire et lecteur léger pour découvrir des radios internet en direct par région et par pays.",
+      "sections": {
+        "discover": {
+          "title": "Découvrir des radios",
+          "body": "Radio ePlus organise les stations de radio internet par région et par pays afin de retrouver des radios locales et internationales depuis une interface cohérente."
+        },
+        "playback": {
+          "title": "Lecture directe",
+          "body": "Le lecteur connecte votre navigateur aux flux de la station ou du fournisseur et prend en charge les formats audio courants ainsi que HLS avec un mécanisme de repli limité."
+        },
+        "availability": {
+          "title": "Les données en direct évoluent",
+          "body": "Les flux, programmes, images et informations de morceau proviennent de catalogues et de fournisseurs tiers susceptibles de changer ou de devenir indisponibles sans préavis."
+        }
+      },
+      "open_source": {
+        "title": "Projet ouvert",
+        "body": "Radio ePlus est maintenu par ePlus.DEV. Le code source, les issues et les améliorations en cours sont publics sur GitHub."
+      }
+    },
+    "privacy": {
+      "eyebrow": "Confidentialité",
+      "title": "Politique de confidentialité",
+      "description": "Comment Radio ePlus traite les préférences du site, la recherche, les requêtes de lecture et les services tiers.",
+      "sections": {
+        "accounts": {
+          "title": "Comptes et paiements",
+          "body": "Radio ePlus ne nécessite pas de compte utilisateur et ne propose aucun parcours de paiement sur ce site. N'envoyez pas d'informations personnelles sensibles via les canaux publics du projet."
+        },
+        "preferences": {
+          "title": "Préférences locales",
+          "body": "Le thème, la langue et des préférences d'interface similaires peuvent être enregistrés par votre navigateur ou le framework via des cookies ou le stockage local afin de mémoriser vos choix."
+        },
+        "search": {
+          "title": "Services de recherche",
+          "body": "Lorsque la recherche est activée, les requêtes peuvent être traitées par le fournisseur configuré, par exemple Algolia. Les règles de confidentialité de ce fournisseur s'appliquent alors."
+        },
+        "streams": {
+          "title": "Flux radio et services tiers",
+          "body": "Démarrer une lecture connecte votre navigateur aux stations, hébergeurs de flux, fournisseurs de programmes ou relais configurés. Ces tiers peuvent recevoir des informations réseau normales comme l'adresse IP et l'agent utilisateur."
+        },
+        "logs": {
+          "title": "Hébergement et journaux techniques",
+          "body": "L'hébergement, le CDN et l'infrastructure de sécurité peuvent traiter les métadonnées standard nécessaires à la diffusion, à la protection et au diagnostic du site, telles que l'IP, le navigateur, le chemin demandé et l'horodatage."
+        },
+        "sharing": {
+          "title": "Vente et partage de données",
+          "body": "Radio ePlus ne vend pas de données personnelles. Les informations sont traitées uniquement pour faire fonctionner le site ou par les services tiers que vous utilisez directement via la recherche, la lecture ou les liens externes."
+        },
+        "changes": {
+          "title": "Modifications de cette politique",
+          "body": "Cette politique peut évoluer si le site, les fournisseurs ou les pratiques de traitement changent. La version actuelle et sa date de mise à jour sont publiées ici."
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "Conditions",
+      "title": "Conditions d'utilisation",
+      "description": "Les conditions applicables à l'utilisation de Radio ePlus et de ses liens vers des services radio tiers.",
+      "sections": {
+        "service": {
+          "title": "Utilisation du service",
+          "body": "Radio ePlus est fourni comme une interface gratuite de découverte et de lecture de radios. Vous pouvez l'utiliser à des fins personnelles licites pour accéder à des services radio publiquement accessibles."
+        },
+        "third_party": {
+          "title": "Flux tiers",
+          "body": "Radio ePlus référence et relie des flux exploités par des tiers. Ceux-ci contrôlent leur contenu, disponibilité, restrictions géographiques, publicité et conditions. Radio ePlus ne garantit pas qu'un flux restera disponible."
+        },
+        "copyright": {
+          "title": "Droits d'auteur et marques",
+          "body": "Les noms de stations, logos, contenus audio et autres éléments tiers appartiennent à leurs propriétaires respectifs. Un ayant droit peut demander une correction ou un retrait en fournissant l'URL concernée et les éléments nécessaires à la vérification."
+        },
+        "acceptable_use": {
+          "title": "Utilisation acceptable",
+          "body": "N'utilisez pas Radio ePlus pour abuser des fournisseurs, contourner des contrôles d'accès, perturber le service, effectuer un crawl nuisible, diffuser des logiciels malveillants ou enfreindre la loi ou les droits de tiers."
+        },
+        "availability": {
+          "title": "Disponibilité et garantie",
+          "body": "Le site et le catalogue sont fournis en l'état et selon disponibilité. La qualité des flux, les programmes, les métadonnées et les API fournisseurs peuvent changer ou tomber en panne indépendamment de Radio ePlus."
+        },
+        "changes": {
+          "title": "Modification des conditions",
+          "body": "Ces conditions peuvent être mises à jour avec l'évolution du projet ou des services pris en charge. Toute utilisation après mise à jour relève des conditions alors publiées."
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Contacter Radio ePlus",
+      "description": "Signalez un bug, demandez une mise à jour de station ou contactez le projet au sujet d'un référencement lié à des droits.",
+      "sections": {
+        "bug": {
+          "title": "Bug ou problème de lecture",
+          "body": "Indiquez l'URL concernée, le navigateur/appareil, le résultat attendu et le résultat observé. Les informations Network ou Console sont utiles lorsqu'un flux ne fonctionne pas."
+        },
+        "station": {
+          "title": "Mise à jour d'une station",
+          "body": "Pour une nouvelle station ou une correction de métadonnées, fournissez le nom, le site officiel, le pays et, si possible, une URL de flux public vérifiée."
+        },
+        "copyright": {
+          "title": "Droits d'auteur ou retrait",
+          "body": "Les ayants droit peuvent demander une correction ou un retrait en identifiant la station/page concernée et en fournissant suffisamment d'informations pour vérifier la demande."
+        }
+      },
+      "github": {
+        "title": "Ouvrir une issue GitHub",
+        "body": "Le développement public, les rapports de bugs et les corrections du catalogue sont suivis dans le dépôt GitHub de Radio ePlus.",
+        "action": "Créer une issue"
+      }
+    },
+    "statistics": {
+      "eyebrow": "Catalogue",
+      "title": "Statistiques radio",
+      "description": "Un instantané au moment du build du nombre de régions, pays et entrées de stations présentes dans le catalogue Radio ePlus.",
+      "metrics": {
+        "areas": "Régions",
+        "countries": "Pays",
+        "stations": "Stations"
+      },
+      "coverage_title": "Couverture par région",
+      "coverage_description": "Chaque carte indique le nombre de catalogues pays et d'entrées de stations enregistrés pour la région.",
+      "method_title": "Comment ces chiffres sont calculés",
+      "method_body": "Ces chiffres sont calculés à partir des catalogues JSON versionnés du dépôt au moment du build. Ils représentent des entrées de catalogue, et non des flux garantis en ligne, des diffuseurs uniques ou une audience."
+    },
+    "error": {
+      "not_found_title": "Page introuvable",
+      "generic_title": "Une erreur s'est produite",
+      "generic_body": "Impossible de charger cette page. Revenez à l'accueil puis réessayez."
+    }
   }
 }

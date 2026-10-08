@@ -42,6 +42,28 @@
           >
             {{ $t("navmenu.homepage") }}
           </NuxtLink>
+          <NuxtLink
+            to="/statistics"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition"
+            :class="
+              route.path === '/statistics'
+                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
+                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
+            "
+          >
+            {{ $t("navmenu.statistics") }}
+          </NuxtLink>
+          <NuxtLink
+            to="/about"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition"
+            :class="
+              route.path === '/about'
+                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
+                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
+            "
+          >
+            {{ $t("navmenu.about") }}
+          </NuxtLink>
         </div>
       </div>
 

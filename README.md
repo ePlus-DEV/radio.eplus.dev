@@ -219,7 +219,9 @@ https://radio.eplus.dev
 
 Override it using `NUXT_PUBLIC_SITE_URL` when needed.
 
-See [`docs/SEO.md`](./docs/SEO.md) for the current SEO implementation and known limitations, including the current no-prefix i18n/hreflang limitation and unresolved sitewide links to pages that do not yet exist.
+See [`docs/SEO.md`](./docs/SEO.md) for the current SEO implementation and known limitations, including the current no-prefix i18n/hreflang limitation.
+
+Public site pages also include `/about`, `/statistics`, `/contact`, `/privacy-policy`, and `/terms-of-use`. They are prerendered and included in the sitemap.
 
 ## Data sync
 

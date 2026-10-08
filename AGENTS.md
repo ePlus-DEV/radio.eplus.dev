@@ -176,7 +176,9 @@ Read `docs/SEO.md` before changing route/data-loading behavior.
 - Do not emit sitemap `lastmod` from CI filesystem mtimes; they are checkout times, not trustworthy content-update times.
 - Keep BreadcrumbList + CollectionPage/ItemList + RadioStation structured data aligned with visible route content.
 - Do not generate fake hreflang tags while i18n uses `strategy: "no_prefix"`; proper multilingual SEO requires distinct locale URLs.
-- Do not invent Privacy Policy or Terms content merely to eliminate a 404. Use owner-approved content or remove the links.
+- Public static routes are `/about`, `/statistics`, `/contact`, `/privacy-policy`, and `/terms-of-use`; keep them prerendered, in the sitemap, and backed by real page files before exposing them in Header/Footer navigation.
+- Static page copy is localized under `site_pages` in every supported locale. Do not add a new public page with untranslated navigation/content keys.
+- Statistics must come from build-time catalog counts via `build/radioStats.ts`; do not hard-code totals.
 - Do not add sitewide Header/Footer links to routes that do not exist; Nitro's prerender crawler will follow them and hard 404s should remain build failures.
 - Route discovery must ignore non-catalog/asset-only directories under `public/radio`; a directory is not an area merely because it exists.
 
@@ -184,6 +186,7 @@ Regression guards:
 
 - `tests/seo-page-foundation.test.mjs`
 - `tests/seo-structured-data.test.mjs`
+- `tests/static-site-pages.test.mjs`
 
 ## CI and validation
 

@@ -221,5 +221,142 @@
     "explore": "探索地區",
     "previous": "上一個電台：{name}",
     "next": "下一個電台：{name}"
+  },
+  "site_pages": {
+    "common": {
+      "last_updated": "最後更新"
+    },
+    "about": {
+      "eyebrow": "關於",
+      "title": "關於 Radio ePlus",
+      "description": "依地區與國家探索網路直播電台的輕量目錄與播放器。",
+      "sections": {
+        "discover": {
+          "title": "探索電台",
+          "body": "Radio ePlus 依地區與國家整理網路電台，讓你能在一致的介面中尋找本地與國際電台。"
+        },
+        "playback": {
+          "title": "直接播放",
+          "body": "播放器會將瀏覽器連接至電台或服務供應商的串流，支援常見音訊格式與 HLS，並提供有限度的備援處理。"
+        },
+        "availability": {
+          "title": "即時資料會變動",
+          "body": "串流、節目表、圖片與目前歌曲資訊來自持續變動的目錄與第三方供應商，因此可能隨時改變或無法使用。"
+        }
+      },
+      "open_source": {
+        "title": "開放專案",
+        "body": "Radio ePlus 由 ePlus.DEV 維護。應用程式原始碼、Issue 與持續改善內容皆公開於 GitHub。"
+      }
+    },
+    "privacy": {
+      "eyebrow": "隱私",
+      "title": "隱私權政策",
+      "description": "說明 Radio ePlus 如何處理站點偏好、搜尋、播放請求與第三方服務。",
+      "sections": {
+        "accounts": {
+          "title": "帳號與付款",
+          "body": "Radio ePlus 不要求使用者註冊，也不在本站提供付款或結帳流程。請勿透過公開專案管道提交敏感個人資訊。"
+        },
+        "preferences": {
+          "title": "本機偏好",
+          "body": "主題、語言等介面偏好可能由瀏覽器或框架透過 Cookie／本機儲存保存，以便記住你的選擇。"
+        },
+        "search": {
+          "title": "搜尋服務",
+          "body": "啟用站內搜尋時，搜尋內容可能由已設定的服務商（例如 Algolia）處理，並適用其自身的隱私條款。"
+        },
+        "streams": {
+          "title": "電台串流與第三方",
+          "body": "開始播放後，瀏覽器會連接至電台、串流主機、節目表供應商或已設定的轉送服務。這些第三方可能收到 IP 位址、User Agent 等一般網路資訊。"
+        },
+        "logs": {
+          "title": "主機與技術日誌",
+          "body": "主機、CDN 與安全基礎設施可能處理用於傳輸、保護與排錯的標準請求資訊，例如 IP、瀏覽器資訊、路徑與時間戳記。"
+        },
+        "sharing": {
+          "title": "資料出售與分享",
+          "body": "Radio ePlus 不出售個人資料。資訊僅在網站運作所需範圍內處理，或由你透過搜尋、播放與外部連結直接使用的第三方服務處理。"
+        },
+        "changes": {
+          "title": "政策變更",
+          "body": "當網站、供應商或資料處理方式改變時，本政策可能更新。最新版本與更新日期會公布於本頁。"
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "條款",
+      "title": "使用條款",
+      "description": "使用 Radio ePlus 與其第三方電台服務連結時適用的條件。",
+      "sections": {
+        "service": {
+          "title": "服務使用",
+          "body": "Radio ePlus 以免費的電台探索與播放介面提供。你可以為合法的個人用途存取公開可用的電台服務。"
+        },
+        "third_party": {
+          "title": "第三方串流",
+          "body": "Radio ePlus 收錄並連結由第三方營運的串流。內容、可用性、地區限制、廣告與條款由各服務自行控制，Radio ePlus 不保證任何串流持續可用。"
+        },
+        "copyright": {
+          "title": "著作權與商標",
+          "body": "電台名稱、標誌、音訊及其他第三方素材均屬各自權利人。如權利人認為某項內容應修正或移除，請提供相關 URL 與足以驗證請求的資訊。"
+        },
+        "acceptable_use": {
+          "title": "合理使用",
+          "body": "不得利用 Radio ePlus 濫用供應商、繞過存取控制、干擾服務、以有害頻率爬取、散布惡意軟體或違反法律及第三方權利。"
+        },
+        "availability": {
+          "title": "可用性與保證",
+          "body": "網站與目錄依現況及可用狀態提供。串流品質、節目表、中繼資料與供應商 API 都可能獨立於 Radio ePlus 變更或故障。"
+        },
+        "changes": {
+          "title": "條款變更",
+          "body": "隨著專案或支援服務演進，本條款可能更新。更新後繼續使用即表示按目前公布的條款使用服務。"
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "聯絡",
+      "title": "聯絡 Radio ePlus",
+      "description": "回報錯誤、要求更新電台，或就權利相關的收錄內容聯絡專案。",
+      "sections": {
+        "bug": {
+          "title": "錯誤或播放問題",
+          "body": "請提供受影響頁面 URL、瀏覽器／裝置、預期結果與實際結果。播放失敗時，Network 或 Console 資訊會很有幫助。"
+        },
+        "station": {
+          "title": "更新電台",
+          "body": "新增電台或修正中繼資料時，請提供電台名稱、官方網站、國家以及可用的已驗證公開串流 URL。"
+        },
+        "copyright": {
+          "title": "著作權或移除請求",
+          "body": "權利人可以指出相關電台／頁面並提供足夠的驗證資訊，要求修正或移除。"
+        }
+      },
+      "github": {
+        "title": "建立 GitHub Issue",
+        "body": "公開開發、錯誤回報與目錄修正均在 Radio ePlus 的 GitHub 儲存庫中追蹤。",
+        "action": "建立 Issue"
+      }
+    },
+    "statistics": {
+      "eyebrow": "目錄",
+      "title": "電台統計",
+      "description": "Radio ePlus 目前目錄中地區、國家與電台項目的建置時快照。",
+      "metrics": {
+        "areas": "地區",
+        "countries": "國家",
+        "stations": "電台"
+      },
+      "coverage_title": "依地區覆蓋",
+      "coverage_description": "每張卡片顯示該地區目前保存的國家目錄數與電台項目數。",
+      "method_title": "數字如何計算",
+      "method_body": "這些數字於網站建置時從儲存庫中受版本控制的 JSON 目錄統計得出，表示目錄項目數，不等於目前上線串流、獨立廣播機構或聽眾數。"
+    },
+    "error": {
+      "not_found_title": "找不到頁面",
+      "generic_title": "發生錯誤",
+      "generic_body": "無法載入此頁面。請返回首頁後再試一次。"
+    }
   }
 }

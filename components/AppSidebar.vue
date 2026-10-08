@@ -7,6 +7,16 @@
           <fa :icon="['fas', 'house']" class="w-4" />
           <span>{{ $t('navmenu.homepage') }}</span>
         </NuxtLink>
+        <NuxtLink to="/statistics" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
+          :class="route.path === '/statistics' ? 'bg-rose-500/10 text-rose-500' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
+          <fa :icon="['fas', 'chart-simple']" class="w-4" />
+          <span>{{ $t('navmenu.statistics') }}</span>
+        </NuxtLink>
+        <NuxtLink to="/about" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
+          :class="route.path === '/about' ? 'bg-rose-500/10 text-rose-500' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
+          <fa :icon="['fas', 'circle-info']" class="w-4" />
+          <span>{{ $t('navmenu.about') }}</span>
+        </NuxtLink>
         <button type="button" class="radio-interactive flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]" @click="focusSearch">
           <fa :icon="['fas', 'magnifying-glass']" class="w-4" />
           <span>{{ $t('popup.search.text') }}</span>

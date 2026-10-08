@@ -9,12 +9,18 @@ Radio ePlus provides public, read-only discovery pages for internet radio statio
 3. Read https://radio.eplus.dev/radio/{area}/{country}.json for a country's station catalog.
 4. Use country pages to discover the same station links in human-readable HTML.
 5. Use station pages for station names, descriptions, artwork, and listening context.
+6. Use /about, /statistics, /contact, /privacy-policy, and /terms-of-use for project, catalog, support, privacy, and usage-policy context.
 
 ## URL model
 
 - Region: https://radio.eplus.dev/{area}
 - Country: https://radio.eplus.dev/{area}/{country}
 - Station: https://radio.eplus.dev/{area}/{country}/{station}
+- About: https://radio.eplus.dev/about
+- Statistics: https://radio.eplus.dev/statistics
+- Contact: https://radio.eplus.dev/contact
+- Privacy: https://radio.eplus.dev/privacy-policy
+- Terms: https://radio.eplus.dev/terms-of-use
 
 ## Data freshness
 
