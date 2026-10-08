@@ -46,6 +46,7 @@ The exact dependency versions are defined in `package.json`.
 > - [`AGENTS.md`](./AGENTS.md) — short, enforceable rules for coding agents and contributors.
 > - [`docs/PROJECT_CONTEXT.md`](./docs/PROJECT_CONTEXT.md) — architecture decisions, known regressions, debugging notes, and project history that should survive individual PRs/chats.
 > - [`docs/instant-audio-sync.md`](./docs/instant-audio-sync.md) — radio-data sync behavior and safety model.
+> - [`docs/SEO.md`](./docs/SEO.md) — SEO architecture, indexability rules, structured-data coverage, and known blockers.
 >
 > These files are the durable project memory. Update them whenever a change introduces a new architectural rule, important workaround, provider limitation, or debugging lesson.
 
@@ -197,13 +198,15 @@ Algolia integration is optional during build and local development. When Algolia
 
 ## SEO
 
-Radio ePlus generates SEO routes from the radio dataset and includes them in the sitemap. The canonical production site URL defaults to:
+Radio ePlus prerenders the radio route hierarchy, exposes server-rendered country/station links, generates structured data, and includes catalog-backed routes in the sitemap. The canonical production site URL defaults to:
 
 ```text
 https://radio.eplus.dev
 ```
 
 Override it using `NUXT_PUBLIC_SITE_URL` when needed.
+
+See [`docs/SEO.md`](./docs/SEO.md) for the current SEO implementation and known limitations, including the current no-prefix i18n/hreflang limitation and unresolved sitewide links to pages that do not yet exist.
 
 ## Data sync
 
