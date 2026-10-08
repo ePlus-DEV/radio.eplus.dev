@@ -272,7 +272,12 @@
             >
               <div class="flex min-w-0 items-center gap-2">
                 <fa :icon="['fas', 'triangle-exclamation']" class="shrink-0" />
-                <span class="truncate">{{ $t("alert.stream_error") }}</span>
+                <span class="truncate">
+                  {{ $t("alert.stream_error") }}
+                  <span v-if="attemptCount >= MAX_STREAM_ATTEMPTS" class="opacity-70">
+                    · {{ attemptCount }}/{{ MAX_STREAM_ATTEMPTS }}
+                  </span>
+                </span>
               </div>
               <button
                 type="button"
@@ -345,6 +350,11 @@
 
 <script lang="ts" setup>
 import type { RadioSource, RadioStationOption } from "~/types/radio";
+import {
+  MAX_STREAM_ATTEMPTS,
+  buildPlaybackSources,
+  nextPlaybackIndex,
+} from "~/utils/radio-source-plan.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -397,6 +407,7 @@ const emit = defineEmits<{
 
 const $store = useMainStore();
 const dayjs = useDayjs();
+const runtimeConfig = useRuntimeConfig();
 const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
 const waiting = ref(false);
@@ -405,7 +416,7 @@ const streamError = ref(false);
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
-const reconnectAttempts = ref(0);
+const attemptCount = ref(0);
 const volume = ref(1);
 const muted = ref(false);
 const mobileQueueOpen = ref(false);
@@ -422,8 +433,7 @@ let sourceVersion = 0;
 let activeResolvedSrc = "";
 let removeAutoPlayUnlockListeners: (() => void) | null = null;
 
-const MAX_RECONNECT_ATTEMPTS = 1;
-const RECONNECT_BASE_DELAY = 1500;
+const RECONNECT_BASE_DELAY = 1200;
 const FALLBACK_PROBE_TIMEOUT = 4000;
 
 const sourceList = computed<RadioSource[]>(() => {
@@ -432,13 +442,13 @@ const sourceList = computed<RadioSource[]>(() => {
       ? props.streamUrls
       : [props.streamUrl];
 
-  const seen = new Set<string>();
-  return candidates.filter((source): source is RadioSource => {
-    const src = String(source?.src || "").trim();
-    if (!src || seen.has(src)) return false;
-    seen.add(src);
-    return true;
-  });
+  return buildPlaybackSources(
+    candidates.filter(
+      (source): source is RadioSource =>
+        Boolean(source && String(source.src || "").trim()),
+    ),
+    runtimeConfig.public.corsServer,
+  ) as RadioSource[];
 });
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
@@ -767,7 +777,6 @@ const configureHlsSource = async (
 
   hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
     if (version !== sourceVersion) return;
-    reconnectAttempts.value = 0;
     streamError.value = false;
 
     if (autoplay && !userPaused.value) {
@@ -791,6 +800,21 @@ const configureHlsSource = async (
   }
 };
 
+const stopPlaybackFailure = (): void => {
+  clearReconnectTimer();
+  clearFallbackProbeTimer();
+  destroyHls();
+
+  const media = mediaElement.value;
+  media?.pause();
+
+  waiting.value = false;
+  playing.value = false;
+  pendingAutoPlay.value = false;
+  streamError.value = true;
+  userPaused.value = true;
+};
+
 const applySource = async (
   index: number,
   autoplay = false,
@@ -803,9 +827,16 @@ const applySource = async (
     return;
   }
 
+  if (autoplay && !userPaused.value) {
+    if (attemptCount.value >= MAX_STREAM_ATTEMPTS) {
+      stopPlaybackFailure();
+      return;
+    }
+    attemptCount.value += 1;
+  }
+
   const version = ++sourceVersion;
   activeSourceIndex.value = index;
-  reconnectAttempts.value = 0;
   streamError.value = false;
   playing.value = false;
   pendingAutoPlay.value = autoplay && !userPaused.value;
@@ -828,17 +859,25 @@ const applySource = async (
 };
 
 const advanceFallbackSource = (): boolean => {
-  if (activeSourceIndex.value + 1 >= sourceList.value.length) {
-    waiting.value = false;
-    playing.value = false;
-    streamError.value = true;
-    pendingAutoPlay.value = false;
+  if (
+    sourceList.value.length === 0 ||
+    attemptCount.value >= MAX_STREAM_ATTEMPTS
+  ) {
+    stopPlaybackFailure();
     return false;
   }
 
-  reconnectAttempts.value = 0;
+  const nextIndex = nextPlaybackIndex(
+    activeSourceIndex.value,
+    sourceList.value.length,
+  );
+  if (nextIndex < 0) {
+    stopPlaybackFailure();
+    return false;
+  }
+
   userPaused.value = false;
-  void applySource(activeSourceIndex.value + 1, true);
+  void applySource(nextIndex, true);
   return true;
 };
 
@@ -847,19 +886,18 @@ const scheduleReconnect = (): void => {
 
   clearFallbackProbeTimer();
 
-  if (reconnectAttempts.value >= MAX_RECONNECT_ATTEMPTS) {
-    advanceFallbackSource();
+  if (attemptCount.value >= MAX_STREAM_ATTEMPTS) {
+    stopPlaybackFailure();
     return;
   }
 
-  reconnectAttempts.value += 1;
   waiting.value = true;
   pendingAutoPlay.value = true;
 
   reconnectTimer = setTimeout(() => {
     reconnectTimer = null;
-    void applySource(activeSourceIndex.value, true);
-  }, RECONNECT_BASE_DELAY * reconnectAttempts.value);
+    advanceFallbackSource();
+  }, RECONNECT_BASE_DELAY);
 };
 
 const onPlay = async (): Promise<void> => {
@@ -894,7 +932,7 @@ const onPause = (): void => {
 };
 
 const retryCurrentSource = (): void => {
-  reconnectAttempts.value = 0;
+  attemptCount.value = 0;
   userPaused.value = false;
   void applySource(activeSourceIndex.value, true);
 };
@@ -902,7 +940,7 @@ const retryCurrentSource = (): void => {
 const selectSource = (index: number): void => {
   if (!sourceList.value[index]) return;
 
-  reconnectAttempts.value = 0;
+  attemptCount.value = 0;
   streamError.value = false;
   userPaused.value = false;
   pendingAutoPlay.value = true;
@@ -983,7 +1021,7 @@ const onMediaCanPlay = (): void => {
 const onMediaPlaying = (): void => {
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  reconnectAttempts.value = 0;
+  attemptCount.value = 0;
   pendingAutoPlay.value = false;
   waiting.value = false;
   playing.value = true;
@@ -1055,7 +1093,7 @@ watch(
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
     mobileQueueOpen.value = false;
-    reconnectAttempts.value = 0;
+    attemptCount.value = 0;
     streamError.value = false;
     clearReconnectTimer();
     clearFallbackProbeTimer();
