@@ -6,7 +6,7 @@
       <div
         class="grid min-w-0"
         :class="
-          queueCount > 0
+          hasQueuePanel
             ? 'lg:grid-cols-[minmax(0,1fr)_360px]'
             : 'lg:grid-cols-1'
         "
@@ -34,7 +34,7 @@
               </div>
 
               <button
-                v-if="queueCount > 0"
+                v-if="hasQueuePanel"
                 type="button"
                 class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 lg:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 :aria-expanded="mobileQueueOpen"
@@ -45,7 +45,7 @@
                   <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
                   <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
                 </svg>
-                <span>{{ queueCount }}</span>
+                <span>{{ queueCount || "…" }}</span>
               </button>
             </div>
 
@@ -221,7 +221,7 @@
             </div>
 
             <div
-              v-if="mobileQueueOpen && queueCount > 0"
+              v-if="mobileQueueOpen && hasQueuePanel"
               class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 lg:hidden dark:border-white/10 dark:bg-slate-950/35"
             >
               <PlayerQueue
@@ -291,7 +291,7 @@
         </div>
 
         <aside
-          v-if="queueCount > 0"
+          v-if="hasQueuePanel"
           class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 lg:block dark:border-white/10 dark:bg-slate-950/30"
         >
           <PlayerQueue
@@ -352,6 +352,7 @@ const props = defineProps<{
   streamUrls?: RadioSource[];
   song?: Song;
   playlist?: PlaylistItem[];
+  queueExpected?: boolean;
 }>();
 
 const $store = useMainStore();
@@ -398,6 +399,9 @@ const hasPlayableSource = computed(() => sourceList.value.length > 0);
 
 const queueCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
+);
+const hasQueuePanel = computed(
+  () => queueCount.value > 0 || Boolean(props.queueExpected),
 );
 
 const nowPlayingTitle = computed(() => {
