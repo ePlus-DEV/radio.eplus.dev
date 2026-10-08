@@ -71,7 +71,7 @@
     <template #body>
       <div class="flex flex-wrap items-center gap-2 border-b border-[var(--radio-border)] p-3">
         <div class="flex min-w-[10rem] flex-1 items-center gap-2">
-          <UButton color="neutral" variant="soft" size="xs" class="shrink-0" :icon="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted ? $t('player.unmute') : $t('player.mute')" @click="toggleMute">{{ $t('player.volume') }}</UButton>
+          <UButton color="neutral" variant="soft" size="xs" class="shrink-0" :icon="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted ? $t('player.unmute') : $t('player.mute')" @click="toggleMute">{{ muted ? $t('player.unmute') : $t('player.mute') }}</UButton>
           <input v-if="!systemVolumeOnly" type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume radio-volume-mobile h-11 min-w-0 flex-1 cursor-pointer appearance-none bg-transparent" />
         </div>
         <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end' }" :ui="{ content: 'w-64' }">
