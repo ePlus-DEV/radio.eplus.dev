@@ -330,6 +330,7 @@ const setStationStreams = (
 };
 let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
 let requestVersion = 0;
+let clientReady = false;
 const POLL_INTERVAL = 60_000;
 
 useHead(() => ({
@@ -404,6 +405,8 @@ const scheduleRequestUrl = (url: string): string =>
     : url;
 
 const fetchLyric = async (id: string, version: number): Promise<void> => {
+  if (!import.meta.client) return;
+
   try {
     const resData = await $fetch(
       `${config.public.apiZingGetLyric}${id}&time=${currentTimestamp()}`,
@@ -433,6 +436,8 @@ const fetchLyric = async (id: string, version: number): Promise<void> => {
 };
 
 const fetchDetail = async (url: string, version: number): Promise<void> => {
+  if (!import.meta.client) return;
+
   try {
     const resData = await $fetch(scheduleRequestUrl(url));
     if (version !== requestVersion) return;
@@ -464,6 +469,8 @@ const fetchDetail = async (url: string, version: number): Promise<void> => {
 };
 
 const fetchSchedule = async (url: string, version: number): Promise<void> => {
+  if (!import.meta.client) return;
+
   try {
     const resData = await $fetch(scheduleRequestUrl(url));
     if (version !== requestVersion) return;
@@ -517,12 +524,28 @@ const fetchSchedule = async (url: string, version: number): Promise<void> => {
 };
 
 const pollSchedule = async (url: string, version: number): Promise<void> => {
+  if (!import.meta.client || !clientReady) return;
+
   await fetchSchedule(url, version);
   if (version !== requestVersion) return;
 
   pollingSchedule = setTimeout(() => {
     void pollSchedule(url, version);
   }, POLL_INTERVAL);
+};
+
+const startStationRealtime = (
+  meta: StationCatalogEntry,
+  version: number,
+): void => {
+  if (!import.meta.client || !clientReady) return;
+
+  const scheduleUrl = normalizeScheduleUrl(meta.schedule);
+  queueLoading.value = Boolean(scheduleUrl);
+
+  if (scheduleUrl) {
+    void pollSchedule(scheduleUrl, version);
+  }
 };
 
 const activateStation = (meta: StationCatalogEntry | undefined): void => {
@@ -533,6 +556,8 @@ const activateStation = (meta: StationCatalogEntry | undefined): void => {
 
   if (!meta) return;
 
+  // Static station metadata belongs to SSR/prerender so the generated route
+  // keeps correct title/artwork/stream information without external requests.
   $store.setTimezone(area.value, slug.value);
 
   streamName.value = meta.title;
@@ -543,12 +568,9 @@ const activateStation = (meta: StationCatalogEntry | undefined): void => {
     meta.stream_alternative || "",
   );
 
-  const scheduleUrl = normalizeScheduleUrl(meta.schedule);
-  queueLoading.value = Boolean(scheduleUrl);
-
-  if (scheduleUrl) {
-    void pollSchedule(scheduleUrl, version);
-  }
+  // Schedule/current-song/lyrics are realtime provider data. They must only
+  // start after hydration on the browser and must never block Nuxt prerender.
+  startStationRealtime(meta, version);
 };
 
 watch(
@@ -567,7 +589,16 @@ const selectStation = (station: RadioStationOption): void => {
   );
 };
 
+onMounted(() => {
+  clientReady = true;
+
+  // The immediate watcher above intentionally performs only static activation
+  // during SSR and hydration. Start realtime data after the component mounts.
+  activateStation(stationMeta.value);
+});
+
 onBeforeUnmount(() => {
+  clientReady = false;
   requestVersion += 1;
   clearPolling();
 });
