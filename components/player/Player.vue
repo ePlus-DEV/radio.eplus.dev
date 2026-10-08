@@ -3,7 +3,14 @@
     <div
       class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_70px_-42px_rgba(15,23,42,0.45)] dark:border-white/10 dark:bg-slate-900"
     >
-      <div class="grid min-w-0 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div
+        class="grid min-w-0"
+        :class="
+          hasQueuePanel
+            ? 'lg:grid-cols-[minmax(0,1fr)_360px]'
+            : 'lg:grid-cols-1'
+        "
+      >
         <div class="relative min-w-0 overflow-hidden p-4 sm:p-6">
           <div
             class="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.13),transparent_42%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.10),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,63,94,0.12),transparent_42%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.07),transparent_38%)]"
@@ -27,7 +34,7 @@
               </div>
 
               <button
-                v-if="queueCount > 0"
+                v-if="hasQueuePanel"
                 type="button"
                 class="relative flex h-9 shrink-0 items-center gap-2 rounded-full bg-slate-100 px-3 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 hover:text-slate-950 lg:hidden dark:bg-white/[0.07] dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
                 :aria-expanded="mobileQueueOpen"
@@ -38,7 +45,7 @@
                   <path d="M4 6h11M4 11h11M4 16h7" stroke-width="1.8" stroke-linecap="round"></path>
                   <path d="m16 14 4 2.5-4 2.5v-5Z" stroke-width="1.8" stroke-linejoin="round"></path>
                 </svg>
-                <span>{{ queueCount }}</span>
+                <span>{{ queueCount || "…" }}</span>
               </button>
             </div>
 
@@ -214,7 +221,7 @@
             </div>
 
             <div
-              v-if="mobileQueueOpen && queueCount > 0"
+              v-if="mobileQueueOpen && hasQueuePanel"
               class="mt-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 lg:hidden dark:border-white/10 dark:bg-slate-950/35"
             >
               <PlayerQueue
@@ -279,12 +286,12 @@
           </div>
 
           <div class="radio-videojs-host" aria-hidden="true">
-            <video ref="mediaElement" class="video-js" playsinline preload="auto"></video>
+            <audio ref="mediaElement" class="video-js" playsinline preload="none"></audio>
           </div>
         </div>
 
         <aside
-          v-if="queueCount > 0"
+          v-if="hasQueuePanel"
           class="hidden min-h-[360px] border-l border-slate-200/80 bg-slate-50/60 lg:block dark:border-white/10 dark:bg-slate-950/30"
         >
           <PlayerQueue
@@ -345,11 +352,12 @@ const props = defineProps<{
   streamUrls?: RadioSource[];
   song?: Song;
   playlist?: PlaylistItem[];
+  queueExpected?: boolean;
 }>();
 
 const $store = useMainStore();
 const dayjs = useDayjs();
-const mediaElement = ref<HTMLVideoElement | null>(null);
+const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
 const waiting = ref(false);
 const playing = ref(false);
@@ -391,6 +399,9 @@ const hasPlayableSource = computed(() => sourceList.value.length > 0);
 
 const queueCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
+);
+const hasQueuePanel = computed(
+  () => queueCount.value > 0 || Boolean(props.queueExpected),
 );
 
 const nowPlayingTitle = computed(() => {
@@ -557,7 +568,7 @@ const applySource = async (
 
   const version = ++sourceVersion;
   activeSourceIndex.value = index;
-  waiting.value = true;
+  waiting.value = autoplay && !userPaused.value;
   playing.value = false;
   streamError.value = false;
   pendingAutoPlay.value = autoplay && !userPaused.value;
@@ -572,12 +583,14 @@ const applySource = async (
   });
   player.load();
 
-  sourceReadyTimer = setTimeout(() => {
-    sourceReadyTimer = null;
-    if (waiting.value && !userPaused.value) {
-      scheduleReconnect();
-    }
-  }, SOURCE_READY_TIMEOUT);
+  if (autoplay && !userPaused.value) {
+    sourceReadyTimer = setTimeout(() => {
+      sourceReadyTimer = null;
+      if (waiting.value && !userPaused.value) {
+        scheduleReconnect();
+      }
+    }, SOURCE_READY_TIMEOUT);
+  }
 };
 
 const advanceFallbackSource = (): boolean => {
@@ -678,7 +691,7 @@ const bindPlayerEvents = (): void => {
   if (!player) return;
 
   player.on("loadstart", () => {
-    waiting.value = true;
+    waiting.value = pendingAutoPlay.value && !userPaused.value;
     streamError.value = false;
   });
 
@@ -712,7 +725,10 @@ const bindPlayerEvents = (): void => {
   player.on("error", () => {
     waiting.value = false;
     playing.value = false;
-    if (!userPaused.value) scheduleReconnect();
+
+    if (!userPaused.value) {
+      scheduleReconnect();
+    }
   });
 
   player.on("volumechange", () => {
@@ -729,12 +745,12 @@ watch(
     mobileQueueOpen.value = false;
     reconnectAttempts.value = 0;
     streamError.value = false;
-    userPaused.value = false;
 
     if (player && hasPlayableSource.value) {
       const autoPlayEnabled =
         import.meta.client &&
         localStorage.getItem("radio_autoplay_enabled") === "1";
+      userPaused.value = !autoPlayEnabled;
       void applySource(0, Boolean(autoPlayEnabled));
     }
   },
@@ -755,7 +771,8 @@ onMounted(() => {
     player = videojs(mediaElement.value, {
       controls: false,
       autoplay: false,
-      preload: "auto",
+      preload: "none",
+      audioOnlyMode: true,
       responsive: false,
       fluid: false,
       html5: {
@@ -772,6 +789,7 @@ onMounted(() => {
     if (hasPlayableSource.value) {
       const autoPlayEnabled =
         localStorage.getItem("radio_autoplay_enabled") === "1";
+      userPaused.value = !autoPlayEnabled;
       void applySource(0, autoPlayEnabled);
     }
   }
