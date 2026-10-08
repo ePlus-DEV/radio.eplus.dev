@@ -1010,7 +1010,6 @@ const updateOnlineStatus = (): void => {
 const onMediaCanPlay = (): void => {
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  reconnectAttempts.value = 0;
   streamError.value = false;
 
   if (pendingAutoPlay.value && !userPaused.value && !playing.value) {
