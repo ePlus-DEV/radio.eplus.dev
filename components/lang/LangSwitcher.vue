@@ -25,16 +25,21 @@
       ref="menuRef"
       role="menu"
       :aria-label="$t('navmenu.language')"
-      class="menu radio-scrollbar absolute right-0 top-full z-[80] mt-2 max-h-[min(20rem,calc(100vh-6rem))] w-56 overflow-y-auto rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] p-1.5 text-sm text-[var(--radio-text)] shadow-xl shadow-slate-900/10"
+      class="radio-scrollbar absolute right-0 top-full z-[80] mt-2 flex max-h-[min(20rem,calc(100vh-6rem))] w-60 max-w-[calc(100vw-1rem)] flex-col gap-1 overflow-x-hidden overflow-y-auto rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] p-1.5 text-sm text-[var(--radio-text)] shadow-xl shadow-slate-900/10"
       @keydown.escape.prevent.stop="closeDropdown(true)"
       @keydown.tab="closeDropdown()"
     >
-      <li v-for="localeItem in locales" :key="localeItem.code" role="none">
+      <li
+        v-for="localeItem in locales"
+        :key="localeItem.code"
+        role="none"
+        class="w-full min-w-0 list-none"
+      >
         <button
           type="button"
           role="menuitemradio"
           :aria-checked="locale === localeItem.code"
-          class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition"
+          class="flex w-full min-w-0 items-center gap-3 rounded-xl px-3 py-2.5 text-left transition"
           :class="
             locale === localeItem.code
               ? 'bg-rose-500/10 text-rose-600 dark:text-rose-300'
