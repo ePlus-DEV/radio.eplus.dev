@@ -12,6 +12,7 @@ export interface RadioCatalogStats {
   countries: number;
   stations: number;
   byArea: RadioAreaStats[];
+  byCountry: Record<string, number>;
 }
 
 export const getRadioCatalogStats = (
@@ -19,6 +20,7 @@ export const getRadioCatalogStats = (
 ): RadioCatalogStats => {
   const radioDir = join(rootDir, "public", "radio");
   const byArea: RadioAreaStats[] = [];
+  const byCountry: Record<string, number> = {};
 
   for (const areaEntry of readdirSync(radioDir, { withFileTypes: true })) {
     if (!areaEntry.isDirectory()) continue;
@@ -36,7 +38,9 @@ export const getRadioCatalogStats = (
         const catalog = JSON.parse(
           readFileSync(join(areaDir, countryFile.name), "utf8"),
         ) as Record<string, unknown>;
-        stations += Object.keys(catalog).length;
+        const count = Object.keys(catalog).length;
+        stations += count;
+        byCountry[`/${areaEntry.name}/${countryFile.name.slice(0, -5)}`] = count;
       } catch (error) {
         console.warn(
           "Unable to count radio catalog " +
@@ -63,5 +67,6 @@ export const getRadioCatalogStats = (
     countries: byArea.reduce((total, area) => total + area.countries, 0),
     stations: byArea.reduce((total, area) => total + area.stations, 0),
     byArea,
+    byCountry,
   };
 };

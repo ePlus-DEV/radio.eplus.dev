@@ -229,7 +229,11 @@
     "stream_format": "串流",
     "proxy": "代理伺服器",
     "direct": "直接連線",
-    "ios_volume_hint": "在 iPhone 或 iPad 上，請使用裝置音量鍵或控制中心調整音量。"
+    "ios_volume_hint": "在 iPhone 或 iPad 上，請使用裝置音量鍵或控制中心調整音量。",
+    "sleep_timer": "睡眠定時器",
+    "sleep_minutes": "{minutes}分鐘後停止",
+    "sleep_cancel": "取消定時器",
+    "sleep_remaining": "{minutes}分鐘後停止"
   },
   "site_pages": {
     "common": {
@@ -412,5 +416,15 @@
   "footer": {
     "tagline": "暢聽世界各地的直播電台",
     "description": "依地區與國家尋找電台，隨時在任何裝置上收聽。"
+  },
+  "library": {
+    "title": "我的電台",
+    "recent": "最近收聽",
+    "favorites": "收藏電台",
+    "recent_empty": "播放電台後會顯示在這裡。",
+    "favorites_empty": "點擊愛心即可收藏電台。",
+    "clear_recent": "清除收聽記錄",
+    "add_favorite": "加入收藏",
+    "remove_favorite": "取消收藏"
   }
 }

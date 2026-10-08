@@ -107,9 +107,7 @@ interface WorldCountry {
 }
 
 const config = useRuntimeConfig();
-const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
-const { result, search } = useAlgoliaSearch("world");
-const ALGOLIA_TIMEOUT_MS = 5000;
+const countryCounts = config.public.radioCatalogStats.byCountry as Record<string, number>;
 
 const selectedArea = computed(() =>
   props.chooseTheArea?.replace(/-/g, "_"),
@@ -129,7 +127,7 @@ const createLocalWorld = (): GroupedResults => {
           name: country.name,
           flag: country.flag,
           url: `/${areaSlug}/${countrySlug}`,
-          station_count: null,
+          station_count: countryCounts[`/${areaSlug}/${countrySlug}`] ?? null,
           category: areaKey,
         };
       },
@@ -139,76 +137,7 @@ const createLocalWorld = (): GroupedResults => {
   return grouped;
 };
 
-const world = ref<GroupedResults>(createLocalWorld());
+const world = computed<GroupedResults>(createLocalWorld);
 const loading = computed(() => Object.keys(world.value).length === 0);
 
-const loadLocalStationCounts = async (): Promise<void> => {
-  const areaKey = selectedArea.value;
-  if (!areaKey || !world.value[areaKey]) return;
-
-  const areaSlug = areaKey.replace(/_/g, "-");
-  await Promise.allSettled(
-    world.value[areaKey].map(async (country) => {
-      const countrySlug = country.url.split("/").pop();
-      if (!countrySlug) return;
-
-      try {
-        const stations = await $fetch<Record<string, unknown>>(
-          `/radio/${areaSlug}/${countrySlug}.json`,
-        );
-        country.station_count = Object.keys(stations || {}).length;
-      } catch {
-        // Keep the card visible even when one local catalog file cannot load.
-      }
-    }),
-  );
-};
-
-const mergeAlgoliaResults = (): void => {
-  for (const rawHit of result.value?.hits || []) {
-    const hit = rawHit as unknown as Partial<Country>;
-    const category = hit.category?.replace(/-/g, "_");
-    if (!category || !world.value[category]) continue;
-
-    const match = world.value[category].find(
-      (country) =>
-        country.url === hit.url ||
-        country.name === hit.name,
-    );
-
-    if (match && typeof hit.station_count === "number") {
-      match.station_count = hit.station_count;
-    }
-  }
-};
-
-const enrichFromAlgolia = async (): Promise<void> => {
-  if (!algoliaConfigured.value) return;
-
-  try {
-    const completed = await Promise.race([
-      search({
-        query: "",
-        requestOptions: { hitsPerPage: 100 },
-      }).then(() => true),
-      new Promise<boolean>((resolve) =>
-        setTimeout(() => resolve(false), ALGOLIA_TIMEOUT_MS),
-      ),
-    ]);
-
-    if (!completed) {
-      console.warn("Algolia country metadata timed out; using local catalog.");
-      return;
-    }
-
-    mergeAlgoliaResults();
-  } catch (error) {
-    console.error("Unable to enrich radio countries from Algolia:", error);
-  }
-};
-
-onMounted(() => {
-  void loadLocalStationCounts();
-  void enrichFromAlgolia();
-});
 </script>

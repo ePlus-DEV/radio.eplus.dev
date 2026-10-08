@@ -1,5 +1,5 @@
 <template>
-  <div class="radio-themed-surface overflow-hidden rounded-3xl border border-[var(--radio-border)]">
+  <div class="radio-search-box flex max-h-[calc(100dvh-2rem)] flex-col overflow-hidden radio-themed-surface rounded-3xl border border-[var(--radio-border)]">
     <div class="border-b border-[var(--radio-border)] p-4 sm:p-5">
       <div class="flex items-center gap-3">
         <div class="relative min-w-0 flex-1">
@@ -14,7 +14,7 @@
             type="search"
             :aria-label="$t('popup.search.text')"
             class="w-full"
-            :ui="{ base: 'h-12 rounded-2xl pl-11 pr-4 text-sm' }"
+            :ui="{ base: 'h-12 rounded-2xl pl-11 pr-4 text-base sm:text-sm' }"
             :placeholder="$t('popup.search.text')"
           />
         </div>
@@ -36,7 +36,7 @@
       </p>
     </div>
 
-    <div class="radio-scrollbar max-h-[65vh] overflow-y-auto p-3 sm:p-4">
+    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 sm:p-4">
       <div class="mb-2 flex items-center justify-between px-2">
         <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
           {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
@@ -66,66 +66,47 @@ defineEmits<{
 
 const config = useRuntimeConfig();
 const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
-const { search, result: searchResult } = useAlgoliaSearch(
+const { search } = useAlgoliaSearch(
   config.public.algoliaIndexStation,
 );
 
-interface StationSearchItem {
-  objectID: string;
-  station_name: string;
-  station_country: string;
-  country_label?: string;
-  station_image: string;
-  url: string;
-  featured?: boolean;
-}
 const input = ref("");
 const inputEl = useTemplateRef("inputEl");
-const localIndex = ref<StationSearchItem[]>([]);
-const localLoading = ref(true);
-const localError = ref(false);
+const { index: localIndex, loading: localLoading, error: localError } = useStationSearchIndex();
+const remoteHits = shallowRef<unknown[]>([]);
+const remoteQuery = ref("");
 const algoliaFailed = ref(false);
-const usingLocal = computed(() => !algoliaConfigured.value || algoliaFailed.value || !input.value.trim());
+const usingLocal = computed(() => !algoliaConfigured.value || algoliaFailed.value || remoteQuery.value !== input.value || !input.value.trim());
 const displayHits = computed(() =>
-  usingLocal.value
-    ? searchLocalStations(localIndex.value, input.value)
-    : (searchResult.value?.hits || [])
+  usingLocal.value ? searchLocalStations(localIndex.value, input.value) : remoteHits.value
 );
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
-
-const loadLocalIndex = async () => {
-  try {
-    const items = await $fetch<StationSearchItem[]>("/search/stations.json", { timeout: 10_000 });
-    if (!Array.isArray(items)) throw new Error("Invalid station search index");
-    localIndex.value = items;
-  } catch (error) {
-    localError.value = true;
-    console.error("Unable to load local radio catalog:", error);
-  } finally {
-    localLoading.value = false;
-  }
-};
+let focusTimeout: ReturnType<typeof setTimeout> | null = null;
+let generation = 0;
 
 watch(input, (value: string) => {
+  const version = ++generation;
   if (typingTimeout) clearTimeout(typingTimeout);
   if (!algoliaConfigured.value || algoliaFailed.value || !value.trim()) return;
   typingTimeout = setTimeout(async () => {
     try {
-      await search({ query: value, requestOptions: { hitsPerPage: 20 } });
+      const response = await search({ query: value, requestOptions: { hitsPerPage: 20 } });
+      if (version !== generation) return;
+      remoteHits.value = response.hits;
+      remoteQuery.value = value;
     } catch {
-      // Do not strand the search modal when a third-party service is down.
-      algoliaFailed.value = true;
+      if (version === generation) algoliaFailed.value = true;
     }
   }, 250);
 });
 
 onMounted(() => {
-  void loadLocalIndex();
-  window.setTimeout(() => inputEl.value?.inputRef?.focus(), 50);
+  focusTimeout = setTimeout(() => inputEl.value?.inputRef?.focus(), 50);
 });
 
 onBeforeUnmount(() => {
+  generation += 1;
   if (typingTimeout) clearTimeout(typingTimeout);
+  if (focusTimeout) clearTimeout(focusTimeout);
 });
 </script>
-

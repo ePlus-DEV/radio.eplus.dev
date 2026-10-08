@@ -198,9 +198,11 @@ At minimum:
 npm ci
 npm test
 npm run generate
-npx playwright install chromium
-npm run test:ui
 ```
+
+At the owner's request, browser checks are temporarily optional. CI runs them
+only with repository variable `ENABLE_BROWSER_TESTS=true`. Keep the suite for
+focused verification when requested; do not run Playwright routinely.
 
 For runtime/server deployment changes, `npm run build` can also be useful locally.
 

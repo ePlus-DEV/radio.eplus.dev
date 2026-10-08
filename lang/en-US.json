@@ -229,7 +229,11 @@
     "stream_format": "Stream",
     "proxy": "Proxy",
     "direct": "Direct",
-    "ios_volume_hint": "On iPhone or iPad, use your device's volume buttons or Control Center to adjust the sound."
+    "ios_volume_hint": "On iPhone or iPad, use your device's volume buttons or Control Center to adjust the sound.",
+    "sleep_timer": "Sleep timer",
+    "sleep_minutes": "Stop after {minutes} minutes",
+    "sleep_cancel": "Cancel sleep timer",
+    "sleep_remaining": "Stops in {minutes} min"
   },
   "site_pages": {
     "common": {
@@ -412,5 +416,15 @@
   "footer": {
     "tagline": "Live radio from around the world",
     "description": "Browse stations by region and country, then listen instantly from any device."
+  },
+  "library": {
+    "title": "Your radio",
+    "recent": "Recently played",
+    "favorites": "Favorites",
+    "recent_empty": "Play a station to see it here.",
+    "favorites_empty": "Tap the heart on a station to save it here.",
+    "clear_recent": "Clear recent history",
+    "add_favorite": "Add to favorites",
+    "remove_favorite": "Remove from favorites"
   }
 }

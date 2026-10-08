@@ -229,7 +229,11 @@
     "stream_format": "Luồng phát",
     "proxy": "Máy chủ trung gian",
     "direct": "Trực tiếp",
-    "ios_volume_hint": "Trên iPhone hoặc iPad, hãy dùng nút âm lượng trên thiết bị hoặc Trung tâm điều khiển để chỉnh âm lượng."
+    "ios_volume_hint": "Trên iPhone hoặc iPad, hãy dùng nút âm lượng trên thiết bị hoặc Trung tâm điều khiển để chỉnh âm lượng.",
+    "sleep_timer": "Hẹn giờ ngủ",
+    "sleep_minutes": "Dừng sau {minutes} phút",
+    "sleep_cancel": "Hủy hẹn giờ",
+    "sleep_remaining": "Dừng sau {minutes} phút"
   },
   "site_pages": {
     "common": {
@@ -412,5 +416,15 @@
   "footer": {
     "tagline": "Radio trực tiếp từ khắp thế giới",
     "description": "Tìm đài theo khu vực và quốc gia, rồi nghe ngay trên mọi thiết bị."
+  },
+  "library": {
+    "title": "Radio của bạn",
+    "recent": "Nghe gần đây",
+    "favorites": "Kênh yêu thích",
+    "recent_empty": "Phát một kênh để lưu vào danh sách nghe gần đây.",
+    "favorites_empty": "Bấm biểu tượng trái tim để lưu kênh yêu thích.",
+    "clear_recent": "Xóa lịch sử nghe",
+    "add_favorite": "Thêm vào yêu thích",
+    "remove_favorite": "Bỏ yêu thích"
   }
 }

@@ -70,8 +70,12 @@ jobs:
         if: github.base_ref == 'develop'
         run: node scripts/assert-staging-noindex.mjs
 
+      # Browser tests are temporarily opt-in at the owner's request.
+      # Keep npm run test:ui available for focused follow-up checks.
       - name: "Install Chromium for UI regression tests"
+        if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' }}
         run: npx playwright install --with-deps chromium
 
       - name: "Verify persistent player and responsive UI"
+        if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' }}
         run: npm run test:ui

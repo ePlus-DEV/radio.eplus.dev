@@ -69,6 +69,8 @@
       </div>
     </section>
 
+    <ClientOnly><PanelListeningLibrary /></ClientOnly>
+
     <section id="featured-radio" class="scroll-mt-24">
       <div class="mb-3 flex items-center justify-between px-1">
         <div>
