@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="btn btn-circle fixed bottom-4 right-4 z-50 h-14 min-h-14 w-14 border border-[var(--radio-border)] bg-[var(--radio-text)] text-[var(--radio-page-bg)] shadow-xl shadow-slate-950/15 hover:opacity-90"
+    class="flex items-center justify-center rounded-full fixed bottom-4 right-4 z-50 h-14 min-h-14 w-14 border border-[var(--radio-border)] bg-[var(--radio-text)] text-[var(--radio-page-bg)] shadow-xl shadow-slate-950/15 hover:opacity-90"
     aria-haspopup="dialog"
     aria-expanded="false"
     data-state="closed"
@@ -50,12 +50,12 @@
 
     <form class="flex gap-2 border-t border-[var(--radio-border)] p-4">
       <input
-        class="input input-bordered h-10 min-h-10 min-w-0 flex-1 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-sm text-[var(--radio-text)] shadow-none placeholder:text-[var(--radio-text-muted)] focus:border-rose-300 focus:outline-none"
+        class="h-10 min-h-10 min-w-0 flex-1 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface-soft)] text-sm text-[var(--radio-text)] shadow-none placeholder:text-[var(--radio-text-muted)] focus:border-rose-300 focus:outline-none"
         placeholder="Type your message"
       />
       <button
         type="submit"
-        class="btn h-10 min-h-10 rounded-xl border-0 bg-rose-500 px-4 text-white shadow-none hover:bg-rose-600"
+        class="inline-flex items-center justify-center h-10 min-h-10 rounded-xl border-0 bg-rose-500 px-4 text-white shadow-none hover:bg-rose-600"
       >
         Send
       </button>
