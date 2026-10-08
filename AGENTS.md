@@ -9,14 +9,14 @@ For deeper history and rationale, read [`docs/PROJECT_CONTEXT.md`](./docs/PROJEC
 - Canonical repository: `ePlus-DEV/radio.eplus.dev`
 - Canonical production site: `https://radio.eplus.dev`
 - Do not use `ePlus-DEV/get-radio` for new work; it is legacy reference code.
-- Treat `main` as the source of truth. Create a branch and PR for normal code/data changes.
+- Treat `main` as the source of truth. Use feature branches and PRs into `develop` for this redesign; promote to `main` after review.
 
 ## Current stack
 
 - Nuxt 4 / Vue 3
 - Node.js 24.15.0
 - Tailwind CSS 4
-- DaisyUI 5
+- Nuxt UI 4 + Radio ePlus tokens (DaisyUI removed)
 - Pinia
 - Native HTML5 `<audio>` + `hls.js`
 - Nuxt Color Mode
@@ -45,14 +45,14 @@ Always check `package.json` before assuming exact versions.
 The site previously mixed three independent styling systems:
 
 1. Tailwind `dark:` utilities;
-2. DaisyUI `data-theme`;
+2. legacy DaisyUI `data-theme`;
 3. component-specific hard-coded light/dark colors.
 
 That caused partially themed pages. The current rule is:
 
 - semantic site colors belong in `assets/css/main.css` as `--radio-*` tokens;
-- Nuxt Color Mode classes and DaisyUI `data-theme` must resolve to the same palette;
-- DaisyUI is a control/component primitive layer, not a separate visual theme;
+- Nuxt Color Mode classes must drive the shared --radio-* palette;
+- Tailwind-native controls must use --radio-* tokens;
 - use `--radio-surface`, `--radio-surface-soft`, `--radio-text`, `--radio-text-muted`, `--radio-border`, etc. for structural colors;
 - intentional status/accent colors such as rose/amber/emerald are allowed;
 - do not reintroduce one-off combinations such as `bg-white dark:bg-slate-*` across the app.
@@ -65,11 +65,11 @@ Do not rely on DaisyUI `dropdown` + `tabindex/focus-within` as the source of tru
 
 For the language selector:
 
-- Vue owns an explicit `open` state;
+- Nuxt UI `UDropdownMenu` binds to explicit Vue `open` state;
 - selection closes the menu before i18n rerenders;
-- outside click, Escape, Tab and route changes close it;
+- Reka handles outside click, Escape and keyboard focus; route changes also close it;
 - keyboard focus must be restored or advanced intentionally;
-- keep `aria-expanded`, `aria-haspopup`, `role=menu` and menu-item roles synchronized with behavior.
+- let Nuxt UI/Reka supply synchronized menu roles, checked state and trigger attributes.
 
 Regression guard: `tests/language-dropdown.test.mjs`.
 
@@ -92,7 +92,7 @@ Important rules:
 - Previous/Next controls navigate the country station list; they are not source-fallback controls.
 - Previous/Next station navigation wraps around at the beginning/end of the list and keeps autoplay behavior consistent with selecting a station from the queue.
 - Keep station navigation logic in `utils/station-navigation.mjs` and cover it with `tests/station-navigation.test.mjs`.
-- The large player metadata area is the single source of truth for the current track. Do not render `currentMedia` a second time in a lower "Now playing" strip.
+- The global bottom player metadata area is the single source of truth for the current track. Do not render `currentMedia` a second time in a lower "Now playing" strip.
 - When a provider supplies a trustworthy `nextMedia` value (for example Zing), the lower strip may show that as `panel.next`; do not infer a future track from generic playlist/history arrays.
 - In the player surface, structural colors stay neutral/theme-based. Rose is the primary playback/live accent; avoid strong competing cyan/blue structural gradients in light mode.
 
@@ -112,25 +112,26 @@ before changing the player.
 
 ## Station routing, schedules and Zing invariants
 
-Nuxt can reuse the station page component when only route params change. Treat station-specific async data as **route-scoped state**.
+- Pages own static country catalogs and station metadata for SEO.
+- `stores/playback.ts` owns the selected station, its country queue and play/pause intent.
+- `PlayerSession` is mounted once under `ClientOnly` in `app.vue`, outside `NuxtPage`.
+- Do not key/remount the audio component on a route change, or put teardown in a page.
+- Seed home/country defaults only with `onlyIfIdle`; browsing must not change an active station.
+- Selecting a station route activates that station; revisiting it must preserve source identity.
+- `PanelStation` is presentational and receives the page's catalog and active identity.
+- `useStationRealtime.ts` polls for the selected station even when its detail page is closed.
+- Only an actual station change aborts old provider requests and resets metadata/lyrics.
+- `station-polling.mjs` checks a generation in addition to AbortSignal; a late response must never overwrite the new station.
+- Normalize legacy boolean schedule values before fetching; detect Zing by provider URL.
+- Schedule/song/lyric requests are client-only and start after mounting.
+- Client-only mounting is intentional: async page setup seeds Pinia after the app shell has rendered during SSR. Rendering controls earlier can leave stale `disabled` attributes after hydration.
+- Main content's queue spacing also waits until mounting. Catalog/SEO content stays prerendered.
+- Reserve the global player's height plus safe-area inset in the shell and floating controls.
+- Keep the desktop Schedule/Channels panel sticky inside the app content's queue column so it stops before the footer. Use horizontal overflow `clip` on its ancestors to preserve viewport sticky positioning.
+- Keep `dir="auto"` on provider titles and make menu/drawer widths viewport-safe.
 
-- The station detail page is the source of truth for the country catalog and active station metadata.
-- `PanelStation` is presentational and never fetches its own catalog.
-- Every page that renders `PanelStation` must pass the same `stations` list and active station identity used by the player. Do not render a bare `<PanelStation />`, or it will intentionally fall back to an empty list.
-- On area/country/station route changes, invalidate old requests and clear polling, schedule, song, playlist, lyric popup/lines and transient stream state before activating the new station.
-- Async schedule/detail/lyric responses must verify the current request version before mutating UI state.
-- Zing behavior must be detected from the Zing schedule provider URL, not from `country === viet-nam`.
-- The lyric control is Zing-specific; do not show it for every Vietnamese station.
-- `schedule` is legacy data and can contain non-URL values such as booleans. Normalize and fetch only valid HTTP(S) URLs.
-- Keep schedule/search tab state route-aware so a previous station's UI does not leak into the next station.
-- Station catalog/static metadata may run during SSR/prerender, but realtime provider calls must not.
-- Schedule, current-song/detail and lyric requests are browser-only and must be guarded with `import.meta.client`.
-- Do not start realtime polling until the station page is mounted/hydrated; prerendering must never depend on external schedule providers such as Webrad.io or Zing endpoints.
-
-Regression guards:
-
-- `tests/station-route-lifecycle.test.mjs`
-- `tests/station-schedule.test.mjs`
+Regression guards include `tests/playback-store.test.mjs`, `tests/station-polling.test.mjs`,
+`tests/station-realtime-ssr.test.mjs`, and `tests/browser/player-shell.spec.mjs`.
 
 ## Radio data invariants
 
@@ -156,7 +157,8 @@ Station names/descriptions may use Arabic or other RTL/mixed scripts.
 
 The application UI is **Font Awesome Free-only**.
 
-- Register visible UI icons centrally in `config/fontawesome-icons.mjs`.
+- Register Font Awesome UI icons centrally in `config/fontawesome-icons.mjs`.
+- Keep Nuxt UI's Lucide icons in the scanned client bundle; client-only player controls must render without an external icon API.
 - `nuxt.config.ts` must not reintroduce `proIcons`.
 - Do not add `@fortawesome/pro-*` or `@fortawesome/sharp-*` packages without an explicit architecture/licensing decision.
 - Do not commit Font Awesome registry auth tokens or a private-registry `.npmrc`.
@@ -193,6 +195,8 @@ At minimum:
 npm ci
 npm test
 npm run generate
+npx playwright install chromium
+npm run test:ui
 ```
 
 For runtime/server deployment changes, `npm run build` can also be useful locally.
@@ -208,3 +212,4 @@ Data-sync PR validation intentionally avoids live provider calls.
 ## Durable-memory rule
 
 When a bug or refactor reveals a project-wide rule that a future contributor/AI could accidentally break again, update `docs/PROJECT_CONTEXT.md` in the same PR.
+

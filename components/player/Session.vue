@@ -1,0 +1,43 @@
+<template>
+  <Player
+    :country="station?.countryKey || ''"
+    :country-name="station ? $t(station.countryKey) : ''"
+    :thumb="station?.image || ''"
+    :stream-name="station?.title || $t('player.choose_station')"
+    :stream-url="station?.sources[0] || emptySource"
+    :stream-urls="station?.sources || emptySources"
+    :station-url="station?.url"
+    :active-station-id="station?.id"
+    :stations="playback.stations"
+    :play-request="playback.playRequest"
+    :pause-request="playback.pauseRequest"
+    :program="program"
+    :playlist="playlist"
+    :song="song"
+    :queue-loading="loading"
+    :lyrics-available="isZingStation"
+    @select-station="selectStation"
+    @open-lyrics="lyricsOpen = true"
+  />
+  <UModal v-model:open="lyricsOpen" :title="$t('panel.lyric')" :description="station?.title" :ui="{ content: 'max-w-xl', body: 'radio-scrollbar max-h-[60dvh] overflow-y-auto' }">
+    <template #body>
+      <p v-for="(line, index) in lyrics" :key="index" dir="auto" class="py-2 text-sm leading-7 text-[var(--radio-text-muted)]">{{ line }}</p>
+    </template>
+  </UModal>
+</template>
+
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { usePlaybackStore } from '~/stores/playback';
+import type { RadioSource, RadioStationOption } from '~/types/radio';
+
+const playback = usePlaybackStore();
+const { station } = storeToRefs(playback);
+const { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation } = useStationRealtime();
+const emptySource: RadioSource = { src: '', type: 'audio/mpeg' };
+const emptySources: RadioSource[] = [];
+
+const selectStation = (target: RadioStationOption) => {
+  if (target.url) void navigateTo(target.url);
+};
+</script>

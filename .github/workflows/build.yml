@@ -5,6 +5,10 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - "app.vue"
+      - "app.config.ts"
+      - "playwright.config.ts"
+      - "types/**"
+      - "utils/**"
       - "nuxt.config.ts"
       - "package.json"
       - "package-lock.json"
@@ -56,3 +60,9 @@ jobs:
 
       - name: "Generate prerendered site"
         run: npm run generate
+
+      - name: "Install Chromium for UI regression tests"
+        run: npx playwright install --with-deps chromium
+
+      - name: "Verify persistent player and responsive UI"
+        run: npm run test:ui

@@ -37,139 +37,35 @@
           </p>
         </div>
       </div>
+      <div class="relative mt-5 flex flex-wrap items-center gap-3">
+        <UButton :icon="isActive && playback.playing ? 'i-lucide-pause' : 'i-lucide-play'" size="lg" class="rounded-full px-5" @click="playStation">
+          {{ isActive && playback.playing ? $t('player.pause') : $t('player.play') }}
+        </UButton>
+        <span class="text-xs text-[var(--radio-text-muted)]">{{ $t('player.keep_listening') }}</span>
+      </div>
     </section>
 
-    <Player
-      :country="i18n"
-      :country-name="countryName"
-      :song="song"
-      :program="program"
-      :playlist="playlist"
-      :streamName="streamName"
-      :streamUrl="streamUrl"
-      :streamUrls="streamUrls"
-      :thumb="thumb"
-      :stations="stations"
-      :active-station-id="stationSlug"
-      :queue-loading="queueLoading"
-      @select-station="selectStation"
-    />
-
     <PanelStation
+      @select-station="playSelected"
       :stations="stations"
       :active-station-id="stationSlug"
       :country-name="countryName"
     />
 
-    <button
-      v-if="isZingStation"
-      type="button"
-      class="fixed bottom-5 left-4 z-40 flex h-11 items-center gap-2 rounded-2xl bg-[var(--radio-inverse-bg)] px-4 text-sm font-semibold text-[var(--radio-inverse-text)] shadow-xl shadow-slate-950/20 transition hover:-translate-y-0.5"
-      @click="lyric_popup = !lyric_popup"
-    >
-      <fa :icon="['fas', 'music']" class="h-4 w-4" />
-      <span class="hidden sm:inline">{{ $t("panel.lyric") }}</span>
-    </button>
-
-    <div
-      v-if="lyric_popup"
-      class="fixed inset-0 z-[80] flex items-end bg-[var(--radio-overlay)] p-3 backdrop-blur-sm sm:items-auto sm:bg-transparent sm:p-0 sm:backdrop-blur-none"
-      @click.self="lyric_popup = false"
-    >
-      <aside
-        class="radio-themed-elevated w-full overflow-hidden rounded-3xl border border-[var(--radio-border)] shadow-2xl shadow-slate-950/20 sm:fixed sm:bottom-20 sm:left-4 sm:max-w-md"
-      >
-        <div class="flex items-center justify-between border-b border-[var(--radio-border)] px-5 py-4">
-          <div>
-            <p class="text-[10px] font-semibold uppercase tracking-[0.16em] text-rose-500">
-              Now playing
-            </p>
-            <h2 class="mt-1 text-lg font-semibold text-[var(--radio-text)]">
-              {{ $t("panel.lyric") }}
-            </h2>
-          </div>
-          <button
-            type="button"
-            class="flex h-9 w-9 items-center justify-center rounded-xl text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]"
-            :aria-label="$t('button.close')"
-            @click="lyric_popup = false"
-          >
-            <fa :icon="['fas', 'xmark']" />
-          </button>
-        </div>
-
-        <div id="lyric" class="radio-scrollbar max-h-[55vh] overflow-y-auto px-5 py-4 sm:max-h-80">
-          <p
-            v-for="(line, index) in lyricLines"
-            :key="`${index}-${line}`"
-            class="py-1.5 text-sm leading-6 text-[var(--radio-text-muted)]"
-          >
-            {{ line }}
-          </p>
-        </div>
-      </aside>
-    </div>
   </div>
 </template>
 
 
 
 <script setup lang="ts">
-import type { RadioSource, RadioStationOption } from "~/types/radio";
-import {
-  isZingScheduleUrl,
-  normalizeScheduleUrl,
-} from "~/utils/station-schedule.mjs";
+import type { RadioCatalogEntry as StationCatalogEntry, RadioStationOption } from "~/types/radio";
+import { usePlaybackStore } from "~/stores/playback";
+import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import {
   buildBreadcrumbSchema,
   buildRadioStationSchema,
 } from "~/utils/seo-structured-data.mjs";
 
-interface ProgramItem {
-  encodeId: string;
-}
-
-interface Track {
-  track_title: string;
-  track_artist: string;
-  track_image: string;
-  track_played: number;
-}
-
-interface CurrentMedia {
-  title: string;
-  artists: string;
-  hasLyric: boolean;
-  encodeId: string;
-}
-
-interface Song {
-  encodeId: string;
-  currentMedia?: CurrentMedia;
-}
-
-interface StationStream {
-  url: string;
-  type?: string;
-  cros?: boolean;
-  source?: string;
-  label?: string;
-}
-
-interface StationCatalogEntry {
-  title: string;
-  description?: string;
-  type: string;
-  cros: boolean;
-  stream: string;
-  streams?: StationStream[];
-  stream_alternative?: string;
-  features?: string;
-  schedule?: string | boolean;
-}
-
-const $store = useMainStore();
-const dayjs = useDayjs();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -274,13 +170,6 @@ const stations = computed<RadioStationOption[]>(() =>
   })),
 );
 
-const stationScheduleUrl = computed(() =>
-  normalizeScheduleUrl(stationMeta.value?.schedule),
-);
-const isZingStation = computed(() =>
-  isZingScheduleUrl(stationScheduleUrl.value),
-);
-
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
 const areaName = computed(() =>
   t(`world.${area.value.replace(/-/g, "_")}.name`),
@@ -331,56 +220,10 @@ const stationSchema = computed(() =>
   }),
 );
 
-const streamName = ref("");
-const program = ref<ProgramItem[]>([]);
-const song = ref<Song>();
-const thumb = ref("");
-const playlist = ref<Track[]>([]);
-const queueLoading = ref(false);
-const lyric_popup = ref(false);
-const lyricLines = ref<string[]>([t("panel.updating")]);
-const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
-const streamUrls = ref<RadioSource[]>([]);
-
-const toRadioSource = (
-  stream: StationStream | { url: string; type?: string; cros?: boolean },
-): RadioSource => ({
-  src: stream.cros
-    ? `${config.public.corsServer || ""}${stream.url}`
-    : stream.url,
-  type: (stream.type || "audio/mpeg"),
-  source: stream.source,
-  label: stream.label,
-  proxied: Boolean(stream.cros),
-});
-
-const setStationStreams = (
-  primary: StationStream,
-  fallbacks: StationStream[] = [],
-  alternative = "",
-): void => {
-  const seen = new Set<string>();
-  const candidates: StationStream[] = [
-    primary,
-    ...fallbacks,
-    ...(alternative
-      ? [{ url: alternative, source: "legacy-alternative" }]
-      : []),
-  ].filter((item) => {
-    const url = String(item?.url || "").trim();
-    if (!/^https?:\/\//i.test(url) || seen.has(url)) return false;
-    seen.add(url);
-    return true;
-  });
-
-  streamUrls.value = candidates.map(toRadioSource);
-  streamUrl.value =
-    streamUrls.value[0] || ({ src: "", type: "audio/mpeg" });
-};
-let pollingSchedule: ReturnType<typeof setTimeout> | null = null;
-let requestVersion = 0;
-let clientReady = false;
-const POLL_INTERVAL = 60_000;
+const playback = usePlaybackStore();
+const streamName = computed(() => stationName.value);
+const thumb = computed(() => stationMeta.value?.features || String(config.public.placeholderStation));
+const isActive = computed(() => playback.station?.url === stationPath.value);
 
 useHead(() => ({
   title: seoTitle.value,
@@ -411,245 +254,33 @@ useSeoMeta(() => ({
   twitterImageAlt: `${stationName.value} radio station artwork`,
 }));
 
-const clearPolling = (): void => {
-  if (pollingSchedule) {
-    clearTimeout(pollingSchedule);
-    pollingSchedule = null;
-  }
-};
-
-const resetStationAsyncState = (): void => {
-  program.value = [];
-  song.value = undefined;
-  playlist.value = [];
-  lyricLines.value = [t("panel.updating")];
-  queueLoading.value = false;
-};
-
-const resetRouteScopedState = (): void => {
-  requestVersion += 1;
-  clearPolling();
-  resetStationAsyncState();
-  lyric_popup.value = false;
-
-  streamName.value = "";
-  thumb.value = "";
-  streamUrls.value = [];
-  streamUrl.value = { src: "", type: "audio/mpeg" };
-};
-
-watch(
-  () => [area.value, slug.value, stationSlug.value] as const,
-  () => {
-    resetRouteScopedState();
-  },
-  { flush: "sync" },
-);
-
-const currentTimestamp = (): number =>
-  dayjs().tz($store.getTimezone).unix();
-
-const scheduleRequestUrl = (url: string): string =>
-  /[?&](?:time|timestamp)=$/i.test(url)
-    ? `${url}${currentTimestamp()}`
-    : url;
-
-const fetchLyric = async (id: string, version: number): Promise<void> => {
-  if (!import.meta.client) return;
-
-  try {
-    const resData = await $fetch(
-      `${config.public.apiZingGetLyric}${id}&time=${currentTimestamp()}`,
-    );
-    if (version !== requestVersion) return;
-
-    const value = resData as {
-      err: number;
-      data?: { sentences?: { words: { data: string }[] }[] };
-    };
-
-    if (value.err === 0 && value.data?.sentences?.length) {
-      lyricLines.value = value.data.sentences.map((sentence) =>
-        sentence.words.map((word) => word.data).join(" "),
-      );
-      return;
-    }
-  } catch (error) {
-    if (version === requestVersion) {
-      console.error("Unable to load lyrics:", error);
-    }
-  }
-
-  if (version === requestVersion) {
-    lyricLines.value = [t("panel.no_lyric")];
-  }
-};
-
-const fetchDetail = async (url: string, version: number): Promise<void> => {
-  if (!import.meta.client) return;
-
-  try {
-    const resData = await $fetch(scheduleRequestUrl(url));
-    if (version !== requestVersion) return;
-
-    const value = resData as { err: number; data?: Song };
-    if (value.err !== 0 || !value.data) {
-      song.value = undefined;
-      lyricLines.value = [t("panel.no_lyric")];
-      return;
-    }
-
-    song.value = value.data;
-    const currentMedia = value.data.currentMedia;
-    if (!currentMedia) {
-      lyricLines.value = [t("panel.no_lyric")];
-      return;
-    }
-
-    if (currentMedia.hasLyric) {
-      await fetchLyric(currentMedia.encodeId, version);
-    } else {
-      lyricLines.value = [t("panel.no_lyric")];
-    }
-  } catch (error) {
-    if (version === requestVersion) {
-      console.error("Unable to load current song:", error);
-    }
-  }
-};
-
-const fetchSchedule = async (url: string, version: number): Promise<void> => {
-  if (!import.meta.client) return;
-
-  try {
-    const resData = await $fetch(scheduleRequestUrl(url));
-    if (version !== requestVersion) return;
-
-    const value = resData as {
-      err?: number;
-      success?: boolean;
-      data?: { items?: ProgramItem[] };
-      result?: Track[];
-    };
-
-    if (isZingScheduleUrl(url)) {
-      if (value.err !== 0) {
-        program.value = [];
-        song.value = undefined;
-        lyricLines.value = [t("panel.no_lyric")];
-        return;
-      }
-
-      const items = value.data?.items || [];
-      program.value = items;
-      const firstProgram = items[0];
-
-      if (
-        firstProgram?.encodeId &&
-        config.public.apiZingLiveStreamProgramDetail
-      ) {
-        await fetchDetail(
-          `${config.public.apiZingLiveStreamProgramDetail}${firstProgram.encodeId}&time=`,
-          version,
-        );
-      } else {
-        song.value = undefined;
-        lyricLines.value = [t("panel.no_lyric")];
-      }
-      return;
-    }
-
-    if (value.success && Array.isArray(value.result)) {
-      playlist.value = value.result;
-    }
-  } catch (error) {
-    if (version === requestVersion) {
-      console.error("Unable to load station schedule:", error);
-    }
-  } finally {
-    if (version === requestVersion) {
-      queueLoading.value = false;
-    }
-  }
-};
-
-const pollSchedule = async (url: string, version: number): Promise<void> => {
-  if (!import.meta.client || !clientReady) return;
-
-  await fetchSchedule(url, version);
-  if (version !== requestVersion) return;
-
-  pollingSchedule = setTimeout(() => {
-    void pollSchedule(url, version);
-  }, POLL_INTERVAL);
-};
-
-const startStationRealtime = (
-  meta: StationCatalogEntry,
-  version: number,
-): void => {
-  if (!import.meta.client || !clientReady) return;
-
-  const scheduleUrl = normalizeScheduleUrl(meta.schedule);
-  queueLoading.value = Boolean(scheduleUrl);
-
-  if (scheduleUrl) {
-    void pollSchedule(scheduleUrl, version);
-  }
-};
-
-const activateStation = (meta: StationCatalogEntry | undefined): void => {
-  requestVersion += 1;
-  const version = requestVersion;
-  clearPolling();
-  resetStationAsyncState();
-
+const activateStation = (autoplay = false): void => {
+  const meta = stationMeta.value;
   if (!meta) return;
-
-  // Static station metadata belongs to SSR/prerender so the generated route
-  // keeps correct title/artwork/stream information without external requests.
-  $store.setTimezone(area.value, slug.value);
-
-  streamName.value = meta.title;
-  thumb.value = meta.features || String(config.public.placeholderStation);
-  setStationStreams(
-    { url: meta.stream, type: meta.type, cros: meta.cros, source: "primary" },
-    meta.streams || [],
-    meta.stream_alternative || "",
-  );
-
-  // Schedule/current-song/lyrics are realtime provider data. They must only
-  // start after hydration on the browser and must never block Nuxt prerender.
-  startStationRealtime(meta, version);
+  playback.activate(createPlaybackStation({
+    area: area.value, country: slug.value, id: stationSlug.value, meta,
+    corsServer: String(config.public.corsServer || ''),
+    placeholder: String(config.public.placeholderStation),
+  }), stations.value, { autoplay });
 };
 
-watch(
-  stationMeta,
-  (meta) => {
-    activateStation(meta);
-  },
-  { immediate: true },
-);
-
-const selectStation = (station: RadioStationOption): void => {
-  if (station.id === stationSlug.value) return;
-
-  void navigateTo(
-    station.url || `/${area.value}/${slug.value}/${station.id}`,
-  );
+const playStation = (): void => {
+  if (isActive.value && (playback.playing || playback.waiting)) playback.pauseRequest += 1;
+  else activateStation(true);
 };
 
-onMounted(() => {
-  clientReady = true;
+const playSelected = (station: RadioStationOption): void => {
+  const meta = stationCatalog.value[station.id];
+  if (!meta) return;
+  playback.activate(createPlaybackStation({
+    area: area.value, country: slug.value, id: station.id, meta,
+    corsServer: String(config.public.corsServer || ''),
+    placeholder: String(config.public.placeholderStation),
+  }), stations.value, { autoplay: true });
+};
 
-  // The immediate watcher above intentionally performs only static activation
-  // during SSR and hydration. Start realtime data after the component mounts.
-  activateStation(stationMeta.value);
-});
-
-onBeforeUnmount(() => {
-  clientReady = false;
-  requestVersion += 1;
-  clearPolling();
-});
+// Only a station selection changes playback. Leaving this page does not own
+// audio teardown or stop the application-level schedule polling.
+watch(stationMeta, (meta) => { if (meta) activateStation(); }, { immediate: true });
 </script>
+

@@ -22,19 +22,15 @@ async function collectVueFiles(dir) {
   return files;
 }
 
-test("theme CSS keeps Nuxt Color Mode and daisyUI in sync", async () => {
+test("theme CSS defines semantic surfaces for Nuxt Color Mode", async () => {
   const css = await readFile(join(ROOT, "assets/css/main.css"), "utf8");
 
   for (const required of [
     'html.light',
-    'html[data-theme="light"]',
     'html.dark',
-    'html[data-theme="dark"]',
     '--radio-page-bg',
     '--radio-surface',
     '--radio-text',
-    '--color-base-100',
-    '--color-base-content',
     'body,',
     '#__nuxt',
   ]) {

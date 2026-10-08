@@ -1,12 +1,26 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
 
 /* Tailwind 4 defaults dark: to prefers-color-scheme. Nuxt Color Mode
    toggles a .dark class, so make dark: follow that class explicitly. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-@plugin "daisyui";
 
 @layer base {
+  :root, html.light, html.dark {
+    --radio-player-height: 96px;
+    --ui-bg: var(--radio-surface);
+    --ui-bg-muted: var(--radio-surface-muted);
+    --ui-bg-elevated: var(--radio-surface-elevated);
+    --ui-bg-accented: var(--radio-surface-soft);
+    --ui-border: var(--radio-border);
+    --ui-border-muted: var(--radio-border);
+    --ui-border-accented: var(--radio-border-strong);
+    --ui-text: var(--radio-text);
+    --ui-text-muted: var(--radio-text-muted);
+    --ui-text-dimmed: var(--radio-text-muted);
+    --ui-text-highlighted: var(--radio-text);
+  }
   :root,
   html.light,
   html[data-theme="light"] {
@@ -29,15 +43,6 @@
     --radio-header-bg: rgb(255 255 255 / 0.9);
     --radio-overlay: rgb(15 23 42 / 0.55);
 
-    /* Keep daisyUI controls on the exact same theme as Nuxt Color Mode. */
-    --color-base-100: #ffffff;
-    --color-base-200: #f1f5f9;
-    --color-base-300: #e2e8f0;
-    --color-base-content: #0f172a;
-    --color-primary: #f43f5e;
-    --color-primary-content: #ffffff;
-    --color-neutral: #0f172a;
-    --color-neutral-content: #ffffff;
   }
 
   html.dark,
@@ -61,14 +66,6 @@
     --radio-header-bg: rgb(2 6 23 / 0.86);
     --radio-overlay: rgb(2 6 23 / 0.72);
 
-    --color-base-100: #0f172a;
-    --color-base-200: #111827;
-    --color-base-300: #1e293b;
-    --color-base-content: #f8fafc;
-    --color-primary: #fb7185;
-    --color-primary-content: #020617;
-    --color-neutral: #f8fafc;
-    --color-neutral-content: #020617;
   }
 
   html {
@@ -86,7 +83,7 @@
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -109,6 +106,59 @@
 }
 
 @layer utilities {
+  .radio-shell {
+    padding-bottom: calc(var(--radio-player-height) + env(safe-area-inset-bottom));
+  }
+
+  .radio-player-dock {
+    min-height: calc(var(--radio-player-height) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .radio-right-panel {
+    top: 96px;
+    height: calc(100dvh - 112px - var(--radio-player-height) - env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 1536px) {
+    .radio-shell-queue .radio-app-content {
+      grid-template-columns: 224px minmax(0, 1fr) 320px;
+    }
+
+    .radio-shell-queue .radio-queue-slot {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .radio-bar, .radio-player-dock .animate-spin, .radio-player-dock .animate-pulse { animation: none; }
+  }
+
+  .radio-hero {
+    background: linear-gradient(115deg, #10276d 0%, #25146d 48%, #782eae 78%, #a93890 100%);
+    box-shadow: 0 26px 64px -38px rgb(79 46 167 / 0.6);
+  }
+
+  .radio-station-card {
+    border-color: var(--radio-border);
+    background: var(--radio-surface);
+    color: var(--radio-text);
+  }
+
+  .radio-station-card:hover {
+    border-color: rgb(139 92 246 / 0.46);
+    box-shadow: 0 18px 38px -28px rgb(88 54 165 / 0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .radio-station-card,
+    .radio-station-card img {
+      transition-duration: 0.01ms;
+      transform: none;
+    }
+  }
+
   .radio-surface {
     border-color: var(--radio-border);
     background: var(--radio-surface);
@@ -189,3 +239,4 @@
     @apply transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
   }
 }
+

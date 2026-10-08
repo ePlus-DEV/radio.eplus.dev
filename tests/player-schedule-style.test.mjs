@@ -21,7 +21,7 @@ test("schedule sidebar keeps rose as an accent instead of a structural fill", as
 
   assert.match(
     source,
-    /tab-active !bg-\[var\(--radio-surface\)\]/,
+    /bg-\[var\(--radio-surface\)\]/,
   );
   assert.match(
     source,

@@ -22,14 +22,14 @@ Current application architecture:
 | Framework | Nuxt 4 / Vue 3 |
 | Runtime | Node.js 24.15.0 |
 | Styling | Tailwind CSS 4 |
-| UI primitives | DaisyUI 5 |
+| UI primitives | Nuxt UI 4 + Radio ePlus tokens (DaisyUI removed) |
 | State | Pinia |
 | Audio | Native HTML5 Audio + hls.js |
 | Theme state | `@nuxtjs/color-mode` |
 | i18n | `@nuxtjs/i18n` |
 | Images | `@nuxt/image` |
 | Search | Algolia |
-| Icons | Font Awesome Free |
+| Icons | Lucide for Nuxt UI; Font Awesome Free for existing catalog views |
 | SEO | prerendered radio routes + sitemap |
 
 Exact versions belong in `package.json`.
@@ -71,7 +71,7 @@ The design direction is:
 - rose accent for live/primary actions;
 - consistent cards, menus, badges, inputs and selects;
 - responsive layouts that avoid fixed empty columns;
-- DaisyUI for stable primitives such as buttons, tabs, inputs, selects, badges and menus;
+- Nuxt UI controls with Radio ePlus semantic colors;
 - custom Radio ePlus semantic tokens for the actual product palette.
 
 DaisyUI should **not** be allowed to become an independent visual theme that conflicts with Nuxt Color Mode.
@@ -99,33 +99,21 @@ Breadcrumbs are route-semantic rather than placeholder-level based:
 
 The Back-to-top control is available on mobile and desktop after scrolling, and its arrow is an inline SVG rather than a Font Awesome dependency.
 
-### Language dropdown lifecycle
+### Language, theme and overlay lifecycle
 
-A 2026-10-08 regression exposed a problem with using DaisyUI's CSS-only `dropdown` + `tabindex/focus-within` state for the header language selector.
+Nuxt UI `UDropdownMenu` binds to explicit Vue open state for theme and language.
+Selection closes the menu before the preference/locale changes. Reka owns menu
+roles, outside-click/Escape behavior, focus and collision-aware positioning;
+route changes close the menu as well. Do not reintroduce CSS focus-only menus.
 
-Observed class of failures:
-
-- menu remains open after changing locale;
-- locale rerender retains focus inside the dropdown and the menu appears to reopen;
-- stale focus makes click/keyboard behavior inconsistent;
-- small-screen positioning can become difficult to reason about because visibility is controlled by CSS focus rather than Vue state.
-
-Current rule for `components/lang/LangSwitcher.vue`:
-
-- Vue owns an explicit boolean `open` state;
-- choose locale → close first, then call `setLocale`;
-- click outside closes;
-- Escape closes and restores trigger focus;
-- ArrowDown opens and focuses the first option;
-- route changes close the menu;
-- menu is explicitly anchored with `absolute right-0 top-full`;
-- accessibility state uses `aria-expanded`, `aria-haspopup="menu"`, `role="menu"` and `menuitemradio`.
-
-Do not regress this component back to DaisyUI focus-driven visibility.
-
-The dropdown list also owns its own layout. Do not add DaisyUI `menu` / `dropdown-content` classes back to this controlled menu: they can introduce child sizing/layout rules that, combined with vertical overflow, produce horizontal scrolling and displaced locale items on narrow screens. Keep the list `flex-col`, `overflow-x-hidden`, and constrain it with a viewport-aware max width.
-
-Regression test: `tests/language-dropdown.test.mjs`.
+`UApp` provides translated component labels. Search and lyrics use `UModal`,
+mobile navigation and player queues use `USlideover`, and the queue uses `UTabs`.
+The `--ui-*` structural variables map to `--radio-*`; Nuxt Color Mode remains the
+only theme owner. Nuxt UI installs Tailwind's Vite plugin, so do not register a
+second instance. Fonts are disabled to retain the existing font and avoid a
+new external font dependency. Lucide's small client icon bundle is generated
+from the installed collection with `icon.clientBundle.scan`; `icon.provider`
+is `none` so client-only controls also work without an external icon API.
 
 ## 5. Dark-mode architecture
 
@@ -134,7 +122,7 @@ Regression test: `tests/language-dropdown.test.mjs`.
 Dark mode previously depended on three independent mechanisms:
 
 1. Tailwind `dark:`;
-2. DaisyUI `data-theme`;
+2. legacy DaisyUI `data-theme`;
 3. manually hard-coded light/dark colors per component.
 
 This produced pages where most of the UI was dark but individual controls, menus, select elements, overlays, or legacy components stayed light.
@@ -161,9 +149,9 @@ The theme defines semantic variables for both light and dark modes, including va
 - `--radio-track`
 - `--radio-overlay`
 
-DaisyUI `--color-base-*` values are synchronized to the same resolved light/dark state.
+The previous DaisyUI `--color-base-*` duplicate palette was removed; Nuxt Color Mode and `--radio-*` tokens are the source of truth.
 
-Nuxt Color Mode and `data-theme` must remain synchronized.
+Nuxt Color Mode drives the semantic tokens; avoid adding a second theme system.
 
 The background/text are also applied at the root/document level so portals, dialogs, empty page regions, and browser-rendered controls do not expose white gaps in dark mode.
 
@@ -349,91 +337,53 @@ Some stations can also include:
 
 Do not destructively replace existing stations merely because a sync provider returns a different result.
 
-## 10. Station route lifecycle and schedule providers
+## 10. Persistent playback, catalog routing and realtime providers
 
-### Router regression discovered on 2026-10-08
+The selected station has an application lifetime. `stores/playback.ts` owns its
+identity, stream sources, station queue, and explicit play/pause requests.
+`components/player/Session.vue` stays outside `NuxtPage` in `app.vue`; the audio
+element, HLS instance, volume and pending recovery survive normal navigation.
 
-Nuxt reuses the station detail component when navigating between compatible station routes. The old implementation accidentally treated several pieces of state as component-lifetime state instead of route-lifetime state.
+Pages still load local catalogs during SSR/prerender for station names, links,
+404s and structured data. They pass the same catalog to `PanelStation` and
+shared playback. Home/country defaults use `onlyIfIdle`, so browsing does not
+replace an active station. Opening a station route selects it; revisiting the
+same URL or changing language leaves its source identity intact. Previous/Next
+and queue selections remain explicit autoplay actions. Pausing records the
+paused preference so a new page does not resume playback.
 
-Observed/possible symptoms when navigating without a full page reload:
+`useStationRealtime.ts` owns schedule/current-song/lyrics polling. It follows
+the playback identity, not the route. A new station aborts pending requests,
+clears metadata and lyrics, and closes the lyric dialog. `station-polling.mjs`
+also verifies a generation because an aborted provider may still return data.
+Polling begins after mounting and never runs during SSR/prerender. Normalize
+schedule URLs before use and detect Zing from its provider endpoint, not country.
 
-- previous station schedule remains visible briefly on the next station;
-- previous Zing song/lyrics remain visible after route navigation;
-- lyric popup stays open while the station route changes;
-- an old schedule/detail/lyric request returns later and mutates the new station;
-- country/station catalog UI and player metadata can update from different fetches at different times;
-- schedule tab/search state from the previous station carries into the new station.
+### Hydration rule
 
-### Root causes
+The app shell renders before async station-page setup can seed Pinia during SSR.
+Rendering a global player at that point can serialize an empty/disabled player,
+then leave stale DOM attributes when hydration sees the seeded station. The
+player is therefore mounted once inside `ClientOnly`, with a fixed-height
+fallback. Main content's queue spacing waits for mounting too. Indexable catalog
+content and all page metadata remain server rendered.
 
-1. The station page loaded the country catalog, while `PanelStation` independently loaded the same catalog again and emitted active-station data back to the parent.
-2. Schedule/song/playlist/lyric state was reset only after that child fetch completed.
-3. Route-derived catalog async state did not explicitly guard the returned payload against the currently active area/country.
-4. Zing handling was selected with `country === "viet-nam"` rather than by schedule provider.
-5. The lyric action was shown for all Vietnamese stations.
-6. Some legacy entries use non-URL schedule values such as `true`.
+The shell and Back to top reserve `--radio-player-height` plus the bottom safe
+area. At wide desktop widths the queue is teleported into a dedicated column
+inside `.radio-app-content`. Its sticky panel stops at the content boundary
+before the footer, with a viewport-height limit and internal list scrolling.
+Keep the shell/body horizontal overflow set to `clip`: `hidden` creates a scroll
+container that prevents viewport sticky positioning. Smaller screens use a
+Nuxt UI drawer with focus containment. The audio session remains outside
+`NuxtPage`; moving the visual queue must never remount it.
 
-### Current rules
+A late native play promise is also version-checked. Pausing while connecting
+must not be undone when an older `play()` promise later resolves/rejects.
 
-- `pages/[area]/[country]/[station].vue` owns the country catalog and active station state.
-- `components/panel/Station.vue` is presentational and must not independently fetch/emit station catalog state.
-- Both country and station-detail pages must pass their current station list into `PanelStation`. A bare `<PanelStation />` renders its safe default empty array and therefore shows `0 / updating` even if the Player sidebar already has stations.
-- The catalog async key is route-reactive, and returned catalog data is accepted only when its identity matches the active area/country.
-- Route changes immediately:
-  - increment the request version;
-  - stop the previous polling timer;
-  - clear program/song/playlist/lyric/loading state;
-  - close the lyric popup;
-  - clear transient stream state before activating the new station.
-- Every async schedule/detail/lyric response must check the request version before changing UI state.
-- Schedule values must pass `normalizeScheduleUrl` before fetching. Boolean/invalid legacy values are not URLs and must not be fetched.
-- Zing-specific behavior is selected by `isZingScheduleUrl`, based on the provider endpoint (`zing.eplus.dev/api/live-stream-program-list`), not the country.
-- The lyric action is Zing-only.
-- Queue search/tab state is station-route-scoped. If a new station has a schedule that finishes loading asynchronously, the schedule tab can become active after loading instead of leaving stale navigation state.
-
-### SSR/prerender realtime-fetch regression discovered on 2026-10-08
-
-DigitalOcean logs showed Nuxt prerender executing:
-
-```text
-fetchSchedule → pollSchedule → external schedule URL
-```
-
-and timing out on providers such as `api.webrad.io:443`.
-
-Root cause: the station page used an immediate `watch(stationMeta)` that called `activateStation()`; `activateStation()` started schedule polling even during SSR/prerender. Because Nuxt prerenders the radio SEO routes, builds could accidentally make many external realtime requests.
-
-This is architecturally incorrect because schedule/current-song/lyrics are realtime data and should not determine whether a static station route can build.
-
-Current rule:
-
-- SSR/prerender may load local station JSON and static metadata for SEO and initial markup.
-- Realtime schedule/current-song/lyric requests are client-only.
-- Realtime polling starts after `onMounted`/hydration.
-- `fetchSchedule`, `fetchDetail`, `fetchLyric`, and polling functions explicitly refuse server execution.
-- External provider outages must not block or slow prerender/deployment.
-
-Regression test:
-
-```text
-tests/station-realtime-ssr.test.mjs
-```
-
-Regression tests:
-
-```text
-tests/station-route-lifecycle.test.mjs
-tests/station-schedule.test.mjs
-```
-
-Useful manual route test:
-
-1. open a Zing station such as `/asia/viet-nam/edm-radio-zing-mp3`;
-2. open lyrics/schedule;
-3. navigate through the in-player station list to another Zing station;
-4. navigate to a non-Zing Vietnam station such as `/asia/viet-nam/vov1`;
-5. verify old Zing song/schedule/lyrics disappear immediately and the lyric control is no longer shown;
-6. navigate to a station in another country and verify the station catalog changes with the route.
+Regression checks: playback-store and station-polling unit tests, the SSR guard,
+and the Playwright suite against generated output. The suite uses a local AAC
+HLS fixture and deterministic media/provider mocks, so CI has no live stream
+availability requirement.
 
 ## 11. Data sync
 
@@ -510,7 +460,7 @@ The 2026-10-08 icon audit moved the remaining UI uses away from Pro-only icons, 
 Important rules:
 
 - all `fas`/brand icons used by Vue templates must be registered centrally;
-- theme icons use Free Solid `sun`, `moon`, and `desktop`;
+- Nuxt UI theme and player controls use locally bundled Lucide icons;
 - the lyric action uses Free Solid `music`;
 - the offline state uses Free Solid `wifi`;
 - the Back-to-top control uses an inline SVG so this critical navigation action cannot render blank because of an icon-registry regression;
@@ -576,3 +526,11 @@ Update this document in the same PR when any of the following changes:
 - a production regression reveals a new rule that future refactors must preserve.
 
 Prefer documenting the **reason** for a rule, not only the final code, so later refactors do not accidentally recreate the same bug.
+
+
+## 18. Nuxt development tooling compatibility
+
+Nuxt devtools still imports the removed default export from Simple Git 4, while
+the repository pins Simple Git 4 for security. Devtools is disabled so `nuxt dev`
+remains usable without weakening that override. Re-enable only after devtools
+supports the named export. This does not affect the product or production build.

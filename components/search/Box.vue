@@ -7,20 +7,20 @@
             :icon="['fas', 'magnifying-glass']"
             class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
           />
-          <input
+          <UInput
             ref="inputEl"
             id="search-input"
             v-model="input"
             type="search"
-            role="combobox"
-            aria-expanded="true"
-            class="input input-bordered block h-12 min-h-12 w-full rounded-2xl border-[var(--radio-border)] bg-[var(--radio-surface-soft)] pl-11 pr-4 text-sm text-[var(--radio-text)] shadow-none outline-none placeholder:text-slate-400 focus:border-rose-300 focus:outline-none focus:ring-4 focus:ring-rose-500/10"
+            :aria-label="$t('popup.search.text')"
+            class="w-full"
+            :ui="{ base: 'h-12 rounded-2xl pl-11 pr-4 text-sm' }"
             :placeholder="$t('popup.search.text')"
           />
         </div>
         <button
           type="button"
-          class="btn btn-ghost btn-square h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-slate-400 shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
+          class="inline-flex items-center justify-center h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-slate-400 shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
           :aria-label="$t('button.close')"
           @click="$emit('close')"
         >
@@ -68,7 +68,7 @@ const { search, result: searchResult } = useAlgoliaSearch(
 );
 
 const input = ref("");
-const inputEl = ref<HTMLInputElement | null>(null);
+const inputEl = useTemplateRef("inputEl");
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
 
 watch(input, (value: string) => {
@@ -90,10 +90,11 @@ watch(input, (value: string) => {
 });
 
 onMounted(() => {
-  window.setTimeout(() => inputEl.value?.focus(), 50);
+  window.setTimeout(() => inputEl.value?.inputRef?.focus(), 50);
 });
 
 onBeforeUnmount(() => {
   if (typingTimeout) clearTimeout(typingTimeout);
 });
 </script>
+

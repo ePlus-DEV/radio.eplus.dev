@@ -201,5 +201,25 @@
       "system": "システム"
     },
     "offline": "ネットワーク接続に失敗しました。ネットワーク接続を確認してください。"
+  },
+  "player": {
+    "title": "ラジオプレーヤー",
+    "choose_station": "放送局を選んで聴き始める",
+    "play": "ラジオを再生",
+    "pause": "一時停止",
+    "retry": "再試行",
+    "connecting": "接続中…",
+    "on_air": "再生中",
+    "ready": "再生準備完了",
+    "queue": "放送局と番組表",
+    "source": "配信ソース",
+    "volume": "音量",
+    "mute": "ミュート",
+    "unmute": "ミュート解除",
+    "keep_listening": "ページを移動しても再生を続けます",
+    "listen_country": "放送局を聴く",
+    "explore": "地域を探す",
+    "previous": "前の放送局: {name}",
+    "next": "次の放送局: {name}"
   }
 }

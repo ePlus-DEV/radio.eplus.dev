@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <span class="badge h-9 border-0 bg-[var(--radio-surface-soft)] px-4 text-sm font-semibold tabular-nums text-[var(--radio-text-muted)]">
+          <span class="inline-flex items-center rounded-full h-9 border-0 bg-[var(--radio-surface-soft)] px-4 text-sm font-semibold tabular-nums text-[var(--radio-text-muted)]">
             {{ countryCount }} countries
           </span>
         </div>
