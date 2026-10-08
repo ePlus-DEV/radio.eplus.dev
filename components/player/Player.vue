@@ -410,10 +410,6 @@ const hasPlayableSource = computed(() => sourceList.value.length > 0);
 const queueCount = computed(
   () => (props.playlist?.length || 0) + (props.program?.length || 0),
 );
-const hasQueuePanel = computed(
-  () => queueCount.value > 0 || Boolean(props.queueExpected),
-);
-
 const nowPlayingTitle = computed(() => {
   const songTitle = props.song?.currentMedia?.title?.trim();
   if (songTitle) return songTitle;
