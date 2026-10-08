@@ -30,11 +30,10 @@
             {{ stationName }}
           </h1>
           <p
-            v-if="stationMeta?.description"
             dir="auto"
             class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]"
           >
-            {{ stationMeta.description }}
+            {{ seoDescription }}
           </p>
         </div>
       </div>
@@ -121,6 +120,10 @@ import {
   isZingScheduleUrl,
   normalizeScheduleUrl,
 } from "~/utils/station-schedule.mjs";
+import {
+  buildBreadcrumbSchema,
+  buildRadioStationSchema,
+} from "~/utils/seo-structured-data.mjs";
 
 interface ProgramItem {
   encodeId: string;
@@ -195,39 +198,55 @@ interface StationCatalogPayload {
   stations: Record<string, StationCatalogEntry>;
 }
 
-const { data: stationCatalogPayload } = await useAsyncData<StationCatalogPayload>(
+const { data: stationCatalogPayload, error: stationCatalogError } =
+  await useAsyncData<StationCatalogPayload>(
   stationCatalogKey,
   async () => {
     const key = stationCatalogKey.value;
-    let stations: Record<string, StationCatalogEntry>;
 
-    if (import.meta.server) {
-      const [{ readFile }, { join }] = await Promise.all([
-        import("node:fs/promises"),
-        import("node:path"),
-      ]);
-      const file = join(
-        process.cwd(),
-        "public",
-        "radio",
-        area.value,
-        `${slug.value}.json`,
-      );
-      stations = JSON.parse(
-        await readFile(file, "utf8"),
-      ) as Record<string, StationCatalogEntry>;
-    } else {
-      stations = await $fetch<Record<string, StationCatalogEntry>>(
-        stationCatalogUrl.value,
-      );
+    try {
+      let stations: Record<string, StationCatalogEntry>;
+
+      if (import.meta.server) {
+        const [{ readFile }, { join }] = await Promise.all([
+          import("node:fs/promises"),
+          import("node:path"),
+        ]);
+        const file = join(
+          process.cwd(),
+          "public",
+          "radio",
+          area.value,
+          `${slug.value}.json`,
+        );
+        stations = JSON.parse(
+          await readFile(file, "utf8"),
+        ) as Record<string, StationCatalogEntry>;
+      } else {
+        stations = await $fetch<Record<string, StationCatalogEntry>>(
+          stationCatalogUrl.value,
+        );
+      }
+
+      return { key, stations };
+    } catch {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Radio country not found",
+      });
     }
-
-    return { key, stations };
   },
   {
     default: () => ({ key: "", stations: {} }),
   },
 );
+
+if (stationCatalogError.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Radio country not found",
+  });
+}
 
 const stationCatalog = computed<Record<string, StationCatalogEntry>>(() =>
   stationCatalogPayload.value?.key === stationCatalogKey.value
@@ -237,6 +256,13 @@ const stationCatalog = computed<Record<string, StationCatalogEntry>>(() =>
 const stationMeta = computed(
   () => stationCatalog.value[stationSlug.value],
 );
+
+if (!stationMeta.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Radio station not found",
+  });
+}
 
 const stations = computed<RadioStationOption[]>(() =>
   Object.entries(stationCatalog.value || {}).map(([stationId, station]) => ({
@@ -256,6 +282,12 @@ const isZingStation = computed(() =>
 );
 
 const siteUrl = computed(() => String(config.public.siteUrl).replace(/\/$/, ""));
+const areaName = computed(() =>
+  t(`world.${area.value.replace(/-/g, "_")}.name`),
+);
+const stationPath = computed(
+  () => `/${area.value}/${slug.value}/${stationSlug.value}`,
+);
 const stationName = computed(
   () =>
     stationMeta.value?.title ||
@@ -279,7 +311,24 @@ const seoImage = computed(() => {
   return image.startsWith("http") ? image : `${siteUrl.value}${image}`;
 });
 const canonicalUrl = computed(
-  () => `${siteUrl.value}/${area.value}/${slug.value}/${stationSlug.value}`,
+  () => `${siteUrl.value}${stationPath.value}`,
+);
+const breadcrumbSchema = computed(() =>
+  buildBreadcrumbSchema(siteUrl.value, [
+    { name: "Home", path: "/" },
+    { name: areaName.value, path: `/${area.value}` },
+    { name: countryName.value, path: `/${area.value}/${slug.value}` },
+    { name: stationName.value, path: stationPath.value },
+  ]),
+);
+const stationSchema = computed(() =>
+  buildRadioStationSchema({
+    siteUrl: siteUrl.value,
+    path: stationPath.value,
+    name: stationName.value,
+    description: seoDescription.value,
+    image: seoImage.value,
+  }),
 );
 
 const streamName = ref("");
@@ -337,16 +386,14 @@ useHead(() => ({
   title: seoTitle.value,
   script: [
     {
+      key: "station-breadcrumb-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(breadcrumbSchema.value),
+    },
+    {
       key: "radio-station-schema",
       type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "RadioStation",
-        name: stationName.value,
-        description: seoDescription.value,
-        url: canonicalUrl.value,
-        image: seoImage.value,
-      }),
+      innerHTML: JSON.stringify(stationSchema.value),
     },
   ],
 }));
@@ -355,10 +402,13 @@ useSeoMeta(() => ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,
+  ogUrl: canonicalUrl.value,
   ogImage: seoImage.value,
+  ogImageAlt: `${stationName.value} radio station artwork`,
   twitterTitle: seoTitle.value,
   twitterDescription: seoDescription.value,
   twitterImage: seoImage.value,
+  twitterImageAlt: `${stationName.value} radio station artwork`,
 }));
 
 const clearPolling = (): void => {

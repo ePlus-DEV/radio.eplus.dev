@@ -33,17 +33,34 @@
 
 <script setup lang="ts">
 import worldData from "~/data/world";
+import {
+  buildBreadcrumbSchema,
+  buildCollectionPageSchema,
+} from "~/utils/seo-structured-data.mjs";
 
 const { t } = useI18n();
 const route = useRoute();
+const config = useRuntimeConfig();
+const siteUrl = computed(() =>
+  String(config.public.siteUrl).replace(/\/$/, ""),
+);
 const area = computed(() => String(route.params.area || ""));
 const areaKey = computed(() => area.value.replace(/-/g, "_"));
 const i18n = computed(() => `world.${areaKey.value}.name`);
 const areaName = computed(() => t(i18n.value));
 const areaCountries = computed(
   () =>
-    (worldData as Record<string, Record<string, unknown>>)[areaKey.value] || {},
+    (worldData as Record<string, Record<string, { name: string }>>)[
+      areaKey.value
+    ] || {},
 );
+
+if (!Object.prototype.hasOwnProperty.call(worldData, areaKey.value)) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Radio region not found",
+  });
+}
 const countryCount = computed(() => Object.keys(areaCountries.value).length);
 
 const seoTitle = computed(() => `Live Radio in ${areaName.value}`);
@@ -52,11 +69,47 @@ const seoDescription = computed(
     `Browse and listen to live internet radio stations across ${areaName.value} on Radio ePlus.`,
 );
 
-useHead(() => ({ title: seoTitle.value }));
+const areaPath = computed(() => `/${area.value}`);
+const areaUrl = computed(() => `${siteUrl.value}${areaPath.value}`);
+const areaBreadcrumbSchema = computed(() =>
+  buildBreadcrumbSchema(siteUrl.value, [
+    { name: "Home", path: "/" },
+    { name: areaName.value, path: areaPath.value },
+  ]),
+);
+const areaCollectionSchema = computed(() =>
+  buildCollectionPageSchema({
+    siteUrl: siteUrl.value,
+    path: areaPath.value,
+    name: seoTitle.value,
+    description: seoDescription.value,
+    items: Object.entries(areaCountries.value).map(([countrySlug, country]) => ({
+      name: t(country.name),
+      path: `${areaPath.value}/${countrySlug}`,
+    })),
+  }),
+);
+
+useHead(() => ({
+  title: seoTitle.value,
+  script: [
+    {
+      key: "area-breadcrumb-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(areaBreadcrumbSchema.value),
+    },
+    {
+      key: "area-collection-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(areaCollectionSchema.value),
+    },
+  ],
+}));
 useSeoMeta(() => ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,
+  ogUrl: areaUrl.value,
   twitterTitle: seoTitle.value,
   twitterDescription: seoDescription.value,
 }));

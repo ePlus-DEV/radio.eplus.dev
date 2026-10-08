@@ -24,8 +24,14 @@
           <h1 class="mt-1 line-clamp-2 text-2xl font-bold tracking-tight text-[var(--radio-text)] sm:text-3xl">
             {{ countryName }}
           </h1>
-          <p class="mt-2 text-sm text-[var(--radio-text-muted)]">
-            {{ stationCount ? stationCount + " stations" : seoDescription }}
+          <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]">
+            {{ seoDescription }}
+          </p>
+          <p
+            v-if="stationCount"
+            class="mt-2 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
+          >
+            {{ stationCount }} stations
           </p>
         </div>
       </div>
@@ -55,6 +61,11 @@
 
 <script setup lang="ts">
 import type { RadioSource, RadioStationOption } from "~/types/radio";
+import { normalizeScheduleUrl } from "~/utils/station-schedule.mjs";
+import {
+  buildBreadcrumbSchema,
+  buildCollectionPageSchema,
+} from "~/utils/seo-structured-data.mjs";
 
 interface ChannelStream {
   url: string;
@@ -67,12 +78,13 @@ interface ChannelStream {
 interface Channel {
   favorite?: boolean;
   title: string;
+  description?: string;
   stream: string;
   streams?: ChannelStream[];
   stream_alternative?: string;
   type?: string;
   cros?: boolean;
-  schedule?: string;
+  schedule?: string | boolean;
   features?: string;
 }
 
@@ -81,6 +93,11 @@ interface Track {
   track_artist: string;
   track_image: string;
   track_played: number;
+}
+
+interface CountryCatalogPayload {
+  key: string;
+  stations: Record<string, Channel>;
 }
 
 const $store = useMainStore();
@@ -96,48 +113,171 @@ const slug = computed(() => normalizeParam(route.params.country));
 const country = computed(() => slug.value.replace(/-/g, "_"));
 const area = computed(() => normalizeParam(route.params.area));
 const i18n = computed(
-  () => `world.${String(area.value).replace(/-/g, "_")}.${country.value}`,
+  () => `world.${area.value.replace(/-/g, "_")}.${country.value}`,
 );
 const countryName = computed(() => t(i18n.value));
 const countryFlag = computed(
-  () =>
-    `/img/${area.value || "asia"}/flags/${slug.value || "viet-nam"}.png`,
+  () => `/img/${area.value}/flags/${slug.value}.png`,
 );
+const siteUrl = computed(() =>
+  String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
+);
+const countryPath = computed(() => `/${area.value}/${slug.value}`);
+const countryUrl = computed(() => `${siteUrl.value}${countryPath.value}`);
+const countryImage = computed(() => `${siteUrl.value}${countryFlag.value}`);
+
+const catalogUrl = computed(
+  () => `/radio/${area.value}/${slug.value}.json`,
+);
+const catalogKey = computed(
+  () => `country-catalog:${area.value}:${slug.value}`,
+);
+
+const { data: catalogPayload, error: catalogError } =
+  await useAsyncData<CountryCatalogPayload>(
+  catalogKey,
+  async () => {
+    const key = catalogKey.value;
+
+    try {
+      let data: Record<string, Channel>;
+
+      if (import.meta.server) {
+        const [{ readFile }, { join }] = await Promise.all([
+          import("node:fs/promises"),
+          import("node:path"),
+        ]);
+        const file = join(
+          process.cwd(),
+          "public",
+          "radio",
+          area.value,
+          `${slug.value}.json`,
+        );
+        data = JSON.parse(await readFile(file, "utf8")) as Record<
+          string,
+          Channel
+        >;
+      } else {
+        data = await $fetch<Record<string, Channel>>(catalogUrl.value);
+      }
+
+      return { key, stations: data };
+    } catch {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Radio country not found",
+      });
+    }
+  },
+  {
+    default: () => ({ key: "", stations: {} }),
+  },
+);
+
+if (catalogError.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Radio country not found",
+  });
+}
+
+const catalog = computed<Record<string, Channel>>(() =>
+  catalogPayload.value?.key === catalogKey.value
+    ? catalogPayload.value.stations
+    : {},
+);
+
+const stationEntries = computed(() => Object.entries(catalog.value));
+const stations = computed<RadioStationOption[]>(() =>
+  stationEntries.value.map(([stationId, channel]) => ({
+    id: stationId,
+    title: channel.title,
+    image:
+      channel.features || String(runtimeConfig.public.placeholderStation),
+    url: `${countryPath.value}/${stationId}`,
+  })),
+);
+const stationCount = computed(() => stations.value.length);
+const defaultStationId = computed(() => {
+  const favorite = stationEntries.value.find(([, channel]) => channel.favorite);
+  return favorite?.[0] || stationEntries.value[0]?.[0] || "";
+});
 
 const streamName = ref("");
 const playerThumb = ref(String(runtimeConfig.public.placeholderStation));
 const streamUrl = ref<RadioSource>({ src: "", type: "audio/mpeg" });
 const streamUrls = ref<RadioSource[]>([]);
-const stations = ref<RadioStationOption[]>([]);
 const activeStationId = ref("");
-const catalog = ref<Record<string, Channel>>({});
 const playlist = ref<Track[]>([]);
-const stationCount = ref(0);
 const queueLoading = ref(false);
-const timeZone = ref($store.getTimezone);
 
 let scheduleTimer: ReturnType<typeof setTimeout> | null = null;
 let scheduleVersion = 0;
+let clientReady = false;
 const POLL_INTERVAL = 60_000;
 
 const seoTitle = computed(() => `Live Radio in ${countryName.value}`);
-const seoDescription = computed(
-  () =>
-    `Listen to live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`,
+const seoDescription = computed(() =>
+  stationCount.value > 0
+    ? `Listen to ${stationCount.value} live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`
+    : `Listen to live internet radio stations from ${countryName.value} on Radio ePlus.`,
+);
+const breadcrumbSchema = computed(() =>
+  buildBreadcrumbSchema(siteUrl.value, [
+    { name: "Home", path: "/" },
+    {
+      name: t(`world.${area.value.replace(/-/g, "_")}.name`),
+      path: `/${area.value}`,
+    },
+    { name: countryName.value, path: countryPath.value },
+  ]),
+);
+const countryCollectionSchema = computed(() =>
+  buildCollectionPageSchema({
+    siteUrl: siteUrl.value,
+    path: countryPath.value,
+    name: seoTitle.value,
+    description: seoDescription.value,
+    items: stations.value.map((station) => ({
+      name: station.title,
+      path: station.url || countryPath.value,
+    })),
+  }),
 );
 
-useHead(() => ({ title: seoTitle.value }));
+useHead(() => ({
+  title: seoTitle.value,
+  script: [
+    {
+      key: "country-breadcrumb-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(breadcrumbSchema.value),
+    },
+    {
+      key: "country-collection-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify(countryCollectionSchema.value),
+    },
+  ],
+}));
+
 useSeoMeta(() => ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,
+  ogUrl: countryUrl.value,
+  ogImage: countryImage.value,
+  ogImageAlt: `${countryName.value} flag`,
   twitterTitle: seoTitle.value,
   twitterDescription: seoDescription.value,
+  twitterImage: countryImage.value,
+  twitterImageAlt: `${countryName.value} flag`,
 }));
 
 const scheduleRequestUrl = (url: string): string =>
   /[?&](?:time|timestamp)=$/i.test(url)
-    ? `${url}${dayjs().tz(timeZone.value).unix()}`
+    ? `${url}${dayjs().tz($store.getTimezone).unix()}`
     : url;
 
 const clearSchedule = (): void => {
@@ -147,6 +287,15 @@ const clearSchedule = (): void => {
     scheduleTimer = null;
   }
   queueLoading.value = false;
+};
+
+const resetPlayer = (): void => {
+  activeStationId.value = "";
+  streamName.value = "";
+  playerThumb.value = String(runtimeConfig.public.placeholderStation);
+  streamUrls.value = [];
+  streamUrl.value = { src: "", type: "audio/mpeg" };
+  playlist.value = [];
 };
 
 const toSources = (channel: Channel): RadioSource[] => {
@@ -185,6 +334,7 @@ const fetchSchedule = async (
   version: number,
   initial = false,
 ): Promise<void> => {
+  if (!import.meta.client || !clientReady) return;
   if (initial) queueLoading.value = true;
 
   try {
@@ -205,7 +355,7 @@ const fetchSchedule = async (
     }
   }
 
-  if (version !== scheduleVersion) return;
+  if (version !== scheduleVersion || !clientReady) return;
   scheduleTimer = setTimeout(() => {
     void fetchSchedule(url, version);
   }, POLL_INTERVAL);
@@ -213,6 +363,7 @@ const fetchSchedule = async (
 
 const applyChannel = (stationId: string, channel: Channel): void => {
   clearSchedule();
+  $store.setTimezone(area.value, slug.value);
 
   activeStationId.value = stationId;
   streamName.value = channel.title;
@@ -223,10 +374,24 @@ const applyChannel = (stationId: string, channel: Channel): void => {
     streamUrls.value[0] || ({ src: "", type: "audio/mpeg" } as RadioSource);
   playlist.value = [];
 
-  if (channel.schedule) {
+  const scheduleUrl = normalizeScheduleUrl(channel.schedule);
+  if (import.meta.client && clientReady && scheduleUrl) {
     const version = scheduleVersion;
-    void fetchSchedule(channel.schedule, version, true);
+    void fetchSchedule(scheduleUrl, version, true);
   }
+};
+
+const activateDefaultStation = (): void => {
+  const stationId = defaultStationId.value;
+  const channel = stationId ? catalog.value[stationId] : undefined;
+
+  if (!stationId || !channel) {
+    clearSchedule();
+    resetPlayer();
+    return;
+  }
+
+  applyChannel(stationId, channel);
 };
 
 const selectStation = (station: RadioStationOption): void => {
@@ -235,48 +400,30 @@ const selectStation = (station: RadioStationOption): void => {
   applyChannel(station.id, channel);
 };
 
-const fetchData = async (): Promise<void> => {
-  try {
-    const data = await $fetch<Record<string, Channel>>(
-      `/radio/${area.value || "asia"}/${slug.value || "viet-nam"}.json`,
-    );
-    if (!data) throw new Error("No data returned from fetch");
-
-    catalog.value = data;
-    const entries = Object.entries(data);
-    stationCount.value = entries.length;
-    stations.value = entries.map(([stationId, channel]) => ({
-      id: stationId,
-      title: channel.title,
-      image:
-        channel.features || String(runtimeConfig.public.placeholderStation),
-      url: `/${area.value}/${slug.value}/${stationId}`,
-    }));
-
-    const favoriteEntry =
-      entries.find(([, channel]) => channel.favorite) || entries[0];
-
-    if (!favoriteEntry) {
-      throw new Error("No station found");
-    }
-
-    applyChannel(favoriteEntry[0], favoriteEntry[1]);
-  } catch (error) {
-    console.error("Error fetching country radio data:", error);
-  }
-};
-
 watch(
-  () => [area.value, slug.value],
+  () => [catalogPayload.value?.key, area.value, slug.value] as const,
   () => {
-    if (!import.meta.client) return;
-    clearSchedule();
-    void fetchData();
+    activateDefaultStation();
   },
   { immediate: true },
 );
 
+onMounted(() => {
+  clientReady = true;
+
+  const current =
+    catalog.value[activeStationId.value] ||
+    catalog.value[defaultStationId.value];
+  if (current) {
+    applyChannel(
+      activeStationId.value || defaultStationId.value,
+      current,
+    );
+  }
+});
+
 onBeforeUnmount(() => {
+  clientReady = false;
   clearSchedule();
 });
 </script>

@@ -57,7 +57,7 @@ tests/player-hls-startup.test.mjs    HLS lifecycle regression guard
 tests/radio-source-plan.test.mjs     Source-plan regression guard
 tests/station-route-lifecycle.test.mjs Station-router state regression guard
 tests/station-schedule.test.mjs       Schedule-provider regression guard
-.github/workflows/build.yml          Pull-request unit-test workflow
+.github/workflows/build.yml          Pull-request test + prerender workflow
 .github/workflows/instant-audio-sync.yml Radio data sync/validation workflow
 ```
 
@@ -453,6 +453,32 @@ The workflow name exposed in GitHub Actions is **Radio data sync**.
 
 ## 12. Search, SEO and canonical URLs
 
+Detailed SEO architecture and the current audit live in [`SEO.md`](./SEO.md).
+
+Current foundation:
+
+- production canonical origin: `https://radio.eplus.dev`;
+- radio hierarchy is prerendered;
+- country pages expose station links during SSR rather than waiting for client JavaScript;
+- unknown area/country/station URLs return 404 rather than soft-404 content;
+- sitemap avoids synthetic `lastmod` until a trustworthy content timestamp exists;
+- JSON-LD coverage includes WebSite, Organization, BreadcrumbList, CollectionPage/ItemList, and RadioStation as appropriate;
+- realtime schedule/song/lyric APIs remain client-only and are excluded from crawl-time dependencies.
+
+Known SEO limitation:
+
+1. i18n still uses `strategy: "no_prefix"`, so true multilingual hreflang SEO requires a dedicated URL migration.
+
+Prerender hard-404 regression fixed on 2026-10-08:
+
+- Header/Footer previously linked to `/about`, `/privacy-policy`, `/terms-of-use`, and `/statistics` even though those pages did not exist;
+- Nitro crawled those links during `npm run generate` and correctly failed on the new hard 404 guards;
+- the invalid sitewide links were removed until real pages exist;
+- `build/radioRoutes.ts` now ignores asset-only folders under `public/radio`;
+- legacy Romania artwork was moved from `public/radio/romania/` to the canonical `public/img/europe/romania/` tree so it can no longer masquerade as a geographic area.
+
+
+
 Production canonical URL:
 
 `https://radio.eplus.dev`
@@ -512,9 +538,9 @@ Pull-request workflow:
 
 `.github/workflows/build.yml`
 
-Despite the filename, its current GitHub Actions display name is **Unit tests**.
+Its current GitHub Actions display name is **CI** and it runs `npm test` followed by `npm run generate`.
 
-For large UI/framework changes, unit tests alone are not a substitute for manually validating:
+The prerender step catches SSR/generation failures, but automated checks are still not a substitute for manually validating:
 
 - desktop/mobile layout;
 - light/dark mode;
