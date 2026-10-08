@@ -30,6 +30,18 @@ const canonicalUrl = computed(() => {
   return `${siteUrl.value}${path}`;
 });
 const shareImage = computed(() => `${siteUrl.value}/brand/logo-share.png`);
+const ogLocale = computed(
+  () =>
+    ({
+      en: "en_US",
+      vi: "vi_VN",
+      ja: "ja_JP",
+      "zh-CN": "zh_CN",
+      "zh-TW": "zh_TW",
+      fr: "fr_FR",
+      ru: "ru_RU",
+    })[locale.value] || "en_US",
+);
 
 useHead(() => ({
   htmlAttrs: {
@@ -49,10 +61,29 @@ useHead(() => ({
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": `${siteUrl.value}/#website`,
         name: siteName.value,
         url: `${siteUrl.value}/`,
         description: defaultDescription.value,
         inLanguage: locale.value,
+        publisher: {
+          "@id": `${siteUrl.value}/#organization`,
+        },
+      }),
+    },
+    {
+      key: "organization-schema",
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": `${siteUrl.value}/#organization`,
+        name: siteName.value,
+        url: `${siteUrl.value}/`,
+        logo: {
+          "@type": "ImageObject",
+          url: shareImage.value,
+        },
       }),
     },
   ],
@@ -63,13 +94,16 @@ useSeoMeta(() => ({
   robots: "index, follow",
   ogType: "website",
   ogSiteName: siteName.value,
+  ogLocale: ogLocale.value,
   ogTitle: siteName.value,
   ogDescription: defaultDescription.value,
   ogUrl: canonicalUrl.value,
   ogImage: shareImage.value,
+  ogImageAlt: `${siteName.value} logo`,
   twitterCard: "summary_large_image",
   twitterTitle: siteName.value,
   twitterDescription: defaultDescription.value,
   twitterImage: shareImage.value,
+  twitterImageAlt: `${siteName.value} logo`,
 }));
 </script>
