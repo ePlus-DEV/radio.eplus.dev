@@ -7,7 +7,7 @@
         class="grid min-w-0"
         :class="
           hasSidebar
-            ? 'xl:grid-cols-[minmax(0,1fr)_380px]'
+            ? 'xl:grid-cols-[minmax(0,1fr)_360px]'
             : 'lg:grid-cols-1'
         "
       >
@@ -85,16 +85,17 @@
               </div>
 
               <div class="min-w-0 flex-1">
-                <p class="truncate text-xs font-medium text-slate-400 dark:text-slate-500">
+                <p dir="auto" class="truncate text-xs font-medium text-slate-400 dark:text-slate-500">
                   {{ streamName || $t(country) }}
                 </p>
 
-                <h2 class="mt-1.5 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-slate-950 sm:text-2xl dark:text-white">
+                <h2 dir="auto" class="mt-1.5 line-clamp-2 text-xl font-bold leading-tight tracking-tight text-slate-950 sm:text-2xl dark:text-white">
                   {{ nowPlayingTitle }}
                 </h2>
 
                 <p
                   v-if="nowPlayingArtist"
+                  dir="auto"
                   class="mt-1.5 truncate text-sm text-slate-500 dark:text-slate-400"
                 >
                   {{ nowPlayingArtist }}
@@ -260,7 +261,7 @@
 
             <div
               v-if="streamError"
-              class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-rose-50 px-3 py-2 text-sm text-rose-700 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-200 dark:ring-rose-400/20"
+              class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-700 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-200 dark:ring-rose-400/20"
               role="alert"
             >
               <div class="flex min-w-0 items-center gap-2">
@@ -323,7 +324,7 @@
 
         <aside
           v-if="hasSidebar"
-          class="radio-themed-muted hidden h-[380px] overflow-hidden border-l border-[var(--radio-border)] xl:block"
+          class="radio-themed-muted hidden h-[360px] overflow-hidden border-l border-[var(--radio-border)] xl:block"
         >
           <PlayerQueue
             :playlist="playlist || []"
