@@ -8,7 +8,7 @@ async function vueFiles(dir) {
   const entries = await readdir(join(root, dir), { withFileTypes: true });
   return (await Promise.all(entries.map(async (item) =>
     item.isDirectory() ? vueFiles(join(dir, item.name)) :
-    item.name.endsWith(".vue") ? [join(dir, item.name)] : []
+    item.name.endsWith(".vue") ? [join(root, dir, item.name)] : []
   ))).flat();
 }
 
