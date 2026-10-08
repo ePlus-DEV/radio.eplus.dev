@@ -85,13 +85,13 @@
       </div>
     </div>
 
-    <div class="min-h-0 flex-1 overflow-y-auto p-2.5">
+    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto p-2.5">
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
         <button
           v-for="station in filteredStations"
           :key="station.id"
           type="button"
-          class="group flex w-full min-w-0 items-center gap-3 rounded-xl px-2.5 py-2.5 text-left transition"
+          class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition"
           :class="
             station.id === activeStationId
               ? 'bg-rose-50 ring-1 ring-inset ring-rose-100 dark:bg-rose-500/10 dark:ring-rose-400/10'
@@ -100,7 +100,7 @@
           @click="$emit('select-station', station)"
         >
           <span
-            class="radio-themed-artwork flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5"
+            class="radio-themed-artwork flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5"
           >
             <img
               loading="lazy"
@@ -112,6 +112,7 @@
 
           <span class="min-w-0 flex-1">
             <span
+              dir="auto"
               class="block truncate text-sm font-semibold"
               :class="
                 station.id === activeStationId
@@ -179,6 +180,7 @@
 
             <div class="min-w-0">
               <p
+                dir="auto"
                 class="truncate text-sm font-semibold"
                 :class="
                   index === 0
@@ -190,6 +192,7 @@
               </p>
               <p
                 v-if="item.description"
+                dir="auto"
                 class="mt-0.5 line-clamp-2 text-xs leading-5 text-slate-400 dark:text-slate-500"
               >
                 {{ item.description }}
