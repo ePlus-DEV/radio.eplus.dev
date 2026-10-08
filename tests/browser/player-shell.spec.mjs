@@ -229,6 +229,40 @@ test('320px mobile dock and drawer stay inside the viewport, including long RTL 
   await expect(dock(page).getByRole('button', { name: 'Channels & schedule', exact: true })).toBeFocused();
 });
 
+test('mobile web-volume slider has a usable touch target and changes volume', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
+  const slider = page.getByRole('dialog').getByRole('slider', { name: 'Volume', exact: true });
+  await expect(slider).toBeVisible();
+  const bounds = await slider.boundingBox();
+  expect(bounds.height).toBeGreaterThanOrEqual(40);
+  expect(bounds.width).toBeGreaterThanOrEqual(64);
+  await page.mouse.click(bounds.x + bounds.width * 0.25, bounds.y + bounds.height / 2);
+  await expect.poll(() => page.locator('audio').evaluate(media => media.volume)).toBeLessThan(0.8);
+});
+
+test('iOS volume controls show hardware instructions rather than an inoperative slider', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+  });
+  try {
+    const page = await context.newPage();
+    await mockMedia(page);
+    await ready(page, '/europe/belgium/studio-brussel');
+    await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
+    const drawer = page.getByRole('dialog');
+    await expect(drawer.getByRole('slider', { name: 'Volume', exact: true })).toHaveCount(0);
+    await expect(drawer.getByRole('note')).toContainText("On iPhone or iPad");
+  } finally {
+    await context.close();
+  }
+});
+
 test('real hls.js playback waits for a local manifest, continues across pages and keeps one audio element', async ({ page }) => {
   const manifest = await readFile(new URL('./fixtures/live.m3u8', import.meta.url), 'utf8');
   const segment = await readFile(new URL('./fixtures/radio-fixture-0.ts', import.meta.url));

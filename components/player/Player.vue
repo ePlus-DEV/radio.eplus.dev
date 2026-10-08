@@ -69,13 +69,16 @@
 
   <USlideover v-model:open="mobileQueueOpen" :title="$t('player.queue')" :description="streamName" :ui="{ content: 'w-full max-w-sm', body: 'flex min-h-0 flex-1 flex-col p-0 sm:p-0' }">
     <template #body>
-      <div class="flex flex-wrap gap-2 border-b border-[var(--radio-border)] p-3">
-        <UButton color="neutral" variant="soft" size="xs" :icon="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted ? $t('player.unmute') : $t('player.mute')" @click="toggleMute">{{ $t('player.volume') }}</UButton>
-        <input type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume my-auto h-1 w-20 appearance-none rounded-full bg-[var(--radio-track)]" />
+      <div class="flex flex-wrap items-center gap-2 border-b border-[var(--radio-border)] p-3">
+        <div class="flex min-w-[10rem] flex-1 items-center gap-2">
+          <UButton color="neutral" variant="soft" size="xs" class="shrink-0" :icon="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted ? $t('player.unmute') : $t('player.mute')" @click="toggleMute">{{ muted ? $t('player.unmute') : $t('player.mute') }}</UButton>
+          <input v-if="!systemVolumeOnly" type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume radio-volume-mobile h-11 min-w-0 flex-1 cursor-pointer appearance-none bg-transparent" />
+        </div>
         <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end' }" :ui="{ content: 'w-64' }">
           <UButton color="neutral" variant="soft" size="xs" icon="i-lucide-radio-tower">{{ $t('player.source') }}</UButton>
         </UDropdownMenu>
         <UButton v-if="lyricsAvailable" color="neutral" variant="soft" size="xs" icon="i-lucide-mic-vocal" @click="mobileQueueOpen = false; $emit('open-lyrics')">{{ $t('panel.lyric') }}</UButton>
+        <p v-if="systemVolumeOnly" role="note" class="w-full text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('player.ios_volume_hint') }}</p>
       </div>
       <div v-if="song?.nextMedia?.title" class="border-b border-[var(--radio-border)] p-4">
         <p class="text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t('panel.next') }}</p>
@@ -88,6 +91,7 @@
 
 <script lang="ts" setup>
 import { usePlaybackStore } from "~/stores/playback";
+import { usesSystemVolumeControls } from "~/utils/mobile-volume.mjs";
 import type { RadioSource, RadioStationOption } from "~/types/radio";
 import {
   MAX_STREAM_ATTEMPTS,
@@ -170,6 +174,8 @@ const userPaused = ref(true);
 const attemptCount = ref(0);
 const volume = ref(1);
 const muted = ref(false);
+// iOS browsers reserve playback volume for the hardware/system controls.
+const systemVolumeOnly = ref(false);
 const mobileQueueOpen = ref(false);
 const currentDate = ref(dayjs().tz($store.getTimezone).format("LLLL"));
 const currentTime = ref(dayjs().tz($store.getTimezone).format("LTS"));
@@ -875,7 +881,7 @@ const toggleMute = (): void => {
 
 const onVolumeInput = (event: Event): void => {
   const media = mediaElement.value;
-  if (!media) return;
+  if (!media || systemVolumeOnly.value) return;
 
   const target = event.target as HTMLInputElement;
   const nextVolume = Math.max(0, Math.min(1, Number(target.value)));
@@ -1041,6 +1047,7 @@ watch(() => props.country, () => {
 });
 
 onMounted(() => {
+  systemVolumeOnly.value = usesSystemVolumeControls(navigator);
   const [, area, country] = props.country.split(".");
   if (area && country) {
     $store.setTimezone(area.replace(/_/g, "-"), country.replace(/_/g, "-"));
@@ -1146,6 +1153,29 @@ onUnmounted(() => {
   border-radius: 9999px;
   background: #fb7185;
   box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.16);
+}
+/* Keep a 44px touch target without making the visible mobile track oversized. */
+.radio-volume-mobile::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--radio-track);
+}
+
+.radio-volume-mobile::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--radio-track);
+}
+
+.radio-volume-mobile::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+}
+
+.radio-volume-mobile::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
 }
 </style>
 

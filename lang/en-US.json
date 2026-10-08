@@ -228,7 +228,8 @@
     "source_number": "Source {number}",
     "stream_format": "Stream",
     "proxy": "Proxy",
-    "direct": "Direct"
+    "direct": "Direct",
+    "ios_volume_hint": "On iPhone or iPad, use your device's volume buttons or Control Center to adjust the sound."
   },
   "site_pages": {
     "common": {

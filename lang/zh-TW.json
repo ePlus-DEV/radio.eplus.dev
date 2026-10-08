@@ -228,7 +228,8 @@
     "source_number": "音源 {number}",
     "stream_format": "串流",
     "proxy": "代理伺服器",
-    "direct": "直接連線"
+    "direct": "直接連線",
+    "ios_volume_hint": "在 iPhone 或 iPad 上，請使用裝置音量鍵或控制中心調整音量。"
   },
   "site_pages": {
     "common": {

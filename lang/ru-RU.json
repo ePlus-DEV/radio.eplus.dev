@@ -228,7 +228,8 @@
     "source_number": "Источник {number}",
     "stream_format": "Аудиопоток",
     "proxy": "Прокси",
-    "direct": "Прямое подключение"
+    "direct": "Прямое подключение",
+    "ios_volume_hint": "На iPhone или iPad регулируйте громкость кнопками устройства или через Пункт управления."
   },
   "site_pages": {
     "common": {

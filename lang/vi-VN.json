@@ -228,7 +228,8 @@
     "source_number": "Nguồn {number}",
     "stream_format": "Luồng phát",
     "proxy": "Máy chủ trung gian",
-    "direct": "Trực tiếp"
+    "direct": "Trực tiếp",
+    "ios_volume_hint": "Trên iPhone hoặc iPad, hãy dùng nút âm lượng trên thiết bị hoặc Trung tâm điều khiển để chỉnh âm lượng."
   },
   "site_pages": {
     "common": {

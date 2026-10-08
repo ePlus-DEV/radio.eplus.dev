@@ -228,7 +228,8 @@
     "source_number": "Source {number}",
     "stream_format": "Flux audio",
     "proxy": "Proxy",
-    "direct": "Accès direct"
+    "direct": "Accès direct",
+    "ios_volume_hint": "Sur iPhone ou iPad, réglez le volume avec les boutons de l’appareil ou le Centre de contrôle."
   },
   "site_pages": {
     "common": {

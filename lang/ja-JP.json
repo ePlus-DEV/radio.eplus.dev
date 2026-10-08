@@ -228,7 +228,8 @@
     "source_number": "音声ソース {number}",
     "stream_format": "配信形式",
     "proxy": "プロキシ",
-    "direct": "直接接続"
+    "direct": "直接接続",
+    "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。"
   },
   "site_pages": {
     "common": {

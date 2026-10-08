@@ -228,7 +228,8 @@
     "source_number": "音源 {number}",
     "stream_format": "音频流",
     "proxy": "代理",
-    "direct": "直连"
+    "direct": "直连",
+    "ios_volume_hint": "在 iPhone 或 iPad 上，请使用设备音量键或控制中心调节音量。"
   },
   "site_pages": {
     "common": {
