@@ -180,22 +180,17 @@ Regression guards:
 
 ## CI and validation
 
-Primary PR CI is `.github/workflows/build.yml`, currently named **Unit tests**.
+Primary PR CI is `.github/workflows/build.yml`, currently named **CI**. It runs both unit tests and a full Nuxt prerender generation.
 
 At minimum:
 
 ```bash
 npm ci
 npm test
-```
-
-For substantial Nuxt/SEO/layout changes, also run the appropriate build/generate command locally when practical:
-
-```bash
-npm run build
-# or
 npm run generate
 ```
+
+For runtime/server deployment changes, `npm run build` can also be useful locally.
 
 Data-sync PR validation intentionally avoids live provider calls.
 
