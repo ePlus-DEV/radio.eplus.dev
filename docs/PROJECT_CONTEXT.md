@@ -471,10 +471,12 @@ Known SEO limitation:
 
 Prerender hard-404 regression fixed on 2026-10-08:
 
-- Header/Footer previously linked to `/about`, `/privacy-policy`, `/terms-of-use`, and `/statistics` even though those pages did not exist;
-- Nitro crawled those links during `npm run generate` and correctly failed on the new hard 404 guards;
-- the invalid sitewide links were removed until real pages exist;
-- `build/radioRoutes.ts` now ignores asset-only folders under `public/radio`;
+- Header/Footer previously linked to static routes before those pages existed, and Nitro correctly failed when its prerender crawler followed the 404s;
+- the site now has real `/about`, `/statistics`, `/contact`, `/privacy-policy`, and `/terms-of-use` pages;
+- those routes are explicitly prerendered, included in the sitemap, and restored in site navigation;
+- static-page copy is localized under `site_pages` for every configured locale;
+- `/statistics` uses catalog counts calculated at build time by `build/radioStats.ts`, not hard-coded totals;
+- `build/radioRoutes.ts` ignores asset-only folders under `public/radio`;
 - legacy Romania artwork was moved from `public/radio/romania/` to the canonical `public/img/europe/romania/` tree so it can no longer masquerade as a geographic area.
 
 
