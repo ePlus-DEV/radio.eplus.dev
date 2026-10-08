@@ -99,6 +99,7 @@ import {
   nextPlaybackIndex,
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
+import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -217,8 +218,8 @@ const sourceName = (source: RadioSource, index: number): string => {
   if (source.label?.trim()) return source.label.trim();
 
   const sourceKey = String(source.source || "").trim().toLowerCase();
-  if (sourceKey === "primary" || index === 0) return "Primary";
-  if (sourceKey.includes("alternative")) return "Alternative";
+  if (sourceKey === "primary" || index === 0) return t('player.primary_source');
+  if (sourceKey.includes("alternative")) return t('player.alternative_source');
   if (sourceKey) {
     return sourceKey
       .split(/[-_]/g)
@@ -227,7 +228,7 @@ const sourceName = (source: RadioSource, index: number): string => {
       .join(" ");
   }
 
-  return `Source ${index + 1}`;
+  return t('player.source_number', { number: index + 1 });
 };
 
 const sourceFormat = (source: RadioSource): string => {
@@ -242,20 +243,20 @@ const sourceFormat = (source: RadioSource): string => {
   if (/\.pls(?:$|[?#])/i.test(src)) return "PLS";
   if (/\.m3u(?:$|[?#])/i.test(src)) return "M3U";
 
-  return "Stream";
+  return t('player.stream_format');
 };
 
 const sourceHost = (source: RadioSource): string => {
   try {
     return new URL(source.src).hostname.replace(/^www\./, "");
   } catch {
-    return source.proxied ? "Proxy" : "Direct";
+    return source.proxied ? t('player.proxy') : t('player.direct');
   }
 };
 
 const sourceMenuItems = computed(() => sourceList.value.map((source, index) => ({
   label: `${index + 1}. ${sourceName(source, index)} · ${sourceFormat(source)}`,
-  description: source.proxied ? 'Proxy' : sourceHost(source),
+  description: source.proxied ? t('player.proxy') : sourceHost(source),
   type: 'checkbox' as const,
   checked: index === activeSourceIndex.value,
   onSelect: () => selectSource(index),
@@ -824,6 +825,54 @@ const navigateStation = (offset: -1 | 1): void => {
   selectStation(station);
 };
 
+// Media Session integrates live radio with iOS lock-screen / Control Center
+// metadata and headset controls. Track controls switch STATIONS, never songs:
+// an individual song cannot be skipped in a linear live broadcast.
+const mediaSessionActions = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'] as const;
+const updateMediaSession = (): void => {
+  if (!import.meta.client || !('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
+  const details = buildRadioMediaMetadata({
+    title: nowPlayingTitle.value,
+    artist: nowPlayingArtist.value,
+    station: props.streamName,
+    artwork: nowPlayingArtwork.value,
+    fallbackArtwork: props.thumb,
+  }, window.location.origin);
+  navigator.mediaSession.metadata = new MediaMetadata(details);
+  navigator.mediaSession.playbackState = playing.value ? 'playing' : 'paused';
+};
+
+const registerMediaSession = (): void => {
+  if (!('mediaSession' in navigator)) return;
+  const handlers = {
+    play: () => { void onPlay(); },
+    pause: () => onPause(),
+    nexttrack: () => navigateStation(1),
+    previoustrack: () => navigateStation(-1),
+    // iOS may expose ±10s controls for live audio instead of track buttons.
+    // They cannot seek the station stream, so use them to switch stations too.
+    seekforward: () => navigateStation(1),
+    seekbackward: () => navigateStation(-1),
+  } as const;
+  for (const action of mediaSessionActions) {
+    try {
+      navigator.mediaSession.setActionHandler(action, handlers[action]);
+    } catch {
+      // WebKit versions may support metadata but not every hardware action.
+    }
+  }
+  // Linear live streams do not have a meaningful timeline to seek to.
+  try { navigator.mediaSession.setActionHandler('seekto', null); } catch { /* unsupported */ }
+};
+
+const clearMediaSession = (): void => {
+  if (!('mediaSession' in navigator)) return;
+  for (const action of mediaSessionActions) {
+    try { navigator.mediaSession.setActionHandler(action, null); } catch { /* unsupported */ }
+  }
+  navigator.mediaSession.metadata = null;
+};
+
 const toggleMute = (): void => {
   const media = mediaElement.value;
   if (!media) return;
@@ -948,6 +997,14 @@ watch([playing, waiting], ([isPlaying, isWaiting]) => {
   playback.waiting = isWaiting;
 });
 
+// Track/station images and song titles can update asynchronously via Zing;
+// keep lock-screen metadata synchronized without restarting playback.
+watch(
+  [nowPlayingTitle, nowPlayingArtist, nowPlayingArtwork, () => props.streamName, playing],
+  updateMediaSession,
+  { flush: 'post' },
+);
+
 const sourceSignature = computed(() => JSON.stringify([props.stationUrl, sourceList.value]));
 watch(
   [sourceSignature, () => props.playRequest, () => props.pauseRequest],
@@ -1003,6 +1060,8 @@ onMounted(() => {
   timeInterval = setInterval(updateCurrentTime, 1000);
 
   bindMediaEvents();
+  registerMediaSession();
+  updateMediaSession();
 
   const media = mediaElement.value;
   if (media) {
@@ -1029,6 +1088,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  clearMediaSession();
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
@@ -1094,7 +1154,6 @@ onUnmounted(() => {
   background: #fb7185;
   box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.16);
 }
-
 /* Keep a 44px touch target without making the visible mobile track oversized. */
 .radio-volume-mobile::-webkit-slider-runnable-track {
   height: 4px;

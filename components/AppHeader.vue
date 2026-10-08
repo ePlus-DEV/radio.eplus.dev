@@ -25,7 +25,7 @@
               Radio ePlus
             </span>
             <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-500">
-              Live radio
+              {{ $t('brand.live_radio') }}
             </span>
           </span>
         </NuxtLink>

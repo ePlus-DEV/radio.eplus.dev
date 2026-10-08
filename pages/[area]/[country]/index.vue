@@ -166,15 +166,15 @@ const defaultStationId = computed(() => {
 
 const activeStationId = computed(() => playback.station?.url.startsWith(`${countryPath.value}/`) ? playback.station.id : '');
 
-const seoTitle = computed(() => `Live Radio in ${countryName.value}`);
+const seoTitle = computed(() => t("seo.country_title", { country: countryName.value }));
 const seoDescription = computed(() =>
   stationCount.value > 0
-    ? `Listen to ${stationCount.value} live internet radio stations from ${countryName.value}. Browse local stations and stream radio online on Radio ePlus.`
-    : `Listen to live internet radio stations from ${countryName.value} on Radio ePlus.`,
+    ? t("seo.country_description", { count: stationCount.value, country: countryName.value })
+    : t("seo.country_description_empty", { country: countryName.value }),
 );
 const breadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
-    { name: "Home", path: "/" },
+    { name: t("seo.home_breadcrumb"), path: "/" },
     {
       name: t(`world.${area.value.replace(/-/g, "_")}.name`),
       path: `/${area.value}`,

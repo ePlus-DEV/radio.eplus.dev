@@ -63,17 +63,17 @@ if (!Object.prototype.hasOwnProperty.call(worldData, areaKey.value)) {
 }
 const countryCount = computed(() => Object.keys(areaCountries.value).length);
 
-const seoTitle = computed(() => `Live Radio in ${areaName.value}`);
+const seoTitle = computed(() => t("seo.country_title", { country: areaName.value }));
 const seoDescription = computed(
   () =>
-    `Browse and listen to live internet radio stations across ${areaName.value} on Radio ePlus.`,
+    t("seo.country_description_empty", { country: areaName.value }),
 );
 
 const areaPath = computed(() => `/${area.value}`);
 const areaUrl = computed(() => `${siteUrl.value}${areaPath.value}`);
 const areaBreadcrumbSchema = computed(() =>
   buildBreadcrumbSchema(siteUrl.value, [
-    { name: "Home", path: "/" },
+    { name: t("seo.home_breadcrumb"), path: "/" },
     { name: areaName.value, path: areaPath.value },
   ]),
 );

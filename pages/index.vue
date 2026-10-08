@@ -14,19 +14,19 @@
       <div class="relative max-w-3xl">
         <div class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm">
           <span class="h-2 w-2 animate-pulse rounded-full bg-rose-500"></span>
-          Live internet radio
+          {{ $t('home.live_badge') }}
         </div>
 
         <h1 class="max-w-xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-          Live radio from around the world
+          {{ $t('home.title') }}
         </h1>
         <p class="mt-4 max-w-xl text-sm leading-7 text-slate-200 sm:text-base">
-          Browse stations by region and country, discover local radio, and start listening instantly.
+          {{ $t('home.description') }}
         </p>
 
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#featured-radio" class="radio-interactive inline-flex items-center gap-2 rounded-full bg-violet-500 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-950/20 transition hover:bg-violet-400"><fa :icon="['fas', 'play']" /> Start listening</a>
-          <a href="#explore-radio" class="radio-interactive inline-flex items-center rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20">Explore countries</a>
+          <a href="#featured-radio" class="radio-interactive inline-flex items-center gap-2 rounded-full bg-violet-500 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-violet-950/20 transition hover:bg-violet-400"><fa :icon="['fas', 'play']" /> {{ $t('home.start_listening') }}</a>
+          <a href="#explore-radio" class="radio-interactive inline-flex items-center rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20">{{ $t('home.explore_countries') }}</a>
         </div>
         <div class="mt-6 flex flex-wrap gap-2">
           <NuxtLink
@@ -52,19 +52,19 @@
           <p class="text-xl font-bold tracking-tight text-white">
             {{ totalCountries }}
           </p>
-          <p class="mt-1 text-xs text-slate-200">Countries</p>
+          <p class="mt-1 text-xs text-slate-200">{{ $t('home.countries') }}</p>
         </div>
         <div>
           <p class="text-xl font-bold tracking-tight text-white">
             {{ areaItems.length }}
           </p>
-          <p class="mt-1 text-xs text-slate-200">Regions</p>
+          <p class="mt-1 text-xs text-slate-200">{{ $t('home.regions') }}</p>
         </div>
         <div>
           <p class="text-xl font-bold tracking-tight text-white">
             24/7
           </p>
-          <p class="mt-1 text-xs text-slate-200">Streaming</p>
+          <p class="mt-1 text-xs text-slate-200">{{ $t('home.streaming') }}</p>
         </div>
       </div>
     </section>
@@ -73,10 +73,10 @@
       <div class="mb-3 flex items-center justify-between px-1">
         <div>
           <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
-            Featured
+            {{ $t('home.featured') }}
           </p>
           <h2 class="mt-1 text-lg font-semibold tracking-tight text-[var(--radio-text)]">
-            Start listening
+            {{ $t('home.start_listening') }}
           </h2>
         </div>
       </div>
@@ -87,10 +87,10 @@
     <section id="explore-radio" class="scroll-mt-28">
       <div class="mb-3 px-1">
         <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
-          Explore
+          {{ $t('home.explore') }}
         </p>
         <h2 class="mt-1 text-xl font-semibold tracking-tight text-[var(--radio-text)]">
-          Browse by country
+          {{ $t('home.browse_country') }}
         </h2>
       </div>
       <PanelRadio />
@@ -103,6 +103,7 @@ import worldData from "~/data/world";
 import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
+import { selectVietnamFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
@@ -111,7 +112,9 @@ const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
 );
 const playback = usePlaybackStore();
-const featuredCountry = String(runtimeConfig.public.pinChannelFavorites || 'viet-nam');
+// This homepage curation is intentionally Vietnam-specific; do not derive it
+// from the configurable country favorite or an unverified alphabetic catalog.
+const featuredCountry = 'viet-nam';
 const { data: featuredCatalog } = await useAsyncData('featured-catalog', async () => {
   if (import.meta.server) {
     const { readFile } = await import('node:fs/promises');
@@ -120,8 +123,8 @@ const { data: featuredCatalog } = await useAsyncData('featured-catalog', async (
   }
   return await $fetch<Record<string, RadioCatalogEntry>>(`/radio/asia/${featuredCountry}.json`);
 });
-const featuredEntries = computed(() => Object.entries(featuredCatalog.value || {}).sort((a, b) => Number(Boolean(b[1].favorite)) - Number(Boolean(a[1].favorite))));
-const featuredStations = computed(() => featuredEntries.value.slice(0, 8).map(([id, station]) => ({
+const featuredEntries = computed(() => selectVietnamFeaturedStations(featuredCatalog.value || {}));
+const featuredStations = computed(() => featuredEntries.value.map(([id, station]) => ({
   id, title: station.title, image: station.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${id}`,
 })));
 
@@ -137,16 +140,15 @@ const totalCountries = computed(() =>
   areaItems.value.reduce((total, area) => total + area.count, 0),
 );
 
-const seoTitle = "Live Internet Radio Worldwide";
-const seoDescription =
-  "Listen to live internet radio from around the world. Browse stations by region and country and stream radio online with Radio ePlus.";
+const seoTitle = computed(() => t("home.title"));
+const seoDescription = computed(() => t("home.description"));
 
 const homeCollectionSchema = computed(() =>
   buildCollectionPageSchema({
     siteUrl: siteUrl.value,
     path: "/",
-    name: seoTitle,
-    description: seoDescription,
+    name: seoTitle.value,
+    description: seoDescription.value,
     items: areaItems.value.map((item) => ({
       name: t(`world.${item.key}.name`),
       path: `/${item.slug}`,
@@ -155,7 +157,7 @@ const homeCollectionSchema = computed(() =>
 );
 
 useHead(() => ({
-  title: seoTitle,
+  title: seoTitle.value,
   script: [
     {
       key: "home-collection-schema",
@@ -165,11 +167,11 @@ useHead(() => ({
   ],
 }));
 useSeoMeta({
-  description: seoDescription,
-  ogTitle: seoTitle,
-  ogDescription: seoDescription,
-  twitterTitle: seoTitle,
-  twitterDescription: seoDescription,
+  description: () => seoDescription.value,
+  ogTitle: () => seoTitle.value,
+  ogDescription: () => seoDescription.value,
+  twitterTitle: () => seoTitle.value,
+  twitterDescription: () => seoDescription.value,
 });
 
 const playFeatured = (station: RadioStationOption): void => {

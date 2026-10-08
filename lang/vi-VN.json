@@ -1,17 +1,17 @@
 {
   "404": {
-    "content": "Chúng tôi muốn thông báo rằng trang bạn tìm, không tồn tại!"
+    "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
   "navmenu": {
-    "homepage": "Trang Chủ",
-    "about": "Giới Thiệu",
+    "homepage": "Trang chủ",
+    "about": "Giới thiệu",
     "blog": "Blog",
     "group": "Nhóm",
-    "terms": "Điều Khoản",
+    "terms": "Điều khoản sử dụng",
     "privacy": "Chính sách bảo mật",
     "contact": "Liên Hệ",
     "language": "Ngôn ngữ:",
-    "old_version": "#phienbancu",
+    "old_version": "Phiên bản cũ",
     "statistics": "Thống kê",
     "changelog": "Nhật ký thay đổi"
   },
@@ -54,17 +54,17 @@
       "china": "Trung Quốc",
       "hong_kong": "Hồng Kông",
       "japan": "Nhật Bản",
-      "malaysia": "Ma-lai-xi-a",
-      "philippines": "Phi-líp-pin",
-      "indonesia": "In-đô-nê-xia",
+      "malaysia": "Malaysia",
+      "philippines": "Philippines",
+      "indonesia": "Indonesia",
       "thailand": "Thái Lan",
-      "bangladesh": "Băng-la-đét",
-      "pakistan": "Pa-ki-xtan",
+      "bangladesh": "Bangladesh",
+      "pakistan": "Pakistan",
       "india": "Ấn Độ",
       "taiwan": "Đài Loan",
-      "israel": "I-xra-en",
-      "sri_lanka": "Xri Lan-ca",
-      "nepal": "Nê-pan"
+      "israel": "Israel",
+      "sri_lanka": "Sri Lanka",
+      "nepal": "Nepal"
     },
     "central_america": {
       "name": "Trung Mỹ",
@@ -78,7 +78,7 @@
     "europe": {
       "name": "Châu Âu",
       "united_kingdom": "Vương quốc Anh",
-      "ukraine": "U-cà-rai-na",
+      "ukraine": "Ukraina",
       "russia": "Nga",
       "france": "Pháp",
       "greece": "Hy Lạp",
@@ -92,17 +92,17 @@
       "austria": "Áo",
       "poland": "Ba Lan",
       "portugal": "Bồ Đào Nha",
-      "romania": "Ru-ma-ni",
+      "romania": "Romania",
       "switzerland": "Thụy Sĩ",
-      "slovenia": "Xlô-ven-ni-a",
-      "serbia": "Xéc-bi",
+      "slovenia": "Slovenia",
+      "serbia": "Serbia",
       "finland": "Phần Lan",
       "sweden": "Thụy Điển",
       "bulgaria": "Bulgaria",
       "belgium": "Bỉ",
       "czechia": "Cộng hòa Séc",
       "denmark": "Đan Mạch",
-      "estonia": "E-xtô-ni-a",
+      "estonia": "Estonia",
       "germany": "Đức",
       "spain": "Tây Ban Nha",
       "latvia": "Latvia",
@@ -120,7 +120,7 @@
     },
     "oceania": {
       "name": "Châu Đại Dương",
-      "australia": "Châu Úc",
+      "australia": "Úc",
       "new_zealand": "New Zealand"
     },
     "south_america": {
@@ -141,7 +141,7 @@
   "panel": {
     "most_popular": "Thịnh hành tại {name}",
     "frequency": "Tần số",
-    "play_from_radio": "Phát từ Radio",
+    "play_from_radio": "Nghe radio",
     "country": "Quốc gia",
     "radio_in": "Radio tại {name}",
     "description": "Mô tả",
@@ -150,11 +150,11 @@
     "playlist": "Danh sách phát",
     "next": "Kế tiếp",
     "lyric": "Lời bài hát",
-    "no_lyric": "Không có lời",
+    "no_lyric": "Chưa có lời bài hát",
     "updating": "Đang cập nhật...",
-    "channels": "Tất cả kênh",
-    "search_channels": "Tìm kênh...",
-    "no_channels": "Không tìm thấy kênh"
+    "channels": "Tất cả đài",
+    "search_channels": "Tìm đài radio...",
+    "no_channels": "Không tìm thấy đài radio"
   },
   "button": {
     "back": "Quay lại",
@@ -170,16 +170,16 @@
   },
   "notify": {
     "success": "Thành công",
-    "success_content": "Có thể phát radio: {radio}",
+    "success_content": "Đang phát: {radio}",
     "error": "Thất bại",
-    "error_content": "Không thể phát radio: {radio}"
+    "error_content": "Không thể phát: {radio}"
   },
   "statistics_tooltip": {
     "text": "Sự cố: {num} | Ngừng hoạt động: {time} phút | {response}ms"
   },
   "table": {
     "status": "Trạng thái",
-    "commit": "Cam kết",
+    "commit": "Bản commit",
     "created": "Khởi tạo",
     "updated": "Cập nhật",
     "published": "Phát hành",
@@ -221,6 +221,14 @@
     "explore": "Khám phá khu vực",
     "previous": "Đài trước: {name}",
     "next": "Đài tiếp theo: {name}",
+    "sidebar_label": "Đài radio và lịch phát sóng",
+    "live": "Trực tiếp",
+    "primary_source": "Nguồn chính",
+    "alternative_source": "Nguồn dự phòng",
+    "source_number": "Nguồn {number}",
+    "stream_format": "Luồng phát",
+    "proxy": "Máy chủ trung gian",
+    "direct": "Trực tiếp",
     "ios_volume_hint": "Trên iPhone hoặc iPad, hãy dùng nút âm lượng trên thiết bị hoặc Trung tâm điều khiển để chỉnh âm lượng."
   },
   "site_pages": {
@@ -303,7 +311,7 @@
           "body": "Tên đài, logo, âm thanh và tài liệu của bên thứ ba thuộc về chủ sở hữu tương ứng. Nếu bạn là chủ sở hữu quyền và cho rằng một mục cần sửa hoặc gỡ, hãy liên hệ dự án kèm URL liên quan và thông tin xác minh."
         },
         "acceptable_use": {
-          "title": "Sử dụng hợp lý",
+          "title": "Sử dụng được phép",
           "body": "Không sử dụng Radio ePlus để lạm dụng nhà cung cấp, vượt cơ chế kiểm soát truy cập, phá hoại dịch vụ, crawl ở mức gây hại, phát tán mã độc hoặc vi phạm pháp luật/quyền của bên thứ ba."
         },
         "availability": {
@@ -341,7 +349,7 @@
       }
     },
     "statistics": {
-      "eyebrow": "Catalog",
+      "eyebrow": "Danh mục",
       "title": "Thống kê radio",
       "description": "Ảnh chụp tại thời điểm build về số khu vực, quốc gia và mục đài hiện có trong catalog Radio ePlus.",
       "metrics": {
@@ -359,5 +367,50 @@
       "generic_title": "Đã xảy ra lỗi",
       "generic_body": "Không thể tải trang này. Vui lòng quay về trang chủ và thử lại."
     }
+  },
+  "home": {
+    "live_badge": "Radio trực tuyến",
+    "title": "Nghe radio trực tiếp khắp thế giới",
+    "description": "Khám phá các đài radio theo khu vực và quốc gia, tìm chương trình yêu thích và nghe ngay.",
+    "start_listening": "Nghe ngay",
+    "explore_countries": "Khám phá quốc gia",
+    "countries": "Quốc gia",
+    "regions": "Khu vực",
+    "streaming": "Phát sóng",
+    "featured": "Nổi bật",
+    "explore": "Khám phá",
+    "browse_country": "Duyệt theo quốc gia"
+  },
+  "sidebar": {
+    "browse_radio": "Khám phá radio",
+    "radio_regions": "Các khu vực phát sóng",
+    "live_badge": "RADIO TRỰC TIẾP",
+    "description": "Khám phá các đài radio khắp thế giới bất cứ lúc nào."
+  },
+  "search": {
+    "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới."
+  },
+  "chat": {
+    "open": "Mở trợ lý trò chuyện",
+    "title": "Trợ lý trò chuyện",
+    "powered_by": "Được hỗ trợ bởi Mendable và Vercel",
+    "greeting": "Xin chào! Tôi có thể giúp gì cho bạn?",
+    "placeholder": "Nhập tin nhắn",
+    "send": "Gửi"
+  },
+  "seo": {
+    "home_breadcrumb": "Trang chủ",
+    "country_title": "Radio trực tiếp tại {country}",
+    "country_description": "Nghe {count} đài radio trực tuyến tại {country}. Khám phá các đài địa phương và nghe trên Radio ePlus.",
+    "country_description_empty": "Nghe các đài radio trực tuyến tại {country} trên Radio ePlus.",
+    "station_title": "{station} – Radio trực tiếp tại {country}",
+    "station_description": "Nghe trực tiếp {station} từ {country} trên Radio ePlus."
+  },
+  "brand": {
+    "live_radio": "Radio trực tiếp"
+  },
+  "footer": {
+    "tagline": "Radio trực tiếp từ khắp thế giới",
+    "description": "Tìm đài theo khu vực và quốc gia, rồi nghe ngay trên mọi thiết bị."
   }
 }

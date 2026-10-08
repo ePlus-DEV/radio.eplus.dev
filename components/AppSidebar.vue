@@ -1,5 +1,5 @@
 <template>
-  <aside :class="mobile ? 'block' : 'hidden xl:block'" class="min-w-0" aria-label="Browse radio">
+  <aside :class="mobile ? 'block' : 'hidden xl:block'" class="min-w-0" :aria-label="$t('sidebar.browse_radio')">
     <div :class="mobile ? 'space-y-6' : 'sticky top-28 max-h-[calc(100dvh-9rem-var(--radio-player-height))] space-y-6 overflow-y-auto pb-8 pr-2 radio-scrollbar'">
       <div class="space-y-1">
         <NuxtLink to="/" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
@@ -24,7 +24,7 @@
       </div>
       <div class="border-t border-[var(--radio-border)] pt-5">
         <p class="mb-3 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--radio-text-muted)]">{{ $t('player.explore') }}</p>
-        <nav class="space-y-1" aria-label="Radio regions">
+        <nav class="space-y-1" :aria-label="$t('sidebar.radio_regions')">
           <NuxtLink v-for="item in areas" :key="item.slug" :to="`/${item.slug}`"
             class="radio-interactive flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-sm transition"
             :class="route.path.startsWith(`/${item.slug}`) ? 'bg-rose-500/10 font-semibold text-rose-500' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
@@ -36,9 +36,9 @@
       <div class="rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-4">
         <div class="mb-2 flex items-center gap-2 text-xs font-semibold text-rose-500">
           <span class="h-2 w-2 animate-pulse rounded-full bg-current" aria-hidden="true"></span>
-          <span>LIVE RADIO</span>
+          <span>{{ $t('sidebar.live_badge') }}</span>
         </div>
-        <p class="text-sm leading-6 text-[var(--radio-text-muted)]">Explore live stations around the world, any time.</p>
+        <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('sidebar.description') }}</p>
       </div>
     </div>
   </aside>
