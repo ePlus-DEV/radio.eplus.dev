@@ -822,7 +822,7 @@ const navigateStation = (offset: -1 | 1): void => {
 // Media Session integrates live radio with iOS lock-screen / Control Center
 // metadata and headset controls. Track controls switch STATIONS, never songs:
 // an individual song cannot be skipped in a linear live broadcast.
-const mediaSessionActions = ['play', 'pause', 'nexttrack', 'previoustrack'] as const;
+const mediaSessionActions = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'] as const;
 const updateMediaSession = (): void => {
   if (!import.meta.client || !('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
   const details = buildRadioMediaMetadata({
@@ -843,6 +843,10 @@ const registerMediaSession = (): void => {
     pause: () => onPause(),
     nexttrack: () => navigateStation(1),
     previoustrack: () => navigateStation(-1),
+    // iOS may expose ±10s controls for live audio instead of track buttons.
+    // They cannot seek the station stream, so use them to switch stations too.
+    seekforward: () => navigateStation(1),
+    seekbackward: () => navigateStation(-1),
   } as const;
   for (const action of mediaSessionActions) {
     try {
@@ -851,10 +855,8 @@ const registerMediaSession = (): void => {
       // WebKit versions may support metadata but not every hardware action.
     }
   }
-  // No seek handlers for an unseekable linear radio broadcast.
-  for (const action of ['seekforward', 'seekbackward', 'seekto'] as const) {
-    try { navigator.mediaSession.setActionHandler(action, null); } catch { /* unsupported */ }
-  }
+  // Linear live streams do not have a meaningful timeline to seek to.
+  try { navigator.mediaSession.setActionHandler('seekto', null); } catch { /* unsupported */ }
 };
 
 const clearMediaSession = (): void => {
