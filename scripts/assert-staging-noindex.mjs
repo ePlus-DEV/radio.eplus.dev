@@ -12,7 +12,7 @@ const [home, robots] = await Promise.all([
   read(`${output}/robots.txt`),
 ]);
 
-assert.match(home, /<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)[^>]*>/i, "staging must render a robots noindex meta");
+assert.ok(/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)[^>]*>/i.test(home), "staging must render a robots noindex meta");
 assert.doesNotMatch(home, /<link[^>]*rel=["']canonical["']/i, "staging must not render production canonical");
 assert.doesNotMatch(home, /application\/ld\+json/i, "staging must not embed JSON-LD");
 assert.doesNotMatch(home, /<meta[^>]*property=["']og:/i, "staging must omit Open Graph metadata");
