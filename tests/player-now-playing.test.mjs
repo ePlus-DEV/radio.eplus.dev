@@ -27,3 +27,17 @@ test("player palette keeps structural surfaces neutral and violet as the primary
   assert.match(source, /bg-violet-600 text-white[\s\S]*hover:bg-violet-500/);
   assert.match(source, /\$t\('player\.pause'\)/);
 });
+
+test("player dock is a live radio console, not a cloned music timeline", async () => {
+  const source = await readFile(playerFile, "utf8");
+
+  assert.match(source, /radio-player-console/);
+  assert.match(source, /radio-player-main-action/);
+  assert.match(source, /liveStateLabel/);
+  assert.match(source, /activeSourceName/);
+  assert.doesNotMatch(
+    source,
+    /nowPlayingTitle[\s\S]{0,800}<input type="range"[\s\S]{0,800}currentMedia/,
+    "the dock should not add a song-progress timeline for live radio",
+  );
+});

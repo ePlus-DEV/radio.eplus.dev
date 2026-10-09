@@ -13,9 +13,9 @@
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
 
-      <div class="grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pb-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
+      <div class="radio-player-console grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 pb-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
         <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
-          <div class="radio-themed-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
+          <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
             <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
             <UIcon v-else name="i-lucide-radio" class="h-5 w-5 text-[var(--radio-text-muted)]" />
             <span v-if="playing" class="absolute bottom-1 right-1 flex h-4 w-4 items-end justify-center gap-px rounded-full bg-[var(--radio-inverse-bg)] pb-1 text-[var(--radio-inverse-text)]" aria-hidden="true">
@@ -24,6 +24,13 @@
           </div>
           <button type="button" class="absolute inset-0 z-10 rounded-xl sm:hidden" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true"></button>
           <div class="min-w-0 flex-1">
+            <div class="mb-1 hidden items-center gap-2 sm:flex">
+              <span class="radio-player-live-pill inline-flex max-w-full items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" :class="liveStateClass">
+                <span class="h-1.5 w-1.5 rounded-full" :class="playing ? 'animate-pulse bg-emerald-500' : waiting ? 'animate-pulse bg-amber-500' : streamError ? 'bg-rose-500' : 'bg-current'"></span>
+                {{ liveStateLabel }}
+              </span>
+              <span v-if="sourceList.length > 1" class="truncate text-[10px] text-[var(--radio-text-muted)]">{{ activeSourceName }}</span>
+            </div>
             <p dir="auto" class="truncate text-xs font-semibold sm:text-sm" :title="nowPlayingTitle">{{ nowPlayingTitle }}</p>
             <p v-if="nowPlayingArtist" dir="auto" class="mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
             <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
@@ -31,30 +38,32 @@
         </div>
 
         <div class="flex items-center justify-center gap-0.5 sm:gap-2">
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="hidden h-11 w-11 justify-center rounded-full sm:inline-flex" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
-          <UButton class="h-11 w-11 justify-center rounded-full bg-violet-600 text-white shadow-sm shadow-violet-900/20 hover:bg-violet-500 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full sm:inline-flex" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
+          <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-violet-600 text-white shadow-lg shadow-violet-900/25 ring-4 ring-violet-500/10 transition hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="hidden h-11 w-11 justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
         </div>
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
-          <UButton color="neutral" variant="ghost" icon="i-lucide-maximize-2" class="h-11 w-11 shrink-0 justify-center" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true" />
-          <UButton color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 justify-center" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
+          <UButton color="neutral" variant="ghost" icon="i-lucide-maximize-2" class="h-11 w-11 shrink-0 cursor-pointer justify-center rounded-full" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true" />
+          <UButton color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 cursor-pointer justify-center rounded-full" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
 
           <UDropdownMenu :items="sleepMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false">
-            <UButton color="neutral" :variant="sleepRemaining ? 'soft' : 'ghost'" icon="i-lucide-timer" class="h-11 min-w-11 justify-center" :disabled="!hasPlayableSource" :aria-label="$t('player.sleep_timer')" :title="$t('player.sleep_timer')" />
+            <UButton color="neutral" :variant="sleepRemaining ? 'soft' : 'ghost'" icon="i-lucide-timer" class="h-11 min-w-11 cursor-pointer justify-center rounded-full" :disabled="!hasPlayableSource" :aria-label="$t('player.sleep_timer')" :title="$t('player.sleep_timer')" />
           </UDropdownMenu>
 
           <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false" :ui="{ content: 'w-72' }">
-            <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-radio-tower" :aria-label="$t('player.source')" class="hidden max-w-28 truncate lg:inline-flex">{{ activeSourceName }}</UButton>
+            <UButton color="neutral" variant="soft" size="xs" icon="i-lucide-radio-tower" :aria-label="$t('player.source')" class="hidden max-w-36 cursor-pointer truncate rounded-full lg:inline-flex">{{ activeSourceName }}</UButton>
           </UDropdownMenu>
-          <UButton color="neutral" variant="ghost" size="sm" :icon="muted || volume === 0 ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted || volume === 0 ? $t('player.unmute') : $t('player.mute')" @click="toggleMute" />
+          <UButton color="neutral" variant="ghost" size="sm" class="cursor-pointer rounded-full" :icon="muted || volume === 0 ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted || volume === 0 ? $t('player.unmute') : $t('player.mute')" @click="toggleMute" />
           <input type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume hidden h-1 w-20 cursor-pointer appearance-none rounded-full bg-[var(--radio-track)] md:block xl:w-24" />
-          <UButton v-if="lyricsAvailable" color="neutral" variant="ghost" size="sm" icon="i-lucide-mic-vocal" :aria-label="$t('panel.lyric')" @click="$emit('open-lyrics')" />
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" :aria-label="$t('player.queue')" :aria-expanded="wideViewport ? playback.queueOpen : mobileQueueOpen" @click="toggleQueue" />
+          <UButton v-if="lyricsAvailable" color="neutral" variant="ghost" size="sm" icon="i-lucide-mic-vocal" class="cursor-pointer rounded-full" :aria-label="$t('panel.lyric')" @click="$emit('open-lyrics')" />
+          <UButton v-if="hasSidebar" color="neutral" variant="soft" size="sm" class="relative cursor-pointer rounded-full" icon="i-lucide-list-music" :aria-label="$t('player.queue')" :aria-expanded="wideViewport ? playback.queueOpen : mobileQueueOpen" @click="toggleQueue">
+            <span v-if="sidebarCount" class="absolute -right-1 -top-1 min-w-4 rounded-full bg-rose-500 px-1 text-[9px] font-bold leading-4 text-white">{{ sidebarCount }}</span>
+          </UButton>
         </div>
       </div>
     </div>
@@ -184,6 +193,14 @@ const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(pl
 const { t } = useI18n();
 const nowPlayingOpen = ref(false);
 const playerStatus = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
+const liveStateLabel = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'player.ready'));
+const liveStateClass = computed(() => {
+  if (streamError.value) return "bg-rose-500/10 text-rose-500";
+  if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
+  if (waiting.value) return "bg-amber-500/10 text-amber-500";
+  if (playing.value) return "bg-emerald-500/10 text-emerald-500";
+  return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
+});
 let pendingPlayerAction: 'queue' | 'lyrics' | null = null;
 const deferPlayerAction = (action: 'queue' | 'lyrics') => { pendingPlayerAction = action; nowPlayingOpen.value = false; };
 const finishPlayerAction = () => { const action = pendingPlayerAction; pendingPlayerAction = null; if (action === 'queue') { if (wideViewport.value) playback.queueOpen = true; else mobileQueueOpen.value = true; } else if (action === 'lyrics') emit('open-lyrics'); };
@@ -1142,6 +1159,26 @@ onUnmounted(() => {
   clip-path: inset(50%);
   opacity: 0;
   pointer-events: none;
+}
+
+.radio-player-console {
+  isolation: isolate;
+}
+
+.radio-player-artwork {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--radio-border) 58%, transparent);
+}
+
+.radio-player-live-pill {
+  letter-spacing: 0;
+}
+
+.radio-player-main-action:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.radio-player-main-action:not(:disabled):active {
+  transform: translateY(0);
 }
 
 .radio-bar.is-playing:nth-child(1) {
