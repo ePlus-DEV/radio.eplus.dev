@@ -12,7 +12,7 @@
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
 
-      <div class="radio-player-console grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:gap-4" :class="playerCompact ? 'min-h-[52px] pb-1' : 'min-h-[64px] pb-2'">
+      <div class="radio-player-console grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:gap-4" :class="playerCompact ? 'min-h-[52px] pb-1' : 'min-h-[64px] pb-2'">
         <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
           <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5" :class="playerCompact ? 'sm:h-11 sm:w-11' : 'sm:h-14 sm:w-14'">
             <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
@@ -34,12 +34,14 @@
                 <span>{{ nowPlayingTitle }}</span>
               </p>
             </UTooltip>
-            <p v-if="nowPlayingArtist && !playerCompact" dir="auto" class="mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
-            <NuxtLink v-if="stationUrl && !playerCompact" :to="stationUrl" dir="auto" class="mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
+            <p v-if="nowPlayingArtist && !playerCompact" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
+            <p v-else-if="!playerCompact" class="radio-player-meta radio-player-meta-placeholder mt-0.5 text-[10px] sm:text-xs">&nbsp;</p>
+            <NuxtLink v-if="stationUrl && !playerCompact" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
+            <p v-else-if="!playerCompact" class="radio-player-meta mt-1 text-[10px] sm:text-xs">&nbsp;</p>
           </div>
         </div>
 
-        <div class="flex items-center justify-center gap-0.5 sm:gap-2">
+        <div class="radio-player-controls flex items-center justify-center gap-0.5 sm:gap-2">
           <UTooltip v-if="canNavigateStations" :text="previousStationLabel">
             <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="inline-flex h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
           </UTooltip>
@@ -50,7 +52,10 @@
           <UTooltip v-if="canNavigateStations" :text="nextStationLabel">
             <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="nextStationLabel" @click="navigateStation(1)" />
           </UTooltip>
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-10 w-10 cursor-pointer justify-center rounded-full sm:hidden" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+        </div>
+
+        <div class="flex items-center justify-end sm:hidden">
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-10 w-10 cursor-pointer justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
         </div>
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
@@ -121,7 +126,7 @@
     <aside v-if="hasSidebar" v-show="playback.queueOpen" class="radio-right-panel sticky z-30 flex w-full min-h-0 flex-col overflow-hidden rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)]" :aria-label="$t('player.queue')">
       <div class="flex items-center justify-between border-b border-[var(--radio-border)] p-4">
         <div class="min-w-0"><p class="text-xs font-semibold">{{ $t('player.queue') }}</p><p dir="auto" class="mt-1 truncate text-[11px] text-[var(--radio-text-muted)]">{{ streamName }}</p></div>
-        <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-panel-right-close" :aria-label="$t('button.close')" @click="playback.queueOpen = false" />
+        <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-panel-right-close" :aria-label="$t('button.close')" @click="setQueueOpen(false)" />
       </div>
       <div v-if="song?.nextMedia?.title" class="border-b border-[var(--radio-border)] p-4">
         <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t("panel.next") }}</p>
@@ -235,6 +240,7 @@ const $store = useMainStore();
 const playback = usePlaybackStore();
 const listening = useListeningStore();
 listening.hydrate();
+const PLAYER_QUEUE_OPEN_KEY = 'radio:player-queue-open';
 const favoriteActive = computed(() => listening.library.favorites.some((item: { url: string }) => item.url === props.stationUrl));
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
 const { t } = useI18n();
@@ -250,10 +256,17 @@ const liveStateClass = computed(() => {
 });
 let pendingPlayerAction: 'queue' | 'lyrics' | null = null;
 const deferPlayerAction = (action: 'queue' | 'lyrics') => { pendingPlayerAction = action; nowPlayingOpen.value = false; };
-const finishPlayerAction = () => { const action = pendingPlayerAction; pendingPlayerAction = null; if (action === 'queue') { if (wideViewport.value) playback.queueOpen = true; else mobileQueueOpen.value = true; } else if (action === 'lyrics') emit('open-lyrics'); };
+const finishPlayerAction = () => { const action = pendingPlayerAction; pendingPlayerAction = null; if (action === 'queue') { if (wideViewport.value) setQueueOpen(true); else mobileQueueOpen.value = true; } else if (action === 'lyrics') emit('open-lyrics'); };
 const wideViewport = ref(false);
 const updateViewport = () => { wideViewport.value = window.innerWidth >= 1536; if (wideViewport.value) mobileQueueOpen.value = false; };
-const toggleQueue = () => { if (wideViewport.value) playback.queueOpen = !playback.queueOpen; else mobileQueueOpen.value = !mobileQueueOpen.value; };
+const persistQueueOpen = (): void => {
+  if (import.meta.client) localStorage.setItem(PLAYER_QUEUE_OPEN_KEY, playback.queueOpen ? '1' : '0');
+};
+const setQueueOpen = (value: boolean): void => {
+  playback.queueOpen = value;
+  persistQueueOpen();
+};
+const toggleQueue = () => { if (wideViewport.value) setQueueOpen(!playback.queueOpen); else mobileQueueOpen.value = !mobileQueueOpen.value; };
 const runtimeConfig = useRuntimeConfig();
 const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
@@ -279,7 +292,7 @@ const togglePlayerCompact = (): void => {
 const setPlayerMini = (value: boolean): void => {
   playerMini.value = value;
   if (value) {
-    playback.queueOpen = false;
+    setQueueOpen(false);
     mobileQueueOpen.value = false;
   }
   if (import.meta.client) localStorage.setItem('radio:player-mini', value ? '1' : '0');
@@ -1161,6 +1174,7 @@ onMounted(() => {
   window.addEventListener("pageshow", checkSleepDeadline);
   playerCompact.value = localStorage.getItem('radio:player-compact') === '1';
   playerMini.value = localStorage.getItem('radio:player-mini') === '1';
+  playback.queueOpen = localStorage.getItem(PLAYER_QUEUE_OPEN_KEY) === '1' && !playerMini.value;
   systemVolumeOnly.value = usesSystemVolumeControls(navigator);
   const [, area, country] = props.country.split(".");
   if (area && country) {
@@ -1251,6 +1265,14 @@ onUnmounted(() => {
   vertical-align: bottom;
 }
 
+.radio-player-meta {
+  line-height: 1rem;
+}
+
+.radio-player-meta-placeholder {
+  display: none;
+}
+
 .radio-player-live-pill {
   letter-spacing: 0;
 }
@@ -1261,6 +1283,30 @@ onUnmounted(() => {
 
 .radio-player-main-action:not(:disabled):active {
   transform: translateY(0);
+}
+
+@media (max-width: 639px) {
+  .radio-player-console {
+    position: relative;
+  }
+
+  .radio-player-console > :first-child {
+    padding-right: 6.25rem;
+  }
+
+  .radio-player-meta {
+    min-height: 1rem;
+  }
+
+  .radio-player-meta-placeholder {
+    display: block;
+  }
+
+  .radio-player-controls {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .radio-bar.is-playing:nth-child(1) {
