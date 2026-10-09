@@ -13,7 +13,8 @@
     "language": "Ngôn ngữ:",
     "old_version": "Phiên bản cũ",
     "statistics": "Thống kê",
-    "changelog": "Nhật ký thay đổi"
+    "changelog": "Nhật ký thay đổi",
+    "cookie": "Chính sách cookie"
   },
   "terms": {
     "content": "Chào mừng bạn đến với trang web https://radio.eplus.dev (\"Radio ePlus\") - một sản phẩm của ePlus.DEV. Vui lòng đọc kỹ Thỏa thuận về cung cấp và sử dụng dịch vụ trên trang web https://radio.eplus.dev trước khi bạn sử dụng các tính năng trên trang web \"Radio\" của ePlus. Sau khi đăng ký, bạn đã đọc, hiểu, chấp nhận và tuân thủ các điều khoản dưới đây:",
@@ -153,6 +154,7 @@
     "no_lyric": "Chưa có lời bài hát",
     "updating": "Đang cập nhật...",
     "channels": "Tất cả đài",
+    "station_count": "{count} đài radio",
     "search_channels": "Tìm đài radio...",
     "no_channels": "Không tìm thấy đài radio"
   },
@@ -233,7 +235,11 @@
     "sleep_timer": "Hẹn giờ ngủ",
     "sleep_minutes": "Dừng sau {minutes} phút",
     "sleep_cancel": "Hủy hẹn giờ",
-    "sleep_remaining": "Dừng sau {minutes} phút"
+    "sleep_remaining": "Dừng sau {minutes} phút",
+    "compact_player": "Thu gọn trình phát",
+    "expand_player": "Mở rộng trình phát",
+    "window_player": "Trình phát cửa sổ",
+    "dock_player": "Trở về thanh phát"
   },
   "site_pages": {
     "common": {
@@ -257,9 +263,10 @@
           "body": "Luồng phát, lịch chương trình, ảnh và thông tin bài hát đến từ catalog và nhà cung cấp bên thứ ba nên có thể thay đổi hoặc gián đoạn bất kỳ lúc nào."
         }
       },
-      "open_source": {
-        "title": "Dự án mở",
-        "body": "Radio ePlus được duy trì bởi ePlus.DEV. Mã nguồn ứng dụng, issue và các cải tiến đang thực hiện được công khai trên GitHub."
+      "service": {
+        "title": "Tập trung vào trải nghiệm nghe đơn giản",
+        "body": "Radio ePlus giúp tìm kênh nhanh, điều khiển phát rõ ràng và giữ giao diện gọn gàng trên cả máy tính lẫn điện thoại.",
+        "action": "Bắt đầu nghe"
       }
     },
     "privacy": {
@@ -346,10 +353,10 @@
           "body": "Chủ sở hữu quyền có thể yêu cầu sửa hoặc gỡ bằng cách xác định đài/trang liên quan và cung cấp đủ thông tin để dự án xác minh yêu cầu."
         }
       },
-      "github": {
-        "title": "Tạo GitHub issue",
-        "body": "Phát triển công khai, báo lỗi và chỉnh sửa catalog được theo dõi trong repository GitHub của Radio ePlus.",
-        "action": "Tạo issue"
+      "support": {
+        "title": "Cần hỗ trợ về Radio ePlus?",
+        "body": "Nếu cần sửa thông tin kênh, báo lỗi phát, hỏi về quyền riêng tư hoặc nội dung, hãy gửi tên kênh, đường dẫn trang và mô tả ngắn cho đội ngũ Radio ePlus.",
+        "action": "Gửi email hỗ trợ"
       }
     },
     "statistics": {
@@ -364,12 +371,39 @@
       "coverage_title": "Độ phủ theo khu vực",
       "coverage_description": "Mỗi thẻ hiển thị số catalog quốc gia và số mục đài hiện được lưu trong khu vực đó.",
       "method_title": "Các con số được tính như thế nào",
-      "method_body": "Số liệu được đếm từ các catalog JSON được quản lý phiên bản trong repository tại thời điểm build website. Đây là số mục trong catalog, không phải số luồng chắc chắn đang online, số broadcaster duy nhất hay lượng người nghe."
+      "method_body": "Số liệu được đếm từ catalog radio tại thời điểm build website. Đây là số mục trong catalog, không phải số luồng chắc chắn đang online, số broadcaster duy nhất hay lượng người nghe."
     },
     "error": {
       "not_found_title": "Không tìm thấy trang",
       "generic_title": "Đã xảy ra lỗi",
       "generic_body": "Không thể tải trang này. Vui lòng quay về trang chủ và thử lại."
+    },
+    "cookie": {
+      "eyebrow": "Cookie",
+      "title": "Chính sách cookie",
+      "description": "Cách Radio ePlus dùng cookie và lưu trữ cục bộ để vận hành website và ghi nhớ lựa chọn của bạn.",
+      "sections": {
+        "essential": {
+          "title": "Lưu trữ cần thiết",
+          "body": "Radio ePlus có thể dùng lưu trữ trình duyệt cần thiết cho ngôn ngữ, giao diện sáng/tối, bố cục trình phát, kênh yêu thích và lịch sử nghe gần đây. Các dữ liệu này giúp giao diện hoạt động ổn định trên thiết bị của bạn."
+        },
+        "analytics": {
+          "title": "Đo lường và chẩn đoán",
+          "body": "Website có thể dùng phân tích bảo vệ quyền riêng tư hoặc log máy chủ để hiểu cách sử dụng, phát hiện lỗi và cải thiện độ ổn định. Dữ liệu này phục vụ vận hành và xử lý sự cố, không dùng để bán dữ liệu cá nhân."
+        },
+        "third_party": {
+          "title": "Dịch vụ bên thứ ba",
+          "body": "Tìm kiếm, luồng radio, ảnh, lịch phát và dữ liệu nhà cung cấp có thể được phân phối bởi bên thứ ba. Các dịch vụ đó có thể đặt cookie riêng hoặc nhận thông tin mạng tiêu chuẩn khi trình duyệt kết nối tới họ."
+        },
+        "choices": {
+          "title": "Lựa chọn của bạn",
+          "body": "Bạn có thể xóa cookie và local storage trong cài đặt trình duyệt. Việc xóa có thể đặt lại giao diện, ngôn ngữ, yêu thích, lịch sử nghe, bố cục trình phát và lịch sử tìm kiếm trên thiết bị này."
+        },
+        "changes": {
+          "title": "Cập nhật",
+          "body": "Chính sách này có thể thay đổi khi Radio ePlus thay đổi tính năng, nhà cung cấp hoặc hạ tầng. Phiên bản mới nhất được công bố tại trang này."
+        }
+      }
     }
   },
   "home": {
@@ -392,7 +426,10 @@
     "description": "Khám phá các đài radio khắp thế giới bất cứ lúc nào."
   },
   "search": {
-    "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới."
+    "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới.",
+    "suggestions": "Đề xuất cho bạn",
+    "recent": "Tìm kiếm gần đây",
+    "clear": "Xóa"
   },
   "chat": {
     "open": "Mở trợ lý trò chuyện",
@@ -441,5 +478,11 @@
     "library_description": "Kênh yêu thích và lịch sử nghe được lưu trên thiết bị này.",
     "all": "Tất cả",
     "see_all": "Xem tất cả"
+  },
+  "cookie_consent": {
+    "title": "Tùy chọn cookie",
+    "body": "Radio ePlus dùng cookie cần thiết và local storage để ghi nhớ ngôn ngữ, giao diện, cài đặt trình phát và lựa chọn nghe của bạn.",
+    "accept": "Đã hiểu",
+    "learn_more": "Chính sách cookie"
   }
 }

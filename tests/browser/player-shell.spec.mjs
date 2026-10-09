@@ -114,6 +114,8 @@ test('desktop queue stays beside the catalog while scrolling and stops before th
   await ready(page, '/asia/viet-nam/edm-radio-zing-mp3');
   const panel = page.locator('.radio-right-panel');
   const footer = page.locator('footer');
+  await expect(panel).toBeHidden();
+  await dock(page).getByRole('button', { name: 'Channels & schedule', exact: true }).click();
   await expect(panel).toBeVisible();
   await expect(panel.getByRole('tab', { name: /Schedule/ })).toBeVisible();
   await page.locator('header a[href="/"]').first().click();

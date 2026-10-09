@@ -31,7 +31,7 @@
             v-if="stationCount"
             class="mt-2 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
           >
-            {{ stationCount }} stations
+            {{ $t("panel.station_count", { count: stationCount }) }}
           </p>
         </div>
       </div>

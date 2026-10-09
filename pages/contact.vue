@@ -25,19 +25,17 @@
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 class="text-lg font-semibold text-[var(--radio-text)]">
-            {{ t("site_pages.contact.github.title") }}
+            {{ t("site_pages.contact.support.title") }}
           </h2>
           <p class="mt-2 max-w-2xl text-sm leading-6 text-[var(--radio-text-muted)]">
-            {{ t("site_pages.contact.github.body") }}
+            {{ t("site_pages.contact.support.body") }}
           </p>
         </div>
         <a
-          href="https://github.com/ePlus-DEV/radio.eplus.dev/issues/new/choose"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="mailto:support@eplus.dev?subject=Radio%20ePlus%20support"
           class="radio-interactive inline-flex h-10 shrink-0 items-center justify-center rounded-xl bg-rose-500 px-4 text-sm font-semibold text-white hover:bg-rose-600"
         >
-          {{ t("site_pages.contact.github.action") }}
+          {{ t("site_pages.contact.support.action") }}
         </a>
       </div>
     </section>

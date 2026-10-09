@@ -10,6 +10,7 @@
   :root, html.light, html.dark {
     --radio-player-height: 96px;
     --radio-mobile-nav-height: 0px;
+    --radio-mobile-player-gap: 0px;
     --ui-bg: var(--radio-surface);
     --ui-bg-muted: var(--radio-surface-muted);
     --ui-bg-elevated: var(--radio-surface-elevated);
@@ -32,7 +33,7 @@
     --radio-surface-elevated: #ffffff;
     --radio-surface-soft: #f1f5f9;
     --radio-surface-muted: #f8fafc;
-    --radio-artwork-bg: #ffffff;
+    --radio-artwork-bg: #fff7f8;
     --radio-hover: #f1f5f9;
     --radio-border: rgb(226 232 240 / 0.9);
     --radio-border-strong: rgb(203 213 225 / 0.95);
@@ -55,7 +56,7 @@
     --radio-surface-elevated: #1a1b26;
     --radio-surface-soft: #111827;
     --radio-surface-muted: #0b1220;
-    --radio-artwork-bg: #1e293b;
+    --radio-artwork-bg: #181923;
     --radio-hover: rgb(255 255 255 / 0.06);
     --radio-border: rgb(255 255 255 / 0.1);
     --radio-border-strong: rgb(255 255 255 / 0.16);
@@ -96,6 +97,17 @@
     color: inherit;
   }
 
+  a[href],
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
   select option {
     background: var(--radio-surface);
     color: var(--radio-text);
@@ -108,7 +120,7 @@
 
 @layer utilities {
   .radio-shell {
-    padding-bottom: calc(var(--radio-player-height) + var(--radio-mobile-nav-height) + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--radio-player-height) + var(--radio-mobile-nav-height) + var(--radio-mobile-player-gap) + env(safe-area-inset-bottom));
   }
 
   .radio-player-dock {
@@ -147,8 +159,8 @@
   }
 
   .radio-station-card:hover {
-    border-color: rgb(139 92 246 / 0.46);
-    box-shadow: 0 18px 38px -28px rgb(88 54 165 / 0.4);
+    border-color: rgb(244 63 94 / 0.46);
+    box-shadow: 0 18px 38px -28px rgb(244 63 94 / 0.32);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -235,6 +247,29 @@
     background-clip: padding-box;
   }
 
+  .radio-search-popover {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--radio-surface) 92%, rgb(244 63 94) 8%), var(--radio-surface));
+    border-color: rgb(244 63 94 / 0.34);
+    color: var(--radio-text);
+    box-shadow: 0 28px 80px -32px rgb(0 0 0 / 0.72), 0 0 0 1px rgb(244 63 94 / 0.08);
+  }
+
+  .radio-search-panel-input {
+    background: var(--radio-surface-soft);
+    border-color: rgb(244 63 94 / 0.42);
+    color: var(--radio-text);
+  }
+
+  .radio-search-panel-input::placeholder {
+    color: var(--radio-text-muted);
+  }
+
+  .radio-search-panel-row:hover,
+  .radio-search-panel-row:focus-visible {
+    background: color-mix(in srgb, var(--radio-surface-soft) 76%, rgb(244 63 94) 24%);
+  }
+
   .radio-interactive {
     @apply transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
   }
@@ -259,7 +294,12 @@
   .radio-resume-card { background: linear-gradient(110deg, var(--radio-surface), var(--radio-surface-soft)); }
   .radio-player-tool { min-height: 64px; width: 100%; display: flex; flex-direction: column; justify-content: center; gap: 8px; font-size: 11px; }
   .radio-now-playing { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
-  .radio-now-playing-artwork { max-width: min(100%, 34dvh); }
+  .radio-now-playing-artwork { max-width: min(100%, 32dvh); }
+  .radio-now-playing-artwork-image { inline-size: min(100%, 220px); block-size: auto; max-block-size: min(100%, 220px); }
+  @media (min-width: 1024px) {
+    .radio-now-playing-artwork { max-width: min(360px, 32vw, 54dvh); }
+    .radio-now-playing-artwork-image { inline-size: min(100%, 240px); max-block-size: min(100%, 240px); }
+  }
   .radio-mobile-navigation { background: var(--radio-surface-elevated); border-top: 1px solid var(--radio-border); min-height: calc(64px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); }
   .radio-country-compact > div:last-child { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .radio-country-compact .radio-station-card { display: flex; align-items: center; border-radius: 12px; }
@@ -268,21 +308,32 @@
   .radio-country-compact .radio-station-card > div:last-child { min-width: 0; border: 0; padding: 8px; }
   @media (min-width: 1024px) { .radio-country-compact > div:last-child { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 639px) {
-    :root, html.light, html.dark { --radio-mobile-nav-height: 64px; }
-    .radio-player-dock { bottom: calc(var(--radio-mobile-nav-height) + env(safe-area-inset-bottom)); min-height: var(--radio-player-height); padding-bottom: 0; }
+    :root, html.light, html.dark {
+      --radio-player-height: 80px;
+      --radio-mobile-nav-height: 64px;
+      --radio-mobile-player-gap: 8px;
+    }
+    .radio-player-dock {
+      inset-inline: 8px;
+      bottom: calc(var(--radio-mobile-nav-height) + var(--radio-mobile-player-gap) + env(safe-area-inset-bottom));
+      min-height: var(--radio-player-height);
+      padding-bottom: 0;
+      border: 1px solid var(--radio-border);
+      border-radius: 18px;
+      box-shadow: 0 18px 48px -28px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(244 63 94 / 0.08);
+    }
+    .radio-player-dock .radio-player-console {
+      min-height: 72px;
+      padding-bottom: 0;
+    }
   }
 }
 
 @layer utilities {
   .radio-mobile-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-height: 64px; font-size: 11px; font-weight: 500; }
-  .radio-mobile-nav-item:focus-visible { outline: 2px solid #8b5cf6; outline-offset: -4px; border-radius: 12px; }
+  .radio-mobile-nav-item:focus-visible { outline: 2px solid #f43f5e; outline-offset: -4px; border-radius: 12px; }
 }
 
 @layer utilities {
- .radio-recent-grid article { padding: 8px; }
- .radio-recent-grid article > a { display: flex; align-items: center; gap: 10px; padding-right: 30px; min-height: 48px; }
- .radio-recent-grid img { width: 44px; height: 44px; flex-shrink: 0; margin: 0; padding: 4px; }
- .radio-recent-grid article > a > span { padding: 0; }
- .radio-recent-grid article > button { bottom: 10px; }
- @media (max-width: 639px) { .radio-recent-grid { grid-template-columns: minmax(0, 1fr); } }
+ .radio-library-artwork { inline-size: 3rem; block-size: 3rem; }
 }

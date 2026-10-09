@@ -16,11 +16,22 @@ export function useRestoreLastStation() {
     if (!saved || route.path.split('/').filter(Boolean).length >= 3 || playback.playRequest || playback.requestedStationUrl || playback.playing) return;
     const path = route.fullPath;
     const request = playback.playRequest;
-    const selected = playback.station?.url;
     const [, area, country, id] = saved.url.split('/');
+    playback.activate({
+      id,
+      area,
+      country,
+      title: saved.title,
+      image: saved.image,
+      url: saved.url,
+      countryKey: saved.countryKey || `world.${area.replace(/-/g, '_')}.${country.replace(/-/g, '_')}`,
+      schedule: '',
+      sources: [],
+    }, [], { autoplay: false, onlyIfIdle: true });
+    if (playback.station?.url !== saved.url) return;
     try {
       const catalog = await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${area}/${country}.json`, { timeout: 10_000 });
-      if (disposed || route.fullPath !== path || playback.playRequest !== request || playback.requestedStationUrl || playback.station?.url !== selected || playback.playing) return;
+      if (disposed || route.fullPath !== path || playback.playRequest !== request || playback.requestedStationUrl || playback.station?.url !== saved.url || playback.playing) return;
       const meta = catalog[id];
       if (!meta || !meta.stream) return;
       const options = Object.entries(catalog).map(([key, entry]) => ({ id: key, title: entry.title, image: entry.features || '/brand/logo-share.png', url: `/${area}/${country}/${key}` }));

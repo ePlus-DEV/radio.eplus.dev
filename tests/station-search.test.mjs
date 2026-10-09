@@ -11,12 +11,13 @@ test('local station search ignores accents, matches words, and ranks names', () 
     { station_name: 'English News', url: '/a' },
     { station_name: 'Rap Việt Radio - Zing MP3', url: '/b', featured: true, country_label: 'Viet Nam' },
     { station_name: 'Chạm Radio', url: '/c', featured: true },
-    { station_name: 'VOV Giao Thông Hồ Chí Minh', url: '/d', country_label: 'Viet Nam' },
+    { station_name: 'VOV Giao Thông Hồ Chí Minh', url: '/d', country_label: 'Viet Nam', featured_rank: 1 },
+    { station_name: 'Heart UK', url: '/e', country_label: 'United Kingdom', featured_rank: 12 },
   ];
   assert.equal(normalizeStationQuery('Chạm Việt'), 'cham viet');
   assert.deepEqual(searchLocalStations(stations, 'rap viet').map(x => x.url), ['/b']);
   assert.deepEqual(searchLocalStations(stations, 'giao thong').map(x => x.url), ['/d']);
-  assert.deepEqual(searchLocalStations(stations, '', 2).map(x => x.url), ['/b', '/c']);
+  assert.deepEqual(searchLocalStations(stations, '', 3).map(x => x.url), ['/d', '/e', '/b']);
   assert.deepEqual(searchLocalStations(stations, 'zzzzz'), []);
   assert.deepEqual(searchLocalStations(stations, 'rap', 0), []);
 });
@@ -38,16 +39,18 @@ test('build-time fallback index includes only playable radio catalog entries', a
     assert.equal(built[0].station_image, '/img/rap.png');
     assert.equal(built[0].url, '/asia/viet-nam/rap-viet-radio-zing-mp3');
     assert.equal(built[0].featured, true);
+    assert.equal(built[0].featured_rank, 2);
     assert.equal(JSON.parse(await readFile(target, 'utf8')).length, 1);
     assert.doesNotMatch(await readFile(target, 'utf8'), /https:\/\/example\.com\/live/, 'search index must not expose stream URLs');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test('UI has featured carousel, compact country cards, and fallback search', async () => {
-  const [home, featured, countries, box, result, packageSource] = await Promise.all([
+  const [home, featured, countries, queue, box, result, packageSource] = await Promise.all([
     readFile('pages/index.vue', 'utf8'),
     readFile('components/panel/FeaturedStations.vue', 'utf8'),
     readFile('components/panel/Radio.vue', 'utf8'),
+    readFile('components/player/Queue.vue', 'utf8'),
     readFile('components/search/Box.vue', 'utf8'),
     readFile('components/search/Result.vue', 'utf8'),
     readFile('package.json', 'utf8'),
@@ -56,7 +59,9 @@ test('UI has featured carousel, compact country cards, and fallback search', asy
   assert.match(featured, /snap-x snap-mandatory/);
   assert.match(featured, /sm:grid/);
   assert.match(countries, /aspect-\[7\/4\]/);
+  assert.match(queue, /normalizeStationQuery/);
   assert.match(box, /searchLocalStations/);
+  assert.match(box, /defineExpose\(\{ focus \}\)/);
   assert.match(await readFile('composables/useStationSearchIndex.ts', 'utf8'), /\/search\/stations\.json/);
   assert.doesNotMatch(result, /Xone FM 96MHz/, 'search must not render mock results');
   const pkg = JSON.parse(packageSource);

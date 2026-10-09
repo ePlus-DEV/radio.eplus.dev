@@ -38,6 +38,7 @@ const staticSeoRoutes = [
   { loc: "/contact", priority: 0.4, changefreq: "monthly" as const },
   { loc: "/privacy-policy", priority: 0.3, changefreq: "yearly" as const },
   { loc: "/terms-of-use", priority: 0.3, changefreq: "yearly" as const },
+  { loc: "/cookie-policy", priority: 0.3, changefreq: "yearly" as const },
 ];
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -52,8 +53,8 @@ export default defineNuxtConfig({
     url: siteUrl,
     name: siteName,
   },
-  // Devtools still imports Simple Git's removed default export; retain the
-  // security override and keep the development server usable until it updates.
+  // Nuxt DevTools imports Simple Git's legacy default export, so keep the
+  // Simple Git override on the 3.x line until DevTools supports Simple Git 4.
   devtools: { enabled: true },
   ssr: true,
   pages: true,
@@ -224,13 +225,25 @@ export default defineNuxtConfig({
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   colorMode: {
-    preference: "system",
-    fallback: "light",
+    preference: "dark",
+    fallback: "dark",
     classPrefix: "",
     classSuffix: "",
     storageKey: "theme",
   },
   nitro: {
+    // Nitro 2.13.4's string externals rules never match Windows ids with
+    // backslashes (nitrojs/nitro#4732, nuxt/nuxt#36467), so the Nuxt server
+    // renderer is left external and `nuxt/internal/manifest` resolves to a
+    // stub, breaking every SSR page with "Either manifest or precomputed data
+    // must be provided". Mirror the critical inline rules as
+    // separator-agnostic regexes until a Nitro release ships the fix.
+    externals: {
+      inline: [
+        /node_modules[\\/]nuxt[\\/]dist[\\/]/,
+        /node_modules[\\/]@nuxt[\\/]nitro-server[\\/]dist[\\/]/,
+      ],
+    },
     prerender: {
       crawlLinks: true,
       routes: [

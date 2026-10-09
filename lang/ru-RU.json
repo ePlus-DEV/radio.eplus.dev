@@ -13,7 +13,8 @@
     "language": "Язык:",
     "old_version": "Старая версия",
     "statistics": "Статистика",
-    "changelog": "Журнал изменений"
+    "changelog": "Журнал изменений",
+    "cookie": "Политика cookie"
   },
   "terms": {
     "content": "Добро пожаловать на веб-сайт https://radio.eplus.dev («Радио ePlus»), продукт от ePlus.DEV. Пожалуйста, внимательно ознакомьтесь с Соглашением о предоставлении и использовании услуг на веб-сайте https://radio.eplus.dev, прежде чем использовать функции на веб-сайте «Радио» ePlus. После регистрации вы прочитали, поняли, приняли и соблюдаете нижеприведенные условия:",
@@ -153,6 +154,7 @@
     "no_lyric": "Текст песни недоступен",
     "updating": "Обновление...",
     "channels": "Все радиостанции",
+    "station_count": "{count} радиостанций",
     "search_channels": "Поиск радиостанций…",
     "no_channels": "Станции не найдены"
   },
@@ -233,7 +235,11 @@
     "sleep_timer": "Таймер сна",
     "sleep_minutes": "Остановить через {minutes} мин.",
     "sleep_cancel": "Отменить таймер",
-    "sleep_remaining": "Остановка через {minutes} мин."
+    "sleep_remaining": "Остановка через {minutes} мин.",
+    "compact_player": "Свернуть плеер",
+    "expand_player": "Развернуть плеер",
+    "window_player": "Мини-плеер",
+    "dock_player": "Вернуть в панель"
   },
   "site_pages": {
     "common": {
@@ -257,9 +263,10 @@
           "body": "Потоки, расписания, изображения и информация о текущей композиции поступают из меняющихся каталогов и сторонних источников, поэтому могут измениться или стать недоступными без предупреждения."
         }
       },
-      "open_source": {
-        "title": "Открытый проект",
-        "body": "Radio ePlus поддерживается ePlus.DEV. Исходный код приложения, issues и текущие улучшения доступны публично на GitHub."
+      "service": {
+        "title": "Built for simple listening",
+        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "action": "Start listening"
       }
     },
     "privacy": {
@@ -346,10 +353,10 @@
           "body": "Правообладатели могут запросить исправление или удаление, указав затронутую станцию/страницу и предоставив достаточные данные для проверки запроса."
         }
       },
-      "github": {
-        "title": "Создать GitHub Issue",
-        "body": "Публичная разработка, отчёты об ошибках и исправления каталога отслеживаются в GitHub-репозитории Radio ePlus.",
-        "action": "Создать Issue"
+      "support": {
+        "title": "Need help with Radio ePlus?",
+        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "action": "Email support"
       }
     },
     "statistics": {
@@ -364,12 +371,39 @@
       "coverage_title": "Покрытие по регионам",
       "coverage_description": "Каждая карточка показывает количество каталогов стран и записей станций, сохранённых для региона.",
       "method_title": "Как рассчитываются числа",
-      "method_body": "Значения подсчитываются во время сборки сайта из версионируемых JSON-каталогов репозитория. Это количество записей каталога, а не гарантированно работающих потоков, уникальных вещателей или слушателей."
+      "method_body": "Эти показатели рассчитываются по радиокаталогам во время сборки сайта. Они описывают записи каталога, а не гарантированно доступные сейчас потоки, уникальных вещателей или размер аудитории."
     },
     "error": {
       "not_found_title": "Страница не найдена",
       "generic_title": "Произошла ошибка",
       "generic_body": "Не удалось загрузить страницу. Вернитесь на главную и попробуйте снова."
+    },
+    "cookie": {
+      "eyebrow": "Cookie Policy",
+      "title": "Cookie Policy",
+      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "sections": {
+        "essential": {
+          "title": "Essential storage",
+          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+        },
+        "analytics": {
+          "title": "Measurement and diagnostics",
+          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+        },
+        "third_party": {
+          "title": "Third-party services",
+          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+        },
+        "choices": {
+          "title": "Your choices",
+          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+        },
+        "changes": {
+          "title": "Updates",
+          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+        }
+      }
     }
   },
   "home": {
@@ -392,7 +426,10 @@
     "description": "Открывайте радиостанции со всего мира в любое время."
   },
   "search": {
-    "unavailable": "Поиск временно недоступен. Популярные станции по-прежнему показаны ниже."
+    "unavailable": "Поиск временно недоступен. Популярные станции по-прежнему показаны ниже.",
+    "suggestions": "Рекомендации для вас",
+    "recent": "Недавние поиски",
+    "clear": "Очистить"
   },
   "chat": {
     "open": "Открыть чат-помощник",
@@ -441,5 +478,11 @@
     "library_description": "Избранное и история прослушивания хранятся на этом устройстве.",
     "all": "Все",
     "see_all": "Показать все"
+  },
+  "cookie_consent": {
+    "title": "Настройки cookie",
+    "body": "Radio ePlus использует необходимые cookie и локальное хранилище, чтобы запоминать язык, тему, настройки плеера и предпочтения прослушивания.",
+    "accept": "Понятно",
+    "learn_more": "Политика cookie"
   }
 }

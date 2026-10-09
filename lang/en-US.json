@@ -13,7 +13,8 @@
     "language": "Language:",
     "old_version": "Previous version",
     "statistics": "Statistics",
-    "changelog": "Changelog"
+    "changelog": "Changelog",
+    "cookie": "Cookie Policy"
   },
   "terms": {
     "content": "Welcome to the website https://radio.eplus.dev (\"Radio ePlus\") a product by ePlus.DEV. Please carefully read the Agreement on provision and use of services on the Website https://radio.eplus.dev before you use the features on the \"Radio.\" Website ePlus. Once registered, you have read, understood, accepted and complied with the terms below:",
@@ -153,6 +154,7 @@
     "no_lyric": "Lyrics unavailable",
     "updating": "Updating...",
     "channels": "All channels",
+    "station_count": "{count} stations",
     "search_channels": "Search channels...",
     "no_channels": "No channels found"
   },
@@ -233,7 +235,11 @@
     "sleep_timer": "Sleep timer",
     "sleep_minutes": "Stop after {minutes} minutes",
     "sleep_cancel": "Cancel sleep timer",
-    "sleep_remaining": "Stops in {minutes} min"
+    "sleep_remaining": "Stops in {minutes} min",
+    "compact_player": "Compact player",
+    "expand_player": "Expand player",
+    "window_player": "Mini player",
+    "dock_player": "Return to dock"
   },
   "site_pages": {
     "common": {
@@ -257,9 +263,10 @@
           "body": "Station streams, schedules, artwork and current-song data come from changing catalogs and third-party providers, so availability can change without notice."
         }
       },
-      "open_source": {
-        "title": "Open project",
-        "body": "Radio ePlus is maintained by ePlus.DEV. The application source, issues and ongoing improvements are available publicly on GitHub."
+      "service": {
+        "title": "Built for simple listening",
+        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "action": "Start listening"
       }
     },
     "privacy": {
@@ -346,10 +353,10 @@
           "body": "Rights holders can request a correction or removal by identifying the affected station/page and providing enough information for the project to verify the request."
         }
       },
-      "github": {
-        "title": "Open a GitHub issue",
-        "body": "Public development, bug reports and catalog corrections are tracked in the Radio ePlus GitHub repository.",
-        "action": "Create issue"
+      "support": {
+        "title": "Need help with Radio ePlus?",
+        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "action": "Email support"
       }
     },
     "statistics": {
@@ -364,12 +371,39 @@
       "coverage_title": "Coverage by region",
       "coverage_description": "Each card shows how many country catalogs and station entries are currently stored for that region.",
       "method_title": "How these numbers are calculated",
-      "method_body": "These figures are counted from the version-controlled JSON catalogs in the repository during the site build. They describe catalog entries, not guaranteed currently-online streams, unique broadcasters or audience size."
+      "method_body": "These figures are counted from the radio catalogs during the site build. They describe catalog entries, not guaranteed currently-online streams, unique broadcasters or audience size."
     },
     "error": {
       "not_found_title": "Page not found",
       "generic_title": "Something went wrong",
       "generic_body": "The page could not be loaded. Please return to the homepage and try again."
+    },
+    "cookie": {
+      "eyebrow": "Cookie Policy",
+      "title": "Cookie Policy",
+      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "sections": {
+        "essential": {
+          "title": "Essential storage",
+          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+        },
+        "analytics": {
+          "title": "Measurement and diagnostics",
+          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+        },
+        "third_party": {
+          "title": "Third-party services",
+          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+        },
+        "choices": {
+          "title": "Your choices",
+          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+        },
+        "changes": {
+          "title": "Updates",
+          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+        }
+      }
     }
   },
   "home": {
@@ -392,7 +426,10 @@
     "description": "Explore live stations around the world, any time."
   },
   "search": {
-    "unavailable": "Search is temporarily unavailable. Popular stations are shown below."
+    "unavailable": "Search is temporarily unavailable. Popular stations are shown below.",
+    "suggestions": "Suggested for you",
+    "recent": "Recent searches",
+    "clear": "Clear"
   },
   "chat": {
     "open": "Open chatbot",
@@ -441,5 +478,11 @@
     "library_description": "Your favorite stations and listening history, saved on this device.",
     "all": "All",
     "see_all": "See all"
+  },
+  "cookie_consent": {
+    "title": "Cookie preferences",
+    "body": "Radio ePlus uses essential cookies and local storage to remember your language, theme, player settings and listening preferences.",
+    "accept": "Got it",
+    "learn_more": "Cookie Policy"
   }
 }

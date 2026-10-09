@@ -6,6 +6,13 @@ import { createPlaybackStation } from '../utils/playback-station.mjs';
 
 const station = id => createPlaybackStation({ area: 'asia', country: 'viet-nam', id, meta: { title: id, stream: 'https://radio.example/' + id + '.mp3' } });
 
+test('desktop queue starts closed until the listener opens it', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+
+  assert.equal(playback.queueOpen, false);
+});
+
 test('browsing country/home catalogs preserves active audio and its station queue', () => {
   setActivePinia(createPinia());
   const playback = usePlaybackStore();

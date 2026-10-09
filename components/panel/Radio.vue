@@ -45,40 +45,43 @@
       </div>
 
       <div class="grid grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
-        <NuxtLink
+        <UTooltip
           v-for="country in continent"
           :key="country.url"
-          :to="country.url"
-          class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-violet-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
-          :title="$t(country.name)"
-          :aria-label="$t(country.name)"
+          :text="$t(country.name)"
         >
-          <div class="radio-themed-artwork relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square">
-            <img
-              loading="lazy"
-              :src="country.flag"
-              :alt="$t(country.name)"
-              class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
-            />
-            <span
-              v-if="country.station_count !== null"
-              class="absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
-            >
-              {{ country.station_count }}
-            </span>
-          </div>
+          <NuxtLink
+            :to="country.url"
+            class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-rose-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+            :aria-label="$t(country.name)"
+          >
+            <div class="radio-themed-artwork relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square">
+              <img
+                loading="lazy"
+                :src="country.flag"
+                :alt="$t(country.name)"
+                class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
+              />
+              <span
+                v-if="country.station_count !== null"
+                class="absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
+              >
+                {{ country.station_count }}
+              </span>
+            </div>
 
-          <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3">
-            <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
-              {{ $t(country.name) }}
-            </span>
-            <span v-if="compact && country.station_count !== null" class="shrink-0 text-[10px] tabular-nums text-[var(--radio-text-muted)]">{{ country.station_count }}</span>
-            <fa
-              :icon="['fas', 'arrow-right']"
-              class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
-            />
-          </div>
-        </NuxtLink>
+            <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3">
+              <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
+                {{ $t(country.name) }}
+              </span>
+              <span v-if="compact && country.station_count !== null" class="shrink-0 text-[10px] tabular-nums text-[var(--radio-text-muted)]">{{ country.station_count }}</span>
+              <fa
+                :icon="['fas', 'arrow-right']"
+                class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
+              />
+            </div>
+          </NuxtLink>
+        </UTooltip>
       </div>
     </section>
   </div>

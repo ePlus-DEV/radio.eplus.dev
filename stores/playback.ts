@@ -10,7 +10,7 @@ export const usePlaybackStore = defineStore('playback', {
     pauseRequest: 0,
     playing: false,
     waiting: false,
-    queueOpen: true,
+    queueOpen: false,
   }),
   actions: {
     requestStation(url: string) {
@@ -20,7 +20,7 @@ export const usePlaybackStore = defineStore('playback', {
     activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean } = {}) {
       if (options.onlyIfIdle && this.station) return;
       // Revisiting the same station or changing language must not reload audio.
-      if (this.station?.url !== station.url) this.station = station;
+      if (this.station?.url !== station.url || (!this.station?.sources.length && station.sources.length)) this.station = station;
       this.stations = stations;
       if (options.autoplay || this.requestedStationUrl === station.url) this.playRequest += 1;
       this.requestedStationUrl = '';

@@ -19,11 +19,25 @@ test("player does not duplicate current song below the main now-playing area", a
   assert.match(source, /song\.nextMedia\.artists/);
 });
 
-test("player palette keeps structural surfaces neutral and violet as the primary action accent", async () => {
+test("player palette keeps structural surfaces neutral and rose as the primary action accent", async () => {
   const source = await readFile(playerFile, "utf8");
 
   assert.doesNotMatch(source, /rgba\(56,189,248/);
   assert.match(source, /bg-\[var\(--radio-surface-elevated\)\]/);
-  assert.match(source, /bg-violet-600 text-white[\s\S]*hover:bg-violet-500/);
+  assert.match(source, /bg-rose-500 text-white[\s\S]*hover:bg-rose-400/);
   assert.match(source, /\$t\('player\.pause'\)/);
+});
+
+test("player dock is a live radio console, not a cloned music timeline", async () => {
+  const source = await readFile(playerFile, "utf8");
+
+  assert.match(source, /radio-player-console/);
+  assert.match(source, /radio-player-main-action/);
+  assert.match(source, /liveStateLabel/);
+  assert.match(source, /activeSourceName/);
+  assert.doesNotMatch(
+    source,
+    /nowPlayingTitle[\s\S]{0,800}<input type="range"[\s\S]{0,800}currentMedia/,
+    "the dock should not add a song-progress timeline for live radio",
+  );
 });
