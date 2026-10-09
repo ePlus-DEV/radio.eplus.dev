@@ -74,3 +74,18 @@ test('country, station and queue count chips use the shared badge treatment', as
   assert.match(queue, /radio-count-badge/);
   assert.match(featured, /'radio-neutral-badge'/);
 });
+
+
+test('mobile country names are not ellipsized in the compact or regular country view', async () => {
+  const [country, css, homepage] = await Promise.all([
+    read('components/panel/Radio.vue'),
+    read('assets/css/main.css'),
+    read('pages/index.vue'),
+  ]);
+  assert.match(homepage, /<PanelRadio compact\s*\/>/);
+  assert.match(country, /min-w-0 flex-1 whitespace-normal break-words text-sm font-semibold leading-5/);
+  assert.doesNotMatch(country, /min-w-0 flex-1 truncate text-sm font-semibold/);
+  assert.match(css, /\.radio-country-compact > div:last-child \{ grid-template-columns: minmax\(0, 1fr\); gap: 8px; \}/);
+  assert.match(css, /@media \(min-width: 640px\) \{ \.radio-country-compact > div:last-child \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); \} \}/);
+  assert.match(css, /@media \(min-width: 1024px\) \{ \.radio-country-compact > div:last-child \{ grid-template-columns: repeat\(3, minmax\(0, 1fr\)\); \} \}/);
+});
