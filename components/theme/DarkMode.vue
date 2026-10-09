@@ -1,6 +1,6 @@
 <template>
   <UDropdownMenu v-model:open="open" :items="items" :content="{ align: 'end' }" :modal="false">
-    <UButton color="neutral" variant="ghost" :icon="icon" class="radio-header-action h-11 w-11 justify-center rounded-xl" :aria-label="$t('text.darkmode.' + $colorMode.preference)" />
+    <UButton color="neutral" variant="ghost" :icon="icon" class="h-11 w-11 justify-center" :aria-label="$t('text.darkmode.' + $colorMode.preference)" />
   </UDropdownMenu>
 </template>
 
