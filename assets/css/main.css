@@ -279,10 +279,5 @@
 }
 
 @layer utilities {
- .radio-recent-grid article { padding: 8px; }
- .radio-recent-grid article > a { display: flex; align-items: center; gap: 10px; padding-right: 30px; min-height: 48px; }
- .radio-recent-grid img { width: 44px; height: 44px; flex-shrink: 0; margin: 0; padding: 4px; }
- .radio-recent-grid article > a > span { padding: 0; }
- .radio-recent-grid article > button { bottom: 10px; }
- @media (max-width: 639px) { .radio-recent-grid { grid-template-columns: minmax(0, 1fr); } }
+ .radio-library-artwork { inline-size: 3rem; block-size: 3rem; }
 }

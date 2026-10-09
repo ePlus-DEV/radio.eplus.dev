@@ -10,7 +10,7 @@ export const usePlaybackStore = defineStore('playback', {
     pauseRequest: 0,
     playing: false,
     waiting: false,
-    queueOpen: true,
+    queueOpen: false,
   }),
   actions: {
     requestStation(url: string) {

@@ -14,10 +14,12 @@ test('full player changes presentation without creating a second audio engine', 
   assert.match(screen, /redesign.next_station/);
 });
 
-test('personal library is navigable and excluded from public SEO lists', async () => {
-  const [page, config, nav, css] = await Promise.all([read('pages/library.vue'), read('nuxt.config.ts'), read('components/MobileNavigation.vue'), read('assets/css/main.css')]);
+test('personal library is navigable, compact and excluded from public SEO lists', async () => {
+  const [page, panel, config, nav, css] = await Promise.all([read('pages/library.vue'), read('components/panel/ListeningLibrary.vue'), read('nuxt.config.ts'), read('components/MobileNavigation.vue'), read('assets/css/main.css')]);
   assert.match(page, /<ClientOnly>/);
   assert.match(page, /noindex, follow/);
+  assert.match(panel, /radio-library-artwork/);
+  assert.doesNotMatch(panel, /aspect-square w-full/);
   assert.match(config, /prerender:[\s\S]*"\/library"/);
   assert.doesNotMatch(config.split('prerender:')[0], /loc:\s*['"]\/library['"]/);
   assert.match(nav, /to="\/library"/);

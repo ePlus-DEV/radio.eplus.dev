@@ -6,13 +6,13 @@
         <NuxtLink v-if="compact && group.items.length" :to="`/library#${group.key}`" class="radio-interactive rounded-lg p-2 text-xs text-violet-500">{{ $t('redesign.see_all') }}</NuxtLink>
         <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="listening.clearRecent()">{{ $t('library.clear_recent') }}</UButton>
       </div>
-      <div v-if="group.items.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" :class="group.key === 'recent' ? 'radio-recent-grid' : ''">
-        <article v-for="station in compact ? group.items.slice(0, 4) : group.items" :key="station.url" class="radio-station-card relative min-w-0 rounded-2xl border p-3 sm:p-4">
-          <NuxtLink :to="station.url" class="radio-interactive block rounded-xl" :title="station.title" @click="playSelected($event, station.url)">
-            <StationArtwork :src="station.image" :alt="station.title" class="radio-themed-artwork mb-3 aspect-square w-full rounded-xl object-contain p-3" />
-            <span dir="auto" class="block truncate pr-7 text-sm font-semibold">{{ station.title }}</span>
+      <div v-if="group.items.length" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <article v-for="station in compact ? group.items.slice(0, 4) : group.items" :key="station.url" class="radio-station-card relative min-w-0 rounded-2xl border p-2">
+          <NuxtLink :to="station.url" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-11" :title="station.title" @click="playSelected($event, station.url)">
+            <StationArtwork :src="station.image" :alt="station.title" class="radio-library-artwork radio-themed-artwork h-12 w-12 shrink-0 rounded-xl object-contain p-1.5" />
+            <span dir="auto" class="block min-w-0 truncate text-sm font-semibold">{{ station.title }}</span>
           </NuxtLink>
-          <UButton color="neutral" variant="ghost" icon="i-lucide-heart" :class="isFavorite(station.url) ? 'text-rose-500' : ''" class="absolute bottom-1 right-1 h-11 w-11 justify-center" :aria-pressed="isFavorite(station.url)" :aria-label="$t(isFavorite(station.url) ? 'library.remove_favorite' : 'library.add_favorite')" @click="listening.toggleFavorite(station)" />
+          <UButton color="neutral" variant="ghost" icon="i-lucide-heart" :class="isFavorite(station.url) ? 'text-rose-500' : ''" class="absolute right-2 top-1/2 h-10 w-10 -translate-y-1/2 justify-center" :aria-pressed="isFavorite(station.url)" :aria-label="$t(isFavorite(station.url) ? 'library.remove_favorite' : 'library.add_favorite')" @click="listening.toggleFavorite(station)" />
         </article>
       </div>
       <p v-else class="rounded-2xl border border-dashed border-[var(--radio-border)] p-4 text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t(`library.${group.key}_empty`) }}</p>
