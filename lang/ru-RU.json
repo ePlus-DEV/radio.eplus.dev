@@ -389,7 +389,7 @@
         },
         "analytics": {
           "title": "Measurement and diagnostics",
-          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data. Google Analytics 4 загружается только на основном сайте после вашего согласия. Здесь можно изменить решение в любое время."
         },
         "third_party": {
           "title": "Third-party services",
@@ -483,6 +483,12 @@
     "title": "Настройки cookie",
     "body": "Radio ePlus использует необходимые cookie и локальное хранилище, чтобы запоминать язык, тему, настройки плеера и предпочтения прослушивания.",
     "accept": "Понятно",
+    "analytics_body": "Radio ePlus хранит необходимые настройки. Только с вашего согласия Google Analytics 4 измеряет посещения и просмотры страниц для улучшения сайта.",
+    "allow_analytics": "Разрешить аналитику",
+    "essential_only": "Только необходимые",
+    "analytics_preferences": "Настройки аналитики",
+    "analytics_on": "Аналитика включена",
+    "analytics_off": "Аналитика отключена",
     "learn_more": "Политика cookie"
   }
 }
