@@ -234,6 +234,7 @@
 
 <script setup lang="ts">
 import type { RadioStationOption } from "~/types/radio";
+import { normalizeStationQuery } from "~/utils/station-search.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -296,11 +297,11 @@ const activeTab = ref<"stations" | "schedule">(
 const preferScheduleAfterLoad = ref(false);
 
 const filteredStations = computed(() => {
-  const keyword = query.value.trim().toLocaleLowerCase();
+  const keyword = normalizeStationQuery(query.value);
   if (!keyword) return props.stations;
 
   return props.stations.filter((station) =>
-    station.title.toLocaleLowerCase().includes(keyword),
+    normalizeStationQuery(station.title).includes(keyword),
   );
 });
 

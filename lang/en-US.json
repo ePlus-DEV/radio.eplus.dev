@@ -153,6 +153,7 @@
     "no_lyric": "Lyrics unavailable",
     "updating": "Updating...",
     "channels": "All channels",
+    "station_count": "{count} stations",
     "search_channels": "Search channels...",
     "no_channels": "No channels found"
   },

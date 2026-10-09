@@ -153,6 +153,7 @@
     "no_lyric": "Chưa có lời bài hát",
     "updating": "Đang cập nhật...",
     "channels": "Tất cả đài",
+    "station_count": "{count} đài radio",
     "search_channels": "Tìm đài radio...",
     "no_channels": "Không tìm thấy đài radio"
   },

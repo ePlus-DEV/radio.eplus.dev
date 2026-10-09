@@ -153,6 +153,7 @@
     "no_lyric": "Paroles indisponibles",
     "updating": "Mise à jour...",
     "channels": "Toutes les stations",
+    "station_count": "{count} stations",
     "search_channels": "Rechercher des stations…",
     "no_channels": "Aucune station trouvée"
   },

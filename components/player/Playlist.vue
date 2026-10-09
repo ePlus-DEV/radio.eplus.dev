@@ -37,7 +37,7 @@
         </div>
 
         <span v-if="index === 0" class="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-rose-500">
-          Live
+          {{ $t("player.live") }}
         </span>
         <span v-else class="shrink-0 text-xs text-[var(--radio-text-muted)]">
           {{ dayjs.unix(item.track_played).fromNow() }}

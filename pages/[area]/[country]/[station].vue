@@ -22,7 +22,7 @@
           <div class="flex flex-wrap items-center gap-2">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 dark:bg-rose-500/10 dark:text-rose-300">
               <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-              Live
+              {{ $t("player.live") }}
             </span>
             <span class="text-xs text-slate-400">{{ countryName }}</span>
           </div>

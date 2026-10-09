@@ -153,6 +153,7 @@
     "no_lyric": "歌詞が見つかりません",
     "updating": "更新中...",
     "channels": "すべての局",
+    "station_count": "{count} 局",
     "search_channels": "局を検索...",
     "no_channels": "局が見つかりません"
   },

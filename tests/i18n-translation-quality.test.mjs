@@ -43,10 +43,11 @@ test("visible navigation, player, search and chat copy use localized keys", asyn
     "components/AppSidebar.vue": ["sidebar.browse_radio", "sidebar.description"],
     "components/search/Box.vue": ["search.unavailable"],
     "components/player/Queue.vue": ["player.sidebar_label", "player.live"],
+    "components/player/Playlist.vue": ["player.live"],
     "components/player/Player.vue": ["player.primary_source", "player.alternative_source", "player.source_number"],
     "components/panel/Chat.vue": ["chat.greeting", "chat.send"],
-    "pages/[area]/[country]/index.vue": ["seo.country_title", "seo.country_description"],
-    "pages/[area]/[country]/[station].vue": ["seo.station_title", "seo.station_description"],
+    "pages/[area]/[country]/index.vue": ["seo.country_title", "seo.country_description", "panel.station_count"],
+    "pages/[area]/[country]/[station].vue": ["seo.station_title", "seo.station_description", "player.live"],
   };
   const en = new Map(flatten(JSON.parse(await read("lang/en-US.json"))));
   for (const [path, keys] of Object.entries(files)) {

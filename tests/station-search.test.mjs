@@ -44,10 +44,11 @@ test('build-time fallback index includes only playable radio catalog entries', a
 });
 
 test('UI has featured carousel, compact country cards, and fallback search', async () => {
-  const [home, featured, countries, box, result, packageSource] = await Promise.all([
+  const [home, featured, countries, queue, box, result, packageSource] = await Promise.all([
     readFile('pages/index.vue', 'utf8'),
     readFile('components/panel/FeaturedStations.vue', 'utf8'),
     readFile('components/panel/Radio.vue', 'utf8'),
+    readFile('components/player/Queue.vue', 'utf8'),
     readFile('components/search/Box.vue', 'utf8'),
     readFile('components/search/Result.vue', 'utf8'),
     readFile('package.json', 'utf8'),
@@ -56,6 +57,7 @@ test('UI has featured carousel, compact country cards, and fallback search', asy
   assert.match(featured, /snap-x snap-mandatory/);
   assert.match(featured, /sm:grid/);
   assert.match(countries, /aspect-\[7\/4\]/);
+  assert.match(queue, /normalizeStationQuery/);
   assert.match(box, /searchLocalStations/);
   assert.match(await readFile('composables/useStationSearchIndex.ts', 'utf8'), /\/search\/stations\.json/);
   assert.doesNotMatch(result, /Xone FM 96MHz/, 'search must not render mock results');

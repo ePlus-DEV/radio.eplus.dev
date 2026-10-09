@@ -153,6 +153,7 @@
     "no_lyric": "暂无歌词",
     "updating": "更新中...",
     "channels": "全部电台",
+    "station_count": "{count} 个电台",
     "search_channels": "搜索电台...",
     "no_channels": "未找到电台"
   },

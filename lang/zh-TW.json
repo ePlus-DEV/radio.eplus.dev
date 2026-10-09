@@ -153,6 +153,7 @@
     "no_lyric": "目前沒有歌詞",
     "updating": "更新中...",
     "channels": "所有電台",
+    "station_count": "{count} 個電台",
     "search_channels": "搜尋電台...",
     "no_channels": "找不到電台"
   },

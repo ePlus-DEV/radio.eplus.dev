@@ -532,10 +532,21 @@ Prefer documenting the **reason** for a rule, not only the final code, so later 
 
 ## 18. Nuxt development tooling compatibility
 
-Nuxt devtools still imports the removed default export from Simple Git 4, while
-the repository pins Simple Git 4 for security. Devtools is disabled so `nuxt dev`
-remains usable without weakening that override. Re-enable only after devtools
-supports the named export. This does not affect the product or production build.
+Nuxt devtools still imports Simple Git's legacy default export. Simple Git 4 no
+longer provides that export, so the repository pins `simple-git` to `3.36.0`
+until Nuxt devtools supports Simple Git 4's named exports. Keep this compatibility
+pin with `devtools: { enabled: true }`; otherwise `nuxt prepare` and local
+development can fail during module initialization.
+
+Nitro 2.13.4's string externals rules never match Windows module ids that use
+backslashes (nitrojs/nitro#4732, nuxt/nuxt#36467). Without a workaround, the
+Nuxt server renderer is left external, native Node resolves
+`nuxt/internal/manifest` to a stub, and every SSR page fails with
+`Error (500): Either manifest or precomputed data must be provided` on Windows
+(dev and local builds; Linux CI is unaffected). `nuxt.config.ts` therefore adds
+separator-agnostic regex `nitro.externals.inline` rules for `nuxt/dist` and
+`@nuxt/nitro-server/dist`. Remove them once the installed Nitro release
+includes the upstream fix.
 
 ## 19. Listening continuity and reload silence
 
