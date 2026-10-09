@@ -22,7 +22,7 @@
           <div class="mt-6 flex min-w-0 items-start justify-between gap-3 lg:mt-0">
             <div class="min-w-0">
               <div class="mb-3 flex flex-wrap items-center gap-2 text-xs" role="status">
-                <span class="rounded-full bg-[var(--radio-surface-soft)] px-3 py-1.5" :class="playing ? 'text-emerald-500' : 'text-[var(--radio-text-muted)]'">{{ status }}</span>
+                <span class="rounded-full bg-[var(--radio-surface-soft)] px-3 py-1.5"  :class="error ? 'bg-red-500/10 text-red-700 dark:text-red-300' : waiting ? 'bg-amber-500/10 text-amber-700 dark:text-amber-300' : playing ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'text-[var(--radio-text-muted)]'">{{ status }}</span>
                 <span v-if="sleepRemaining" class="text-[var(--radio-text-muted)]">{{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
                 <UButton v-if="error" variant="link" @click="$emit('retry')">{{ $t('player.retry') }}</UButton>
               </div>
