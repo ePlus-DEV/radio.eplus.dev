@@ -75,11 +75,17 @@ const choose = (allowAnalytics: boolean): void => {
 const accept = (): void => choose(true);
 const denyAnalytics = (): void => choose(false);
 
+const onPreferenceChanged = () => { visible.value = false; };
+
 onMounted(() => {
   analyticsAvailable.value = Boolean(config.public.ga4Enabled)
     && window.location.hostname === 'radio.eplus.dev';
   visible.value = analyticsAvailable.value
     ? !isAnalyticsDecision(window.localStorage.getItem(ANALYTICS_CONSENT_KEY))
     : window.localStorage.getItem(STORAGE_KEY) !== 'accepted';
+  window.addEventListener(ANALYTICS_CONSENT_EVENT, onPreferenceChanged);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener(ANALYTICS_CONSENT_EVENT, onPreferenceChanged);
 });
 </script>
