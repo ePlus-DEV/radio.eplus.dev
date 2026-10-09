@@ -109,7 +109,7 @@
           </span>
           <span
             v-else
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--radio-border)] text-[var(--radio-text-muted)] transition group-hover:border-rose-200 group-hover:text-rose-500"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-700 ring-1 ring-inset ring-rose-500/20 transition group-hover:bg-rose-500/20 group-active:scale-95 dark:text-rose-300"
             aria-hidden="true"
           >
             <svg viewBox="0 0 24 24" class="ml-0.5 h-3.5 w-3.5 fill-current">
