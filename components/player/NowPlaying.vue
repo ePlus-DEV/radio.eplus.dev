@@ -13,7 +13,9 @@
 
       <div class="radio-now-playing-console flex flex-1 flex-col lg:grid lg:grid-cols-[minmax(280px,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-12">
         <div class="lg:flex lg:justify-end">
-          <StationArtwork :src="artwork" :alt="title" eager class="radio-now-playing-artwork radio-themed-artwork mx-auto mt-4 aspect-square w-full rounded-2xl object-contain shadow-xl sm:mt-6 lg:mx-0 lg:mt-0 lg:rounded-[2rem]" />
+          <div class="radio-now-playing-artwork radio-themed-artwork mx-auto mt-4 flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl p-10 shadow-xl sm:mt-6 sm:p-12 lg:mx-0 lg:mt-0 lg:rounded-[2rem] lg:p-14">
+            <StationArtwork :src="artwork" :alt="title" eager class="radio-now-playing-artwork-image max-h-full max-w-full object-contain" />
+          </div>
         </div>
 
         <div class="min-w-0 lg:max-w-xl">

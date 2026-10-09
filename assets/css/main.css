@@ -127,6 +127,12 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 
+  @media (min-width: 1280px) {
+    .radio-player-inner {
+      padding-left: calc(224px + 3rem);
+    }
+  }
+
   .radio-right-panel {
     top: 96px;
     height: calc(100dvh - 112px - var(--radio-player-height) - env(safe-area-inset-bottom));
@@ -293,9 +299,11 @@
   .radio-resume-card { background: linear-gradient(110deg, var(--radio-surface), var(--radio-surface-soft)); }
   .radio-player-tool { min-height: 64px; width: 100%; display: flex; flex-direction: column; justify-content: center; gap: 8px; font-size: 11px; }
   .radio-now-playing { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
-  .radio-now-playing-artwork { max-width: min(100%, 34dvh); }
+  .radio-now-playing-artwork { max-width: min(100%, 32dvh); }
+  .radio-now-playing-artwork-image { inline-size: min(100%, 220px); block-size: auto; max-block-size: min(100%, 220px); }
   @media (min-width: 1024px) {
-    .radio-now-playing-artwork { max-width: min(460px, 42vw, 62dvh); }
+    .radio-now-playing-artwork { max-width: min(360px, 32vw, 54dvh); }
+    .radio-now-playing-artwork-image { inline-size: min(100%, 240px); max-block-size: min(100%, 240px); }
   }
   .radio-mobile-navigation { background: var(--radio-surface-elevated); border-top: 1px solid var(--radio-border); min-height: calc(64px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); }
   .radio-country-compact > div:last-child { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
