@@ -25,7 +25,7 @@ import worldData from "~/data/world";
 import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
-import { selectVietnamFeaturedStations } from "~/utils/featured-stations.mjs";
+import { selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
@@ -35,20 +35,22 @@ const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
 );
 const playback = usePlaybackStore();
-// This homepage curation is intentionally Vietnam-specific; do not derive it
-// from the configurable country favorite or an unverified alphabetic catalog.
-const featuredCountry = 'viet-nam';
-const { data: featuredCatalog } = await useAsyncData('featured-catalog', async () => {
-  if (import.meta.server) {
-    const { readFile } = await import('node:fs/promises');
-    const { join } = await import('node:path');
-    return JSON.parse(await readFile(join(process.cwd(), 'public/radio/asia', `${featuredCountry}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
-  }
-  return await $fetch<Record<string, RadioCatalogEntry>>(`/radio/asia/${featuredCountry}.json`);
+// Curate verified station IDs, not arbitrary favorites or the full country catalogs.
+const featuredCountries = ['asia/viet-nam', 'europe/united-kingdom', 'asia/singapore'];
+const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalogs', async () => {
+  const catalogs = await Promise.all(featuredCountries.map(async (country) => {
+    if (import.meta.server) {
+      const { readFile } = await import('node:fs/promises');
+      const { join } = await import('node:path');
+      return JSON.parse(await readFile(join(process.cwd(), 'public/radio', `${country}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
+    }
+    return await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${country}.json`);
+  }));
+  return Object.fromEntries(featuredCountries.map((country, index) => [country, catalogs[index]])) as Record<string, Record<string, RadioCatalogEntry>>;
 });
-const featuredEntries = computed(() => selectVietnamFeaturedStations(featuredCatalog.value || {}));
-const featuredStations = computed(() => featuredEntries.value.map(([id, station]) => ({
-  id, title: station.title, image: station.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${id}`,
+const featuredEntries = computed(() => selectHomepageFeaturedStations(featuredCatalogs.value || {}));
+const featuredStations = computed<RadioStationOption[]>(() => featuredEntries.value.map(({ area, country, id, meta }) => ({
+  id, title: meta.title, image: meta.features || String(runtimeConfig.public.placeholderStation), url: `/${area}/${country}/${id}`,
 })));
 
 const areaItems = computed(() =>
@@ -98,26 +100,24 @@ if (!noIndex) useSeoMeta({
 });
 
 const playFeatured = (station: RadioStationOption): void => {
-  const meta = featuredCatalog.value?.[station.id];
-  if (!meta) return;
-  const stations = featuredEntries.value.map(([id, entry]) => ({ id, title: entry.title, image: entry.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${id}` }));
+  const selected = featuredEntries.value.find(entry => `/${entry.path}` === station.url);
+  if (!selected) return;
+  const { area, country, id, meta } = selected;
   playback.activate(createPlaybackStation({
-    area: 'asia', country: featuredCountry, id: station.id, meta,
-    corsServer: String(runtimeConfig.public.corsServer || ''), placeholder: String(runtimeConfig.public.placeholderStation),
-  }), stations, { autoplay: true });
-};
-
-watch(featuredCatalog, () => {
-  const [id, meta] = featuredEntries.value[0] || [];
-  if (!id || !meta) return;
-  const stations = featuredEntries.value.map(([stationId, station]) => ({
-    id: stationId, title: station.title, image: station.features || String(runtimeConfig.public.placeholderStation), url: `/asia/${featuredCountry}/${stationId}`,
-  }));
-  playback.activate(createPlaybackStation({
-    area: 'asia', country: featuredCountry, id, meta,
+    area, country, id, meta,
     corsServer: String(runtimeConfig.public.corsServer || ''),
     placeholder: String(runtimeConfig.public.placeholderStation),
-  }), stations, { onlyIfIdle: true });
+  }), featuredStations.value, { autoplay: true });
+};
+
+watch(featuredCatalogs, () => {
+  const first = featuredEntries.value[0];
+  if (!first) return;
+  playback.activate(createPlaybackStation({
+    area: first.area, country: first.country, id: first.id, meta: first.meta,
+    corsServer: String(runtimeConfig.public.corsServer || ''),
+    placeholder: String(runtimeConfig.public.placeholderStation),
+  }), featuredStations.value, { onlyIfIdle: true });
 }, { immediate: true });
 </script>
 
