@@ -38,10 +38,10 @@
         </button>
       </div>
 
-      <p v-if="usingLocal && localLoading" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
+      <p v-if="!inline && usingLocal && localLoading" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
         {{ $t('panel.updating') }}
       </p>
-      <p v-else-if="usingLocal && localError" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
+      <p v-else-if="!inline && usingLocal && localError" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
         {{ $t('search.unavailable') }}
       </p>
     </div>
@@ -53,6 +53,14 @@
         ? 'radio-search-popover absolute left-0 top-[calc(100%+0.5rem)] z-50 w-[min(36rem,calc(100vw-2rem))] max-h-[min(76dvh,38rem)] rounded-3xl border'
         : ''"
     >
+      <!-- Inline header search must never grow taller while its index loads.
+           Status feedback stays inside the results popover, shown only on focus. -->
+      <p v-if="inline && usingLocal && localLoading" class="px-2 pb-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
+        {{ $t('panel.updating') }}
+      </p>
+      <p v-else-if="inline && usingLocal && localError" class="px-2 pb-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
+        {{ $t('search.unavailable') }}
+      </p>
       <div v-if="!input" class="space-y-5">
         <div v-if="searchHistory.length">
           <div class="mb-2 flex items-center justify-between px-2">
