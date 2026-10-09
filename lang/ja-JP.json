@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "ブラウザのデフォルトでは、ラジオを聞くには ▶ ボタンを押す必要があります。",
-    "stream_error": "このストリームは現在再生できません。"
+    "stream_error": "現在この局を再生できません。後ほど試すか、別の局を選んでください。"
   },
   "text": {
     "guide": "ガイド",
@@ -202,7 +202,7 @@
       "light": "ライト",
       "system": "システム"
     },
-    "offline": "ネットワーク接続に失敗しました。ネットワーク接続を確認してください。"
+    "offline": "インターネットに接続されていないようです。接続を確認してもう一度お試しください。"
   },
   "player": {
     "title": "ラジオプレーヤー",
@@ -264,7 +264,7 @@
         }
       },
       "service": {
-        "title": "Built for simple listening",
+        "title": "もっと手軽にラジオを楽しもう",
         "body": "お気に入りの局を見つけて保存し、スマートフォンやパソコンで気軽にラジオを楽しめます。",
         "action": "Start listening"
       }
@@ -319,7 +319,7 @@
         },
         "copyright": {
           "title": "著作権と商標",
-          "body": "局名、ロゴ、音声その他の第三者素材の権利は各権利者に帰属します。修正・削除が必要な場合は、対象 URL と確認に必要な情報を添えてご連絡ください。"
+          "body": "放送局名、ロゴ、音声などの権利はそれぞれの所有者にあります。権利者として修正や削除を希望する場合は、対象ページのリンクと確認に必要な情報をお送りください。"
         },
         "acceptable_use": {
           "title": "安心して利用するために",
@@ -354,13 +354,13 @@
         }
       },
       "support": {
-        "title": "Need help with Radio ePlus?",
-        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "title": "お困りですか？",
+        "body": "放送局名やページのリンクと、問題やご質問の内容を簡単にお知らせください。",
         "action": "Email support"
       }
     },
     "statistics": {
-      "eyebrow": "カタログ",
+      "eyebrow": "ラジオ局",
       "title": "ラジオ統計",
       "description": "Radio ePlus で探せる国やラジオ局の数をご覧いただけます。",
       "metrics": {
@@ -401,7 +401,7 @@
         },
         "changes": {
           "title": "Updates",
-          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+          "body": "サイトやサービスの変更に合わせて、この方針を更新する場合があります。最新版はいつでもこちらでご覧いただけます。"
         }
       }
     }
