@@ -23,7 +23,7 @@
         </span>
       </div>
 
-      <p v-if="scheduleLoading" class="mt-2 text-[11px] text-[var(--radio-text-muted)]" aria-live="polite">{{ $t('panel.updating') }}</p>
+      <p v-if="scheduleLoading" class="mt-2 text-[11px] text-[var(--radio-text-muted)]" aria-live="polite">{{ $t('player.schedule_loading') }}</p>
 
       <div
         v-if="activeTab === 'stations' && hasStations"

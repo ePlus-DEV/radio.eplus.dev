@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "Theo mặc định của trình duyệt, bạn cần phải nhấn nút ▶ để bắt đầu nghe Radio.",
-    "stream_error": "Luồng này hiện không thể phát."
+    "stream_error": "Hiện chưa nghe được đài này. Hãy thử lại sau hoặc chọn đài khác."
   },
   "text": {
     "guide": "Hướng dẫn",
@@ -202,7 +202,7 @@
       "light": "Sáng",
       "system": "Hệ thống"
     },
-    "offline": "Kết nối mạng thất bại, vui lòng kiểm tra kết nối mạng của bạn."
+    "offline": "Có vẻ bạn đã mất kết nối mạng. Hãy kiểm tra Internet rồi thử lại."
   },
   "player": {
     "title": "Trình phát radio",
@@ -239,7 +239,8 @@
     "compact_player": "Thu gọn trình phát",
     "expand_player": "Mở rộng trình phát",
     "window_player": "Trình phát cửa sổ",
-    "dock_player": "Trở về thanh phát"
+    "dock_player": "Trở về thanh phát",
+    "schedule_loading": "Đang tải lịch phát sóng…"
   },
   "site_pages": {
     "common": {
@@ -248,7 +249,7 @@
     "about": {
       "eyebrow": "Giới thiệu",
       "title": "Giới thiệu Radio ePlus",
-      "description": "Danh bạ và trình phát gọn nhẹ để khám phá radio trực tuyến theo khu vực và quốc gia.",
+      "description": "Tìm và nghe các đài radio trong nước, quốc tế ở cùng một nơi.",
       "sections": {
         "discover": {
           "title": "Khám phá radio",
@@ -256,47 +257,47 @@
         },
         "playback": {
           "title": "Phát trực tiếp",
-          "body": "Trình phát kết nối trình duyệt của bạn tới luồng của đài hoặc nhà cung cấp, hỗ trợ các nguồn audio phổ biến và HLS cùng cơ chế fallback có giới hạn."
+          "body": "Chọn đài bạn thích rồi nhấn Phát. Nếu đường phát đầu tiên gặp lỗi, website có thể thử đường phát khác của đài."
         },
         "availability": {
-          "title": "Dữ liệu trực tiếp luôn thay đổi",
-          "body": "Luồng phát, lịch chương trình, ảnh và thông tin bài hát đến từ catalog và nhà cung cấp bên thứ ba nên có thể thay đổi hoặc gián đoạn bất kỳ lúc nào."
+          "title": "Thông tin đài có thể thay đổi",
+          "body": "Các đài tự quản lý chương trình và lịch phát sóng. Đôi khi đài tạm ngừng phát, đổi lịch hoặc cập nhật tên bài hát chậm hơn dự kiến."
         }
       },
       "service": {
-        "title": "Tập trung vào trải nghiệm nghe đơn giản",
-        "body": "Radio ePlus giúp tìm kênh nhanh, điều khiển phát rõ ràng và giữ giao diện gọn gàng trên cả máy tính lẫn điện thoại.",
+        "title": "Nghe radio thật đơn giản",
+        "body": "Dễ dàng tìm đài yêu thích, lưu lại để nghe sau và tiếp tục nghe khi sử dụng điện thoại hoặc máy tính.",
         "action": "Bắt đầu nghe"
       }
     },
     "privacy": {
       "eyebrow": "Quyền riêng tư",
       "title": "Chính sách bảo mật",
-      "description": "Cách Radio ePlus xử lý tùy chọn giao diện, tìm kiếm, yêu cầu phát radio và dịch vụ bên thứ ba.",
+      "description": "Tìm hiểu website lưu thông tin gì và điều gì xảy ra khi bạn tìm kiếm hoặc nghe radio.",
       "sections": {
         "accounts": {
           "title": "Tài khoản và thanh toán",
           "body": "Radio ePlus không yêu cầu tài khoản người dùng và không có quy trình thanh toán trên website này. Vui lòng không gửi thông tin cá nhân nhạy cảm qua các kênh công khai của dự án."
         },
         "preferences": {
-          "title": "Tùy chọn cục bộ",
-          "body": "Giao diện sáng/tối, ngôn ngữ và các tùy chọn tương tự có thể được trình duyệt hoặc framework lưu bằng cookie/local storage để ghi nhớ lựa chọn của bạn."
+          "title": "Các lựa chọn đã lưu",
+          "body": "Trình duyệt có thể lưu ngôn ngữ, giao diện sáng/tối, đài yêu thích và đài nghe gần đây trên thiết bị này để bạn sử dụng thuận tiện hơn."
         },
         "search": {
           "title": "Dịch vụ tìm kiếm",
-          "body": "Khi tìm kiếm được bật, truy vấn có thể được xử lý bởi nhà cung cấp tìm kiếm đã cấu hình như Algolia. Chính sách riêng tư của nhà cung cấp đó sẽ áp dụng cho phần xử lý này."
+          "body": "Khi bạn tìm đài, từ khóa tìm kiếm có thể được gửi đến dịch vụ tìm kiếm như Algolia. Dịch vụ này có chính sách bảo mật riêng."
         },
         "streams": {
-          "title": "Luồng radio và bên thứ ba",
-          "body": "Khi bắt đầu phát, trình duyệt sẽ kết nối tới đài radio, máy chủ streaming, nhà cung cấp lịch phát hoặc relay đã cấu hình. Các bên đó có thể nhận thông tin mạng thông thường như địa chỉ IP và user agent."
+          "title": "Khi bạn nghe radio",
+          "body": "Thiết bị của bạn kết nối với đài hoặc dịch vụ cung cấp âm thanh. Những dịch vụ này có thể nhận địa chỉ IP và thông tin cơ bản về trình duyệt."
         },
         "logs": {
-          "title": "Hạ tầng và log kỹ thuật",
-          "body": "Hạ tầng hosting, CDN và bảo mật có thể xử lý metadata yêu cầu tiêu chuẩn để phân phối, bảo vệ và khắc phục sự cố website, ví dụ IP, thông tin trình duyệt, đường dẫn truy cập và thời gian."
+          "title": "Giữ website hoạt động ổn định",
+          "body": "Dịch vụ vận hành và bảo vệ website có thể lưu địa chỉ IP, trình duyệt, trang đã truy cập và thời gian truy cập để duy trì hoạt động, bảo vệ website và xử lý lỗi."
         },
         "sharing": {
           "title": "Bán và chia sẻ dữ liệu",
-          "body": "Radio ePlus không bán dữ liệu cá nhân. Thông tin chỉ được xử lý khi cần để vận hành website hoặc bởi các dịch vụ bên thứ ba mà bạn trực tiếp sử dụng qua tìm kiếm, phát radio hoặc liên kết ngoài."
+          "body": "Chúng tôi không bán dữ liệu cá nhân. Website chính thức sử dụng Google Analytics 4 để đếm lượt truy cập và lượt xem trang. Dịch vụ tìm kiếm và các đài radio cũng có thể nhận thông tin khi bạn sử dụng."
         },
         "changes": {
           "title": "Thay đổi chính sách",
@@ -314,20 +315,20 @@
           "body": "Radio ePlus được cung cấp như một giao diện miễn phí để khám phá và nghe radio. Bạn có thể sử dụng website cho mục đích cá nhân hợp pháp để truy cập các dịch vụ radio công khai."
         },
         "third_party": {
-          "title": "Luồng phát của bên thứ ba",
-          "body": "Radio ePlus lập danh mục và liên kết tới các luồng do bên thứ ba vận hành. Các dịch vụ đó tự kiểm soát nội dung, khả dụng, giới hạn khu vực, quảng cáo và điều khoản. Radio ePlus không đảm bảo một luồng sẽ luôn hoạt động."
+          "title": "Đài radio và dịch vụ liên kết",
+          "body": "Mỗi đài tự quản lý nội dung, lịch phát và khu vực được phép nghe. Một số đài có quảng cáo hoặc tạm ngừng hoạt động mà không báo trước."
         },
         "copyright": {
           "title": "Bản quyền và nhãn hiệu",
-          "body": "Tên đài, logo, âm thanh và tài liệu của bên thứ ba thuộc về chủ sở hữu tương ứng. Nếu bạn là chủ sở hữu quyền và cho rằng một mục cần sửa hoặc gỡ, hãy liên hệ dự án kèm URL liên quan và thông tin xác minh."
+          "body": "Tên đài, logo, âm thanh và nội dung khác thuộc về chủ sở hữu tương ứng. Nếu bạn có quyền sở hữu và muốn sửa hoặc gỡ nội dung, hãy gửi đường dẫn trang và thông tin để chúng tôi kiểm tra."
         },
         "acceptable_use": {
-          "title": "Sử dụng được phép",
-          "body": "Không sử dụng Radio ePlus để lạm dụng nhà cung cấp, vượt cơ chế kiểm soát truy cập, phá hoại dịch vụ, crawl ở mức gây hại, phát tán mã độc hoặc vi phạm pháp luật/quyền của bên thứ ba."
+          "title": "Sử dụng Radio ePlus đúng cách",
+          "body": "Vui lòng tuân thủ pháp luật. Không làm gián đoạn website hay các đài, truy cập trái phép, thu thập dữ liệu với số lượng gây ảnh hưởng hoặc phát tán phần mềm độc hại."
         },
         "availability": {
-          "title": "Khả dụng và bảo đảm",
-          "body": "Website và catalog được cung cấp theo tình trạng hiện có. Chất lượng luồng, lịch phát, metadata và API nhà cung cấp có thể thay đổi hoặc lỗi độc lập với Radio ePlus."
+          "title": "Khi không nghe được radio",
+          "body": "Đôi khi đài tạm ngừng phát hoặc đường dẫn nghe gặp sự cố. Bạn có thể thử lại sau hoặc chọn đài khác. Chúng tôi cung cấp danh sách theo thông tin hiện có và không thể bảo đảm đài, lịch phát hay tên bài hát luôn chính xác và truy cập được."
         },
         "changes": {
           "title": "Thay đổi điều khoản",
@@ -338,40 +339,40 @@
     "contact": {
       "eyebrow": "Liên hệ",
       "title": "Liên hệ Radio ePlus",
-      "description": "Báo lỗi, yêu cầu cập nhật đài hoặc liên hệ dự án về một danh sách liên quan tới quyền sở hữu.",
+      "description": "Bạn gặp khó khăn khi nghe, muốn đề xuất đài mới hoặc có câu hỏi về nội dung? Hãy liên hệ với chúng tôi.",
       "sections": {
         "bug": {
-          "title": "Lỗi hoặc sự cố phát",
-          "body": "Hãy gửi URL bị lỗi, trình duyệt/thiết bị, kết quả mong đợi và lỗi thực tế. Thông tin Network hoặc Console sẽ hữu ích khi luồng không phát được."
+          "title": "Đài hoặc trang không hoạt động",
+          "body": "Cho chúng tôi biết tên đài hoặc trang gặp lỗi, điều gì đã xảy ra và bạn đang dùng điện thoại hay máy tính. Bạn có thể gửi thêm ảnh chụp màn hình."
         },
         "station": {
           "title": "Cập nhật đài",
-          "body": "Nếu thêm đài mới hoặc sửa metadata, hãy cung cấp tên đài, website chính thức, quốc gia và URL luồng công khai đã xác minh nếu có."
+          "body": "Để thêm đài hoặc sửa thông tin, hãy gửi tên đài, quốc gia, website chính thức và đường dẫn nghe nếu có."
         },
         "copyright": {
           "title": "Bản quyền hoặc yêu cầu gỡ",
-          "body": "Chủ sở hữu quyền có thể yêu cầu sửa hoặc gỡ bằng cách xác định đài/trang liên quan và cung cấp đủ thông tin để dự án xác minh yêu cầu."
+          "body": "Nếu bạn sở hữu nội dung được hiển thị và muốn sửa hoặc gỡ bỏ, hãy gửi đường dẫn liên quan cùng thông tin giúp chúng tôi kiểm tra yêu cầu."
         }
       },
       "support": {
-        "title": "Cần hỗ trợ về Radio ePlus?",
-        "body": "Nếu cần sửa thông tin kênh, báo lỗi phát, hỏi về quyền riêng tư hoặc nội dung, hãy gửi tên kênh, đường dẫn trang và mô tả ngắn cho đội ngũ Radio ePlus.",
+        "title": "Bạn cần hỗ trợ?",
+        "body": "Gửi tên đài hoặc đường dẫn trang cùng vài dòng mô tả vấn đề hay câu hỏi của bạn.",
         "action": "Gửi email hỗ trợ"
       }
     },
     "statistics": {
-      "eyebrow": "Danh mục",
+      "eyebrow": "Đài radio",
       "title": "Thống kê radio",
-      "description": "Ảnh chụp tại thời điểm build về số khu vực, quốc gia và mục đài hiện có trong catalog Radio ePlus.",
+      "description": "Xem Radio ePlus hiện có bao nhiêu quốc gia và đài radio để bạn khám phá.",
       "metrics": {
         "areas": "Khu vực",
         "countries": "Quốc gia",
         "stations": "Đài radio"
       },
       "coverage_title": "Độ phủ theo khu vực",
-      "coverage_description": "Mỗi thẻ hiển thị số catalog quốc gia và số mục đài hiện được lưu trong khu vực đó.",
-      "method_title": "Các con số được tính như thế nào",
-      "method_body": "Số liệu được đếm từ catalog radio tại thời điểm build website. Đây là số mục trong catalog, không phải số luồng chắc chắn đang online, số broadcaster duy nhất hay lượng người nghe."
+      "coverage_description": "Mỗi khu vực cho biết số quốc gia và đài radio đang có trong danh sách.",
+      "method_title": "Các con số này có ý nghĩa gì?",
+      "method_body": "Số liệu lấy từ danh sách đài được cập nhật gần nhất. Đây là số đài được liệt kê, không phải số đài đang phát hoặc số người đang nghe."
     },
     "error": {
       "not_found_title": "Không tìm thấy trang",
@@ -381,27 +382,27 @@
     "cookie": {
       "eyebrow": "Cookie",
       "title": "Chính sách cookie",
-      "description": "Cách Radio ePlus dùng cookie và lưu trữ cục bộ để vận hành website và ghi nhớ lựa chọn của bạn.",
+      "description": "Tìm hiểu cách Radio ePlus ghi nhớ cài đặt và thống kê lượt truy cập website.",
       "sections": {
         "essential": {
           "title": "Lưu trữ cần thiết",
-          "body": "Radio ePlus có thể dùng lưu trữ trình duyệt cần thiết cho ngôn ngữ, giao diện sáng/tối, bố cục trình phát, kênh yêu thích và lịch sử nghe gần đây. Các dữ liệu này giúp giao diện hoạt động ổn định trên thiết bị của bạn."
+          "body": "Trình duyệt lưu ngôn ngữ, giao diện, đài yêu thích và lịch sử nghe trên thiết bị này để bạn dễ dàng sử dụng lại."
         },
         "analytics": {
-          "title": "Đo lường và chẩn đoán",
-          "body": "Trên website chính thức, Google Analytics 4 đo lượt truy cập và lượt xem trang để cải thiện dịch vụ. Việc đo lường bắt đầu khi tải trang; thông báo này chỉ cung cấp thông tin và việc đóng thông báo không ảnh hưởng đến tracking."
+          "title": "Thống kê lượt truy cập",
+          "body": "Website Radio ePlus chính thức sử dụng Google Analytics 4 để đếm lượt truy cập và lượt xem trang ngay khi mở trang. Đóng thông báo cookie không dừng việc đo lường này."
         },
         "third_party": {
           "title": "Dịch vụ bên thứ ba",
-          "body": "Tìm kiếm, luồng radio, ảnh, lịch phát và dữ liệu nhà cung cấp có thể được phân phối bởi bên thứ ba. Các dịch vụ đó có thể đặt cookie riêng hoặc nhận thông tin mạng tiêu chuẩn khi trình duyệt kết nối tới họ."
+          "body": "Khi tìm hoặc nghe đài, các dịch vụ khác có thể cung cấp âm thanh, hình ảnh hay lịch phát. Họ có thể nhận địa chỉ IP và sử dụng cookie riêng."
         },
         "choices": {
           "title": "Lựa chọn của bạn",
-          "body": "Bạn có thể xóa cookie và local storage trong cài đặt trình duyệt. Việc xóa có thể đặt lại giao diện, ngôn ngữ, yêu thích, lịch sử nghe, bố cục trình phát và lịch sử tìm kiếm trên thiết bị này."
+          "body": "Bạn có thể xóa dữ liệu website trong cài đặt trình duyệt. Khi đó, các đài yêu thích, lịch sử nghe và lựa chọn giao diện trên thiết bị này cũng có thể bị xóa."
         },
         "changes": {
           "title": "Cập nhật",
-          "body": "Chính sách này có thể thay đổi khi Radio ePlus thay đổi tính năng, nhà cung cấp hoặc hạ tầng. Phiên bản mới nhất được công bố tại trang này."
+          "body": "Chúng tôi có thể cập nhật chính sách khi website hoặc các dịch vụ thay đổi. Bạn luôn có thể xem bản mới nhất tại đây."
         }
       }
     }
@@ -429,7 +430,8 @@
     "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới.",
     "suggestions": "Đề xuất cho bạn",
     "recent": "Tìm kiếm gần đây",
-    "clear": "Xóa"
+    "clear": "Xóa",
+    "loading": "Đang tải danh sách đài…"
   },
   "chat": {
     "open": "Mở trợ lý trò chuyện",
@@ -462,7 +464,8 @@
     "favorites_empty": "Bấm biểu tượng trái tim để lưu kênh yêu thích.",
     "clear_recent": "Xóa lịch sử nghe",
     "add_favorite": "Thêm vào yêu thích",
-    "remove_favorite": "Bỏ yêu thích"
+    "remove_favorite": "Bỏ yêu thích",
+    "loading": "Đang tải các đài của bạn…"
   },
   "redesign": {
     "navigation": "Điều hướng",
@@ -481,9 +484,9 @@
   },
   "cookie_consent": {
     "title": "Thông báo cookie và đo lường",
-    "body": "Radio ePlus dùng cookie cần thiết và local storage để ghi nhớ ngôn ngữ, giao diện, cài đặt trình phát và lựa chọn nghe của bạn.",
+    "body": "Radio ePlus lưu các lựa chọn nghe và giao diện của bạn trên thiết bị này.",
     "accept": "Đã hiểu",
-    "analytics_body": "Radio ePlus dùng bộ nhớ cần thiết để lưu tùy chọn và Google Analytics 4 để đo lượt truy cập, lượt xem trang trên website chính thức. Đây là thông báo về việc đo lường.",
+    "analytics_body": "Radio ePlus ghi nhớ tùy chọn của bạn và dùng Google Analytics 4 để thống kê lượt truy cập trên website chính thức. Đây là thông báo cung cấp thông tin; đóng thông báo không tắt việc đo lường.",
     "learn_more": "Chính sách cookie"
   }
 }

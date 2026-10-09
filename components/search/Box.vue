@@ -39,7 +39,7 @@
       </div>
 
       <p v-if="!inline && usingLocal && localLoading" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
-        {{ $t('panel.updating') }}
+        {{ $t('search.loading') }}
       </p>
       <p v-else-if="!inline && usingLocal && localError" class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
         {{ $t('search.unavailable') }}
@@ -56,7 +56,7 @@
       <!-- Inline header search must never grow taller while its index loads.
            Status feedback stays inside the results popover, shown only on focus. -->
       <p v-if="inline && usingLocal && localLoading" class="px-2 pb-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
-        {{ $t('panel.updating') }}
+        {{ $t('search.loading') }}
       </p>
       <p v-else-if="inline && usingLocal && localError" class="px-2 pb-3 text-xs leading-5 text-[var(--radio-text-muted)]" role="status">
         {{ $t('search.unavailable') }}

@@ -80,7 +80,7 @@
       v-else
       class="px-5 py-10 text-center text-sm text-[var(--radio-text-muted)]"
     >
-      {{ $t("panel.updating") }}
+      {{ $t("panel.no_channels") }}
     </div>
   </section>
 </template>

@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "Par défaut du navigateur, vous devez appuyer sur le bouton ▶ pour commencer à écouter la radio.",
-    "stream_error": "Ce flux ne peut pas être lu pour le moment."
+    "stream_error": "Cette station ne peut pas être écoutée pour le moment. Réessayez plus tard ou choisissez une autre station."
   },
   "text": {
     "guide": "Guide",
@@ -202,7 +202,7 @@
       "light": "Clair",
       "system": "Système"
     },
-    "offline": "La connexion réseau a échoué, veuillez vérifier votre connexion réseau."
+    "offline": "Vous semblez hors ligne. Vérifiez votre connexion Internet et réessayez."
   },
   "player": {
     "title": "Lecteur radio",
@@ -239,7 +239,8 @@
     "compact_player": "Réduire le lecteur",
     "expand_player": "Agrandir le lecteur",
     "window_player": "Mini lecteur",
-    "dock_player": "Retour au lecteur"
+    "dock_player": "Retour au lecteur",
+    "schedule_loading": "Chargement du programme…"
   },
   "site_pages": {
     "common": {
@@ -248,7 +249,7 @@
     "about": {
       "eyebrow": "À propos",
       "title": "À propos de Radio ePlus",
-      "description": "Un annuaire et lecteur léger pour découvrir des radios internet en direct par région et par pays.",
+      "description": "Découvrez et écoutez des radios du monde entier, au même endroit.",
       "sections": {
         "discover": {
           "title": "Découvrir des radios",
@@ -256,47 +257,47 @@
         },
         "playback": {
           "title": "Lecture directe",
-          "body": "Le lecteur connecte votre navigateur aux flux de la station ou du fournisseur et prend en charge les formats audio courants ainsi que HLS avec un mécanisme de repli limité."
+          "body": "Choisissez une station et appuyez sur Lecture. Si le premier lien ne fonctionne pas, le site peut essayer un autre lien de cette station."
         },
         "availability": {
-          "title": "Les données en direct évoluent",
-          "body": "Les flux, programmes, images et informations de morceau proviennent de catalogues et de fournisseurs tiers susceptibles de changer ou de devenir indisponibles sans préavis."
+          "title": "Les informations des stations peuvent changer",
+          "body": "Chaque station gère ses émissions et ses horaires. Une station peut interrompre sa diffusion, changer de programme ou mettre à jour le titre d’un morceau avec du retard."
         }
       },
       "service": {
-        "title": "Built for simple listening",
-        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "title": "La radio en toute simplicité",
+        "body": "Trouvez vos stations préférées, enregistrez-les et continuez à écouter sur votre téléphone ou votre ordinateur.",
         "action": "Start listening"
       }
     },
     "privacy": {
       "eyebrow": "Confidentialité",
       "title": "Politique de confidentialité",
-      "description": "Comment Radio ePlus traite les préférences du site, la recherche, les requêtes de lecture et les services tiers.",
+      "description": "Découvrez quelles informations le site conserve et ce qui se passe quand vous recherchez ou écoutez une radio.",
       "sections": {
         "accounts": {
           "title": "Comptes et paiements",
           "body": "Radio ePlus ne nécessite pas de compte utilisateur et ne propose aucun parcours de paiement sur ce site. N'envoyez pas d'informations personnelles sensibles via les canaux publics du projet."
         },
         "preferences": {
-          "title": "Préférences locales",
-          "body": "Le thème, la langue et des préférences d'interface similaires peuvent être enregistrés par votre navigateur ou le framework via des cookies ou le stockage local afin de mémoriser vos choix."
+          "title": "Vos préférences enregistrées",
+          "body": "Votre navigateur peut garder sur cet appareil la langue, le thème, vos stations favorites et vos écoutes récentes pour faciliter vos prochaines visites."
         },
         "search": {
           "title": "Services de recherche",
-          "body": "Lorsque la recherche est activée, les requêtes peuvent être traitées par le fournisseur configuré, par exemple Algolia. Les règles de confidentialité de ce fournisseur s'appliquent alors."
+          "body": "Lorsque vous recherchez une station, les mots saisis peuvent être transmis à un service tel qu’Algolia. Ce service applique sa propre politique de confidentialité."
         },
         "streams": {
-          "title": "Flux radio et services tiers",
-          "body": "Démarrer une lecture connecte votre navigateur aux stations, hébergeurs de flux, fournisseurs de programmes ou relais configurés. Ces tiers peuvent recevoir des informations réseau normales comme l'adresse IP et l'agent utilisateur."
+          "title": "Quand vous écoutez une station",
+          "body": "La lecture connecte votre appareil à la station ou au service qui diffuse son son. Ces services peuvent recevoir votre adresse IP et des informations de base sur votre navigateur."
         },
         "logs": {
-          "title": "Hébergement et journaux techniques",
-          "body": "L'hébergement, le CDN et l'infrastructure de sécurité peuvent traiter les métadonnées standard nécessaires à la diffusion, à la protection et au diagnostic du site, telles que l'IP, le navigateur, le chemin demandé et l'horodatage."
+          "title": "Assurer le bon fonctionnement du site",
+          "body": "Les services chargés du site et de sa sécurité peuvent conserver votre adresse IP, votre navigateur, les pages visitées et les heures d’accès pour protéger le site et résoudre les problèmes."
         },
         "sharing": {
           "title": "Vente et partage de données",
-          "body": "Radio ePlus ne vend pas de données personnelles. Les informations sont traitées uniquement pour faire fonctionner le site ou par les services tiers que vous utilisez directement via la recherche, la lecture ou les liens externes."
+          "body": "Nous ne vendons pas vos données personnelles. Le site principal utilise Google Analytics 4 pour compter les visites et les pages vues. Les services de recherche et de radio peuvent aussi recevoir des informations lorsque vous les utilisez."
         },
         "changes": {
           "title": "Modifications de cette politique",
@@ -314,20 +315,20 @@
           "body": "Radio ePlus est fourni comme une interface gratuite de découverte et de lecture de radios. Vous pouvez l'utiliser à des fins personnelles licites pour accéder à des services radio publiquement accessibles."
         },
         "third_party": {
-          "title": "Flux tiers",
-          "body": "Radio ePlus référence et relie des flux exploités par des tiers. Ceux-ci contrôlent leur contenu, disponibilité, restrictions géographiques, publicité et conditions. Radio ePlus ne garantit pas qu'un flux restera disponible."
+          "title": "Stations et services partenaires",
+          "body": "Chaque station choisit ses émissions, ses horaires et les pays où elle peut être écoutée. Certaines diffusent des publicités ou peuvent s’arrêter sans préavis."
         },
         "copyright": {
           "title": "Droits d'auteur et marques",
-          "body": "Les noms de stations, logos, contenus audio et autres éléments tiers appartiennent à leurs propriétaires respectifs. Un ayant droit peut demander une correction ou un retrait en fournissant l'URL concernée et les éléments nécessaires à la vérification."
+          "body": "Les noms, logos, sons et autres contenus appartiennent à leurs propriétaires. Si vous détenez les droits et souhaitez une correction ou un retrait, envoyez-nous le lien de la page et les informations nécessaires à l’examen de votre demande."
         },
         "acceptable_use": {
-          "title": "Utilisation acceptable",
-          "body": "N'utilisez pas Radio ePlus pour abuser des fournisseurs, contourner des contrôles d'accès, perturber le service, effectuer un crawl nuisible, diffuser des logiciels malveillants ou enfreindre la loi ou les droits de tiers."
+          "title": "Utiliser Radio ePlus de manière responsable",
+          "body": "Respectez la loi. Ne perturbez pas le site ou les stations, ne contournez pas les restrictions sans autorisation, ne collectez pas de données au point de gêner le service et ne diffusez pas de logiciels malveillants."
         },
         "availability": {
-          "title": "Disponibilité et garantie",
-          "body": "Le site et le catalogue sont fournis en l'état et selon disponibilité. La qualité des flux, les programmes, les métadonnées et les API fournisseurs peuvent changer ou tomber en panne indépendamment de Radio ePlus."
+          "title": "Si vous n'arrivez pas à écouter une station",
+          "body": "Une station peut interrompre sa diffusion ou son lien d'écoute peut cesser de fonctionner. Réessayez plus tard ou choisissez une autre station. Nous proposons la liste selon les informations disponibles, sans pouvoir garantir que les émissions, les horaires et les titres des morceaux sont toujours exacts et accessibles."
         },
         "changes": {
           "title": "Modification des conditions",
@@ -338,40 +339,40 @@
     "contact": {
       "eyebrow": "Contact",
       "title": "Contacter Radio ePlus",
-      "description": "Signalez un bug, demandez une mise à jour de station ou contactez le projet au sujet d'un référencement lié à des droits.",
+      "description": "Une radio ne fonctionne pas, vous souhaitez proposer une station ou signaler un contenu ? Contactez-nous.",
       "sections": {
         "bug": {
-          "title": "Bug ou problème de lecture",
-          "body": "Indiquez l'URL concernée, le navigateur/appareil, le résultat attendu et le résultat observé. Les informations Network ou Console sont utiles lorsqu'un flux ne fonctionne pas."
+          "title": "Une station ou une page ne fonctionne pas",
+          "body": "Indiquez la station ou la page concernée, ce qui s’est passé et si vous utilisez un téléphone ou un ordinateur. Une capture d’écran peut aider."
         },
         "station": {
           "title": "Mise à jour d'une station",
-          "body": "Pour une nouvelle station ou une correction de métadonnées, fournissez le nom, le site officiel, le pays et, si possible, une URL de flux public vérifiée."
+          "body": "Pour ajouter une station ou corriger ses informations, envoyez son nom, son pays, son site officiel et, si vous l’avez, son lien d’écoute."
         },
         "copyright": {
           "title": "Droits d'auteur ou retrait",
-          "body": "Les ayants droit peuvent demander une correction ou un retrait en identifiant la station/page concernée et en fournissant suffisamment d'informations pour vérifier la demande."
+          "body": "Si vous détenez les droits d’un contenu et souhaitez le corriger ou le supprimer, indiquez la page concernée et les informations permettant d’examiner votre demande."
         }
       },
       "support": {
-        "title": "Need help with Radio ePlus?",
-        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "title": "Besoin d’aide ?",
+        "body": "Envoyez-nous le nom de la station ou le lien de la page, avec quelques mots sur votre question ou le problème rencontré.",
         "action": "Email support"
       }
     },
     "statistics": {
-      "eyebrow": "Catalogue",
+      "eyebrow": "Stations de radio",
       "title": "Statistiques radio",
-      "description": "Un instantané au moment du build du nombre de régions, pays et entrées de stations présentes dans le catalogue Radio ePlus.",
+      "description": "Découvrez combien de pays et de stations de radio sont disponibles sur Radio ePlus.",
       "metrics": {
         "areas": "Régions",
         "countries": "Pays",
         "stations": "Stations"
       },
       "coverage_title": "Couverture par région",
-      "coverage_description": "Chaque carte indique le nombre de catalogues pays et d'entrées de stations enregistrés pour la région.",
-      "method_title": "Comment ces chiffres sont calculés",
-      "method_body": "Ces chiffres sont comptés à partir des catalogues radio lors de la génération du site. Ils décrivent les entrées du catalogue, pas des flux actuellement disponibles garantis, des diffuseurs uniques ni une audience."
+      "coverage_description": "Chaque région indique le nombre de pays et de stations répertoriés.",
+      "method_title": "À quoi correspondent ces chiffres ?",
+      "method_body": "Ces totaux viennent de notre liste de stations récemment mise à jour. Ils indiquent les stations répertoriées, pas celles qui diffusent actuellement ni le nombre d’auditeurs."
     },
     "error": {
       "not_found_title": "Page introuvable",
@@ -381,27 +382,27 @@
     "cookie": {
       "eyebrow": "Cookie Policy",
       "title": "Cookie Policy",
-      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "description": "Découvrez comment Radio ePlus mémorise vos réglages et mesure les visites du site.",
       "sections": {
         "essential": {
           "title": "Essential storage",
-          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+          "body": "Votre navigateur conserve sur cet appareil la langue, le thème, vos favoris et les stations récemment écoutées pour faciliter votre prochaine visite."
         },
         "analytics": {
-          "title": "Measurement and diagnostics",
-          "body": "Sur le site de production, Google Analytics 4 mesure les visites et les pages vues pour améliorer le service. La mesure démarre au chargement de la page ; fermer cet avis ne l'interrompt pas."
+          "title": "Statistiques de fréquentation",
+          "body": "Le site principal de Radio ePlus utilise Google Analytics 4 dès l’ouverture d’une page pour compter les visites et les pages vues. Fermer cet avis n’arrête pas cette mesure."
         },
         "third_party": {
           "title": "Third-party services",
-          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+          "body": "Lorsque vous recherchez ou écoutez une radio, d’autres services peuvent fournir le son, les images ou les programmes. Ils peuvent recevoir votre adresse IP et utiliser leurs propres cookies."
         },
         "choices": {
           "title": "Your choices",
-          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+          "body": "Vous pouvez effacer les données du site dans les paramètres de votre navigateur. Cela peut aussi supprimer vos favoris, votre historique d’écoute et vos préférences d’affichage sur cet appareil."
         },
         "changes": {
           "title": "Updates",
-          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+          "body": "Cette politique peut évoluer si le site ou ses services changent. Vous pouvez toujours consulter la dernière version ici."
         }
       }
     }
@@ -429,7 +430,8 @@
     "unavailable": "La recherche est momentanément indisponible. Les stations populaires restent affichées ci-dessous.",
     "suggestions": "Suggestions pour vous",
     "recent": "Recherches récentes",
-    "clear": "Effacer"
+    "clear": "Effacer",
+    "loading": "Chargement des stations…"
   },
   "chat": {
     "open": "Ouvrir l'assistant",
@@ -462,7 +464,8 @@
     "favorites_empty": "Touchez le cœur pour ajouter une station aux favoris.",
     "clear_recent": "Effacer l’historique récent",
     "add_favorite": "Ajouter aux favoris",
-    "remove_favorite": "Retirer des favoris"
+    "remove_favorite": "Retirer des favoris",
+    "loading": "Chargement de vos stations…"
   },
   "redesign": {
     "navigation": "Navigation",
@@ -481,9 +484,9 @@
   },
   "cookie_consent": {
     "title": "Informations sur les cookies et la mesure d'audience",
-    "body": "Radio ePlus utilise des cookies essentiels et le stockage local pour mémoriser la langue, le thème, les réglages du lecteur et vos préférences d’écoute.",
+    "body": "Radio ePlus mémorise sur cet appareil vos préférences d’écoute et d’affichage.",
     "accept": "Compris",
-    "analytics_body": "Radio ePlus utilise un stockage essentiel pour vos préférences et Google Analytics 4 pour mesurer les visites et les pages vues sur le site de production. Ceci est une information.",
+    "analytics_body": "Radio ePlus mémorise vos préférences et utilise Google Analytics 4 pour compter les visites sur son site principal. Cet avis est informatif : le fermer n’arrête pas la mesure.",
     "learn_more": "Politique cookies"
   }
 }
