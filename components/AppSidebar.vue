@@ -1,6 +1,6 @@
 <template>
-  <aside :class="mobile ? 'block' : 'hidden xl:block'" class="min-w-0" :aria-label="$t('sidebar.browse_radio')">
-    <div :class="mobile ? 'space-y-6' : 'sticky top-28 max-h-[calc(100dvh-9rem-var(--radio-player-height))] space-y-6 overflow-y-auto pb-8 pr-2 radio-scrollbar'">
+  <aside :class="mobile ? 'block' : 'radio-desktop-sidebar hidden xl:block'" class="min-w-0" :aria-label="$t('sidebar.browse_radio')">
+    <div :class="mobile ? 'space-y-6' : 'radio-desktop-sidebar-scroll radio-scrollbar space-y-6'">
       <div class="space-y-1">
         <NuxtLink to="/" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
