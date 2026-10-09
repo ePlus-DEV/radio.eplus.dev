@@ -234,7 +234,11 @@
     "sleep_timer": "Minuterie de sommeil",
     "sleep_minutes": "Arrêter dans {minutes} minutes",
     "sleep_cancel": "Annuler la minuterie",
-    "sleep_remaining": "Arrêt dans {minutes} min"
+    "sleep_remaining": "Arrêt dans {minutes} min",
+    "compact_player": "Réduire le lecteur",
+    "expand_player": "Agrandir le lecteur",
+    "window_player": "Mini lecteur",
+    "dock_player": "Retour au lecteur"
   },
   "site_pages": {
     "common": {
@@ -393,7 +397,10 @@
     "description": "Découvrez des stations en direct du monde entier à tout moment."
   },
   "search": {
-    "unavailable": "La recherche est momentanément indisponible. Les stations populaires restent affichées ci-dessous."
+    "unavailable": "La recherche est momentanément indisponible. Les stations populaires restent affichées ci-dessous.",
+    "suggestions": "Suggestions pour vous",
+    "recent": "Recherches récentes",
+    "clear": "Effacer"
   },
   "chat": {
     "open": "Ouvrir l'assistant",

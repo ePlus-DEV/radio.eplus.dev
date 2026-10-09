@@ -234,7 +234,11 @@
     "sleep_timer": "Sleep timer",
     "sleep_minutes": "Stop after {minutes} minutes",
     "sleep_cancel": "Cancel sleep timer",
-    "sleep_remaining": "Stops in {minutes} min"
+    "sleep_remaining": "Stops in {minutes} min",
+    "compact_player": "Compact player",
+    "expand_player": "Expand player",
+    "window_player": "Mini player",
+    "dock_player": "Return to dock"
   },
   "site_pages": {
     "common": {
@@ -393,7 +397,10 @@
     "description": "Explore live stations around the world, any time."
   },
   "search": {
-    "unavailable": "Search is temporarily unavailable. Popular stations are shown below."
+    "unavailable": "Search is temporarily unavailable. Popular stations are shown below.",
+    "suggestions": "Suggested for you",
+    "recent": "Recent searches",
+    "clear": "Clear"
   },
   "chat": {
     "open": "Open chatbot",

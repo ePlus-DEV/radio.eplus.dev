@@ -3,8 +3,9 @@
     <div class="block" v-for="item in result" :key="item.objectID || item.url">
       <nuxt-link
         :to="item.url"
-        class="flex items-center gap-3 rounded-2xl px-3 py-3 transition hover:bg-[var(--radio-hover)] focus:outline-none focus:ring-2 focus:ring-rose-400/40"
-        @click="$emit('select')"
+        class="radio-search-panel-row flex items-center gap-3 rounded-2xl px-3 py-3 transition focus:outline-none focus:ring-2 focus:ring-rose-400/40"
+        :class="elevated ? 'text-white' : 'hover:bg-[var(--radio-hover)]'"
+        @click="$emit('select', item.station_name)"
       >
         <img
           loading="lazy" decoding="async" width="44" height="44"
@@ -12,10 +13,10 @@
           :src="item.station_image || '/brand/logo-share.png'"
           :alt="item.station_name"
         />
-        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-[var(--radio-text)]">
+        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium" :class="elevated ? 'text-white' : 'text-[var(--radio-text)]'">
           {{ item.station_name }}
         </span>
-        <span class="hidden shrink-0 text-xs text-slate-400 sm:block">
+        <span class="hidden shrink-0 text-xs sm:block" :class="elevated ? 'text-white/55' : 'text-slate-400'">
           {{ item.station_country ? $t(item.station_country) : '' }}
         </span>
       </nuxt-link>
@@ -25,13 +26,17 @@
 
 <script setup lang="ts">
 defineEmits<{
-  (event: "select"): void;
+  (event: "select", value?: string): void;
 }>();
 
 defineProps({
   result: {
     type: Array,
     default: () => [],
+  },
+  elevated: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

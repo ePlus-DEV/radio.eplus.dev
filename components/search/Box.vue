@@ -1,9 +1,9 @@
 <template>
   <div
-    class="radio-search-box flex flex-col overflow-hidden"
+    class="radio-search-box flex flex-col"
     :class="inline
-      ? 'relative'
-      : 'max-h-[calc(100dvh-2rem)] radio-themed-surface rounded-3xl border border-[var(--radio-border)]'"
+      ? 'relative overflow-visible'
+      : 'max-h-[calc(100dvh-2rem)] overflow-hidden radio-themed-surface rounded-3xl border border-[var(--radio-border)]'"
     @focusin="openResults"
     @focusout="onFocusout"
   >
@@ -21,7 +21,7 @@
             type="search"
             :aria-label="$t('popup.search.text')"
             class="w-full"
-            :ui="{ base: inline ? 'h-11 rounded-xl pl-11 pr-10 text-sm' : 'h-12 rounded-2xl pl-11 pr-4 text-base sm:text-sm' }"
+            :ui="{ base: inline ? 'radio-search-panel-input h-11 rounded-2xl pl-11 pr-10 text-sm' : 'h-12 rounded-2xl pl-11 pr-4 text-base sm:text-sm' }"
             :placeholder="$t('popup.search.text')"
             @keydown.esc="closeResults"
           />
@@ -50,25 +50,77 @@
       v-show="!inline || resultsOpen"
       class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 sm:p-4"
       :class="inline
-        ? 'absolute left-0 right-0 top-[calc(100%+0.5rem)] z-50 max-h-[min(70dvh,34rem)] rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] shadow-2xl shadow-black/30'
+        ? 'radio-search-popover absolute left-0 top-[calc(100%+0.5rem)] z-50 w-[min(36rem,calc(100vw-2rem))] max-h-[min(76dvh,38rem)] rounded-3xl border'
         : ''"
     >
-      <div class="mb-2 flex items-center justify-between px-2">
-        <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
-          {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
-        </span>
-        <span
-          v-if="displayHits.length"
-          class="text-xs tabular-nums text-slate-400"
-        >
-          {{ displayHits.length }}
-        </span>
+      <div v-if="!input" class="space-y-5">
+        <div v-if="searchHistory.length">
+          <div class="mb-2 flex items-center justify-between px-2">
+            <span class="text-sm font-bold text-[var(--radio-text)]">{{ $t("search.recent") }}</span>
+            <button type="button" class="text-xs font-semibold text-rose-400 hover:text-rose-300" @click="clearHistory">
+              {{ $t("search.clear") }}
+            </button>
+          </div>
+          <button
+            v-for="item in searchHistory"
+            :key="`history-${item}`"
+            type="button"
+            class="radio-search-panel-row flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition"
+            @click="selectSuggestion(item)"
+          >
+            <UIcon name="i-lucide-clock-3" class="h-4 w-4 shrink-0 text-[var(--radio-text-muted)]" />
+            <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
+              {{ item }}
+            </span>
+          </button>
+        </div>
+
+        <div>
+          <div class="mb-2 flex items-center justify-between px-2">
+            <span class="text-sm font-bold text-[var(--radio-text)]">{{ $t("search.suggestions") }}</span>
+          </div>
+          <button
+            v-for="item in suggestionQueries"
+            :key="`suggestion-${item}`"
+            type="button"
+            class="radio-search-panel-row flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition"
+            @click="selectSuggestion(item)"
+          >
+            <UIcon name="i-lucide-trending-up" class="h-4 w-4 shrink-0 text-rose-400" />
+            <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
+              {{ item }}
+            </span>
+          </button>
+        </div>
+
+        <div class="border-t border-[var(--radio-border)] pt-4">
+          <div class="mb-2 flex items-center justify-between px-2">
+            <span class="text-sm font-bold text-[var(--radio-text)]">{{ $t("popup.search.popular_channels") }}</span>
+            <span class="text-xs text-[var(--radio-text-muted)]">{{ popularHits.length }}</span>
+          </div>
+          <SearchResult :result="popularHits" @select="handleSelect" />
+        </div>
       </div>
-      <SearchResult :result="displayHits" @select="handleSelect" />
-      <p v-if="!localLoading && !localError && !displayHits.length"
-        class="px-3 py-8 text-center text-sm text-[var(--radio-text-muted)]" role="status">
-        {{ $t('panel.no_channels') }}
-      </p>
+
+      <div v-else>
+        <div class="mb-2 flex items-center justify-between px-2">
+          <span class="text-xs font-semibold uppercase tracking-[0.14em]" :class="inline ? 'text-[var(--radio-text-muted)]' : 'text-slate-400'">
+            {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
+          </span>
+          <span
+            v-if="displayHits.length"
+            class="text-xs tabular-nums"
+            :class="inline ? 'text-[var(--radio-text-muted)]' : 'text-slate-400'"
+          >
+            {{ displayHits.length }}
+          </span>
+        </div>
+        <SearchResult :result="displayHits" @select="handleSelect" />
+        <p v-if="!localLoading && !localError && !displayHits.length"
+          class="px-3 py-8 text-center text-sm text-[var(--radio-text-muted)]" role="status">
+          {{ $t('panel.no_channels') }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -106,6 +158,17 @@ const usingLocal = computed(() => !algoliaConfigured.value || algoliaFailed.valu
 const displayHits = computed(() =>
   usingLocal.value ? searchLocalStations(localIndex.value, input.value) : remoteHits.value
 );
+const suggestionQueries = [
+  "VOV Giao Thông",
+  "Heart UK",
+  "Power 98 Love Songs",
+  "Rap Việt",
+  "EDM",
+  "Bolero",
+];
+const popularHits = computed(() => searchLocalStations(localIndex.value, "", 5));
+const searchHistory = ref<string[]>([]);
+const HISTORY_KEY = "radio:search-history";
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
 let focusTimeout: ReturnType<typeof setTimeout> | null = null;
 let generation = 0;
@@ -140,6 +203,12 @@ const focus = (): void => {
   inputEl.value?.inputRef?.focus();
 };
 
+const selectSuggestion = (value: string): void => {
+  input.value = value;
+  rememberSearch(value);
+  focus();
+};
+
 const onFocusout = (event: FocusEvent): void => {
   if (!props.inline) return;
   const nextTarget = event.relatedTarget as Node | null;
@@ -147,12 +216,32 @@ const onFocusout = (event: FocusEvent): void => {
   resultsOpen.value = false;
 };
 
-const handleSelect = (): void => {
+const handleSelect = (value?: string): void => {
+  const selected = String(value || input.value).trim();
+  if (selected) rememberSearch(selected);
   resultsOpen.value = false;
   emit("close");
 };
 
+const rememberSearch = (value: string): void => {
+  const term = value.trim();
+  if (!term || !import.meta.client) return;
+  searchHistory.value = [term, ...searchHistory.value.filter(item => item.toLowerCase() !== term.toLowerCase())].slice(0, 6);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(searchHistory.value));
+};
+
+const clearHistory = (): void => {
+  searchHistory.value = [];
+  if (import.meta.client) localStorage.removeItem(HISTORY_KEY);
+};
+
 onMounted(() => {
+  try {
+    const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+    if (Array.isArray(saved)) searchHistory.value = saved.filter(item => typeof item === "string" && item.trim()).slice(0, 6);
+  } catch {
+    searchHistory.value = [];
+  }
   if (props.autofocus) focusTimeout = setTimeout(() => focus(), 50);
 });
 

@@ -234,7 +234,11 @@
     "sleep_timer": "スリープタイマー",
     "sleep_minutes": "{minutes}分後に停止",
     "sleep_cancel": "タイマーを解除",
-    "sleep_remaining": "あと{minutes}分で停止"
+    "sleep_remaining": "あと{minutes}分で停止",
+    "compact_player": "プレーヤーをコンパクトにする",
+    "expand_player": "プレーヤーを展開",
+    "window_player": "ミニプレーヤー",
+    "dock_player": "ドックに戻す"
   },
   "site_pages": {
     "common": {
@@ -393,7 +397,10 @@
     "description": "世界中のラジオ局をいつでも見つけて楽しめます。"
   },
   "search": {
-    "unavailable": "現在検索を利用できません。以下の人気放送局は引き続き表示されます。"
+    "unavailable": "現在検索を利用できません。以下の人気放送局は引き続き表示されます。",
+    "suggestions": "おすすめ",
+    "recent": "最近の検索",
+    "clear": "消去"
   },
   "chat": {
     "open": "チャットボットを開く",

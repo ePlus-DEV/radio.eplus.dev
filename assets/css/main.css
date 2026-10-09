@@ -96,6 +96,17 @@
     color: inherit;
   }
 
+  a[href],
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
   select option {
     background: var(--radio-surface);
     color: var(--radio-text);
@@ -233,6 +244,29 @@
   .radio-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgb(100 116 139 / 0.55);
     background-clip: padding-box;
+  }
+
+  .radio-search-popover {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--radio-surface) 92%, rgb(244 63 94) 8%), var(--radio-surface));
+    border-color: rgb(244 63 94 / 0.34);
+    color: var(--radio-text);
+    box-shadow: 0 28px 80px -32px rgb(0 0 0 / 0.72), 0 0 0 1px rgb(244 63 94 / 0.08);
+  }
+
+  .radio-search-panel-input {
+    background: var(--radio-surface-soft);
+    border-color: rgb(244 63 94 / 0.42);
+    color: var(--radio-text);
+  }
+
+  .radio-search-panel-input::placeholder {
+    color: var(--radio-text-muted);
+  }
+
+  .radio-search-panel-row:hover,
+  .radio-search-panel-row:focus-visible {
+    background: color-mix(in srgb, var(--radio-surface-soft) 76%, rgb(244 63 94) 24%);
   }
 
   .radio-interactive {

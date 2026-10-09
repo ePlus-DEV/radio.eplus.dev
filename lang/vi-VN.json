@@ -234,7 +234,11 @@
     "sleep_timer": "Hẹn giờ ngủ",
     "sleep_minutes": "Dừng sau {minutes} phút",
     "sleep_cancel": "Hủy hẹn giờ",
-    "sleep_remaining": "Dừng sau {minutes} phút"
+    "sleep_remaining": "Dừng sau {minutes} phút",
+    "compact_player": "Thu gọn trình phát",
+    "expand_player": "Mở rộng trình phát",
+    "window_player": "Trình phát cửa sổ",
+    "dock_player": "Trở về thanh phát"
   },
   "site_pages": {
     "common": {
@@ -393,7 +397,10 @@
     "description": "Khám phá các đài radio khắp thế giới bất cứ lúc nào."
   },
   "search": {
-    "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới."
+    "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới.",
+    "suggestions": "Đề xuất cho bạn",
+    "recent": "Tìm kiếm gần đây",
+    "clear": "Xóa"
   },
   "chat": {
     "open": "Mở trợ lý trò chuyện",

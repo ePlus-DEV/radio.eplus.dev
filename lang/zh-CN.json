@@ -234,7 +234,11 @@
     "sleep_timer": "睡眠定时器",
     "sleep_minutes": "{minutes}分钟后停止",
     "sleep_cancel": "取消定时器",
-    "sleep_remaining": "{minutes}分钟后停止"
+    "sleep_remaining": "{minutes}分钟后停止",
+    "compact_player": "收起播放器",
+    "expand_player": "展开播放器",
+    "window_player": "迷你播放器",
+    "dock_player": "返回底部栏"
   },
   "site_pages": {
     "common": {
@@ -393,7 +397,10 @@
     "description": "随时探索全球各地的直播电台。"
   },
   "search": {
-    "unavailable": "搜索服务暂时不可用，下方仍显示热门电台。"
+    "unavailable": "搜索服务暂时不可用，下方仍显示热门电台。",
+    "suggestions": "为你推荐",
+    "recent": "最近搜索",
+    "clear": "清除"
   },
   "chat": {
     "open": "打开聊天助手",
