@@ -478,5 +478,11 @@
     "library_description": "Your favorite stations and listening history, saved on this device.",
     "all": "All",
     "see_all": "See all"
+  },
+  "cookie_consent": {
+    "title": "Cookie preferences",
+    "body": "Radio ePlus uses essential cookies and local storage to remember your language, theme, player settings and listening preferences.",
+    "accept": "Got it",
+    "learn_more": "Cookie Policy"
   }
 }

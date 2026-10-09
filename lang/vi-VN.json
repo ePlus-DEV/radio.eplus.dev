@@ -478,5 +478,11 @@
     "library_description": "Kênh yêu thích và lịch sử nghe được lưu trên thiết bị này.",
     "all": "Tất cả",
     "see_all": "Xem tất cả"
+  },
+  "cookie_consent": {
+    "title": "Tùy chọn cookie",
+    "body": "Radio ePlus dùng cookie cần thiết và local storage để ghi nhớ ngôn ngữ, giao diện, cài đặt trình phát và lựa chọn nghe của bạn.",
+    "accept": "Đã hiểu",
+    "learn_more": "Chính sách cookie"
   }
 }

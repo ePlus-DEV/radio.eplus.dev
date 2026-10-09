@@ -478,5 +478,11 @@
     "library_description": "收藏和收聽記錄儲存在此裝置上。",
     "all": "全部",
     "see_all": "查看全部"
+  },
+  "cookie_consent": {
+    "title": "Cookie 偏好",
+    "body": "Radio ePlus 使用必要的 Cookie 和本機儲存來記住語言、主題、播放器設定與收聽偏好。",
+    "accept": "知道了",
+    "learn_more": "Cookie 政策"
   }
 }

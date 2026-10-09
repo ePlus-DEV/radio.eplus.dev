@@ -16,6 +16,9 @@
     <AppFooter />
     <MobileNavigation />
     <ClientOnly>
+      <CookieConsent />
+    </ClientOnly>
+    <ClientOnly>
       <PlayerSession />
       <template #fallback>
         <div class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)]" aria-hidden="true">

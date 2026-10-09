@@ -478,5 +478,11 @@
     "library_description": "お気に入りと再生履歴はこの端末に保存されます。",
     "all": "すべて",
     "see_all": "すべて見る"
+  },
+  "cookie_consent": {
+    "title": "Cookie設定",
+    "body": "Radio ePlus は、言語、テーマ、プレーヤー設定、リスニング設定を記憶するために必要なCookieとローカルストレージを使用します。",
+    "accept": "了解",
+    "learn_more": "Cookieポリシー"
   }
 }

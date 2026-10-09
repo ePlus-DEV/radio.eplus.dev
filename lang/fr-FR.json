@@ -478,5 +478,11 @@
     "library_description": "Vos favoris et votre historique sont enregistrés sur cet appareil.",
     "all": "Tout",
     "see_all": "Voir tout"
+  },
+  "cookie_consent": {
+    "title": "Préférences des cookies",
+    "body": "Radio ePlus utilise des cookies essentiels et le stockage local pour mémoriser la langue, le thème, les réglages du lecteur et vos préférences d’écoute.",
+    "accept": "Compris",
+    "learn_more": "Politique cookies"
   }
 }
