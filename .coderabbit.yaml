@@ -1,0 +1,6 @@
+# Disable CodeRabbit automatic pull-request reviews in this repository.
+# This does not uninstall the GitHub App or affect other repositories.
+reviews:
+  auto_review:
+    enabled: false
+    auto_incremental_review: false
