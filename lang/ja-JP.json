@@ -152,7 +152,7 @@
     "next": "次",
     "lyric": "歌詞",
     "no_lyric": "歌詞が見つかりません",
-    "updating": "読み込み中…",
+    "updating": "更新中...",
     "channels": "すべての局",
     "station_count": "{count} 局",
     "search_channels": "局を検索...",
@@ -214,7 +214,7 @@
     "on_air": "再生中",
     "ready": "再生準備完了",
     "queue": "放送局と番組表",
-    "source": "再生方法",
+    "source": "配信ソース",
     "volume": "音量",
     "mute": "ミュート",
     "unmute": "ミュート解除",
@@ -225,12 +225,12 @@
     "next": "次の放送局: {name}",
     "sidebar_label": "放送局と番組表",
     "live": "ライブ",
-    "primary_source": "メインの接続",
-    "alternative_source": "予備の接続",
-    "source_number": "再生方法 {number}",
-    "stream_format": "音声の種類",
-    "proxy": "補助接続",
-    "direct": "放送局から直接",
+    "primary_source": "メイン",
+    "alternative_source": "代替",
+    "source_number": "音声ソース {number}",
+    "stream_format": "配信形式",
+    "proxy": "プロキシ",
+    "direct": "直接接続",
     "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。",
     "sleep_timer": "スリープタイマー",
     "sleep_minutes": "{minutes}分後に停止",
@@ -239,7 +239,8 @@
     "compact_player": "プレーヤーをコンパクトにする",
     "expand_player": "プレーヤーを展開",
     "window_player": "ミニプレーヤー",
-    "dock_player": "ドックに戻す"
+    "dock_player": "ドックに戻す",
+    "schedule_loading": "番組表を読み込み中…"
   },
   "site_pages": {
     "common": {
@@ -326,8 +327,8 @@
           "body": "法律を守ってご利用ください。サイトや放送局の運営を妨げたり、無断で制限を回避したり、大量のデータ取得で負荷をかけたり、有害なソフトウェアを配布したりしないでください。"
         },
         "availability": {
-          "title": "放送が利用できない場合",
-          "body": "サイトと放送局一覧は現在入手できる情報をもとに提供しています。すべての局や番組表、曲名、再生先が常に正確で利用できるとは限りません。"
+          "title": "ラジオが聴けないとき",
+          "body": "放送局が一時的に放送を休止したり、再生用のリンクが使えなくなったりする場合があります。時間をおいて再度試すか、別の局を選んでください。局の一覧は入手できる情報をもとに提供しており、放送、番組表、曲名が常に正確で利用できるとは限りません。"
         },
         "changes": {
           "title": "規約の変更",
@@ -429,7 +430,8 @@
     "unavailable": "現在検索を利用できません。以下の人気放送局は引き続き表示されます。",
     "suggestions": "おすすめ",
     "recent": "最近の検索",
-    "clear": "消去"
+    "clear": "消去",
+    "loading": "放送局を読み込み中…"
   },
   "chat": {
     "open": "チャットボットを開く",
@@ -462,7 +464,8 @@
     "favorites_empty": "ハートを押すとお気に入りに保存できます。",
     "clear_recent": "履歴を消去",
     "add_favorite": "お気に入りに追加",
-    "remove_favorite": "お気に入りから削除"
+    "remove_favorite": "お気に入りから削除",
+    "loading": "保存した放送局を読み込み中…"
   },
   "redesign": {
     "navigation": "ナビゲーション",
