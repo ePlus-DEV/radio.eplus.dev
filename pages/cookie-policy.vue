@@ -6,8 +6,6 @@
       :description="description"
     />
 
-    <ClientOnly><AnalyticsPreferences /></ClientOnly>
-
     <div class="radio-surface rounded-3xl p-5 sm:p-7">
       <p class="text-xs font-medium text-[var(--radio-text-muted)]">
         {{ t("site_pages.common.last_updated") }}: 09/10/2026
