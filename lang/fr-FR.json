@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "Par défaut du navigateur, vous devez appuyer sur le bouton ▶ pour commencer à écouter la radio.",
-    "stream_error": "Ce flux ne peut pas être lu pour le moment."
+    "stream_error": "Cette station ne peut pas être écoutée pour le moment. Réessayez plus tard ou choisissez une autre station."
   },
   "text": {
     "guide": "Guide",
@@ -202,7 +202,7 @@
       "light": "Clair",
       "system": "Système"
     },
-    "offline": "La connexion réseau a échoué, veuillez vérifier votre connexion réseau."
+    "offline": "Vous semblez hors ligne. Vérifiez votre connexion Internet et réessayez."
   },
   "player": {
     "title": "Lecteur radio",
@@ -264,7 +264,7 @@
         }
       },
       "service": {
-        "title": "Built for simple listening",
+        "title": "La radio en toute simplicité",
         "body": "Trouvez vos stations préférées, enregistrez-les et continuez à écouter sur votre téléphone ou votre ordinateur.",
         "action": "Start listening"
       }
@@ -319,7 +319,7 @@
         },
         "copyright": {
           "title": "Droits d'auteur et marques",
-          "body": "Les noms de stations, logos, contenus audio et autres éléments tiers appartiennent à leurs propriétaires respectifs. Un ayant droit peut demander une correction ou un retrait en fournissant l'URL concernée et les éléments nécessaires à la vérification."
+          "body": "Les noms, logos, sons et autres contenus appartiennent à leurs propriétaires. Si vous détenez les droits et souhaitez une correction ou un retrait, envoyez-nous le lien de la page et les informations nécessaires à l’examen de votre demande."
         },
         "acceptable_use": {
           "title": "Utiliser Radio ePlus de manière responsable",
@@ -354,13 +354,13 @@
         }
       },
       "support": {
-        "title": "Need help with Radio ePlus?",
-        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "title": "Besoin d’aide ?",
+        "body": "Envoyez-nous le nom de la station ou le lien de la page, avec quelques mots sur votre question ou le problème rencontré.",
         "action": "Email support"
       }
     },
     "statistics": {
-      "eyebrow": "Catalogue",
+      "eyebrow": "Stations de radio",
       "title": "Statistiques radio",
       "description": "Découvrez combien de pays et de stations de radio sont disponibles sur Radio ePlus.",
       "metrics": {
@@ -401,7 +401,7 @@
         },
         "changes": {
           "title": "Updates",
-          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+          "body": "Cette politique peut évoluer si le site ou ses services changent. Vous pouvez toujours consulter la dernière version ici."
         }
       }
     }
