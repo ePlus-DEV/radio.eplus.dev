@@ -34,7 +34,7 @@
                 <span>{{ nowPlayingTitle }}</span>
               </p>
             </UTooltip>
-            <p v-if="nowPlayingArtist" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
+            <p v-if="nowPlayingArtist" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs"><span class="sm:hidden">{{ streamName }} · {{ nowPlayingArtist }}</span><span class="hidden sm:inline">{{ nowPlayingArtist }}</span></p>
             <p v-else dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">
               <span class="sm:hidden">{{ streamName }} · {{ countryName || $t(country) }}</span><span class="hidden sm:inline">&nbsp;</span>
             </p>
