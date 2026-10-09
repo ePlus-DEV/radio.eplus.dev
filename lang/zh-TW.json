@@ -152,7 +152,7 @@
     "next": "下一個",
     "lyric": "歌詞",
     "no_lyric": "目前沒有歌詞",
-    "updating": "載入中…",
+    "updating": "更新中...",
     "channels": "所有電台",
     "station_count": "{count} 個電台",
     "search_channels": "搜尋電台...",
@@ -214,7 +214,7 @@
     "on_air": "正在播放",
     "ready": "準備就緒",
     "queue": "電台與節目表",
-    "source": "收聽方式",
+    "source": "播放來源",
     "volume": "音量",
     "mute": "靜音",
     "unmute": "取消靜音",
@@ -225,12 +225,12 @@
     "next": "下一個電台：{name}",
     "sidebar_label": "電台與節目表",
     "live": "直播",
-    "primary_source": "主要連線",
-    "alternative_source": "備用連線",
-    "source_number": "收聽方式 {number}",
-    "stream_format": "音訊類型",
-    "proxy": "輔助連線",
-    "direct": "直接連接電台",
+    "primary_source": "主要音源",
+    "alternative_source": "備用音源",
+    "source_number": "音源 {number}",
+    "stream_format": "串流",
+    "proxy": "代理伺服器",
+    "direct": "直接連線",
     "ios_volume_hint": "在 iPhone 或 iPad 上，請使用裝置音量鍵或控制中心調整音量。",
     "sleep_timer": "睡眠定時器",
     "sleep_minutes": "{minutes}分鐘後停止",
@@ -239,7 +239,8 @@
     "compact_player": "收合播放器",
     "expand_player": "展開播放器",
     "window_player": "迷你播放器",
-    "dock_player": "返回底部列"
+    "dock_player": "返回底部列",
+    "schedule_loading": "正在載入節目表…"
   },
   "site_pages": {
     "common": {
@@ -326,8 +327,8 @@
           "body": "請遵守法律。請勿干擾網站或電台服務、未經許可繞過存取限制、大量擷取資料影響運作，或散播有害軟體。"
         },
         "availability": {
-          "title": "電台無法收聽時",
-          "body": "網站根據現有資訊提供電台清單。我們無法保證所有電台、節目表、歌曲名稱或收聽連結始終正確且可用。"
+          "title": "無法收聽廣播時",
+          "body": "電台有時會暫停播出，或收聽連結暫時失效。您可以稍後再試，或選擇其他電台。我們依現有資訊提供電台清單，無法保證節目、播出時間及歌曲名稱始終正確且可用。"
         },
         "changes": {
           "title": "條款變更",
@@ -429,7 +430,8 @@
     "unavailable": "搜尋服務暫時無法使用，下方仍會顯示熱門電台。",
     "suggestions": "為你推薦",
     "recent": "最近搜尋",
-    "clear": "清除"
+    "clear": "清除",
+    "loading": "正在載入電台清單…"
   },
   "chat": {
     "open": "開啟聊天助理",
@@ -462,7 +464,8 @@
     "favorites_empty": "點擊愛心即可收藏電台。",
     "clear_recent": "清除收聽記錄",
     "add_favorite": "加入收藏",
-    "remove_favorite": "取消收藏"
+    "remove_favorite": "取消收藏",
+    "loading": "正在載入您的電台…"
   },
   "redesign": {
     "navigation": "導覽",
