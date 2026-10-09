@@ -46,9 +46,9 @@ test("desktop player controls remain centered regardless of station metadata lin
   const source = await readFile(playerFile, "utf8");
   const dockMarkup = source.match(/<div class="radio-player-console [^"]+"/)?.[0];
   assert.ok(dockMarkup, "radio player grid must exist");
-  assert.match(dockMarkup, /min-h-\\[var\\(--radio-player-height\\)\\]/);
-  assert.match(dockMarkup, /sm:grid-cols-\\[minmax\\(0,1fr\\)_auto_minmax\\(0,1fr\\)\\]/);
-  assert.doesNotMatch(dockMarkup, /(?:^|\\s)pb-\\d+/, "bottom padding offsets the controls from the dock center");
+  assert.match(dockMarkup, /min-h-\[var\(--radio-player-height\)\]/);
+  assert.match(dockMarkup, /sm:grid-cols-\[minmax\(0,1fr\)_auto_minmax\(0,1fr\)\]/);
+  assert.doesNotMatch(dockMarkup, /(?:^|\s)pb-\d+/, "bottom padding offsets the controls from the dock center");
   assert.match(source, /radio-player-live-pill[^"]*whitespace-nowrap/);
   assert.match(source, /radio-player-controls[^"]*items-center justify-center/);
   assert.match(source, /radio-player-meta[^"]*truncate/);
