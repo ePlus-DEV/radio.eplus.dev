@@ -177,38 +177,6 @@
     .radio-bar, .radio-player-dock .animate-spin, .radio-player-dock .animate-pulse { animation: none; }
   }
 
-  /* Header icon buttons need visible surfaces, not ghost controls on navy. */
-  .radio-header-action {
-    color: var(--radio-text) !important;
-    background: var(--radio-surface-soft) !important;
-    border: 1px solid var(--radio-border-strong) !important;
-    transition: background-color 150ms ease, border-color 150ms ease;
-  }
-
-  .radio-header-action:hover {
-    color: var(--radio-text) !important;
-    background: var(--radio-hover) !important;
-    border-color: var(--radio-border-strong) !important;
-  }
-
-  .radio-header-action:focus-visible {
-    outline: 2px solid #f43f5e;
-    outline-offset: 2px;
-  }
-
-  html.dark .radio-header-action,
-  html[data-theme="dark"] .radio-header-action {
-    color: #f8fafc !important;
-    background: rgb(255 255 255 / 0.12) !important;
-    border-color: rgb(255 255 255 / 0.22) !important;
-  }
-
-  html.dark .radio-header-action:hover,
-  html[data-theme="dark"] .radio-header-action:hover {
-    background: rgb(255 255 255 / 0.20) !important;
-    border-color: rgb(255 255 255 / 0.36) !important;
-  }
-
   .radio-hero {
     background: transparent;
   }
