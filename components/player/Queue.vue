@@ -18,7 +18,7 @@
         <span class="truncate text-xs font-semibold text-[var(--radio-text)]">
           {{ hasStations ? $t("panel.channels") : $t("panel.schedule") }}
         </span>
-        <span class="inline-flex items-center rounded-full border-0 bg-rose-500/10 text-[10px] font-bold text-rose-500">
+        <span class="inline-flex items-center rounded-full border-0 bg-rose-500/10 text-[10px] font-bold text-rose-700 dark:text-rose-300">
           {{ hasStations ? stations.length : scheduleCount }}
         </span>
       </div>
@@ -42,7 +42,7 @@
           <span class="sr-only">{{ $t("panel.search_channels") }}</span>
           <svg
             viewBox="0 0 24 24"
-            class="h-3.5 w-3.5 shrink-0 fill-none stroke-slate-400"
+            class="h-3.5 w-3.5 shrink-0 fill-none stroke-[var(--radio-text-muted)]"
             aria-hidden="true"
           >
             <circle cx="11" cy="11" r="6" stroke-width="1.8"></circle>
@@ -89,7 +89,7 @@
               class="block truncate text-sm font-semibold"
               :class="
                 station.id === activeStationId
-                  ? 'text-rose-600 dark:text-rose-300'
+                  ? 'text-rose-700 dark:text-rose-300'
                   : 'text-[var(--radio-text)]'
               "
             >
