@@ -57,7 +57,11 @@ test("desktop player controls remain centered regardless of station metadata lin
 
 test("mobile dock reserves separate columns for info, Play/Pause and Playlist", async () => {
   const source = await readFile(playerFile, "utf8");
-  const template = source.slice(0, source.indexOf("</template>"));
+  // Player.vue has nested <template> blocks; the first closing tag is not
+  // the end of the component template. Stop at the script block instead.
+  const scriptStart = source.indexOf('<script lang="ts" setup>');
+  assert.ok(scriptStart > 0, "player script must follow its full template");
+  const template = source.slice(0, scriptStart);
   const mobileStyles = source.match(/@media \(max-width: 639px\) \{[\s\S]*?Three real grid columns[\s\S]*?\n\}/)?.[0];
 
   assert.match(template, /grid-cols-\[minmax\(0,1fr\)_2\.75rem_2\.75rem\]/);
