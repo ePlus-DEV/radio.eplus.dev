@@ -12,6 +12,9 @@ test('full player changes presentation without creating a second audio engine', 
   assert.match(player, /@after:leave="finishPlayerAction"/);
   assert.match(screen, /v-else-if="nextStationTitle"/);
   assert.match(screen, /redesign.next_station/);
+  assert.match(screen, /radio-now-playing-console/);
+  assert.match(screen, /lg:grid-cols-\[minmax\(280px,0\.9fr\)_minmax\(0,1\.1fr\)\]/);
+  assert.match(screen, /<UTooltip/);
 });
 
 test('personal library is navigable, compact and excluded from public SEO lists', async () => {

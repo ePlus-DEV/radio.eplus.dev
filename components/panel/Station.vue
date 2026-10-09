@@ -32,41 +32,42 @@
             : 'border-[var(--radio-border)] hover:border-rose-200 dark:hover:border-rose-400/30'
         "
       >
-        <NuxtLink
-          :to="station.url"
-          class="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
-          :title="station.title"
-          :aria-label="station.title"
-        >
-          <div class="radio-themed-artwork relative flex aspect-[5/4] items-center justify-center overflow-hidden p-3 sm:aspect-square sm:p-4">
-            <img
-              loading="lazy"
-              :src="station.image"
-              :alt="station.title"
-              class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
-            />
+        <UTooltip :text="station.title">
+          <NuxtLink
+            :to="station.url"
+            class="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+            :aria-label="station.title"
+          >
+            <div class="radio-themed-artwork relative flex aspect-[5/4] items-center justify-center overflow-hidden p-3 sm:aspect-square sm:p-4">
+              <img
+                loading="lazy"
+                :src="station.image"
+                :alt="station.title"
+                class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
+              />
 
-            <span
-              v-if="station.id === activeStationId"
-              class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
-            >
-              <span v-if="playback.playing" class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
-              {{ $t(playback.playing ? 'player.on_air' : 'redesign.paused') }}
-            </span>
-          </div>
+              <span
+                v-if="station.id === activeStationId"
+                class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
+              >
+                <span v-if="playback.playing" class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+                {{ $t(playback.playing ? 'player.on_air' : 'redesign.paused') }}
+              </span>
+            </div>
 
-          <div class="border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3.5">
-            <p
-              dir="auto"
-              class="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-[var(--radio-text)]"
-            >
-              {{ station.title }}
-            </p>
-          </div>
-        </NuxtLink>
+            <div class="flex min-h-[4.5rem] items-center border-t border-[var(--radio-border)] px-3 py-2.5 pr-14 sm:py-3.5">
+              <p
+                dir="auto"
+                class="line-clamp-2 text-sm font-semibold leading-5 text-[var(--radio-text)]"
+              >
+                {{ station.title }}
+              </p>
+            </div>
+          </NuxtLink>
+        </UTooltip>
         <button
           type="button"
-          class="absolute bottom-3 right-3 flex h-10 w-10 scale-90 cursor-pointer items-center justify-center rounded-full bg-violet-600 text-white opacity-0 shadow-lg shadow-violet-900/30 transition group-hover:scale-100 group-hover:opacity-100 focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+          class="absolute bottom-4 right-3 flex h-10 w-10 scale-95 cursor-pointer items-center justify-center rounded-full bg-rose-500 pl-0.5 text-white opacity-0 shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 group-hover:scale-100 group-hover:opacity-100 focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
           :aria-label="$t('player.play') + ': ' + station.title"
           @click="emit('select-station', station)"
         >

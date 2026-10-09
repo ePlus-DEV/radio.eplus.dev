@@ -27,14 +27,14 @@
         {{ item.label }}
       </NuxtLink>
 
-      <span
-        v-else
-        aria-current="page"
-        class="max-w-[220px] shrink-0 truncate rounded-lg px-2 py-1.5 text-[var(--radio-text)] sm:max-w-md"
-        :title="item.label"
-      >
-        {{ item.label }}
-      </span>
+      <UTooltip v-else :text="item.label">
+        <span
+          aria-current="page"
+          class="block max-w-[220px] shrink-0 truncate rounded-lg px-2 py-1.5 text-[var(--radio-text)] sm:max-w-md"
+        >
+          {{ item.label }}
+        </span>
+      </UTooltip>
     </template>
   </nav>
 </template>

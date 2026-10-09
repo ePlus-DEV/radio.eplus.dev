@@ -31,19 +31,25 @@
               </span>
               <span v-if="sourceList.length > 1" class="truncate text-[10px] text-[var(--radio-text-muted)]">{{ activeSourceName }}</span>
             </div>
-            <p dir="auto" class="truncate text-xs font-semibold sm:text-sm" :title="nowPlayingTitle">{{ nowPlayingTitle }}</p>
+            <UTooltip :text="nowPlayingTitle">
+              <p dir="auto" class="truncate text-xs font-semibold sm:text-sm">{{ nowPlayingTitle }}</p>
+            </UTooltip>
             <p v-if="nowPlayingArtist" dir="auto" class="mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
             <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
           </div>
         </div>
 
         <div class="flex items-center justify-center gap-0.5 sm:gap-2">
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full sm:inline-flex" :aria-label="previousStationLabel" :title="previousStationLabel" @click="navigateStation(-1)" />
-          <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-violet-600 text-white shadow-lg shadow-violet-900/25 ring-4 ring-violet-500/10 transition hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
+          <UTooltip v-if="canNavigateStations" :text="previousStationLabel">
+            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full sm:inline-flex" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
+          </UTooltip>
+          <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
-          <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="nextStationLabel" :title="nextStationLabel" @click="navigateStation(1)" />
+          <UTooltip v-if="canNavigateStations" :text="nextStationLabel">
+            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="nextStationLabel" @click="navigateStation(1)" />
+          </UTooltip>
           <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
         </div>
 
@@ -52,7 +58,9 @@
           <UButton color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 cursor-pointer justify-center rounded-full" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
 
           <UDropdownMenu :items="sleepMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false">
-            <UButton color="neutral" :variant="sleepRemaining ? 'soft' : 'ghost'" icon="i-lucide-timer" class="h-11 min-w-11 cursor-pointer justify-center rounded-full" :disabled="!hasPlayableSource" :aria-label="$t('player.sleep_timer')" :title="$t('player.sleep_timer')" />
+            <UTooltip :text="$t('player.sleep_timer')">
+              <UButton color="neutral" :variant="sleepRemaining ? 'soft' : 'ghost'" icon="i-lucide-timer" class="h-11 min-w-11 cursor-pointer justify-center rounded-full" :disabled="!hasPlayableSource" :aria-label="$t('player.sleep_timer')" />
+            </UTooltip>
           </UDropdownMenu>
 
           <UDropdownMenu v-if="sourceList.length > 1" :items="sourceMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false" :ui="{ content: 'w-72' }">

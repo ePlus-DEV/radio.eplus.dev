@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <UButton :icon="playback.playing || playback.waiting ? 'i-lucide-pause' : 'i-lucide-play'" class="h-14 w-14 shrink-0 justify-center rounded-full bg-violet-600 text-white hover:bg-violet-500" :aria-label="$t(playback.playing || playback.waiting ? 'player.pause' : 'redesign.continue_listening')" @click="toggle" />
+    <UButton :icon="playback.playing || playback.waiting ? 'i-lucide-pause' : 'i-lucide-play'" class="h-14 w-14 shrink-0 justify-center rounded-full bg-rose-500 text-white hover:bg-rose-400" :aria-label="$t(playback.playing || playback.waiting ? 'player.pause' : 'redesign.continue_listening')" @click="toggle" />
   </section>
 </template>
 <script setup lang="ts">
