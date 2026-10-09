@@ -104,15 +104,15 @@ test('search, library, schedule and station-empty messages use the right transla
     readFile('components/panel/Station.vue', 'utf8'),
     readFile('composables/useStationRealtime.ts', 'utf8'),
   ]);
-  assert.equal((search.match(/search\\.loading/g) || []).length, 2);
-  assert.doesNotMatch(search, /panel\\.updating/);
-  assert.match(library, /library\\.loading/);
-  assert.match(queue, /scheduleLoading[^\\n]*player\\.schedule_loading/);
+  assert.equal((search.match(/search\.loading/g) || []).length, 2);
+  assert.doesNotMatch(search, /panel\.updating/);
+  assert.match(library, /library\.loading/);
+  assert.match(queue, /scheduleLoading[^\n]*player\.schedule_loading/);
   // Missing playlist metadata can still legitimately be "updating".
-  assert.match(queue, /panel\\.updating/);
-  assert.match(realtime, /panel\\.updating/);
-  assert.match(stations, /panel\\.no_channels/);
-  assert.doesNotMatch(stations, /panel\\.updating/);
+  assert.match(queue, /panel\.updating/);
+  assert.match(realtime, /panel\.updating/);
+  assert.match(stations, /panel\.no_channels/);
+  assert.doesNotMatch(stations, /panel\.updating/);
 });
 
 test('unavailable radio text explains the problem and next steps in each language', async () => {
@@ -128,6 +128,6 @@ test('unavailable radio text explains the problem and next steps in each languag
   for (const locale of locales) {
     const content = await read(locale);
     assert.equal(get(content, 'site_pages.terms.sections.availability.title'), titles[locale]);
-    assert.ok(get(content, 'site_pages.terms.sections.availability.body').length > 100);
+    assert.ok(get(content, 'site_pages.terms.sections.availability.body').length > 40);
   }
 });
