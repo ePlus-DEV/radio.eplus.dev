@@ -152,7 +152,7 @@
     "next": "Next",
     "lyric": "Lyrics",
     "no_lyric": "Lyrics unavailable",
-    "updating": "Loading…",
+    "updating": "Updating...",
     "channels": "All channels",
     "station_count": "{count} stations",
     "search_channels": "Search channels...",
@@ -214,7 +214,7 @@
     "on_air": "On air",
     "ready": "Ready to listen",
     "queue": "Channels & schedule",
-    "source": "Listening option",
+    "source": "Stream source",
     "volume": "Volume",
     "mute": "Mute",
     "unmute": "Unmute",
@@ -225,12 +225,12 @@
     "next": "Next station: {name}",
     "sidebar_label": "Stations and schedule",
     "live": "Live",
-    "primary_source": "Main connection",
-    "alternative_source": "Backup connection",
-    "source_number": "Option {number}",
-    "stream_format": "Audio type",
-    "proxy": "Assisted connection",
-    "direct": "From the station",
+    "primary_source": "Primary",
+    "alternative_source": "Alternative",
+    "source_number": "Source {number}",
+    "stream_format": "Stream",
+    "proxy": "Proxy",
+    "direct": "Direct",
     "ios_volume_hint": "On iPhone or iPad, use your device's volume buttons or Control Center to adjust the sound.",
     "sleep_timer": "Sleep timer",
     "sleep_minutes": "Stop after {minutes} minutes",
@@ -239,7 +239,8 @@
     "compact_player": "Compact player",
     "expand_player": "Expand player",
     "window_player": "Mini player",
-    "dock_player": "Return to dock"
+    "dock_player": "Return to dock",
+    "schedule_loading": "Loading the schedule…"
   },
   "site_pages": {
     "common": {
@@ -326,8 +327,8 @@
           "body": "Please use the website lawfully. Do not disrupt the website or radio providers, access restricted services without permission, collect large amounts of data in a harmful way, or share harmful software."
         },
         "availability": {
-          "title": "When a station is unavailable",
-          "body": "We provide the website and station list as they are. We cannot promise that every station, schedule, song title, or listening link will always be correct or available."
+          "title": "If you can't listen to a radio station",
+          "body": "Sometimes a station stops broadcasting for a while or its listening link stops working. You can try again later or choose another station. We provide the station list as available and cannot guarantee that broadcasts, schedules and song information are always correct or accessible."
         },
         "changes": {
           "title": "Changes to these terms",
@@ -429,7 +430,8 @@
     "unavailable": "Search is temporarily unavailable. Popular stations are shown below.",
     "suggestions": "Suggested for you",
     "recent": "Recent searches",
-    "clear": "Clear"
+    "clear": "Clear",
+    "loading": "Loading stations…"
   },
   "chat": {
     "open": "Open chatbot",
@@ -462,7 +464,8 @@
     "favorites_empty": "Tap the heart on a station to save it here.",
     "clear_recent": "Clear recent history",
     "add_favorite": "Add to favorites",
-    "remove_favorite": "Remove from favorites"
+    "remove_favorite": "Remove from favorites",
+    "loading": "Loading your stations…"
   },
   "redesign": {
     "navigation": "Navigation",
