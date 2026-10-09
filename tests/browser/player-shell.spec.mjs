@@ -323,3 +323,36 @@ test('mobile dock keeps station text clear of Play and Playlist at 320–390px',
   await playlistButton.click();
   await expect(page.getByRole('dialog')).toBeVisible();
 });
+
+
+test('country marquee keeps two mobile columns without wrapping long names', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await mockMedia(page);
+  await ready(page, '/');
+  const africa = page.locator('#explore-radio .radio-country-compact').first();
+  await expect(africa).toBeVisible();
+  const cards = africa.locator('.radio-station-card');
+  await expect(cards.nth(1)).toBeVisible();
+
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 740 });
+    const bounds = await Promise.all([cards.nth(0).boundingBox(), cards.nth(1).boundingBox()]);
+    expect(bounds[0]).toBeTruthy();
+    expect(bounds[1]).toBeTruthy();
+    expect(Math.abs(bounds[0].y - bounds[1].y), `Two country columns at ${width}px`).toBeLessThan(2);
+    expect(bounds[1].x, `Second country card is alongside first at ${width}px`).toBeGreaterThan(bounds[0].x);
+    expect(bounds[1].x + bounds[1].width).toBeLessThanOrEqual(width + 1);
+    const titleHeights = await africa.locator('.country-marquee-viewport').evaluateAll(items =>
+      items.map(item => ({ visible: item.clientHeight, line: Number.parseFloat(getComputedStyle(item).lineHeight) || 20 })),
+    );
+    expect(titleHeights.length).toBeGreaterThan(0);
+    expect(titleHeights.every(item => item.visible <= item.line + 2), `Every country name stays on one line at ${width}px`).toBe(true);
+  }
+
+  await expect.poll(() => africa.locator('.country-marquee-content--overflow').count()).toBeGreaterThan(0);
+  const longName = africa.locator('.country-marquee-content--overflow').first();
+  await expect(longName).toBeVisible();
+  expect(await longName.evaluate(el => getComputedStyle(el).animationName)).toBe('country-marquee-slide');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => longName.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+});
