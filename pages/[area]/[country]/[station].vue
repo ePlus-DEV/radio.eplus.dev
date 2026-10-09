@@ -8,7 +8,7 @@
     />
 
     <section class="radio-surface relative overflow-hidden px-5 py-6 sm:px-7 lg:px-8">
-      <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(139,92,246,0.12),transparent_42%),radial-gradient(circle_at_top_right,rgba(244,63,94,0.12),transparent_38%)]"></div>
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.10),transparent_48%)]"></div>
       <div class="relative grid gap-6 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:items-center">
         <div class="radio-themed-artwork flex aspect-square w-40 max-w-full items-center justify-center justify-self-start rounded-3xl border border-[var(--radio-border)] p-5 shadow-sm shadow-slate-900/5 sm:w-48 lg:w-56">
           <img

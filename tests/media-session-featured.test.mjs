@@ -2,7 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { buildRadioMediaMetadata } from "../utils/radio-media-session.mjs";
-import { VIETNAM_FEATURED_STATION_IDS, selectVietnamFeaturedStations } from "../utils/featured-stations.mjs";
+import {
+  VIETNAM_FEATURED_STATION_IDS,
+  HOMEPAGE_FEATURED_STATION_PATHS,
+  selectVietnamFeaturedStations,
+  selectHomepageFeaturedStations,
+} from "../utils/featured-stations.mjs";
 
 test("Media Session uses song artwork and details before station logo", () => {
   const result = buildRadioMediaMetadata({
@@ -41,6 +46,77 @@ test("Homepage featured stations contain VOV Giao Thong and Zing only", async ()
     assert.ok(!ids.includes(unavailable), `Do not feature known unavailable station ${unavailable}`);
   }
   assert.deepEqual(selectVietnamFeaturedStations({ "vov1": catalog.vov1 }), []);
+});
+
+test("Homepage featured radio includes Heart UK and Power 98 Love Songs with unique country routes", async () => {
+  const [vn, uk, sg] = await Promise.all([
+    readFile("public/radio/asia/viet-nam.json", "utf8"),
+    readFile("public/radio/europe/united-kingdom.json", "utf8"),
+    readFile("public/radio/asia/singapore.json", "utf8"),
+  ]);
+  const featured = selectHomepageFeaturedStations({
+    "asia/viet-nam": JSON.parse(vn),
+    "europe/united-kingdom": JSON.parse(uk),
+    "asia/singapore": JSON.parse(sg),
+  });
+  assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, VIETNAM_FEATURED_STATION_IDS.length + 2);
+  assert.deepEqual(featured.map(entry => entry.path), [...HOMEPAGE_FEATURED_STATION_PATHS]);
+  assert.equal(featured[0].path, "asia/viet-nam/vov-gt-hcm");
+  assert.equal(featured.find(entry => entry.id === "heart-uk")?.meta.title, "Heart UK");
+  assert.equal(featured.find(entry => entry.id === "power")?.meta.title, "Power 98 Love Songs");
+  assert.deepEqual(featured.slice(1, 3).map(entry => entry.path), [
+    "europe/united-kingdom/heart-uk",
+    "asia/singapore/power",
+  ]);
+  assert.equal(new Set(featured.map(entry => entry.path)).size, featured.length);
+  for (const unavailable of ["vov1", "vov2", "vov3", "vov5"]) {
+    assert.ok(!featured.some(entry => entry.id === unavailable));
+  }
+});
+
+test("Homepage curation skips unavailable stations without substituting another country's stream", () => {
+  const selected = selectHomepageFeaturedStations({
+    "asia/viet-nam": { "vov-gt-hcm": { title: "VOV GT", stream: "https://radio.example/live.mp3" } },
+    "europe/united-kingdom": { "heart-uk": { title: "Heart", stream: "" } },
+    "asia/singapore": { power: { title: "Power", stream: "https://radio.example/power" } },
+  });
+  assert.deepEqual(selected.map(entry => entry.path), [
+    "asia/viet-nam/vov-gt-hcm",
+    "asia/singapore/power",
+  ]);
+});
+
+test("Featured cards use each station's country metadata for direct playback", async () => {
+  const source = await readFile("pages/index.vue", "utf8");
+  assert.match(source, /selectHomepageFeaturedStations\(featuredCatalogs\.value/);
+  assert.match(source, /area, country, id, meta/);
+  assert.match(source, /playback\.activate\(createPlaybackStation\(/);
+  assert.match(source, /featuredEntries\.value\.find\(entry =>/);
+  assert.match(source, /featuredStations\.value, \{ autoplay: true \}/);
+});
+
+test("Featured radio cards toggle play/pause with the global player without leaving the page", async () => {
+  const [card, home] = await Promise.all([
+    readFile("components/panel/FeaturedStations.vue", "utf8"),
+    readFile("pages/index.vue", "utf8"),
+  ]);
+
+  // Match station URLs, not only short IDs; the carousel mixes countries.
+  assert.match(card, /:key="station\.url \|\| station\.id"/);
+  assert.match(card, /station\.url === activeStationUrl/);
+  assert.match(home, /:active-station-url="playback\.station\?\.url"/);
+
+  // Keep the direct-play control separate from the station details link.
+  assert.match(card, /:to="station\.url"/);
+  assert.match(card, /@click="emit\('select-station', station\)"/);
+  assert.match(card, /:name="isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'"/);
+  assert.match(card, /:aria-pressed="isPlaying\(station\)"/);
+
+  // Pause the active stream; resume with a play request; otherwise activate the chosen catalog.
+  assert.match(home, /playback\.station\?\.url === station\.url && playback\.station\.sources\.length/);
+  assert.match(home, /if \(playback\.playing \|\| playback\.waiting\) playback\.pauseRequest \+= 1/);
+  assert.match(home, /else playback\.requestStation\(station\.url\)/);
+  assert.match(home, /playback\.activate\(createPlaybackStation\([\s\S]*?featuredStations\.value, \{ autoplay: true \}/);
 });
 
 test("Missing or unusable featured streams are excluded rather than played", () => {

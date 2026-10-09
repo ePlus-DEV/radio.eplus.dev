@@ -12,7 +12,7 @@
         <div class="relative min-w-0 flex-1">
           <fa
             :icon="['fas', 'magnifying-glass']"
-            class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+            class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--radio-text-muted)]"
           />
           <UInput
             ref="inputEl"
@@ -30,7 +30,7 @@
         <button
           v-if="!inline"
           type="button"
-          class="inline-flex items-center justify-center h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-slate-400 shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
+          class="inline-flex items-center justify-center h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-[var(--radio-text-muted)] shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
           :aria-label="$t('button.close')"
           @click="$emit('close')"
         >
@@ -57,7 +57,7 @@
         <div v-if="searchHistory.length">
           <div class="mb-2 flex items-center justify-between px-2">
             <span class="text-sm font-bold text-[var(--radio-text)]">{{ $t("search.recent") }}</span>
-            <button type="button" class="text-xs font-semibold text-rose-400 hover:text-rose-300" @click="clearHistory">
+            <button type="button" class="text-xs font-semibold text-rose-700 hover:text-rose-600 dark:text-rose-300 dark:hover:text-rose-200" @click="clearHistory">
               {{ $t("search.clear") }}
             </button>
           </div>
@@ -86,7 +86,7 @@
             class="radio-search-panel-row flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition"
             @click="selectSuggestion(item)"
           >
-            <UIcon name="i-lucide-trending-up" class="h-4 w-4 shrink-0 text-rose-400" />
+            <UIcon name="i-lucide-trending-up" class="h-4 w-4 shrink-0 text-rose-700 dark:text-rose-300" />
             <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
               {{ item }}
             </span>
@@ -104,13 +104,12 @@
 
       <div v-else>
         <div class="mb-2 flex items-center justify-between px-2">
-          <span class="text-xs font-semibold uppercase tracking-[0.14em]" :class="inline ? 'text-[var(--radio-text-muted)]' : 'text-slate-400'">
+          <span class="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--radio-text-muted)]">
             {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
           </span>
           <span
             v-if="displayHits.length"
-            class="text-xs tabular-nums"
-            :class="inline ? 'text-[var(--radio-text-muted)]' : 'text-slate-400'"
+            class="text-xs tabular-nums text-[var(--radio-text-muted)]"
           >
             {{ displayHits.length }}
           </span>

@@ -389,7 +389,7 @@
         },
         "analytics": {
           "title": "Measurement and diagnostics",
-          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+          "body": "本番サイトでは Google Analytics 4 が訪問とページ閲覧を計測します。ページ読み込み時から計測を開始し、このお知らせを閉じても計測には影響しません。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -480,9 +480,10 @@
     "see_all": "すべて見る"
   },
   "cookie_consent": {
-    "title": "Cookie設定",
+    "title": "Cookieとアクセス解析のお知らせ",
     "body": "Radio ePlus は、言語、テーマ、プレーヤー設定、リスニング設定を記憶するために必要なCookieとローカルストレージを使用します。",
     "accept": "了解",
+    "analytics_body": "Radio ePlus は設定の保存に必要なストレージと、訪問・ページ閲覧を計測する Google Analytics 4 を本番サイトで使用しています。これは利用状況に関するお知らせです。",
     "learn_more": "Cookieポリシー"
   }
 }

@@ -19,7 +19,7 @@
           {{ $t("cookie_consent.title") }}
         </p>
         <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)]">
-          {{ $t("cookie_consent.body") }}
+          {{ $t(analyticsAvailable ? "cookie_consent.analytics_body" : "cookie_consent.body") }}
         </p>
       </div>
     </div>
@@ -46,15 +46,21 @@
 </template>
 
 <script setup lang="ts">
-const STORAGE_KEY = "radio:cookie-consent";
+const STORAGE_KEY = 'radio:tracking-notice-v2';
+const config = useRuntimeConfig();
 const visible = ref(false);
+const analyticsAvailable = ref(false);
 
 const accept = (): void => {
+  // Dismiss an informational notice only; GA4 never depends on this value.
+  window.localStorage.setItem(STORAGE_KEY, 'dismissed');
   visible.value = false;
-  localStorage.setItem(STORAGE_KEY, "accepted");
 };
 
 onMounted(() => {
-  visible.value = localStorage.getItem(STORAGE_KEY) !== "accepted";
+  analyticsAvailable.value = Boolean(config.public.ga4Enabled)
+    && window.location.hostname === 'radio.eplus.dev';
+  // New notice key makes previous opt-in/opt-out choices irrelevant.
+  visible.value = window.localStorage.getItem(STORAGE_KEY) !== 'dismissed';
 });
 </script>

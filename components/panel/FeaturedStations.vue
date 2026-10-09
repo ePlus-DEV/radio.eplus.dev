@@ -5,9 +5,9 @@
     >
       <article
         v-for="station in stations"
-        :key="station.id"
+        :key="station.url || station.id"
         class="radio-featured-card group relative w-40 shrink-0 snap-start overflow-hidden rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] transition duration-200 hover:-translate-y-0.5 hover:border-rose-400/50 hover:shadow-lg sm:w-auto"
-        :class="station.id === activeStationId ? 'border-rose-400/60 ring-2 ring-rose-500/35' : ''"
+        :class="station.url === activeStationUrl ? 'border-rose-400/60 ring-2 ring-rose-500/35' : ''"
       >
         <UTooltip :text="station.title">
           <NuxtLink
@@ -23,10 +23,10 @@
                 class="max-h-[75%] max-w-[85%] object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
               />
               <span
-                v-if="station.id === activeStationId"
-                class="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[10px] font-semibold text-white"
+                v-if="station.url === activeStationUrl"
+                class="absolute left-2 top-2 flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold" :class="isPlaying(station) ? (playback.waiting ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300') : 'radio-neutral-badge'"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-white"></span> {{ $t(playback.playing ? 'player.on_air' : 'redesign.paused') }}
+                <span class="h-1.5 w-1.5 rounded-full bg-current"></span> {{ $t(playback.playing ? 'player.on_air' : playback.waiting ? 'player.connecting' : 'redesign.paused') }}
               </span>
             </div>
             <div class="flex min-h-[4.25rem] items-center border-t border-[var(--radio-border)] px-3 py-3 pr-14">
@@ -36,11 +36,12 @@
         </UTooltip>
         <button
           type="button"
-          class="absolute bottom-4 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-rose-500 pl-0.5 text-white shadow-md shadow-rose-950/25 transition group-hover:scale-105 hover:bg-rose-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
-          :aria-label="$t('player.play') + ': ' + station.title"
+          class="absolute bottom-4 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-md shadow-rose-950/25 transition group-hover:scale-105 hover:bg-rose-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+          :aria-label="$t(isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
+          :aria-pressed="isPlaying(station)"
           @click="emit('select-station', station)"
         >
-          <UIcon name="i-lucide-play" class="h-4 w-4" />
+          <UIcon :name="isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'" class="h-4 w-4" :class="isPlaying(station) ? '' : 'translate-x-px'" />
         </button>
       </article>
     </div>
@@ -52,6 +53,7 @@ import { usePlaybackStore } from '~/stores/playback';
 const playback = usePlaybackStore();
 import type { RadioStationOption } from '~/types/radio';
 
-defineProps<{ stations: RadioStationOption[]; activeStationId?: string }>();
+const props = defineProps<{ stations: RadioStationOption[]; activeStationUrl?: string }>();
+const isPlaying = (station: RadioStationOption) => station.url === props.activeStationUrl && (playback.playing || playback.waiting);
 const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
 </script>

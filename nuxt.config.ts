@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from "nuxt/config";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
+import { GA4_MEASUREMENT_ID, isGa4ProductionBuild } from "./utils/ga4-config.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
@@ -25,6 +26,12 @@ const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").
 const noIndex = isStagingDeployment({
   siteUrl,
   noIndex: process.env.NUXT_PUBLIC_NO_INDEX,
+});
+// Nuxt production builds also power previews; require our canonical public origin.
+const ga4Enabled = isGa4ProductionBuild({
+  nodeEnv: process.env.NODE_ENV,
+  siteUrl,
+  noIndex,
 });
 const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "Radio ePlus";
 const defaultDescription =
@@ -77,6 +84,8 @@ export default defineNuxtConfig({
       algoliaIndexStation: "radio.eplus.dev",
       algoliaIndexRadio: "world",
       algoliaConfigured: hasAlgoliaConfig,
+      ga4Enabled,
+      ga4MeasurementId: ga4Enabled ? GA4_MEASUREMENT_ID : "",
       siteUrl,
       siteName,
       defaultDescription,

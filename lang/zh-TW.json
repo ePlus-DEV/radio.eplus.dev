@@ -389,7 +389,7 @@
         },
         "analytics": {
           "title": "Measurement and diagnostics",
-          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+          "body": "正式網站使用 Google Analytics 4 統計造訪與頁面瀏覽量，以改善服務。頁面載入時即開始統計，關閉通知不會影響統計。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -480,9 +480,10 @@
     "see_all": "查看全部"
   },
   "cookie_consent": {
-    "title": "Cookie 偏好",
+    "title": "Cookie 與流量分析通知",
     "body": "Radio ePlus 使用必要的 Cookie 和本機儲存來記住語言、主題、播放器設定與收聽偏好。",
     "accept": "知道了",
+    "analytics_body": "Radio ePlus 使用必要的儲存空間保留偏好，並在正式網站透過 Google Analytics 4 統計造訪與頁面瀏覽量。這是一則告知。",
     "learn_more": "Cookie 政策"
   }
 }

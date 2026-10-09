@@ -33,7 +33,7 @@
     --radio-surface-elevated: #ffffff;
     --radio-surface-soft: #f1f5f9;
     --radio-surface-muted: #f8fafc;
-    --radio-artwork-bg: #fff7f8;
+    --radio-artwork-bg: #f1f5f9;
     --radio-hover: #f1f5f9;
     --radio-border: rgb(226 232 240 / 0.9);
     --radio-border-strong: rgb(203 213 225 / 0.95);
@@ -44,6 +44,9 @@
     --radio-track: #e2e8f0;
     --radio-header-bg: rgb(255 255 255 / 0.9);
     --radio-overlay: rgb(15 23 42 / 0.55);
+    --radio-badge-bg: #e2e8f0;
+    --radio-badge-text: #334155;
+    --radio-badge-border: #cbd5e1;
 
   }
 
@@ -67,6 +70,9 @@
     --radio-track: rgb(255 255 255 / 0.15);
     --radio-header-bg: rgb(2 6 23 / 0.86);
     --radio-overlay: rgb(2 6 23 / 0.72);
+    --radio-badge-bg: #303c55;
+    --radio-badge-text: #f1f5f9;
+    --radio-badge-border: rgb(148 163 184 / 0.4);
 
   }
 
@@ -131,6 +137,29 @@
   .radio-right-panel {
     top: 96px;
     height: calc(100dvh - 112px - var(--radio-player-height) - env(safe-area-inset-bottom));
+  }
+
+  /* The desktop navigation scrolls independently even on short pages.
+     Its sticky container owns the viewport height; inner content owns scroll. */
+  @media (min-width: 1280px) {
+    .radio-desktop-sidebar {
+      position: sticky;
+      top: 104px;
+      align-self: start;
+      min-height: 0;
+      height: calc(100dvh - 104px - var(--radio-player-height) - 16px - env(safe-area-inset-bottom));
+    }
+
+    .radio-desktop-sidebar-scroll {
+      box-sizing: border-box;
+      height: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scrollbar-gutter: stable;
+      padding-right: 8px;
+      padding-bottom: 16px;
+    }
   }
 
   @media (min-width: 1536px) {
@@ -214,6 +243,15 @@
 
   .radio-muted {
     color: var(--radio-text-muted);
+  }
+
+  /* Neutral informational chips remain distinct from cards in both themes. */
+  .radio-count-badge,
+  .radio-neutral-badge {
+    background: var(--radio-badge-bg);
+    color: var(--radio-badge-text);
+    border: 1px solid var(--radio-badge-border);
+    font-variant-numeric: tabular-nums;
   }
 
   .radio-hover:hover {
