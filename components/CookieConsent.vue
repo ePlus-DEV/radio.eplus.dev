@@ -30,17 +30,7 @@
         class="cursor-pointer rounded-xl bg-rose-500 text-white hover:bg-rose-400"
         @click="accept"
       >
-        {{ $t(analyticsAvailable ? "cookie_consent.allow_analytics" : "cookie_consent.accept") }}
-      </UButton>
-      <UButton
-        v-if="analyticsAvailable"
-        size="sm"
-        color="neutral"
-        variant="soft"
-        class="cursor-pointer rounded-xl"
-        @click="denyAnalytics"
-      >
-        {{ $t("cookie_consent.essential_only") }}
+        {{ $t("cookie_consent.accept") }}
       </UButton>
       <UButton
         to="/cookie-policy"
@@ -56,36 +46,21 @@
 </template>
 
 <script setup lang="ts">
-import { ANALYTICS_CONSENT_EVENT, ANALYTICS_CONSENT_KEY, isAnalyticsDecision } from '~/utils/ga4-config.mjs';
-
-const STORAGE_KEY = 'radio:cookie-consent';
+const STORAGE_KEY = 'radio:tracking-notice-v2';
 const config = useRuntimeConfig();
 const visible = ref(false);
 const analyticsAvailable = ref(false);
 
-const choose = (allowAnalytics: boolean): void => {
-  window.localStorage.setItem(STORAGE_KEY, 'accepted');
-  if (analyticsAvailable.value) {
-    window.localStorage.setItem(ANALYTICS_CONSENT_KEY, allowAnalytics ? 'granted' : 'denied');
-    window.dispatchEvent(new Event(ANALYTICS_CONSENT_EVENT));
-  }
+const accept = (): void => {
+  // Dismiss an informational notice only; GA4 never depends on this value.
+  window.localStorage.setItem(STORAGE_KEY, 'dismissed');
   visible.value = false;
 };
-
-const accept = (): void => choose(true);
-const denyAnalytics = (): void => choose(false);
-
-const onPreferenceChanged = () => { visible.value = false; };
 
 onMounted(() => {
   analyticsAvailable.value = Boolean(config.public.ga4Enabled)
     && window.location.hostname === 'radio.eplus.dev';
-  visible.value = analyticsAvailable.value
-    ? !isAnalyticsDecision(window.localStorage.getItem(ANALYTICS_CONSENT_KEY))
-    : window.localStorage.getItem(STORAGE_KEY) !== 'accepted';
-  window.addEventListener(ANALYTICS_CONSENT_EVENT, onPreferenceChanged);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener(ANALYTICS_CONSENT_EVENT, onPreferenceChanged);
+  // New notice key makes previous opt-in/opt-out choices irrelevant.
+  visible.value = window.localStorage.getItem(STORAGE_KEY) !== 'dismissed';
 });
 </script>
