@@ -152,7 +152,7 @@
     "next": "次",
     "lyric": "歌詞",
     "no_lyric": "歌詞が見つかりません",
-    "updating": "更新中...",
+    "updating": "読み込み中…",
     "channels": "すべての局",
     "station_count": "{count} 局",
     "search_channels": "局を検索...",
@@ -214,7 +214,7 @@
     "on_air": "再生中",
     "ready": "再生準備完了",
     "queue": "放送局と番組表",
-    "source": "配信ソース",
+    "source": "再生方法",
     "volume": "音量",
     "mute": "ミュート",
     "unmute": "ミュート解除",
@@ -225,12 +225,12 @@
     "next": "次の放送局: {name}",
     "sidebar_label": "放送局と番組表",
     "live": "ライブ",
-    "primary_source": "メイン",
-    "alternative_source": "代替",
-    "source_number": "音声ソース {number}",
-    "stream_format": "配信形式",
-    "proxy": "プロキシ",
-    "direct": "直接接続",
+    "primary_source": "メインの接続",
+    "alternative_source": "予備の接続",
+    "source_number": "再生方法 {number}",
+    "stream_format": "音声の種類",
+    "proxy": "補助接続",
+    "direct": "放送局から直接",
     "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。",
     "sleep_timer": "スリープタイマー",
     "sleep_minutes": "{minutes}分後に停止",
@@ -248,7 +248,7 @@
     "about": {
       "eyebrow": "概要",
       "title": "Radio ePlus について",
-      "description": "地域や国からライブインターネットラジオを探して再生できる軽量なディレクトリとプレーヤーです。",
+      "description": "世界各地のラジオ局を、ひとつの場所で見つけて聴けます。",
       "sections": {
         "discover": {
           "title": "ラジオを探す",
@@ -256,47 +256,47 @@
         },
         "playback": {
           "title": "直接再生",
-          "body": "プレーヤーはブラウザーを放送局または配信事業者のストリームへ接続し、一般的な音声形式と HLS を限定的なフォールバック処理付きで再生します。"
+          "body": "好きな局を選んで再生ボタンを押してください。最初の再生先が使えない場合、別の再生先を試せることがあります。"
         },
         "availability": {
-          "title": "ライブデータは変化します",
-          "body": "ストリーム、番組表、画像、現在の楽曲情報はカタログや第三者プロバイダーに依存するため、予告なく変更・停止することがあります。"
+          "title": "放送局の情報は変わることがあります",
+          "body": "放送内容や番組表は各放送局が管理しています。放送が一時的に止まったり、予定が変わったり、曲名の表示が遅れたりする場合があります。"
         }
       },
       "service": {
         "title": "Built for simple listening",
-        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "body": "お気に入りの局を見つけて保存し、スマートフォンやパソコンで気軽にラジオを楽しめます。",
         "action": "Start listening"
       }
     },
     "privacy": {
       "eyebrow": "プライバシー",
       "title": "プライバシーポリシー",
-      "description": "Radio ePlus における設定、検索、再生リクエスト、第三者サービスの取り扱いについて説明します。",
+      "description": "サイトに保存される情報と、ラジオの検索や再生時に何が起こるかをご案内します。",
       "sections": {
         "accounts": {
           "title": "アカウントと支払い",
           "body": "Radio ePlus はユーザー登録を必要とせず、このサイトに決済機能もありません。公開のプロジェクト窓口へ機微な個人情報を送らないでください。"
         },
         "preferences": {
-          "title": "ローカル設定",
-          "body": "テーマや言語などの表示設定は、選択内容を記憶するためブラウザーやフレームワークの Cookie／ローカルストレージに保存される場合があります。"
+          "title": "保存される設定",
+          "body": "言語、画面の色、お気に入り、最近聴いた局などを、この端末のブラウザーに保存することがあります。次回も使いやすくするためです。"
         },
         "search": {
           "title": "検索サービス",
-          "body": "サイト検索が有効な場合、検索語は Algolia など設定済みの検索プロバイダーで処理されることがあります。その処理には各社のプライバシーポリシーが適用されます。"
+          "body": "放送局を検索すると、入力した言葉が Algolia などの検索サービスに送られることがあります。各サービスのプライバシーポリシーが適用されます。"
         },
         "streams": {
-          "title": "ラジオストリームと第三者",
-          "body": "再生を開始すると、ブラウザーは放送局、ストリーミングホスト、番組表プロバイダー、設定済みリレーへ接続します。これらの第三者は IP アドレスやユーザーエージェントなど通常のネットワーク情報を受け取る場合があります。"
+          "title": "ラジオを聴くとき",
+          "body": "再生すると、お使いの端末が放送局や音声配信サービスに接続します。それらのサービスには IP アドレスやブラウザーの基本情報が伝わる場合があります。"
         },
         "logs": {
-          "title": "ホスティングと技術ログ",
-          "body": "ホスティング、CDN、セキュリティ基盤は、配信・保護・障害調査に必要な標準的リクエスト情報（IP、ブラウザー情報、パス、時刻など）を処理する場合があります。"
+          "title": "サイトを安全に保つために",
+          "body": "サイトの運営・保護を行うサービスが、IP アドレス、ブラウザー、閲覧ページ、アクセス時刻などを記録し、運営や不具合の修正に使うことがあります。"
         },
         "sharing": {
           "title": "データの販売と共有",
-          "body": "Radio ePlus は個人データを販売しません。情報はサイト運営に必要な範囲、または検索・再生・外部リンクを通じて利用する第三者サービスによって処理されます。"
+          "body": "個人情報を販売することはありません。公式サイトでは Google Analytics 4 でアクセス数とページ閲覧数を確認しています。検索や再生の際には、各サービスにも情報が伝わる場合があります。"
         },
         "changes": {
           "title": "ポリシーの変更",
@@ -314,20 +314,20 @@
           "body": "Radio ePlus は無料のラジオ検索・再生インターフェースとして提供されます。公開されているラジオサービスへ適法に個人利用する目的で使用できます。"
         },
         "third_party": {
-          "title": "第三者ストリーム",
-          "body": "Radio ePlus は第三者が運営するストリームをカタログ化しリンクします。内容、利用可能性、地域制限、広告、利用条件は各サービスが管理し、継続提供は保証されません。"
+          "title": "放送局と外部サービス",
+          "body": "各放送局が番組、放送時間、聴取できる地域を決めています。広告が流れたり、予告なく放送が止まったりする場合があります。"
         },
         "copyright": {
           "title": "著作権と商標",
           "body": "局名、ロゴ、音声その他の第三者素材の権利は各権利者に帰属します。修正・削除が必要な場合は、対象 URL と確認に必要な情報を添えてご連絡ください。"
         },
         "acceptable_use": {
-          "title": "適切な利用",
-          "body": "提供者への迷惑行為、アクセス制御の回避、サービス妨害、有害な頻度のクロール、マルウェア配布、法令や第三者権利の侵害に Radio ePlus を使用しないでください。"
+          "title": "安心して利用するために",
+          "body": "法律を守ってご利用ください。サイトや放送局の運営を妨げたり、無断で制限を回避したり、大量のデータ取得で負荷をかけたり、有害なソフトウェアを配布したりしないでください。"
         },
         "availability": {
-          "title": "提供状況と保証",
-          "body": "サイトとカタログは現状有姿・提供可能な範囲で提供されます。ストリーム品質、番組表、メタデータ、外部 API は Radio ePlus とは独立して変更・停止する場合があります。"
+          "title": "放送が利用できない場合",
+          "body": "サイトと放送局一覧は現在入手できる情報をもとに提供しています。すべての局や番組表、曲名、再生先が常に正確で利用できるとは限りません。"
         },
         "changes": {
           "title": "規約の変更",
@@ -338,19 +338,19 @@
     "contact": {
       "eyebrow": "お問い合わせ",
       "title": "Radio ePlus へのお問い合わせ",
-      "description": "不具合、放送局情報の更新、権利に関する掲載内容についてプロジェクトへ連絡できます。",
+      "description": "ラジオが聴けない、局を追加したい、掲載内容を問い合わせたいときはこちらからご連絡ください。",
       "sections": {
         "bug": {
-          "title": "不具合・再生問題",
-          "body": "対象 URL、ブラウザー／端末、期待した動作、実際の結果を記載してください。再生障害では Network や Console の情報も役立ちます。"
+          "title": "局やページが動かない",
+          "body": "問題が起きた局やページ、起きたこと、スマートフォンかパソコンかをお知らせください。画面の画像があると助かります。"
         },
         "station": {
           "title": "放送局情報の更新",
-          "body": "新規局やメタデータ修正では、局名、公式サイト、国、確認済みの公開ストリーム URL があれば添えてください。"
+          "body": "放送局の追加や情報の修正には、局名、国、公式サイト、分かれば再生先のリンクをお送りください。"
         },
         "copyright": {
           "title": "著作権・削除依頼",
-          "body": "権利者は対象の局／ページと、確認に必要な情報を提示して修正・削除を依頼できます。"
+          "body": "掲載内容の権利をお持ちで修正や削除を希望する場合は、対象ページのリンクと確認に必要な情報をお送りください。"
         }
       },
       "support": {
@@ -362,16 +362,16 @@
     "statistics": {
       "eyebrow": "カタログ",
       "title": "ラジオ統計",
-      "description": "現在の Radio ePlus カタログに含まれる地域、国、放送局エントリ数のビルド時スナップショットです。",
+      "description": "Radio ePlus で探せる国やラジオ局の数をご覧いただけます。",
       "metrics": {
         "areas": "地域",
         "countries": "国",
         "stations": "放送局"
       },
       "coverage_title": "地域別カバレッジ",
-      "coverage_description": "各カードは、その地域に保存されている国カタログ数と放送局エントリ数を示します。",
-      "method_title": "集計方法",
-      "method_body": "これらの数値はサイト生成時のラジオカタログから集計されます。現在オンラインであること、放送事業者の一意数、視聴者数を保証するものではありません。"
+      "coverage_description": "地域ごとに、掲載している国と放送局の数を表示します。",
+      "method_title": "数字について",
+      "method_body": "数字は最近更新された放送局一覧から数えています。現在放送中の局数や、聴いている人数を表すものではありません。"
     },
     "error": {
       "not_found_title": "ページが見つかりません",
@@ -381,23 +381,23 @@
     "cookie": {
       "eyebrow": "Cookie Policy",
       "title": "Cookie Policy",
-      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "description": "Radio ePlus が設定を記憶し、サイトのアクセス数を調べる方法をご案内します。",
       "sections": {
         "essential": {
           "title": "Essential storage",
-          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+          "body": "ブラウザーは、この端末に言語、画面の色、お気に入り、再生履歴などを保存します。次回も使いやすくするためです。"
         },
         "analytics": {
-          "title": "Measurement and diagnostics",
-          "body": "本番サイトでは Google Analytics 4 が訪問とページ閲覧を計測します。ページ読み込み時から計測を開始し、このお知らせを閉じても計測には影響しません。"
+          "title": "サイトのアクセス数",
+          "body": "Radio ePlus の公式サイトでは、ページを開いた時点から Google Analytics 4 でアクセス数とページ閲覧数を計測します。このお知らせを閉じても計測は止まりません。"
         },
         "third_party": {
           "title": "Third-party services",
-          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+          "body": "検索や再生の際に、外部サービスから音声、画像、番組情報が届くことがあります。それらのサービスには IP アドレスが伝わり、独自の Cookie が使われる場合があります。"
         },
         "choices": {
           "title": "Your choices",
-          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+          "body": "ブラウザーの設定でサイトに保存されたデータを削除できます。その場合、お気に入り、再生履歴、表示設定も消えることがあります。"
         },
         "changes": {
           "title": "Updates",
@@ -481,9 +481,9 @@
   },
   "cookie_consent": {
     "title": "Cookieとアクセス解析のお知らせ",
-    "body": "Radio ePlus は、言語、テーマ、プレーヤー設定、リスニング設定を記憶するために必要なCookieとローカルストレージを使用します。",
+    "body": "Radio ePlus は、お使いの端末に再生や表示の設定を保存します。",
     "accept": "了解",
-    "analytics_body": "Radio ePlus は設定の保存に必要なストレージと、訪問・ページ閲覧を計測する Google Analytics 4 を本番サイトで使用しています。これは利用状況に関するお知らせです。",
+    "analytics_body": "Radio ePlus は設定を記憶し、公式サイトで Google Analytics 4 によりアクセス数を計測します。これはご案内です。閉じても計測は止まりません。",
     "learn_more": "Cookieポリシー"
   }
 }
