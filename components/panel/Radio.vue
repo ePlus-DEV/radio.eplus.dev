@@ -71,7 +71,7 @@
             </div>
 
             <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3">
-              <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
+              <span class="min-w-0 flex-1 whitespace-normal break-words text-sm font-semibold leading-5 text-[var(--radio-text)]">
                 {{ $t(country.name) }}
               </span>
               <span v-if="compact && country.station_count !== null" class="radio-count-badge shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-medium">{{ country.station_count }}</span>
