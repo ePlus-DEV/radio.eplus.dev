@@ -1,6 +1,6 @@
 <template>
   <UDropdownMenu v-model:open="open" :items="items" :content="{ align: 'end' }" :modal="false" :ui="{ content: 'w-60 max-h-[min(24rem,calc(100dvh-6rem))] overflow-x-hidden overflow-y-auto' }">
-    <UButton ref="trigger" color="neutral" variant="ghost" icon="i-lucide-languages" class="h-11 min-w-11" :aria-label="$t('navmenu.language')">
+    <UButton ref="trigger" color="neutral" variant="ghost" icon="i-lucide-languages" class="radio-header-action h-11 min-w-11 justify-center gap-1.5 rounded-xl" :aria-label="$t('navmenu.language')">
       <span class="hidden uppercase sm:inline">{{ locale.split('-')[0] }}</span>
     </UButton>
     <template #item-leading="{ item }">
