@@ -31,14 +31,18 @@ export function searchLocalStations(stations, query, limit = 20) {
   const words = term.split(/\s+/).filter(Boolean);
   const ranked = prepare(stations).flatMap(({ station, index, title, country, slug }) => {
     if (words.length && !words.every(word => title.includes(word) || country.includes(word) || slug.includes(word))) return [];
-    const score = !term ? Number(Boolean(station.featured)) * 10
+    const featuredRank = Number(station.featured_rank || 0);
+    const score = !term ? (featuredRank ? 1000 - featuredRank : Number(Boolean(station.featured)) * 10)
       : title === term ? 100
       : title.startsWith(term) ? 80
       : title.includes(term) ? 55
       : slug.includes(term) ? 30
       : 10;
-    return [{ station, score, index }];
+    return [{ station, score, index, featuredRank }];
   });
-  ranked.sort((a, b) => b.score - a.score || a.index - b.index);
+  ranked.sort((a, b) => {
+    if (!term && (a.featuredRank || b.featuredRank)) return (a.featuredRank || 9999) - (b.featuredRank || 9999);
+    return b.score - a.score || a.index - b.index;
+  });
   return ranked.slice(0, limit).map(({ station }) => station);
 }

@@ -1,6 +1,13 @@
 <template>
-  <div class="radio-search-box flex max-h-[calc(100dvh-2rem)] flex-col overflow-hidden radio-themed-surface rounded-3xl border border-[var(--radio-border)]">
-    <div class="border-b border-[var(--radio-border)] p-4 sm:p-5">
+  <div
+    class="radio-search-box flex flex-col overflow-hidden"
+    :class="inline
+      ? 'relative'
+      : 'max-h-[calc(100dvh-2rem)] radio-themed-surface rounded-3xl border border-[var(--radio-border)]'"
+    @focusin="openResults"
+    @focusout="onFocusout"
+  >
+    <div :class="inline ? 'p-0' : 'border-b border-[var(--radio-border)] p-4 sm:p-5'">
       <div class="flex items-center gap-3">
         <div class="relative min-w-0 flex-1">
           <fa
@@ -14,11 +21,14 @@
             type="search"
             :aria-label="$t('popup.search.text')"
             class="w-full"
-            :ui="{ base: 'h-12 rounded-2xl pl-11 pr-4 text-base sm:text-sm' }"
+            :ui="{ base: inline ? 'h-11 rounded-xl pl-11 pr-10 text-sm' : 'h-12 rounded-2xl pl-11 pr-4 text-base sm:text-sm' }"
             :placeholder="$t('popup.search.text')"
+            @keydown.esc="closeResults"
           />
+          <kbd v-if="inline && !input" class="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 text-xs text-[var(--radio-text-muted)] sm:block">/</kbd>
         </div>
         <button
+          v-if="!inline"
           type="button"
           class="inline-flex items-center justify-center h-10 min-h-10 w-10 shrink-0 rounded-xl border-0 text-slate-400 shadow-none hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
           :aria-label="$t('button.close')"
@@ -36,7 +46,13 @@
       </p>
     </div>
 
-    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 sm:p-4">
+    <div
+      v-show="!inline || resultsOpen"
+      class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 sm:p-4"
+      :class="inline
+        ? 'absolute left-0 right-0 top-[calc(100%+0.5rem)] z-50 max-h-[min(70dvh,34rem)] rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface)] shadow-2xl shadow-black/30'
+        : ''"
+    >
       <div class="mb-2 flex items-center justify-between px-2">
         <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
           {{ input ? $t("popup.search.text") : $t("popup.search.popular_channels") }}
@@ -48,7 +64,7 @@
           {{ displayHits.length }}
         </span>
       </div>
-      <SearchResult :result="displayHits" @select="$emit('close')" />
+      <SearchResult :result="displayHits" @select="handleSelect" />
       <p v-if="!localLoading && !localError && !displayHits.length"
         class="px-3 py-8 text-center text-sm text-[var(--radio-text-muted)]" role="status">
         {{ $t('panel.no_channels') }}
@@ -60,7 +76,15 @@
 <script lang="ts" setup>
 import { searchLocalStations } from "~/utils/station-search.mjs";
 
-defineEmits<{
+const props = withDefaults(defineProps<{
+  inline?: boolean;
+  autofocus?: boolean;
+}>(), {
+  inline: false,
+  autofocus: true,
+});
+
+const emit = defineEmits<{
   (event: "close"): void;
 }>();
 
@@ -76,6 +100,8 @@ const { index: localIndex, loading: localLoading, error: localError } = useStati
 const remoteHits = shallowRef<unknown[]>([]);
 const remoteQuery = ref("");
 const algoliaFailed = ref(false);
+const resultsOpen = ref(false);
+const inline = computed(() => props.inline);
 const usingLocal = computed(() => !algoliaConfigured.value || algoliaFailed.value || remoteQuery.value !== input.value || !input.value.trim());
 const displayHits = computed(() =>
   usingLocal.value ? searchLocalStations(localIndex.value, input.value) : remoteHits.value
@@ -100,8 +126,34 @@ watch(input, (value: string) => {
   }, 250);
 });
 
+const openResults = (): void => {
+  resultsOpen.value = true;
+};
+
+const closeResults = (): void => {
+  resultsOpen.value = false;
+  inputEl.value?.inputRef?.blur();
+};
+
+const focus = (): void => {
+  resultsOpen.value = true;
+  inputEl.value?.inputRef?.focus();
+};
+
+const onFocusout = (event: FocusEvent): void => {
+  if (!props.inline) return;
+  const nextTarget = event.relatedTarget as Node | null;
+  if (nextTarget && event.currentTarget instanceof Node && event.currentTarget.contains(nextTarget)) return;
+  resultsOpen.value = false;
+};
+
+const handleSelect = (): void => {
+  resultsOpen.value = false;
+  emit("close");
+};
+
 onMounted(() => {
-  focusTimeout = setTimeout(() => inputEl.value?.inputRef?.focus(), 50);
+  if (props.autofocus) focusTimeout = setTimeout(() => focus(), 50);
 });
 
 onBeforeUnmount(() => {
@@ -109,4 +161,6 @@ onBeforeUnmount(() => {
   if (typingTimeout) clearTimeout(typingTimeout);
   if (focusTimeout) clearTimeout(focusTimeout);
 });
+
+defineExpose({ focus });
 </script>

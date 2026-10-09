@@ -14,6 +14,12 @@ export const VIETNAM_FEATURED_STATION_IDS = Object.freeze([
   'acoustic-radio-zing-mp3',
 ]);
 
+export const SEARCH_FEATURED_STATION_IDS = Object.freeze([
+  ...VIETNAM_FEATURED_STATION_IDS.map(id => `asia/viet-nam/${id}`),
+  'asia/singapore/power',
+  'europe/united-kingdom/heart-uk',
+]);
+
 export function selectVietnamFeaturedStations(catalog) {
   if (!catalog || typeof catalog !== 'object') return [];
   return VIETNAM_FEATURED_STATION_IDS.flatMap(id => {

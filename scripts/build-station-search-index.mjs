@@ -1,9 +1,10 @@
 import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { VIETNAM_FEATURED_STATION_IDS } from '../utils/featured-stations.mjs';
+import { SEARCH_FEATURED_STATION_IDS, VIETNAM_FEATURED_STATION_IDS } from '../utils/featured-stations.mjs';
 
 const featuredIds = new Set(VIETNAM_FEATURED_STATION_IDS);
+const searchFeaturedIds = new Map(SEARCH_FEATURED_STATION_IDS.map((id, index) => [id, index + 1]));
 const humanLabel = value => value.replaceAll('-', ' ').replaceAll('_', ' ');
 
 /**
@@ -32,11 +33,15 @@ export async function buildStationSearchIndex({
           station_image: station.features || '/brand/logo-share.png',
           url: `/${area.name}/${country}/${id}`,
           featured: area.name === 'asia' && country === 'viet-nam' && featuredIds.has(id),
+          featured_rank: searchFeaturedIds.get(`${area.name}/${country}/${id}`) || 0,
         });
       }
     }
   }
-  result.sort((a, b) => Number(b.featured) - Number(a.featured) || a.station_name.localeCompare(b.station_name));
+  result.sort((a, b) => {
+    if (a.featured_rank || b.featured_rank) return (a.featured_rank || 9999) - (b.featured_rank || 9999);
+    return Number(b.featured) - Number(a.featured) || a.station_name.localeCompare(b.station_name);
+  });
   await mkdir(dirname(outputFile), { recursive: true });
   await writeFile(outputFile, JSON.stringify(result));
   return result;
