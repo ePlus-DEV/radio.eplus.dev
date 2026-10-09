@@ -76,16 +76,24 @@ test('country, station and queue count chips use the shared badge treatment', as
 });
 
 
-test('mobile country names are not ellipsized in the compact or regular country view', async () => {
-  const [country, css, homepage] = await Promise.all([
+test('compact country list stays in two mobile columns while long names marquee on one line', async () => {
+  const [country, css, homepage, marquee] = await Promise.all([
     read('components/panel/Radio.vue'),
     read('assets/css/main.css'),
     read('pages/index.vue'),
+    read('components/CountryMarquee.vue'),
   ]);
-  assert.match(homepage, /<PanelRadio compact\s*\/>/);
-  assert.match(country, /min-w-0 flex-1 whitespace-normal break-words text-sm font-semibold leading-5/);
-  assert.doesNotMatch(country, /min-w-0 flex-1 truncate text-sm font-semibold/);
-  assert.match(css, /\.radio-country-compact > div:last-child \{ grid-template-columns: minmax\(0, 1fr\); gap: 8px; \}/);
-  assert.match(css, /@media \(min-width: 640px\) \{ \.radio-country-compact > div:last-child \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); \} \}/);
-  assert.match(css, /@media \(min-width: 1024px\) \{ \.radio-country-compact > div:last-child \{ grid-template-columns: repeat\(3, minmax\(0, 1fr\)\); \} \}/);
+  assert.match(homepage, /<PanelRadio compact\\s*\\/>/);
+  assert.match(country, /<CountryMarquee :text="\\$t\\(country\\.name\\)" \\/>/);
+  assert.doesNotMatch(country, /whitespace-normal break-words text-sm font-semibold/);
+  assert.match(country, /v-if="!compact"/); // Hidden arrows must not waste mobile card width.
+  assert.match(css, /\\.radio-country-compact > div:last-child \\{ grid-template-columns: repeat\\(2, minmax\\(0, 1fr\\)\\); gap: 8px; \\}/);
+  assert.match(css, /\\.radio-country-compact \\.radio-themed-artwork \\{[^}]*width: 42px; height: 44px;/);
+  assert.match(css, /@media \\(min-width: 1024px\\) \\{ \\.radio-country-compact > div:last-child \\{ grid-template-columns: repeat\\(3, minmax\\(0, 1fr\\)\\); \\} \\}/);
+  assert.match(marquee, /scrollWidth - viewport\\.value\\.clientWidth/);
+  assert.match(marquee, /ResizeObserver/);
+  assert.match(marquee, /overflowPixels > 1/);
+  assert.match(marquee, /country-marquee-slide/);
+  assert.match(marquee, /prefers-reduced-motion: reduce/);
+  assert.match(marquee, /text-overflow: ellipsis/); // No forced motion for accessibility.
 });
