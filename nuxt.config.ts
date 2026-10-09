@@ -54,7 +54,7 @@ export default defineNuxtConfig({
   },
   // Devtools still imports Simple Git's removed default export; retain the
   // security override and keep the development server usable until it updates.
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   ssr: true,
   pages: true,
   runtimeConfig: {
@@ -260,4 +260,3 @@ export default defineNuxtConfig({
     },
   },
 });
-
