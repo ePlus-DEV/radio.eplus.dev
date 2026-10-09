@@ -12,7 +12,7 @@
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
 
-      <div class="radio-player-console grid min-h-[var(--radio-player-height)] grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
+      <div class="radio-player-console grid min-h-[var(--radio-player-height)] grid-cols-[minmax(0,1fr)_2.75rem_2.75rem] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
         <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
           <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
             <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
@@ -35,27 +35,33 @@
               </p>
             </UTooltip>
             <p v-if="nowPlayingArtist" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
-            <p v-else class="radio-player-meta radio-player-meta-placeholder mt-0.5 text-[10px] sm:text-xs">&nbsp;</p>
-            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
-            <p v-else class="radio-player-meta mt-1 text-[10px] sm:text-xs">&nbsp;</p>
+            <p v-else dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">
+              <span class="sm:hidden">{{ streamName }} · {{ countryName || $t(country) }}</span><span class="hidden sm:inline">&nbsp;</span>
+            </p>
+            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
+            <p v-else class="radio-player-meta mt-1 hidden text-[10px] sm:block sm:text-xs">&nbsp;</p>
           </div>
         </div>
 
         <div class="radio-player-controls z-20 flex items-center justify-center gap-0.5 sm:gap-2">
-          <UTooltip v-if="canNavigateStations" :text="previousStationLabel">
-            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="inline-flex h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
-          </UTooltip>
+          <span v-if="canNavigateStations" class="hidden sm:inline-flex">
+            <UTooltip :text="previousStationLabel">
+              <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
+            </UTooltip>
+          </span>
           <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
-          <UTooltip v-if="canNavigateStations" :text="nextStationLabel">
-            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="nextStationLabel" @click="navigateStation(1)" />
-          </UTooltip>
+          <span v-if="canNavigateStations" class="hidden sm:inline-flex">
+            <UTooltip :text="nextStationLabel">
+              <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="nextStationLabel" @click="navigateStation(1)" />
+            </UTooltip>
+          </span>
         </div>
 
-        <div class="flex items-center justify-end sm:hidden">
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-10 w-10 cursor-pointer justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+        <div class="flex min-w-0 items-center justify-end sm:hidden">
+          <UButton color="neutral" variant="soft" size="sm" icon="i-lucide-list-music" class="h-11 w-11 cursor-pointer justify-center rounded-xl border border-[var(--radio-border)]" :disabled="!hasSidebar" :aria-label="$t('player.queue')" :aria-expanded="hasSidebar && mobileQueueOpen" @click="toggleQueue" />
         </div>
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
@@ -1283,27 +1289,19 @@ onUnmounted(() => {
 }
 
 @media (max-width: 639px) {
-  .radio-player-console {
-    position: relative;
+  /* Three real grid columns keep station metadata, Play and Playlist separate. */
+  .radio-player-console > :first-child {
+    min-width: 0;
   }
 
-  .radio-player-console > :first-child {
-    padding-right: 6.25rem;
+  .radio-player-console .radio-player-controls {
+    position: static;
+    transform: none;
+    min-width: 0;
   }
 
   .radio-player-meta {
     min-height: 1rem;
-  }
-
-  .radio-player-meta-placeholder {
-    display: block;
-  }
-
-  .radio-player-controls {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
   }
 }
 
