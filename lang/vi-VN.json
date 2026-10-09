@@ -152,7 +152,7 @@
     "next": "Kế tiếp",
     "lyric": "Lời bài hát",
     "no_lyric": "Chưa có lời bài hát",
-    "updating": "Đang tải…",
+    "updating": "Đang cập nhật...",
     "channels": "Tất cả đài",
     "station_count": "{count} đài radio",
     "search_channels": "Tìm đài radio...",
@@ -214,7 +214,7 @@
     "on_air": "Đang phát",
     "ready": "Sẵn sàng phát",
     "queue": "Kênh & lịch phát sóng",
-    "source": "Cách nghe",
+    "source": "Nguồn phát",
     "volume": "Âm lượng",
     "mute": "Tắt tiếng",
     "unmute": "Bật tiếng",
@@ -225,12 +225,12 @@
     "next": "Đài tiếp theo: {name}",
     "sidebar_label": "Đài radio và lịch phát sóng",
     "live": "Trực tiếp",
-    "primary_source": "Kết nối chính",
-    "alternative_source": "Kết nối dự phòng",
-    "source_number": "Cách nghe {number}",
-    "stream_format": "Kiểu âm thanh",
-    "proxy": "Kết nối hỗ trợ",
-    "direct": "Từ đài phát",
+    "primary_source": "Nguồn chính",
+    "alternative_source": "Nguồn dự phòng",
+    "source_number": "Nguồn {number}",
+    "stream_format": "Luồng phát",
+    "proxy": "Máy chủ trung gian",
+    "direct": "Trực tiếp",
     "ios_volume_hint": "Trên iPhone hoặc iPad, hãy dùng nút âm lượng trên thiết bị hoặc Trung tâm điều khiển để chỉnh âm lượng.",
     "sleep_timer": "Hẹn giờ ngủ",
     "sleep_minutes": "Dừng sau {minutes} phút",
@@ -239,7 +239,8 @@
     "compact_player": "Thu gọn trình phát",
     "expand_player": "Mở rộng trình phát",
     "window_player": "Trình phát cửa sổ",
-    "dock_player": "Trở về thanh phát"
+    "dock_player": "Trở về thanh phát",
+    "schedule_loading": "Đang tải lịch phát sóng…"
   },
   "site_pages": {
     "common": {
@@ -326,8 +327,8 @@
           "body": "Vui lòng tuân thủ pháp luật. Không làm gián đoạn website hay các đài, truy cập trái phép, thu thập dữ liệu với số lượng gây ảnh hưởng hoặc phát tán phần mềm độc hại."
         },
         "availability": {
-          "title": "Khi đài không hoạt động",
-          "body": "Website cung cấp danh sách đài theo thông tin hiện có. Chúng tôi không thể bảo đảm mọi đài, lịch phát, tên bài hát hay đường nghe luôn chính xác và hoạt động."
+          "title": "Khi không nghe được radio",
+          "body": "Đôi khi đài tạm ngừng phát hoặc đường dẫn nghe gặp sự cố. Bạn có thể thử lại sau hoặc chọn đài khác. Chúng tôi cung cấp danh sách theo thông tin hiện có và không thể bảo đảm đài, lịch phát hay tên bài hát luôn chính xác và truy cập được."
         },
         "changes": {
           "title": "Thay đổi điều khoản",
@@ -429,7 +430,8 @@
     "unavailable": "Tính năng tìm kiếm đang tạm gián đoạn. Các đài phổ biến vẫn hiển thị bên dưới.",
     "suggestions": "Đề xuất cho bạn",
     "recent": "Tìm kiếm gần đây",
-    "clear": "Xóa"
+    "clear": "Xóa",
+    "loading": "Đang tải danh sách đài…"
   },
   "chat": {
     "open": "Mở trợ lý trò chuyện",
@@ -462,7 +464,8 @@
     "favorites_empty": "Bấm biểu tượng trái tim để lưu kênh yêu thích.",
     "clear_recent": "Xóa lịch sử nghe",
     "add_favorite": "Thêm vào yêu thích",
-    "remove_favorite": "Bỏ yêu thích"
+    "remove_favorite": "Bỏ yêu thích",
+    "loading": "Đang tải các đài của bạn…"
   },
   "redesign": {
     "navigation": "Điều hướng",
