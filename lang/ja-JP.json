@@ -480,7 +480,7 @@
     "see_all": "すべて見る"
   },
   "cookie_consent": {
-    "title": "Cookie設定",
+    "title": "Cookieとアクセス解析のお知らせ",
     "body": "Radio ePlus は、言語、テーマ、プレーヤー設定、リスニング設定を記憶するために必要なCookieとローカルストレージを使用します。",
     "accept": "了解",
     "analytics_body": "Radio ePlus は設定の保存に必要なストレージと、訪問・ページ閲覧を計測する Google Analytics 4 を本番サイトで使用しています。これは利用状況に関するお知らせです。",
