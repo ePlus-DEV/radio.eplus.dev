@@ -1,7 +1,7 @@
 <template>
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'radio-player-dock-compact': playerCompact, 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
-      <div v-if="playerStatusVisible" class="flex h-6 min-w-0 items-center justify-center gap-2 text-[10px] text-[var(--radio-text-muted)]" aria-live="polite">
+      <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <template v-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
           <UButton size="xs" variant="link" class="shrink-0 p-0 text-[10px]" @click="retryCurrentSource">{{ $t('player.retry') }}</UButton>

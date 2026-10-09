@@ -26,5 +26,5 @@ test('personal library is navigable, compact and excluded from public SEO lists'
   assert.match(config, /prerender:[\s\S]*"\/library"/);
   assert.doesNotMatch(config.split('prerender:')[0], /loc:\s*['"]\/library['"]/);
   assert.match(nav, /to="\/library"/);
-  assert.match(css, /var\(--radio-player-height\) \+ var\(--radio-mobile-nav-height\) \+ env\(safe-area-inset-bottom\)/);
+  assert.match(css, /var\(--radio-player-height\) \+ var\(--radio-mobile-nav-height\) \+ var\(--radio-mobile-player-gap\) \+ env\(safe-area-inset-bottom\)/);
 });
