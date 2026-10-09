@@ -220,3 +220,7 @@ SEO work should prioritize, in order:
 6. crawler convenience files.
 
 Do not treat keyword stuffing or adding arbitrary meta tags as an SEO fix.
+
+## Personal library
+
+`/library` is prerendered for static navigation, with `noindex, follow` on production and the staging noindex policy on staging. Its device-local lists are client-only. It is not part of the sitemap URL list.

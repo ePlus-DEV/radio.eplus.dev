@@ -7,7 +7,7 @@ test("music cards use responsive square artwork without removing navigation", as
     const source = await readFile(file, "utf8");
     assert.match(source, /radio-station-card/);
     assert.match(source, /aspect-square/);
-    assert.match(source, /focus-visible:ring-violet-500/);
+    assert.match(source, /focus-visible:ring-rose-500/);
     assert.match(source, /<NuxtLink/);
     assert.match(source, /loading="lazy"/);
   }

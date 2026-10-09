@@ -38,6 +38,20 @@ test("theme CSS defines semantic surfaces for Nuxt Color Mode", async () => {
   }
 });
 
+test("site defaults to dark mode with the color brand mark", async () => {
+  const [config, header, artwork] = await Promise.all([
+    readFile(join(ROOT, "nuxt.config.ts"), "utf8"),
+    readFile(join(ROOT, "components/AppHeader.vue"), "utf8"),
+    readFile(join(ROOT, "components/StationArtwork.vue"), "utf8"),
+  ]);
+
+  assert.match(config, /preference:\s*"dark"/);
+  assert.match(config, /fallback:\s*"dark"/);
+  assert.match(header, /\/brand\/logo-share\.png/);
+  assert.doesNotMatch(header, /dark:invert|logo-black\.svg|logo-white\.svg/);
+  assert.match(artwork, /\/brand\/logo-share\.png/);
+});
+
 test("Vue templates do not reintroduce legacy light/dark utility pairs", async () => {
   const vueFiles = [
     join(ROOT, "app.vue"),

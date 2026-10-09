@@ -8,6 +8,9 @@ test('station page owns the static catalog and the application owns playback lif
   const app = await readFile('app.vue', 'utf8');
   assert.match(page, /const stationCatalogKey = computed/);
   assert.match(page, /stationCatalogPayload\.value\?\.key === stationCatalogKey\.value/);
+  assert.match(page, /lg:grid-cols-\[minmax\(0,14rem\)_minmax\(0,1fr\)\]/);
+  assert.match(page, /sourceCount/);
+  assert.match(page, /playback\.queueOpen = true/);
   assert.doesNotMatch(page, /<Player\s|@update-data=|pollSchedule|onBeforeUnmount/);
   assert.doesNotMatch(panel, /\$fetch<|emit\("update-data"/);
   assert.match(app, /<PlayerSession\s*\/>/);

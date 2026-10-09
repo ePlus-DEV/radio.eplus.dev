@@ -5,7 +5,7 @@
     <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
       <AppSidebar />
       <main
-        class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-24 sm:px-6 sm:pt-28 xl:px-0"
+        class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-20 sm:px-6 sm:pt-28 xl:px-0"
         id="main-content"
         scroll-container
       >
@@ -14,10 +14,35 @@
       <div id="radio-queue-slot" class="radio-queue-slot hidden min-h-0 min-w-0 pb-14 pt-24"></div>
     </div>
     <AppFooter />
+    <MobileNavigation />
+    <ClientOnly>
+      <CookieConsent />
+    </ClientOnly>
     <ClientOnly>
       <PlayerSession />
       <template #fallback>
-        <div class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)]"></div>
+        <div class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)]" aria-hidden="true">
+          <div class="radio-player-inner mx-auto flex min-h-[96px] max-w-[1920px] items-center gap-4 px-3 sm:grid sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:px-6">
+            <div class="flex min-w-0 items-center gap-3">
+              <div class="h-11 w-11 shrink-0 animate-pulse rounded-xl bg-[var(--radio-surface-soft)] sm:h-14 sm:w-14"></div>
+              <div class="min-w-0 flex-1 space-y-2">
+                <div class="h-3 w-24 animate-pulse rounded-full bg-rose-500/20"></div>
+                <div class="h-4 w-40 max-w-full animate-pulse rounded-full bg-[var(--radio-border-strong)]"></div>
+                <div class="h-3 w-52 max-w-full animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
+              </div>
+            </div>
+            <div class="ml-auto flex items-center justify-center gap-2 sm:ml-0">
+              <div class="hidden h-9 w-9 animate-pulse rounded-full bg-[var(--radio-surface-soft)] sm:block"></div>
+              <div class="h-12 w-12 animate-pulse rounded-full bg-rose-500/35"></div>
+              <div class="hidden h-9 w-9 animate-pulse rounded-full bg-[var(--radio-surface-soft)] sm:block"></div>
+            </div>
+            <div class="hidden min-w-0 items-center justify-end gap-2 sm:flex">
+              <div class="h-9 w-9 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
+              <div class="h-9 w-9 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
+              <div class="h-5 w-24 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
+            </div>
+          </div>
+        </div>
       </template>
     </ClientOnly>
   </div>

@@ -19,7 +19,7 @@
               <span class="block text-sm font-bold text-[var(--radio-text)]">
                 Radio ePlus
               </span>
-              <span class="block text-xs text-slate-400">
+              <span class="block text-xs text-[var(--radio-text-muted)]">
                 {{ $t('footer.tagline') }}
               </span>
             </span>
@@ -36,7 +36,7 @@
               :href="socialLink.href"
               target="_blank"
               rel="external nofollow noopener noreferrer"
-              class="radio-interactive flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--radio-border)] text-slate-400 hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
+              class="radio-interactive flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--radio-border)] text-[var(--radio-text-muted)] hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
             >
               <span class="sr-only">{{ socialLink.name }}</span>
               <fa :icon="['fab', socialLink.icon]" class="h-4 w-4" />
@@ -64,7 +64,7 @@
             </a>
           </nav>
 
-          <p class="mt-5 text-xs leading-5 text-slate-400">
+          <p class="mt-5 text-xs leading-5 text-[var(--radio-text-muted)]">
             © {{ new Date().getFullYear() }}
             <a
               :href="config.public.copyright"
@@ -82,7 +82,7 @@
     <button
       v-show="showTop"
       type="button"
-      class="radio-themed-elevated fixed bottom-[calc(var(--radio-player-height)+env(safe-area-inset-bottom)+1rem)] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--radio-border)] text-[var(--radio-text-muted)] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:right-5"
+      class="radio-themed-elevated fixed bottom-[calc(var(--radio-player-height)+var(--radio-mobile-nav-height)+env(safe-area-inset-bottom)+0.75rem)] right-3 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-[var(--radio-border)] text-[var(--radio-text-muted)] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:right-5"
       :aria-label="$t('button.back')"
       @click="scrollToTop"
     >
@@ -112,6 +112,7 @@ const links = [
   { id: 3, to: "/contact", text: "navmenu.contact" },
   { id: 4, to: "/privacy-policy", text: "navmenu.privacy" },
   { id: 5, to: "/terms-of-use", text: "navmenu.terms" },
+  { id: 6, to: "/cookie-policy", text: "navmenu.cookie" },
 ];
 
 const socialLinks = computed(() => [
@@ -126,12 +127,6 @@ const socialLinks = computed(() => [
     name: "X",
     href: config.public.x,
     icon: "x-twitter",
-  },
-  {
-    id: 3,
-    name: "GitHub",
-    href: config.public.github,
-    icon: "github",
   },
 ]);
 

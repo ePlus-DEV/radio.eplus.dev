@@ -56,7 +56,7 @@ test("all Font Awesome UI icons are Free and centrally registered", async () => 
 
   assert.deepEqual(
     [...brandIcons].sort(),
-    ["facebook-f", "github", "x-twitter"],
+    ["facebook-f", "x-twitter"],
   );
 });
 

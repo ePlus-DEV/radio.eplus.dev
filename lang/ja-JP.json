@@ -13,7 +13,8 @@
     "language": "言語：",
     "old_version": "旧バージョン",
     "statistics": "統計",
-    "changelog": "変更ログ"
+    "changelog": "変更ログ",
+    "cookie": "Cookieポリシー"
   },
   "terms": {
     "content": "ウェブサイト https://radio.eplus.dev (「Radio ePlus」) へようこそ。ePlus.DEV の製品です。ウェブサイト https://radio.eplus.dev のサービス提供および利用に関する契約を注意深くお読みください。「Radio」ウェブサイト ePlus の機能を使用する前に。登録すると、以下の条件を読み、理解し、受け入れ、遵守したことになります。",
@@ -153,6 +154,7 @@
     "no_lyric": "歌詞が見つかりません",
     "updating": "更新中...",
     "channels": "すべての局",
+    "station_count": "{count} 局",
     "search_channels": "局を検索...",
     "no_channels": "局が見つかりません"
   },
@@ -229,7 +231,15 @@
     "stream_format": "配信形式",
     "proxy": "プロキシ",
     "direct": "直接接続",
-    "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。"
+    "ios_volume_hint": "iPhone／iPad では、本体の音量ボタンまたはコントロールセンターで音量を調整してください。",
+    "sleep_timer": "スリープタイマー",
+    "sleep_minutes": "{minutes}分後に停止",
+    "sleep_cancel": "タイマーを解除",
+    "sleep_remaining": "あと{minutes}分で停止",
+    "compact_player": "プレーヤーをコンパクトにする",
+    "expand_player": "プレーヤーを展開",
+    "window_player": "ミニプレーヤー",
+    "dock_player": "ドックに戻す"
   },
   "site_pages": {
     "common": {
@@ -253,9 +263,10 @@
           "body": "ストリーム、番組表、画像、現在の楽曲情報はカタログや第三者プロバイダーに依存するため、予告なく変更・停止することがあります。"
         }
       },
-      "open_source": {
-        "title": "オープンなプロジェクト",
-        "body": "Radio ePlus は ePlus.DEV が管理しています。ソースコード、Issue、進行中の改善は GitHub で公開されています。"
+      "service": {
+        "title": "Built for simple listening",
+        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "action": "Start listening"
       }
     },
     "privacy": {
@@ -342,10 +353,10 @@
           "body": "権利者は対象の局／ページと、確認に必要な情報を提示して修正・削除を依頼できます。"
         }
       },
-      "github": {
-        "title": "GitHub Issue を作成",
-        "body": "公開開発、不具合報告、カタログ修正は Radio ePlus の GitHub リポジトリで管理しています。",
-        "action": "Issue を作成"
+      "support": {
+        "title": "Need help with Radio ePlus?",
+        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "action": "Email support"
       }
     },
     "statistics": {
@@ -360,12 +371,39 @@
       "coverage_title": "地域別カバレッジ",
       "coverage_description": "各カードは、その地域に保存されている国カタログ数と放送局エントリ数を示します。",
       "method_title": "集計方法",
-      "method_body": "これらの数値はサイトビルド時にリポジトリ内のバージョン管理された JSON カタログから集計されます。現在オンラインのストリーム数、固有事業者数、聴取者数を示すものではありません。"
+      "method_body": "これらの数値はサイト生成時のラジオカタログから集計されます。現在オンラインであること、放送事業者の一意数、視聴者数を保証するものではありません。"
     },
     "error": {
       "not_found_title": "ページが見つかりません",
       "generic_title": "エラーが発生しました",
       "generic_body": "ページを読み込めませんでした。ホームページに戻ってもう一度お試しください。"
+    },
+    "cookie": {
+      "eyebrow": "Cookie Policy",
+      "title": "Cookie Policy",
+      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "sections": {
+        "essential": {
+          "title": "Essential storage",
+          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+        },
+        "analytics": {
+          "title": "Measurement and diagnostics",
+          "body": "本番サイトでは Google Analytics 4 が訪問とページ閲覧を計測します。ページ読み込み時から計測を開始し、このお知らせを閉じても計測には影響しません。"
+        },
+        "third_party": {
+          "title": "Third-party services",
+          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+        },
+        "choices": {
+          "title": "Your choices",
+          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+        },
+        "changes": {
+          "title": "Updates",
+          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+        }
+      }
     }
   },
   "home": {
@@ -388,7 +426,10 @@
     "description": "世界中のラジオ局をいつでも見つけて楽しめます。"
   },
   "search": {
-    "unavailable": "現在検索を利用できません。以下の人気放送局は引き続き表示されます。"
+    "unavailable": "現在検索を利用できません。以下の人気放送局は引き続き表示されます。",
+    "suggestions": "おすすめ",
+    "recent": "最近の検索",
+    "clear": "消去"
   },
   "chat": {
     "open": "チャットボットを開く",
@@ -412,5 +453,37 @@
   "footer": {
     "tagline": "世界中のラジオをライブで",
     "description": "地域や国から放送局を探して、どの端末からでもすぐに聴けます。"
+  },
+  "library": {
+    "title": "マイラジオ",
+    "recent": "最近聴いた局",
+    "favorites": "お気に入り",
+    "recent_empty": "再生したラジオ局がここに表示されます。",
+    "favorites_empty": "ハートを押すとお気に入りに保存できます。",
+    "clear_recent": "履歴を消去",
+    "add_favorite": "お気に入りに追加",
+    "remove_favorite": "お気に入りから削除"
+  },
+  "redesign": {
+    "navigation": "ナビゲーション",
+    "discover": "見つける",
+    "search": "検索",
+    "library": "ライブラリ",
+    "continue_listening": "続きを聴く",
+    "paused": "一時停止中",
+    "now_playing": "再生画面",
+    "timer": "タイマー",
+    "channel_list": "チャンネル",
+    "next_station": "次の放送局",
+    "library_description": "お気に入りと再生履歴はこの端末に保存されます。",
+    "all": "すべて",
+    "see_all": "すべて見る"
+  },
+  "cookie_consent": {
+    "title": "Cookieとアクセス解析のお知らせ",
+    "body": "Radio ePlus は、言語、テーマ、プレーヤー設定、リスニング設定を記憶するために必要なCookieとローカルストレージを使用します。",
+    "accept": "了解",
+    "analytics_body": "Radio ePlus は設定の保存に必要なストレージと、訪問・ページ閲覧を計測する Google Analytics 4 を本番サイトで使用しています。これは利用状況に関するお知らせです。",
+    "learn_more": "Cookieポリシー"
   }
 }

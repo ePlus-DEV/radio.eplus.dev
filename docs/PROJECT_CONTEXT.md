@@ -532,7 +532,60 @@ Prefer documenting the **reason** for a rule, not only the final code, so later 
 
 ## 18. Nuxt development tooling compatibility
 
-Nuxt devtools still imports the removed default export from Simple Git 4, while
-the repository pins Simple Git 4 for security. Devtools is disabled so `nuxt dev`
-remains usable without weakening that override. Re-enable only after devtools
-supports the named export. This does not affect the product or production build.
+Nuxt devtools still imports Simple Git's legacy default export. Simple Git 4 no
+longer provides that export, so the repository pins `simple-git` to `3.36.0`
+until Nuxt devtools supports Simple Git 4's named exports. Keep this compatibility
+pin with `devtools: { enabled: true }`; otherwise `nuxt prepare` and local
+development can fail during module initialization.
+
+Nitro 2.13.4's string externals rules never match Windows module ids that use
+backslashes (nitrojs/nitro#4732, nuxt/nuxt#36467). Without a workaround, the
+Nuxt server renderer is left external, native Node resolves
+`nuxt/internal/manifest` to a stub, and every SSR page fails with
+`Error (500): Either manifest or precomputed data must be provided` on Windows
+(dev and local builds; Linux CI is unaffected). `nuxt.config.ts` therefore adds
+separator-agnostic regex `nitro.externals.inline` rules for `nuxt/dist` and
+`@nuxt/nitro-server/dist`. Remove them once the installed Nitro release
+includes the upstream fix.
+
+## 19. Listening continuity and reload silence
+
+`stores/listening.ts` owns local recent/favorite lists, the last station identity,
+and the last explicit Play/Pause preference. Recent history is added on actual
+playback, not when browsing a station. Persist display identity only; restore
+stream sources from the current catalog rather than storing stale/proxied URLs.
+Corrupt or unavailable localStorage must leave playback usable in the session.
+
+Every fresh page stays silent, even if the previous session was playing or the
+legacy `radio_autoplay_enabled` flag was set. Restore the last station on general
+pages, but respect a station deep link and any new user action while restoration
+is pending. Explicit selection from the listening lists requests its target
+station, not the previous station while the target catalog is loading.
+
+The sleep timer follows the global player lifetime and uses a wall-clock deadline.
+It rechecks on visibility/pageshow, cancels on explicit pause, and does not survive
+reload. OS background suspension can delay the browser callback until wake.
+
+Country counts are part of build-time `radioCatalogStats.byCountry`; never fetch
+all country catalogs solely to count stations. Search shares a successful static
+index across modal opens and prepares normalized fields once per immutable array.
+Remote search results must match the current input generation.
+
+At the owner's request, Playwright CI steps are temporarily opt-in with repository
+variable `ENABLE_BROWSER_TESTS=true`. Keep unit/prerender/noindex checks enabled.
+See `UI_ROADMAP.md` for the current follow-up priorities.
+
+## 20. App layout and personal library
+
+The app redesign uses a compact discovery header, violet navigation, a resume
+card, personal favorite/recent grids, compact country rows, and a mobile bottom
+navigation. `/library` is prerendered but excluded from the public sitemap;
+its device-local content is client-only and its page is always noindex.
+
+`PlayerNowPlaying` is presentation only. The existing persistent `Player` owns
+one native audio element and all source/retry/session logic. Opening the modal
+hides the compact dock without unmounting the audio. Queue/lyrics open after the
+full player exits so their focus traps do not overlap. Mobile navigation and
+player heights are reserved in the page/footer together with the bottom safe area.
+No elapsed/remaining seek bar is shown for live radio. Next track is shown only
+when supplied by the provider; otherwise the UI explicitly labels next station.

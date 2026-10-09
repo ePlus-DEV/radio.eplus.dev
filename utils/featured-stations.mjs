@@ -14,6 +14,12 @@ export const VIETNAM_FEATURED_STATION_IDS = Object.freeze([
   'acoustic-radio-zing-mp3',
 ]);
 
+export const SEARCH_FEATURED_STATION_IDS = Object.freeze([
+  ...VIETNAM_FEATURED_STATION_IDS.map(id => `asia/viet-nam/${id}`),
+  'asia/singapore/power',
+  'europe/united-kingdom/heart-uk',
+]);
+
 export function selectVietnamFeaturedStations(catalog) {
   if (!catalog || typeof catalog !== 'object') return [];
   return VIETNAM_FEATURED_STATION_IDS.flatMap(id => {
@@ -21,5 +27,24 @@ export function selectVietnamFeaturedStations(catalog) {
     // Do not render stale entries without a usable stream or station name.
     if (!station || !station.title || !/^https?:\/\//i.test(String(station.stream || ''))) return [];
     return [[id, station]];
+  });
+}
+// Curated international picks share the same homepage carousel as the original
+// Vietnamese selection. Store full station paths so navigation and playback
+// always resolve from the correct country catalog.
+export const HOMEPAGE_FEATURED_STATION_PATHS = Object.freeze([
+  ...VIETNAM_FEATURED_STATION_IDS.slice(0, 1).map(id => `asia/viet-nam/${id}`),
+  'europe/united-kingdom/heart-uk',
+  'asia/singapore/power',
+  ...VIETNAM_FEATURED_STATION_IDS.slice(1).map(id => `asia/viet-nam/${id}`),
+]);
+
+export function selectHomepageFeaturedStations(catalogs) {
+  if (!catalogs || typeof catalogs !== 'object') return [];
+  return HOMEPAGE_FEATURED_STATION_PATHS.flatMap(path => {
+    const [area, country, id] = path.split('/');
+    const meta = catalogs[`${area}/${country}`]?.[id];
+    if (!meta || !meta.title || !/^https?:\/\//i.test(String(meta.stream || ''))) return [];
+    return [{ area, country, id, path, meta }];
   });
 }

@@ -6,6 +6,13 @@ import { createPlaybackStation } from '../utils/playback-station.mjs';
 
 const station = id => createPlaybackStation({ area: 'asia', country: 'viet-nam', id, meta: { title: id, stream: 'https://radio.example/' + id + '.mp3' } });
 
+test('desktop queue starts closed until the listener opens it', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+
+  assert.equal(playback.queueOpen, false);
+});
+
 test('browsing country/home catalogs preserves active audio and its station queue', () => {
   setActivePinia(createPinia());
   const playback = usePlaybackStore();
@@ -31,4 +38,17 @@ test('revisiting a selected station preserves source identity; explicit play sti
   assert.equal(playback.playRequest, 0);
   playback.activate(station('first'), [], { autoplay: true });
   assert.equal(playback.playRequest, 1);
+});
+
+test('a library selection waits for its target instead of playing the old station', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  playback.activate(station('first'), []);
+  playback.requestStation('/asia/viet-nam/second');
+  assert.equal(playback.playRequest, 0);
+  playback.activate(station('second'), []);
+  assert.equal(playback.playRequest, 1);
+  assert.equal(playback.requestedStationUrl, '');
+  playback.requestStation('/asia/viet-nam/second');
+  assert.equal(playback.playRequest, 2, 'selecting the current station can resume it');
 });

@@ -24,6 +24,32 @@ test("player palette keeps structural surfaces neutral and rose as the primary a
 
   assert.doesNotMatch(source, /rgba\(56,189,248/);
   assert.match(source, /bg-\[var\(--radio-surface-elevated\)\]/);
-  assert.match(source, /bg-rose-500 text-white hover:bg-rose-600/);
+  assert.match(source, /bg-rose-500 text-white[\s\S]*hover:bg-rose-400/);
   assert.match(source, /\$t\('player\.pause'\)/);
+});
+
+test("player dock is a live radio console, not a cloned music timeline", async () => {
+  const source = await readFile(playerFile, "utf8");
+
+  assert.match(source, /radio-player-console/);
+  assert.match(source, /radio-player-main-action/);
+  assert.match(source, /liveStateLabel/);
+  assert.match(source, /activeSourceName/);
+  assert.doesNotMatch(
+    source,
+    /nowPlayingTitle[\s\S]{0,800}<input type="range"[\s\S]{0,800}currentMedia/,
+    "the dock should not add a song-progress timeline for live radio",
+  );
+});
+
+test("desktop player controls remain centered regardless of station metadata lines", async () => {
+  const source = await readFile(playerFile, "utf8");
+  const dockMarkup = source.match(/<div class="radio-player-console [^"]+"/)?.[0];
+  assert.ok(dockMarkup, "radio player grid must exist");
+  assert.match(dockMarkup, /min-h-\[var\(--radio-player-height\)\]/);
+  assert.match(dockMarkup, /sm:grid-cols-\[minmax\(0,1fr\)_auto_minmax\(0,1fr\)\]/);
+  assert.doesNotMatch(dockMarkup, /(?:^|\s)pb-\d+/, "bottom padding offsets the controls from the dock center");
+  assert.match(source, /radio-player-live-pill[^"]*whitespace-nowrap/);
+  assert.match(source, /radio-player-controls[^"]*items-center justify-center/);
+  assert.match(source, /radio-player-meta[^"]*truncate/);
 });

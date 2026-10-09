@@ -13,7 +13,8 @@
     "language": "語言：",
     "old_version": "舊版網站",
     "statistics": "統計",
-    "changelog": "更新日誌"
+    "changelog": "更新日誌",
+    "cookie": "Cookie 政策"
   },
   "terms": {
     "content": "歡迎使用網站 https://radio.eplus.dev（「Radio ePlus」），這是 ePlus.DEV 的產品。在您使用「Radio」網站 ePlus 的功能之前，請仔細閱讀網站 https://radio.eplus.dev 上的服務提供和使用協議。一旦註冊，表示您已閱讀、理解、接受並遵守以下條款：",
@@ -153,6 +154,7 @@
     "no_lyric": "目前沒有歌詞",
     "updating": "更新中...",
     "channels": "所有電台",
+    "station_count": "{count} 個電台",
     "search_channels": "搜尋電台...",
     "no_channels": "找不到電台"
   },
@@ -229,7 +231,15 @@
     "stream_format": "串流",
     "proxy": "代理伺服器",
     "direct": "直接連線",
-    "ios_volume_hint": "在 iPhone 或 iPad 上，請使用裝置音量鍵或控制中心調整音量。"
+    "ios_volume_hint": "在 iPhone 或 iPad 上，請使用裝置音量鍵或控制中心調整音量。",
+    "sleep_timer": "睡眠定時器",
+    "sleep_minutes": "{minutes}分鐘後停止",
+    "sleep_cancel": "取消定時器",
+    "sleep_remaining": "{minutes}分鐘後停止",
+    "compact_player": "收合播放器",
+    "expand_player": "展開播放器",
+    "window_player": "迷你播放器",
+    "dock_player": "返回底部列"
   },
   "site_pages": {
     "common": {
@@ -253,9 +263,10 @@
           "body": "串流、節目表、圖片與目前歌曲資訊來自持續變動的目錄與第三方供應商，因此可能隨時改變或無法使用。"
         }
       },
-      "open_source": {
-        "title": "開放專案",
-        "body": "Radio ePlus 由 ePlus.DEV 維護。應用程式原始碼、Issue 與持續改善內容皆公開於 GitHub。"
+      "service": {
+        "title": "Built for simple listening",
+        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "action": "Start listening"
       }
     },
     "privacy": {
@@ -342,10 +353,10 @@
           "body": "權利人可以指出相關電台／頁面並提供足夠的驗證資訊，要求修正或移除。"
         }
       },
-      "github": {
-        "title": "建立 GitHub Issue",
-        "body": "公開開發、錯誤回報與目錄修正均在 Radio ePlus 的 GitHub 儲存庫中追蹤。",
-        "action": "建立 Issue"
+      "support": {
+        "title": "Need help with Radio ePlus?",
+        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "action": "Email support"
       }
     },
     "statistics": {
@@ -360,12 +371,39 @@
       "coverage_title": "依地區覆蓋",
       "coverage_description": "每張卡片顯示該地區目前保存的國家目錄數與電台項目數。",
       "method_title": "數字如何計算",
-      "method_body": "這些數字於網站建置時從儲存庫中受版本控制的 JSON 目錄統計得出，表示目錄項目數，不等於目前上線串流、獨立廣播機構或聽眾數。"
+      "method_body": "這些數字來自網站建置時的電台目錄統計。它們代表目錄項目數量，並不保證目前在線串流、唯一廣播方數量或聽眾規模。"
     },
     "error": {
       "not_found_title": "找不到頁面",
       "generic_title": "發生錯誤",
       "generic_body": "無法載入此頁面。請返回首頁後再試一次。"
+    },
+    "cookie": {
+      "eyebrow": "Cookie Policy",
+      "title": "Cookie Policy",
+      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "sections": {
+        "essential": {
+          "title": "Essential storage",
+          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+        },
+        "analytics": {
+          "title": "Measurement and diagnostics",
+          "body": "正式網站使用 Google Analytics 4 統計造訪與頁面瀏覽量，以改善服務。頁面載入時即開始統計，關閉通知不會影響統計。"
+        },
+        "third_party": {
+          "title": "Third-party services",
+          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+        },
+        "choices": {
+          "title": "Your choices",
+          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+        },
+        "changes": {
+          "title": "Updates",
+          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+        }
+      }
     }
   },
   "home": {
@@ -388,7 +426,10 @@
     "description": "隨時探索全球各地的直播電台。"
   },
   "search": {
-    "unavailable": "搜尋服務暫時無法使用，下方仍會顯示熱門電台。"
+    "unavailable": "搜尋服務暫時無法使用，下方仍會顯示熱門電台。",
+    "suggestions": "為你推薦",
+    "recent": "最近搜尋",
+    "clear": "清除"
   },
   "chat": {
     "open": "開啟聊天助理",
@@ -412,5 +453,37 @@
   "footer": {
     "tagline": "暢聽世界各地的直播電台",
     "description": "依地區與國家尋找電台，隨時在任何裝置上收聽。"
+  },
+  "library": {
+    "title": "我的電台",
+    "recent": "最近收聽",
+    "favorites": "收藏電台",
+    "recent_empty": "播放電台後會顯示在這裡。",
+    "favorites_empty": "點擊愛心即可收藏電台。",
+    "clear_recent": "清除收聽記錄",
+    "add_favorite": "加入收藏",
+    "remove_favorite": "取消收藏"
+  },
+  "redesign": {
+    "navigation": "導覽",
+    "discover": "探索",
+    "search": "搜尋",
+    "library": "資料庫",
+    "continue_listening": "繼續收聽",
+    "paused": "已暫停",
+    "now_playing": "播放畫面",
+    "timer": "定時",
+    "channel_list": "頻道列表",
+    "next_station": "下一個電台",
+    "library_description": "收藏和收聽記錄儲存在此裝置上。",
+    "all": "全部",
+    "see_all": "查看全部"
+  },
+  "cookie_consent": {
+    "title": "Cookie 與流量分析通知",
+    "body": "Radio ePlus 使用必要的 Cookie 和本機儲存來記住語言、主題、播放器設定與收聽偏好。",
+    "accept": "知道了",
+    "analytics_body": "Radio ePlus 使用必要的儲存空間保留偏好，並在正式網站透過 Google Analytics 4 統計造訪與頁面瀏覽量。這是一則告知。",
+    "learn_more": "Cookie 政策"
   }
 }

@@ -7,7 +7,7 @@
         :items="tabs"
         :content="false"
         size="sm"
-        :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-[var(--radio-border)] shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:text-[var(--radio-text)]' }"
+        :ui="{ list: 'w-full rounded-xl bg-[var(--radio-surface-soft)]', indicator: 'rounded-lg bg-[var(--radio-surface)] ring-1 ring-rose-500/25 shadow-sm', trigger: 'flex-1 text-[var(--radio-text-muted)] data-[state=active]:font-semibold data-[state=active]:text-rose-600 dark:data-[state=active]:text-rose-300' }"
         :aria-label="$t('player.sidebar_label')"
       />
 
@@ -18,7 +18,7 @@
         <span class="truncate text-xs font-semibold text-[var(--radio-text)]">
           {{ hasStations ? $t("panel.channels") : $t("panel.schedule") }}
         </span>
-        <span class="inline-flex items-center rounded-full border-0 bg-rose-500/10 text-[10px] font-bold text-rose-500">
+        <span class="radio-count-badge inline-flex min-w-6 items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-semibold">
           {{ hasStations ? stations.length : scheduleCount }}
         </span>
       </div>
@@ -42,7 +42,7 @@
           <span class="sr-only">{{ $t("panel.search_channels") }}</span>
           <svg
             viewBox="0 0 24 24"
-            class="h-3.5 w-3.5 shrink-0 fill-none stroke-slate-400"
+            class="h-3.5 w-3.5 shrink-0 fill-none stroke-[var(--radio-text-muted)]"
             aria-hidden="true"
           >
             <circle cx="11" cy="11" r="6" stroke-width="1.8"></circle>
@@ -58,13 +58,13 @@
       </div>
     </div>
 
-    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto p-2.5">
+    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5">
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
         <button
           v-for="station in filteredStations"
           :key="station.id"
           type="button"
-          class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition"
+          class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left transition"
           :class="
             station.id === activeStationId
               ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
@@ -89,7 +89,7 @@
               class="block truncate text-sm font-semibold"
               :class="
                 station.id === activeStationId
-                  ? 'text-rose-600 dark:text-rose-300'
+                  ? 'text-rose-700 dark:text-rose-300'
                   : 'text-[var(--radio-text)]'
               "
             >
@@ -234,6 +234,7 @@
 
 <script setup lang="ts">
 import type { RadioStationOption } from "~/types/radio";
+import { normalizeStationQuery } from "~/utils/station-search.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -296,11 +297,11 @@ const activeTab = ref<"stations" | "schedule">(
 const preferScheduleAfterLoad = ref(false);
 
 const filteredStations = computed(() => {
-  const keyword = query.value.trim().toLocaleLowerCase();
+  const keyword = normalizeStationQuery(query.value);
   if (!keyword) return props.stations;
 
   return props.stations.filter((station) =>
-    station.title.toLocaleLowerCase().includes(keyword),
+    normalizeStationQuery(station.title).includes(keyword),
   );
 });
 

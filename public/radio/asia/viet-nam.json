@@ -2,32 +2,80 @@
   "vov1": {
     "title": "VOV 1",
     "description": "VOV1 Radio là kênh phát thanh tổng hợp các tin tức thời sự, chính trị, ngoại giao, kinh tế, văn học nghệ thuật... mới nhất, trực thuộc đài phát thanh Việt Nam VOV, phát sóng 24/24h hàng ngày.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Thời sự",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://stream.vovmedia.vn/vov1",
-    "features": "/img/asia/viet-nam/vov1.png"
+    "stream": "https://stream-cdn.vov.vn/live/vov1-audio_only.m3u8",
+    "features": "/img/asia/viet-nam/vov1.png",
+    "streams": [
+      {
+        "url": "https://str.vov.gov.vn/vovlive/vov1vov5Vietnamese.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Live"
+      },
+      {
+        "url": "https://stream.vovmedia.vn/vov1",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Media (legacy)"
+      }
+    ]
   },
   "vov2": {
     "title": "VOV 2",
     "description": "Hệ văn hóa - đời sống - khoa học VOV2 trực thuộc Đài tiếng nói Việt Nam, là kênh phát thanh quốc gia quốc gia, phát sóng 19 giờ/ ngày, tập trung vào các chương trình liên quan đến văn hóa, giáo dục và xã hội.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Văn Hóa - Xã Hội",
     "url": "https://vov.vn",
-    "cros": true,
-    "stream": "https://stream.vovmedia.vn/vov2",
-    "features": "/img/asia/viet-nam/vov2.png"
+    "cros": false,
+    "stream": "https://stream-cdn.vov.vn/live/vov2-audio_only.m3u8",
+    "features": "/img/asia/viet-nam/vov2.png",
+    "streams": [
+      {
+        "url": "https://str.vov.gov.vn/vovlive/vov2.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Live"
+      },
+      {
+        "url": "https://stream.vovmedia.vn/vov2",
+        "type": "audio/mpeg",
+        "cros": true,
+        "source": "alternative",
+        "label": "VOV Media (legacy)"
+      }
+    ]
   },
   "vov3": {
     "title": "VOV 3",
     "description": "VOV3 Radio là kênh phát thanh thuộc đài tiếng nói Việt Nam, cung cấp các chương trình liên quan đến âm nhạc trong nước và quốc tế, cũng như các thông tin cập nhật trong ngành giải trí.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Âm nhạc",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://stream.vovmedia.vn/vov3",
-    "features": "/img/asia/viet-nam/vov3.png"
+    "stream": "https://str.vov.gov.vn/vovlive/vov3.sdp_aac/playlist.m3u8",
+    "features": "/img/asia/viet-nam/vov3.png",
+    "streams": [
+      {
+        "url": "https://media-audio.vov.vn/vov3.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Audio"
+      },
+      {
+        "url": "https://stream.vovmedia.vn/vov3",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Media (legacy)"
+      }
+    ]
   },
   "vov4": {
     "title": "VOV 4 - Hồ Chí Minh",
@@ -72,22 +120,40 @@
   "vov5": {
     "title": "VOV 5",
     "description": "VOV5 là chương trình phát thanh đối ngoại trực thuộc Đài tiếng Nói Việt Nam. VOV5 có các chương trình phát thanh bằng tiếng Anh, Tây Ban Nha, Pháp, Nga, Nhật Bản, Trung Quốc, Đức, Lào, Thái Lan, Campuchia, Indonesia và tiếng Việt dành cho kiều bào.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ban Đối Ngoại",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://stream.vovmedia.vn/vov5",
-    "features": "/img/asia/viet-nam/vov5.png"
+    "stream": "https://media-audio.vov.vn/vov5.sdp_aac/playlist.m3u8",
+    "features": "/img/asia/viet-nam/vov5.png",
+    "streams": [
+      {
+        "url": "https://stream.vovmedia.vn/vov5",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Media (legacy)"
+      }
+    ]
   },
   "vov-english": {
     "title": "VOV - English",
     "description": "VOV5 English là một trong những kênh đầu tiên của Dịch vụ VOV5 hải ngoại, bắt đầu phát sóng vào ngày 7 tháng 9 năm 1945. Từ năm 1998, các chương trình tiếng Anh đã chính thức được phát trên FM cho cộng đồng nước ngoài tại Việt Nam và khán giả trong nước.",
-    "type": "audio/mpeg",
+    "type": "application/x-mpegURL",
     "category": "Ban Dân Tộc",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://stream.vovmedia.vn/vov247",
-    "features": "/img/asia/viet-nam/vov-english.png"
+    "stream": "https://media-audio.vov.vn/vov247vov5English.sdp_aac/playlist.m3u8",
+    "features": "/img/asia/viet-nam/vov-english.png",
+    "streams": [
+      {
+        "url": "https://stream.vovmedia.vn/vov247",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Media (legacy)"
+      }
+    ]
   },
   "vov5-chinese": {
     "title": "VOV 5 - Chinese",
@@ -195,9 +261,18 @@
     "type": "application/x-mpegURL",
     "category": "Ban Văn học - Nghệ thuật",
     "url": "https://vov6.vov.vn",
-    "cros": true,
+    "cros": false,
     "stream": "https://stream-cdn.vov.vn/live/vov24_7-audio_only.m3u8",
-    "features": "/img/asia/viet-nam/vov-247.png"
+    "features": "/img/asia/viet-nam/vov-247.png",
+    "streams": [
+      {
+        "url": "https://media-audio.vov.vn/vov247vov5English.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Audio"
+      }
+    ]
   },
   "vov-gt-hcm": {
     "title": "VOV Giao Thông TP.HCM",
@@ -738,7 +813,7 @@
     "stream": "https://multi-playlist-zmp3.zmdcdn.me/_TAVBRh_ce4/zhls/playback-realtime/97b35e1f625a8b04d24b/index.m3u8",
     "features": "/img/asia/viet-nam/c-pop-zing-mp3.png"
   },
-    "pladio-zing-mp3": {
+  "pladio-zing-mp3": {
     "title": "Pladio - Zing MP3",
     "description": "Live 247 - Nghe ngày nghe đêm",
     "type": "application/x-mpegURL",

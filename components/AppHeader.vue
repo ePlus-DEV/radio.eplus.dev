@@ -1,121 +1,35 @@
 <template>
-  <header class="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6">
-    <nav
-      class="mx-auto flex h-16 max-w-[1920px] items-center justify-between rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-header-bg)] px-3 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:shadow-black/20 sm:px-4"
-    >
-      <div class="flex min-w-0 items-center gap-2">
-        <NuxtLink
-          to="/"
-          class="group flex min-w-0 items-center gap-3 rounded-xl pr-2 focus:outline-none focus:ring-2 focus:ring-rose-400/40"
-          @click="mobileOpen = false"
-        >
-          <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)] shadow-md ring-1 ring-[var(--radio-border)]"
-          >
-            <img
-              src="/brand/logo-white.svg"
-              width="30"
-              height="30"
-              alt="Radio ePlus"
-              class="h-7 w-7 object-contain dark:brightness-0"
-            />
-          </span>
-          <span class="hidden min-w-0 sm:block">
-            <span class="block truncate text-sm font-bold tracking-tight text-[var(--radio-text)]">
-              Radio ePlus
-            </span>
-            <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-500">
-              {{ $t('brand.live_radio') }}
-            </span>
-          </span>
-        </NuxtLink>
-
-        <div class="ml-2 hidden items-center gap-1 lg:flex">
-          <NuxtLink
-            to="/"
-            class="rounded-xl px-3 py-2 text-sm font-medium transition"
-            :class="
-              route.path === '/'
-                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
-                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-            "
-          >
-            {{ $t("navmenu.homepage") }}
-          </NuxtLink>
-          <NuxtLink
-            to="/statistics"
-            class="rounded-xl px-3 py-2 text-sm font-medium transition"
-            :class="
-              route.path === '/statistics'
-                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
-                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-            "
-          >
-            {{ $t("navmenu.statistics") }}
-          </NuxtLink>
-          <NuxtLink
-            to="/about"
-            class="rounded-xl px-3 py-2 text-sm font-medium transition"
-            :class="
-              route.path === '/about'
-                ? 'bg-[var(--radio-hover)] text-[var(--radio-text)]'
-                : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'
-            "
-          >
-            {{ $t("navmenu.about") }}
-          </NuxtLink>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-1">
-        <button
-          type="button"
-          class="flex h-10 items-center gap-2 rounded-xl px-2.5 text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] sm:px-3"
-          :aria-label="$t('popup.search.text')"
-          @click="openSearch"
-        >
-          <fa :icon="['fas', 'magnifying-glass']" class="h-4 w-4" />
-          <span class="hidden text-sm font-medium md:inline">
-            {{ $t("popup.search.text") }}
-          </span>
-          <kbd
-            class="rounded border px-1.5 py-0.5 text-[10px] hidden border-[var(--radio-border)] bg-[var(--radio-surface-soft)] font-medium text-[var(--radio-text-muted)] xl:inline"
-          >
-            /
-          </kbd>
-        </button>
-
-        <ThemeDarkMode />
-        <LangSwitcher />
-
-        <button
-          type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-xl text-[var(--radio-text-muted)] transition hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)] lg:hidden"
-          :aria-label="mobileOpen ? $t('button.close') : 'Menu'"
-          :aria-expanded="mobileOpen"
-          @click="mobileOpen = !mobileOpen"
-        >
-          <fa :icon="['fas', mobileOpen ? 'xmark' : 'bars']" />
-        </button>
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-[var(--radio-border)] bg-[var(--radio-header-bg)] backdrop-blur-xl">
+    <nav class="mx-auto flex h-16 max-w-[1920px] items-center gap-2 px-4 sm:h-20 sm:gap-5 sm:px-6">
+      <NuxtLink to="/" class="radio-interactive flex shrink-0 items-center gap-2 rounded-xl xl:w-56">
+        <img src="/brand/logo-share.png" width="36" height="36" alt="Radio ePlus" class="h-9 w-9 rounded-lg object-contain" />
+        <span class="hidden sm:block"><span class="block text-base font-bold">Radio ePlus</span><span class="block text-[10px] text-rose-500">{{ $t('brand.live_radio') }}</span></span>
+      </NuxtLink>
+      <SearchBox ref="headerSearch" inline :autofocus="false" class="hidden min-w-0 flex-1 sm:block sm:max-w-2xl" @close="closeSearch" />
+      <button type="button" class="radio-interactive flex h-11 min-w-0 flex-1 items-center gap-3 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 text-left text-[var(--radio-text-muted)] sm:hidden" :aria-label="$t('popup.search.text')" @click="openSearch">
+        <UIcon name="i-lucide-search" class="h-5 w-5 shrink-0" /><span class="truncate text-sm">{{ $t('popup.search.text') }}</span><kbd class="ml-auto hidden text-xs sm:block">/</kbd>
+      </button>
+      <div class="ml-auto flex shrink-0 items-center gap-1"><ThemeDarkMode /><LangSwitcher />
+        <UButton color="neutral" variant="ghost" icon="i-lucide-menu" class="hidden h-11 w-11 justify-center sm:flex xl:hidden" :aria-label="$t('redesign.navigation')" :aria-expanded="mobileOpen" @click="mobileOpen = !mobileOpen" />
       </div>
     </nav>
-
   </header>
-  <USlideover v-model:open="mobileOpen" side="left" :title="$t('player.explore')" :ui="{ content: 'w-80', body: 'p-3 sm:p-3' }">
-    <template #body><AppSidebar mobile /></template>
-  </USlideover>
-  <UModal v-model:open="searchOpen" :title="$t('popup.search.text')" :description="$t('popup.search.popular_channels')" :ui="{ content: 'max-w-2xl' }">
-    <template #content><SearchBox @close="closeSearch" /></template>
-  </UModal>
+  <USlideover v-model:open="mobileOpen" side="left" :title="$t('player.explore')" :ui="{ content: 'w-80', body: 'p-3 sm:p-3' }"><template #body><AppSidebar mobile /></template></USlideover>
+  <UModal v-model:open="searchOpen" :title="$t('popup.search.text')" :description="$t('popup.search.popular_channels')" :ui="{ content: 'max-w-2xl' }"><template #content><SearchBox @close="closeSearch" /></template></UModal>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute();
 const searchOpen = ref(false);
 const mobileOpen = ref(false);
+const headerSearch = useTemplateRef("headerSearch");
 
 const openSearch = (): void => {
   mobileOpen.value = false;
+  if (import.meta.client && window.matchMedia("(min-width: 640px)").matches) {
+    headerSearch.value?.focus?.();
+    return;
+  }
   searchOpen.value = true;
 };
 

@@ -10,11 +10,11 @@
           <div class="h-5 w-36 animate-pulse rounded-full bg-[var(--radio-border-strong)]"></div>
           <div class="h-4 w-12 animate-pulse rounded-full bg-[var(--radio-surface-soft)]"></div>
         </div>
-        <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
+        <div class="grid grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
           <div
             v-for="n in 12"
             :key="n"
-            class="aspect-[4/3] animate-pulse rounded-2xl bg-[var(--radio-surface-soft)]"
+            class="aspect-[7/4] animate-pulse rounded-2xl bg-[var(--radio-surface-soft)] sm:aspect-[5/4] lg:aspect-square"
           ></div>
         </div>
       </section>
@@ -24,6 +24,7 @@
       v-for="(continent, continentIndex) in world"
       :key="continentIndex"
       class="radio-surface overflow-hidden"
+      :class="compact ? 'radio-country-compact' : ''"
     >
       <div
         class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4  sm:px-5"
@@ -37,46 +38,50 @@
           </h2>
         </div>
         <span
-          class="inline-flex items-center rounded-full h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
+          class="radio-count-badge inline-flex h-7 shrink-0 items-center rounded-full px-2.5 text-xs font-semibold"
         >
           {{ continent.length }}
         </span>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
-        <NuxtLink
+      <div class="grid grid-cols-2 gap-2.5 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5">
+        <UTooltip
           v-for="country in continent"
           :key="country.url"
-          :to="country.url"
-          class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-violet-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
-          :title="$t(country.name)"
-          :aria-label="$t(country.name)"
+          :text="$t(country.name)"
         >
-          <div class="radio-themed-artwork relative flex aspect-square items-center justify-center overflow-hidden p-5">
-            <img
-              loading="lazy"
-              :src="country.flag"
-              :alt="$t(country.name)"
-              class="max-h-[70%] max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
-            />
-            <span
-              v-if="country.station_count !== null"
-              class="absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
-            >
-              {{ country.station_count }}
-            </span>
-          </div>
+          <NuxtLink
+            :to="country.url"
+            class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-rose-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+            :aria-label="$t(country.name)"
+          >
+            <div class="radio-themed-artwork relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square">
+              <img
+                loading="lazy"
+                :src="country.flag"
+                :alt="$t(country.name)"
+                class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
+              />
+              <span
+                v-if="country.station_count !== null"
+                class="absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
+              >
+                {{ country.station_count }}
+              </span>
+            </div>
 
-          <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-3">
-            <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
-              {{ $t(country.name) }}
-            </span>
-            <fa
-              :icon="['fas', 'arrow-right']"
-              class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
-            />
-          </div>
-        </NuxtLink>
+            <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3">
+              <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
+                {{ $t(country.name) }}
+              </span>
+              <span v-if="compact && country.station_count !== null" class="radio-count-badge shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-medium">{{ country.station_count }}</span>
+              <fa
+                :icon="['fas', 'arrow-right']"
+                class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
+              />
+            </div>
+          </NuxtLink>
+        </UTooltip>
       </div>
     </section>
   </div>
@@ -87,6 +92,7 @@ import worldData from "~/data/world";
 
 const props = defineProps<{
   chooseTheArea?: string;
+  compact?: boolean;
 }>();
 
 interface Country {
@@ -107,9 +113,7 @@ interface WorldCountry {
 }
 
 const config = useRuntimeConfig();
-const algoliaConfigured = computed(() => Boolean(config.public.algoliaConfigured));
-const { result, search } = useAlgoliaSearch("world");
-const ALGOLIA_TIMEOUT_MS = 5000;
+const countryCounts = config.public.radioCatalogStats.byCountry as Record<string, number>;
 
 const selectedArea = computed(() =>
   props.chooseTheArea?.replace(/-/g, "_"),
@@ -129,7 +133,7 @@ const createLocalWorld = (): GroupedResults => {
           name: country.name,
           flag: country.flag,
           url: `/${areaSlug}/${countrySlug}`,
-          station_count: null,
+          station_count: countryCounts[`/${areaSlug}/${countrySlug}`] ?? null,
           category: areaKey,
         };
       },
@@ -139,76 +143,7 @@ const createLocalWorld = (): GroupedResults => {
   return grouped;
 };
 
-const world = ref<GroupedResults>(createLocalWorld());
+const world = computed<GroupedResults>(createLocalWorld);
 const loading = computed(() => Object.keys(world.value).length === 0);
 
-const loadLocalStationCounts = async (): Promise<void> => {
-  const areaKey = selectedArea.value;
-  if (!areaKey || !world.value[areaKey]) return;
-
-  const areaSlug = areaKey.replace(/_/g, "-");
-  await Promise.allSettled(
-    world.value[areaKey].map(async (country) => {
-      const countrySlug = country.url.split("/").pop();
-      if (!countrySlug) return;
-
-      try {
-        const stations = await $fetch<Record<string, unknown>>(
-          `/radio/${areaSlug}/${countrySlug}.json`,
-        );
-        country.station_count = Object.keys(stations || {}).length;
-      } catch {
-        // Keep the card visible even when one local catalog file cannot load.
-      }
-    }),
-  );
-};
-
-const mergeAlgoliaResults = (): void => {
-  for (const rawHit of result.value?.hits || []) {
-    const hit = rawHit as unknown as Partial<Country>;
-    const category = hit.category?.replace(/-/g, "_");
-    if (!category || !world.value[category]) continue;
-
-    const match = world.value[category].find(
-      (country) =>
-        country.url === hit.url ||
-        country.name === hit.name,
-    );
-
-    if (match && typeof hit.station_count === "number") {
-      match.station_count = hit.station_count;
-    }
-  }
-};
-
-const enrichFromAlgolia = async (): Promise<void> => {
-  if (!algoliaConfigured.value) return;
-
-  try {
-    const completed = await Promise.race([
-      search({
-        query: "",
-        requestOptions: { hitsPerPage: 100 },
-      }).then(() => true),
-      new Promise<boolean>((resolve) =>
-        setTimeout(() => resolve(false), ALGOLIA_TIMEOUT_MS),
-      ),
-    ]);
-
-    if (!completed) {
-      console.warn("Algolia country metadata timed out; using local catalog.");
-      return;
-    }
-
-    mergeAlgoliaResults();
-  } catch (error) {
-    console.error("Unable to enrich radio countries from Algolia:", error);
-  }
-};
-
-onMounted(() => {
-  void loadLocalStationCounts();
-  void enrichFromAlgolia();
-});
 </script>
