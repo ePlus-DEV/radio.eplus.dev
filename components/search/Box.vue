@@ -86,7 +86,7 @@
             class="radio-search-panel-row flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition"
             @click="selectSuggestion(item)"
           >
-            <UIcon name="i-lucide-trending-up" class="h-4 w-4 shrink-0 text-rose-400" />
+            <UIcon name="i-lucide-trending-up" class="h-4 w-4 shrink-0 text-rose-700 dark:text-rose-300" />
             <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
               {{ item }}
             </span>
