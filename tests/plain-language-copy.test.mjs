@@ -7,9 +7,7 @@ const read = async locale => JSON.parse(await readFile(`lang/${locale}.json`, 'u
 const get = (object, key) => key.split('.').reduce((value, part) => value?.[part], object);
 
 const userFacingKeys = [
-  'panel.updating', 'player.source', 'player.primary_source',
-  'player.alternative_source', 'player.source_number', 'player.stream_format',
-  'player.proxy', 'player.direct',
+  'search.loading', 'library.loading', 'player.schedule_loading',
   'site_pages.about.description', 'site_pages.about.sections.playback.body',
   'site_pages.about.sections.availability.title', 'site_pages.about.sections.availability.body',
   'site_pages.about.service.title', 'site_pages.about.service.body',
@@ -38,13 +36,13 @@ const userFacingKeys = [
 
 test('listener-facing copy exists and is translated in all seven languages', async () => {
   const english = await read('en-US');
-  assert.equal(userFacingKeys.length, 53);
+  assert.equal(userFacingKeys.length, 48);
   for (const locale of locales) {
     const content = await read(locale);
     for (const key of userFacingKeys) {
       const value = get(content, key);
       assert.ok(typeof value === 'string' && value.trim(), `${locale} missing ${key}`);
-      if (locale !== 'en-US' && key !== 'player.source_number') {
+      if (locale !== 'en-US') {
         assert.notEqual(value, get(english, key), `${locale} left ${key} in English`);
       }
     }
@@ -78,5 +76,58 @@ test('cookie notice stays factual about automatic GA4 instead of promising opt-i
     assert.match(get(content, 'site_pages.cookie.sections.analytics.body'), /Google Analytics 4/);
     assert.equal(typeof get(content, 'cookie_consent.accept'), 'string');
     assert.equal(get(content, 'cookie_consent.allow_analytics'), undefined);
+  }
+});
+
+test('existing translation keys retain their original meanings', async () => {
+  const english = await read('en-US');
+  const vietnamese = await read('vi-VN');
+  assert.equal(english.panel.updating, 'Updating...');
+  assert.equal(vietnamese.panel.updating, 'Đang cập nhật...');
+  assert.equal(english.player.source, 'Stream source');
+  assert.equal(vietnamese.player.source, 'Nguồn phát');
+  assert.equal(english.player.stream_format, 'Stream');
+  assert.equal(vietnamese.player.stream_format, 'Luồng phát');
+  for (const locale of locales) {
+    const content = await read(locale);
+    for (const key of ['search.loading', 'library.loading', 'player.schedule_loading']) {
+      assert.ok(get(content, key), `${locale}: missing context-specific loading key ${key}`);
+    }
+  }
+});
+
+test('search, library, schedule and station-empty messages use the right translation keys', async () => {
+  const [search, library, queue, stations, realtime] = await Promise.all([
+    readFile('components/search/Box.vue', 'utf8'),
+    readFile('pages/library.vue', 'utf8'),
+    readFile('components/player/Queue.vue', 'utf8'),
+    readFile('components/panel/Station.vue', 'utf8'),
+    readFile('composables/useStationRealtime.ts', 'utf8'),
+  ]);
+  assert.equal((search.match(/search\\.loading/g) || []).length, 2);
+  assert.doesNotMatch(search, /panel\\.updating/);
+  assert.match(library, /library\\.loading/);
+  assert.match(queue, /scheduleLoading[^\\n]*player\\.schedule_loading/);
+  // Missing playlist metadata can still legitimately be "updating".
+  assert.match(queue, /panel\\.updating/);
+  assert.match(realtime, /panel\\.updating/);
+  assert.match(stations, /panel\\.no_channels/);
+  assert.doesNotMatch(stations, /panel\\.updating/);
+});
+
+test('unavailable radio text explains the problem and next steps in each language', async () => {
+  const titles = {
+    'en-US': "If you can't listen to a radio station",
+    'vi-VN': 'Khi không nghe được radio',
+    'ja-JP': 'ラジオが聴けないとき',
+    'zh-CN': '无法收听广播时',
+    'zh-TW': '無法收聽廣播時',
+    'fr-FR': "Si vous n'arrivez pas à écouter une station",
+    'ru-RU': 'Если не удаётся слушать радио',
+  };
+  for (const locale of locales) {
+    const content = await read(locale);
+    assert.equal(get(content, 'site_pages.terms.sections.availability.title'), titles[locale]);
+    assert.ok(get(content, 'site_pages.terms.sections.availability.body').length > 100);
   }
 });
