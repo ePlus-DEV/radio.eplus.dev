@@ -25,7 +25,7 @@
           <div class="min-w-0 flex-1">
             <div class="mb-1 hidden items-center gap-2 sm:flex">
               <span class="radio-player-live-pill inline-flex max-w-full items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" :class="liveStateClass">
-                <span class="h-1.5 w-1.5 rounded-full" :class="playing ? 'animate-pulse bg-emerald-500' : waiting ? 'animate-pulse bg-amber-500' : streamError ? 'bg-rose-500' : 'bg-current'"></span>
+                <span class="h-1.5 w-1.5 rounded-full" :class="playing ? 'animate-pulse bg-emerald-500' : waiting ? 'animate-pulse bg-amber-500' : streamError ? 'bg-red-500' : 'bg-current'"></span>
                 {{ liveStateLabel }}
               </span>
             </div>
@@ -94,8 +94,8 @@
         <UIcon v-else name="i-lucide-radio" class="h-6 w-6 text-[var(--radio-text-muted)]" />
       </div>
       <div class="min-w-0 flex-1">
-        <p class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-emerald-500">
-          <span class="h-1.5 w-1.5 rounded-full" :class="playing ? 'animate-pulse bg-emerald-500' : 'bg-current'"></span>
+        <p class="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" :class="liveStateClass">
+          <span class="h-1.5 w-1.5 rounded-full" :class="playing ? 'animate-pulse bg-emerald-500' : waiting ? 'animate-pulse bg-amber-500' : streamError ? 'bg-red-500' : 'bg-current'"></span>
           {{ liveStateLabel }}
         </p>
         <p dir="auto" class="mt-1 truncate text-sm font-semibold">{{ nowPlayingTitle }}</p>
@@ -245,11 +245,11 @@ const nowPlayingOpen = ref(false);
 const playerStatus = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
 const liveStateLabel = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
-  if (streamError.value) return "bg-rose-500/10 text-rose-500";
+  if (streamError.value) return "bg-red-500/10 text-red-700 dark:text-red-300";
   if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
-  if (waiting.value) return "bg-amber-500/10 text-amber-500";
-  if (playing.value) return "bg-emerald-500/10 text-emerald-500";
-  return "bg-rose-500/10 text-rose-400";
+  if (waiting.value) return "bg-amber-500/10 text-amber-700 dark:text-amber-300";
+  if (playing.value) return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300";
+  return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
 });
 let pendingPlayerAction: 'queue' | 'lyrics' | null = null;
 const deferPlayerAction = (action: 'queue' | 'lyrics') => { pendingPlayerAction = action; nowPlayingOpen.value = false; };
