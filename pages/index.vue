@@ -3,16 +3,16 @@
     <section class="radio-hero rounded-2xl">
       <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{{ $t('home.title') }}</h1>
       <p class="mt-2 max-w-2xl text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('home.description') }}</p>
-      <div class="mt-4 flex flex-wrap gap-4 text-xs font-medium text-rose-500">
+      <div class="mt-4 flex flex-wrap gap-4 text-xs font-semibold text-rose-700 dark:text-rose-300">
         <a href="#featured-radio" class="radio-interactive rounded-lg py-2">{{ $t('home.start_listening') }}</a>
         <a href="#explore-radio" class="radio-interactive rounded-lg py-2">{{ $t('home.explore_countries') }} · {{ totalCountries }}</a>
       </div>
     </section>
-    <ClientOnly><PanelResumeCard /><PanelListeningLibrary compact /></ClientOnly>
     <section id="featured-radio" class="scroll-mt-24">
       <div class="mb-4 flex items-center justify-between"><h2 class="text-lg font-semibold">{{ $t('home.featured') }}</h2><span class="text-xs text-[var(--radio-text-muted)]">{{ $t('home.start_listening') }}</span></div>
       <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-url="playback.station?.url" />
     </section>
+    <ClientOnly><PanelResumeCard /><PanelListeningLibrary compact /></ClientOnly>
     <section id="explore-radio" class="scroll-mt-24">
       <h2 class="mb-4 text-lg font-semibold">{{ $t('home.browse_country') }}</h2>
       <PanelRadio compact />
