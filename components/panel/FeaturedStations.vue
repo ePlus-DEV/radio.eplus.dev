@@ -24,7 +24,7 @@
               />
               <span
                 v-if="station.url === activeStationUrl"
-                class="absolute left-2 top-2 flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold" :class="isPlaying(station) ? (playback.waiting ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300') : 'bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]'"
+                class="absolute left-2 top-2 flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold" :class="isPlaying(station) ? (playback.waiting ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300') : 'radio-neutral-badge'"
               >
                 <span class="h-1.5 w-1.5 rounded-full bg-current"></span> {{ $t(playback.playing ? 'player.on_air' : playback.waiting ? 'player.connecting' : 'redesign.paused') }}
               </span>
