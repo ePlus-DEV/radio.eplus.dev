@@ -1,0 +1,10 @@
+# Disable Qodo Merge / PR-Agent automatic feedback only for this repository.
+# The GitHub App remains installed; no automatic PR or push commands will run.
+[config]
+disable_auto_feedback = true
+
+[github_app]
+pr_commands = []
+handle_push_trigger = false
+push_commands = []
+review_commands = []
