@@ -25,7 +25,7 @@ import worldData from "~/data/world";
 import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
-import { selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
+import { HOMEPAGE_FEATURED_STATION_PATHS, selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const runtimeConfig = useRuntimeConfig();
@@ -35,16 +35,22 @@ const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
 );
 const playback = usePlaybackStore();
-// Curate verified station IDs, not arbitrary favorites or the full country catalogs.
-const featuredCountries = ['asia/viet-nam', 'europe/united-kingdom', 'asia/singapore'];
+// Load only curated stations into the Nuxt payload, not entire country catalogs.
+const featuredCountries = [...new Set(HOMEPAGE_FEATURED_STATION_PATHS.map(path => path.split('/').slice(0, 2).join('/')))];
 const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalogs', async () => {
   const catalogs = await Promise.all(featuredCountries.map(async (country) => {
+    let catalog: Record<string, RadioCatalogEntry>;
     if (import.meta.server) {
       const { readFile } = await import('node:fs/promises');
       const { join } = await import('node:path');
-      return JSON.parse(await readFile(join(process.cwd(), 'public/radio', `${country}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
+      catalog = JSON.parse(await readFile(join(process.cwd(), 'public/radio', `${country}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
+    } else {
+      catalog = await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${country}.json`);
     }
-    return await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${country}.json`);
+    const ids = new Set(HOMEPAGE_FEATURED_STATION_PATHS
+      .filter(path => path.startsWith(`${country}/`))
+      .map(path => path.slice(country.length + 1)));
+    return Object.fromEntries(Object.entries(catalog).filter(([id]) => ids.has(id))) as Record<string, RadioCatalogEntry>;
   }));
   return Object.fromEntries(featuredCountries.map((country, index) => [country, catalogs[index]])) as Record<string, Record<string, RadioCatalogEntry>>;
 });
