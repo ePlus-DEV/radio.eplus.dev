@@ -29,3 +29,22 @@ export function selectVietnamFeaturedStations(catalog) {
     return [[id, station]];
   });
 }
+// Curated international picks share the same homepage carousel as the original
+// Vietnamese selection. Store full station paths so navigation and playback
+// always resolve from the correct country catalog.
+export const HOMEPAGE_FEATURED_STATION_PATHS = Object.freeze([
+  ...VIETNAM_FEATURED_STATION_IDS.slice(0, 1).map(id => `asia/viet-nam/${id}`),
+  'europe/united-kingdom/heart-uk',
+  'asia/singapore/power',
+  ...VIETNAM_FEATURED_STATION_IDS.slice(1).map(id => `asia/viet-nam/${id}`),
+]);
+
+export function selectHomepageFeaturedStations(catalogs) {
+  if (!catalogs || typeof catalogs !== 'object') return [];
+  return HOMEPAGE_FEATURED_STATION_PATHS.flatMap(path => {
+    const [area, country, id] = path.split('/');
+    const meta = catalogs[`${area}/${country}`]?.[id];
+    if (!meta || !meta.title || !/^https?:\/\//i.test(String(meta.stream || ''))) return [];
+    return [{ area, country, id, path, meta }];
+  });
+}
