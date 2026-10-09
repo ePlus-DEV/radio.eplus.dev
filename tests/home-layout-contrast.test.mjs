@@ -33,7 +33,7 @@ test('compact Favorites / Recently played omit empty sections without removing f
   assert.match(source, /@click="togglePlayback\(station, group\.items\)"/);
 });
 
-test('dark secondary text and cards have clear, accessible contrast', async () => {
+test('restored dark palette and informative badges have clear contrast', async () => {
   const css = await read('assets/css/main.css');
   const dark = css.match(/html\.dark,\s*html\[data-theme="dark"\]\s*\{([\s\S]*?)\n\s*\}/)?.[1];
   assert.ok(dark, 'dark color tokens defined');
@@ -45,8 +45,32 @@ test('dark secondary text and cards have clear, accessible contrast', async () =
   const surface = token('radio-surface');
   const muted = token('radio-text-muted');
   const primary = token('radio-text');
-  assert.ok(contrast(muted, surface) >= 7, 'secondary text should remain visible even in small UI');
+  assert.ok(contrast(muted, surface) >= 4.5, 'secondary text meets WCAG AA');
   assert.ok(contrast(primary, surface) >= 7, 'main text should remain legible');
   assert.notEqual(token('radio-page-bg'), surface, 'cards must separate from the page background');
-  assert.match(dark, /--radio-border:\s*rgb\(221 230 245 \/ 0\.16\)/);
+  assert.equal(token('radio-page-bg'), '#101119', 'original dark page tone restored');
+  assert.equal(surface, '#1a1b26', 'original dark card tone restored');
+  assert.equal(token('radio-surface-soft'), '#111827', 'original muted surface tone restored');
+  const chipBg = token('radio-badge-bg');
+  const chipText = token('radio-badge-text');
+  assert.ok(contrast(chipText, chipBg) >= 4.5, 'badge text meets WCAG AA');
+  assert.ok(contrast(chipBg, surface) >= 1.4, 'badge fill remains perceptibly distinct from the card');
+  assert.match(dark, /--radio-badge-border:\s*rgb\(148 163 184 \/ 0\.4\)/);
+});
+
+test('country, station and queue count chips use the shared badge treatment', async () => {
+  const [styles, countries, stations, queue, featured] = await Promise.all([
+    read('assets/css/main.css'),
+    read('components/panel/Radio.vue'),
+    read('components/panel/Station.vue'),
+    read('components/player/Queue.vue'),
+    read('components/panel/FeaturedStations.vue'),
+  ]);
+  assert.match(styles, /\.radio-count-badge,/);
+  assert.match(styles, /\.radio-neutral-badge\s*\{/);
+  assert.match(styles, /background:\s*var\(--radio-badge-bg\)/);
+  assert.ok((countries.match(/radio-count-badge/g) || []).length >= 2, 'country section and compact station counts share chips');
+  assert.match(stations, /radio-count-badge/);
+  assert.match(queue, /radio-count-badge/);
+  assert.match(featured, /'radio-neutral-badge'/);
 });
