@@ -18,7 +18,7 @@
         <span class="truncate text-xs font-semibold text-[var(--radio-text)]">
           {{ hasStations ? $t("panel.channels") : $t("panel.schedule") }}
         </span>
-        <span class="inline-flex items-center rounded-full border-0 bg-rose-500/10 text-[10px] font-bold text-rose-700 dark:text-rose-300">
+        <span class="radio-count-badge inline-flex min-w-6 items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-semibold">
           {{ hasStations ? stations.length : scheduleCount }}
         </span>
       </div>
