@@ -309,6 +309,7 @@
   @media (min-width: 1024px) { .radio-country-compact > div:last-child { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 639px) {
     :root, html.light, html.dark {
+      --radio-player-height: 80px;
       --radio-mobile-nav-height: 64px;
       --radio-mobile-player-gap: 8px;
     }
@@ -320,6 +321,10 @@
       border: 1px solid var(--radio-border);
       border-radius: 18px;
       box-shadow: 0 18px 48px -28px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(244 63 94 / 0.08);
+    }
+    .radio-player-dock .radio-player-console {
+      min-height: 72px;
+      padding-bottom: 0;
     }
   }
 }

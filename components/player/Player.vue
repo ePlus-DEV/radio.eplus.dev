@@ -30,7 +30,9 @@
               </span>
             </div>
             <UTooltip :text="nowPlayingTitle">
-              <p dir="auto" class="truncate text-xs font-semibold sm:text-sm">{{ nowPlayingTitle }}</p>
+              <p dir="auto" class="radio-player-title text-xs font-semibold sm:text-sm" :class="{ 'radio-player-title-marquee': nowPlayingTitleMarquee }">
+                <span>{{ nowPlayingTitle }}</span>
+              </p>
             </UTooltip>
             <p v-if="nowPlayingArtist && !playerCompact" dir="auto" class="mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
             <NuxtLink v-if="stationUrl && !playerCompact" :to="stationUrl" dir="auto" class="mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
@@ -39,16 +41,16 @@
 
         <div class="flex items-center justify-center gap-0.5 sm:gap-2">
           <UTooltip v-if="canNavigateStations" :text="previousStationLabel">
-            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full sm:inline-flex" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
+            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="inline-flex h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
           </UTooltip>
           <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
           <UTooltip v-if="canNavigateStations" :text="nextStationLabel">
-            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="nextStationLabel" @click="navigateStation(1)" />
+            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-forward" class="h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="nextStationLabel" @click="navigateStation(1)" />
           </UTooltip>
-          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="hidden h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
+          <UButton v-if="hasSidebar" color="neutral" variant="ghost" size="sm" icon="i-lucide-list-music" class="h-10 w-10 cursor-pointer justify-center rounded-full sm:hidden" :aria-label="$t('player.queue')" :aria-expanded="mobileQueueOpen" @click="toggleQueue" />
         </div>
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
@@ -413,6 +415,7 @@ const nowPlayingTitle = computed(() => {
 
   return props.streamName || "Live radio";
 });
+const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
 
 const nowPlayingArtist = computed(() => {
   const songArtist = props.song?.currentMedia?.artists?.trim();
@@ -1235,6 +1238,19 @@ onUnmounted(() => {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--radio-border) 58%, transparent);
 }
 
+.radio-player-title {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.radio-player-title span {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}
+
 .radio-player-live-pill {
   letter-spacing: 0;
 }
@@ -1262,6 +1278,28 @@ onUnmounted(() => {
 @keyframes radio-eq {
   from { transform: scaleY(0.45); }
   to { transform: scaleY(1); }
+}
+
+@media (max-width: 639px) {
+  .radio-player-title-marquee span {
+    max-width: none;
+    min-width: 100%;
+    overflow: visible;
+    padding-right: 2rem;
+    text-overflow: clip;
+    animation: radio-title-marquee 10s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio-player-title-marquee span {
+    animation: none;
+  }
+}
+
+@keyframes radio-title-marquee {
+  0%, 18% { transform: translateX(0); }
+  82%, 100% { transform: translateX(calc(-100% + 11rem)); }
 }
 
 .radio-volume::-webkit-slider-thumb {
