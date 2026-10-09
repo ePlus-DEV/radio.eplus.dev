@@ -12,7 +12,7 @@
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
 
-      <div class="radio-player-console grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 pb-2 sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:gap-4">
+      <div class="radio-player-console grid min-h-[var(--radio-player-height)] grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
         <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
           <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
             <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
@@ -24,7 +24,7 @@
           <button type="button" class="absolute inset-0 z-10 rounded-xl sm:hidden" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true"></button>
           <div class="min-w-0 flex-1">
             <div class="mb-1 hidden items-center gap-2 sm:flex">
-              <span class="radio-player-live-pill inline-flex max-w-full items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" :class="liveStateClass">
+              <span class="radio-player-live-pill inline-flex max-w-full items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" :class="liveStateClass">
                 <span class="h-1.5 w-1.5 rounded-full" :class="playing ? 'animate-pulse bg-emerald-500' : waiting ? 'animate-pulse bg-amber-500' : streamError ? 'bg-rose-500' : 'bg-current'"></span>
                 {{ liveStateLabel }}
               </span>
