@@ -1,9 +1,9 @@
 <template>
-  <div class="space-y-7">
+  <div v-if="groups.length" class="space-y-7">
     <section v-for="group in groups" :key="group.key" :aria-label="$t(`library.${group.key}`)">
       <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <h2 class="flex items-center gap-2 text-lg font-semibold"><UIcon :name="group.icon" class="h-5 w-5 text-rose-500" />{{ $t(`library.${group.key}`) }}<span class="text-xs font-normal text-[var(--radio-text-muted)]">{{ group.items.length }}</span></h2>
-        <NuxtLink v-if="compact && group.items.length" :to="`/library#${group.key}`" class="radio-interactive rounded-lg p-2 text-xs text-rose-500">{{ $t('redesign.see_all') }}</NuxtLink>
+        <h2 class="flex items-center gap-2 text-lg font-semibold"><UIcon :name="group.icon" class="h-5 w-5 text-rose-600 dark:text-rose-400" />{{ $t(`library.${group.key}`) }}<span class="text-xs font-normal text-[var(--radio-text-muted)]">{{ group.items.length }}</span></h2>
+        <NuxtLink v-if="compact && group.items.length" :to="`/library#${group.key}`" class="radio-interactive rounded-lg p-2 text-xs font-semibold text-rose-700 dark:text-rose-300">{{ $t('redesign.see_all') }}</NuxtLink>
         <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="listening.clearRecent()">{{ $t('library.clear_recent') }}</UButton>
       </div>
       <div v-if="group.items.length" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -74,7 +74,10 @@ let selectionGeneration = 0;
 const groups = computed(() => [
   { key: 'favorites', icon: 'i-lucide-heart', items: listening.library.favorites },
   { key: 'recent', icon: 'i-lucide-history', items: listening.library.recent },
-].filter((group) => !props.group || props.group === 'all' || props.group === group.key));
+].filter((group) =>
+  (!props.group || props.group === 'all' || props.group === group.key)
+  && (!props.compact || group.items.length > 0)
+));
 
 const isFavorite = (url: string) => listening.library.favorites.some((item: { url: string }) => item.url === url);
 const isActive = (url: string) => playback.station?.url === url;
