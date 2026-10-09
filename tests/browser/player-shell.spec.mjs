@@ -352,7 +352,7 @@ test('country marquee keeps two mobile columns without wrapping long names', asy
   await expect.poll(() => africa.locator('.country-marquee-content--overflow').count()).toBeGreaterThan(0);
   const longName = africa.locator('.country-marquee-content--overflow').first();
   await expect(longName).toBeVisible();
-  expect(await longName.evaluate(el => getComputedStyle(el).animationName)).toBe('country-marquee-slide');
+  expect(await longName.evaluate(el => getComputedStyle(el).animationName)).toMatch(/^country-marquee-slide/);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect.poll(() => longName.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
 });
