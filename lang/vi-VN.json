@@ -389,7 +389,7 @@
         },
         "analytics": {
           "title": "Đo lường và chẩn đoán",
-          "body": "Website có thể dùng phân tích bảo vệ quyền riêng tư hoặc log máy chủ để hiểu cách sử dụng, phát hiện lỗi và cải thiện độ ổn định. Dữ liệu này phục vụ vận hành và xử lý sự cố, không dùng để bán dữ liệu cá nhân."
+          "body": "Website có thể dùng phân tích bảo vệ quyền riêng tư hoặc log máy chủ để hiểu cách sử dụng, phát hiện lỗi và cải thiện độ ổn định. Dữ liệu này phục vụ vận hành và xử lý sự cố, không dùng để bán dữ liệu cá nhân. Google Analytics 4 chỉ được tải trên website chính thức sau khi bạn đồng ý. Bạn có thể thay đổi lựa chọn tại đây bất cứ lúc nào."
         },
         "third_party": {
           "title": "Dịch vụ bên thứ ba",
@@ -483,6 +483,12 @@
     "title": "Tùy chọn cookie",
     "body": "Radio ePlus dùng cookie cần thiết và local storage để ghi nhớ ngôn ngữ, giao diện, cài đặt trình phát và lựa chọn nghe của bạn.",
     "accept": "Đã hiểu",
+    "analytics_body": "Radio ePlus dùng bộ nhớ cần thiết để lưu các tùy chọn. Nếu bạn đồng ý, Google Analytics 4 sẽ đo lượt truy cập và lượt xem trang để cải thiện website.",
+    "allow_analytics": "Cho phép Analytics",
+    "essential_only": "Chỉ cookie cần thiết",
+    "analytics_preferences": "Tùy chọn Analytics",
+    "analytics_on": "Đã cho phép Analytics",
+    "analytics_off": "Đã tắt Analytics",
     "learn_more": "Chính sách cookie"
   }
 }
