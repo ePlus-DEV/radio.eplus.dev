@@ -67,3 +67,22 @@ test('UI has featured carousel, compact country cards, and fallback search', asy
   const pkg = JSON.parse(packageSource);
   for (const script of ['pregenerate','prebuild','predev']) assert.match(pkg.scripts[script], /build-station-search-index/);
 });
+
+
+test('inline header search keeps loading/error text inside the popover', async () => {
+  const [box, header] = await Promise.all([
+    readFile('components/search/Box.vue', 'utf8'),
+    readFile('components/AppHeader.vue', 'utf8'),
+  ]);
+  assert.match(header, /<SearchBox[^>]*\sinline\s/);
+  assert.match(box, /v-if="!inline && usingLocal && localLoading"/);
+  assert.match(box, /v-else-if="!inline && usingLocal && localError"/);
+  assert.match(box, /v-show="!inline \|\| resultsOpen"/);
+  assert.match(box, /v-if="inline && usingLocal && localLoading"/);
+  assert.match(box, /v-else-if="inline && usingLocal && localError"/);
+  const inputPosition = box.indexOf('<UInput');
+  const resultsPosition = box.indexOf('v-show="!inline || resultsOpen"');
+  const inlineStatusPosition = box.indexOf('v-if="inline && usingLocal && localLoading"');
+  assert.ok(inputPosition >= 0 && resultsPosition > inputPosition);
+  assert.ok(inlineStatusPosition > resultsPosition, 'inline loading must appear only within the hidden results panel');
+});
