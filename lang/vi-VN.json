@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "Theo mặc định của trình duyệt, bạn cần phải nhấn nút ▶ để bắt đầu nghe Radio.",
-    "stream_error": "Luồng này hiện không thể phát."
+    "stream_error": "Hiện chưa nghe được đài này. Hãy thử lại sau hoặc chọn đài khác."
   },
   "text": {
     "guide": "Hướng dẫn",
@@ -202,7 +202,7 @@
       "light": "Sáng",
       "system": "Hệ thống"
     },
-    "offline": "Kết nối mạng thất bại, vui lòng kiểm tra kết nối mạng của bạn."
+    "offline": "Có vẻ bạn đã mất kết nối mạng. Hãy kiểm tra Internet rồi thử lại."
   },
   "player": {
     "title": "Trình phát radio",
@@ -264,7 +264,7 @@
         }
       },
       "service": {
-        "title": "Tập trung vào trải nghiệm nghe đơn giản",
+        "title": "Nghe radio thật đơn giản",
         "body": "Dễ dàng tìm đài yêu thích, lưu lại để nghe sau và tiếp tục nghe khi sử dụng điện thoại hoặc máy tính.",
         "action": "Bắt đầu nghe"
       }
@@ -319,7 +319,7 @@
         },
         "copyright": {
           "title": "Bản quyền và nhãn hiệu",
-          "body": "Tên đài, logo, âm thanh và tài liệu của bên thứ ba thuộc về chủ sở hữu tương ứng. Nếu bạn là chủ sở hữu quyền và cho rằng một mục cần sửa hoặc gỡ, hãy liên hệ dự án kèm URL liên quan và thông tin xác minh."
+          "body": "Tên đài, logo, âm thanh và nội dung khác thuộc về chủ sở hữu tương ứng. Nếu bạn có quyền sở hữu và muốn sửa hoặc gỡ nội dung, hãy gửi đường dẫn trang và thông tin để chúng tôi kiểm tra."
         },
         "acceptable_use": {
           "title": "Sử dụng Radio ePlus đúng cách",
@@ -354,13 +354,13 @@
         }
       },
       "support": {
-        "title": "Cần hỗ trợ về Radio ePlus?",
-        "body": "Nếu cần sửa thông tin kênh, báo lỗi phát, hỏi về quyền riêng tư hoặc nội dung, hãy gửi tên kênh, đường dẫn trang và mô tả ngắn cho đội ngũ Radio ePlus.",
+        "title": "Bạn cần hỗ trợ?",
+        "body": "Gửi tên đài hoặc đường dẫn trang cùng vài dòng mô tả vấn đề hay câu hỏi của bạn.",
         "action": "Gửi email hỗ trợ"
       }
     },
     "statistics": {
-      "eyebrow": "Danh mục",
+      "eyebrow": "Đài radio",
       "title": "Thống kê radio",
       "description": "Xem Radio ePlus hiện có bao nhiêu quốc gia và đài radio để bạn khám phá.",
       "metrics": {
@@ -401,7 +401,7 @@
         },
         "changes": {
           "title": "Cập nhật",
-          "body": "Chính sách này có thể thay đổi khi Radio ePlus thay đổi tính năng, nhà cung cấp hoặc hạ tầng. Phiên bản mới nhất được công bố tại trang này."
+          "body": "Chúng tôi có thể cập nhật chính sách khi website hoặc các dịch vụ thay đổi. Bạn luôn có thể xem bản mới nhất tại đây."
         }
       }
     }
