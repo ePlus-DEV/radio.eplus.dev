@@ -4,7 +4,7 @@
       <nuxt-link
         :to="item.url"
         class="radio-search-panel-row flex items-center gap-3 rounded-2xl px-3 py-3 transition focus:outline-none focus:ring-2 focus:ring-rose-400/40"
-        :class="elevated ? 'text-white' : 'hover:bg-[var(--radio-hover)]'"
+        :class="elevated ? 'bg-[var(--radio-surface-soft)]' : 'hover:bg-[var(--radio-hover)]'"
         @click="$emit('select', item.station_name)"
       >
         <img
@@ -13,10 +13,10 @@
           :src="item.station_image || '/brand/logo-share.png'"
           :alt="item.station_name"
         />
-        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium" :class="elevated ? 'text-white' : 'text-[var(--radio-text)]'">
+        <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-[var(--radio-text)]">
           {{ item.station_name }}
         </span>
-        <span class="hidden shrink-0 text-xs sm:block" :class="elevated ? 'text-white/55' : 'text-slate-400'">
+        <span class="hidden shrink-0 text-xs text-[var(--radio-text-muted)] sm:block">
           {{ item.station_country ? $t(item.station_country) : '' }}
         </span>
       </nuxt-link>
