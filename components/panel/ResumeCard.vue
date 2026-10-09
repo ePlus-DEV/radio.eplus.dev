@@ -7,7 +7,7 @@
         <div class="min-w-0">
           <p dir="auto" class="truncate text-base font-semibold sm:text-xl">{{ station.title }}</p>
           <p class="mt-1 truncate text-xs text-[var(--radio-text-muted)]">{{ $t(station.countryKey) }}</p>
-          <span class="mt-2 inline-block rounded-full bg-[var(--radio-surface-soft)] px-2.5 py-1 text-[10px]" :class="playback.playing ? 'text-emerald-500' : 'text-[var(--radio-text-muted)]'">{{ $t(playback.playing ? 'player.on_air' : playback.waiting ? 'player.connecting' : 'redesign.paused') }}</span>
+          <span class="mt-2 inline-block rounded-full bg-[var(--radio-surface-soft)] px-2.5 py-1 text-[10px]"  :class="playback.playing ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : playback.waiting ? 'bg-amber-500/10 text-amber-700 dark:text-amber-300' : 'text-[var(--radio-text-muted)]'">{{ $t(playback.playing ? 'player.on_air' : playback.waiting ? 'player.connecting' : 'redesign.paused') }}</span>
         </div>
       </div>
     </div>
