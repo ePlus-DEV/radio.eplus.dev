@@ -224,8 +224,8 @@ export default defineNuxtConfig({
     provider: process.env.NODE_ENV === "production" ? "cloudinary" : "ipx",
   },
   colorMode: {
-    preference: "system",
-    fallback: "light",
+    preference: "dark",
+    fallback: "dark",
     classPrefix: "",
     classSuffix: "",
     storageKey: "theme",
