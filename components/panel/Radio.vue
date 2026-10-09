@@ -38,7 +38,7 @@
           </h2>
         </div>
         <span
-          class="inline-flex items-center rounded-full h-7 shrink-0 border-0 bg-[var(--radio-surface-soft)] px-2.5 text-xs font-medium tabular-nums text-[var(--radio-text-muted)]"
+          class="radio-count-badge inline-flex h-7 shrink-0 items-center rounded-full px-2.5 text-xs font-semibold"
         >
           {{ continent.length }}
         </span>
@@ -74,7 +74,7 @@
               <span class="min-w-0 flex-1 truncate text-sm font-semibold text-[var(--radio-text)]">
                 {{ $t(country.name) }}
               </span>
-              <span v-if="compact && country.station_count !== null" class="shrink-0 text-[10px] tabular-nums text-[var(--radio-text-muted)]">{{ country.station_count }}</span>
+              <span v-if="compact && country.station_count !== null" class="radio-count-badge shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-medium">{{ country.station_count }}</span>
               <fa
                 :icon="['fas', 'arrow-right']"
                 class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
