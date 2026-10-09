@@ -1,5 +1,5 @@
 <template>
-  <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'radio-player-dock-compact': playerCompact, 'hidden': playerMini }" :aria-label="$t('player.title')">
+  <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <template v-if="streamError">
@@ -12,9 +12,9 @@
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
 
-      <div class="radio-player-console grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:gap-4" :class="playerCompact ? 'min-h-[52px] pb-1' : 'min-h-[64px] pb-2'">
+      <div class="radio-player-console grid min-h-[64px] grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 pb-2 sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:gap-4">
         <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
-          <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5" :class="playerCompact ? 'sm:h-11 sm:w-11' : 'sm:h-14 sm:w-14'">
+          <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
             <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
             <UIcon v-else name="i-lucide-radio" class="h-5 w-5 text-[var(--radio-text-muted)]" />
             <span v-if="playing" class="absolute bottom-1 right-1 flex h-4 w-4 items-end justify-center gap-px rounded-full bg-[var(--radio-inverse-bg)] pb-1 text-[var(--radio-inverse-text)]" aria-hidden="true">
@@ -34,14 +34,14 @@
                 <span>{{ nowPlayingTitle }}</span>
               </p>
             </UTooltip>
-            <p v-if="nowPlayingArtist && !playerCompact" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
-            <p v-else-if="!playerCompact" class="radio-player-meta radio-player-meta-placeholder mt-0.5 text-[10px] sm:text-xs">&nbsp;</p>
-            <NuxtLink v-if="stationUrl && !playerCompact" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
-            <p v-else-if="!playerCompact" class="radio-player-meta mt-1 text-[10px] sm:text-xs">&nbsp;</p>
+            <p v-if="nowPlayingArtist" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">{{ nowPlayingArtist }}</p>
+            <p v-else class="radio-player-meta radio-player-meta-placeholder mt-0.5 text-[10px] sm:text-xs">&nbsp;</p>
+            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 block truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
+            <p v-else class="radio-player-meta mt-1 text-[10px] sm:text-xs">&nbsp;</p>
           </div>
         </div>
 
-        <div class="radio-player-controls flex items-center justify-center gap-0.5 sm:gap-2">
+        <div class="radio-player-controls z-20 flex items-center justify-center gap-0.5 sm:gap-2">
           <UTooltip v-if="canNavigateStations" :text="previousStationLabel">
             <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="inline-flex h-10 w-10 cursor-pointer justify-center rounded-full sm:h-11 sm:w-11" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
           </UTooltip>
@@ -73,16 +73,13 @@
           </UDropdownMenu>
           <UButton v-else color="neutral" variant="soft" size="xs" icon="i-lucide-radio-tower" :aria-label="$t('player.source')" class="hidden max-w-36 truncate rounded-full lg:inline-flex">{{ activeSourceName }}</UButton>
           <UButton color="neutral" variant="ghost" size="sm" class="cursor-pointer rounded-full" :icon="muted || volume === 0 ? 'i-lucide-volume-x' : 'i-lucide-volume-2'" :aria-label="muted || volume === 0 ? $t('player.unmute') : $t('player.mute')" @click="toggleMute" />
-          <input v-if="!playerCompact" type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume hidden h-1 w-20 cursor-pointer appearance-none rounded-full bg-[var(--radio-track)] md:block xl:w-24" />
+          <input type="range" min="0" max="1" step="0.01" :value="muted ? 0 : volume" @input="onVolumeInput" :aria-label="$t('player.volume')" class="radio-volume hidden h-1 w-20 cursor-pointer appearance-none rounded-full bg-[var(--radio-track)] md:block xl:w-24" />
           <UButton v-if="lyricsAvailable" color="neutral" variant="ghost" size="sm" icon="i-lucide-mic-vocal" class="cursor-pointer rounded-full" :aria-label="$t('panel.lyric')" @click="$emit('open-lyrics')" />
           <UButton v-if="hasSidebar" color="neutral" variant="soft" size="sm" class="relative cursor-pointer rounded-full" icon="i-lucide-list-music" :aria-label="$t('player.queue')" :aria-expanded="wideViewport ? playback.queueOpen : mobileQueueOpen" @click="toggleQueue">
             <span v-if="sidebarCount" class="absolute -right-1 -top-1 min-w-4 rounded-full bg-rose-500 px-1 text-[9px] font-bold leading-4 text-white">{{ sidebarCount }}</span>
           </UButton>
           <UTooltip :text="$t('player.window_player')">
             <UButton color="neutral" variant="ghost" size="sm" class="cursor-pointer rounded-full" icon="i-lucide-picture-in-picture-2" :aria-label="$t('player.window_player')" @click="setPlayerMini(true)" />
-          </UTooltip>
-          <UTooltip :text="$t(playerCompact ? 'player.expand_player' : 'player.compact_player')">
-            <UButton color="neutral" variant="ghost" size="sm" class="cursor-pointer rounded-full" :icon="playerCompact ? 'i-lucide-chevrons-up' : 'i-lucide-chevrons-down'" :aria-pressed="playerCompact" :aria-label="$t(playerCompact ? 'player.expand_player' : 'player.compact_player')" @click="togglePlayerCompact" />
           </UTooltip>
         </div>
       </div>
@@ -1305,7 +1302,8 @@ onUnmounted(() => {
   .radio-player-controls {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
