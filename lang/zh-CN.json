@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "根据浏览器的默认设置，您需要按 ▶ 按钮开始收听广播。",
-    "stream_error": "此流当前无法播放。"
+    "stream_error": "暂时无法播放这个电台。请稍后重试或选择其他电台。"
   },
   "text": {
     "guide": "指南",
@@ -202,7 +202,7 @@
       "light": "明亮模式",
       "system": "系统模式"
     },
-    "offline": "网络连接失败，请检查您的网络连接。"
+    "offline": "似乎没有网络连接。请检查网络后重试。"
   },
   "player": {
     "title": "电台播放器",
@@ -264,7 +264,7 @@
         }
       },
       "service": {
-        "title": "Built for simple listening",
+        "title": "轻松收听广播",
         "body": "轻松寻找并收藏喜欢的电台，在手机或电脑上继续收听。",
         "action": "Start listening"
       }
@@ -319,7 +319,7 @@
         },
         "copyright": {
           "title": "版权与商标",
-          "body": "电台名称、标志、音频及其他第三方材料归各自权利人所有。如权利人认为某项内容应更正或删除，请提供相关 URL 和足以核实请求的信息。"
+          "body": "电台名称、标志、音频及其他内容属于各自的所有者。如果您拥有相关权利并希望更正或删除，请提供页面链接和核实所需的信息。"
         },
         "acceptable_use": {
           "title": "合理使用 Radio ePlus",
@@ -354,13 +354,13 @@
         }
       },
       "support": {
-        "title": "Need help with Radio ePlus?",
-        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "title": "需要帮助吗？",
+        "body": "请发送电台名称或页面链接，并简单说明您遇到的问题或疑问。",
         "action": "Email support"
       }
     },
     "statistics": {
-      "eyebrow": "目录",
+      "eyebrow": "广播电台",
       "title": "电台统计",
       "description": "看看 Radio ePlus 有多少国家和电台可供探索。",
       "metrics": {
@@ -401,7 +401,7 @@
         },
         "changes": {
           "title": "Updates",
-          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+          "body": "网站或服务发生变化时，我们可能更新此政策。您随时可以在这里查看最新版本。"
         }
       }
     }
