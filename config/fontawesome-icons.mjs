@@ -22,6 +22,5 @@ export const freeSolidIcons = [
 
 export const brandIcons = [
   "facebook-f",
-  "github",
   "x-twitter",
 ];

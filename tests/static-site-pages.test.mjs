@@ -22,6 +22,7 @@ test("all supported locales include complete static page copy", async () => {
     assert.ok(json.site_pages?.about?.title, locale + " missing about copy");
     assert.ok(json.site_pages?.privacy?.title, locale + " missing privacy copy");
     assert.ok(json.site_pages?.terms?.title, locale + " missing terms copy");
+    assert.ok(json.site_pages?.cookie?.title, locale + " missing cookie copy");
     assert.ok(json.site_pages?.contact?.title, locale + " missing contact copy");
     assert.ok(
       json.site_pages?.statistics?.title,
@@ -54,6 +55,7 @@ test("static pages share the canonical static-page SEO helper", async () => {
     "pages/about.vue",
     "pages/privacy-policy.vue",
     "pages/terms-of-use.vue",
+    "pages/cookie-policy.vue",
     "pages/contact.vue",
     "pages/statistics.vue",
   ];

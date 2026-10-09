@@ -112,6 +112,7 @@ const links = [
   { id: 3, to: "/contact", text: "navmenu.contact" },
   { id: 4, to: "/privacy-policy", text: "navmenu.privacy" },
   { id: 5, to: "/terms-of-use", text: "navmenu.terms" },
+  { id: 6, to: "/cookie-policy", text: "navmenu.cookie" },
 ];
 
 const socialLinks = computed(() => [
@@ -126,12 +127,6 @@ const socialLinks = computed(() => [
     name: "X",
     href: config.public.x,
     icon: "x-twitter",
-  },
-  {
-    id: 3,
-    name: "GitHub",
-    href: config.public.github,
-    icon: "github",
   },
 ]);
 

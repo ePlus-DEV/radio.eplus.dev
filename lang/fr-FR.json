@@ -13,7 +13,8 @@
     "language": "Langue:",
     "old_version": "Ancienne version",
     "statistics": "Statistiques",
-    "changelog": "Journal des modifications"
+    "changelog": "Journal des modifications",
+    "cookie": "Politique relative aux cookies"
   },
   "terms": {
     "content": "Bienvenue sur le site Web https://radio.eplus.dev (« Radio ePlus »), un produit de ePlus.DEV. Veuillez lire attentivement l'Accord sur la fourniture et l'utilisation des services sur le site Web https://radio.eplus.dev avant d'utiliser les fonctionnalités du site Web « Radio » ePlus. Une fois inscrit, vous avez lu, compris, accepté et respecté les termes ci-dessous :",
@@ -262,9 +263,10 @@
           "body": "Les flux, programmes, images et informations de morceau proviennent de catalogues et de fournisseurs tiers susceptibles de changer ou de devenir indisponibles sans préavis."
         }
       },
-      "open_source": {
-        "title": "Projet ouvert",
-        "body": "Radio ePlus est maintenu par ePlus.DEV. Le code source, les issues et les améliorations en cours sont publics sur GitHub."
+      "service": {
+        "title": "Built for simple listening",
+        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "action": "Start listening"
       }
     },
     "privacy": {
@@ -351,10 +353,10 @@
           "body": "Les ayants droit peuvent demander une correction ou un retrait en identifiant la station/page concernée et en fournissant suffisamment d'informations pour vérifier la demande."
         }
       },
-      "github": {
-        "title": "Ouvrir une issue GitHub",
-        "body": "Le développement public, les rapports de bugs et les corrections du catalogue sont suivis dans le dépôt GitHub de Radio ePlus.",
-        "action": "Créer une issue"
+      "support": {
+        "title": "Need help with Radio ePlus?",
+        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "action": "Email support"
       }
     },
     "statistics": {
@@ -369,12 +371,39 @@
       "coverage_title": "Couverture par région",
       "coverage_description": "Chaque carte indique le nombre de catalogues pays et d'entrées de stations enregistrés pour la région.",
       "method_title": "Comment ces chiffres sont calculés",
-      "method_body": "Ces chiffres sont calculés à partir des catalogues JSON versionnés du dépôt au moment du build. Ils représentent des entrées de catalogue, et non des flux garantis en ligne, des diffuseurs uniques ou une audience."
+      "method_body": "Ces chiffres sont comptés à partir des catalogues radio lors de la génération du site. Ils décrivent les entrées du catalogue, pas des flux actuellement disponibles garantis, des diffuseurs uniques ni une audience."
     },
     "error": {
       "not_found_title": "Page introuvable",
       "generic_title": "Une erreur s'est produite",
       "generic_body": "Impossible de charger cette page. Revenez à l'accueil puis réessayez."
+    },
+    "cookie": {
+      "eyebrow": "Cookie Policy",
+      "title": "Cookie Policy",
+      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "sections": {
+        "essential": {
+          "title": "Essential storage",
+          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+        },
+        "analytics": {
+          "title": "Measurement and diagnostics",
+          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+        },
+        "third_party": {
+          "title": "Third-party services",
+          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+        },
+        "choices": {
+          "title": "Your choices",
+          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+        },
+        "changes": {
+          "title": "Updates",
+          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+        }
+      }
     }
   },
   "home": {

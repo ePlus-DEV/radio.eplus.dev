@@ -38,6 +38,7 @@ const staticSeoRoutes = [
   { loc: "/contact", priority: 0.4, changefreq: "monthly" as const },
   { loc: "/privacy-policy", priority: 0.3, changefreq: "yearly" as const },
   { loc: "/terms-of-use", priority: 0.3, changefreq: "yearly" as const },
+  { loc: "/cookie-policy", priority: 0.3, changefreq: "yearly" as const },
 ];
 
 // https://nuxt.com/docs/api/configuration/nuxt-config

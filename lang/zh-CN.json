@@ -13,7 +13,8 @@
     "language": "语言：",
     "old_version": "旧版网站",
     "statistics": "统计",
-    "changelog": "更新日志"
+    "changelog": "更新日志",
+    "cookie": "Cookie 政策"
   },
   "terms": {
     "content": "欢迎访问网站 https://radio.eplus.dev（“Radio ePlus”），这是ePlus.DEV的产品。在使用“Radio”网站ePlus上的功能之前，请仔细阅读网站 https://radio.eplus.dev 上的服务提供和使用协议。一旦注册，您已经阅读、理解、接受并遵守以下条款：",
@@ -262,9 +263,10 @@
           "body": "电台流、节目表、图片和当前歌曲信息来自不断变化的目录和第三方提供商，因此可能随时改变或不可用。"
         }
       },
-      "open_source": {
-        "title": "开放项目",
-        "body": "Radio ePlus 由 ePlus.DEV 维护。应用源码、Issue 和持续改进内容均公开在 GitHub 上。"
+      "service": {
+        "title": "Built for simple listening",
+        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "action": "Start listening"
       }
     },
     "privacy": {
@@ -351,10 +353,10 @@
           "body": "权利人可以通过指出相关电台／页面并提供足够核实信息，请求更正或删除。"
         }
       },
-      "github": {
-        "title": "创建 GitHub Issue",
-        "body": "公开开发、错误报告和目录修正均在 Radio ePlus 的 GitHub 仓库中跟踪。",
-        "action": "创建 Issue"
+      "support": {
+        "title": "Need help with Radio ePlus?",
+        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "action": "Email support"
       }
     },
     "statistics": {
@@ -369,12 +371,39 @@
       "coverage_title": "按地区覆盖",
       "coverage_description": "每张卡片显示该地区当前存储的国家目录数量和电台条目数量。",
       "method_title": "这些数字如何计算",
-      "method_body": "这些数据在网站构建时从仓库中受版本控制的 JSON 目录统计得出，表示目录条目数量，不等于当前在线音频流、独立广播机构或听众数量。"
+      "method_body": "这些数字来自网站构建时的电台目录统计。它们表示目录条目数量，并不保证当前在线流、唯一广播方数量或听众规模。"
     },
     "error": {
       "not_found_title": "找不到页面",
       "generic_title": "发生错误",
       "generic_body": "无法加载此页面。请返回首页后重试。"
+    },
+    "cookie": {
+      "eyebrow": "Cookie Policy",
+      "title": "Cookie Policy",
+      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "sections": {
+        "essential": {
+          "title": "Essential storage",
+          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+        },
+        "analytics": {
+          "title": "Measurement and diagnostics",
+          "body": "The site may use privacy-conscious analytics or server logs to understand usage patterns, detect errors and improve reliability. These records are used for operation and troubleshooting, not for selling personal data."
+        },
+        "third_party": {
+          "title": "Third-party services",
+          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+        },
+        "choices": {
+          "title": "Your choices",
+          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+        },
+        "changes": {
+          "title": "Updates",
+          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+        }
+      }
     }
   },
   "home": {

@@ -80,6 +80,7 @@ test("sitewide static navigation points to implemented pages", async () => {
     "/contact": "pages/contact.vue",
     "/privacy-policy": "pages/privacy-policy.vue",
     "/terms-of-use": "pages/terms-of-use.vue",
+    "/cookie-policy": "pages/cookie-policy.vue",
   };
 
   for (const [route, file] of Object.entries(pages)) {
