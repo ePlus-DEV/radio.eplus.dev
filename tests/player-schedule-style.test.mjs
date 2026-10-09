@@ -47,7 +47,7 @@ test('mobile playlist toolbar shares button styles and keeps a usable volume con
   const player = await readFile(join(process.cwd(), 'components/player/Player.vue'), 'utf8');
   const drawer = player.slice(player.indexOf('<USlideover v-model:open="mobileQueueOpen"'), player.indexOf('</USlideover>'));
   assert.match(drawer, /grid grid-cols-2 items-stretch gap-2/);
-  assert.ok((drawer.match(/class="radio-queue-action"/g) || []).length >= 5);
+  assert.ok((drawer.match(/class="radio-queue-action(?:\\s|")/g) || []).length >= 5);
   assert.match(drawer, /radio-volume radio-volume-mobile h-11 min-w-0 flex-1/);
   assert.match(drawer, /role="note" class="col-span-2/);
   assert.doesNotMatch(drawer, /flex flex-wrap items-center gap-2 border-b/);
