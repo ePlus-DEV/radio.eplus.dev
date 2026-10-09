@@ -51,21 +51,22 @@
   html[data-theme="dark"] {
     color-scheme: dark;
 
-    --radio-page-bg: #101119;
-    --radio-surface: #1a1b26;
-    --radio-surface-elevated: #1a1b26;
-    --radio-surface-soft: #111827;
-    --radio-surface-muted: #0b1220;
-    --radio-artwork-bg: #181923;
-    --radio-hover: rgb(255 255 255 / 0.06);
-    --radio-border: rgb(255 255 255 / 0.1);
-    --radio-border-strong: rgb(255 255 255 / 0.16);
+    /* Brighter layered surfaces and secondary labels for legible dark UI. */
+    --radio-page-bg: #10131e;
+    --radio-surface: #1d2231;
+    --radio-surface-elevated: #212637;
+    --radio-surface-soft: #272e40;
+    --radio-surface-muted: #171d2b;
+    --radio-artwork-bg: #1c2230;
+    --radio-hover: rgb(255 255 255 / 0.10);
+    --radio-border: rgb(221 230 245 / 0.16);
+    --radio-border-strong: rgb(221 230 245 / 0.26);
     --radio-text: #f8fafc;
-    --radio-text-muted: #94a3b8;
+    --radio-text-muted: #b5c1d4;
     --radio-inverse-bg: #f8fafc;
-    --radio-inverse-text: #101119;
-    --radio-track: rgb(255 255 255 / 0.15);
-    --radio-header-bg: rgb(2 6 23 / 0.86);
+    --radio-inverse-text: #10131e;
+    --radio-track: rgb(221 230 245 / 0.26);
+    --radio-header-bg: rgb(7 11 25 / 0.94);
     --radio-overlay: rgb(2 6 23 / 0.72);
 
   }
