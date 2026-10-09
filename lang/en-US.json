@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "To start listening, press the ▶ play button.",
-    "stream_error": "This stream cannot be played right now."
+    "stream_error": "This station cannot be played right now. Please try again later or choose another station."
   },
   "text": {
     "guide": "Guide",
@@ -202,7 +202,7 @@
       "light": "Light",
       "system": "System"
     },
-    "offline": "Network connection failed, please check your network connection."
+    "offline": "You seem to be offline. Check your internet connection and try again."
   },
   "player": {
     "title": "Radio player",
@@ -264,7 +264,7 @@
         }
       },
       "service": {
-        "title": "Built for simple listening",
+        "title": "Radio made easy",
         "body": "Find a station you like, save it as a favorite, and keep listening as you browse on your phone or computer.",
         "action": "Start listening"
       }
@@ -319,7 +319,7 @@
         },
         "copyright": {
           "title": "Copyright and trademarks",
-          "body": "Station names, logos, audio and other third-party materials remain the property of their respective owners. If you are a rights holder and believe a listing should be corrected or removed, contact the project with the affected URL and supporting information."
+          "body": "Station names, logos, audio, and other materials belong to their owners. If you own the rights and want something corrected or removed, send us the page link and information to support your request."
         },
         "acceptable_use": {
           "title": "Using Radio ePlus responsibly",
@@ -354,13 +354,13 @@
         }
       },
       "support": {
-        "title": "Need help with Radio ePlus?",
-        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "title": "Need help?",
+        "body": "Send us the station name or page link, along with a short description of the problem or question.",
         "action": "Email support"
       }
     },
     "statistics": {
-      "eyebrow": "Catalog",
+      "eyebrow": "Radio stations",
       "title": "Radio statistics",
       "description": "See how many countries and radio stations you can explore on Radio ePlus.",
       "metrics": {
@@ -401,7 +401,7 @@
         },
         "changes": {
           "title": "Updates",
-          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+          "body": "We may update this policy when the website or its services change. You can always read the latest version here."
         }
       }
     }
