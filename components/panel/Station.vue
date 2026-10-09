@@ -66,7 +66,7 @@
         </NuxtLink>
         <button
           type="button"
-          class="absolute bottom-3 right-3 flex h-10 w-10 scale-90 items-center justify-center rounded-full bg-violet-600 text-white opacity-0 shadow-lg shadow-violet-900/30 transition group-hover:scale-100 group-hover:opacity-100 focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+          class="absolute bottom-3 right-3 flex h-10 w-10 scale-90 cursor-pointer items-center justify-center rounded-full bg-violet-600 text-white opacity-0 shadow-lg shadow-violet-900/30 transition group-hover:scale-100 group-hover:opacity-100 focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           :aria-label="$t('player.play') + ': ' + station.title"
           @click="emit('select-station', station)"
         >

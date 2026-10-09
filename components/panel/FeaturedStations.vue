@@ -35,7 +35,7 @@
         </NuxtLink>
         <button
           type="button"
-          class="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-full bg-violet-600 text-white shadow-md transition group-hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+          class="absolute bottom-2 right-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-violet-600 text-white shadow-md transition group-hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           :aria-label="$t('player.play') + ': ' + station.title"
           @click="emit('select-station', station)"
         >

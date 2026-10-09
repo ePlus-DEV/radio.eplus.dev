@@ -7,10 +7,10 @@
       :level_2="streamName"
     />
 
-    <section class="radio-surface relative overflow-hidden px-5 py-5 sm:px-6">
-      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,63,94,0.09),transparent_42%)]"></div>
-      <div class="relative flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center">
-        <div class="radio-themed-artwork flex h-16 w-20 shrink-0 items-center justify-center rounded-2xl border border-[var(--radio-border)] p-2 sm:h-20 sm:w-24">
+    <section class="radio-surface relative overflow-hidden px-5 py-6 sm:px-7 lg:px-8">
+      <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(139,92,246,0.12),transparent_42%),radial-gradient(circle_at_top_right,rgba(244,63,94,0.12),transparent_38%)]"></div>
+      <div class="relative grid gap-6 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:items-center">
+        <div class="radio-themed-artwork flex aspect-square w-40 max-w-full items-center justify-center justify-self-start rounded-3xl border border-[var(--radio-border)] p-5 shadow-sm shadow-slate-900/5 sm:w-48 lg:w-56">
           <img
             :src="thumb || stationMeta?.features || config.public.placeholderStation"
             :alt="stationName"
@@ -18,30 +18,48 @@
           />
         </div>
 
-        <div class="min-w-0 flex-1">
+        <div class="min-w-0">
           <div class="flex flex-wrap items-center gap-2">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-rose-600 dark:bg-rose-500/10 dark:text-rose-300">
               <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
               {{ $t("player.live") }}
             </span>
-            <span class="text-xs text-slate-400">{{ countryName }}</span>
+            <span class="rounded-full bg-[var(--radio-surface-soft)] px-2.5 py-1 text-xs font-medium text-[var(--radio-text-muted)]">{{ countryName }}</span>
           </div>
-          <h1 dir="auto" class="mt-2 line-clamp-2 text-2xl font-bold tracking-tight text-[var(--radio-text)] sm:text-3xl">
+          <h1 dir="auto" class="mt-3 max-w-4xl text-3xl font-bold tracking-tight text-[var(--radio-text)] sm:text-4xl lg:text-5xl">
             {{ stationName }}
           </h1>
           <p
             dir="auto"
-            class="mt-2 line-clamp-2 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)]"
+            class="mt-3 line-clamp-3 max-w-3xl text-sm leading-6 text-[var(--radio-text-muted)] sm:text-base sm:leading-7"
           >
             {{ seoDescription }}
           </p>
+
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <UButton :icon="isActive && playback.playing ? 'i-lucide-pause' : 'i-lucide-play'" size="xl" class="cursor-pointer rounded-full px-6" @click="playStation">
+              {{ isActive && playback.playing ? $t('player.pause') : $t('player.play') }}
+            </UButton>
+            <UButton color="neutral" variant="soft" icon="i-lucide-list-music" class="hidden rounded-full 2xl:inline-flex" @click="playback.queueOpen = true">
+              {{ $t('player.queue') }}
+            </UButton>
+          </div>
+
+          <div class="mt-5 grid gap-2 text-xs text-[var(--radio-text-muted)] sm:grid-cols-3">
+            <div class="rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2">
+              <span class="block font-semibold text-[var(--radio-text)]">{{ countryName }}</span>
+              <span>{{ areaName }}</span>
+            </div>
+            <div class="rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2">
+              <span class="block font-semibold text-[var(--radio-text)]">{{ $t("panel.station_count", { count: stations.length }) }}</span>
+              <span>{{ $t("panel.channels") }}</span>
+            </div>
+            <div class="rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2">
+              <span class="block font-semibold text-[var(--radio-text)]">{{ $t("player.source_number", { number: sourceCount }) }}</span>
+              <span>{{ $t("player.keep_listening") }}</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="relative mt-5 flex flex-wrap items-center gap-3">
-        <UButton :icon="isActive && playback.playing ? 'i-lucide-pause' : 'i-lucide-play'" size="lg" class="rounded-full px-5" @click="playStation">
-          {{ isActive && playback.playing ? $t('player.pause') : $t('player.play') }}
-        </UButton>
-        <span class="text-xs text-[var(--radio-text-muted)]">{{ $t('player.keep_listening') }}</span>
       </div>
     </section>
 
@@ -225,6 +243,11 @@ const playback = usePlaybackStore();
 const streamName = computed(() => stationName.value);
 const thumb = computed(() => stationMeta.value?.features || String(config.public.placeholderStation));
 const isActive = computed(() => playback.station?.url === stationPath.value);
+const sourceCount = computed(() => {
+  const meta = stationMeta.value;
+  if (!meta) return 0;
+  return 1 + (meta.streams?.length || 0) + Number(Boolean(meta.stream_alternative));
+});
 
 useHead(() => ({
   title: seoTitle.value,
