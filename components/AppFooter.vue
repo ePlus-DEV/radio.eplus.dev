@@ -19,7 +19,7 @@
               <span class="block text-sm font-bold text-[var(--radio-text)]">
                 Radio ePlus
               </span>
-              <span class="block text-xs text-slate-400">
+              <span class="block text-xs text-[var(--radio-text-muted)]">
                 {{ $t('footer.tagline') }}
               </span>
             </span>
@@ -36,7 +36,7 @@
               :href="socialLink.href"
               target="_blank"
               rel="external nofollow noopener noreferrer"
-              class="radio-interactive flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--radio-border)] text-slate-400 hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
+              class="radio-interactive flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--radio-border)] text-[var(--radio-text-muted)] hover:bg-[var(--radio-surface-soft)] hover:text-[var(--radio-text)]"
             >
               <span class="sr-only">{{ socialLink.name }}</span>
               <fa :icon="['fab', socialLink.icon]" class="h-4 w-4" />
@@ -64,7 +64,7 @@
             </a>
           </nav>
 
-          <p class="mt-5 text-xs leading-5 text-slate-400">
+          <p class="mt-5 text-xs leading-5 text-[var(--radio-text-muted)]">
             © {{ new Date().getFullYear() }}
             <a
               :href="config.public.copyright"
