@@ -95,6 +95,30 @@ test("Featured cards use each station's country metadata for direct playback", a
   assert.match(source, /featuredStations\.value, \{ autoplay: true \}/);
 });
 
+test("Featured radio cards toggle play/pause with the global player without leaving the page", async () => {
+  const [card, home] = await Promise.all([
+    readFile("components/panel/FeaturedStations.vue", "utf8"),
+    readFile("pages/index.vue", "utf8"),
+  ]);
+
+  // Match station URLs, not only short IDs; the carousel mixes countries.
+  assert.match(card, /:key="station\.url \|\| station\.id"/);
+  assert.match(card, /station\.url === activeStationUrl/);
+  assert.match(home, /:active-station-url="playback\.station\?\.url"/);
+
+  // Keep the direct-play control separate from the station details link.
+  assert.match(card, /:to="station\.url"/);
+  assert.match(card, /@click="emit\('select-station', station\)"/);
+  assert.match(card, /:name="isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'"/);
+  assert.match(card, /:aria-pressed="isPlaying\(station\)"/);
+
+  // Pause the active stream; resume with a play request; otherwise activate the chosen catalog.
+  assert.match(home, /playback\.station\?\.url === station\.url && playback\.station\.sources\.length/);
+  assert.match(home, /if \(playback\.playing \|\| playback\.waiting\) playback\.pauseRequest \+= 1/);
+  assert.match(home, /else playback\.requestStation\(station\.url\)/);
+  assert.match(home, /playback\.activate\(createPlaybackStation\([\s\S]*?featuredStations\.value, \{ autoplay: true \}/);
+});
+
 test("Missing or unusable featured streams are excluded rather than played", () => {
   const sample = {
     "vov-gt-hcm": { title: "VOV Giao Thong", stream: "" },
