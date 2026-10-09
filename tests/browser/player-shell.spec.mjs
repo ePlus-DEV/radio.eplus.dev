@@ -283,3 +283,43 @@ test('real hls.js playback waits for a local manifest, continues across pages an
   expect(await page.locator('audio').evaluate(audio => audio.paused)).toBe(false);
   await expect(dock(page).getByRole('link')).toContainText('EDM');
 });
+
+
+test('mobile dock keeps station text clear of Play and Playlist at 320–390px', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  await page.evaluate(() => {
+    document.querySelector('#__nuxt').__vue_app__.config.globalProperties.$pinia._s.get('playback').station.title =
+      'Very long station title across different countries '.repeat(5);
+  });
+
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 740 });
+    const boxes = await dock(page).evaluate(element => {
+      const consoleRow = element.querySelector('.radio-player-console');
+      const info = consoleRow.children[0].getBoundingClientRect();
+      const title = consoleRow.querySelector('.radio-player-title').getBoundingClientRect();
+      const play = consoleRow.querySelector('.radio-player-main-action').getBoundingClientRect();
+      const playlist = consoleRow.children[2].querySelector('button').getBoundingClientRect();
+      return {
+        infoRight: info.right,
+        titleRight: title.right,
+        playLeft: play.left,
+        playRight: play.right,
+        playlistLeft: playlist.left,
+        playlistRight: playlist.right,
+        viewport: innerWidth,
+      };
+    });
+    expect(boxes.playLeft, `Play must not cover metadata at ${width}px`).toBeGreaterThanOrEqual(boxes.infoRight);
+    expect(boxes.titleRight, `Title must stay in info column at ${width}px`).toBeLessThanOrEqual(boxes.infoRight + 1);
+    expect(boxes.playlistLeft, `Playlist must not overlap Play at ${width}px`).toBeGreaterThanOrEqual(boxes.playRight);
+    expect(boxes.playlistRight, `Playlist must fit viewport at ${width}px`).toBeLessThanOrEqual(boxes.viewport);
+  }
+
+  const playlistButton = dock(page).getByRole('button', { name: 'Channels & schedule', exact: true });
+  await expect(playlistButton).toBeVisible();
+  await playlistButton.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+});
