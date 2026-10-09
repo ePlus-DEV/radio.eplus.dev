@@ -152,7 +152,7 @@
     "next": "Suivant",
     "lyric": "Paroles",
     "no_lyric": "Paroles indisponibles",
-    "updating": "Chargement…",
+    "updating": "Mise à jour...",
     "channels": "Toutes les stations",
     "station_count": "{count} stations",
     "search_channels": "Rechercher des stations…",
@@ -214,7 +214,7 @@
     "on_air": "En direct",
     "ready": "Prêt à écouter",
     "queue": "Stations et programmes",
-    "source": "Mode d’écoute",
+    "source": "Source audio",
     "volume": "Volume",
     "mute": "Couper le son",
     "unmute": "Activer le son",
@@ -225,12 +225,12 @@
     "next": "Station suivante : {name}",
     "sidebar_label": "Stations et programmes",
     "live": "En direct",
-    "primary_source": "Connexion principale",
-    "alternative_source": "Connexion de secours",
-    "source_number": "Option {number}",
-    "stream_format": "Type audio",
-    "proxy": "Connexion assistée",
-    "direct": "Depuis la station",
+    "primary_source": "Source principale",
+    "alternative_source": "Source secondaire",
+    "source_number": "Source {number}",
+    "stream_format": "Flux audio",
+    "proxy": "Proxy",
+    "direct": "Accès direct",
     "ios_volume_hint": "Sur iPhone ou iPad, réglez le volume avec les boutons de l’appareil ou le Centre de contrôle.",
     "sleep_timer": "Minuterie de sommeil",
     "sleep_minutes": "Arrêter dans {minutes} minutes",
@@ -239,7 +239,8 @@
     "compact_player": "Réduire le lecteur",
     "expand_player": "Agrandir le lecteur",
     "window_player": "Mini lecteur",
-    "dock_player": "Retour au lecteur"
+    "dock_player": "Retour au lecteur",
+    "schedule_loading": "Chargement du programme…"
   },
   "site_pages": {
     "common": {
@@ -326,8 +327,8 @@
           "body": "Respectez la loi. Ne perturbez pas le site ou les stations, ne contournez pas les restrictions sans autorisation, ne collectez pas de données au point de gêner le service et ne diffusez pas de logiciels malveillants."
         },
         "availability": {
-          "title": "Quand une station est indisponible",
-          "body": "Le site affiche les stations d’après les informations disponibles. Nous ne pouvons garantir que chaque station, programme, titre ou lien d’écoute sera toujours exact et accessible."
+          "title": "Si vous n'arrivez pas à écouter une station",
+          "body": "Une station peut interrompre sa diffusion ou son lien d'écoute peut cesser de fonctionner. Réessayez plus tard ou choisissez une autre station. Nous proposons la liste selon les informations disponibles, sans pouvoir garantir que les émissions, les horaires et les titres des morceaux sont toujours exacts et accessibles."
         },
         "changes": {
           "title": "Modification des conditions",
@@ -429,7 +430,8 @@
     "unavailable": "La recherche est momentanément indisponible. Les stations populaires restent affichées ci-dessous.",
     "suggestions": "Suggestions pour vous",
     "recent": "Recherches récentes",
-    "clear": "Effacer"
+    "clear": "Effacer",
+    "loading": "Chargement des stations…"
   },
   "chat": {
     "open": "Ouvrir l'assistant",
@@ -462,7 +464,8 @@
     "favorites_empty": "Touchez le cœur pour ajouter une station aux favoris.",
     "clear_recent": "Effacer l’historique récent",
     "add_favorite": "Ajouter aux favoris",
-    "remove_favorite": "Retirer des favoris"
+    "remove_favorite": "Retirer des favoris",
+    "loading": "Chargement de vos stations…"
   },
   "redesign": {
     "navigation": "Navigation",
