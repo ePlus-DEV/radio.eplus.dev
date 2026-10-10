@@ -356,3 +356,47 @@ test('country marquee keeps two mobile columns without wrapping long names', asy
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect.poll(() => longName.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
 });
+
+
+test('mobile country station cards show Play/Pause and marquee titles without covering controls', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await mockMedia(page);
+  await ready(page, '/africa/south-africa');
+  const cards = page.locator('main .radio-station-card');
+  await expect(cards.first()).toBeVisible();
+  await expect(cards.nth(1)).toBeVisible();
+
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 740 });
+    const card = cards.nth(1);
+    const title = card.locator('.country-marquee-viewport');
+    const play = card.getByRole('button', { name: /^Play/ });
+    await expect(title).toBeVisible();
+    await expect(play).toBeVisible();
+    const geometry = await card.evaluate(element => {
+      const text = element.querySelector('.country-marquee-viewport');
+      const control = element.querySelector('button');
+      const textRect = text.getBoundingClientRect();
+      const playRect = control.getBoundingClientRect();
+      return {
+        textRight: textRect.right,
+        playLeft: playRect.left,
+        titleHeight: text.clientHeight,
+        lineHeight: Number.parseFloat(getComputedStyle(text).lineHeight) || 20,
+        opacity: getComputedStyle(control).opacity,
+        playWidth: playRect.width,
+      };
+    });
+    expect(geometry.titleHeight, 'Station name stays on one line').toBeLessThanOrEqual(geometry.lineHeight + 2);
+    expect(geometry.textRight, 'Play does not cover station name').toBeLessThanOrEqual(geometry.playLeft + 1);
+    expect(geometry.opacity).toBe('1');
+    expect(geometry.playWidth).toBeGreaterThanOrEqual(44);
+  }
+
+  const firstCard = cards.first();
+  await firstCard.getByRole('button', { name: /^Play/ }).click();
+  await expect(firstCard.getByRole('button', { name: /^Pause/ })).toBeVisible();
+  await expect(dock(page).getByRole('button', { name: 'Pause radio', exact: true })).toBeVisible();
+  await firstCard.getByRole('button', { name: /^Pause/ }).click();
+  await expect(firstCard.getByRole('button', { name: /^Play/ })).toBeVisible();
+});
