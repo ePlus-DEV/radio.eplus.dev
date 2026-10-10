@@ -13,17 +13,17 @@
             class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--radio-inverse-bg)]"
           >
             <img
-              src="/brand/logo-white.svg"
+              src="/brand/onair-mark.svg"
               width="32"
               height="32"
-              alt="Radio ePlus"
-              class="h-8 w-8 object-contain dark:brightness-0"
+              alt="ePlus OnAir"
+              class="h-8 w-8 rounded-lg object-contain"
             />
           </span>
           <span class="text-left">
-            <span class="block text-sm font-bold">Radio ePlus</span>
+            <span class="block text-sm font-bold">ePlus OnAir</span>
             <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-500">
-              Live radio
+              {{ t("brand.slogan") }}
             </span>
           </span>
         </NuxtLink>
