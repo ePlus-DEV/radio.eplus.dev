@@ -20,12 +20,12 @@ export function buildRadioMediaMetadata(
 
   const image = resolveArtwork(artwork)
     || resolveArtwork(fallbackArtwork)
-    || resolveArtwork('/brand/logo-share.png');
+    || resolveArtwork('/brand/android-chrome-512x512.png');
   const channel = String(station || '').trim();
   return {
-    title: String(title || '').trim() || channel || 'Radio ePlus',
-    artist: String(artist || '').trim() || channel || 'Radio ePlus',
-    album: channel || 'Radio ePlus',
+    title: String(title || '').trim() || channel || 'ePlus OnAir',
+    artist: String(artist || '').trim() || channel || 'ePlus OnAir',
+    album: channel || 'ePlus OnAir',
     artwork: image ? [{ src: image }] : [],
   };
 }
