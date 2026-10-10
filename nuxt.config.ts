@@ -159,7 +159,7 @@ export default defineNuxtConfig({
         {
           rel: "mask-icon",
           color: "#e11d48",
-          href: "/brand/onair-mark.svg",
+          href: "/brand/safari-pinned-tab.svg",
         },
       ],
     },
