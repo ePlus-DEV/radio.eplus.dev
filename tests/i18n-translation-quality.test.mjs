@@ -38,7 +38,7 @@ test("all seven locales contain the same nonempty translation keys and interpola
 test("visible navigation, player, search and chat copy use localized keys", async () => {
   const files = {
     "pages/index.vue": ["home.title", "home.start_listening", "home.browse_country"],
-    "components/AppHeader.vue": ["brand.live_radio"],
+    "components/AppHeader.vue": ["brand.slogan"],
     "components/AppFooter.vue": ["footer.tagline", "footer.description"],
     "components/AppSidebar.vue": ["sidebar.browse_radio", "sidebar.description"],
     "components/search/Box.vue": ["search.unavailable"],
