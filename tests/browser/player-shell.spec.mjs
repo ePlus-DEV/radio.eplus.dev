@@ -444,3 +444,27 @@ test('Featured cards marquee long titles on a single line without covering Play'
   await play.click();
   await expect(longCard.getByRole('button', { name: /^Pause/ })).toBeVisible();
 });
+
+test('dark station detail Play/Pause label and icon stay white', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  await page.evaluate(() => {
+    document.documentElement.classList.remove('light');
+    document.documentElement.classList.add('dark');
+  });
+
+  const button = page.locator('main .radio-station-detail-action');
+  await expect(button).toBeVisible();
+  const foreground = () => button.evaluate(el => ({
+    text: getComputedStyle(el).color,
+    icon: getComputedStyle(el.querySelector('.iconify') || el).color,
+  }));
+  await expect.poll(async () => (await foreground()).text).toBe('rgb(255, 255, 255)');
+  await expect.poll(async () => (await foreground()).icon).toBe('rgb(255, 255, 255)');
+
+  await button.click();
+  await expect(button).toContainText('Pause');
+  await expect.poll(async () => (await foreground()).text).toBe('rgb(255, 255, 255)');
+  await expect.poll(async () => (await foreground()).icon).toBe('rgb(255, 255, 255)');
+});
