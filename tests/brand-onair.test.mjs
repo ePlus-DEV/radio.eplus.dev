@@ -33,9 +33,9 @@ test('header, footer, hero and policy pages show the new identity', async () => 
   ]);
   assert.match(header, /ePlus <span class="text-rose-500">OnAir<\/span>/);
   assert.match(header, /brand\.slogan/);
-  assert.match(header, /onair-mark\.svg/);
+  assert.match(header, /logo-share\.png/);
   assert.match(footer, /ePlus OnAir/);
-  assert.match(footer, /onair-mark\.svg/);
+  assert.match(footer, /logo-share\.png/);
   assert.match(home, /ePlus OnAir ·/);
   assert.match(about, /ePlus OnAir/);
   assert.match(contact, /ePlus%20OnAir%20support/);
@@ -55,33 +55,38 @@ test('canonical domains and existing service identifiers are preserved', async (
   assert.match(config, /algoliaIndexStation: "radio\.eplus\.dev"/);
   assert.match(ga4, /radio\.eplus\.dev/);
   assert.match(seo, /radio-new\.eplus\.dev/);
-  assert.match(app, /onair-share\.png/);
+  assert.match(app, /logo-share\.png/);
   assert.match(app, /ogSiteName: siteName\.value/);
 });
 
-test('new vector artwork is the source for consistent PNG social and app icons', async () => {
-  const [mark, image, generator, manifest, pkg, pinned] = await Promise.all([
-    read('public/brand/onair-mark.svg'),
-    read('public/brand/onair-share.svg'),
-    read('scripts/generate-brand-assets.mjs'),
+test('existing ON AIR assets stay authoritative and build hooks never overwrite them', async () => {
+  const [config, header, footer, stationArtwork, manifestText, pkgText, app] = await Promise.all([
+    read('nuxt.config.ts'),
+    read('components/AppHeader.vue'),
+    read('components/AppFooter.vue'),
+    read('components/StationArtwork.vue'),
     read('public/brand/site.webmanifest'),
     read('package.json'),
-    read('public/brand/safari-pinned-tab.svg'),
+    read('app.vue'),
   ]);
-  assert.match(mark, /<svg/);
-  assert.match(image, /Listen Beyond Borders/);
-  assert.match(image, /ePlus/);
-  assert.match(generator, /onair-share\.png/);
-  assert.match(generator, /logo-share\.png/);
-  assert.match(generator, /favicon\.ico/);
-  assert.match(generator, /apple-touch-icon/);
-  assert.match(generator, /sharp/);
-  assert.match(pinned, /<svg/);
-  const m=JSON.parse(manifest),p=JSON.parse(pkg);
-  assert.equal(m.short_name,'ePlus OnAir');
-  assert.ok(m.icons.some(i=>i.src==='./onair-mark.svg'));
-  assert.equal(p.name,'eplus-onair');
-  for(const task of ['predev','prebuild','pregenerate']){
-    assert.match(p.scripts[task], /generate-brand-assets\.mjs/);
+  const manifest = JSON.parse(manifestText);
+  const pkg = JSON.parse(pkgText);
+
+  for (const source of [header, footer, stationArtwork]) {
+    assert.match(source, /\/brand\/logo-share\.png/);
+    assert.doesNotMatch(source, /\/brand\/onair-mark\.svg/);
   }
+  assert.match(app, /\/brand\/logo-share\.png/);
+  assert.doesNotMatch(app, /\/brand\/onair-share\.png/);
+  assert.match(config, /\/brand\/favicon-32x32\.png/);
+  assert.doesNotMatch(config, /\/brand\/onair-mark\.svg/);
+  assert.equal(manifest.short_name, 'ePlus OnAir');
+  assert.ok(manifest.icons.some(i => i.src === './android-chrome-192x192.png'));
+  assert.ok(manifest.icons.every(i => i.src !== './onair-mark.svg'));
+  assert.equal(pkg.name, 'eplus-onair');
+  for (const task of ['predev', 'prebuild', 'pregenerate']) {
+    assert.doesNotMatch(pkg.scripts[task], /generate-brand-assets/);
+    assert.match(pkg.scripts[task], /build-station-search-index/);
+  }
+  assert.ok(!('brand:generate' in pkg.scripts));
 });
