@@ -91,3 +91,19 @@ test("Vue templates do not reintroduce legacy light/dark utility pairs", async (
     `Theme regressions found:\n${violations.join("\n")}`,
   );
 });
+
+
+test("station detail Play/Pause button uses white text and icon in dark mode", async () => {
+  const [page, css] = await Promise.all([
+    readFile(join(ROOT, "pages/[area]/[country]/[station].vue"), "utf8"),
+    readFile(join(ROOT, "assets/css/main.css"), "utf8"),
+  ]);
+
+  const action = page.match(/<UButton[^>]*radio-station-detail-action[^>]*>[\s\S]*?<\/UButton>/)?.[0];
+  assert.ok(action, "station detail has a dedicated Play/Pause action");
+  assert.match(action, /'i-lucide-pause' : 'i-lucide-play'/);
+  assert.match(action, /\$t\('player\.pause'\) : \$t\('player\.play'\)/);
+  assert.match(css, /html\.dark \.radio-station-detail-action,[\s\S]*?html\[data-theme="dark"\] \.radio-station-detail-action \{\s*color: #fff !important;/);
+  assert.match(css, /html\.dark \.radio-station-detail-action \.iconify,[\s\S]*?html\[data-theme="dark"\] \.radio-station-detail-action \.iconify \{\s*color: inherit !important;/);
+  assert.doesNotMatch(css, /html\.light \.radio-station-detail-action/);
+});
