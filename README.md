@@ -1,14 +1,16 @@
 > [!IMPORTANT]
 > **Canonical / active repository**
 >
-> This is the current Radio ePlus codebase used for `https://radio.eplus.dev`.
+> ePlus OnAir — Listen Beyond Borders. The public URL remains `https://radio.eplus.dev` during this rebrand.
 > Use this repository for the radio UI/player, station data, sync tooling, tests, and deployment work.
 >
 > **Do not use `ePlus-DEV/get-radio` for new work.** That repository is a legacy PHP crawler kept only for historical reference and is not part of the current production flow.
 
-# Radio ePlus
+# ePlus OnAir
 
-Radio ePlus is a Nuxt-based internet radio application for browsing and listening to live radio stations from around the world.
+**Listen Beyond Borders.**
+
+ePlus OnAir is a Nuxt-based internet radio application for browsing and listening to live radio stations from around the world.
 
 **Website:** https://radio.eplus.dev
 
@@ -243,7 +245,7 @@ Algolia integration is optional during build and local development. When Algolia
 
 ## SEO
 
-Radio ePlus prerenders the radio route hierarchy, exposes server-rendered country/station links, generates structured data, and includes catalog-backed routes in the sitemap. The canonical production site URL defaults to:
+ePlus OnAir prerenders the radio route hierarchy, exposes server-rendered country/station links, generates structured data, and includes catalog-backed routes in the sitemap. The canonical production site URL defaults to:
 
 ```text
 https://radio.eplus.dev
@@ -311,3 +313,9 @@ Follow the [branch and release workflow](#branches-and-deployment-environments):
 
 This repository is maintained by ePlus.DEV. Refer to the repository settings or project owner for licensing and redistribution terms.
 
+
+## Brand and domain migration
+
+The public brand is **ePlus OnAir** with the tagline **Listen Beyond Borders.** The existing `radio.eplus.dev` production URL and `radio-new.eplus.dev` staging URL intentionally remain unchanged to preserve routing, analytics, and existing links. Replacing domains requires a separate migration plan (DNS, 301 redirects, canonical URLs, GA4, search indexing, and third-party integrations).
+
+The official mark and social artwork live under `public/brand/onair-*`; original URLs are retained for backward compatibility.
