@@ -67,6 +67,9 @@ jobs:
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: npm run generate
 
+      - name: "Verify rebranded social images and favicons"
+        run: node scripts/assert-brand-assets.mjs
+
       - name: "Assert staging pages are noindex"
         if: github.base_ref == 'develop'
         run: node scripts/assert-staging-noindex.mjs
