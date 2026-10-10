@@ -1,8 +1,8 @@
-# Radio ePlus — Project Context and Architecture Decisions
+# ePlus OnAir — Project Context and Architecture Decisions
 
 Last updated: **2026-10-08**
 
-This document is the durable technical memory for Radio ePlus. It records decisions and failure modes that are easy to lose when work is spread across GitHub PRs, chats, and multiple coding assistants.
+This document is the durable technical memory for ePlus OnAir. It records decisions and failure modes that are easy to lose when work is spread across GitHub PRs, chats, and multiple coding assistants.
 
 For short operational rules, see [`../AGENTS.md`](../AGENTS.md).
 
@@ -22,7 +22,7 @@ Current application architecture:
 | Framework | Nuxt 4 / Vue 3 |
 | Runtime | Node.js 24.15.0 |
 | Styling | Tailwind CSS 4 |
-| UI primitives | Nuxt UI 4 + Radio ePlus tokens (DaisyUI removed) |
+| UI primitives | Nuxt UI 4 + ePlus OnAir tokens (DaisyUI removed) |
 | State | Pinia |
 | Audio | Native HTML5 Audio + hls.js |
 | Theme state | `@nuxtjs/color-mode` |
@@ -63,22 +63,22 @@ tests/station-schedule.test.mjs       Schedule-provider regression guard
 
 ## 4. UI direction
 
-The current Radio ePlus UI was reviewed site-wide rather than component-by-component.
+The current ePlus OnAir UI was reviewed site-wide rather than component-by-component.
 
 The design direction is:
 
-- dark navy/slate Radio ePlus surfaces;
+- dark navy/slate ePlus OnAir surfaces;
 - rose accent for live/primary actions;
 - consistent cards, menus, badges, inputs and selects;
 - responsive layouts that avoid fixed empty columns;
-- Nuxt UI controls with Radio ePlus semantic colors;
-- custom Radio ePlus semantic tokens for the actual product palette.
+- Nuxt UI controls with ePlus OnAir semantic colors;
+- custom ePlus OnAir semantic tokens for the actual product palette.
 
 DaisyUI should **not** be allowed to become an independent visual theme that conflicts with Nuxt Color Mode.
 
 ### Player schedule/sidebar color rule
 
-The player sidebar uses Radio ePlus structural surfaces for tabs and schedule rows. Rose is an accent/status color only.
+The player sidebar uses ePlus OnAir structural surfaces for tabs and schedule rows. Rose is an accent/status color only.
 
 - Do not use a full `bg-rose-500` fill for active schedule/channel tabs.
 - Do not style the current schedule row like an error/alert block with a large rose-tinted surface.
@@ -214,7 +214,7 @@ Current rule:
 
 Player color hierarchy:
 
-- structural surface/background = Radio ePlus theme tokens;
+- structural surface/background = ePlus OnAir theme tokens;
 - rose = primary Play/Pause, Live and small current/next accents;
 - emerald = playback status such as On air;
 - avoid large competing rose + cyan split gradients in light mode.
