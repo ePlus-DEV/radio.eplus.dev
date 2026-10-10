@@ -5,14 +5,14 @@
         <div>
           <NuxtLink to="/" class="inline-flex items-center gap-3">
             <span
-              class="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)]"
+              class="flex h-10 w-10 items-center justify-center rounded-xl bg-transparent"
             >
               <img
-                src="/brand/onair-mark.svg"
+                src="/brand/logo-share.png"
                 width="28"
                 height="28"
                 alt="ePlus OnAir"
-                class="h-7 w-7 rounded-lg object-contain"
+                class="h-9 w-9 rounded-lg object-contain"
               />
             </span>
             <span>
