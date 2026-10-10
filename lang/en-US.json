@@ -17,7 +17,7 @@
     "cookie": "Cookie Policy"
   },
   "terms": {
-    "content": "Welcome to the website https://radio.eplus.dev (\"Radio ePlus\") a product by ePlus.DEV. Please carefully read the Agreement on provision and use of services on the Website https://radio.eplus.dev before you use the features on the \"Radio.\" Website ePlus. Once registered, you have read, understood, accepted and complied with the terms below:",
+    "content": "Welcome to the website https://radio.eplus.dev (\"ePlus OnAir\") a product by ePlus.DEV. Please carefully read the Agreement on provision and use of services on the Website https://radio.eplus.dev before you use the features on the \"Radio.\" Website ePlus. Once registered, you have read, understood, accepted and complied with the terms below:",
     "article_1": {
       "title": "Article 1: Nonprofit",
       "line_1": "We are committed to free forever, with no fees of any kind.",
@@ -25,8 +25,8 @@
     },
     "article_2": {
       "title": "Article 2: Digital Millennium Copyright Act",
-      "line_1": "Radio ePlus takes matters of Intellectual Property very seriously and is committed to meeting the needs of content owners while helping them manage publication of their content online. It should be noted that Radio ePlus is a radio station portal linking to third party websites by pop ups.",
-      "line_2": "Any content on these third party websites are the responsibility of those sites and not Radio ePlus. We have no knowledge of whether content on third party websites is or is not authorized by the content owner as that is a matter between the site that hosts the audio content and the content owner. Radio ePlus does not host any audio content on its servers or network."
+      "line_1": "ePlus OnAir takes matters of Intellectual Property very seriously and is committed to meeting the needs of content owners while helping them manage publication of their content online. It should be noted that ePlus OnAir is a radio station portal linking to third party websites by pop ups.",
+      "line_2": "Any content on these third party websites are the responsibility of those sites and not ePlus OnAir. We have no knowledge of whether content on third party websites is or is not authorized by the content owner as that is a matter between the site that hosts the audio content and the content owner. ePlus OnAir does not host any audio content on its servers or network."
     }
   },
   "world": {
@@ -248,12 +248,12 @@
     },
     "about": {
       "eyebrow": "About",
-      "title": "About Radio ePlus",
+      "title": "About ePlus OnAir",
       "description": "Find and listen to live radio stations from different countries, all in one place.",
       "sections": {
         "discover": {
           "title": "Discover radio",
-          "body": "Radio ePlus organizes internet radio stations by region and country so listeners can find local and international stations from one consistent interface."
+          "body": "ePlus OnAir organizes internet radio stations by region and country so listeners can find local and international stations from one consistent interface."
         },
         "playback": {
           "title": "Direct playback",
@@ -277,7 +277,7 @@
       "sections": {
         "accounts": {
           "title": "Accounts and payments",
-          "body": "Radio ePlus does not require a user account and does not provide a payment or checkout flow on this website. Please do not submit sensitive personal information through public project channels."
+          "body": "ePlus OnAir does not require a user account and does not provide a payment or checkout flow on this website. Please do not submit sensitive personal information through public project channels."
         },
         "preferences": {
           "title": "Your saved preferences",
@@ -308,11 +308,11 @@
     "terms": {
       "eyebrow": "Terms",
       "title": "Terms of Use",
-      "description": "The conditions for using Radio ePlus and its links to third-party radio services.",
+      "description": "The conditions for using ePlus OnAir and its links to third-party radio services.",
       "sections": {
         "service": {
           "title": "Use of the service",
-          "body": "Radio ePlus is provided as a free radio discovery and playback interface. You may use the website for lawful personal access to publicly reachable radio services."
+          "body": "ePlus OnAir is provided as a free radio discovery and playback interface. You may use the website for lawful personal access to publicly reachable radio services."
         },
         "third_party": {
           "title": "Radio stations and other providers",
@@ -323,7 +323,7 @@
           "body": "Station names, logos, audio, and other materials belong to their owners. If you own the rights and want something corrected or removed, send us the page link and information to support your request."
         },
         "acceptable_use": {
-          "title": "Using Radio ePlus responsibly",
+          "title": "Using ePlus OnAir responsibly",
           "body": "Please use the website lawfully. Do not disrupt the website or radio providers, access restricted services without permission, collect large amounts of data in a harmful way, or share harmful software."
         },
         "availability": {
@@ -338,7 +338,7 @@
     },
     "contact": {
       "eyebrow": "Contact",
-      "title": "Contact Radio ePlus",
+      "title": "Contact ePlus OnAir",
       "description": "Need help listening, want to suggest a station, or have a question about content? Contact us here.",
       "sections": {
         "bug": {
@@ -363,7 +363,7 @@
     "statistics": {
       "eyebrow": "Radio stations",
       "title": "Radio statistics",
-      "description": "See how many countries and radio stations you can explore on Radio ePlus.",
+      "description": "See how many countries and radio stations you can explore on ePlus OnAir.",
       "metrics": {
         "areas": "Regions",
         "countries": "Countries",
@@ -382,15 +382,15 @@
     "cookie": {
       "eyebrow": "Cookie Policy",
       "title": "Cookie Policy",
-      "description": "Find out how Radio ePlus remembers your settings and measures visits to the website.",
+      "description": "Find out how ePlus OnAir remembers your settings and measures visits to the website.",
       "sections": {
         "essential": {
           "title": "Essential storage",
-          "body": "Your browser saves settings such as language, theme, favorites, and listening history on this device. This makes Radio ePlus easier to use when you return."
+          "body": "Your browser saves settings such as language, theme, favorites, and listening history on this device. This makes ePlus OnAir easier to use when you return."
         },
         "analytics": {
           "title": "Website visit statistics",
-          "body": "The main Radio ePlus website uses Google Analytics 4 to count visits and page views as soon as a page opens. Closing the cookie notice does not stop this measurement."
+          "body": "The main ePlus OnAir website uses Google Analytics 4 to count visits and page views as soon as a page opens. Closing the cookie notice does not stop this measurement."
         },
         "third_party": {
           "title": "Third-party services",
@@ -444,16 +444,18 @@
   "seo": {
     "home_breadcrumb": "Home",
     "country_title": "Live Radio in {country}",
-    "country_description": "Listen to {count} live internet radio stations from {country}. Browse local stations and stream radio online on Radio ePlus.",
-    "country_description_empty": "Listen to live internet radio stations from {country} on Radio ePlus.",
+    "country_description": "Listen to {count} live internet radio stations from {country}. Browse local stations and stream radio online on ePlus OnAir.",
+    "country_description_empty": "Listen to live internet radio stations from {country} on ePlus OnAir.",
     "station_title": "{station} Live Radio - {country}",
-    "station_description": "Listen to {station} live from {country} on Radio ePlus."
+    "station_description": "Listen to {station} live from {country} on ePlus OnAir."
   },
   "brand": {
-    "live_radio": "Live radio"
+    "live_radio": "Live radio",
+    "slogan": "Listen Beyond Borders.",
+    "slogan_localized": "Listen Beyond Borders."
   },
   "footer": {
-    "tagline": "Live radio from around the world",
+    "tagline": "Listen Beyond Borders.",
     "description": "Browse stations by region and country, then listen instantly from any device."
   },
   "library": {
@@ -484,9 +486,9 @@
   },
   "cookie_consent": {
     "title": "Cookies and analytics notice",
-    "body": "Radio ePlus saves your listening and display preferences on this device.",
+    "body": "ePlus OnAir saves your listening and display preferences on this device.",
     "accept": "Got it",
-    "analytics_body": "Radio ePlus remembers your preferences and uses Google Analytics 4 to count visits to the main website. This message is for your information; closing it does not turn off measurement.",
+    "analytics_body": "ePlus OnAir remembers your preferences and uses Google Analytics 4 to count visits to the main website. This message is for your information; closing it does not turn off measurement.",
     "learn_more": "Cookie Policy"
   }
 }
