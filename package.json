@@ -8,16 +8,15 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "prebuild": "node scripts/build-station-search-index.mjs && node scripts/generate-brand-assets.mjs",
+    "prebuild": "node scripts/build-station-search-index.mjs",
     "dev": "nuxt dev",
-    "predev": "node scripts/build-station-search-index.mjs && node scripts/generate-brand-assets.mjs",
+    "predev": "node scripts/build-station-search-index.mjs",
     "generate": "nuxt generate",
-    "pregenerate": "node scripts/build-station-search-index.mjs && node scripts/generate-brand-assets.mjs",
+    "pregenerate": "node scripts/build-station-search-index.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "node --test tests/*.test.mjs",
-    "test:ui": "playwright test",
-    "brand:generate": "node scripts/generate-brand-assets.mjs"
+    "test:ui": "playwright test"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
