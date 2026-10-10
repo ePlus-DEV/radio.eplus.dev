@@ -189,7 +189,7 @@
   },
   "alert": {
     "play_button": "根据浏览器的默认设置，您需要按 ▶ 按钮开始收听广播。",
-    "stream_error": "此流当前无法播放。"
+    "stream_error": "暂时无法播放这个电台。请稍后重试或选择其他电台。"
   },
   "text": {
     "guide": "指南",
@@ -202,7 +202,7 @@
       "light": "明亮模式",
       "system": "系统模式"
     },
-    "offline": "网络连接失败，请检查您的网络连接。"
+    "offline": "似乎没有网络连接。请检查网络后重试。"
   },
   "player": {
     "title": "电台播放器",
@@ -239,7 +239,8 @@
     "compact_player": "收起播放器",
     "expand_player": "展开播放器",
     "window_player": "迷你播放器",
-    "dock_player": "返回底部栏"
+    "dock_player": "返回底部栏",
+    "schedule_loading": "正在加载节目表…"
   },
   "site_pages": {
     "common": {
@@ -248,7 +249,7 @@
     "about": {
       "eyebrow": "关于",
       "title": "关于 Radio ePlus",
-      "description": "一个轻量的互联网直播电台目录和播放器，可按地区和国家发现电台。",
+      "description": "在一个地方寻找并收听世界各地的直播电台。",
       "sections": {
         "discover": {
           "title": "发现电台",
@@ -256,47 +257,47 @@
         },
         "playback": {
           "title": "直接播放",
-          "body": "播放器会将浏览器连接到电台或服务提供商的音频流，并支持常见音频格式与 HLS，以及有限度的回退处理。"
+          "body": "选择喜欢的电台并点击播放。如果第一个播放地址不可用，网站可能会尝试该电台的其他地址。"
         },
         "availability": {
-          "title": "实时数据会变化",
-          "body": "电台流、节目表、图片和当前歌曲信息来自不断变化的目录和第三方提供商，因此可能随时改变或不可用。"
+          "title": "电台信息可能变化",
+          "body": "节目内容和播出时间由各电台管理。电台可能暂时停播、调整时间，歌曲名称也可能延迟更新。"
         }
       },
       "service": {
-        "title": "Built for simple listening",
-        "body": "Radio ePlus focuses on fast station discovery, clear playback controls and a calm interface that works across desktop and mobile.",
+        "title": "轻松收听广播",
+        "body": "轻松寻找并收藏喜欢的电台，在手机或电脑上继续收听。",
         "action": "Start listening"
       }
     },
     "privacy": {
       "eyebrow": "隐私",
       "title": "隐私政策",
-      "description": "说明 Radio ePlus 如何处理站点偏好、搜索、播放请求和第三方服务。",
+      "description": "了解网站保存哪些信息，以及搜索或收听电台时会发生什么。",
       "sections": {
         "accounts": {
           "title": "账户与付款",
           "body": "Radio ePlus 不要求用户注册，也不在本站提供付款或结账流程。请不要通过公开项目渠道提交敏感个人信息。"
         },
         "preferences": {
-          "title": "本地偏好",
-          "body": "主题、语言等界面偏好可能由浏览器或框架通过 Cookie／本地存储保存，以便记住你的选择。"
+          "title": "保存的设置",
+          "body": "浏览器可能在此设备上保存语言、界面颜色、收藏电台及最近收听记录，方便您下次继续使用。"
         },
         "search": {
           "title": "搜索服务",
-          "body": "启用站内搜索时，搜索词可能由已配置的服务商（例如 Algolia）处理，并适用其自己的隐私条款。"
+          "body": "搜索电台时，您输入的文字可能会发送给 Algolia 等搜索服务。这些服务有各自的隐私政策。"
         },
         "streams": {
-          "title": "电台流与第三方",
-          "body": "开始播放后，浏览器会连接到电台、流媒体主机、节目表提供商或已配置的中继服务。这些第三方可能收到 IP 地址、User Agent 等正常网络信息。"
+          "title": "收听电台时",
+          "body": "播放电台会使设备连接到电台或音频提供商。对方可能收到您的 IP 地址和基本浏览器信息。"
         },
         "logs": {
-          "title": "托管与技术日志",
-          "body": "托管、CDN 和安全基础设施可能处理用于传输、保护和排障的标准请求信息，例如 IP、浏览器信息、访问路径和时间戳。"
+          "title": "保障网站正常运行",
+          "body": "网站运行和安全服务可能记录 IP 地址、浏览器、访问页面和访问时间，用于维护网站、安全防护和排查问题。"
         },
         "sharing": {
           "title": "数据出售与共享",
-          "body": "Radio ePlus 不出售个人数据。信息仅在运营网站所需范围内处理，或由你通过搜索、播放和外部链接直接使用的第三方服务处理。"
+          "body": "我们不会出售个人信息。正式网站使用 Google Analytics 4 统计访问和页面浏览量。使用搜索和电台服务时，相关服务商也可能收到信息。"
         },
         "changes": {
           "title": "政策变更",
@@ -314,20 +315,20 @@
           "body": "Radio ePlus 作为免费的电台发现和播放界面提供。你可以为合法的个人用途访问公开可用的电台服务。"
         },
         "third_party": {
-          "title": "第三方音频流",
-          "body": "Radio ePlus 收录并链接由第三方运营的音频流。内容、可用性、地区限制、广告和条款由各服务自行控制，Radio ePlus 不保证任何音频流持续可用。"
+          "title": "电台与其他服务",
+          "body": "各电台自行决定节目内容、播出时间和可收听地区。部分电台会播放广告，也可能不经通知就暂时停止服务。"
         },
         "copyright": {
           "title": "版权与商标",
-          "body": "电台名称、标志、音频及其他第三方材料归各自权利人所有。如权利人认为某项内容应更正或删除，请提供相关 URL 和足以核实请求的信息。"
+          "body": "电台名称、标志、音频及其他内容属于各自的所有者。如果您拥有相关权利并希望更正或删除，请提供页面链接和核实所需的信息。"
         },
         "acceptable_use": {
-          "title": "允许的使用方式",
-          "body": "不得利用 Radio ePlus 滥用服务商、绕过访问控制、干扰服务、进行有害频率的抓取、传播恶意软件或违反法律及第三方权利。"
+          "title": "合理使用 Radio ePlus",
+          "body": "请遵守法律。请勿干扰网站或电台服务、未经许可绕过访问限制、大量抓取数据影响运行，或传播有害软件。"
         },
         "availability": {
-          "title": "可用性与保证",
-          "body": "网站和目录按现状及可用状态提供。音频质量、节目表、元数据和提供商 API 都可能独立于 Radio ePlus 发生变化或故障。"
+          "title": "无法收听广播时",
+          "body": "电台有时会暂停播出，或收听链接暂时失效。您可以稍后重试，也可以选择其他电台。我们根据现有信息提供电台列表，无法保证节目、播出时间和歌曲名称始终准确或可用。"
         },
         "changes": {
           "title": "条款变更",
@@ -338,40 +339,40 @@
     "contact": {
       "eyebrow": "联系",
       "title": "联系 Radio ePlus",
-      "description": "报告错误、请求更新电台，或就涉及权利的收录内容联系项目。",
+      "description": "无法收听、想推荐电台或有内容方面的问题？欢迎联系我们。",
       "sections": {
         "bug": {
-          "title": "错误或播放问题",
-          "body": "请提供受影响页面 URL、浏览器／设备、预期结果和实际结果。遇到播放失败时，Network 或 Console 信息会很有帮助。"
+          "title": "电台或页面无法使用",
+          "body": "请告诉我们出问题的电台或页面、发生了什么，以及您使用的是手机还是电脑。截图也很有帮助。"
         },
         "station": {
           "title": "更新电台",
-          "body": "新增电台或修正元数据时，请提供电台名称、官方网站、国家以及可用的已验证公开音频流 URL。"
+          "body": "如需添加电台或更正信息，请提供电台名称、国家、官网，以及您知道的收听地址。"
         },
         "copyright": {
           "title": "版权或删除请求",
-          "body": "权利人可以通过指出相关电台／页面并提供足够核实信息，请求更正或删除。"
+          "body": "如果您拥有相关内容的权利并希望更正或删除，请提供页面链接和有助于核实的信息。"
         }
       },
       "support": {
-        "title": "Need help with Radio ePlus?",
-        "body": "For station corrections, playback issues, privacy questions or content concerns, contact the Radio ePlus team with the station name, page URL and a short description.",
+        "title": "需要帮助吗？",
+        "body": "请发送电台名称或页面链接，并简单说明您遇到的问题或疑问。",
         "action": "Email support"
       }
     },
     "statistics": {
-      "eyebrow": "目录",
+      "eyebrow": "广播电台",
       "title": "电台统计",
-      "description": "Radio ePlus 当前目录中地区、国家和电台条目的构建时快照。",
+      "description": "看看 Radio ePlus 有多少国家和电台可供探索。",
       "metrics": {
         "areas": "地区",
         "countries": "国家",
         "stations": "电台"
       },
       "coverage_title": "按地区覆盖",
-      "coverage_description": "每张卡片显示该地区当前存储的国家目录数量和电台条目数量。",
-      "method_title": "这些数字如何计算",
-      "method_body": "这些数字来自网站构建时的电台目录统计。它们表示目录条目数量，并不保证当前在线流、唯一广播方数量或听众规模。"
+      "coverage_description": "每个地区展示目前收录的国家和电台数量。",
+      "method_title": "这些数字代表什么？",
+      "method_body": "这些数字来自最近更新的电台列表，表示收录数量，不代表当前正在播放的电台数或收听人数。"
     },
     "error": {
       "not_found_title": "找不到页面",
@@ -381,27 +382,27 @@
     "cookie": {
       "eyebrow": "Cookie Policy",
       "title": "Cookie Policy",
-      "description": "How Radio ePlus uses cookies and local storage to keep the site reliable and remember your preferences.",
+      "description": "了解 Radio ePlus 如何保存您的设置并统计网站访问量。",
       "sections": {
         "essential": {
           "title": "Essential storage",
-          "body": "Radio ePlus may use essential browser storage for language, theme, playback layout, favorite stations and recent listening choices. These settings help the interface work consistently on your device."
+          "body": "浏览器会在此设备上保存语言、界面颜色、收藏电台和收听记录，方便您再次使用。"
         },
         "analytics": {
-          "title": "Measurement and diagnostics",
-          "body": "正式网站使用 Google Analytics 4 统计访问量和页面浏览量，以改进服务。页面加载时即开始统计，关闭通知不会影响统计。"
+          "title": "网站访问统计",
+          "body": "Radio ePlus 正式网站在页面打开时即通过 Google Analytics 4 统计访问和页面浏览量。关闭此通知不会停止统计。"
         },
         "third_party": {
           "title": "Third-party services",
-          "body": "Search, radio streams, artwork, schedules and embedded provider data may be delivered by third parties. Those services can set their own cookies or receive standard network information when your browser connects to them."
+          "body": "搜索或收听电台时，其他服务可能提供音频、图片或节目内容。这些服务可能收到 IP 地址并使用自己的 Cookie。"
         },
         "choices": {
           "title": "Your choices",
-          "body": "You can clear cookies and local storage in your browser settings. Clearing them may reset theme, language, favorites, recent listening, player layout and search history on this device."
+          "body": "您可以在浏览器设置中清除网站保存的数据。这可能同时删除此设备上的收藏、收听记录和界面设置。"
         },
         "changes": {
           "title": "Updates",
-          "body": "This policy may change when Radio ePlus changes features, providers or hosting. The latest version is published on this page."
+          "body": "网站或服务发生变化时，我们可能更新此政策。您随时可以在这里查看最新版本。"
         }
       }
     }
@@ -429,7 +430,8 @@
     "unavailable": "搜索服务暂时不可用，下方仍显示热门电台。",
     "suggestions": "为你推荐",
     "recent": "最近搜索",
-    "clear": "清除"
+    "clear": "清除",
+    "loading": "正在加载电台列表…"
   },
   "chat": {
     "open": "打开聊天助手",
@@ -462,7 +464,8 @@
     "favorites_empty": "点击爱心即可收藏电台。",
     "clear_recent": "清除收听记录",
     "add_favorite": "添加到收藏",
-    "remove_favorite": "取消收藏"
+    "remove_favorite": "取消收藏",
+    "loading": "正在加载您的电台…"
   },
   "redesign": {
     "navigation": "导航",
@@ -481,9 +484,9 @@
   },
   "cookie_consent": {
     "title": "Cookie 与访问分析通知",
-    "body": "Radio ePlus 使用必要的 Cookie 和本地存储来记住语言、主题、播放器设置和收听偏好。",
+    "body": "Radio ePlus 会在此设备上保存您的收听和显示偏好。",
     "accept": "知道了",
-    "analytics_body": "Radio ePlus 使用必要的存储来保存偏好，并在正式网站使用 Google Analytics 4 统计访问量和页面浏览量。这是一则告知。",
+    "analytics_body": "Radio ePlus 会保存您的偏好，并在正式网站使用 Google Analytics 4 统计访问量。这只是信息提示，关闭后统计仍会继续。",
     "learn_more": "Cookie 政策"
   }
 }
