@@ -47,9 +47,9 @@ test("site defaults to dark mode with the color brand mark", async () => {
 
   assert.match(config, /preference:\s*"dark"/);
   assert.match(config, /fallback:\s*"dark"/);
-  assert.match(header, /\/brand\/onair-mark\.svg/);
+  assert.match(header, /\/brand\/logo-share\.png/);
   assert.doesNotMatch(header, /dark:invert|logo-black\.svg|logo-white\.svg/);
-  assert.match(artwork, /\/brand\/onair-mark\.svg/);
+  assert.match(artwork, /\/brand\/logo-share\.png/);
 });
 
 test("Vue templates do not reintroduce legacy light/dark utility pairs", async () => {
