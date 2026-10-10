@@ -376,3 +376,18 @@
 @layer utilities {
  .radio-library-artwork { inline-size: 3rem; block-size: 3rem; }
 }
+
+@layer utilities {
+  /* The Nuxt UI primary button uses dark text on rose by default. Keep the
+     station detail Play/Pause label and its icon white in dark mode. */
+  html.dark .radio-station-detail-action,
+  html[data-theme="dark"] .radio-station-detail-action {
+    color: #fff !important;
+  }
+
+  html.dark .radio-station-detail-action .iconify,
+  html[data-theme="dark"] .radio-station-detail-action .iconify {
+    color: inherit !important;
+  }
+}
+
