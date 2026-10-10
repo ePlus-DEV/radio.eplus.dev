@@ -318,4 +318,4 @@ This repository is maintained by ePlus.DEV. Refer to the repository settings or 
 
 The public brand is **ePlus OnAir** with the tagline **Listen Beyond Borders.** The existing `radio.eplus.dev` production URL and `radio-new.eplus.dev` staging URL intentionally remain unchanged to preserve routing, analytics, and existing links. Replacing domains requires a separate migration plan (DNS, 301 redirects, canonical URLs, GA4, search indexing, and third-party integrations).
 
-The official mark and social artwork live under `public/brand/onair-*`; original URLs are retained for backward compatibility.
+The official mark and social artwork live under `public/brand/onair-*`. Run `npm run brand:generate` (automatically invoked by `dev`, `build`, and `generate`) to produce compatible PNG social images, favicons and PWA icons from the SVG sources. The current production URLs remain unchanged.
