@@ -66,7 +66,7 @@
     <PanelStation
       @select-station="playSelected"
       :stations="stations"
-      :active-station-id="stationSlug"
+      :active-station-id="playingStationId"
       :country-name="countryName"
     />
 
@@ -243,6 +243,11 @@ const playback = usePlaybackStore();
 const streamName = computed(() => stationName.value);
 const thumb = computed(() => stationMeta.value?.features || String(config.public.placeholderStation));
 const isActive = computed(() => playback.station?.url === stationPath.value);
+const playingStationId = computed(() =>
+  playback.station?.url.startsWith(`/${area.value}/${slug.value}/`)
+    ? playback.station.id
+    : "",
+);
 const sourceCount = computed(() => {
   const meta = stationMeta.value;
   if (!meta) return 0;
@@ -294,6 +299,10 @@ const playStation = (): void => {
 };
 
 const playSelected = (station: RadioStationOption): void => {
+  if (playback.station?.url === station.url && (playback.playing || playback.waiting)) {
+    playback.pauseRequest += 1;
+    return;
+  }
   const meta = stationCatalog.value[station.id];
   if (!meta) return;
   playback.activate(createPlaybackStation({
