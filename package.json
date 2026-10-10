@@ -1,8 +1,8 @@
 {
-  "name": "eplus-radio",
+  "name": "eplus-onair",
   "version": "2.0.0",
   "repository": "https://github.com/ePlus-DEV/radio.eplus.dev",
-  "description": "ePlus Radio",
+  "description": "ePlus OnAir — Listen Beyond Borders. Live radio from around the world.",
   "author": "David Nguyen",
   "private": true,
   "type": "module",
