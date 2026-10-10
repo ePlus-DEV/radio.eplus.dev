@@ -5,19 +5,19 @@
         <div>
           <NuxtLink to="/" class="inline-flex items-center gap-3">
             <span
-              class="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--radio-inverse-bg)]"
+              class="flex h-10 w-10 items-center justify-center rounded-xl bg-transparent"
             >
               <img
-                src="/brand/logo-white.svg"
+                src="/brand/logo-share.png"
                 width="28"
                 height="28"
-                alt="Radio ePlus"
-                class="h-7 w-7 object-contain dark:brightness-0"
+                alt="ePlus OnAir"
+                class="h-9 w-9 rounded-lg object-contain"
               />
             </span>
             <span>
               <span class="block text-sm font-bold text-[var(--radio-text)]">
-                Radio ePlus
+                ePlus OnAir
               </span>
               <span class="block text-xs text-[var(--radio-text-muted)]">
                 {{ $t('footer.tagline') }}

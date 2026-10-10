@@ -32,7 +32,7 @@
           </p>
         </div>
         <a
-          href="mailto:support@eplus.dev?subject=Radio%20ePlus%20support"
+          href="mailto:support@eplus.dev?subject=ePlus%20OnAir%20support"
           class="radio-interactive inline-flex h-10 shrink-0 items-center justify-center rounded-xl bg-rose-500 px-4 text-sm font-semibold text-white hover:bg-rose-600"
         >
           {{ t("site_pages.contact.support.action") }}

@@ -19,7 +19,7 @@ const noIndex = Boolean(config.public.noIndex);
   );
   const canonicalUrl = computed(() => siteUrl.value + route.path);
   const shareImage = computed(
-    () => siteUrl.value + "/brand/logo-share.png",
+    () => siteUrl.value + "/brand/onair-share.png",
   );
 
   useHead(() => ({
@@ -49,7 +49,7 @@ const noIndex = Boolean(config.public.noIndex);
             {
               "@type": "ListItem",
               position: 1,
-              name: "Radio ePlus",
+              name: "ePlus OnAir",
               item: siteUrl.value + "/",
             },
             {
@@ -70,11 +70,11 @@ const noIndex = Boolean(config.public.noIndex);
     ogDescription: description.value,
     ogUrl: canonicalUrl.value,
     ogImage: shareImage.value,
-    ogImageAlt: "Radio ePlus",
+    ogImageAlt: "ePlus OnAir",
     twitterTitle: title.value,
     twitterDescription: description.value,
     twitterImage: shareImage.value,
-    twitterImageAlt: "Radio ePlus",
+    twitterImageAlt: "ePlus OnAir",
   }));
 
   return { canonicalUrl };

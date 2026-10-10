@@ -30,7 +30,7 @@ export async function buildStationSearchIndex({
           station_name: station.title,
           station_country: `world.${area.name.replaceAll('-', '_')}.${country.replaceAll('-', '_')}`,
           country_label: humanLabel(country),
-          station_image: station.features || '/brand/logo-share.png',
+          station_image: station.features || '/brand/onair-mark.svg',
           url: `/${area.name}/${country}/${id}`,
           featured: area.name === 'asia' && country === 'viet-nam' && featuredIds.has(id),
           featured_rank: searchFeaturedIds.get(`${area.name}/${country}/${id}`) || 0,

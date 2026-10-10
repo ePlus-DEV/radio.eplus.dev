@@ -13,7 +13,7 @@
         class="radio-surface rounded-3xl p-5 sm:p-6"
       >
         <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-rose-500">
-          Radio ePlus
+          ePlus OnAir
         </p>
         <h2 class="mt-2 text-lg font-semibold text-[var(--radio-text)]">
           {{ t("site_pages.about.sections." + section + ".title") }}

@@ -215,7 +215,7 @@ const seoDescription = computed(
 );
 const seoImage = computed(() => {
   const image = stationMeta.value?.features;
-  if (!image) return `${siteUrl.value}/brand/logo-share.png`;
+  if (!image) return `${siteUrl.value}/brand/onair-share.png`;
   return image.startsWith("http") ? image : `${siteUrl.value}${image}`;
 });
 const canonicalUrl = computed(

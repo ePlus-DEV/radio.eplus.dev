@@ -1,6 +1,6 @@
-# Radio ePlus
+# ePlus OnAir
 
-> Radio ePlus is an internet radio directory for discovering and listening to live radio stations from countries around the world.
+> ePlus OnAir is an internet radio directory for discovering and listening to live radio stations from countries around the world.
 
 ## Canonical site
 

@@ -1,6 +1,7 @@
 <template>
   <div class="space-y-7 sm:space-y-8">
     <section class="radio-hero rounded-2xl">
+      <p class="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-rose-600 dark:text-rose-300">ePlus OnAir · {{ $t("brand.slogan") }}</p>
       <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{{ $t('home.title') }}</h1>
       <p class="mt-2 max-w-2xl text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('home.description') }}</p>
       <div class="mt-4 flex flex-wrap gap-4 text-xs font-semibold text-rose-700 dark:text-rose-300">
