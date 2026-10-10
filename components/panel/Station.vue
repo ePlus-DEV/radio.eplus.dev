@@ -55,23 +55,21 @@
               </span>
             </div>
 
-            <div class="flex min-h-[4.5rem] items-center border-t border-[var(--radio-border)] px-3 py-2.5 pr-14 sm:py-3.5">
-              <p
-                dir="auto"
-                class="line-clamp-2 text-sm font-semibold leading-5 text-[var(--radio-text)]"
-              >
-                {{ station.title }}
-              </p>
+            <div class="flex min-h-[4.5rem] min-w-0 items-center border-t border-[var(--radio-border)] px-3 py-2.5 pr-16 sm:py-3.5">
+              <span dir="auto" class="block min-w-0 flex-1 text-sm font-semibold leading-5 text-[var(--radio-text)]">
+                <CountryMarquee :text="station.title" />
+              </span>
             </div>
           </NuxtLink>
         </UTooltip>
         <button
           type="button"
-          class="absolute bottom-4 right-3 flex h-10 w-10 scale-95 cursor-pointer items-center justify-center rounded-full bg-rose-500 pl-0.5 text-white opacity-0 shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 group-hover:scale-100 group-hover:opacity-100 focus-visible:scale-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
-          :aria-label="$t('player.play') + ': ' + station.title"
+          class="absolute bottom-3 right-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+          :aria-label="$t(isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
+          :aria-pressed="isPlaying(station)"
           @click="emit('select-station', station)"
         >
-          <fa :icon="['fas', 'play']" class="ml-0.5 h-3 w-3" />
+          <UIcon :name="isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'" class="h-4 w-4" :class="isPlaying(station) ? '' : 'translate-x-px'" />
         </button>
       </article>
     </div>
@@ -91,8 +89,7 @@ const playback = usePlaybackStore();
 import type { RadioStationOption } from "~/types/radio";
 
 const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
-
-withDefaults(
+const props = withDefaults(
   defineProps<{
     stations?: RadioStationOption[];
     activeStationId?: string;
@@ -104,5 +101,9 @@ withDefaults(
     countryName: "",
   },
 );
+const isPlaying = (station: RadioStationOption): boolean =>
+  station.id === props.activeStationId && (playback.playing || playback.waiting);
+
+
 </script>
 

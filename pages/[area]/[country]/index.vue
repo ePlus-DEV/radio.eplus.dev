@@ -237,6 +237,10 @@ const listenDefault = (autoplay = false): void => {
 };
 
 const playSelected = (station: RadioStationOption): void => {
+  if (playback.station?.url === station.url && (playback.playing || playback.waiting)) {
+    playback.pauseRequest += 1;
+    return;
+  }
   const meta = catalog.value[station.id];
   if (!meta) return;
   playback.activate(createPlaybackStation({
