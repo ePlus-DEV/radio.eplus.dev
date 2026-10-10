@@ -10,7 +10,8 @@ const files = [
   ['brand/apple-touch-icon.png', 180, 180],
   ['brand/android-chrome-192x192.png', 192, 192],
   ['brand/android-chrome-512x512.png', 512, 512],
-  ['brand/mstile-150x150.png', 150, 150],
+  // Existing Windows tile is 270px despite its legacy 150x150 filename.
+  ['brand/mstile-150x150.png', 270, 270],
 ];
 
 for (const [name, width, height] of files) {
