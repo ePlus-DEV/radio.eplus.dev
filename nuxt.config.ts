@@ -155,7 +155,6 @@ export default defineNuxtConfig({
           href: "/brand/favicon-16x16.png",
         },
         { rel: "manifest", href: "/brand/site.webmanifest" },
-        { rel: "icon", type: "image/svg+xml", href: "/brand/onair-mark.svg" },
         {
           rel: "mask-icon",
           color: "#e11d48",
