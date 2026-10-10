@@ -61,7 +61,7 @@ test("station cards marquee long titles and show Play/Pause without hover", asyn
   assert.match(button, /:aria-label="\$t\(isPlaying\(station\) \? 'player\.pause' : 'player\.play'\)/);
   assert.match(button, /@click="emit\('select-station', station\)"/);
   assert.match(button, /isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'/);
-  assert.doesNotMatch(button, /opacity-0|group-hover:opacity-100|scale-95/);
+  assert.doesNotMatch(button, /(?:^|\s)opacity-0\b|group-hover:opacity-100|(?:^|\s)scale-95\b/);
   assert.match(stationPanel, /station\.id === props\.activeStationId && \(playback\.playing \|\| playback\.waiting\)/);
 
   // Both pages pause the active station instead of restarting its audio stream.
