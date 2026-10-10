@@ -29,8 +29,10 @@
                 <span class="h-1.5 w-1.5 rounded-full bg-current"></span> {{ $t(playback.playing ? 'player.on_air' : playback.waiting ? 'player.connecting' : 'redesign.paused') }}
               </span>
             </div>
-            <div class="flex min-h-[4.25rem] items-center border-t border-[var(--radio-border)] px-3 py-3 pr-14">
-              <p dir="auto" class="line-clamp-2 text-sm font-semibold leading-5 text-[var(--radio-text)]">{{ station.title }}</p>
+            <div class="flex min-h-[4.25rem] min-w-0 items-center border-t border-[var(--radio-border)] px-3 py-3 pr-14">
+              <span dir="auto" class="block min-w-0 flex-1 text-sm font-semibold leading-5 text-[var(--radio-text)]">
+                <CountryMarquee :text="station.title" />
+              </span>
             </div>
           </NuxtLink>
         </UTooltip>

@@ -400,3 +400,47 @@ test('mobile country station cards show Play/Pause and marquee titles without co
   await firstCard.getByRole('button', { name: /^Pause/ }).click();
   await expect(firstCard.getByRole('button', { name: /^Play/ })).toBeVisible();
 });
+
+
+test('Featured cards marquee long titles on a single line without covering Play', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await mockMedia(page);
+  await ready(page, '/');
+  const cards = page.locator('.radio-featured-card');
+  await expect(cards.nth(1)).toBeVisible();
+
+  const longCard = cards.first();
+  const shortCard = cards.nth(1);
+  const label = longCard.locator('.country-marquee-viewport');
+  const play = longCard.getByRole('button', { name: /^Play/ });
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 740 });
+    await expect(label).toBeVisible();
+    await expect(play).toBeVisible();
+
+    const layout = await longCard.evaluate(card => {
+      const viewport = card.querySelector('.country-marquee-viewport');
+      const button = card.querySelector('button');
+      const text = viewport.getBoundingClientRect();
+      const action = button.getBoundingClientRect();
+      return {
+        titleHeight: viewport.clientHeight,
+        lineHeight: parseFloat(getComputedStyle(viewport).lineHeight) || 20,
+        textRight: text.right,
+        playLeft: action.left,
+        buttonOpacity: getComputedStyle(button).opacity,
+      };
+    });
+    expect(layout.titleHeight, 'Featured title remains on one line').toBeLessThanOrEqual(layout.lineHeight + 2);
+    expect(layout.textRight, 'Featured title does not overlap Play').toBeLessThanOrEqual(layout.playLeft + 1);
+    expect(layout.buttonOpacity).toBe('1');
+  }
+
+  const scrolling = longCard.locator('.country-marquee-content--overflow');
+  await expect(scrolling).toBeVisible();
+  expect(await scrolling.evaluate(el => getComputedStyle(el).animationName)).toMatch(/^country-marquee-slide/);
+  await expect(shortCard.locator('.country-marquee-content--overflow')).toHaveCount(0);
+
+  await play.click();
+  await expect(longCard.getByRole('button', { name: /^Pause/ })).toBeVisible();
+});
