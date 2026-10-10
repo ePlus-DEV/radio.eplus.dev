@@ -33,10 +33,10 @@ const ga4Enabled = isGa4ProductionBuild({
   siteUrl,
   noIndex,
 });
-const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "Radio ePlus";
+const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "ePlus OnAir";
 const defaultDescription =
   process.env.DESCRIPTION ||
-  "Listen to live internet radio stations from around the world on Radio ePlus.";
+  "ePlus OnAir — Listen Beyond Borders. Discover and listen to live radio stations from around the world.";
 const radioSeoRoutes = getRadioSeoRoutes();
 const radioCatalogStats = getRadioCatalogStats();
 const staticSeoRoutes = [
@@ -128,7 +128,7 @@ export default defineNuxtConfig({
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         ...(noIndex ? [{ name: "robots", content: "noindex, nofollow, noarchive" }] : []),
         ...(!noIndex ? [{ name: "description", content: defaultDescription }] : []),
-        { name: "msapplication-TileColor", content: "#603cba" },
+        { name: "msapplication-TileColor", content: "#101119" },
         ...(!noIndex ? [
           { property: "article:author", content: process.env.FANPAGE },
           { property: "article:publisher", content: process.env.FANPAGE },
@@ -155,9 +155,10 @@ export default defineNuxtConfig({
           href: "/brand/favicon-16x16.png",
         },
         { rel: "manifest", href: "/brand/site.webmanifest" },
+        { rel: "icon", type: "image/svg+xml", href: "/brand/onair-mark.svg" },
         {
           rel: "mask-icon",
-          color: "#5bbad5",
+          color: "#e11d48",
           href: "/brand/safari-pinned-tab.svg",
         },
       ],

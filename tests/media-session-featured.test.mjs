@@ -31,7 +31,7 @@ test("Media Session falls back to local station artwork and ignores invalid sche
     album: "VOV Giao Thông TP.HCM",
     artwork: [{ src: origin + "/img/asia/viet-nam/vov-giao-thong.png" }],
   });
-  assert.deepEqual(buildRadioMediaMetadata({}, origin).artwork, [{ src: origin + "/brand/logo-share.png" }]);
+  assert.deepEqual(buildRadioMediaMetadata({}, origin).artwork, [{ src: origin + "/brand/android-chrome-512x512.png" }]);
 });
 
 test("Homepage featured stations contain VOV Giao Thong and Zing only", async () => {

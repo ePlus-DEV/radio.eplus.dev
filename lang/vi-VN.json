@@ -17,7 +17,7 @@
     "cookie": "Chính sách cookie"
   },
   "terms": {
-    "content": "Chào mừng bạn đến với trang web https://radio.eplus.dev (\"Radio ePlus\") - một sản phẩm của ePlus.DEV. Vui lòng đọc kỹ Thỏa thuận về cung cấp và sử dụng dịch vụ trên trang web https://radio.eplus.dev trước khi bạn sử dụng các tính năng trên trang web \"Radio\" của ePlus. Sau khi đăng ký, bạn đã đọc, hiểu, chấp nhận và tuân thủ các điều khoản dưới đây:",
+    "content": "Chào mừng bạn đến với trang web https://radio.eplus.dev (\"ePlus OnAir\") - một sản phẩm của ePlus.DEV. Vui lòng đọc kỹ Thỏa thuận về cung cấp và sử dụng dịch vụ trên trang web https://radio.eplus.dev trước khi bạn sử dụng các tính năng trên trang web \"Radio\" của ePlus. Sau khi đăng ký, bạn đã đọc, hiểu, chấp nhận và tuân thủ các điều khoản dưới đây:",
     "article_1": {
       "title": "Bài viết 1: Phi lợi nhuận",
       "line_1": "Chúng tôi cam kết miễn phí vĩnh viễn, không có bất kỳ phí nào.",
@@ -25,8 +25,8 @@
     },
     "article_2": {
       "title": "Bài viết 2: Đạo luật Bản quyền Thiên niên kỷ Kỹ thuật số",
-      "line_1": "Radio ePlus coi trọng vấn đề Sở hữu Trí tuệ và cam kết đáp ứng nhu cầu của chủ sở hữu nội dung trong việc quản lý xuất bản nội dung của họ trực tuyến. Cần lưu ý rằng Radio ePlus là một cổng đài phát thanh liên kết đến các trang web bên thứ ba qua cửa sổ pop-up.",
-      "line_2": "Bất kỳ nội dung nào trên các trang web bên thứ ba đều là trách nhiệm của những trang web đó và không phải của Radio ePlus. Chúng tôi không biết liệu nội dung trên các trang web bên thứ ba có được chủ sở hữu nội dung ủy quyền hay không, vì đó là một vấn đề giữa trang web chứa nội dung âm thanh và chủ sở hữu nội dung. Radio ePlus không lưu trữ bất kỳ nội dung âm thanh nào trên máy chủ hoặc mạng của mình."
+      "line_1": "ePlus OnAir coi trọng vấn đề Sở hữu Trí tuệ và cam kết đáp ứng nhu cầu của chủ sở hữu nội dung trong việc quản lý xuất bản nội dung của họ trực tuyến. Cần lưu ý rằng ePlus OnAir là một cổng đài phát thanh liên kết đến các trang web bên thứ ba qua cửa sổ pop-up.",
+      "line_2": "Bất kỳ nội dung nào trên các trang web bên thứ ba đều là trách nhiệm của những trang web đó và không phải của ePlus OnAir. Chúng tôi không biết liệu nội dung trên các trang web bên thứ ba có được chủ sở hữu nội dung ủy quyền hay không, vì đó là một vấn đề giữa trang web chứa nội dung âm thanh và chủ sở hữu nội dung. ePlus OnAir không lưu trữ bất kỳ nội dung âm thanh nào trên máy chủ hoặc mạng của mình."
     }
   },
   "world": {
@@ -248,12 +248,12 @@
     },
     "about": {
       "eyebrow": "Giới thiệu",
-      "title": "Giới thiệu Radio ePlus",
+      "title": "Giới thiệu ePlus OnAir",
       "description": "Tìm và nghe các đài radio trong nước, quốc tế ở cùng một nơi.",
       "sections": {
         "discover": {
           "title": "Khám phá radio",
-          "body": "Radio ePlus sắp xếp các đài radio trực tuyến theo khu vực và quốc gia để người nghe có thể tìm đài trong nước và quốc tế trên cùng một giao diện."
+          "body": "ePlus OnAir sắp xếp các đài radio trực tuyến theo khu vực và quốc gia để người nghe có thể tìm đài trong nước và quốc tế trên cùng một giao diện."
         },
         "playback": {
           "title": "Phát trực tiếp",
@@ -277,7 +277,7 @@
       "sections": {
         "accounts": {
           "title": "Tài khoản và thanh toán",
-          "body": "Radio ePlus không yêu cầu tài khoản người dùng và không có quy trình thanh toán trên website này. Vui lòng không gửi thông tin cá nhân nhạy cảm qua các kênh công khai của dự án."
+          "body": "ePlus OnAir không yêu cầu tài khoản người dùng và không có quy trình thanh toán trên website này. Vui lòng không gửi thông tin cá nhân nhạy cảm qua các kênh công khai của dự án."
         },
         "preferences": {
           "title": "Các lựa chọn đã lưu",
@@ -308,11 +308,11 @@
     "terms": {
       "eyebrow": "Điều khoản",
       "title": "Điều khoản sử dụng",
-      "description": "Các điều kiện sử dụng Radio ePlus và các liên kết tới dịch vụ radio của bên thứ ba.",
+      "description": "Các điều kiện sử dụng ePlus OnAir và các liên kết tới dịch vụ radio của bên thứ ba.",
       "sections": {
         "service": {
           "title": "Sử dụng dịch vụ",
-          "body": "Radio ePlus được cung cấp như một giao diện miễn phí để khám phá và nghe radio. Bạn có thể sử dụng website cho mục đích cá nhân hợp pháp để truy cập các dịch vụ radio công khai."
+          "body": "ePlus OnAir được cung cấp như một giao diện miễn phí để khám phá và nghe radio. Bạn có thể sử dụng website cho mục đích cá nhân hợp pháp để truy cập các dịch vụ radio công khai."
         },
         "third_party": {
           "title": "Đài radio và dịch vụ liên kết",
@@ -323,7 +323,7 @@
           "body": "Tên đài, logo, âm thanh và nội dung khác thuộc về chủ sở hữu tương ứng. Nếu bạn có quyền sở hữu và muốn sửa hoặc gỡ nội dung, hãy gửi đường dẫn trang và thông tin để chúng tôi kiểm tra."
         },
         "acceptable_use": {
-          "title": "Sử dụng Radio ePlus đúng cách",
+          "title": "Sử dụng ePlus OnAir đúng cách",
           "body": "Vui lòng tuân thủ pháp luật. Không làm gián đoạn website hay các đài, truy cập trái phép, thu thập dữ liệu với số lượng gây ảnh hưởng hoặc phát tán phần mềm độc hại."
         },
         "availability": {
@@ -338,7 +338,7 @@
     },
     "contact": {
       "eyebrow": "Liên hệ",
-      "title": "Liên hệ Radio ePlus",
+      "title": "Liên hệ ePlus OnAir",
       "description": "Bạn gặp khó khăn khi nghe, muốn đề xuất đài mới hoặc có câu hỏi về nội dung? Hãy liên hệ với chúng tôi.",
       "sections": {
         "bug": {
@@ -363,7 +363,7 @@
     "statistics": {
       "eyebrow": "Đài radio",
       "title": "Thống kê radio",
-      "description": "Xem Radio ePlus hiện có bao nhiêu quốc gia và đài radio để bạn khám phá.",
+      "description": "Xem ePlus OnAir hiện có bao nhiêu quốc gia và đài radio để bạn khám phá.",
       "metrics": {
         "areas": "Khu vực",
         "countries": "Quốc gia",
@@ -382,7 +382,7 @@
     "cookie": {
       "eyebrow": "Cookie",
       "title": "Chính sách cookie",
-      "description": "Tìm hiểu cách Radio ePlus ghi nhớ cài đặt và thống kê lượt truy cập website.",
+      "description": "Tìm hiểu cách ePlus OnAir ghi nhớ cài đặt và thống kê lượt truy cập website.",
       "sections": {
         "essential": {
           "title": "Lưu trữ cần thiết",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "Thống kê lượt truy cập",
-          "body": "Website Radio ePlus chính thức sử dụng Google Analytics 4 để đếm lượt truy cập và lượt xem trang ngay khi mở trang. Đóng thông báo cookie không dừng việc đo lường này."
+          "body": "Website ePlus OnAir chính thức sử dụng Google Analytics 4 để đếm lượt truy cập và lượt xem trang ngay khi mở trang. Đóng thông báo cookie không dừng việc đo lường này."
         },
         "third_party": {
           "title": "Dịch vụ bên thứ ba",
@@ -444,16 +444,18 @@
   "seo": {
     "home_breadcrumb": "Trang chủ",
     "country_title": "Radio trực tiếp tại {country}",
-    "country_description": "Nghe {count} đài radio trực tuyến tại {country}. Khám phá các đài địa phương và nghe trên Radio ePlus.",
-    "country_description_empty": "Nghe các đài radio trực tuyến tại {country} trên Radio ePlus.",
+    "country_description": "Nghe {count} đài radio trực tuyến tại {country}. Khám phá các đài địa phương và nghe trên ePlus OnAir.",
+    "country_description_empty": "Nghe các đài radio trực tuyến tại {country} trên ePlus OnAir.",
     "station_title": "{station} – Radio trực tiếp tại {country}",
-    "station_description": "Nghe trực tiếp {station} từ {country} trên Radio ePlus."
+    "station_description": "Nghe trực tiếp {station} từ {country} trên ePlus OnAir."
   },
   "brand": {
-    "live_radio": "Radio trực tiếp"
+    "live_radio": "Radio trực tiếp",
+    "slogan": "Listen Beyond Borders.",
+    "slogan_localized": "Lắng nghe không biên giới."
   },
   "footer": {
-    "tagline": "Radio trực tiếp từ khắp thế giới",
+    "tagline": "Listen Beyond Borders.",
     "description": "Tìm đài theo khu vực và quốc gia, rồi nghe ngay trên mọi thiết bị."
   },
   "library": {
@@ -484,9 +486,9 @@
   },
   "cookie_consent": {
     "title": "Thông báo cookie và đo lường",
-    "body": "Radio ePlus lưu các lựa chọn nghe và giao diện của bạn trên thiết bị này.",
+    "body": "ePlus OnAir lưu các lựa chọn nghe và giao diện của bạn trên thiết bị này.",
     "accept": "Đã hiểu",
-    "analytics_body": "Radio ePlus ghi nhớ tùy chọn của bạn và dùng Google Analytics 4 để thống kê lượt truy cập trên website chính thức. Đây là thông báo cung cấp thông tin; đóng thông báo không tắt việc đo lường.",
+    "analytics_body": "ePlus OnAir ghi nhớ tùy chọn của bạn và dùng Google Analytics 4 để thống kê lượt truy cập trên website chính thức. Đây là thông báo cung cấp thông tin; đóng thông báo không tắt việc đo lường.",
     "learn_more": "Chính sách cookie"
   }
 }

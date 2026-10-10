@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file is the short operational guide for coding agents and contributors working on **Radio ePlus**.
+This file is the short operational guide for coding agents and contributors working on **ePlus OnAir**.
 
 For deeper history and rationale, read [`docs/PROJECT_CONTEXT.md`](./docs/PROJECT_CONTEXT.md).
 
@@ -16,7 +16,7 @@ For deeper history and rationale, read [`docs/PROJECT_CONTEXT.md`](./docs/PROJEC
 - Nuxt 4 / Vue 3
 - Node.js 24.15.0
 - Tailwind CSS 4
-- Nuxt UI 4 + Radio ePlus tokens (DaisyUI removed)
+- Nuxt UI 4 + ePlus OnAir tokens (DaisyUI removed)
 - Pinia
 - Native HTML5 `<audio>` + `hls.js`
 - Nuxt Color Mode

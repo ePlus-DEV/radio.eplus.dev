@@ -34,9 +34,9 @@ export function useRestoreLastStation() {
       if (disposed || route.fullPath !== path || playback.playRequest !== request || playback.requestedStationUrl || playback.station?.url !== saved.url || playback.playing) return;
       const meta = catalog[id];
       if (!meta || !meta.stream) return;
-      const options = Object.entries(catalog).map(([key, entry]) => ({ id: key, title: entry.title, image: entry.features || '/brand/logo-share.png', url: `/${area}/${country}/${key}` }));
+      const options = Object.entries(catalog).map(([key, entry]) => ({ id: key, title: entry.title, image: entry.features || '/brand/onair-mark.svg', url: `/${area}/${country}/${key}` }));
       playback.activate(createPlaybackStation({ area, country, id, meta,
-        corsServer: String(config.public.corsServer || ''), placeholder: '/brand/logo-share.png',
+        corsServer: String(config.public.corsServer || ''), placeholder: '/brand/onair-mark.svg',
       }), options, { autoplay: false });
     } catch { /* A removed station or offline catalog must not break the page. */ }
   });

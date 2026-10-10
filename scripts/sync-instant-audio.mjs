@@ -16,7 +16,7 @@ const MWYNIKI_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36";
 const USER_AGENT =
-  "Radio-ePlus-Data-Sync/2.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
+  "ePlus-OnAir-Data-Sync/2.0 (+https://github.com/ePlus-DEV/radio.eplus.dev)";
 const DEFAULT_STATION_IMAGE = "https://s3.eplus.dev/i/station-on-air.png";
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 const STATION_ARTWORK_WIDTH = 96;

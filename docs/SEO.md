@@ -1,8 +1,8 @@
-# Radio ePlus SEO Architecture
+# ePlus OnAir SEO Architecture
 
 Last updated: **2026-10-08**
 
-This file is the durable SEO checklist for Radio ePlus. It records what is implemented, what is intentionally not implemented, and the reasons behind those decisions.
+This file is the durable SEO checklist for ePlus OnAir. It records what is implemented, what is intentionally not implemented, and the reasons behind those decisions.
 
 ## Staging branch noindex policy
 
@@ -148,7 +148,7 @@ strategy: "no_prefix"
 
 That means all languages share the same canonical URL.
 
-Because there is no distinct URL per locale, **Radio ePlus does not currently have true multilingual SEO/hreflang coverage**.
+Because there is no distinct URL per locale, **ePlus OnAir does not currently have true multilingual SEO/hreflang coverage**.
 
 Do not generate multiple `hreflang` entries that all point to the same URL merely to satisfy a checklist. Proper multilingual SEO requires a route migration such as:
 

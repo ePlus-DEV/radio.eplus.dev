@@ -10,7 +10,7 @@
         <img
           loading="lazy" decoding="async" width="44" height="44"
           class="radio-themed-artwork h-11 w-11 shrink-0 rounded-xl object-contain p-1 ring-1 ring-[var(--radio-border)]"
-          :src="item.station_image || '/brand/logo-share.png'"
+          :src="item.station_image || '/brand/onair-mark.svg'"
           :alt="item.station_name"
         />
         <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-[var(--radio-text)]">

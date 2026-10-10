@@ -1,6 +1,6 @@
-# Radio ePlus Agent Guide
+# ePlus OnAir Agent Guide
 
-Radio ePlus provides public, read-only discovery pages for internet radio stations.
+ePlus OnAir provides public, read-only discovery pages for internet radio stations.
 
 ## Preferred discovery order
 

@@ -17,7 +17,7 @@
     "cookie": "Cookieポリシー"
   },
   "terms": {
-    "content": "ウェブサイト https://radio.eplus.dev (「Radio ePlus」) へようこそ。ePlus.DEV の製品です。ウェブサイト https://radio.eplus.dev のサービス提供および利用に関する契約を注意深くお読みください。「Radio」ウェブサイト ePlus の機能を使用する前に。登録すると、以下の条件を読み、理解し、受け入れ、遵守したことになります。",
+    "content": "ウェブサイト https://radio.eplus.dev (「ePlus OnAir」) へようこそ。ePlus.DEV の製品です。ウェブサイト https://radio.eplus.dev のサービス提供および利用に関する契約を注意深くお読みください。「Radio」ウェブサイト ePlus の機能を使用する前に。登録すると、以下の条件を読み、理解し、受け入れ、遵守したことになります。",
     "article_1": {
       "title": "第1条: 非営利",
       "line_1": "私たちは、いかなる種類の料金もなく、永遠に無料であることを約束します。",
@@ -25,8 +25,8 @@
     },
     "article_2": {
       "title": "第2条: デジタルミレニアム著作権法",
-      "line_1": "Radio ePlus は知的財産の問題を非常に真剣に受け止めており、コンテンツ所有者のニーズに応えながら、オンラインでのコンテンツの公開を管理する手助けをすることに尽力しています。Radio ePlus はポップアップによってサードパーティのウェブサイトにリンクするラジオステーションポータルであることに注意してください。",
-      "line_2": "これらのサードパーティのウェブサイト上のコンテンツは、それらのサイトの責任であり、Radio ePlus の責任ではありません。サードパーティのウェブサイト上のコンテンツがコンテンツ所有者によって許可されているかどうかについては、オーディオコンテンツをホストするサイトとコンテンツ所有者の間の問題であるため、Radio ePlus はその知識を持っていません。Radio ePlus は、サーバーやネットワーク上にオーディオコンテンツをホストしていません。"
+      "line_1": "ePlus OnAir は知的財産の問題を非常に真剣に受け止めており、コンテンツ所有者のニーズに応えながら、オンラインでのコンテンツの公開を管理する手助けをすることに尽力しています。ePlus OnAir はポップアップによってサードパーティのウェブサイトにリンクするラジオステーションポータルであることに注意してください。",
+      "line_2": "これらのサードパーティのウェブサイト上のコンテンツは、それらのサイトの責任であり、ePlus OnAir の責任ではありません。サードパーティのウェブサイト上のコンテンツがコンテンツ所有者によって許可されているかどうかについては、オーディオコンテンツをホストするサイトとコンテンツ所有者の間の問題であるため、ePlus OnAir はその知識を持っていません。ePlus OnAir は、サーバーやネットワーク上にオーディオコンテンツをホストしていません。"
     }
   },
   "world": {
@@ -248,12 +248,12 @@
     },
     "about": {
       "eyebrow": "概要",
-      "title": "Radio ePlus について",
+      "title": "ePlus OnAir について",
       "description": "世界各地のラジオ局を、ひとつの場所で見つけて聴けます。",
       "sections": {
         "discover": {
           "title": "ラジオを探す",
-          "body": "Radio ePlus はインターネットラジオ局を地域・国別に整理し、国内外の放送局を一つの統一された画面から探せるようにします。"
+          "body": "ePlus OnAir はインターネットラジオ局を地域・国別に整理し、国内外の放送局を一つの統一された画面から探せるようにします。"
         },
         "playback": {
           "title": "直接再生",
@@ -277,7 +277,7 @@
       "sections": {
         "accounts": {
           "title": "アカウントと支払い",
-          "body": "Radio ePlus はユーザー登録を必要とせず、このサイトに決済機能もありません。公開のプロジェクト窓口へ機微な個人情報を送らないでください。"
+          "body": "ePlus OnAir はユーザー登録を必要とせず、このサイトに決済機能もありません。公開のプロジェクト窓口へ機微な個人情報を送らないでください。"
         },
         "preferences": {
           "title": "保存される設定",
@@ -308,11 +308,11 @@
     "terms": {
       "eyebrow": "利用条件",
       "title": "利用規約",
-      "description": "Radio ePlus と第三者ラジオサービスへのリンクを利用する際の条件です。",
+      "description": "ePlus OnAir と第三者ラジオサービスへのリンクを利用する際の条件です。",
       "sections": {
         "service": {
           "title": "サービスの利用",
-          "body": "Radio ePlus は無料のラジオ検索・再生インターフェースとして提供されます。公開されているラジオサービスへ適法に個人利用する目的で使用できます。"
+          "body": "ePlus OnAir は無料のラジオ検索・再生インターフェースとして提供されます。公開されているラジオサービスへ適法に個人利用する目的で使用できます。"
         },
         "third_party": {
           "title": "放送局と外部サービス",
@@ -338,7 +338,7 @@
     },
     "contact": {
       "eyebrow": "お問い合わせ",
-      "title": "Radio ePlus へのお問い合わせ",
+      "title": "ePlus OnAir へのお問い合わせ",
       "description": "ラジオが聴けない、局を追加したい、掲載内容を問い合わせたいときはこちらからご連絡ください。",
       "sections": {
         "bug": {
@@ -363,7 +363,7 @@
     "statistics": {
       "eyebrow": "ラジオ局",
       "title": "ラジオ統計",
-      "description": "Radio ePlus で探せる国やラジオ局の数をご覧いただけます。",
+      "description": "ePlus OnAir で探せる国やラジオ局の数をご覧いただけます。",
       "metrics": {
         "areas": "地域",
         "countries": "国",
@@ -382,7 +382,7 @@
     "cookie": {
       "eyebrow": "Cookie Policy",
       "title": "Cookie Policy",
-      "description": "Radio ePlus が設定を記憶し、サイトのアクセス数を調べる方法をご案内します。",
+      "description": "ePlus OnAir が設定を記憶し、サイトのアクセス数を調べる方法をご案内します。",
       "sections": {
         "essential": {
           "title": "Essential storage",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "サイトのアクセス数",
-          "body": "Radio ePlus の公式サイトでは、ページを開いた時点から Google Analytics 4 でアクセス数とページ閲覧数を計測します。このお知らせを閉じても計測は止まりません。"
+          "body": "ePlus OnAir の公式サイトでは、ページを開いた時点から Google Analytics 4 でアクセス数とページ閲覧数を計測します。このお知らせを閉じても計測は止まりません。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -444,16 +444,18 @@
   "seo": {
     "home_breadcrumb": "ホーム",
     "country_title": "{country} のライブ ラジオ",
-    "country_description": "{country} のインターネットラジオ {count} 局をライブで楽しめます。Radio ePlus で現地の放送局を探しましょう。",
-    "country_description_empty": "Radio ePlus で {country} のインターネットラジオをライブで聴きましょう。",
+    "country_description": "{country} のインターネットラジオ {count} 局をライブで楽しめます。ePlus OnAir で現地の放送局を探しましょう。",
+    "country_description_empty": "ePlus OnAir で {country} のインターネットラジオをライブで聴きましょう。",
     "station_title": "{station} ライブ ラジオ – {country}",
-    "station_description": "Radio ePlus で {country} の {station} をライブで聴きましょう。"
+    "station_description": "ePlus OnAir で {country} の {station} をライブで聴きましょう。"
   },
   "brand": {
-    "live_radio": "ライブ ラジオ"
+    "live_radio": "ライブ ラジオ",
+    "slogan": "Listen Beyond Borders.",
+    "slogan_localized": "国境を越えて、耳を傾けよう。"
   },
   "footer": {
-    "tagline": "世界中のラジオをライブで",
+    "tagline": "Listen Beyond Borders.",
     "description": "地域や国から放送局を探して、どの端末からでもすぐに聴けます。"
   },
   "library": {
@@ -484,9 +486,9 @@
   },
   "cookie_consent": {
     "title": "Cookieとアクセス解析のお知らせ",
-    "body": "Radio ePlus は、お使いの端末に再生や表示の設定を保存します。",
+    "body": "ePlus OnAir は、お使いの端末に再生や表示の設定を保存します。",
     "accept": "了解",
-    "analytics_body": "Radio ePlus は設定を記憶し、公式サイトで Google Analytics 4 によりアクセス数を計測します。これはご案内です。閉じても計測は止まりません。",
+    "analytics_body": "ePlus OnAir は設定を記憶し、公式サイトで Google Analytics 4 によりアクセス数を計測します。これはご案内です。閉じても計測は止まりません。",
     "learn_more": "Cookieポリシー"
   }
 }

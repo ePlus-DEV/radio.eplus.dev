@@ -72,7 +72,7 @@ const canonicalUrl = computed(() => {
   const path = route.path === "/" ? "/" : route.path.replace(/\/$/, "");
   return `${siteUrl.value}${path}`;
 });
-const shareImage = computed(() => `${siteUrl.value}/brand/logo-share.png`);
+const shareImage = computed(() => `${siteUrl.value}/brand/onair-share.png`);
 const ogLocale = computed(
   () =>
     ({

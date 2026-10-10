@@ -17,7 +17,7 @@
     "cookie": "Cookie 政策"
   },
   "terms": {
-    "content": "欢迎访问网站 https://radio.eplus.dev（“Radio ePlus”），这是ePlus.DEV的产品。在使用“Radio”网站ePlus上的功能之前，请仔细阅读网站 https://radio.eplus.dev 上的服务提供和使用协议。一旦注册，您已经阅读、理解、接受并遵守以下条款：",
+    "content": "欢迎访问网站 https://radio.eplus.dev（“ePlus OnAir”），这是ePlus.DEV的产品。在使用“Radio”网站ePlus上的功能之前，请仔细阅读网站 https://radio.eplus.dev 上的服务提供和使用协议。一旦注册，您已经阅读、理解、接受并遵守以下条款：",
     "article_1": {
       "title": "第一条：非盈利",
       "line_1": "我们承诺永久免费，不收取任何费用。",
@@ -25,8 +25,8 @@
     },
     "article_2": {
       "title": "第二条：数字千年版权法",
-      "line_1": "Radio ePlus非常重视知识产权问题，并致力于满足内容所有者的需求，同时帮助他们管理其在线内容的发布。需要注意的是，Radio ePlus是通过弹出窗口链接到第三方网站的广播电台门户。",
-      "line_2": "这些第三方网站上的任何内容都由这些网站负责，而不是Radio ePlus。我们不知道第三方网站上的内容是否经过内容所有者的授权，因为这是托管音频内容的网站和内容所有者之间的事情。Radio ePlus不在其服务器或网络上托管任何音频内容。"
+      "line_1": "ePlus OnAir非常重视知识产权问题，并致力于满足内容所有者的需求，同时帮助他们管理其在线内容的发布。需要注意的是，ePlus OnAir是通过弹出窗口链接到第三方网站的广播电台门户。",
+      "line_2": "这些第三方网站上的任何内容都由这些网站负责，而不是ePlus OnAir。我们不知道第三方网站上的内容是否经过内容所有者的授权，因为这是托管音频内容的网站和内容所有者之间的事情。ePlus OnAir不在其服务器或网络上托管任何音频内容。"
     }
   },
   "world": {
@@ -248,12 +248,12 @@
     },
     "about": {
       "eyebrow": "关于",
-      "title": "关于 Radio ePlus",
+      "title": "关于 ePlus OnAir",
       "description": "在一个地方寻找并收听世界各地的直播电台。",
       "sections": {
         "discover": {
           "title": "发现电台",
-          "body": "Radio ePlus 按地区和国家整理互联网电台，让你可以在统一界面中查找本地和国际电台。"
+          "body": "ePlus OnAir 按地区和国家整理互联网电台，让你可以在统一界面中查找本地和国际电台。"
         },
         "playback": {
           "title": "直接播放",
@@ -277,7 +277,7 @@
       "sections": {
         "accounts": {
           "title": "账户与付款",
-          "body": "Radio ePlus 不要求用户注册，也不在本站提供付款或结账流程。请不要通过公开项目渠道提交敏感个人信息。"
+          "body": "ePlus OnAir 不要求用户注册，也不在本站提供付款或结账流程。请不要通过公开项目渠道提交敏感个人信息。"
         },
         "preferences": {
           "title": "保存的设置",
@@ -308,11 +308,11 @@
     "terms": {
       "eyebrow": "条款",
       "title": "使用条款",
-      "description": "使用 Radio ePlus 及其第三方电台服务链接时适用的条件。",
+      "description": "使用 ePlus OnAir 及其第三方电台服务链接时适用的条件。",
       "sections": {
         "service": {
           "title": "服务使用",
-          "body": "Radio ePlus 作为免费的电台发现和播放界面提供。你可以为合法的个人用途访问公开可用的电台服务。"
+          "body": "ePlus OnAir 作为免费的电台发现和播放界面提供。你可以为合法的个人用途访问公开可用的电台服务。"
         },
         "third_party": {
           "title": "电台与其他服务",
@@ -323,7 +323,7 @@
           "body": "电台名称、标志、音频及其他内容属于各自的所有者。如果您拥有相关权利并希望更正或删除，请提供页面链接和核实所需的信息。"
         },
         "acceptable_use": {
-          "title": "合理使用 Radio ePlus",
+          "title": "合理使用 ePlus OnAir",
           "body": "请遵守法律。请勿干扰网站或电台服务、未经许可绕过访问限制、大量抓取数据影响运行，或传播有害软件。"
         },
         "availability": {
@@ -338,7 +338,7 @@
     },
     "contact": {
       "eyebrow": "联系",
-      "title": "联系 Radio ePlus",
+      "title": "联系 ePlus OnAir",
       "description": "无法收听、想推荐电台或有内容方面的问题？欢迎联系我们。",
       "sections": {
         "bug": {
@@ -363,7 +363,7 @@
     "statistics": {
       "eyebrow": "广播电台",
       "title": "电台统计",
-      "description": "看看 Radio ePlus 有多少国家和电台可供探索。",
+      "description": "看看 ePlus OnAir 有多少国家和电台可供探索。",
       "metrics": {
         "areas": "地区",
         "countries": "国家",
@@ -382,7 +382,7 @@
     "cookie": {
       "eyebrow": "Cookie Policy",
       "title": "Cookie Policy",
-      "description": "了解 Radio ePlus 如何保存您的设置并统计网站访问量。",
+      "description": "了解 ePlus OnAir 如何保存您的设置并统计网站访问量。",
       "sections": {
         "essential": {
           "title": "Essential storage",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "网站访问统计",
-          "body": "Radio ePlus 正式网站在页面打开时即通过 Google Analytics 4 统计访问和页面浏览量。关闭此通知不会停止统计。"
+          "body": "ePlus OnAir 正式网站在页面打开时即通过 Google Analytics 4 统计访问和页面浏览量。关闭此通知不会停止统计。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -444,16 +444,18 @@
   "seo": {
     "home_breadcrumb": "首页",
     "country_title": "{country} 直播电台",
-    "country_description": "收听来自 {country} 的 {count} 家在线直播电台，在 Radio ePlus 探索本地节目。",
-    "country_description_empty": "在 Radio ePlus 收听来自 {country} 的在线直播电台。",
+    "country_description": "收听来自 {country} 的 {count} 家在线直播电台，在 ePlus OnAir 探索本地节目。",
+    "country_description_empty": "在 ePlus OnAir 收听来自 {country} 的在线直播电台。",
     "station_title": "{station} 在线直播 – {country}",
-    "station_description": "在 Radio ePlus 收听来自 {country} 的 {station} 直播。"
+    "station_description": "在 ePlus OnAir 收听来自 {country} 的 {station} 直播。"
   },
   "brand": {
-    "live_radio": "直播电台"
+    "live_radio": "直播电台",
+    "slogan": "Listen Beyond Borders.",
+    "slogan_localized": "聆听无国界。"
   },
   "footer": {
-    "tagline": "畅听世界各地的直播电台",
+    "tagline": "Listen Beyond Borders.",
     "description": "按地区和国家寻找电台，在任何设备上即刻收听。"
   },
   "library": {
@@ -484,9 +486,9 @@
   },
   "cookie_consent": {
     "title": "Cookie 与访问分析通知",
-    "body": "Radio ePlus 会在此设备上保存您的收听和显示偏好。",
+    "body": "ePlus OnAir 会在此设备上保存您的收听和显示偏好。",
     "accept": "知道了",
-    "analytics_body": "Radio ePlus 会保存您的偏好，并在正式网站使用 Google Analytics 4 统计访问量。这只是信息提示，关闭后统计仍会继续。",
+    "analytics_body": "ePlus OnAir 会保存您的偏好，并在正式网站使用 Google Analytics 4 统计访问量。这只是信息提示，关闭后统计仍会继续。",
     "learn_more": "Cookie 政策"
   }
 }
