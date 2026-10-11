@@ -391,3 +391,36 @@
   }
 }
 
+
+
+/* Shared, theme-aware page skeletons. Respect reduced-motion preferences. */
+@keyframes radio-skeleton-shimmer {
+  from { background-position-x: 200%; }
+  to { background-position-x: -200%; }
+}
+
+@layer utilities {
+  .radio-page-skeleton {
+    min-height: min(65dvh, 650px);
+  }
+
+  .radio-skeleton {
+    background-color: var(--radio-surface-soft);
+    background-image: linear-gradient(
+      100deg,
+      transparent 15%,
+      color-mix(in srgb, var(--radio-border-strong) 65%, transparent) 45%,
+      transparent 78%
+    );
+    background-size: 200% 100%;
+    animation: radio-skeleton-shimmer 1.8s ease-in-out infinite;
+  }
+
+  .radio-skeleton-card {
+    background: var(--radio-surface);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .radio-skeleton { animation: none; background-image: none; }
+  }
+}
