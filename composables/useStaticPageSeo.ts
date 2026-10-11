@@ -19,7 +19,7 @@ const noIndex = Boolean(config.public.noIndex);
   );
   const canonicalUrl = computed(() => siteUrl.value + route.path);
   const shareImage = computed(
-    () => siteUrl.value + "/brand/onair-share.png",
+    () => siteUrl.value + "/brand/social-preview.png",
   );
 
   useHead(() => ({
@@ -70,11 +70,14 @@ const noIndex = Boolean(config.public.noIndex);
     ogDescription: description.value,
     ogUrl: canonicalUrl.value,
     ogImage: shareImage.value,
-    ogImageAlt: "ePlus OnAir",
+    ogImageAlt: "ePlus OnAir — Live radio from around the world",
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    ogImageType: "image/png",
     twitterTitle: title.value,
     twitterDescription: description.value,
     twitterImage: shareImage.value,
-    twitterImageAlt: "ePlus OnAir",
+    twitterImageAlt: "ePlus OnAir — Live radio from around the world",
   }));
 
   return { canonicalUrl };

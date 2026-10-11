@@ -8,11 +8,11 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "prebuild": "node scripts/build-station-search-index.mjs",
+    "prebuild": "node scripts/build-station-search-index.mjs && node scripts/generate-social-preview.mjs",
     "dev": "nuxt dev",
     "predev": "node scripts/build-station-search-index.mjs",
     "generate": "nuxt generate",
-    "pregenerate": "node scripts/build-station-search-index.mjs",
+    "pregenerate": "node scripts/build-station-search-index.mjs && node scripts/generate-social-preview.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "node --test tests/*.test.mjs",
