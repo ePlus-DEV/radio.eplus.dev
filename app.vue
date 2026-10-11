@@ -131,9 +131,10 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => noIndex ? { robots: "noindex, nofollow, noarchive" } : ({
+// Social cards remain crawlable on staging, while search indexing stays disabled.
+useSeoMeta(() => ({
   description: defaultDescription.value,
-  robots: "index, follow",
+  robots: noIndex ? "noindex, nofollow, noarchive" : "index, follow",
   ogType: "website",
   ogSiteName: siteName.value,
   ogLocale: ogLocale.value,
