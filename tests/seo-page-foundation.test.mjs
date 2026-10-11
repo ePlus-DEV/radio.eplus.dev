@@ -47,8 +47,9 @@ test("global metadata includes canonical social and organization identity", asyn
   assert.match(source, /"@type": "WebSite"/);
   assert.match(source, /"@type": "Organization"/);
   assert.match(source, /ogLocale:/);
-  assert.match(source, /ogImageAlt:/);
-  assert.match(source, /twitterImageAlt:/);
+  assert.match(source, /ogSiteName:/);
+  assert.match(source, /twitterCard:/);
+  assert.doesNotMatch(source, /ogImage:/);
 });
 
 test("sitemap avoids fake deployment-time lastmod values", async () => {
@@ -109,8 +110,9 @@ test("Romania artwork lives in the canonical image tree", async () => {
 });
 
 test("social sharing uses a generated 1200x630 image instead of the icon", async () => {
-  const [app, staticSeo, config, pkg, svg] = await Promise.all([
+  const [app, home, staticSeo, config, pkg, svg] = await Promise.all([
     read("app.vue"),
+    read("pages/index.vue"),
     read("composables/useStaticPageSeo.ts"),
     read("nuxt.config.ts"),
     read("package.json"),
@@ -118,11 +120,13 @@ test("social sharing uses a generated 1200x630 image instead of the icon", async
   ]);
   assert.match(svg, /viewBox="0 0 1200 630"/);
   assert.match(svg, /Live radio from around the world/);
-  assert.match(app, /\/brand\/social-preview\.png/);
-  assert.match(app, /ogImageWidth: 1200/);
-  assert.match(app, /ogImageHeight: 630/);
-  assert.match(app, /ogImageType: "image\/png"/);
+  assert.match(home, /\/brand\/social-preview\.png/);
+  assert.match(home, /ogImageWidth: 1200/);
+  assert.match(home, /ogImageHeight: 630/);
+  assert.match(home, /ogImageType: "image\/png"/);
   assert.match(app, /twitterCard: "summary_large_image"/);
+  assert.doesNotMatch(app, /ogImage:/);
+  assert.doesNotMatch(app, /ogTitle:/);
   assert.match(staticSeo, /\/brand\/social-preview\.png/);
   assert.match(config, /"@nuxt\/image"/);
   const scripts = JSON.parse(pkg).scripts;
