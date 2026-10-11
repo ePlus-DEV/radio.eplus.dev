@@ -30,7 +30,7 @@ function exactMeta(html, property, expected) {
     const relevant = metaTags(html).filter(tag =>
       /property=["']og:|name=["'](description|twitter:)/i.test(tag)
     ).slice(0, 24);
-    const title = html.match(/<title[^>]*>(.*?)<\\/title>/is)?.[1] || "(missing title)";
+    const title = html.match(/<title[^>]*>([^<]*)/i)?.[1] || "(missing title)";
     console.error("Prerendered SEO diagnostics:", JSON.stringify({ title, property, expected, entries, relevant }, null, 2));
   }
   assert.deepEqual(entries, [expected], property + " must be unique and match route; got " + JSON.stringify(entries));
