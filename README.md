@@ -259,9 +259,9 @@ Public site pages also include `/about`, `/statistics`, `/contact`, `/privacy-po
 
 ### Staging: noindex (develop)
 
-The `develop` deployment at **https://radio-new.eplus.dev** is **not indexed**.
+The `develop` deployment at **https://radio-new.eplus.dev** is **not indexed**. If the additional `new-radio.eplus.dev` preview hostname is used, configure its actual deployment, DNS and `NUXT_PUBLIC_SITE_URL` consistently; the source code accepts both hostnames as staging for noindex purposes.
 It retains functioning prerendered radio pages but does not render SEO canonical,
-social metadata or JSON-LD; its `robots.txt` allows crawlers to read
+or JSON-LD; Open Graph/Twitter previews remain available for link-sharing tests. Its `robots.txt` allows crawlers to read
 `noindex` without advertising a sitemap. The sitemap module is disabled.
 Production `main` stays indexable.
 
@@ -280,7 +280,7 @@ generated. Never turn on noindex unconditionally in shared source, or
 production would inherit it on promotion.
 
 Verify the staging HTML source includes `<meta name="robots" content="noindex, nofollow, noarchive">`,
-has no canonical/JSON-LD or SEO social metadata, and that `/robots.txt`
+has no canonical/JSON-LD but has explicit social preview metadata, and that `/robots.txt`
 contains `Allow: /` without a sitemap. Do **not** use `Disallow: /` in staging:
 Google needs to crawl a page to observe its `noindex` directive; blocking
 crawling can leave already-discovered staging URLs visible in search results.
