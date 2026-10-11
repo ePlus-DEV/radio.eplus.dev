@@ -112,6 +112,13 @@ useSeoMeta(() => ({
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,
   ogUrl: areaUrl.value,
+  ogImage: `${siteUrl.value}/brand/social-preview.png`,
+  ogImageAlt: "ePlus OnAir — Live radio from around the world",
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: "image/png",
+  twitterImage: `${siteUrl.value}/brand/social-preview.png`,
+  twitterImageAlt: "ePlus OnAir — Live radio from around the world",
   twitterTitle: seoTitle.value,
   twitterDescription: seoDescription.value,
 }));
