@@ -274,6 +274,7 @@ useHead(() => ({
     { key: "station-og-image-width", property: "og:image:width", content: "1200" },
     { key: "station-og-image-height", property: "og:image:height", content: "630" },
     { key: "station-og-image-type", property: "og:image:type", content: "image/jpeg" },
+    { key: "station-twitter-card", name: "twitter:card", content: "summary_large_image" },
     { key: "station-twitter-title", name: "twitter:title", content: seoTitle.value },
     { key: "station-twitter-description", name: "twitter:description", content: seoDescription.value },
     { key: "station-twitter-image", name: "twitter:image", content: seoImage.value },
