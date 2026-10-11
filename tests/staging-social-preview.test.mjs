@@ -35,9 +35,9 @@ test("staging keeps server-rendered social cards without canonical or sitemap", 
   assert.match(validator, /staging must not render production canonical/);
   for (const source of [index, station, country, area, staticSeo]) {
     assert.doesNotMatch(source, /useSeoMeta\(\(\) => noIndex \? \{\} :/);
-    assert.match(source, /ogTitle:/);
+    assert.match(source, /ogTitle:|property: "og:title"/);
   }
-  assert.match(station, /ogImage: seoImage\.value/);
-  assert.match(station, /ogImageWidth: 1200/);
-  assert.match(station, /ogImageType: "image\/jpeg"/);
+  assert.match(station, /property: "og:image", content: seoImage\.value/);
+  assert.match(station, /property: "og:image:width", content: "1200"/);
+  assert.match(station, /property: "og:image:type", content: "image\/jpeg"/);
 });
