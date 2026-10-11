@@ -15,9 +15,10 @@ const [home, robots] = await Promise.all([
 assert.ok(/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)[^>]*>/i.test(home), "staging must render a robots noindex meta");
 assert.doesNotMatch(home, /<link[^>]*rel=["']canonical["']/i, "staging must not render production canonical");
 assert.doesNotMatch(home, /application\/ld\+json/i, "staging must not embed JSON-LD");
-assert.doesNotMatch(home, /<meta[^>]*property=["']og:/i, "staging must omit Open Graph metadata");
+assert.match(home, /<meta(?=[^>]*property=["']og:image["'])(?=[^>]*content=["'][^"']+\/brand\/social-preview\.png)[^>]*>/i, "staging must expose branded og:image");
+assert.match(home, /<meta(?=[^>]*name=["']twitter:card["'])(?=[^>]*content=["']summary_large_image["'])[^>]*>/i, "staging should provide Twitter card");
 assert.match(robots, /^User-agent: \*\s*\nAllow: \/\s*$/i, "staging robots.txt must allow crawlers to read the noindex meta");
 assert.doesNotMatch(robots, /^Disallow: \/\s*$/im, "staging robots.txt must not block crawlers from discovering noindex");
 assert.doesNotMatch(robots, /Sitemap:/i, "staging robots.txt must not announce a sitemap");
 assert.equal(await isFile(`${output}/sitemap.xml`), false, "staging must not generate sitemap.xml");
-console.log("PASS: staging HTML has noindex and no SEO metadata; robots allows noindex discovery; sitemap is absent.");
+console.log("PASS: staging HTML has robots noindex and social previews, but no canonical/JSON-LD/sitemap.");
