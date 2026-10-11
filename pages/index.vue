@@ -98,7 +98,8 @@ useHead(() => ({
     },
   ],
 }));
-if (!noIndex) useSeoMeta({
+// Social metadata is still useful on noindex staging previews.
+useSeoMeta({
   description: () => seoDescription.value,
   ogTitle: () => seoTitle.value,
   ogDescription: () => seoDescription.value,
