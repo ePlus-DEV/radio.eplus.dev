@@ -14,7 +14,7 @@
           :class="isActive(station.url) ? 'border-rose-500/40' : ''"
         >
           <UTooltip :text="station.title">
-            <NuxtLink :to="station.url" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-24" @click="playSelected($event, station.url)">
+            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-24" @click="playSelected($event, station.url)">
               <StationArtwork :src="station.image" :alt="station.title" class="radio-library-artwork radio-themed-artwork h-12 w-12 shrink-0 rounded-xl object-contain p-1.5" />
               <span dir="auto" class="block min-w-0 truncate text-sm font-semibold">{{ station.title }}</span>
             </NuxtLink>
