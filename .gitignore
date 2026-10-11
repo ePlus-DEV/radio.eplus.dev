@@ -29,3 +29,6 @@ test-results/
 
 # Generated from public/radio/* catalogs for offline/Algolia fallback search
 /public/search/stations.json
+
+# Derived social cards: generated before Nuxt builds from radio catalog artwork
+/public/og/stations/

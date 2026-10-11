@@ -6,15 +6,15 @@
     "category": "Thời sự",
     "url": "https://vov.vn",
     "cros": false,
-    "stream": "https://stream-cdn.vov.vn/live/vov1-audio_only.m3u8",
+    "stream": "https://str.vov.gov.vn/vovlive/vov1vov5Vietnamese.sdp_aac/playlist.m3u8",
     "features": "/img/asia/viet-nam/vov1.png",
     "streams": [
       {
-        "url": "https://str.vov.gov.vn/vovlive/vov1vov5Vietnamese.sdp_aac/playlist.m3u8",
+        "url": "https://stream-cdn.vov.vn/live/vov1-audio_only.m3u8",
         "type": "application/x-mpegURL",
         "cros": false,
         "source": "alternative",
-        "label": "VOV Live"
+        "label": "VOV CDN"
       },
       {
         "url": "https://stream.vovmedia.vn/vov1",
@@ -85,7 +85,16 @@
     "url": "https://vov.vn",
     "cros": false,
     "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
-    "features": "/img/asia/viet-nam/vov4.png"
+    "features": "/img/asia/viet-nam/vov4.png",
+    "streams": [
+      {
+        "url": "https://stream.vovmedia.vn/vov4hcm",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV4 TP.HCM (regional)"
+      }
+    ]
   },
   "vov4-tay-bac": {
     "title": "VOV 4 - Tây Bắc",
@@ -95,7 +104,16 @@
     "url": "https://vov.vn",
     "cros": false,
     "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
-    "features": "/img/asia/viet-nam/vov4.png"
+    "features": "/img/asia/viet-nam/vov4.png",
+    "streams": [
+      {
+        "url": "https://stream.vovmedia.vn/vov4tb",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV4 Tây Bắc (regional)"
+      }
+    ]
   },
   "vov4-tay-nguyen": {
     "title": "VOV 4 - Tây Nguyên",
@@ -105,7 +123,23 @@
     "url": "https://vov.vn",
     "cros": false,
     "stream": "https://stream-cdn.vov.vn/live/vov4-audio_only.m3u8",
-    "features": "/img/asia/viet-nam/vov4.png"
+    "features": "/img/asia/viet-nam/vov4.png",
+    "streams": [
+      {
+        "url": "https://str.vov.gov.vn/vovlive/vov4.TayNguyen.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV4 Tây Nguyên (VOV Live)"
+      },
+      {
+        "url": "https://stream.vovmedia.vn/vov4tn",
+        "type": "audio/mpeg",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV4 Tây Nguyên (regional)"
+      }
+    ]
   },
   "vov4-dong-bang-song-cuu-long": {
     "title": "VOV 4 - Đồng bằng sông Cửu Long",
@@ -248,11 +282,11 @@
   "vov6": {
     "title": "VOV 6 - Ban Văn học Nghệ thuật",
     "description": "VOV 6 là kênh phát thanh chuyên biệt về văn học nghệ thuật, trực thuộc Đài tiếng nói Việt Nam. Kênh cung cấp các chương trình về văn học, nghệ thuật, âm nhạc và các thông tin văn hóa khác.",
-    "type": "application/x-mpegURL",
+    "type": "audio/mpeg",
     "category": "Ban Văn học - Nghệ thuật",
     "url": "https://vov6.vov.vn",
-    "cros": true,
-    "stream": "https://str.vov.gov.vn/vovlive/vov2.sdp_aac/playlist.m3u8",
+    "cros": false,
+    "stream": "https://stream.vovmedia.vn/vov6",
     "features": "/img/asia/viet-nam/vov6.png"
   },
   "vov-247": {
@@ -284,7 +318,16 @@
     "stream": "https://play.vovgiaothong.vn/live/gthcm/playlist.m3u8",
     "stream_alternative": "https://stream.vovmedia.vn/vovgthcm",
     "features": "/img/asia/viet-nam/vov-giao-thong.png",
-    "favorite": true
+    "favorite": true,
+    "streams": [
+      {
+        "url": "https://str.vov.gov.vn/vovlive/vovGTHCM.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Live"
+      }
+    ]
   },
   "vov-giao-thong": {
     "title": "VOV Giao Thông Hà Nội",
@@ -294,7 +337,16 @@
     "url": "https://vov.vn",
     "cros": false,
     "stream": "https://play.vovgiaothong.vn/live/gthn/playlist.m3u8",
-    "features": "/img/asia/viet-nam/vov-giao-thong-ha-noi.png"
+    "features": "/img/asia/viet-nam/vov-giao-thong-ha-noi.png",
+    "streams": [
+      {
+        "url": "https://str.vov.gov.vn/vovlive/vovGTHN.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Live"
+      }
+    ]
   },
   "vov-mekong": {
     "title": "VOV Mekong",
@@ -304,7 +356,16 @@
     "url": "https://vov.vn",
     "cros": false,
     "stream": "https://play.vovgiaothong.vn/live/mekong/playlist.m3u8",
-    "features": "/img/asia/viet-nam/vov-mekong.png"
+    "features": "/img/asia/viet-nam/vov-mekong.png",
+    "streams": [
+      {
+        "url": "https://str.vov.gov.vn/vovlive/vovgtMeKong.sdp_aac/playlist.m3u8",
+        "type": "application/x-mpegURL",
+        "cros": false,
+        "source": "alternative",
+        "label": "VOV Live"
+      }
+    ]
   },
   "vov-suc-khoe": {
     "title": "VOV Sức Khỏe",

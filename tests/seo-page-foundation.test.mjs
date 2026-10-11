@@ -107,3 +107,25 @@ test("Romania artwork lives in the canonical image tree", async () => {
   await access(join(ROOT, "public/img/europe/romania/europa-fm.png"));
   await assert.rejects(access(join(ROOT, "public/radio/romania")));
 });
+
+test("social sharing uses a generated 1200x630 image instead of the icon", async () => {
+  const [app, staticSeo, config, pkg, svg] = await Promise.all([
+    read("app.vue"),
+    read("composables/useStaticPageSeo.ts"),
+    read("nuxt.config.ts"),
+    read("package.json"),
+    read("public/brand/social-preview.svg"),
+  ]);
+  assert.match(svg, /viewBox="0 0 1200 630"/);
+  assert.match(svg, /Live radio from around the world/);
+  assert.match(app, /\/brand\/social-preview\.png/);
+  assert.match(app, /ogImageWidth: 1200/);
+  assert.match(app, /ogImageHeight: 630/);
+  assert.match(app, /ogImageType: "image\/png"/);
+  assert.match(app, /twitterCard: "summary_large_image"/);
+  assert.match(staticSeo, /\/brand\/social-preview\.png/);
+  assert.match(config, /"@nuxt\/image"/);
+  const scripts = JSON.parse(pkg).scripts;
+  assert.match(scripts.prebuild, /generate-social-preview\.mjs/);
+  assert.match(scripts.pregenerate, /generate-social-preview\.mjs/);
+});
