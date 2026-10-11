@@ -213,11 +213,16 @@ const seoDescription = computed(
     stationMeta.value?.description ||
     t("seo.station_description", { station: stationName.value, country: countryName.value }),
 );
-const seoImage = computed(() => {
+// Preserve the actual station artwork in RadioStation JSON-LD.
+const stationArtwork = computed(() => {
   const image = stationMeta.value?.features;
-  if (!image) return `${siteUrl.value}/brand/onair-share.png`;
+  if (!image) return `${siteUrl.value}/brand/social-preview.png`;
   return image.startsWith("http") ? image : `${siteUrl.value}${image}`;
 });
+// Use the catalog-generated share card, not a tiny logo thumbnail.
+const seoImage = computed(() =>
+  `${siteUrl.value}/og/stations/${area.value}/${slug.value}/${stationSlug.value}.jpg`,
+);
 const canonicalUrl = computed(
   () => `${siteUrl.value}${stationPath.value}`,
 );
@@ -235,7 +240,7 @@ const stationSchema = computed(() =>
     path: stationPath.value,
     name: stationName.value,
     description: seoDescription.value,
-    image: seoImage.value,
+    image: stationArtwork.value,
   }),
 );
 
@@ -276,11 +281,14 @@ useSeoMeta(() => noIndex ? {} : ({
   ogDescription: seoDescription.value,
   ogUrl: canonicalUrl.value,
   ogImage: seoImage.value,
-  ogImageAlt: `${stationName.value} radio station artwork`,
+  ogImageAlt: `${stationName.value} — ePlus OnAir live radio`,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: "image/jpeg",
   twitterTitle: seoTitle.value,
   twitterDescription: seoDescription.value,
   twitterImage: seoImage.value,
-  twitterImageAlt: `${stationName.value} radio station artwork`,
+  twitterImageAlt: `${stationName.value} — ePlus OnAir live radio`,
 }));
 
 const activateStation = (autoplay = false): void => {
