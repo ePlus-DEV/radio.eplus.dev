@@ -49,6 +49,25 @@ async function setupFixture(root, { wrongSecondImage = false, missingCard = fals
   }
 }
 
+test("meta parser respects > and quotes inside HTML attribute values", () => {
+  const html = [
+    "<html><head>",
+    '<meta content="RTE Radio 1> Live Radio - Ireland" property="og:title">',
+    "<meta name='description' content='An Irish radio station > news'>",
+    '<meta content="https://radio.eplus.dev/og/stations/europe/ireland/rte-radio-1-bccbc87b.jpg" property="og:image">',
+    "</head></html>",
+  ].join("");
+  assert.deepEqual(collectMeta(html, "property", "og:title"), [
+    "RTE Radio 1> Live Radio - Ireland",
+  ]);
+  assert.deepEqual(collectMeta(html, "name", "description"), [
+    "An Irish radio station > news",
+  ]);
+  assert.deepEqual(collectMeta(html, "property", "og:image"), [
+    "https://radio.eplus.dev/og/stations/europe/ireland/rte-radio-1-bccbc87b.jpg",
+  ]);
+});
+
 test("meta parser selects only explicit exact property/name matches", () => {
   const html = fixtureHtml("/asia/viet-nam/vov1", "/og/stations/asia/viet-nam/vov1.jpg");
   assert.deepEqual(collectMeta(html, "property", "og:image"), [
