@@ -1,5 +1,6 @@
 import { mkdir } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 
 // The SVG is the editable, versioned artwork; export a crawler-compatible
@@ -19,6 +20,6 @@ export async function generateSocialPreview(source = socialPreviewSource, output
   return output;
 }
 
-if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1].replaceAll("\\", "/")}`).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   await generateSocialPreview();
 }
