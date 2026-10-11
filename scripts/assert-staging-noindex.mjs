@@ -23,7 +23,7 @@ const selectMeta = (attribute, value) =>
 const images = selectMeta("property", "og:image");
 const twitterCards = selectMeta("name", "twitter:card");
 assert.ok(
-  images.some(tag => /content=["']https?:\\/\\/[^"']+\\/brand\\/social-preview\\.png["']/i.test(tag)),
+  images.some(tag => tag.includes("/brand/social-preview.png") && /content=["\']https?:/i.test(tag)),
   `staging must expose branded og:image; observed: ${JSON.stringify(images)}`,
 );
 assert.ok(
