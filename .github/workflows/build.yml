@@ -72,6 +72,11 @@ jobs:
           SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-route-social-meta.mjs
 
+      - name: "Audit all stations Open Graph HTML and JPEG images"
+        env:
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+        run: node scripts/assert-all-station-social-meta.mjs
+
       - name: "Verify ePlus OnAir logo, social image and favicons"
         run: node scripts/assert-brand-assets.mjs
 
