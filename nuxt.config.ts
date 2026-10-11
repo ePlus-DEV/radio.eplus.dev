@@ -127,6 +127,21 @@ export default defineNuxtConfig({
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         ...(noIndex ? [{ name: "robots", content: "noindex, nofollow, noarchive" }] : []),
+        // Static staging builds must expose a crawlable default social image even
+        // before app-level reactive head entries are evaluated. Route-specific
+        // useSeoMeta overrides this base OG card for station pages.
+        ...(noIndex ? [
+          { property: "og:type", content: "website" },
+          { property: "og:site_name", content: siteName },
+          { property: "og:title", content: siteName },
+          { property: "og:description", content: defaultDescription },
+          { property: "og:image", content: `${siteUrl}/brand/social-preview.png` },
+          { property: "og:image:width", content: "1200" },
+          { property: "og:image:height", content: "630" },
+          { property: "og:image:type", content: "image/png" },
+          { name: "twitter:card", content: "summary_large_image" },
+          { name: "twitter:image", content: `${siteUrl}/brand/social-preview.png` },
+        ] : []),
         ...(!noIndex ? [{ name: "description", content: defaultDescription }] : []),
         { name: "msapplication-TileColor", content: "#101119" },
         ...(!noIndex ? [
