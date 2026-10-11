@@ -60,10 +60,10 @@ test("station SEO points at generated image while station JSON-LD keeps logo art
   const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
   assert.match(source, /\/og\/stations\/\$\{area\.value\}\/\$\{slug\.value\}\/\$\{stationSlug\.value\}\.jpg/);
   assert.match(source, /image: stationArtwork\.value/);
-  assert.match(source, /ogImageWidth: 1200/);
-  assert.match(source, /ogImageHeight: 630/);
-  assert.match(source, /ogImageType: "image\/jpeg"/);
-  assert.match(source, /twitterImage: seoImage\.value/);
+  assert.match(source, /property: "og:image:width", content: "1200"/);
+  assert.match(source, /property: "og:image:height", content: "630"/);
+  assert.match(source, /property: "og:image:type", content: "image\/jpeg"/);
+  assert.match(source, /name: "twitter:image", content: seoImage\.value/);
   for (const step of ["prebuild", "pregenerate", "predev"]) {
     assert.match(pkg.scripts[step], /generate-station-og-images\.mjs/);
   }
