@@ -72,7 +72,7 @@ const canonicalUrl = computed(() => {
   const path = route.path === "/" ? "/" : route.path.replace(/\/$/, "");
   return `${siteUrl.value}${path}`;
 });
-const shareImage = computed(() => `${siteUrl.value}/brand/logo-share.png`);
+const shareImage = computed(() => `${siteUrl.value}/brand/social-preview.png`);
 const ogLocale = computed(
   () =>
     ({
@@ -124,7 +124,7 @@ useHead(() => ({
         url: `${siteUrl.value}/`,
         logo: {
           "@type": "ImageObject",
-          url: shareImage.value,
+          url: `${siteUrl.value}/brand/logo-share.png`,
         },
       }),
     },
@@ -141,12 +141,15 @@ useSeoMeta(() => noIndex ? { robots: "noindex, nofollow, noarchive" } : ({
   ogDescription: defaultDescription.value,
   ogUrl: canonicalUrl.value,
   ogImage: shareImage.value,
-  ogImageAlt: `${siteName.value} logo`,
+  ogImageAlt: `${siteName.value} — Listen Beyond Borders. Live radio from around the world`,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: "image/png",
   twitterCard: "summary_large_image",
   twitterTitle: siteName.value,
   twitterDescription: defaultDescription.value,
   twitterImage: shareImage.value,
-  twitterImageAlt: `${siteName.value} logo`,
+  twitterImageAlt: `${siteName.value} — Listen Beyond Borders. Live radio from around the world`,
 }));
 </script>
 
