@@ -259,8 +259,26 @@ const sourceCount = computed(() => {
   return 1 + (meta.streams?.length || 0) + Number(Boolean(meta.stream_alternative));
 });
 
+// Station-specific head tags share the same SSR lifecycle as the page title.
+// Emit explicit property/name attributes so static prerenderers and crawlers
+// receive unique route-level metadata without relying on global defaults.
 useHead(() => ({
   title: seoTitle.value,
+  meta: [
+    { key: "station-description", name: "description", content: seoDescription.value },
+    { key: "station-og-title", property: "og:title", content: seoTitle.value },
+    { key: "station-og-description", property: "og:description", content: seoDescription.value },
+    { key: "station-og-url", property: "og:url", content: canonicalUrl.value },
+    { key: "station-og-image", property: "og:image", content: seoImage.value },
+    { key: "station-og-image-alt", property: "og:image:alt", content: `${stationName.value} — ePlus OnAir live radio` },
+    { key: "station-og-image-width", property: "og:image:width", content: "1200" },
+    { key: "station-og-image-height", property: "og:image:height", content: "630" },
+    { key: "station-og-image-type", property: "og:image:type", content: "image/jpeg" },
+    { key: "station-twitter-title", name: "twitter:title", content: seoTitle.value },
+    { key: "station-twitter-description", name: "twitter:description", content: seoDescription.value },
+    { key: "station-twitter-image", name: "twitter:image", content: seoImage.value },
+    { key: "station-twitter-image-alt", name: "twitter:image:alt", content: `${stationName.value} — ePlus OnAir live radio` },
+  ],
   script: noIndex ? [] : [
     {
       key: "station-breadcrumb-schema",
@@ -273,23 +291,6 @@ useHead(() => ({
       innerHTML: JSON.stringify(stationSchema.value),
     },
   ],
-}));
-
-// Share cards are public on staging while robots noindex remains global.
-useSeoMeta(() => ({
-  description: seoDescription.value,
-  ogTitle: seoTitle.value,
-  ogDescription: seoDescription.value,
-  ogUrl: canonicalUrl.value,
-  ogImage: seoImage.value,
-  ogImageAlt: `${stationName.value} — ePlus OnAir live radio`,
-  ogImageWidth: 1200,
-  ogImageHeight: 630,
-  ogImageType: "image/jpeg",
-  twitterTitle: seoTitle.value,
-  twitterDescription: seoDescription.value,
-  twitterImage: seoImage.value,
-  twitterImageAlt: `${stationName.value} — ePlus OnAir live radio`,
 }));
 
 const activateStation = (autoplay = false): void => {
