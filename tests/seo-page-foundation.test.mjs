@@ -36,8 +36,8 @@ test("dynamic SEO pages expose structured data and hard 404 guards", async () =>
   assert.match(station, /buildBreadcrumbSchema/);
   assert.match(station, /buildRadioStationSchema/);
   assert.match(station, /statusCode: 404/);
-  assert.match(station, /ogImageAlt:/);
-  assert.match(station, /twitterImageAlt:/);
+  assert.match(station, /property: "og:image:alt"/);
+  assert.match(station, /name: "twitter:image:alt"/);
 });
 
 test("global metadata includes canonical social and organization identity", async () => {
