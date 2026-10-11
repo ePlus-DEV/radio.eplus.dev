@@ -1,5 +1,6 @@
 <template>
   <UApp :locale="uiLocale" :toaster="null">
+  <NuxtLoadingIndicator color="#f43f5e" :height="3" :throttle="150" />
   <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen }" class="radio-shell min-h-screen w-full overflow-x-clip bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
     <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
@@ -8,8 +9,14 @@
         class="mx-auto w-full min-w-0 max-w-7xl px-4 pb-14 pt-20 sm:px-6 sm:pt-28 xl:px-0"
         id="main-content"
         scroll-container
+        :aria-busy="pageIsLoading"
       >
-        <NuxtPage />
+        <!-- Keep NuxtPage mounted while async route components resolve:
+             unmounting it would cancel their Suspense/data work. -->
+        <div v-show="!pageIsLoading" :aria-hidden="pageIsLoading ? 'true' : undefined" :inert="pageIsLoading">
+          <NuxtPage />
+        </div>
+        <PageSkeleton v-if="pageIsLoading" :path="pendingPagePath" />
       </main>
       <div id="radio-queue-slot" class="radio-queue-slot hidden min-h-0 min-w-0 pb-14 pt-24"></div>
     </div>
@@ -53,6 +60,51 @@
 import { en, vi, ja, zh_cn, zh_tw, fr, ru } from '@nuxt/ui/locale';
 import { usePlaybackStore } from '~/stores/playback';
 const playback = usePlaybackStore();
+const router = useRouter();
+const nuxtApp = useNuxtApp();
+
+// Delayed skeleton on client-side page changes only: static SSR remains instant
+// and fast navigations do not flash a placeholder. PlayerSession lives outside
+// this page viewport and continues playing through route transitions.
+const pageIsLoading = ref(false);
+const pendingPagePath = ref("/");
+let skeletonDelay: ReturnType<typeof setTimeout> | undefined;
+let skeletonSafety: ReturnType<typeof setTimeout> | undefined;
+let removeSkeletonHooks: Array<() => void> = [];
+
+const stopPageSkeleton = () => {
+  if (skeletonDelay) clearTimeout(skeletonDelay);
+  if (skeletonSafety) clearTimeout(skeletonSafety);
+  skeletonDelay = undefined;
+  skeletonSafety = undefined;
+  pageIsLoading.value = false;
+};
+
+onMounted(() => {
+  removeSkeletonHooks = [
+    router.beforeEach((to, from) => {
+      if (to.path === from.path) return; // hash/query changes need no page skeleton
+      stopPageSkeleton();
+      pendingPagePath.value = to.path;
+      skeletonDelay = setTimeout(() => { pageIsLoading.value = true; }, 140);
+      // Error/network timeouts must never leave an inaccessible page behind.
+      skeletonSafety = setTimeout(stopPageSkeleton, 15_000);
+    }),
+    router.afterEach((_to, _from, failure) => {
+      if (failure) stopPageSkeleton();
+    }),
+    router.onError(stopPageSkeleton),
+    nuxtApp.hook("page:finish", stopPageSkeleton),
+    nuxtApp.hook("app:error", stopPageSkeleton),
+  ];
+});
+
+onBeforeUnmount(() => {
+  stopPageSkeleton();
+  removeSkeletonHooks.forEach(unhook => unhook());
+  removeSkeletonHooks = [];
+});
+
 const clientReady = ref(false);
 onMounted(() => { clientReady.value = true; });
 const route = useRoute();
