@@ -243,6 +243,37 @@ New translation keys must preserve the same structure, nonempty values and `{var
 
 Algolia integration is optional during build and local development. When Algolia credentials are not configured, the application can still build without them.
 
+### Incremental station Open Graph thumbnails
+
+During \`npm run generate\`, \`scripts/generate-station-og-images.mjs\` creates the static
+1200×630 JPEGs referenced by each station's \`og:image\`. It also publishes an
+\`/og/stations/manifest.json\` manifest of SHA-256 source fingerprints and rendered
+JPEG hashes. No generated JPEGs or manifest are committed to Git.
+
+- **Unchanged title, country, source logo bytes and renderer:** reuse a validated
+  local JPEG, or download the exact unchanged JPEG from the previously deployed
+  static site. This avoids expensive Sharp rendering on later deployments.
+- **Changed title/logo or updated renderer:** render only the affected station's
+  JPEG. Changes to rendering functions invalidate their fingerprints.
+- **Fresh deploy / unavailable CDN / invalid cached JPEG:** render normally.
+  A missing cache never causes missing share thumbnails or build failures.
+- **Deleted stations:** no longer appear in a clean deployment's catalog/output.
+- **Staging vs production:** the cache uses \`NUXT_PUBLIC_SITE_URL\` to read the
+  corresponding environment's *previous live deployment* via HTTPS.
+  Optionally set \`OG_IMAGE_CACHE_BASE_URL\` to another trusted public static
+  origin serving the same manifest and images. Do not point staging to production
+  for previews with unpublished changes.
+- The first build after enabling caching necessarily generates the collection.
+  Subsequent builds print \`generated\`, \`reusedLocal\`, \`reusedRemote\` and
+  \`remoteFailures\` counts, making savings and fallback behavior visible.
+  Static builds still ship a complete set of assets, so cross-deployment reuse
+  downloads unchanged JPEGs (~192 MB total for 4,227 stations); it saves render
+  CPU and duration but not artifact size or all network transfer.
+
+Keep \`NUXT_PUBLIC_SITE_URL\` configured correctly at **build time** on DigitalOcean.
+The \`scripts/assert-all-station-social-meta.mjs\` CI gate still checks the final
+HTML and image dimensions for every station regardless of cache hits.
+
 ## SEO
 
 ePlus OnAir prerenders the radio route hierarchy, exposes server-rendered country/station links, generates structured data, and includes catalog-backed routes in the sitemap. The canonical production site URL defaults to:
