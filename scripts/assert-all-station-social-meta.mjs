@@ -6,10 +6,11 @@ import sharp from "sharp";
 import { stationOgPath } from "./generate-station-og-images.mjs";
 
 // Audit EVERY catalog station against the actual Nuxt prerender output.
+// Respect quoted attribute values containing > so valid metadata is not lost.
 export const defaultOrigin = "https://radio.eplus.dev";
 const metaTags = (html) => {
   const end = html.search(/<\/head\s*>/i);
-  return [...(end < 0 ? html : html.slice(0, end)).matchAll(/<meta\b[^>]*>/gi)].map(m => m[0]);
+  return [...(end < 0 ? html : html.slice(0, end)).matchAll(/<meta\b(?:[^>"']|"[^"]*"|'[^']*')*>/gi)].map(m => m[0]);
 };
 const attr = (tag, name) =>
   tag.match(new RegExp("\\b" + name + "\\s*=\\s*([\"'])(.*?)\\1", "i"))?.[2] ?? null;
