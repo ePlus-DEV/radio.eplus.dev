@@ -67,6 +67,11 @@ jobs:
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: npm run generate
 
+      - name: "Assert route-specific prerendered Open Graph metadata"
+        env:
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+        run: node scripts/assert-route-social-meta.mjs
+
       - name: "Verify ePlus OnAir logo, social image and favicons"
         run: node scripts/assert-brand-assets.mjs
 

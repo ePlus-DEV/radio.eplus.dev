@@ -101,6 +101,14 @@ useHead(() => ({
 // Social metadata is still useful on noindex staging previews.
 useSeoMeta({
   description: () => seoDescription.value,
+  ogUrl: () => `${siteUrl.value}/`,
+  ogImage: () => `${siteUrl.value}/brand/social-preview.png`,
+  ogImageAlt: "ePlus OnAir — Live radio from around the world",
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: "image/png",
+  twitterImage: () => `${siteUrl.value}/brand/social-preview.png`,
+  twitterImageAlt: "ePlus OnAir — Live radio from around the world",
   ogTitle: () => seoTitle.value,
   ogDescription: () => seoDescription.value,
   twitterTitle: () => seoTitle.value,
