@@ -75,6 +75,7 @@ const noIndex = Boolean(config.public.noIndex);
     ogImageWidth: 1200,
     ogImageHeight: 630,
     ogImageType: "image/png",
+    twitterCard: "summary_large_image",
     twitterTitle: title.value,
     twitterDescription: description.value,
     twitterImage: shareImage.value,

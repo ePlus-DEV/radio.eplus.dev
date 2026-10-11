@@ -28,15 +28,18 @@ test("staging keeps server-rendered social cards without canonical or sitemap", 
   assert.match(app, /robots: noIndex \? "noindex, nofollow, noarchive" : "index, follow"/);
   assert.match(app, /link: noIndex \? \[\] :/);
   assert.match(app, /script: noIndex \? \[\] :/);
-  assert.match(app, /ogImage: shareImage\.value/);
-  assert.match(app, /twitterCard: "summary_large_image"/);
+  assert.doesNotMatch(app, /ogImage:/);
+  assert.match(index, /ogImage:/);
+  assert.doesNotMatch(app, /twitterCard:/);
+  assert.match(index, /twitterCard: "summary_large_image"/);
   assert.match(validator, /staging must expose branded og:image/);
   assert.match(validator, /staging must not render production canonical/);
   for (const source of [index, station, country, area, staticSeo]) {
     assert.doesNotMatch(source, /useSeoMeta\(\(\) => noIndex \? \{\} :/);
-    assert.match(source, /ogTitle:/);
+    assert.match(source, /ogTitle:|property: "og:title"/);
   }
-  assert.match(station, /ogImage: seoImage\.value/);
-  assert.match(station, /ogImageWidth: 1200/);
-  assert.match(station, /ogImageType: "image\/jpeg"/);
+  assert.match(station, /name: "twitter:card", content: "summary_large_image"/);
+  assert.match(station, /property: "og:image", content: seoImage\.value/);
+  assert.match(station, /property: "og:image:width", content: "1200"/);
+  assert.match(station, /property: "og:image:type", content: "image\/jpeg"/);
 });

@@ -72,7 +72,6 @@ const canonicalUrl = computed(() => {
   const path = route.path === "/" ? "/" : route.path.replace(/\/$/, "");
   return `${siteUrl.value}${path}`;
 });
-const shareImage = computed(() => `${siteUrl.value}/brand/social-preview.png`);
 const ogLocale = computed(
   () =>
     ({
@@ -132,25 +131,14 @@ useHead(() => ({
 }));
 
 // Social cards remain crawlable on staging, while search indexing stays disabled.
+// The shell owns only truly global metadata. Page-specific SEO (title,
+// description, og:url and og:image) belongs to the rendered route; adding
+// fallback cards here competes with station cards in SSR/prerender.
 useSeoMeta(() => ({
-  description: defaultDescription.value,
   robots: noIndex ? "noindex, nofollow, noarchive" : "index, follow",
   ogType: "website",
   ogSiteName: siteName.value,
   ogLocale: ogLocale.value,
-  ogTitle: siteName.value,
-  ogDescription: defaultDescription.value,
-  ogUrl: canonicalUrl.value,
-  ogImage: shareImage.value,
-  ogImageAlt: `${siteName.value} — Listen Beyond Borders. Live radio from around the world`,
-  ogImageWidth: 1200,
-  ogImageHeight: 630,
-  ogImageType: "image/png",
-  twitterCard: "summary_large_image",
-  twitterTitle: siteName.value,
-  twitterDescription: defaultDescription.value,
-  twitterImage: shareImage.value,
-  twitterImageAlt: `${siteName.value} — Listen Beyond Borders. Live radio from around the world`,
 }));
 </script>
 
