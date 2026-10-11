@@ -69,6 +69,14 @@ test("build creates distinct crawlable JPEGs from station logos and a safe missi
     const relogo = await generateStationOgImages({ root, limit: 2, cacheBaseUrl: "" });
     assert.equal(relogo.generated, 1);
     assert.equal(relogo.reusedLocal, 1);
+    const manifest = JSON.parse(await readFile(join(root, "public/og/stations/manifest.json"), "utf8"));
+    assert.equal(Object.keys(manifest.entries).length, 2);
+    assert.ok(manifest.entries["asia/viet-nam/vov1.jpg"].sha256);
+    // Corrupt local cached JPEGs must be replaced, never shipped as-is.
+    await writeFile(first, Buffer.from("corrupt"));
+    const repaired = await generateStationOgImages({ root, cacheBaseUrl: "", limit: 2 });
+    assert.equal(repaired.generated, 1);
+    assert.equal(repaired.reusedLocal, 1);
 
     const regenerated = await renderStationOg({
       root, area: "asia", country: "viet-nam", stationId: "vov1",
@@ -108,9 +116,13 @@ test("a fresh deployment restores unchanged thumbnails from previous published m
         vov1: { title: "Unchanged VOV1", features: "/img/asia/viet-nam/vov1.png" },
         vov2: { title: "Unchanged VOV2", features: "https://example.invalid/logo.png" },
       }));
-      await sharp({
-        create: { width: 130, height: 130, channels: 4, background: "#c42e56" },
-      }).png().toFile(join(root, logo));
+      if (root === previous) {
+        await sharp({
+          create: { width: 130, height: 130, channels: 4, background: "#c42e56" },
+        }).png().toFile(join(root, logo));
+      } else {
+        await writeFile(join(root, logo), await readFile(join(previous, logo)));
+      }
     }
     const original = await generateStationOgImages({ root: previous, cacheBaseUrl: "" });
     assert.equal(original.generated, 2);
