@@ -28,7 +28,7 @@ test("all public page families have route-specific skeletons", () => {
 test("skeleton component mirrors real page layouts, remains noninteractive and screen-reader friendly", async () => {
   const source = await readFile("components/PageSkeleton.vue", "utf8");
   for (const variant of ["home", "area", "country", "station", "library", "statistics"]) {
-    assert.match(source, new RegExp('variant === "' + variant + '"'), variant);
+    assert.ok(source.includes("variant === '" + variant + "'"), variant);
   }
   assert.match(source, /role="status"/);
   assert.match(source, /aria-busy="true"/);
