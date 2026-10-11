@@ -7,7 +7,8 @@ export function isStagingDeployment({ siteUrl = "", noIndex = "" } = {}) {
   const enabled = /^(?:true|1|yes|on)$/i.test(String(noIndex).trim());
   let stageHost = false;
   try {
-    stageHost = new URL(String(siteUrl)).hostname.toLowerCase() === "radio-new.eplus.dev";
+    const host = new URL(String(siteUrl)).hostname.toLowerCase();
+    stageHost = host === "radio-new.eplus.dev" || host === "new-radio.eplus.dev";
   } catch { /* Explicit noindex flag remains sufficient without a valid origin. */ }
   return enabled || stageHost;
 }
