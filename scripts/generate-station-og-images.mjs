@@ -1,4 +1,5 @@
-import { readdir, readFile, mkdir } from "node:fs/promises";
+import { readdir, readFile, mkdir, writeFile, rename } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
@@ -132,35 +133,178 @@ export async function renderStationOg({ root = process.cwd(), area, country, sta
   return { path: relativePath, output: target, bytes: result.size, logoFound: Boolean(logo) };
 }
 
-export async function generateStationOgImages({ root = process.cwd(), limit = LIMIT } = {}) {
+// A manifest is published with the static build. On the next deploy we can
+// download *unchanged* JPEGs from the currently deployed site rather than
+// re-render them. Local worktrees also reuse images if their manifest matches.
+const CACHE_VERSION = 1;
+const REMOTE_TIMEOUT_MS = 8000;
+const MAX_REMOTE_IMAGE_BYTES = 1024 * 1024;
+const MANIFEST_PATH = "/og/stations/manifest.json";
+const sha256 = (value) => createHash("sha256").update(value).digest("hex");
+
+// Hash functions that affect pixels so changes to the SVG layout, font sizing,
+// logo processing, JPEG encoding, etc. automatically invalidate the cache.
+export const stationOgRendererSignature = () => sha256([
+  WIDTH, HEIGHT, VERSION,
+  escapeXml.toString(), safeText.toString(), shortLines.toString(),
+  readableAccent.toString(), stationLogo.toString(),
+  stationSvg.toString(), renderStationOg.toString(),
+].join("\n"));
+
+const parseManifest = (value) => value && value.version === CACHE_VERSION &&
+  value.entries && typeof value.entries === "object" && !Array.isArray(value.entries)
+    ? value : null;
+const readManifest = async (filename) => {
+  try { return parseManifest(JSON.parse(await readFile(filename, "utf8"))); }
+  catch { return null; }
+};
+const verifiedImage = (bytes, record) => {
+  return Buffer.isBuffer(bytes) &&
+    bytes.length > 1000 && bytes.length < MAX_REMOTE_IMAGE_BYTES &&
+    bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff &&
+    record?.sha256 === sha256(bytes);
+};
+const safeRemoteBase = (value) => {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && !url.username && !url.password
+      ? url.origin : null;
+  } catch { return null; }
+};
+
+export async function generateStationOgImages({
+  root = process.cwd(),
+  limit = LIMIT,
+  cacheBaseUrl = process.env.OG_IMAGE_CACHE_BASE_URL || process.env.NUXT_PUBLIC_SITE_URL || "",
+  fetchImpl = globalThis.fetch,
+} = {}) {
   const catalogRoot = join(root, "public", "radio");
   const queue = [];
-  const areas = await readdir(catalogRoot, { withFileTypes: true });
-  for (const area of areas.filter((entry) => entry.isDirectory())) {
+  for (const area of await readdir(catalogRoot, { withFileTypes: true })) {
+    if (!area.isDirectory()) continue;
     const directory = join(catalogRoot, area.name);
     for (const file of (await readdir(directory, { withFileTypes: true })).filter(
       (entry) => entry.isFile() && entry.name.endsWith(".json")
     )) {
       const country = file.name.slice(0, -5);
       const catalog = JSON.parse(await readFile(join(directory, file.name), "utf8"));
-      for (const [stationId, meta] of Object.entries(catalog)) {
+      for (const [stationId, meta] of Object.entries(catalog))
         queue.push({ area: area.name, country, stationId, meta });
-      }
     }
   }
-  let count = 0, fallback = 0, bytes = 0;
-  let next = 0;
+
+  const manifestFile = join(root, "public", MANIFEST_PATH.slice(1));
+  const localManifest = await readManifest(manifestFile);
+  const remoteBase = safeRemoteBase(cacheBaseUrl);
+  let remoteManifest = null;
+  if (remoteBase && typeof fetchImpl === "function") {
+    try {
+      const response = await fetchImpl(remoteBase + MANIFEST_PATH, {
+        signal: AbortSignal.timeout(REMOTE_TIMEOUT_MS),
+        redirect: "error",
+      });
+      if (response.ok) remoteManifest = parseManifest(await response.json());
+    } catch {
+      // The first deploy has no manifest. Any network/CDN failure simply
+      // falls back to rendering, never missing thumbnails.
+    }
+  }
+  const signature = stationOgRendererSignature();
+  const manifest = { version: CACHE_VERSION, renderer: signature, entries: {} };
+  const logoDigests = new Map();
+  const inputFingerprint = async ({ area, country, stationId, meta }) => {
+    const feature = typeof meta?.features === "string" ? meta.features : "";
+    let logoHash = "";
+    if (feature.startsWith("/img/") && !feature.includes("?")) {
+      const publicRoot = resolve(root, "public");
+      const logoPath = resolve(publicRoot, feature.slice(1));
+      if (logoPath.startsWith(publicRoot + sep)) {
+        if (!logoDigests.has(logoPath))
+          logoDigests.set(logoPath, readFile(logoPath)
+            .then(data => sha256(data)).catch(() => "missing"));
+        logoHash = await logoDigests.get(logoPath);
+      }
+    }
+    return sha256(JSON.stringify([
+      signature, area, country, stationId, meta?.title || stationId,
+      feature, logoHash,
+    ]));
+  };
+  let next = 0, count = 0, generated = 0, reusedLocal = 0, reusedRemote = 0;
+  let fallback = 0, bytes = 0, remoteFailures = 0;
+  let remoteDisabled = false;
+
   async function worker() {
     while (next < queue.length) {
       const item = queue[next++];
-      const rendered = await renderStationOg({ root, ...item });
+      const image = stationOgPath(item.area, item.country, item.stationId);
+      const output = join(root, "public", image.slice(1));
+      const fingerprint = await inputFingerprint(item);
+      const key = image.slice("/og/stations/".length);
+      let result = null;
+
+      const local = localManifest?.entries[key];
+      if (local?.fingerprint === fingerprint) {
+        try {
+          const jpeg = await readFile(output);
+          if (verifiedImage(jpeg, local)) {
+            result = { ...local, bytes: jpeg.length };
+            reusedLocal++;
+          }
+        } catch { /* Missing local file: try the last deployed build. */ }
+      }
+
+      const remote = remoteManifest?.entries[key];
+      if (!result && !remoteDisabled && remoteBase && remote?.fingerprint === fingerprint) {
+        try {
+          const response = await fetchImpl(remoteBase + image, {
+            signal: AbortSignal.timeout(REMOTE_TIMEOUT_MS),
+            redirect: "error",
+          });
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const length = Number(response.headers.get("content-length") || 0);
+          if (length > MAX_REMOTE_IMAGE_BYTES) throw new Error("Oversized cache image");
+          const jpeg = Buffer.from(await response.arrayBuffer());
+          if (!verifiedImage(jpeg, remote)) throw new Error("Invalid cache image");
+          await mkdir(dirname(output), { recursive: true });
+          await writeFile(output, jpeg);
+          result = { ...remote, bytes: jpeg.length };
+          reusedRemote++;
+        } catch {
+          remoteFailures++;
+          // Do not delay thousands of stations if the cache host is down.
+          if (remoteFailures >= 8) remoteDisabled = true;
+        }
+      }
+
+      if (!result) {
+        const rendered = await renderStationOg({ root, ...item });
+        const jpeg = await readFile(rendered.output);
+        result = {
+          fingerprint,
+          sha256: sha256(jpeg),
+          bytes: jpeg.length,
+          logoFound: rendered.logoFound,
+        };
+        generated++;
+      }
+      manifest.entries[key] = result;
+      fallback += Number(!result.logoFound);
+      bytes += result.bytes;
       count++;
-      fallback += Number(!rendered.logoFound);
-      bytes += rendered.bytes;
     }
   }
   await Promise.all(Array.from({ length: Math.min(Math.max(1, limit), queue.length) }, worker));
-  return { count, fallback, bytes, version: VERSION };
+  await mkdir(dirname(manifestFile), { recursive: true });
+  const tempFile = manifestFile + ".tmp";
+  await writeFile(tempFile, JSON.stringify(manifest));
+  await rename(tempFile, manifestFile);
+  return {
+    count, generated, reusedLocal, reusedRemote,
+    fallback, bytes, version: VERSION,
+    remoteCacheAvailable: Boolean(remoteManifest),
+    remoteFailures,
+  };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

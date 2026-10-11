@@ -48,7 +48,7 @@ test("global metadata includes canonical social and organization identity", asyn
   assert.match(source, /"@type": "Organization"/);
   assert.match(source, /ogLocale:/);
   assert.match(source, /ogSiteName:/);
-  assert.match(source, /twitterCard:/);
+  assert.doesNotMatch(source, /twitterCard:/);
   assert.doesNotMatch(source, /ogImage:/);
 });
 
@@ -124,7 +124,8 @@ test("social sharing uses a generated 1200x630 image instead of the icon", async
   assert.match(home, /ogImageWidth: 1200/);
   assert.match(home, /ogImageHeight: 630/);
   assert.match(home, /ogImageType: "image\/png"/);
-  assert.match(app, /twitterCard: "summary_large_image"/);
+  assert.match(home, /twitterCard: "summary_large_image"/);
+  assert.doesNotMatch(app, /twitterCard:/);
   assert.doesNotMatch(app, /ogImage:/);
   assert.doesNotMatch(app, /ogTitle:/);
   assert.match(staticSeo, /\/brand\/social-preview\.png/);

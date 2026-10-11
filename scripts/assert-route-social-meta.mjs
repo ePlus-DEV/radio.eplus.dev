@@ -49,6 +49,8 @@ const stationRoute = "/asia/viet-nam/vov-gt-hcm";
 const station = await loadPage(stationRoute);
 const homeImage = "/brand/social-preview.png";
 const stationImage = "/og/stations/asia/viet-nam/vov-gt-hcm.jpg";
+assert.deepEqual(values(home, "name", "twitter:card"), ["summary_large_image"], "Homepage must contain a single valid Twitter card");
+assert.deepEqual(values(station, "name", "twitter:card"), ["summary_large_image"], "Station must contain a single valid Twitter card");
 exactMeta(home, "og:image", origin + homeImage);
 exactMeta(home, "og:url", origin + "/");
 exactMeta(station, "og:image", origin + stationImage);

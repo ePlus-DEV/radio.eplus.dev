@@ -139,7 +139,6 @@ useSeoMeta(() => ({
   ogType: "website",
   ogSiteName: siteName.value,
   ogLocale: ogLocale.value,
-  twitterCard: "summary_large_image",
 }));
 </script>
 

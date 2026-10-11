@@ -222,6 +222,7 @@ useSeoMeta(() => ({
   ogImageAlt: `${countryName.value} flag`,
   twitterTitle: seoTitle.value,
   twitterDescription: seoDescription.value,
+  twitterCard: "summary_large_image",
   twitterImage: countryImage.value,
   twitterImageAlt: `${countryName.value} flag`,
 }));

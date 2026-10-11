@@ -117,6 +117,7 @@ useSeoMeta(() => ({
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogImageType: "image/png",
+  twitterCard: "summary_large_image",
   twitterImage: `${siteUrl.value}/brand/social-preview.png`,
   twitterImageAlt: "ePlus OnAir — Live radio from around the world",
   twitterTitle: seoTitle.value,
