@@ -28,7 +28,8 @@ test("staging keeps server-rendered social cards without canonical or sitemap", 
   assert.match(app, /robots: noIndex \? "noindex, nofollow, noarchive" : "index, follow"/);
   assert.match(app, /link: noIndex \? \[\] :/);
   assert.match(app, /script: noIndex \? \[\] :/);
-  assert.match(app, /ogImage: shareImage\.value/);
+  assert.doesNotMatch(app, /ogImage:/);
+  assert.match(index, /ogImage:/);
   assert.match(app, /twitterCard: "summary_large_image"/);
   assert.match(validator, /staging must expose branded og:image/);
   assert.match(validator, /staging must not render production canonical/);
