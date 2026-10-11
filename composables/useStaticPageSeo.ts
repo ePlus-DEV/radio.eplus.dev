@@ -64,7 +64,8 @@ const noIndex = Boolean(config.public.noIndex);
     ],
   }));
 
-  useSeoMeta(() => noIndex ? {} : ({
+  // Share cards are public on staging while robots noindex remains global.
+  useSeoMeta(() => ({
     description: description.value,
     ogTitle: title.value,
     ogDescription: description.value,

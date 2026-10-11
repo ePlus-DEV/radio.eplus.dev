@@ -275,7 +275,8 @@ useHead(() => ({
   ],
 }));
 
-useSeoMeta(() => noIndex ? {} : ({
+// Share cards are public on staging while robots noindex remains global.
+useSeoMeta(() => ({
   description: seoDescription.value,
   ogTitle: seoTitle.value,
   ogDescription: seoDescription.value,
