@@ -399,12 +399,12 @@
   },
   "voh-fm-95.6-mhz": {
     "title": "Đài tiếng nói nhân dân TP.HCM - FM 95.6 MHZ",
-    "description": "",
+    "description": "Kênh VOH FM 95.6 MHz của Đài Tiếng nói Nhân dân Thành phố Hồ Chí Minh, phát thanh thời sự, đời sống và âm nhạc.",
     "type": "application/x-mpegURL",
     "category": "VOH - FM 95.6 MHZ",
-    "url": "https://voh.com.vn",
+    "url": "https://voh.com.vn/radio/kenh-fm-956-02221123001000956.html",
     "cros": false,
-    "stream": "https://strm.voh.com.vn/radio/channel1/playlist.m3u8",
+    "stream": "https://1011337676.vnns.net/-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmkiOiIvaHR2Yy9WT0gtRk05NS42LmFkbS50bXMvIiwiZXhwIjoxOTI0OTI1MjI4fQ.isr2nlUkXOPGSxT-KT8FcZQFCcXn58RZrCyqoB3zDGg-/htvc/VOH-FM95.6.adm.tms/playlist.m3u8",
     "features": "/img/asia/viet-nam/voh-fm-95-6.png"
   },
   "voh-fm-87.7-mhz": {
