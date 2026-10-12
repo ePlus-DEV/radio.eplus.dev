@@ -9,7 +9,7 @@ test('documentation and workflow-only PRs use fast CI but retain unit tests', as
   assert.match(yaml, /"docs\/\*\*"/);
   assert.match(yaml, /"README\.md"/);
   assert.match(yaml, /git diff --name-only "\$PR_BASE_SHA"\.\.\.HEAD/);
-  assert.match(yaml, /prerender=true\s+if \[ ! -s/);
+  assert.match(yaml, /prerender=false\s+if \[ ! -s/);
   assert.match(yaml, /README\.md\|AGENTS\.md\|docs\/\*\|tests\/\*\|\.github\/workflows\/\*\|\.github\/dependabot\.yml/);
   assert.match(yaml, /\*\)\s+prerender=true\s+;;/);
   assert.match(yaml, /- name: "Run unit tests"\s+run: npm test/);
