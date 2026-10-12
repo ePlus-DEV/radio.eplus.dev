@@ -44,6 +44,21 @@ on DigitalOcean; do not update its DNS or enable `PAGES_PROD_READY` yet.
    refreshing detail pages, Play/Pause, navigation, responsive layout, assets,
    noindex, and no generated sitemap.
 
+## Reuse existing files; no extra SEO artwork for staging
+
+Nuxt already copies committed files from `public/img/`, `public/radio/`,
+and `public/brand/` into its static output unchanged. Do not redownload or
+regenerate those catalogs, flags, logos, and artwork. A clean checkout does
+**not** contain `.output/public/` (the prerendered HTML/JS/CSS), so an initial
+Nuxt generate remains necessary for a functioning static GitHub Pages site.
+
+Staging is `noindex`: skip generation of **all** station-specific
+`/og/stations/**/*.jpg` images and the generated OG manifest. Individual
+station pages still exist and keep their title and description but use the
+shared `/brand/social-preview.png` when a link is shared. Production
+continues generating per-station Open Graph JPEGs and uses existing manifest
+hash-based reuse for unchanged artwork.
+
 ## What the workflow does
 
 `.github/workflows/deploy-github-pages.yml` builds Nuxt from the private source,
