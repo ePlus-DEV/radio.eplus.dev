@@ -149,6 +149,21 @@ http://localhost:3000
 
 ## Build
 
+Run the default app/unit tests (no one-off VOH importer checks):
+
+```bash
+npm test
+```
+
+To verify **only VOH** imports and Vietnamese VOH channel fixtures:
+
+```bash
+npm run test:voh
+```
+
+For both suites, run `npm run test:all`. Normal CI runs provider-specific
+VOH tests only when related importer/catalog/playback files change.
+
 Run the UI regression suite against generated output:
 
 ```bash
