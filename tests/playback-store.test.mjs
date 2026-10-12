@@ -52,3 +52,19 @@ test('a library selection waits for its target instead of playing the old statio
   playback.requestStation('/asia/viet-nam/second');
   assert.equal(playback.playRequest, 2, 'selecting the current station can resume it');
 });
+
+test('live track metadata is scoped to the active station and cleared on change', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  playback.activate(station('first'), []);
+  playback.setLiveTrack('/asia/viet-nam/first', { title: 'Price Tag', artist: 'Jessie J' });
+  assert.equal(playback.liveTrack?.title, 'Price Tag');
+  playback.setLiveTrack('/asia/viet-nam/other', { title: 'Stale', artist: '' });
+  assert.equal(playback.liveTrack?.title, 'Price Tag');
+  playback.activate(station('second'), [], { autoplay: true });
+  assert.equal(playback.liveTrack, null);
+  playback.setLiveTrack('/asia/viet-nam/second', { title: 'Next track', artist: '' });
+  assert.equal(playback.liveTrack?.title, 'Next track');
+  playback.setLiveTrack('/asia/viet-nam/second', null);
+  assert.equal(playback.liveTrack, null);
+});
