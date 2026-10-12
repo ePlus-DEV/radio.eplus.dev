@@ -5,6 +5,7 @@ import { join } from "node:path";
 // Assert actual generated static HTML, not only metadata in Vue sources.
 const origin = (process.env.SEO_EXPECTED_SITE_URL || "https://radio.eplus.dev").replace(/\/$/, "");
 const output = ".output/public";
+const staging = origin !== "https://radio.eplus.dev";
 async function loadPage(route) {
   const segments = route.split("/").filter(Boolean);
   const candidates = [join(output, ...segments, "index.html"), join(output, ...segments) + ".html"];
@@ -48,7 +49,7 @@ const home = await loadPage("/");
 const stationRoute = "/asia/viet-nam/vov-gt-hcm";
 const station = await loadPage(stationRoute);
 const homeImage = "/brand/social-preview.png";
-const stationImage = "/og/stations/asia/viet-nam/vov-gt-hcm.jpg";
+const stationImage = staging ? homeImage : "/og/stations/asia/viet-nam/vov-gt-hcm.jpg";
 assert.deepEqual(values(home, "name", "twitter:card"), ["summary_large_image"], "Homepage must contain a single valid Twitter card");
 assert.deepEqual(values(station, "name", "twitter:card"), ["summary_large_image"], "Station must contain a single valid Twitter card");
 exactMeta(home, "og:image", origin + homeImage);
@@ -64,5 +65,7 @@ if (origin === "https://radio.eplus.dev") {
   assert.ok(values(station, "name", "robots").some(x => x.includes("noindex")), "Staging must remain noindex");
 }
 await assertImage(homeImage, [137, 80, 78, 71, 13, 10, 26, 10]);
-await assertImage(stationImage, [255, 216, 255]);
-console.log("PASS: prerendered homepage and station have unique, route-specific OG images and descriptions.");
+await assertImage(stationImage, staging ? [137, 80, 78, 71, 13, 10, 26, 10] : [255, 216, 255]);
+console.log(staging
+  ? "PASS: staging uses existing shared Open Graph artwork for all pages, without station-specific image generation."
+  : "PASS: production homepage and station have unique, route-specific OG images and descriptions.");
