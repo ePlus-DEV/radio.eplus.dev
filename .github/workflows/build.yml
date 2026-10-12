@@ -2,7 +2,7 @@ name: "CI"
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -126,11 +126,11 @@ jobs:
         if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' }}
         run: npm run test:ui
 
-  # DigitalOcean already auto-deploys main. This job observes it via a
-  # read-only token; never request or trigger another deployment.
-  monitor-production:
-    name: "DigitalOcean production deploy (main)"
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+  # DigitalOcean auto-deploys each tracked branch into its own app.
+  # Read-only status polling; never create another deployment.
+  monitor-deployment:
+    name: "DigitalOcean deployment (main / develop)"
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -143,5 +143,7 @@ jobs:
       - name: "Wait for matching DigitalOcean deployment and site health"
         env:
           DIGITALOCEAN_APP_ID: ${{ vars.DIGITALOCEAN_APP_ID }}
+          DIGITALOCEAN_STAGING_APP_ID: ${{ vars.DIGITALOCEAN_STAGING_APP_ID }}
+          DIGITALOCEAN_STAGING_SITE_URL: ${{ vars.DIGITALOCEAN_STAGING_SITE_URL }}
           DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
         run: node scripts/monitor-digitalocean-deploy.mjs
