@@ -143,15 +143,20 @@ export default defineNuxtConfig({
         },
         {
           rel: "icon",
+          type: "image/x-icon",
+          href: "/favicon.ico?v=onair-20261012",
+        },
+        {
+          rel: "icon",
           type: "image/png",
           sizes: "32x32",
-          href: "/brand/favicon-32x32.png",
+          href: "/brand/favicon-32x32.png?v=onair-20261012",
         },
         {
           rel: "icon",
           type: "image/png",
           sizes: "16x16",
-          href: "/brand/favicon-16x16.png",
+          href: "/brand/favicon-16x16.png?v=onair-20261012",
         },
         { rel: "manifest", href: "/brand/site.webmanifest" },
         {
