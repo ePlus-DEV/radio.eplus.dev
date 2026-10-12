@@ -18,7 +18,7 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 
 | Branch | Environment / purpose | URL |
 | --- | --- | --- |
-| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev (current DigitalOcean); your custom DEV domain (planned Pages repository: `onair-staging-pages`) |
+| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev (current DigitalOcean); https://eplus-dev.github.io/ (planned Pages, after renaming DEV repo to `ePlus-DEV.github.io`) |
 | `main` | Production; stable, released application (repository default branch) | https://radio.eplus.dev |
 | `master` | Legacy backup of the previous version; do not deploy or use for new development | — |
 | `feature/*` | Short-lived feature/fix branches, normally created from `develop` | PR into `develop` |
@@ -27,7 +27,7 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 **Release flow:** `feature/*` → `develop` (staging) → `main` (production).
 
 1. Create a feature branch from `develop` and open a PR targeting `develop`.
-2. Run unit tests, prerender and browser regression tests; verify the staging deployment on `radio-new.eplus.dev`.
+2. Run unit tests, prerender and browser regression tests; verify staging on `eplus-dev.github.io` once GitHub Pages is enabled (until then use the existing DigitalOcean staging site).
 3. Open a promotion PR from `develop` to `main`. Review changes, ensure required CI checks pass and merge only when ready to release.
 4. Deploy `main` to `radio.eplus.dev`; create a version tag on `main` for traceability and rollback.
 5. For urgent production hotfixes, branch from `main`, validate/release via PR, then merge or cherry-pick the fix back into `develop`.
