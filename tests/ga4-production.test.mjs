@@ -14,7 +14,7 @@ test('GA4 can run only on the canonical production website', () => {
     { ...production, nodeEnv: 'test' },
     { ...production, noIndex: true },
     { ...production, siteUrl: 'http://localhost:3000' },
-    { ...production, siteUrl: 'https://radio-new.eplus.dev' },
+    { ...production, siteUrl: 'https://new-radio.eplus.dev' },
     { ...production, siteUrl: 'https://arcade.eplus.dev' },
     { ...production, siteUrl: 'http://radio.eplus.dev' },
     { ...production, siteUrl: 'not-a-url' },
