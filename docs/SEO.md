@@ -1,6 +1,6 @@
 # ePlus OnAir SEO Architecture
 
-Last updated: **2026-10-08**
+Last updated: **2026-10-12**
 
 This file is the durable SEO checklist for ePlus OnAir. It records what is implemented, what is intentionally not implemented, and the reasons behind those decisions.
 
