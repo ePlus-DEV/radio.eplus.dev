@@ -264,6 +264,14 @@ export default defineNuxtConfig({
     },
   },
   sitemap: {
+    // XSLT is being removed from Chromium; keep the XML readable to crawlers
+    // without attaching a browser-only presentation stylesheet.
+    xsl: false,
+    // The site serves all languages at the same unprefixed URL, so there
+    // are no distinct localized routes to advertise as hreflang alternatives.
+    autoI18n: false,
+    // A checkout/build timestamp is not a trustworthy page modified date.
+    autoLastmod: false,
     urls: noIndex ? [] : [
       ...radioSeoRoutes.map((route) => ({
         ...getSitemapEntry(route),
