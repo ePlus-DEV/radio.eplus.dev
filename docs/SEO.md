@@ -6,8 +6,10 @@ This file is the durable SEO checklist for ePlus OnAir. It records what is imple
 
 ## Future GitHub Pages staging (not active yet)
 
-The planned GitHub Pages DEV origin is `https://eplus-dev.github.io/`, with
-`NUXT_PUBLIC_SITE_URL=https://eplus-dev.github.io` and
+The planned GitHub Pages DEV origin is an independent custom hostname (for
+example `https://new-radio.eplus.dev/`), configured as `PAGES_DEV_SITE_URL`
+in the private source repo Actions variables. The build uses
+`NUXT_PUBLIC_SITE_URL=$PAGES_DEV_SITE_URL` and
 `NUXT_PUBLIC_NO_INDEX=true`. This is an independent PUBLIC staging website,
 not a private environment. The existing staging/production indexing logic
 uses the explicit noindex flag and does not need GitHub-specific SEO branches.
