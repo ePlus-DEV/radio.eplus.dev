@@ -87,7 +87,7 @@ const loadCatalog = (area: string, country: string) => {
   const key = `${area}/${country}`;
   const cached = catalogs.get(key);
   if (cached) return cached;
-  const request = $fetch<Record<string, RadioCatalogEntry>>(`/radio/${key}.json`, { timeout: 10_000 })
+  const request = $fetch<Record<string, RadioCatalogEntry>>(siteAssetUrl(`/radio/${key}.json`), { timeout: 10_000 })
     .catch(error => {
       catalogs.delete(key);
       throw error;
@@ -157,4 +157,5 @@ const openStationDetails = (event: MouseEvent) => {
 };
 
 onBeforeUnmount(() => { ++selectionGeneration; });
+const siteAssetUrl = useSiteAssetUrl();
 </script>
