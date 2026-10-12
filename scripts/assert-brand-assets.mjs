@@ -27,11 +27,20 @@ for (const file of ['brand/favicon.ico', 'favicon.ico']) {
   const icon = await readFile(output + '/' + file);
   assert.equal(icon.readUInt16LE(2), 1, 'Invalid ICO: ' + file);
 }
+// Browsers may request /favicon.ico directly even with explicit PNG links.
+// Never ship Nuxt's scaffold icon alongside the branded ON AIR icons.
+assert.deepEqual(
+  await readFile(output + '/favicon.ico'),
+  await readFile(output + '/brand/favicon.ico'),
+  'Root favicon must match the official ePlus OnAir favicon',
+);
 const html = await readFile(output + '/index.html', 'utf8');
 assert.match(html, /ePlus OnAir/);
 assert.match(html, /Listen Beyond Borders/);
 assert.doesNotMatch(html, /Radio ePlus/i);
 assert.doesNotMatch(html, /onair-share\.png/);
+assert.match(html, /\/favicon\.ico\?v=onair-20261012/, 'Missing explicit branded ICO link');
+assert.match(html, /\/brand\/favicon-32x32\.png\?v=onair-20261012/, 'Missing branded PNG favicon link');
 
 const manifest = JSON.parse(await readFile(output + '/brand/site.webmanifest', 'utf8'));
 assert.equal(manifest.short_name, 'ePlus OnAir');

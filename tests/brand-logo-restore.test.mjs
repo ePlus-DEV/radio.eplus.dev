@@ -31,6 +31,12 @@ test('ePlus OnAir uses the recognized ON AIR logo without reverting its name or 
   assert.match(config, /NUXT_PUBLIC_SITE_NAME \|\| "ePlus OnAir"/);
   assert.doesNotMatch(config, /rel: "icon", type: "image\/svg\+xml", href: "\/brand\/onair-mark\.svg"/);
   assert.match(config, /\/brand\/favicon-32x32\.png/);
+  assert.match(config, /\/favicon\.ico\?v=onair-20261012/);
+  assert.deepEqual(
+    await readFile('public/favicon.ico'),
+    await readFile('public/brand/favicon.ico'),
+    'Default Nuxt favicon must not be published at /favicon.ico',
+  );
   assert.match(app, /\/brand\/logo-share\.png/);
   assert.doesNotMatch(app, /\/brand\/onair-share\.png/);
   assert.equal(manifest.short_name, 'ePlus OnAir');
