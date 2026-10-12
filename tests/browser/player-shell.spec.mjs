@@ -95,13 +95,36 @@ test('Media Session publishes station artwork and switches stations with headset
   await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
 });
 
-test('station cards start the selected station while retaining real navigation links', async ({ page }) => {
+test('station detail links never start audio; Play starts it and browsing preserves the active station', async ({ page }) => {
   await mockMedia(page);
   await ready(page, '/europe/belgium');
+  const initial = await page.evaluate(() => ({
+    calls: window.radioMediaCalls.play,
+    station: document.querySelector('#__nuxt').__vue_app__.config.globalProperties.$pinia._s.get('playback').station?.url,
+  }));
   await page.locator('main a[href="/europe/belgium/mnm"]').click();
   await expect(page).toHaveURL(/\/europe\/belgium\/mnm$/);
+  expect(await page.evaluate(() => window.radioMediaCalls.play)).toBe(initial.calls);
+  expect(await page.evaluate(() => document.querySelector('#__nuxt').__vue_app__.config.globalProperties.$pinia._s.get('playback').station?.url)).toBe(initial.station);
+
+  // The detail action is the explicit Play gesture; opening details is not.
+  await page.locator('main .radio-station-detail-action').click();
+  await expect.poll(() => page.evaluate(() => window.radioMediaCalls.play)).toBe(initial.calls + 1);
   await expect(dock(page).getByRole('link')).toContainText('MNM');
+  await page.locator('main a[href="/europe/belgium/studio-brussel"]').first().click();
+  await expect(page).toHaveURL(/\/europe\/belgium\/studio-brussel$/);
+  await expect(dock(page).getByRole('link')).toContainText('MNM');
+  expect(await page.evaluate(() => window.radioMediaCalls.play)).toBe(initial.calls + 1);
   await expect(dock(page).getByRole('button', { name: 'Pause radio', exact: true })).toBeVisible();
+});
+
+test('direct station URL remains silent until its Play button is clicked', async ({ page }) => {
+  await mockMedia(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  expect(await page.evaluate(() => window.radioMediaCalls.play)).toBe(0);
+  await expect(dock(page).getByRole('button', { name: 'Play radio', exact: true })).toBeVisible();
+  await page.locator('main .radio-station-detail-action').click();
+  await expect.poll(() => page.evaluate(() => window.radioMediaCalls.play)).toBe(1);
 });
 
 test('desktop queue stays beside the catalog while scrolling and stops before the footer', async ({ page }) => {
