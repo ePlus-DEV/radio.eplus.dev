@@ -89,11 +89,19 @@ jobs:
 
           # Fail closed: unknown/app/data/SEO/build-script changes must get
           # the complete Nuxt generation and all generated-output audits.
+          # Provider-only VOH tests are opt-in unless the PR touches their
+          # importer, matching catalog, playback source utilities, or tests.
           prerender=false
+          voh=false
           if [ ! -s "$RUNNER_TEMP/pr-changed-paths.txt" ]; then
             prerender=true
           fi
           while IFS= read -r path; do
+            case "$path" in
+              scripts/sync-voh-radios.mjs|tests/providers/voh/*|tests/voh-*.test.mjs|public/radio/asia/viet-nam.json|utils/playback-station.mjs|utils/radio-source-plan.mjs)
+                voh=true
+                ;;
+            esac
             case "$path" in
               README.md|AGENTS.md|docs/*|tests/*|.github/workflows/*|.github/dependabot.yml)
                 ;;
@@ -104,6 +112,10 @@ jobs:
           done < "$RUNNER_TEMP/pr-changed-paths.txt"
 
           echo "prerender=$prerender" >> "$GITHUB_OUTPUT"
+          echo "voh=$voh" >> "$GITHUB_OUTPUT"
+          if [ "$voh" = true ]; then
+            echo "::notice::VOH-specific changes detected: run dedicated VOH provider tests."
+          fi
           if [ "$prerender" = true ]; then
             echo "::notice::Application/build/data change: full Nuxt prerender and SEO audits required."
           else
@@ -121,6 +133,10 @@ jobs:
 
       - name: "Run unit tests"
         run: npm test
+
+      - name: "Run VOH-specific tests only when relevant"
+        if: steps.scope.outputs.voh == 'true'
+        run: npm run test:voh
 
       - name: "Generate prerendered site"
         if: steps.scope.outputs.prerender == 'true'
