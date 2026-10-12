@@ -6,15 +6,18 @@ This file is the durable SEO checklist for ePlus OnAir. It records what is imple
 
 ## Future GitHub Pages staging (not active yet)
 
-The planned GitHub Pages DEV origin is an independent custom hostname (for
-example `https://new-radio.eplus.dev/`), configured as `PAGES_DEV_SITE_URL`
-in the private source repo Actions variables. The build uses
-`NUXT_PUBLIC_SITE_URL=$PAGES_DEV_SITE_URL` and
-`NUXT_PUBLIC_NO_INDEX=true`. This is an independent PUBLIC staging website,
-not a private environment. The existing staging/production indexing logic
-uses the explicit noindex flag and does not need GitHub-specific SEO branches.
-Production stays at `https://radio.eplus.dev` with noindex disabled and sitemap
-enabled. See [GitHub Pages migration](./GITHUB_PAGES.md). No DNS was changed.
+The initial GitHub Pages DEV URL is `https://eplus-dev.github.io/`, served
+from the public organization Pages repository `ePlus-DEV/ePlus-DEV.github.io`.
+The existing public `onair-staging-pages` repository must first be **renamed**
+to `ePlus-DEV.github.io`; there is no need for a custom DNS record. The private
+source workflow defaults to `NUXT_PUBLIC_SITE_URL=https://eplus-dev.github.io`
+when `PAGES_DEV_SITE_URL` is unset and always builds DEV with
+`NUXT_PUBLIC_NO_INDEX=true`. It omits `CNAME` until a custom staging domain is
+configured later. GA4 remains disabled for staging.
+
+PRO is unchanged: `https://radio.eplus.dev` on DigitalOcean until validated
+GitHub Pages production cutover. Do not change production DNS now.
+See [GitHub Pages migration](./GITHUB_PAGES.md).
 
 ## Staging branch noindex policy
 
