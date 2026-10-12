@@ -34,3 +34,29 @@ test('CI tests VOH when relevant, with no extra VOH workflow', async () => {
   assert.deepEqual(workflows.filter((name) => name.endsWith('.yml')).sort(),
     ['build.yml', 'deploy-github-pages.yml', 'instant-audio-sync.yml']);
 });
+
+test('Pages deploy ignores one-off VOH importer, tests, docs and unrelated Actions', async () => {
+  const deploy = await read('.github/workflows/deploy-github-pages.yml');
+  const triggers = deploy.slice(0, deploy.indexOf('\npermissions:'));
+  assert.match(triggers, /on:\s*\n  push:\s*\n    branches: \[develop, main\]/);
+  assert.match(triggers, /^    paths:\s*$/m);
+  for (const p of [
+    'app.vue', 'nuxt.config.ts', 'package.json', 'package-lock.json',
+    'components/**', 'composables/**', 'pages/**', 'stores/**',
+    'public/**', 'data/**', 'lang/**', 'server/**', 'utils/**',
+    'scripts/build-station-search-index.mjs',
+    'scripts/generate-social-preview.mjs',
+    'scripts/generate-station-og-images.mjs',
+  ]) {
+    assert.ok(triggers.includes('      - "' + p + '"'), p + ' must trigger a website build');
+  }
+  for (const excluded of [
+    'docs/**', 'README.md', 'tests/**', '.github/workflows/**',
+    'scripts/sync-voh-radios.mjs', 'scripts/sync-instant-audio.mjs',
+  ]) {
+    assert.ok(!triggers.includes('      - "' + excluded + '"'), excluded + ' must not auto-deploy');
+  }
+  assert.match(triggers, /^  workflow_dispatch:\s*$/m, 'explicit manual redeploy must remain available');
+  assert.match(deploy, /vars\.PAGES_DEV_READY == 'true'/);
+  assert.match(deploy, /vars\.PAGES_PROD_READY == 'true'/);
+});
