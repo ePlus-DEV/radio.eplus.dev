@@ -78,7 +78,7 @@ const i18n = computed(
 );
 const countryName = computed(() => t(i18n.value));
 const countryFlag = computed(
-  () => `/img/${area.value}/flags/${slug.value}.png`,
+  () => siteAssetUrl(`/img/${area.value}/flags/${slug.value}.png`),
 );
 const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
@@ -88,7 +88,7 @@ const countryUrl = computed(() => `${siteUrl.value}${countryPath.value}`);
 const countryImage = computed(() => `${siteUrl.value}${countryFlag.value}`);
 
 const catalogUrl = computed(
-  () => `/radio/${area.value}/${slug.value}.json`,
+  () => siteAssetUrl(`/radio/${area.value}/${slug.value}.json`),
 );
 const catalogKey = computed(
   () => `country-catalog:${area.value}:${slug.value}`,
@@ -255,5 +255,6 @@ const playSelected = (station: RadioStationOption): void => {
 // A fresh entry can prepare this country's featured station. Browsing another
 // country while listening keeps the selected station and its queue intact.
 watch(catalog, () => listenDefault(), { immediate: true });
+const siteAssetUrl = useSiteAssetUrl();
 </script>
 
