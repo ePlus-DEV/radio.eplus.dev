@@ -17,7 +17,7 @@ export async function assertProjectPagesOutput(root, repoName) {
       label + ': Nuxt JS/CSS URLs must use ' + base);
     assert.ok(html.includes(base + 'brand/logo-share.png'),
       label + ': brand image must use Pages project base');
-    const assetUrls = [...html.matchAll(/\\b(?:href|src)=["'](\\/[^"']*)["']/gi)]
+    const assetUrls = [...html.matchAll(/\b(?:href|src)=["'](\/[^"']*)["']/gi)]
       .map(m => m[1]).filter(url => !url.startsWith('//'));
     const invalid = assetUrls.filter(url => !url.startsWith(base));
     assert.deepEqual(invalid.slice(0, 8), [],
