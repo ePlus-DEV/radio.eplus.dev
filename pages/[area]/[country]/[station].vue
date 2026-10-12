@@ -84,6 +84,7 @@ import {
   buildRadioStationSchema,
 } from "~/utils/seo-structured-data.mjs";
 
+const siteAssetUrl = useSiteAssetUrl();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -335,6 +336,5 @@ watch([stationMeta, stationPath, () => playback.requestedStationUrl], ([meta, pa
   if (requested === path) activateStation(true);
   else if (!playback.station && !requested) activateStation();
 }, { immediate: true });
-const siteAssetUrl = useSiteAssetUrl();
 </script>
 
