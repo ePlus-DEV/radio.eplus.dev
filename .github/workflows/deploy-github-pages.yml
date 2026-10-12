@@ -86,7 +86,31 @@ jobs:
             echo "::error::Pages target $TARGET_REPOSITORY is missing or this token cannot read it."
             exit 1
           fi
-          echo "Validated target $TARGET_REPOSITORY, no extra repository or custom domain needed."
+          # Read access alone is insufficient: check that the PAT can push
+          # before spending minutes on Nuxt generation.
+          if ! curl --fail --silent --show-error \
+            -H "Authorization: Bearer $PAGES_DEPLOY_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$TARGET_REPOSITORY" | node -e '
+              let data = "";
+              process.stdin.on("data", chunk => { data += chunk; });
+              process.stdin.on("end", () => {
+                try {
+                  const repo = JSON.parse(data);
+                  if (repo.permissions?.push !== true) {
+                    console.error("::error::The Pages PAT does not have write access to the selected repository.");
+                    process.exitCode = 1;
+                  }
+                } catch {
+                  console.error("::error::Could not validate Pages token permissions.");
+                  process.exitCode = 1;
+                }
+              });
+            '; then
+            echo "::error::Fix Pages token Contents permissions before rebuilding."
+            exit 1
+          fi
+          echo "Validated target $TARGET_REPOSITORY and read/write PAT permissions."
 
       - name: Check out private source
         uses: actions/checkout@v7
@@ -116,6 +140,9 @@ jobs:
           if [ "$TARGET_KIND" = staging ]; then
             node scripts/assert-staging-noindex.mjs
           fi
+
+      - name: Check project Pages links and artwork before publishing
+        run: node scripts/assert-project-pages-output.mjs .output/public "${TARGET_REPOSITORY##*/}"
 
       - name: Check Pages output and GitHub hosting size limit
         run: node scripts/check-pages-build.mjs .output/public "$TARGET_KIND"
