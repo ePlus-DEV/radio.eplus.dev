@@ -46,7 +46,7 @@ const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalog
       const { join } = await import('node:path');
       catalog = JSON.parse(await readFile(join(process.cwd(), 'public/radio', `${country}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
     } else {
-      catalog = await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${country}.json`);
+      catalog = await $fetch<Record<string, RadioCatalogEntry>>(siteAssetUrl(`/radio/${country}.json`));
     }
     const ids = new Set(HOMEPAGE_FEATURED_STATION_PATHS
       .filter(path => path.startsWith(`${country}/`))
@@ -145,5 +145,6 @@ watch(featuredCatalogs, () => {
     placeholder: String(runtimeConfig.public.placeholderStation),
   }), featuredStations.value, { onlyIfIdle: true });
 }, { immediate: true });
+const siteAssetUrl = useSiteAssetUrl();
 </script>
 
