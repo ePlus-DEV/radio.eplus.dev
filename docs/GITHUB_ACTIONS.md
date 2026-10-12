@@ -23,13 +23,9 @@ branches, without adding another workflow and without requesting deployments.
 | Git branch | DigitalOcean environment | GitHub Actions variable | Health-check domain |
 | --- | --- | --- | --- |
 | `main` | Production | `DIGITALOCEAN_APP_ID` | `https://radio.eplus.dev/` |
-| `develop` | Staging | `DIGITALOCEAN_STAGING_APP_ID` | `https://radio-new.eplus.dev/` (default) |
+| `develop` | Staging | `DIGITALOCEAN_STAGING_APP_ID` | `https://new-radio.eplus.dev/` |
 
-If the staging App Platform application actually serves the alternate hostname
-`https://new-radio.eplus.dev/`, set the optional repository variable
-`DIGITALOCEAN_STAGING_SITE_URL` to **that complete HTTPS URL**. Only these
-two staging hosts are accepted, to prevent a misconfigured status check from
-quietly validating a different application or an external destination.
+Staging uses the fixed official URL `https://new-radio.eplus.dev/`. The monitor deliberately rejects other staging hosts, so a misconfigured app cannot be mistaken for the correct deployment.
 
 ### One-time GitHub configuration
 
@@ -37,8 +33,6 @@ Go to **Repository → Settings → Secrets and variables → Actions** and add:
 
 - Repository **variable** `DIGITALOCEAN_APP_ID`: production App Platform application ID.
 - Repository **variable** `DIGITALOCEAN_STAGING_APP_ID`: staging App Platform application ID.
-- Optional repository **variable** `DIGITALOCEAN_STAGING_SITE_URL`: actual staging HTTPS URL
-  if it is `https://new-radio.eplus.dev/` rather than the documented default.
 - Repository **secret** `DIGITALOCEAN_API_TOKEN`: a restricted DigitalOcean API token
   with **`app:read` only**, usable for both applications.
 
