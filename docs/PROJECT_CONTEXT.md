@@ -1,6 +1,6 @@
 # ePlus OnAir — Project Context and Architecture Decisions
 
-Last updated: **2026-10-08**
+Last updated: **2026-10-12**
 
 This document is the durable technical memory for ePlus OnAir. It records decisions and failure modes that are easy to lose when work is spread across GitHub PRs, chats, and multiple coding assistants.
 
