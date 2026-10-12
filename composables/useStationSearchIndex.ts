@@ -10,21 +10,30 @@ export interface StationSearchItem {
   featured?: boolean;
 }
 
-// Called only after mounting the search modal; never fetch this catalog in SSR.
-const loadIndex = createCachedLoader(async () => {
-  const items = await $fetch<StationSearchItem[]>('/search/stations.json', { timeout: 10_000 });
-  if (!Array.isArray(items)) throw new Error('Invalid station search index');
-  return markRaw(items);
-});
+// Cache each public project path separately; this executes only on the client.
+const loaders = new Map<string, ReturnType<typeof createCachedLoader>>();
+function loaderFor(url: string) {
+  let loader = loaders.get(url);
+  if (!loader) {
+    loader = createCachedLoader(async () => {
+      const items = await $fetch<StationSearchItem[]>(url, { timeout: 10_000 });
+      if (!Array.isArray(items)) throw new Error('Invalid station search index');
+      return markRaw(items);
+    });
+    loaders.set(url, loader);
+  }
+  return loader;
+}
 
 export function useStationSearchIndex() {
+  const searchUrl = useSiteAssetUrl()('/search/stations.json');
   const index = shallowRef<StationSearchItem[]>([]);
   const loading = ref(true);
   const error = ref(false);
   let disposed = false;
   onMounted(async () => {
     try {
-      const items = await loadIndex();
+      const items = await loaderFor(searchUrl)();
       if (!disposed) index.value = items;
     } catch {
       if (!disposed) error.value = true;
