@@ -144,6 +144,8 @@ useHead(() => ({
   titleTemplate: buildPlaybackTitleTemplate(
     clientReady.value && playback.playing ? playback.station?.title : '',
     siteName.value,
+    clientReady.value && playback.playing && playback.liveTrack?.stationUrl === playback.station?.url
+      ? playback.liveTrack : null,
   ),
 }));
 

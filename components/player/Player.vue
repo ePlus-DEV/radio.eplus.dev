@@ -192,6 +192,7 @@ import {
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
+import { resolveLiveTrack } from "~/utils/live-track.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -430,26 +431,10 @@ const sidebarCount = computed(
   () => stationCount.value || scheduleCount.value,
 );
 
-const nowPlayingTitle = computed(() => {
-  const songTitle = props.song?.currentMedia?.title?.trim();
-  if (songTitle) return songTitle;
-
-  const playlistTitle = props.playlist?.[0]?.track_title?.trim();
-  if (playlistTitle) return playlistTitle;
-
-  return props.streamName || "Live radio";
-});
+const liveTrack = computed(() => resolveLiveTrack(props.song, props.playlist));
+const nowPlayingTitle = computed(() => liveTrack.value?.title || props.streamName || "Live radio");
 const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
-
-const nowPlayingArtist = computed(() => {
-  const songArtist = props.song?.currentMedia?.artists?.trim();
-  if (songArtist) return songArtist;
-
-  const playlistArtist = props.playlist?.[0]?.track_artist?.trim();
-  if (playlistArtist) return playlistArtist;
-
-  return "";
-});
+const nowPlayingArtist = computed(() => liveTrack.value?.artist || "");
 
 const nowPlayingArtwork = computed(
   () =>

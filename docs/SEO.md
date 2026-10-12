@@ -85,8 +85,13 @@ Page metadata:
 ### Browser tab title during playback
 
 The app shell updates only the browser tab's <title> while a station is
-actually playing (for example, `▶ Heart UK | ePlus OnAir`). This uses a
-reactive title template rather than mutating `document.title` directly.
+actually playing. If the realtime provider supplies a song, the tab prioritizes
+that title and artist (for example, `▶ Price Tag — Jessie J · Heart UK | ePlus OnAir`).
+If no track metadata exists, it falls back to `▶ Heart UK | ePlus OnAir`.
+The bottom player and tab share a single track extraction rule for Zing currentMedia
+and Webrad playlist metadata. Track state is tied to the active station URL and
+cleared when switching stations, preventing stale songs from appearing.
+This uses a reactive title template rather than mutating `document.title` directly.
 
 Pause/stop/failed playback return to the current route's normal title, even
 after navigating while listening. During SSR/static prerender, there is no

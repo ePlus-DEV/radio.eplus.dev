@@ -2,6 +2,7 @@ import { usePlaybackStore } from '~/stores/playback';
 import type { RadioProgram, RadioSong, RadioTrack } from '~/types/radio';
 import { isZingScheduleUrl } from '~/utils/station-schedule.mjs';
 import { createStationPolling } from '~/utils/station-polling.mjs';
+import { resolveLiveTrack } from '~/utils/live-track.mjs';
 
 export function useStationRealtime() {
   const playback = usePlaybackStore();
@@ -64,6 +65,7 @@ export function useStationRealtime() {
       playlist.value = value.playlist;
       song.value = value.song;
       lyrics.value = value.lyrics;
+      playback.setLiveTrack(playback.station?.url || '', resolveLiveTrack(value.song, value.playlist));
     },
     onLoading: (value: boolean) => { loading.value = value; },
   });
@@ -72,6 +74,7 @@ export function useStationRealtime() {
     program.value = [];
     playlist.value = [];
     song.value = undefined;
+    playback.setLiveTrack(playback.station?.url || '', null);
     lyrics.value = [t('panel.updating')];
     lyricsOpen.value = false;
     if (!import.meta.client || !clientReady) return;
