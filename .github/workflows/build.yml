@@ -129,7 +129,7 @@ jobs:
   # DigitalOcean auto-deploys each tracked branch into its own app.
   # Read-only status polling; never create another deployment.
   monitor-deployment:
-    name: "DigitalOcean deployment (main / develop)"
+    name: "DigitalOcean deployment (${{ github.ref_name }})"
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 40
