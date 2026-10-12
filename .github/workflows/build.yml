@@ -89,24 +89,24 @@ jobs:
         # CI uses the same two public variables as the real staging host.
         # A checkout/branch name must not change the generated SEO policy.
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: npm run generate
 
       - name: "Validate generated sitemap and staging indexability"
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: node scripts/assert-sitemap-xml.mjs
 
       - name: "Assert route-specific prerendered Open Graph metadata"
         env:
-          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-route-social-meta.mjs
 
       - name: "Audit all stations Open Graph HTML and JPEG images"
         env:
-          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-all-station-social-meta.mjs
 
       - name: "Verify ePlus OnAir logo, social image and favicons"
@@ -144,6 +144,5 @@ jobs:
         env:
           DIGITALOCEAN_APP_ID: ${{ vars.DIGITALOCEAN_APP_ID }}
           DIGITALOCEAN_STAGING_APP_ID: ${{ vars.DIGITALOCEAN_STAGING_APP_ID }}
-          DIGITALOCEAN_STAGING_SITE_URL: ${{ vars.DIGITALOCEAN_STAGING_SITE_URL }}
           DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
         run: node scripts/monitor-digitalocean-deploy.mjs
