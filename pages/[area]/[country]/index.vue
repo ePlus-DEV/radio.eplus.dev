@@ -61,6 +61,7 @@ interface CountryCatalogPayload {
   stations: Record<string, Channel>;
 }
 
+const siteAssetUrl = useSiteAssetUrl();
 const playback = usePlaybackStore();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
@@ -255,6 +256,5 @@ const playSelected = (station: RadioStationOption): void => {
 // A fresh entry can prepare this country's featured station. Browsing another
 // country while listening keeps the selected station and its queue intact.
 watch(catalog, () => listenDefault(), { immediate: true });
-const siteAssetUrl = useSiteAssetUrl();
 </script>
 
