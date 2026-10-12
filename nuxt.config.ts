@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
+import { prefixPublicAsset } from "./utils/public-site-path.mjs";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
 import { GA4_MEASUREMENT_ID, isGa4ProductionBuild } from "./utils/ga4-config.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
@@ -17,6 +18,8 @@ const algoliaApiKey =
   process.env.ALGOLIA_API_KEY ||
   "";
 const hasAlgoliaConfig = Boolean(algoliaApplicationId && algoliaApiKey);
+const baseURL = process.env.NUXT_APP_BASE_URL || "/";
+const staticAsset = (path: string) => prefixPublicAsset(path, baseURL);
 const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").replace(
   /\/$/,
   "",
@@ -129,7 +132,7 @@ export default defineNuxtConfig({
   app: {
     // Nuxt must use the GitHub Pages PROJECT subpath until a custom domain is
     // configured. "/" remains the default for DigitalOcean and local builds.
-    baseURL: process.env.NUXT_APP_BASE_URL || "/",
+    baseURL,
     head: {
       titleTemplate: `%s | ${siteName}`,
       meta: [
@@ -148,30 +151,30 @@ export default defineNuxtConfig({
         {
           rel: "apple-touch-icon",
           sizes: "180x180",
-          href: "/brand/apple-touch-icon.png",
+          href: staticAsset("/brand/apple-touch-icon.png"),
         },
         {
           rel: "icon",
           type: "image/x-icon",
-          href: "/favicon.ico?v=onair-20261012",
+          href: staticAsset("/favicon.ico?v=onair-20261012"),
         },
         {
           rel: "icon",
           type: "image/png",
           sizes: "32x32",
-          href: "/brand/favicon-32x32.png?v=onair-20261012",
+          href: staticAsset("/brand/favicon-32x32.png?v=onair-20261012"),
         },
         {
           rel: "icon",
           type: "image/png",
           sizes: "16x16",
-          href: "/brand/favicon-16x16.png?v=onair-20261012",
+          href: staticAsset("/brand/favicon-16x16.png?v=onair-20261012"),
         },
-        { rel: "manifest", href: "/brand/site.webmanifest" },
+        { rel: "manifest", href: staticAsset("/brand/site.webmanifest") },
         {
           rel: "mask-icon",
           color: "#e11d48",
-          href: "/brand/safari-pinned-tab.svg",
+          href: staticAsset("/brand/safari-pinned-tab.svg"),
         },
       ],
     },
