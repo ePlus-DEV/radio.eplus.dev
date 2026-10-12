@@ -11,7 +11,7 @@ For short operational rules, see [`../AGENTS.md`](../AGENTS.md).
 - Repository: `ePlus-DEV/radio.eplus.dev`
 - Production: `https://radio.eplus.dev`
 - `ePlus-DEV/get-radio` is legacy PHP crawler/history only and is not the active application.
-- A preview/testing hostname such as `https://new-radio.eplus.dev` may be used during rollout, but it is not the canonical public URL unless project configuration is explicitly changed.
+- Staging (`develop`): `https://new-radio.eplus.dev/` (official staging domain, always `noindex`). Production `https://radio.eplus.dev/` remains the canonical public origin.
 
 ## 2. Application stack
 
