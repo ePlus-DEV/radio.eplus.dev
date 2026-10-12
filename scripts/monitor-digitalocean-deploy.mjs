@@ -16,7 +16,7 @@ export function resolveDeployTarget(branch, variables = {}) {
   if (branch === "develop") return {
     branch: "develop", environment: "staging",
     appId: variables.DIGITALOCEAN_STAGING_APP_ID || "",
-    website: variables.DIGITALOCEAN_STAGING_SITE_URL || "https://radio-new.eplus.dev/",
+    website: "https://new-radio.eplus.dev/",
   };
   throw new Error("Deployment monitor only supports main (production) or develop (staging).");
 }
@@ -114,7 +114,7 @@ export async function verifyWebsite(fetcher, url) {
 export async function monitor({
   appId, token, expectedSha, repository = "ePlus-DEV/radio.eplus.dev",
   branch = "main",
-  website = branch === "develop" ? "https://radio-new.eplus.dev/" : "https://radio.eplus.dev/",
+  website = branch === "develop" ? "https://new-radio.eplus.dev/" : "https://radio.eplus.dev/",
   fetcher = fetch, sleep = delay,
   maxAttempts = 105, intervalMs = 20000, log = console.log,
 } = {}) {
@@ -132,7 +132,7 @@ export async function monitor({
   catch { throw new Error("Deployment health-check URL is invalid."); }
   const allowedHosts = branch === "main"
     ? ["radio.eplus.dev"]
-    : ["radio-new.eplus.dev", "new-radio.eplus.dev"];
+    : ["new-radio.eplus.dev"];
   if (url.protocol !== "https:" || !allowedHosts.includes(url.hostname) ||
     url.username || url.password || url.port || url.search || url.hash || url.pathname !== "/") {
     throw new Error("Health-check URL is not an approved " + branch + " domain.");
