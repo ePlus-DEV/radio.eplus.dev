@@ -6,8 +6,8 @@ import { isStagingDeployment } from "../utils/seo-deployment.mjs";
 
 const read = (path) => readFile(new URL("../" + path, import.meta.url), "utf8");
 
-test("both preview domain orders default to noindex but production stays indexable", () => {
-  for (const siteUrl of ["https://radio-new.eplus.dev", "https://new-radio.eplus.dev"]) {
+test("official staging and legacy hostname stay noindex, production stays indexable", () => {
+  for (const siteUrl of ["https://new-radio.eplus.dev", "https://radio-new.eplus.dev"]) {
     assert.equal(isStagingDeployment({ siteUrl }), true, siteUrl);
   }
   assert.equal(isStagingDeployment({ siteUrl: "https://radio.eplus.dev" }), false);
