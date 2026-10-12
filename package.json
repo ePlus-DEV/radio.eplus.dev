@@ -16,7 +16,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "node --test tests/*.test.mjs",
-    "test:ui": "playwright test"
+    "test:ui": "playwright test",
+    "test:voh": "node --test tests/providers/voh/*.test.mjs",
+    "test:all": "npm test && npm run test:voh"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
