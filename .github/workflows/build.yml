@@ -1,6 +1,9 @@
 name: "CI"
 
 on:
+  push:
+    branches: [main]
+  workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
@@ -46,7 +49,7 @@ jobs:
   # Preserve its fast validation without rerunning all ~4k Nuxt pages.
   data-sync:
     name: "Validate radio sync bot PR"
-    if: github.event.pull_request.head.ref == 'bot/instant-audio-sync' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'bot/instant-audio-sync' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -64,7 +67,7 @@ jobs:
 
   test:
     name: "Test and prerender"
-    if: github.event.pull_request.head.ref != 'bot/instant-audio-sync' || github.event.pull_request.head.repo.full_name != github.repository
+    if: github.event_name == 'pull_request' && (github.event.pull_request.head.ref != 'bot/instant-audio-sync' || github.event.pull_request.head.repo.full_name != github.repository)
     runs-on: ubuntu-latest
 
     steps:
@@ -122,3 +125,23 @@ jobs:
       - name: "Verify persistent player and responsive UI"
         if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' }}
         run: npm run test:ui
+
+  # DigitalOcean already auto-deploys main. This job observes it via a
+  # read-only token; never request or trigger another deployment.
+  monitor-production:
+    name: "DigitalOcean production deploy (main)"
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+
+      - name: "Wait for matching DigitalOcean deployment and site health"
+        env:
+          DIGITALOCEAN_APP_ID: ${{ vars.DIGITALOCEAN_APP_ID }}
+          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
+        run: node scripts/monitor-digitalocean-deploy.mjs
