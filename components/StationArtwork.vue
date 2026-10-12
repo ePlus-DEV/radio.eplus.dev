@@ -5,5 +5,6 @@
 const props = defineProps<{ src?: string; alt: string; eager?: boolean }>();
 const failed = ref(false);
 watch(() => props.src, () => { failed.value = false; });
-const resolvedSrc = computed(() => failed.value || !props.src ? '/brand/logo-share.png' : props.src);
+const siteAssetUrl = useSiteAssetUrl();
+const resolvedSrc = computed(() => siteAssetUrl(failed.value || !props.src ? '/brand/logo-share.png' : props.src));
 </script>

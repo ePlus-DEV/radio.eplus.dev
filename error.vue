@@ -13,7 +13,7 @@
             class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--radio-inverse-bg)]"
           >
             <img
-              src="/brand/onair-mark.svg"
+              :src="siteAssetUrl('/brand/logo-share.png')"
               width="32"
               height="32"
               alt="ePlus OnAir"
@@ -70,6 +70,7 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const siteAssetUrl = useSiteAssetUrl();
 const statusCode = computed(() => props.error?.statusCode || 500);
 const isNotFound = computed(() => statusCode.value === 404);
 const heading = computed(() =>

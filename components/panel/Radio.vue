@@ -60,7 +60,7 @@
               <img
                 loading="lazy"
                 decoding="async"
-                :src="country.flag"
+                :src="siteAssetUrl(country.flag)"
                 :alt="$t(country.name)"
                 class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
               />
@@ -149,4 +149,5 @@ const createLocalWorld = (): GroupedResults => {
 const world = computed<GroupedResults>(createLocalWorld);
 const loading = computed(() => Object.keys(world.value).length === 0);
 
+const siteAssetUrl = useSiteAssetUrl();
 </script>

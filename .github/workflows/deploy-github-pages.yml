@@ -4,6 +4,36 @@ name: "Deploy ePlus OnAir to GitHub Pages"
 on:
   push:
     branches: [develop, main]
+    # Only changes to the delivered website justify regenerating thousands of
+    # station pages. Workflows, docs, tests and one-off crawlers do not.
+    paths:
+      - "app.vue"
+      - "app.config.ts"
+      - "error.vue"
+      - "nuxt.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.json"
+      - "assets/**"
+      - "build/**"
+      - "components/**"
+      - "composables/**"
+      - "config/**"
+      - "data/**"
+      - "lang/**"
+      - "layouts/**"
+      - "middleware/**"
+      - "pages/**"
+      - "plugins/**"
+      - "public/**"
+      - "server/**"
+      - "stores/**"
+      - "types/**"
+      - "utils/**"
+      - "scripts/build-station-search-index.mjs"
+      - "scripts/generate-social-preview.mjs"
+      - "scripts/generate-station-og-images.mjs"
+  # Manual deploy remains possible even without site changes.
   workflow_dispatch:
 
 permissions:
@@ -24,31 +54,63 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
-      NUXT_PUBLIC_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || vars.PAGES_DEV_SITE_URL || 'https://eplus-dev.github.io' }}
-      NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'main' && 'false' || 'true' }}
-      TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/ePlus-DEV.github.io' }}
-      TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
-      SEO_EXPECTED_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || vars.PAGES_DEV_SITE_URL || 'https://eplus-dev.github.io' }}
+      # Both repositories are GitHub PROJECT Pages until custom domains are
+      # explicitly introduced in a separate migration.
+      NUXT_PUBLIC_SITE_URL: ${{ github.ref_name == 'main' && 'https://eplus-dev.github.io/onair-production-pages' || 'https://eplus-dev.github.io/onair-staging-pages' }}
+      NUXT_APP_BASE_URL: ${{ github.ref_name == 'main' && '/onair-production-pages/' || '/onair-staging-pages/' }}
+      # Both previews are public but must stay out of search results.
+      NUXT_PUBLIC_NO_INDEX: 'true'
+      TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
+      TARGET_KIND: 'staging'
+      SEO_EXPECTED_SITE_URL: ${{ github.ref_name == 'main' && 'https://eplus-dev.github.io/onair-production-pages' || 'https://eplus-dev.github.io/onair-staging-pages' }}
     steps:
-      - name: Validate staging GitHub Pages origin
-        if: env.TARGET_KIND == 'staging'
+      # Cheap preflight BEFORE npm ci and 4,000+ page prerender. This catches
+      # missing target repositories, expired PATs and wrong credentials fast.
+      - name: Verify exact Pages repository and PAT before building
         shell: bash
+        env:
+          PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
         run: |
           set -euo pipefail
-          node --input-type=module -e '
-            let url;
-            try { url = new URL(process.env.NUXT_PUBLIC_SITE_URL || ""); }
-            catch { console.error("::error::Invalid PAGES_DEV_SITE_URL."); process.exit(1); }
-            if (url.protocol !== "https:" || url.pathname !== "/" || url.search || url.hash || url.username || url.password || url.hostname === "radio.eplus.dev") {
-              console.error("::error::DEV requires its own HTTPS origin at the site root.");
-              process.exit(1);
-            }
-            if (url.hostname.endsWith(".github.io") && url.hostname !== "eplus-dev.github.io") {
-              console.error("::error::Only eplus-dev.github.io is supported for the organization root Pages site.");
-              process.exit(1);
-            }
-            console.log("Staging origin: " + url.origin);
-          '
+          case "$TARGET_REPOSITORY" in
+            ePlus-DEV/onair-staging-pages|ePlus-DEV/onair-production-pages) ;;
+            *) echo "::error::Unexpected Pages target repository"; exit 1 ;;
+          esac
+          if [ -z "$PAGES_DEPLOY_TOKEN" ]; then
+            echo "::error::Missing PAGES_DEPLOY_TOKEN in the private source repository."
+            exit 1
+          fi
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          if ! GIT_TERMINAL_PROMPT=0 git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            ls-remote --exit-code "https://github.com/$TARGET_REPOSITORY.git" refs/heads/main >/dev/null; then
+            echo "::error::Pages target $TARGET_REPOSITORY is missing or this token cannot read it."
+            exit 1
+          fi
+          # Read access alone is insufficient: check that the PAT can push
+          # before spending minutes on Nuxt generation.
+          if ! curl --fail --silent --show-error \
+            -H "Authorization: Bearer $PAGES_DEPLOY_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$TARGET_REPOSITORY" | node -e '
+              let data = "";
+              process.stdin.on("data", chunk => { data += chunk; });
+              process.stdin.on("end", () => {
+                try {
+                  const repo = JSON.parse(data);
+                  if (repo.permissions?.push !== true) {
+                    console.error("::error::The Pages PAT does not have write access to the selected repository.");
+                    process.exitCode = 1;
+                  }
+                } catch {
+                  console.error("::error::Could not validate Pages token permissions.");
+                  process.exitCode = 1;
+                }
+              });
+            '; then
+            echo "::error::Fix Pages token Contents permissions before rebuilding."
+            exit 1
+          fi
+          echo "Validated target $TARGET_REPOSITORY and read/write PAT permissions."
 
       - name: Check out private source
         uses: actions/checkout@v7
@@ -79,6 +141,9 @@ jobs:
             node scripts/assert-staging-noindex.mjs
           fi
 
+      - name: Check project Pages links and artwork before publishing
+        run: node scripts/assert-project-pages-output.mjs .output/public "${TARGET_REPOSITORY##*/}"
+
       - name: Check Pages output and GitHub hosting size limit
         run: node scripts/check-pages-build.mjs .output/public "$TARGET_KIND"
 
@@ -95,21 +160,13 @@ jobs:
           fi
 
           target="$RUNNER_TEMP/onair-pages"
-          git clone --depth 1 --branch main "https://github.com/$TARGET_REPOSITORY.git" "$target"
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          GIT_TERMINAL_PROMPT=0 git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" clone --depth 1 --branch main "https://github.com/$TARGET_REPOSITORY.git" "$target"
           rsync -a --delete --exclude='.git/' "$GITHUB_WORKSPACE/.output/public/" "$target/"
           touch "$target/.nojekyll"
 
-          # Organization Pages default hostname must not include CNAME.
-          # When a real custom domain is configured later, publish its hostname.
-          if [ "$TARGET_KIND" = staging ] && [ "$NUXT_PUBLIC_SITE_URL" = "https://eplus-dev.github.io" ]; then
-            rm -f "$target/CNAME"
-          else
-            node --input-type=module -e '
-              const url = new URL(process.env.NUXT_PUBLIC_SITE_URL);
-              if (url.protocol !== "https:" || url.pathname !== "/" || url.search || url.hash) process.exit(1);
-              process.stdout.write(url.hostname + "\n");
-            ' > "$target/CNAME"
-          fi
+          # GitHub project Pages with no custom domain: never emit CNAME.
+          rm -f "$target/CNAME"
 
           git -C "$target" config user.name "github-actions[bot]"
           git -C "$target" config user.email "41898282+github-actions[bot]@users.noreply.github.com"

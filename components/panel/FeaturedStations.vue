@@ -20,7 +20,7 @@
               <img
                 loading="lazy"
                 decoding="async"
-                :src="station.image"
+                :src="siteAssetUrl(station.image)"
                 :alt="station.title"
                 class="max-h-[75%] max-w-[85%] object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
               />
@@ -60,4 +60,5 @@ import type { RadioStationOption } from '~/types/radio';
 const props = defineProps<{ stations: RadioStationOption[]; activeStationUrl?: string }>();
 const isPlaying = (station: RadioStationOption) => station.url === props.activeStationUrl && (playback.playing || playback.waiting);
 const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
+const siteAssetUrl = useSiteAssetUrl();
 </script>

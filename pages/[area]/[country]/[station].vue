@@ -12,7 +12,7 @@
       <div class="relative grid gap-6 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:items-center">
         <div class="radio-themed-artwork flex aspect-square w-40 max-w-full items-center justify-center justify-self-start rounded-3xl border border-[var(--radio-border)] p-5 shadow-sm shadow-slate-900/5 sm:w-48 lg:w-56">
           <img
-            :src="thumb || stationMeta?.features || config.public.placeholderStation"
+            :src="siteAssetUrl(thumb || stationMeta?.features || config.public.placeholderStation)"
             :alt="stationName"
             class="max-h-full max-w-full object-contain"
           />
@@ -84,6 +84,7 @@ import {
   buildRadioStationSchema,
 } from "~/utils/seo-structured-data.mjs";
 
+const siteAssetUrl = useSiteAssetUrl();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -102,7 +103,7 @@ const i18n = computed(
 const countryName = computed(() => t(i18n.value));
 
 const stationCatalogUrl = computed(
-  () => `/radio/${area.value}/${slug.value}.json`,
+  () => siteAssetUrl(`/radio/${area.value}/${slug.value}.json`),
 );
 const stationCatalogKey = computed(
   () => `station-catalog:${area.value}:${slug.value}`,

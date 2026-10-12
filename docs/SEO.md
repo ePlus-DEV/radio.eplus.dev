@@ -4,30 +4,21 @@ Last updated: **2026-10-08**
 
 This file is the durable SEO checklist for ePlus OnAir. It records what is implemented, what is intentionally not implemented, and the reasons behind those decisions.
 
-## Future GitHub Pages staging (not active yet)
+## GitHub Pages project previews (not a live-domain cutover)
 
-The initial GitHub Pages DEV URL is `https://eplus-dev.github.io/`, served
-from the public organization Pages repository `ePlus-DEV/ePlus-DEV.github.io`.
-The existing public `onair-staging-pages` repository must first be **renamed**
-to `ePlus-DEV.github.io`; there is no need for a custom DNS record. The private
-source workflow defaults to `NUXT_PUBLIC_SITE_URL=https://eplus-dev.github.io`
-when `PAGES_DEV_SITE_URL` is unset and always builds DEV with
-`NUXT_PUBLIC_NO_INDEX=true`. It omits `CNAME` until a custom staging domain is
-configured later. GA4 remains disabled for staging.
+GitHub Pages publishes to the existing public repositories without renames
+or custom domains:
 
-PRO is unchanged: `https://radio.eplus.dev` on DigitalOcean until validated
-GitHub Pages production cutover. Do not change production DNS now.
-See [GitHub Pages migration](./GITHUB_PAGES.md).
+- `develop` → `ePlus-DEV/onair-staging-pages` →
+  `https://eplus-dev.github.io/onair-staging-pages/`
+- `main` → `ePlus-DEV/onair-production-pages` →
+  `https://eplus-dev.github.io/onair-production-pages/` when enabled
 
-### Staging image-build policy
-
-Existing `public/radio/` JSON, `public/img/` radio artwork and
-`public/brand/` files are copied into the static website unchanged.
-DEV does not generate one JPEG social card per station or publish
-`og/stations/manifest.json`; station details instead reference the
-existing shared `/brand/social-preview.png` image. The normal prerendered
-station pages and Nuxt payloads remain available for deep links, reload and
-radio navigation. Production still generates unique 1200×630 station JPEGs.
+Both project previews use `NUXT_PUBLIC_NO_INDEX=true`, no sitemap,
+no canonical/JSON-LD, no production GA4, and a shared brand OG image.
+`NUXT_APP_BASE_URL` must be the respective repo subpath so links and
+static assets load. Production `radio.eplus.dev` on DigitalOcean is unchanged.
+See [GitHub Pages guide](./GITHUB_PAGES.md).
 
 ## Staging branch noindex policy
 

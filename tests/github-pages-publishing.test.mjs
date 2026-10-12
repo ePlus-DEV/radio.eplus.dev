@@ -7,27 +7,33 @@ import { checkPagesBuild } from '../scripts/check-pages-build.mjs';
 
 const read = file => readFile(file, 'utf8');
 
-test('GitHub Pages publishing keeps private source, separate targets and credentials', async () => {
+test('project Pages targets stay exactly the existing two public repositories', async () => {
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
-  assert.match(workflow, /branches: \[develop, main\]/);
-  assert.match(workflow, /PAGES_DEV_READY/);
-  assert.match(workflow, /vars\.PAGES_DEV_SITE_URL/);
-  assert.match(workflow, /https:\/\/eplus-dev\.github\.io/);
-  assert.match(workflow, /DEV requires its own HTTPS origin at the site root/);
-  assert.match(workflow, /PAGES_PROD_READY/);
-  assert.match(workflow, /ePlus-DEV\/ePlus-DEV\.github\.io/);
-  assert.match(workflow, /ePlus-DEV\/onair-production-pages/);
-  assert.match(workflow, /NUXT_PUBLIC_SITE_URL:/);
-  assert.match(workflow, /NUXT_PUBLIC_NO_INDEX:/);
-  assert.match(workflow, /rsync -a --delete/);
-  assert.match(workflow, /\.output\/public/);
-  assert.match(workflow, /\.nojekyll/);
-  assert.match(workflow, /radio\.eplus\.dev/);
-  assert.match(workflow, /process\.stdout\.write\(url\.hostname \+ /);
-  assert.match(workflow, /rm -f "\$target\/CNAME"/);
-  assert.match(workflow, /secrets\.PAGES_DEPLOY_TOKEN/);
-  assert.doesNotMatch(workflow, /pull_request:/, 'Credentials must never run for PRs');
-  assert.doesNotMatch(workflow, /--force|push -f/, 'Do not rewrite Pages history each deploy');
+  assert.ok(workflow.includes('branches: [develop, main]'));
+  assert.ok(workflow.includes('ePlus-DEV/onair-staging-pages'));
+  assert.ok(workflow.includes('ePlus-DEV/onair-production-pages'));
+  assert.ok(workflow.includes('https://eplus-dev.github.io/onair-staging-pages'));
+  assert.ok(workflow.includes('https://eplus-dev.github.io/onair-production-pages'));
+  assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: 'true'"));
+  assert.ok(workflow.includes('NUXT_APP_BASE_URL:'));
+  assert.ok(workflow.includes('PAGES_DEV_READY'));
+  assert.ok(workflow.includes('PAGES_PROD_READY'));
+  assert.ok(workflow.includes('PAGES_DEPLOY_TOKEN'));
+  assert.ok(workflow.includes('ls-remote --exit-code'));
+  assert.ok(workflow.includes('repo.permissions?.push !== true'));
+  assert.ok(workflow.includes('rsync -a --delete'));
+  assert.ok(workflow.includes('.output/public'));
+  assert.ok(workflow.includes('.nojekyll'));
+  assert.ok(workflow.includes('rm -f "$target/CNAME"'));
+  assert.ok(workflow.includes('assert-project-pages-output.mjs'));
+  assert.ok(workflow.indexOf('Verify exact Pages repository and PAT') <
+    workflow.indexOf('Install dependencies'), 'preflight must precede heavy build');
+  assert.ok(!workflow.includes('ePlus-DEV/ePlus-DEV.github.io'));
+  assert.ok(!workflow.includes('PAGES_DEV_SITE_URL'), 'no stale custom-domain variable');
+  assert.ok(!workflow.includes('process.stdout.write(url.hostname'));
+  assert.ok(!workflow.includes('pull_request:'), 'PAT cannot run on untrusted PR');
+  assert.ok(!workflow.includes('push -f') && !workflow.includes('--force'),
+    'do not force-push generated Pages history');
 });
 
 test('Pages bundle audit checks noindex, sitemap, source maps and limits', async () => {
