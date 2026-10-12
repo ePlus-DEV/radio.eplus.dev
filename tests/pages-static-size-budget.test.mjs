@@ -20,7 +20,7 @@ test('Pages size audit gives categories and retains the real 1GB limit', async (
     await writeFile(join(root, '_nuxt', 'main.css'), 'body{margin:0}');
     await writeFile(join(root, 'og', 'stations', 'a.jpg'), 'jpeg-fixture');
     const result = await checkPagesBuild(root, 'staging');
-    assert.equal(result.count, 4 + 1);
+    assert.equal(result.count, 4);
     assert.equal(result.groups['prerendered HTML'].count, 1);
     assert.equal(result.groups['Nuxt JS/CSS bundles'].count, 1);
     assert.equal(result.groups['station Open Graph JPEGs'].count, 1);
