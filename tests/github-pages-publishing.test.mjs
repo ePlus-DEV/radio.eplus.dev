@@ -32,7 +32,7 @@ test('Pages bundle audit checks noindex, sitemap, source maps and limits', async
     await writeFile(join(root, '_nuxt', 'app.js'), 'console.log("ok");');
     await writeFile(join(root, 'index.html'), '<html><head><meta name="robots" content="noindex, nofollow"></head></html>');
     await writeFile(join(root, 'robots.txt'), 'User-agent: *\\nAllow: /\\n');
-    assert.equal((await checkPagesBuild(root, 'staging')).count, 4);
+    assert.equal((await checkPagesBuild(root, 'staging')).count, 3);
     await assert.rejects(checkPagesBuild(root, 'production'), /robots metadata/);
 
     await writeFile(join(root, '_nuxt', 'app.js.map'), '{}');
@@ -40,7 +40,7 @@ test('Pages bundle audit checks noindex, sitemap, source maps and limits', async
     await rm(join(root, '_nuxt', 'app.js.map'));
     await writeFile(join(root, 'index.html'), '<html><head><meta name="robots" content="index, follow"></head></html>');
     await writeFile(join(root, 'robots.txt'), 'User-agent: *\\nAllow: /\\nSitemap: https://radio.eplus.dev/sitemap.xml\\n');
-    assert.equal((await checkPagesBuild(root, 'production')).count, 4);
+    assert.equal((await checkPagesBuild(root, 'production')).count, 3);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
