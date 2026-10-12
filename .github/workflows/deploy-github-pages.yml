@@ -1,0 +1,102 @@
+name: "Deploy ePlus OnAir to GitHub Pages"
+
+# Deploy only merged, trusted source. Never give publishing credentials to PRs.
+on:
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: "Publish ${{ github.ref_name }} to Pages"
+    # Keep both targets disabled until the public Pages repositories, credentials
+    # and branch publishing settings have been configured and verified.
+    if: >-
+      (github.ref_name == 'develop' && vars.PAGES_DEV_READY == 'true') ||
+      (github.ref_name == 'main' && vars.PAGES_PROD_READY == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NUXT_PUBLIC_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || 'https://eplus-dev.github.io' }}
+      NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'main' && 'false' || 'true' }}
+      TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/eplus-dev.github.io' }}
+      TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    steps:
+      - name: Check out private source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Generate static website
+        run: npm run generate
+
+      - name: Check SEO for chosen environment
+        run: |
+          node scripts/assert-sitemap-xml.mjs
+          node scripts/assert-route-social-meta.mjs
+          node scripts/assert-brand-assets.mjs
+          if [ "$TARGET_KIND" = staging ]; then
+            node scripts/assert-staging-noindex.mjs
+          fi
+
+      - name: Check Pages output and GitHub hosting size limit
+        run: node scripts/check-pages-build.mjs .output/public "$TARGET_KIND"
+
+      - name: Publish generated output to public repository
+        shell: bash
+        env:
+          PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$PAGES_DEPLOY_TOKEN" ]; then
+            echo "::error::Missing PAGES_DEPLOY_TOKEN secret with Contents: Read and write access to both public Pages repositories."
+            exit 1
+          fi
+
+          target="$RUNNER_TEMP/onair-pages"
+          git clone --depth 1 --branch main "https://github.com/$TARGET_REPOSITORY.git" "$target"
+          rsync -a --delete --exclude='.git/' "$GITHUB_WORKSPACE/.output/public/" "$target/"
+          touch "$target/.nojekyll"
+
+          if [ "$TARGET_KIND" = production ]; then
+            printf 'radio.eplus.dev\n' > "$target/CNAME"
+          else
+            # Staging uses the GitHub-provided organization domain only.
+            rm -f "$target/CNAME"
+          fi
+
+          git -C "$target" config user.name "github-actions[bot]"
+          git -C "$target" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$target" add --all
+
+          if git -C "$target" diff --cached --quiet; then
+            echo "No changes to publish to $TARGET_REPOSITORY."
+            exit 0
+          fi
+
+          git -C "$target" commit -m "deploy: $TARGET_KIND from $GITHUB_REPOSITORY@$GITHUB_SHA"
+          # GITHUB_TOKEN cannot write to a different repository. Keep the
+          # repository-scoped PAT out of the remote URL and git configuration.
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          git -C "$target" -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push origin HEAD:main
+          echo "Published $TARGET_KIND to $TARGET_REPOSITORY"
