@@ -18,7 +18,7 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 
 | Branch | Environment / purpose | URL |
 | --- | --- | --- |
-| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev (current DigitalOcean); https://eplus-dev.github.io (planned GitHub Pages) |
+| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev (current DigitalOcean); your custom DEV domain (planned Pages repository: `onair-staging-pages`) |
 | `main` | Production; stable, released application (repository default branch) | https://radio.eplus.dev |
 | `master` | Legacy backup of the previous version; do not deploy or use for new development | — |
 | `feature/*` | Short-lived feature/fix branches, normally created from `develop` | PR into `develop` |
