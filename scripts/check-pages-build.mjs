@@ -9,7 +9,7 @@ export async function checkPagesBuild(root, target) {
   assert.ok(['production', 'staging'].includes(target), 'Expected production or staging');
   const home = await readFile(join(root, 'index.html'), 'utf8');
   const robots = await readFile(join(root, 'robots.txt'), 'utf8');
-  const hasNoindex = /<meta\\b(?=[^>]*\\bname=["']robots["'])(?=[^>]*\\bcontent=["'][^"']*noindex)[^>]*>/i.test(home);
+  const hasNoindex = /<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["'][^"']*noindex)[^>]*>/i.test(home);
   assert.equal(hasNoindex, target === 'staging', 'Generated robots metadata does not match target');
   assert.equal(/Sitemap:/i.test(robots), target === 'production', 'Generated robots.txt has wrong sitemap setting');
 
