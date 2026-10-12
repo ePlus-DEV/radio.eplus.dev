@@ -8,7 +8,8 @@ export function isStagingDeployment({ siteUrl = "", noIndex = "" } = {}) {
   let stageHost = false;
   try {
     const host = new URL(String(siteUrl)).hostname.toLowerCase();
-    stageHost = host === "radio-new.eplus.dev" || host === "new-radio.eplus.dev";
+    // The old reversed-order hostname stays noindex as a defensive legacy guard.
+    stageHost = host === "new-radio.eplus.dev" || host === "radio-new.eplus.dev";
   } catch { /* Explicit noindex flag remains sufficient without a valid origin. */ }
   return enabled || stageHost;
 }
