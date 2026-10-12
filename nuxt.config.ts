@@ -127,6 +127,9 @@ export default defineNuxtConfig({
     apiKey: algoliaApiKey || "disabled",
   },
   app: {
+    // Nuxt must use the GitHub Pages PROJECT subpath until a custom domain is
+    // configured. "/" remains the default for DigitalOcean and local builds.
+    baseURL: process.env.NUXT_APP_BASE_URL || "/",
     head: {
       titleTemplate: `%s | ${siteName}`,
       meta: [
