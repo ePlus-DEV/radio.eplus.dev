@@ -24,12 +24,33 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
-      NUXT_PUBLIC_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || 'https://eplus-dev.github.io' }}
+      NUXT_PUBLIC_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || vars.PAGES_DEV_SITE_URL }}
       NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'main' && 'false' || 'true' }}
-      TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/eplus-dev.github.io' }}
+      TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
       TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
-      SEO_EXPECTED_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || 'https://eplus-dev.github.io' }}
+      SEO_EXPECTED_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || vars.PAGES_DEV_SITE_URL }}
     steps:
+      - name: Require custom staging origin before deployment
+        if: env.TARGET_KIND == 'staging'
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module -e '
+            const value = process.env.NUXT_PUBLIC_SITE_URL || "";
+            let url;
+            try { url = new URL(value); }
+            catch { console.error("::error::Set PAGES_DEV_SITE_URL to an HTTPS custom staging origin (e.g. https://new-radio.eplus.dev)"); process.exit(1); }
+            if (url.protocol !== "https:" || url.pathname !== "/" || url.search || url.hash || url.username || url.password || url.hostname.endsWith(".github.io")) {
+              console.error("::error::PAGES_DEV_SITE_URL must be a custom HTTPS origin without a path. GitHub project-path hosting needs separate Nuxt baseURL support.");
+              process.exit(1);
+            }
+            if (url.hostname === "radio.eplus.dev") {
+              console.error("::error::Staging must never use the production radio.eplus.dev hostname.");
+              process.exit(1);
+            }
+            console.log("Staging origin: " + url.origin);
+          '
+
       - name: Check out private source
         uses: actions/checkout@v7
         with:
@@ -79,12 +100,14 @@ jobs:
           rsync -a --delete --exclude='.git/' "$GITHUB_WORKSPACE/.output/public/" "$target/"
           touch "$target/.nojekyll"
 
-          if [ "$TARGET_KIND" = production ]; then
-            printf 'radio.eplus.dev\n' > "$target/CNAME"
-          else
-            # Staging uses the GitHub-provided organization domain only.
-            rm -f "$target/CNAME"
-          fi
+          # Both destinations are GitHub project sites with custom root domains.
+          # The staging hostname comes from PAGES_DEV_SITE_URL; never use a path
+          # under github.io without changing Nuxt's baseURL first.
+          node --input-type=module -e '
+            const url = new URL(process.env.NUXT_PUBLIC_SITE_URL);
+            if (url.protocol !== "https:" || url.pathname !== "/" || url.search || url.hash) process.exit(1);
+            process.stdout.write(url.hostname + "\n");
+          ' > "$target/CNAME"
 
           git -C "$target" config user.name "github-actions[bot]"
           git -C "$target" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
