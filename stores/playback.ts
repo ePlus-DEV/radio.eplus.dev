@@ -11,8 +11,13 @@ export const usePlaybackStore = defineStore('playback', {
     playing: false,
     waiting: false,
     queueOpen: false,
+    liveTrack: null as { stationUrl: string; title: string; artist: string } | null,
   }),
   actions: {
+    setLiveTrack(stationUrl: string, track: { title: string; artist: string } | null) {
+      if (!stationUrl || this.station?.url !== stationUrl) return;
+      this.liveTrack = track ? { stationUrl, title: track.title, artist: track.artist } : null;
+    },
     requestStation(url: string) {
       if (this.station?.url === url) this.playRequest += 1;
       else this.requestedStationUrl = url;
@@ -20,6 +25,7 @@ export const usePlaybackStore = defineStore('playback', {
     activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean } = {}) {
       if (options.onlyIfIdle && this.station) return;
       // Revisiting the same station or changing language must not reload audio.
+      if (this.station?.url !== station.url) this.liveTrack = null;
       if (this.station?.url !== station.url || (!this.station?.sources.length && station.sources.length)) this.station = station;
       this.stations = stations;
       if (options.autoplay || this.requestedStationUrl === station.url) this.playRequest += 1;
