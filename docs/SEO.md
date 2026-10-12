@@ -101,6 +101,19 @@ Do not mark realtime schedule/song/lyric data as static structured data unless i
 
 Route discovery only treats a `public/radio/<area>/` directory as an area when it contains country JSON catalogs. Asset-only folders must never become sitemap/prerender routes.
 
+The sitemap is kept as **plain XML** without an XSLT stylesheet (`sitemap.xsl: false`).
+Chromium is removing XSLT support (expected in stable Chrome 158), so the former
+styled table view would display a deprecation warning and eventually stop working.
+Disabling the stylesheet removes the browser dependency while leaving all valid
+`<loc>` entries in XML for search engines; browsers will display raw XML instead
+of the styled table. An XML sitemap is for crawlers, not a replacement for an HTML
+site directory.
+
+Because i18n uses `strategy: "no_prefix"`, `sitemap.autoI18n` is explicitly
+`false`; do not advertise alternate language URLs until real localized URL
+paths are introduced. Production continues to expose the sitemap and reference
+it in `robots.txt`. Staging does not generate a sitemap at all.
+
 The sitemap intentionally does **not** emit `lastmod` yet.
 
 Filesystem mtimes from CI/deployment checkouts are not reliable content-modification timestamps; using them would effectively tell crawlers that every page changed on every deployment. Add `lastmod` only when the catalog has a durable update timestamp or the build has a trustworthy per-file history source.
