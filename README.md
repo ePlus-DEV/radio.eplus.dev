@@ -18,7 +18,7 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 
 | Branch | Environment / purpose | URL |
 | --- | --- | --- |
-| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev |
+| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev (current DigitalOcean); https://eplus-dev.github.io (planned GitHub Pages) |
 | `main` | Production; stable, released application (repository default branch) | https://radio.eplus.dev |
 | `master` | Legacy backup of the previous version; do not deploy or use for new development | — |
 | `feature/*` | Short-lived feature/fix branches, normally created from `develop` | PR into `develop` |
@@ -33,6 +33,8 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 5. For urgent production hotfixes, branch from `main`, validate/release via PR, then merge or cherry-pick the fix back into `develop`.
 
 **Legacy backup:** Keep `master` intact as the previous-version snapshot. Do not merge `develop` or `main` into `master`, reset it, force-push it or delete it as part of the new release workflow. `master` has a separate history from `main`.
+
+**GitHub Pages migration (not live yet):** [Migration, setup, deployment and rollback guide](./docs/GITHUB_PAGES.md). The source remains private. The public Pages destinations require separate public repositories and a scoped cross-repo deployment credential. Do not switch the production DNS or remove DigitalOcean before verification.
 
 **Deployment configuration:** This table defines the intended branch-to-domain policy. Hosting/CD settings (including any DigitalOcean app source branch) must be configured to match it; modifying Git branches or this README alone does not change deployed websites. Set `NUXT_PUBLIC_SITE_URL` for each environment and validate production canonical URLs and sitemap before release.
 
