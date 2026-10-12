@@ -14,7 +14,7 @@
           :class="isActive(station.url) ? 'border-rose-500/40' : ''"
         >
           <UTooltip :text="station.title">
-            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-24" @click="playSelected($event, station.url)">
+            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-24" @click="openStationDetails($event)">
               <StationArtwork :src="station.image" :alt="station.title" class="radio-library-artwork radio-themed-artwork h-12 w-12 shrink-0 rounded-xl object-contain p-1.5" />
               <span dir="auto" class="block min-w-0 truncate text-sm font-semibold">{{ station.title }}</span>
             </NuxtLink>
@@ -148,12 +148,12 @@ const togglePlayback = async (station: LibraryStation, items: LibraryStation[]) 
   }
 };
 
-const playSelected = (event: MouseEvent, url: string) => {
+const openStationDetails = (event: MouseEvent) => {
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+  // Details is a navigation action, not Play. Cancel any pending async play
+  // so its catalog response cannot start playback after the user leaves.
   ++selectionGeneration;
   pendingStationUrl.value = null;
-  // Navigating via the title still opens the station's details and starts it.
-  playback.requestStation(url);
 };
 
 onBeforeUnmount(() => { ++selectionGeneration; });
