@@ -143,10 +143,10 @@ test("resolves separate production and staging apps without allowing unsupported
   });
   assert.deepEqual(resolveDeployTarget("develop", vars), {
     branch: "develop", environment: "staging",
-    appId: "stage-app-id", website: "https://radio-new.eplus.dev/",
+    appId: "stage-app-id", website: "https://new-radio.eplus.dev/",
   });
   assert.equal(resolveDeployTarget("develop", {
-    ...vars, DIGITALOCEAN_STAGING_SITE_URL: "https://new-radio.eplus.dev/",
+    ...vars, DIGITALOCEAN_STAGING_SITE_URL: "https://radio.eplus.dev/",
   }).website, "https://new-radio.eplus.dev/");
   assert.throws(() => resolveDeployTarget("feature/x", vars), /only supports main/);
 });
@@ -167,14 +167,14 @@ test("staging monitor verifies develop source SHA and staging website", async ()
   };
   const result = await monitor({
     appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
-    website: "https://radio-new.eplus.dev/",
+    website: "https://new-radio.eplus.dev/",
     fetcher, maxAttempts: 1, log: () => {},
   });
   assert.equal(result.state, "active");
-  assert.ok(calls.includes("https://radio-new.eplus.dev/"));
+  assert.ok(calls.includes("https://new-radio.eplus.dev/"));
   await assert.rejects(monitor({
     appId: ID, token: "demo", expectedSha: SHA, branch: "main",
-    website: "https://radio-new.eplus.dev/", fetcher, maxAttempts: 1, log: () => {},
+    website: "https://new-radio.eplus.dev/", fetcher, maxAttempts: 1, log: () => {},
   }), /not an approved main domain/);
   await assert.rejects(monitor({
     appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
@@ -183,6 +183,10 @@ test("staging monitor verifies develop source SHA and staging website", async ()
   await assert.rejects(monitor({
     appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
     website: "https://other.example/", fetcher, maxAttempts: 1, log: () => {},
+  }), /not an approved develop domain/);
+  await assert.rejects(monitor({
+    appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
+    website: "https://radio-new.eplus.dev/", fetcher, maxAttempts: 1, log: () => {},
   }), /not an approved develop domain/);
   await assert.rejects(monitor({
     appId: ID, token: "demo", expectedSha: SHA, branch: "main",
