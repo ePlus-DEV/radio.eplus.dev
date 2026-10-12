@@ -347,10 +347,18 @@ element, HLS instance, volume and pending recovery survive normal navigation.
 Pages still load local catalogs during SSR/prerender for station names, links,
 404s and structured data. They pass the same catalog to `PanelStation` and
 shared playback. Home/country defaults use `onlyIfIdle`, so browsing does not
-replace an active station. Opening a station route selects it; revisiting the
-same URL or changing language leaves its source identity intact. Previous/Next
-and queue selections remain explicit autoplay actions. Pausing records the
-paused preference so a new page does not resume playback.
+replace an active station. Opening a station detail from a card, search result,
+favorite, recent history or other link never starts playback or replaces the
+already selected station. On a fresh deep link with no current station, the
+station may be prepared while remaining paused. Only an explicit Play control
+(detail, featured/country/library card, global player, or Resume) starts audio.
+Previous/Next and selecting a station from the player queue are explicit player
+actions and still switch/play the requested station. The player session marks
+these actions through `requestStation` before navigating; the detail watcher
+consumes only a matching request (or prepares an idle player). Never reintroduce
+an unconditional route watcher that activates a station while another is playing.
+Revisiting the same URL or changing language keeps the source identity intact.
+Pausing records the paused preference so a new page does not resume playback.
 
 `useStationRealtime.ts` owns schedule/current-song/lyrics polling. It follows
 the playback identity, not the route. A new station aborts pending requests,

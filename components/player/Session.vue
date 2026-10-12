@@ -39,6 +39,10 @@ const emptySource: RadioSource = { src: '', type: 'audio/mpeg' };
 const emptySources: RadioSource[] = [];
 
 const selectStation = (target: RadioStationOption) => {
-  if (target.url) void navigateTo(target.url);
+  if (!target.url) return;
+  // Queue and Next/Previous are explicit playback actions. Request the target
+  // before navigating; a regular station-detail link never requests playback.
+  playback.requestStation(target.url);
+  void navigateTo(target.url);
 };
 </script>

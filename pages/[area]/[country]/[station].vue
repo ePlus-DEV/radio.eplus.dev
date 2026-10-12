@@ -323,8 +323,13 @@ const playSelected = (station: RadioStationOption): void => {
   }), stations.value, { autoplay: true });
 };
 
-// Only a station selection changes playback. Leaving this page does not own
-// audio teardown or stop the application-level schedule polling.
-watch(stationMeta, (meta) => { if (meta) activateStation(); }, { immediate: true });
+// Browsing another station's details never interrupts the current audio.
+// A direct deep link may prepare an idle player, but never starts playback.
+// Only explicit Play (detail button, queue or Next/Previous) starts a stream.
+watch([stationMeta, stationPath, () => playback.requestedStationUrl], ([meta, path, requested]) => {
+  if (!meta) return;
+  if (requested === path) activateStation(true);
+  else if (!playback.station && !requested) activateStation();
+}, { immediate: true });
 </script>
 

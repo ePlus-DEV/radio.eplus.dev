@@ -35,7 +35,10 @@ test('favorite and recent cards can play without leaving the page while retainin
   assert.match(source, /v-for="group in groups"/);
   assert.match(source, /group\.key === 'recent'/);
   assert.match(source, /:to="station\.url"/);
-  assert.match(source, /@click="playSelected\(\$event, station\.url\)"/);
+  assert.match(source, /@click="openStationDetails\(\$event\)"/);
+  const detailsHandler = source.match(/const openStationDetails = \(event: MouseEvent\) => \{[\s\S]*?\n\};/)?.[0];
+  assert.ok(detailsHandler, 'Library details must have their own navigation handler');
+  assert.doesNotMatch(detailsHandler, /playback\.requestStation|playback\.activate|autoplay/);
   assert.match(source, /@click="togglePlayback\(station, group\.items\)"/);
   assert.match(source, /isPlaying\(station\.url\) \? 'i-lucide-pause' : 'i-lucide-play'/);
   assert.match(source, /@click="listening\.toggleFavorite\(station\)"/);
