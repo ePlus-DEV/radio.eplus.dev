@@ -8,9 +8,7 @@ export const VIETNAM_FEATURED_STATION_IDS = Object.freeze([
   'us-uk-radio-zing-mp3',
   'vpop-radio-zing-mp3',
   'chill-zing-mp3',
-  'kpop-radio-zing-mp3',
-  'bolero-zing-mp3',
-  'cham-radio-zing-mp3',
+  'c-pop-zing-mp3',
   'acoustic-radio-zing-mp3',
 ]);
 
