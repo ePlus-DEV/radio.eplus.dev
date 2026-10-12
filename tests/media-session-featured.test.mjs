@@ -14,7 +14,7 @@ test("Media Session uses song artwork and details before station logo", () => {
     title: "Xin Đừng Nhắc Máy", artist: "B Ray", station: "Rap Việt Radio - Zing MP3",
     artwork: "https://photo-resize-zmp3.zadn.vn/image.jpg",
     fallbackArtwork: "/img/asia/viet-nam/rap-viet-radio-zing-mp3.png",
-  }, "https://radio-new.eplus.dev");
+  }, "https://new-radio.eplus.dev");
   assert.deepEqual(result, {
     title: "Xin Đừng Nhắc Máy",
     artist: "B Ray",
@@ -24,7 +24,7 @@ test("Media Session uses song artwork and details before station logo", () => {
 });
 
 test("Media Session falls back to local station artwork and ignores invalid schemes", () => {
-  const origin = "https://radio-new.eplus.dev";
+  const origin = "https://new-radio.eplus.dev";
   assert.deepEqual(buildRadioMediaMetadata({ title: "", station: "VOV Giao Thông TP.HCM", artwork: "data:bad", fallbackArtwork: "/img/asia/viet-nam/vov-giao-thong.png" }, origin), {
     title: "VOV Giao Thông TP.HCM",
     artist: "VOV Giao Thông TP.HCM",
