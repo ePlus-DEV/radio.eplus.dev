@@ -28,6 +28,7 @@ jobs:
       NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'main' && 'false' || 'true' }}
       TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/eplus-dev.github.io' }}
       TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+      SEO_EXPECTED_SITE_URL: ${{ github.ref_name == 'main' && 'https://radio.eplus.dev' || 'https://eplus-dev.github.io' }}
     steps:
       - name: Check out private source
         uses: actions/checkout@v7
