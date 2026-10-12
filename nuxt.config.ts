@@ -65,6 +65,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: true,
   pages: true,
+  // Thousands of prerendered station routes otherwise duplicate CSS in each
+  // HTML document. Shared CSS assets are cached across pages and keep the
+  // generated site within GitHub Pages' 1 GB published-site limit.
+  features: {
+    inlineStyles: false,
+  },
   runtimeConfig: {
     public: {
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,

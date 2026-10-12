@@ -40,6 +40,22 @@ test("staging keeps server-rendered social cards without canonical or sitemap", 
   }
   assert.match(station, /name: "twitter:card", content: "summary_large_image"/);
   assert.match(station, /property: "og:image", content: seoImage\.value/);
+  assert.match(station, /noIndex\s*\? `\$\{siteUrl\.value\}\/brand\/social-preview\.png`/);
+  assert.match(station, /"image\/png" : "image\/jpeg"/);
   assert.match(station, /property: "og:image:width", content: "1200"/);
-  assert.match(station, /property: "og:image:type", content: "image\/jpeg"/);
+  assert.match(station, /property: "og:image:type", content: noIndex \? "image\/png" : "image\/jpeg"/);
+});
+
+test("staging does not render thousands of station OG images", async () => {
+  const [generator, station, validator] = await Promise.all([
+    read("scripts/generate-station-og-images.mjs"),
+    read("pages/[area]/[country]/[station].vue"),
+    read("scripts/assert-route-social-meta.mjs"),
+  ]);
+  assert.match(generator, /isStagingDeployment/);
+  assert.match(generator, /if \(staging\) \{/);
+  assert.match(generator, /else \{\s*const summary = await generateStationOgImages\(\)/);
+  assert.match(station, /noIndex\s*\?/);
+  assert.match(station, /\/brand\/social-preview\.png/);
+  assert.match(validator, /const stationImage = staging \? homeImage :/);
 });

@@ -19,6 +19,16 @@ PRO is unchanged: `https://radio.eplus.dev` on DigitalOcean until validated
 GitHub Pages production cutover. Do not change production DNS now.
 See [GitHub Pages migration](./GITHUB_PAGES.md).
 
+### Staging image-build policy
+
+Existing `public/radio/` JSON, `public/img/` radio artwork and
+`public/brand/` files are copied into the static website unchanged.
+DEV does not generate one JPEG social card per station or publish
+`og/stations/manifest.json`; station details instead reference the
+existing shared `/brand/social-preview.png` image. The normal prerendered
+station pages and Nuxt payloads remain available for deep links, reload and
+radio navigation. Production still generates unique 1200×630 station JPEGs.
+
 ## Staging branch noindex policy
 
 `develop` is staged at `https://radio-new.eplus.dev` and must **not** be indexed.
