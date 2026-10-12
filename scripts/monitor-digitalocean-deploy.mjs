@@ -7,6 +7,20 @@ const KEYS = ["services", "static_sites", "workers", "jobs", "functions"];
 const FAILED = new Set(["ERROR", "FAILED", "CANCELED", "CANCELLED", "SUPERSEDED"]);
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+export function resolveDeployTarget(branch, variables = {}) {
+  if (branch === "main") return {
+    branch: "main", environment: "production",
+    appId: variables.DIGITALOCEAN_APP_ID || "",
+    website: "https://radio.eplus.dev/",
+  };
+  if (branch === "develop") return {
+    branch: "develop", environment: "staging",
+    appId: variables.DIGITALOCEAN_STAGING_APP_ID || "",
+    website: variables.DIGITALOCEAN_STAGING_SITE_URL || "https://radio-new.eplus.dev/",
+  };
+  throw new Error("Deployment monitor only supports main (production) or develop (staging).");
+}
+
 export function commitHashes(deployment) {
   if (!deployment || typeof deployment !== "object") return [];
   return [...new Set(KEYS.flatMap((key) =>
@@ -99,17 +113,29 @@ export async function verifyWebsite(fetcher, url) {
 
 export async function monitor({
   appId, token, expectedSha, repository = "ePlus-DEV/radio.eplus.dev",
-  website = "https://radio.eplus.dev/", fetcher = fetch, sleep = delay,
+  branch = "main",
+  website = branch === "develop" ? "https://radio-new.eplus.dev/" : "https://radio.eplus.dev/",
+  fetcher = fetch, sleep = delay,
   maxAttempts = 105, intervalMs = 20000, log = console.log,
 } = {}) {
   if (!/^[0-9a-f-]{8,64}$/i.test(String(appId || ""))) {
-    throw new Error("DIGITALOCEAN_APP_ID is missing or invalid. Set the GitHub Actions repository variable.");
+    throw new Error((branch === "develop" ? "DIGITALOCEAN_STAGING_APP_ID" : "DIGITALOCEAN_APP_ID") +
+      " is missing or invalid. Set the GitHub Actions repository variable.");
   }
   if (!token) throw new Error("DIGITALOCEAN_API_TOKEN is missing. Set the GitHub Actions secret with app:read scope.");
   if (!/^[0-9a-f]{40}$/i.test(String(expectedSha || ""))) throw new Error("Expected a full GitHub commit SHA.");
-  const url = new URL(website);
-  if (url.protocol !== "https:" || url.hostname !== "radio.eplus.dev") {
-    throw new Error("Production health check must use https://radio.eplus.dev/.");
+  if (branch !== "main" && branch !== "develop") {
+    throw new Error("Deployment monitor only supports main or develop.");
+  }
+  let url;
+  try { url = new URL(website); }
+  catch { throw new Error("Deployment health-check URL is invalid."); }
+  const allowedHosts = branch === "main"
+    ? ["radio.eplus.dev"]
+    : ["radio-new.eplus.dev", "new-radio.eplus.dev"];
+  if (url.protocol !== "https:" || !allowedHosts.includes(url.hostname) ||
+    url.username || url.password || url.port || url.search || url.hash || url.pathname !== "/") {
+    throw new Error("Health-check URL is not an approved " + branch + " domain.");
   }
 
   let last = "";
@@ -121,7 +147,7 @@ export async function monitor({
         doApiGet(fetcher, appId, token, "/deployments?per_page=20"),
       ]);
       if (!details.app) throw new Error("DigitalOcean API returned no app.");
-      checkSourceRepository(details.app, repository);
+      checkSourceRepository(details.app, repository, branch);
       const verdict = evaluateDeployment(details.app, recent.deployments, expectedSha);
       const current = verdict.phase + " (" + (verdict.id || "not found") + ")";
       if (current !== last) {
@@ -132,7 +158,7 @@ export async function monitor({
         "Deployment " + verdict.id + " ended in " + verdict.phase + ".");
       if (verdict.state === "active") {
         if (await verifyWebsite(fetcher, website)) {
-          log("Confirmed: matching commit ACTIVE on DigitalOcean, production HTTP 200 HTML.");
+          log("Confirmed: " + branch + " commit ACTIVE on DigitalOcean, " + website + " HTTP 200 HTML.");
           return { ...verdict, expectedSha, website };
         }
         log("Correct deployment is ACTIVE, but website health check has not passed.");
@@ -148,19 +174,20 @@ export async function monitor({
     if (attempt < maxAttempts - 1) await sleep(intervalMs);
   }
   throw new Error("Timed out waiting for DigitalOcean to activate commit " + expectedSha +
-    " and serve HTTP 200 HTML. Check App Platform Activity and main auto-deploy settings.");
+    " and serve HTTP 200 HTML. Check App Platform Activity and " + branch + " auto-deploy settings.");
 }
 
 async function main() {
-  const appId = process.env.DIGITALOCEAN_APP_ID || "";
+  const target = resolveDeployTarget(process.env.GITHUB_REF_NAME, process.env);
+  const { appId, branch, environment, website } = target;
   const result = await monitor({
-    appId,
+    appId, branch, website,
     token: process.env.DIGITALOCEAN_API_TOKEN,
     expectedSha: process.env.GITHUB_SHA,
   });
   if (process.env.GITHUB_STEP_SUMMARY) {
     await appendFile(process.env.GITHUB_STEP_SUMMARY, [
-      "## DigitalOcean production deployment",
+      "## DigitalOcean " + environment + " deployment (" + branch + ")",
       "",
       "Commit: " + result.expectedSha,
       "",
@@ -168,7 +195,7 @@ async function main() {
       "",
       "DigitalOcean: **" + result.phase + "** (active deployment)",
       "",
-      "Production: " + result.website + " (HTTP 200 HTML)",
+      "Environment: " + environment + " — " + result.website + " (HTTP 200 HTML)",
       "",
       "App Platform: https://cloud.digitalocean.com/apps/" + appId,
       "",
