@@ -144,9 +144,9 @@ jobs:
           SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-route-social-meta.mjs
 
-      - name: "Audit all stations Open Graph HTML and JPEG images (production only)"
-        # DEV uses the shared brand preview. Generating/auditing every station
-        # image on staging is unnecessary and can exceed the Pages size budget.
+      # DEV uses the shared brand preview: it must not generate or audit
+      # per-station social JPEGs, which exceed the Pages size budget.
+      - name: "Audit all stations Open Graph HTML and JPEG images"
         if: steps.scope.outputs.prerender == 'true' && github.base_ref != 'develop'
         env:
           SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
