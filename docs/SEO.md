@@ -6,14 +6,14 @@ This file is the durable SEO checklist for ePlus OnAir. It records what is imple
 
 ## Staging branch noindex policy
 
-`develop` is staged at `https://radio-new.eplus.dev` and must **not** be indexed.
+`develop` is staged at `https://new-radio.eplus.dev` and must **not** be indexed.
 Build-time configuration for **staging only**:
 ```env
-NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
+NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev
 NUXT_PUBLIC_NO_INDEX=true
 ```
 There is no dependency on a custom deploy environment or checkout branch.
-Both `radio-new.eplus.dev` (documented staging) and `new-radio.eplus.dev` (preview alias) activate noindex if supplied as `NUXT_PUBLIC_SITE_URL`. The configured static-site build and DNS target must actually match the deployed domain.
+`new-radio.eplus.dev` is the official `develop` staging host. The old reversed-order hostname stays recognized in the noindex guard only for backward safety; it is **not** the deployment target. Ensure DigitalOcean build-time variables and DNS use `new-radio.eplus.dev`.
 On production, keep `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` and do
 not enable `NUXT_PUBLIC_NO_INDEX`.
 
