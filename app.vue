@@ -59,6 +59,7 @@
 <script setup lang="ts">
 import { en, vi, ja, zh_cn, zh_tw, fr, ru } from '@nuxt/ui/locale';
 import { usePlaybackStore } from '~/stores/playback';
+import { buildPlaybackTitleTemplate } from '~/utils/playback-tab-title.mjs';
 const playback = usePlaybackStore();
 const router = useRouter();
 const nuxtApp = useNuxtApp();
@@ -136,6 +137,15 @@ const ogLocale = computed(
       ru: "ru_RU",
     })[locale.value] || "en_US",
 );
+
+// Only the browser tab follows audio playback. The route still owns static
+// <title>/Open Graph SEO metadata during SSR/prerender, and pausing restores it.
+useHead(() => ({
+  titleTemplate: buildPlaybackTitleTemplate(
+    clientReady.value && playback.playing ? playback.station?.title : '',
+    siteName.value,
+  ),
+}));
 
 useHead(() => ({
   htmlAttrs: {
