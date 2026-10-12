@@ -4,7 +4,7 @@ The repository deliberately keeps **two** active GitHub Actions workflows.
 
 | Workflow | Trigger | Responsibility |
 | --- | --- | --- |
-| `.github/workflows/build.yml` (`CI`) | Pull requests; push to `main`; manual dispatch on `main` | PR unit tests, Nuxt prerender, SEO; production deployment monitoring after `main` push |
+| `.github/workflows/build.yml` (`CI`) | Pull requests; pushes to `main` and `develop`; manual dispatch on either | PR unit tests, Nuxt prerender, SEO; production + staging deployment status monitoring |
 | `.github/workflows/instant-audio-sync.yml` (`Radio data sync`) | Manual (`workflow_dispatch`) | Discover stations/flags, validate candidate streams and artwork, then propose a data PR |
 
 ## PR validation policy
@@ -15,51 +15,67 @@ The repository deliberately keeps **two** active GitHub Actions workflows.
 - The bot creates a PR against `main` and never directly pushes catalog updates into `main`.
 - Browser tests remain opt-in with `ENABLE_BROWSER_TESTS=true`.
 
-## DigitalOcean production deployment tracking
+## DigitalOcean App Platform deployment tracking
 
-The existing CI workflow also contains a separate job, **DigitalOcean production deploy (main)**.
-It runs on every push to `main`, or manually via **Actions → CI → Run workflow** with branch `main`.
-It does **not** run on PRs, does **not** trigger a deployment and does **not** change the app configuration.
-Production deployment itself remains owned by **DigitalOcean App Platform auto-deploy**.
+The **same CI workflow** tracks DigitalOcean deployments of **both** long-lived
+branches, without adding another workflow and without requesting deployments.
 
-Before enabling the monitor, configure these repository settings in
-**GitHub → Settings → Secrets and variables → Actions**:
+| Git branch | DigitalOcean environment | GitHub Actions variable | Health-check domain |
+| --- | --- | --- | --- |
+| \`main\` | Production | \`DIGITALOCEAN_APP_ID\` | \`https://radio.eplus.dev/\` |
+| \`develop\` | Staging | \`DIGITALOCEAN_STAGING_APP_ID\` | \`https://radio-new.eplus.dev/\` (default) |
 
-1. Repository **variable** `DIGITALOCEAN_APP_ID`: the production DigitalOcean App Platform app's ID
-   (obtain it from **DigitalOcean → Apps → radio.eplus.dev app** URL).
-2. Repository **secret** `DIGITALOCEAN_API_TOKEN`: a restricted DigitalOcean token
-   with **`app:read` only**, not `app:update` and not a token with broad write permissions.
+If the staging App Platform application actually serves the alternate hostname
+\`https://new-radio.eplus.dev/\`, set the optional repository variable
+\`DIGITALOCEAN_STAGING_SITE_URL\` to **that complete HTTPS URL**. Only these
+two staging hosts are accepted, to prevent a misconfigured status check from
+quietly validating a different application or an external destination.
 
-Do **not** commit the token or put it in a workflow `env:` literal.
-Until both are configured, the monitoring job fails with a clear configuration error;
-a green PR CI build does not itself prove deployment.
+### One-time GitHub configuration
 
-After each `main` push, the job:
+Go to **Repository → Settings → Secrets and variables → Actions** and add:
 
-- GETs `/v2/apps/{app_id}` and `/v2/apps/{app_id}/deployments` using the read-only token.
-- Confirms the DigitalOcean app source matches `ePlus-DEV/radio.eplus.dev@main`
-  when a GitHub source is reported.
-- Waits (up to about 35 minutes) for the **pushed GitHub commit** to appear
-  in the deployment component's `source_commit_hash` (or DigitalOcean's
-  explicit `commit <sha> pushed to` cause if no component hash is present).
-- Requires that exact deployment to be the **active** deployment, in phase `ACTIVE`.
-  An unrelated existing live deployment never counts as success.
-- Checks `https://radio.eplus.dev/` returns HTTP 200 and HTML content type.
-- Reports success/failure in GitHub Actions job status and Step Summary,
-  with a link to DigitalOcean App Platform Activity.
-- Fails on matching deployment errors, wrong app, API auth error, timeout or
-  failing website health checks.
+- Repository **variable** \`DIGITALOCEAN_APP_ID\`: production App Platform application ID.
+- Repository **variable** \`DIGITALOCEAN_STAGING_APP_ID\`: staging App Platform application ID.
+- Optional repository **variable** \`DIGITALOCEAN_STAGING_SITE_URL\`: actual staging HTTPS URL
+  if it is \`https://new-radio.eplus.dev/\` rather than the documented default.
+- Repository **secret** \`DIGITALOCEAN_API_TOKEN\`: a restricted DigitalOcean API token
+  with **\`app:read\` only**, usable for both applications.
 
-The success check proves App Platform reported the expected active source
-commit and the production website responds; it **does not** prove each
-cached CDN asset is the same revision. If a full browser-version attestation is
-needed later, introduce a version endpoint based on DigitalOcean's
-`COMMIT_HASH` bindable environment variable. Do not expose API tokens or
-other deployment secrets through public site files.
+DigitalOcean must already be configured to **auto-deploy** production from
+\`ePlus-DEV/radio.eplus.dev@main\` and staging from
+\`ePlus-DEV/radio.eplus.dev@develop\`, each to its correct App Platform app.
+These GitHub settings do not change how DigitalOcean deploys.
 
-DigitalOcean's own Settings → Alert Policies can independently send email or
-Slack notifications for deployment successes/failures and infrastructure
-maintenance. These alerts are separate from GitHub Actions.
+Never store the token in source or as a plain repository variable.
+Until the relevant App ID and token are configured, the corresponding
+monitor reports a configuration error rather than a false success.
+
+### What runs, and when
+
+- Normal pull requests: CI unit tests/prerender only; **no DigitalOcean API** calls.
+- Push to \`main\`: status-check the production app and production website.
+- Push to \`develop\`: status-check the staging app and staging website.
+- Manual recheck: **Actions → CI → Run workflow**, selecting **\`main\`** or
+  **\`develop\`** to inspect the corresponding commit and environment.
+
+Each job uses read-only GET requests to
+\`/v2/apps/{app_id}\` and \`/v2/apps/{app_id}/deployments\`, confirms that
+the app source follows the expected repository/branch (when GitHub sources
+are exposed), and waits up to approximately **35 minutes** for an App Platform
+deployment with **the pushed commit SHA** to become the **active** deployment
+with phase \`ACTIVE\`. Then it checks the correct environment's website
+responds HTTP 200 HTML. It fails on wrong app/branch, deploy errors, API
+access errors, unhealthy website, or timeout.
+
+This verifies deployment activation and site reachability, **not** complete
+CDN cache freshness or playback of all radio channels. Staging's \`noindex\`
+configuration is separately validated in the regular PR build CI, and its
+deployed environment must keep \`NUXT_PUBLIC_NO_INDEX=true\` as documented in
+\`docs/SEO.md\`.
+
+DigitalOcean App Platform can also send email or Slack alerts for successful
+and failed deployments via its own Alert Policies.
 
 ## Removed automations (2026-10-12)
 
