@@ -43,7 +43,7 @@
               <img
                 loading="lazy"
                 decoding="async"
-                :src="station.image"
+                :src="siteAssetUrl(station.image)"
                 :alt="station.title"
                 class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
               />
@@ -107,5 +107,6 @@ const isPlaying = (station: RadioStationOption): boolean =>
   station.id === props.activeStationId && (playback.playing || playback.waiting);
 
 
+const siteAssetUrl = useSiteAssetUrl();
 </script>
 
