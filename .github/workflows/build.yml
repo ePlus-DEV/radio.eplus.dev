@@ -109,6 +109,9 @@ jobs:
       - name: "Verify ePlus OnAir logo, social image and favicons"
         run: node scripts/assert-brand-assets.mjs
 
+      - name: "Audit output for GitHub Pages migration readiness"
+        run: node scripts/check-pages-build.mjs .output/public "${{ github.base_ref == 'develop' && 'staging' || 'production' }}"
+
       - name: "Assert staging pages are noindex"
         if: github.base_ref == 'develop'
         run: node scripts/assert-staging-noindex.mjs
