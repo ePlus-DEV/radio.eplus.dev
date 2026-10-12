@@ -29,6 +29,7 @@ import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import { HOMEPAGE_FEATURED_STATION_PATHS, selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
+const siteAssetUrl = useSiteAssetUrl();
 const runtimeConfig = useRuntimeConfig();
 const noIndex = Boolean(runtimeConfig.public.noIndex);
 const { t } = useI18n();
@@ -145,6 +146,5 @@ watch(featuredCatalogs, () => {
     placeholder: String(runtimeConfig.public.placeholderStation),
   }), featuredStations.value, { onlyIfIdle: true });
 }, { immediate: true });
-const siteAssetUrl = useSiteAssetUrl();
 </script>
 
