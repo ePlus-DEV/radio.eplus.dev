@@ -29,7 +29,10 @@ on:
       - "server/**"
       - "scripts/**"
       - "tests/**"
-      - ".github/workflows/build.yml"
+      # Check workflow changes as well as application changes.
+      - ".github/workflows/**"
+      - ".github/dependabot.yml"
+      - "public/img/**"
 
 permissions:
   contents: read
@@ -39,9 +42,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # The data-sync bot opens large catalog PRs directly against main.
+  # Preserve its fast validation without rerunning all ~4k Nuxt pages.
+  data-sync:
+    name: "Validate radio sync bot PR"
+    if: github.event.pull_request.head.ref == 'bot/instant-audio-sync' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: "npm"
+      - name: "Install dependencies"
+        run: npm ci
+      - name: "Validate sync script"
+        run: node --check scripts/sync-instant-audio.mjs
+      - name: "Run unit tests"
+        run: npm test
+
   test:
     name: "Test and prerender"
-    if: github.event.pull_request.head.ref != 'bot/instant-audio-sync'
+    if: github.event.pull_request.head.ref != 'bot/instant-audio-sync' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
 
     steps:

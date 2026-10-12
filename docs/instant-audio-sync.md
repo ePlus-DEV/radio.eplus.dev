@@ -47,4 +47,4 @@ The crawler keeps the sync lightweight:
 3. use Radio Browser for the current and remaining countries instead of retrying blocked InstantAudio requests;
 4. use the repository country snapshot when the InstantAudio directory cannot be refreshed.
 
-There is no Playwright/Crawlee browser fallback. Pull-request validation also avoids live upstream calls and runs syntax checks plus unit tests only.
+There is no Playwright/Crawlee browser fallback. Pull-request validation is handled by `.github/workflows/build.yml` (CI): the `bot/instant-audio-sync` branch receives lightweight syntax and unit checks instead of the full 4,000+ page prerender. Other PRs receive the normal CI build. Neither path calls live upstream radio providers during PR validation. The radio sync workflow is manual-only (`workflow_dispatch`).

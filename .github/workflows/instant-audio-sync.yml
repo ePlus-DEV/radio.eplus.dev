@@ -115,13 +115,6 @@ on:
           - "ประเทศไทย | thailand"
           - "中国 | china"
           - "台灣 | taiwan"
-  pull_request:
-    paths:
-      - ".github/workflows/instant-audio-sync.yml"
-      - "scripts/sync-instant-audio.mjs"
-      - "data/instant-audio-countries.json"
-      - "docs/instant-audio-sync.md"
-
 permissions:
   contents: read
 
@@ -130,29 +123,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
-    name: "PR checks only — no live sync"
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: "24.15.0"
-
-      - name: "Install dependencies"
-        run: npm ci
-
-      - name: "Validate radio sync"
-        run: |
-          node --check scripts/sync-instant-audio.mjs
-          npm test
-
   sync:
     name: "Live sync — manual"
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
