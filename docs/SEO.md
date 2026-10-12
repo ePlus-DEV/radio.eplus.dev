@@ -82,6 +82,17 @@ Page metadata:
 - page-specific image where available
 - image alt text on station/country social metadata
 
+### Browser tab title during playback
+
+The app shell updates only the browser tab's <title> while a station is
+actually playing (for example, `▶ Heart UK | ePlus OnAir`). This uses a
+reactive title template rather than mutating `document.title` directly.
+
+Pause/stop/failed playback return to the current route's normal title, even
+after navigating while listening. During SSR/static prerender, there is no
+active audio session: route titles, canonical URLs, Open Graph metadata and
+structured data remain unchanged.
+
 ## Structured data
 
 Current JSON-LD coverage:
