@@ -1,22 +1,42 @@
 # GitHub Actions: active workflows
 
 The repository currently has **two established CI/data workflows** plus one
-**prepared, disabled-by-default Pages deployment workflow**.
+**selective, gated Pages deployment workflow**.
 
 | Workflow | Trigger | Responsibility |
 | --- | --- | --- |
 | `.github/workflows/build.yml` (`CI`) | Pull requests for source, data, assets, workflows and dependency configuration | Unit tests; Nuxt prerender; SEO, sitemap and artwork checks; opt-in browser tests |
 | `.github/workflows/instant-audio-sync.yml` (`Radio data sync`) | Manual (`workflow_dispatch`) | Discover stations/flags, validate candidate streams and artwork, then propose a data PR |
 
-## Prepared GitHub Pages publishing (disabled by default)
+## GitHub Pages publishing (gated per environment)
 
-`.github/workflows/deploy-github-pages.yml` is the planned third workflow. It runs
-only on trusted `main` / `develop` pushes or manual dispatch and is **gated** by
-repository Actions variables `PAGES_DEV_READY` / `PAGES_PROD_READY`. Both are
-off until an organization administrator creates the public Pages destinations,
-configures branch publishing and stores `PAGES_DEPLOY_TOKEN` in this private
-source repository. It pushes only the Nuxt static output, never source files.
+`.github/workflows/deploy-github-pages.yml` is the third workflow. It runs
+on trusted `main` / `develop` pushes affecting site inputs (or manual
+dispatch) and is **gated** by repository Actions variables
+`PAGES_DEV_READY` / `PAGES_PROD_READY`. Configure Pages destinations and
+the cross-repository `PAGES_DEPLOY_TOKEN` before enabling either gate.
+It pushes only the generated Nuxt static output, never source files.
 See [GitHub Pages migration](./GITHUB_PAGES.md) for exact one-time setup and rollback.
+
+## Selective deployment: only changes that affect the website
+
+The private source repository's Pages workflow watches merges/pushes to
+`develop` and `main`, but a push only starts the expensive Nuxt build when it
+changes a **served application input**: Vue components/pages, player/stores,
+styles/assets, radio catalog or images, translations, SEO/Nuxt config, package
+dependencies, or the three build/generation scripts.
+
+Docs, README, tests, workflow-only updates, and one-off maintenance scripts
+(`sync-voh-radios.mjs`, `sync-instant-audio.mjs`) **do not trigger deployment**.
+If an importer actually changes `public/radio/**` or `public/img/**` and that
+data change is committed, the website correctly redeploys to show new stations.
+
+`workflow_dispatch` remains available to **manually redeploy** either
+trusted branch regardless of changed paths. The environment safety gates
+`PAGES_DEV_READY` and `PAGES_PROD_READY` continue to apply. Editing the
+deployment workflow itself does not launch a production deployment.
+
+CI and CD have separate triggers: PR validation is not an automatic deployment.
 
 ## Provider-only tests (VOH)
 
