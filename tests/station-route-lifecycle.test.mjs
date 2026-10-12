@@ -23,3 +23,32 @@ test('Zing metadata belongs to the selected provider and is reset on station cha
   assert.doesNotMatch(realtime, /useRoute|viet-nam/);
 });
 
+
+
+test('detail navigation never requests playback unless an explicit player action asks for the route', async () => {
+  const [detail, session, stationPanel, featuredPanel, searchResult] = await Promise.all([
+    readFile('pages/[area]/[country]/[station].vue', 'utf8'),
+    readFile('components/player/Session.vue', 'utf8'),
+    readFile('components/panel/Station.vue', 'utf8'),
+    readFile('components/panel/FeaturedStations.vue', 'utf8'),
+    readFile('components/search/Result.vue', 'utf8'),
+  ]);
+
+  // Direct deep links prepare an idle player, never take over a different station.
+  assert.match(detail, /watch\(\[stationMeta, stationPath, \(\) => playback\.requestedStationUrl\]/);
+  assert.match(detail, /if \(requested === path\) activateStation\(true\)/);
+  assert.match(detail, /else if \(!playback\.station && !requested\) activateStation\(\)/);
+  assert.doesNotMatch(detail, /watch\(stationMeta, \(meta\) => \{ if \(meta\) activateStation\(\)/);
+  assert.match(detail, /const playStation = \(\): void => \{[\s\S]*?activateStation\(true\)/);
+
+  // Queue/Next/Previous remain explicit playback intents despite opening the route.
+  assert.match(session, /playback\.requestStation\(target\.url\);\s*void navigateTo\(target\.url\)/);
+  for (const panel of [stationPanel, featuredPanel]) {
+    assert.match(panel, /:to="station\.url"/);
+    const link = panel.match(/<NuxtLink[\s\S]*?<\/NuxtLink>/)?.[0];
+    assert.ok(link);
+    assert.doesNotMatch(link, /requestStation|activateStation|select-station/);
+  }
+  assert.match(searchResult, /:to="item\.url"/);
+  assert.doesNotMatch(searchResult, /requestStation|activateStation/);
+});
