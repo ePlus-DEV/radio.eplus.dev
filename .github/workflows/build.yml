@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
+      - "README.md"
+      - "AGENTS.md"
+      - "docs/**"
       - "app.vue"
       - "app.config.ts"
       - "playwright.config.ts"
@@ -66,9 +69,46 @@ jobs:
     name: "Test and prerender"
     if: github.event.pull_request.head.ref != 'bot/instant-audio-sync' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 55
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          # GitHub Actions checks out a synthetic PR merge commit. Fetch base
+          # history so the scope check can reliably diff it against the PR base.
+          fetch-depth: 0
+
+      - name: "Determine whether full prerender is needed"
+        id: scope
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          git diff --name-only "$PR_BASE_SHA"...HEAD > "$RUNNER_TEMP/pr-changed-paths.txt"
+
+          # Fail closed: unknown/app/data/SEO/build-script changes must get
+          # the complete Nuxt generation and all generated-output audits.
+          prerender=false
+          if [ ! -s "$RUNNER_TEMP/pr-changed-paths.txt" ]; then
+            prerender=true
+          fi
+          while IFS= read -r path; do
+            case "$path" in
+              README.md|AGENTS.md|docs/*|tests/*|.github/workflows/*|.github/dependabot.yml)
+                ;;
+              *)
+                prerender=true
+                ;;
+            esac
+          done < "$RUNNER_TEMP/pr-changed-paths.txt"
+
+          echo "prerender=$prerender" >> "$GITHUB_OUTPUT"
+          if [ "$prerender" = true ]; then
+            echo "::notice::Application/build/data change: full Nuxt prerender and SEO audits required."
+          else
+            echo "::notice::CI/docs/tests-only change: unit tests required; expensive Nuxt prerender skipped."
+          fi
 
       - name: "Setup Node.js"
         uses: actions/setup-node@v7
@@ -83,6 +123,7 @@ jobs:
         run: npm test
 
       - name: "Generate prerendered site"
+        if: steps.scope.outputs.prerender == 'true'
         # CI uses the same two public variables as the real staging host.
         # A checkout/branch name must not change the generated SEO policy.
         env:
@@ -91,37 +132,42 @@ jobs:
         run: npm run generate
 
       - name: "Validate generated sitemap and staging indexability"
+        if: steps.scope.outputs.prerender == 'true'
         env:
           NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: node scripts/assert-sitemap-xml.mjs
 
       - name: "Assert route-specific prerendered Open Graph metadata"
+        if: steps.scope.outputs.prerender == 'true'
         env:
           SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-route-social-meta.mjs
 
       - name: "Audit all stations Open Graph HTML and JPEG images"
+        if: steps.scope.outputs.prerender == 'true'
         env:
           SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://radio-new.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-all-station-social-meta.mjs
 
       - name: "Verify ePlus OnAir logo, social image and favicons"
+        if: steps.scope.outputs.prerender == 'true'
         run: node scripts/assert-brand-assets.mjs
 
       - name: "Audit output for GitHub Pages migration readiness"
+        if: steps.scope.outputs.prerender == 'true'
         run: node scripts/check-pages-build.mjs .output/public "${{ github.base_ref == 'develop' && 'staging' || 'production' }}"
 
       - name: "Assert staging pages are noindex"
-        if: github.base_ref == 'develop'
+        if: github.base_ref == 'develop' && steps.scope.outputs.prerender == 'true'
         run: node scripts/assert-staging-noindex.mjs
 
       # Browser tests are temporarily opt-in at the owner's request.
       # Keep npm run test:ui available for focused follow-up checks.
       - name: "Install Chromium for UI regression tests"
-        if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' }}
+        if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' && steps.scope.outputs.prerender == 'true' }}
         run: npx playwright install --with-deps chromium
 
       - name: "Verify persistent player and responsive UI"
-        if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' }}
+        if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' && steps.scope.outputs.prerender == 'true' }}
         run: npm run test:ui
