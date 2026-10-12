@@ -11,8 +11,10 @@ test('GitHub Pages publishing keeps private source, separate targets and credent
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
   assert.match(workflow, /branches: \[develop, main\]/);
   assert.match(workflow, /PAGES_DEV_READY/);
+  assert.match(workflow, /vars\.PAGES_DEV_SITE_URL/);
+  assert.match(workflow, /Staging must never use the production radio\.eplus\.dev hostname/);
   assert.match(workflow, /PAGES_PROD_READY/);
-  assert.match(workflow, /ePlus-DEV\/eplus-dev\.github\.io/);
+  assert.match(workflow, /ePlus-DEV\/onair-staging-pages/);
   assert.match(workflow, /ePlus-DEV\/onair-production-pages/);
   assert.match(workflow, /NUXT_PUBLIC_SITE_URL:/);
   assert.match(workflow, /NUXT_PUBLIC_NO_INDEX:/);
@@ -20,6 +22,8 @@ test('GitHub Pages publishing keeps private source, separate targets and credent
   assert.match(workflow, /\.output\/public/);
   assert.match(workflow, /\.nojekyll/);
   assert.match(workflow, /radio\.eplus\.dev/);
+  assert.match(workflow, /process\.stdout\.write\(url\.hostname \+ /);
+  assert.doesNotMatch(workflow, /https:\/\/eplus-dev\.github\.io/);
   assert.match(workflow, /secrets\.PAGES_DEPLOY_TOKEN/);
   assert.doesNotMatch(workflow, /pull_request:/, 'Credentials must never run for PRs');
   assert.doesNotMatch(workflow, /--force|push -f/, 'Do not rewrite Pages history each deploy');
