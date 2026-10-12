@@ -18,7 +18,7 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 
 | Branch | Environment / purpose | URL |
 | --- | --- | --- |
-| `develop` | Development and staging; integrate and test changes before release | https://radio-new.eplus.dev |
+| `develop` | Development and staging; integrate and test changes before release | https://new-radio.eplus.dev |
 | `main` | Production; stable, released application (repository default branch) | https://radio.eplus.dev |
 | `master` | Legacy backup of the previous version; do not deploy or use for new development | — |
 | `feature/*` | Short-lived feature/fix branches, normally created from `develop` | PR into `develop` |
@@ -27,7 +27,7 @@ ePlus OnAir is a Nuxt-based internet radio application for browsing and listenin
 **Release flow:** `feature/*` → `develop` (staging) → `main` (production).
 
 1. Create a feature branch from `develop` and open a PR targeting `develop`.
-2. Run unit tests, prerender and browser regression tests; verify the staging deployment on `radio-new.eplus.dev`.
+2. Run unit tests, prerender and browser regression tests; verify the staging deployment on `new-radio.eplus.dev`.
 3. Open a promotion PR from `develop` to `main`. Review changes, ensure required CI checks pass and merge only when ready to release.
 4. Deploy `main` to `radio.eplus.dev`; create a version tag on `main` for traceability and rollback.
 5. For urgent production hotfixes, branch from `main`, validate/release via PR, then merge or cherry-pick the fix back into `develop`.
@@ -290,7 +290,7 @@ Public site pages also include `/about`, `/statistics`, `/contact`, `/privacy-po
 
 ### Staging: noindex (develop)
 
-The `develop` deployment at **https://radio-new.eplus.dev** is **not indexed**. If the additional `new-radio.eplus.dev` preview hostname is used, configure its actual deployment, DNS and `NUXT_PUBLIC_SITE_URL` consistently; the source code accepts both hostnames as staging for noindex purposes.
+The official `develop` staging deployment uses **https://new-radio.eplus.dev/** and must remain **noindex**. Configure the DigitalOcean build-time site URL and staging DNS for this hostname. An old reversed-order hostname is still recognized by the noindex guard for backward safety, but is not the documented staging deployment.
 It retains functioning prerendered radio pages but does not render SEO canonical,
 or JSON-LD; Open Graph/Twitter previews remain available for link-sharing tests. Its `robots.txt` allows crawlers to read
 `noindex` without advertising a sitemap. The sitemap module is disabled.
@@ -299,7 +299,7 @@ Production `main` stays indexable.
 **Set these build-time environment variables in the staging host:**
 
 ```env
-NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
+NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev
 NUXT_PUBLIC_NO_INDEX=true
 ```
 
@@ -347,6 +347,6 @@ This repository is maintained by ePlus.DEV. Refer to the repository settings or 
 
 ## Brand and domain migration
 
-The public brand is **ePlus OnAir** with the tagline **Listen Beyond Borders.** The existing `radio.eplus.dev` production URL and `radio-new.eplus.dev` staging URL intentionally remain unchanged to preserve routing, analytics, and existing links. Replacing domains requires a separate migration plan (DNS, 301 redirects, canonical URLs, GA4, search indexing, and third-party integrations).
+The public brand is **ePlus OnAir** with the tagline **Listen Beyond Borders.** Production remains at `https://radio.eplus.dev/`, while staging (`develop`) uses `https://new-radio.eplus.dev/`. Production canonical URLs, GA4 and search indexing must stay attached exclusively to production. Future domain changes require a separate migration plan covering DNS, redirects, canonical URLs, analytics, search indexing and third-party integrations.
 
 The official mark and social artwork live under `public/brand/onair-*`. Run `npm run brand:generate` (automatically invoked by `dev`, `build`, and `generate`) to produce compatible PNG social images, favicons and PWA icons from the SVG sources. The current production URLs remain unchanged.
