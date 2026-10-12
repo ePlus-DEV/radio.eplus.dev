@@ -4,6 +4,39 @@ name: "Deploy ePlus OnAir to GitHub Pages"
 on:
   push:
     branches: [develop, main]
+    # Only rebuild when the delivered Nuxt application or its inputs change.
+    # Documentation, tests, one-time importers, unrelated Actions updates and
+    # provider research can still be validated without a full Pages deploy.
+    paths:
+      - "app.vue"
+      - "app.config.ts"
+      - "error.vue"
+      - "nuxt.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.json"
+      - "app/**"
+      - "assets/**"
+      - "build/**"
+      - "components/**"
+      - "composables/**"
+      - "config/**"
+      - "data/**"
+      - "lang/**"
+      - "layouts/**"
+      - "middleware/**"
+      - "pages/**"
+      - "plugins/**"
+      - "public/**"
+      - "server/**"
+      - "stores/**"
+      - "types/**"
+      - "utils/**"
+      - "scripts/build-station-search-index.mjs"
+      - "scripts/generate-social-preview.mjs"
+      - "scripts/generate-station-og-images.mjs"
+  # Manual dispatch deliberately bypasses paths filtering for an explicit
+  # redeploy of a trusted branch, still subject to PAGES_*_READY gates.
   workflow_dispatch:
 
 permissions:
