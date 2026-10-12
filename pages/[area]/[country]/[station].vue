@@ -323,12 +323,13 @@ const playSelected = (station: RadioStationOption): void => {
   }), stations.value, { autoplay: true });
 };
 
-// Browsing a station detail must never select or start its stream. Only an
-// explicit player queue/resume Play request may start a routed station;
-// the detail page's own Play button activates directly via playStation().
-// Keep the previous station playing while looking at another station's details.
+// Browsing another station's details never interrupts the current audio.
+// A direct deep link may prepare an idle player, but never starts playback.
+// Only explicit Play (detail button, queue or Next/Previous) starts a stream.
 watch([stationMeta, stationPath, () => playback.requestedStationUrl], ([meta, path, requested]) => {
-  if (meta && requested === path) activateStation(true);
+  if (!meta) return;
+  if (requested === path) activateStation(true);
+  else if (!playback.station && !requested) activateStation();
 }, { immediate: true });
 </script>
 
