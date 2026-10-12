@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   commitHashes, matchesCommit, findMatchingDeployment, checkSourceRepository,
-  evaluateDeployment, doApiGet, verifyWebsite, monitor,
+  evaluateDeployment, doApiGet, verifyWebsite, monitor, resolveDeployTarget,
 } from "../scripts/monitor-digitalocean-deploy.mjs";
 
 const SHA = "0ac4bef71d08587cfe5bed526116f735e5c5a1d0";
@@ -129,4 +129,71 @@ test("monitor fails closed on incorrect app, failed deploy, missing secrets and 
     appId: ID, token: "yes", expectedSha: SHA, fetcher: unknownFetcher,
     maxAttempts: 2, sleep: async () => {}, log: () => {},
   }), /Timed out/);
+});
+
+
+test("resolves separate production and staging apps without allowing unsupported refs", () => {
+  const vars = {
+    DIGITALOCEAN_APP_ID: "prod-app-id",
+    DIGITALOCEAN_STAGING_APP_ID: "stage-app-id",
+  };
+  assert.deepEqual(resolveDeployTarget("main", vars), {
+    branch: "main", environment: "production",
+    appId: "prod-app-id", website: "https://radio.eplus.dev/",
+  });
+  assert.deepEqual(resolveDeployTarget("develop", vars), {
+    branch: "develop", environment: "staging",
+    appId: "stage-app-id", website: "https://radio-new.eplus.dev/",
+  });
+  assert.equal(resolveDeployTarget("develop", {
+    ...vars, DIGITALOCEAN_STAGING_SITE_URL: "https://new-radio.eplus.dev/",
+  }).website, "https://new-radio.eplus.dev/");
+  assert.throws(() => resolveDeployTarget("feature/x", vars), /only supports main/);
+});
+
+test("staging monitor verifies develop source SHA and staging website", async () => {
+  const stageApp = {
+    spec: { static_sites: [{ github: {
+      repo: "ePlus-DEV/radio.eplus.dev", branch: "develop",
+    } }] },
+    active_deployment: deployment("staging-live", SHA),
+  };
+  const calls = [];
+  const fetcher = async (url) => {
+    calls.push(url);
+    if (url.endsWith("/deployments?per_page=20")) return json({ deployments: [] });
+    if (url.includes("api.digitalocean.com")) return json({ app: stageApp });
+    return html();
+  };
+  const result = await monitor({
+    appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
+    website: "https://radio-new.eplus.dev/",
+    fetcher, maxAttempts: 1, log: () => {},
+  });
+  assert.equal(result.state, "active");
+  assert.ok(calls.includes("https://radio-new.eplus.dev/"));
+  await assert.rejects(monitor({
+    appId: ID, token: "demo", expectedSha: SHA, branch: "main",
+    website: "https://radio-new.eplus.dev/", fetcher, maxAttempts: 1, log: () => {},
+  }), /not an approved main domain/);
+  await assert.rejects(monitor({
+    appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
+    website: "https://radio.eplus.dev/", fetcher, maxAttempts: 1, log: () => {},
+  }), /not an approved develop domain/);
+  await assert.rejects(monitor({
+    appId: ID, token: "demo", expectedSha: SHA, branch: "develop",
+    website: "https://other.example/", fetcher, maxAttempts: 1, log: () => {},
+  }), /not an approved develop domain/);
+  await assert.rejects(monitor({
+    appId: ID, token: "demo", expectedSha: SHA, branch: "main",
+    fetcher, maxAttempts: 1, log: () => {},
+  }), /not configured for/);
+});
+
+test("a missing staging app ID is reported independently of production", async () => {
+  const variables = resolveDeployTarget("develop", { DIGITALOCEAN_APP_ID: ID });
+  await assert.rejects(monitor({
+    appId: variables.appId, token: "demo", expectedSha: SHA,
+    branch: variables.branch, website: variables.website, maxAttempts: 1,
+  }), /DIGITALOCEAN_STAGING_APP_ID/);
 });
