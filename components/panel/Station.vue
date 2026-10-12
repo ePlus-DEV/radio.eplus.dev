@@ -34,6 +34,7 @@
       >
         <UTooltip :text="station.title">
           <NuxtLink
+            :prefetch="false"
             :to="station.url"
             class="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
             :aria-label="station.title"
@@ -41,6 +42,7 @@
             <div class="radio-themed-artwork relative flex aspect-[5/4] items-center justify-center overflow-hidden p-3 sm:aspect-square sm:p-4">
               <img
                 loading="lazy"
+                decoding="async"
                 :src="station.image"
                 :alt="station.title"
                 class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"

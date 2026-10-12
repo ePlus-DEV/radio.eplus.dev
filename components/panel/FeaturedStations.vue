@@ -11,6 +11,7 @@
       >
         <UTooltip :text="station.title">
           <NuxtLink
+            :prefetch="false"
             :to="station.url"
             class="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
             :aria-label="station.title"
@@ -18,6 +19,7 @@
             <div class="radio-themed-artwork relative flex aspect-[5/4] items-center justify-center overflow-hidden p-5 sm:aspect-square">
               <img
                 loading="lazy"
+                decoding="async"
                 :src="station.image"
                 :alt="station.title"
                 class="max-h-[75%] max-w-[85%] object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"

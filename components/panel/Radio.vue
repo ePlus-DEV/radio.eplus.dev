@@ -51,6 +51,7 @@
           :text="$t(country.name)"
         >
           <NuxtLink
+            :prefetch="false"
             :to="country.url"
             class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-rose-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
             :aria-label="$t(country.name)"
@@ -58,6 +59,7 @@
             <div class="radio-themed-artwork relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square">
               <img
                 loading="lazy"
+                decoding="async"
                 :src="country.flag"
                 :alt="$t(country.name)"
                 class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
