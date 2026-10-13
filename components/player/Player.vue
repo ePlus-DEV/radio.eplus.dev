@@ -38,8 +38,7 @@
             <p v-else dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">
               <span class="sm:hidden">{{ streamName }} · {{ countryName || $t(country) }}</span>
             </p>
-            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
-           </div>
+            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>          </div>
         </div>
 
         <div class="radio-player-controls z-20 flex items-center justify-center gap-0.5 sm:gap-2">
@@ -1291,10 +1290,6 @@ button.radio-queue-action:focus-visible {
 
 .radio-player-meta {
   line-height: 1rem;
-}
-
-.radio-player-meta-placeholder {
-  display: none;
 }
 
 .radio-player-live-pill {
