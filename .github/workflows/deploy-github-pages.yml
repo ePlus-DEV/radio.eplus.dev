@@ -49,7 +49,7 @@ jobs:
     # Keep both targets disabled until the public Pages repositories, credentials
     # and branch publishing settings have been configured and verified.
     if: >-
-      (github.ref_name == 'develop' && vars.PAGES_DEV_READY == 'true') ||
+      (github.ref_name == 'dev' && vars.PAGES_DEV_READY == 'true') ||
       (github.ref_name == 'main' && vars.PAGES_PROD_READY == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 90
