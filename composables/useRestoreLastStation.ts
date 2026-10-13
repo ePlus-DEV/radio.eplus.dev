@@ -8,6 +8,7 @@ export function useRestoreLastStation() {
   const playback = usePlaybackStore();
   const route = useRoute();
   const config = useRuntimeConfig();
+  const siteAssetUrl = useSiteAssetUrl();
   listening.hydrate();
   let disposed = false;
   onMounted(async () => {
@@ -30,7 +31,7 @@ export function useRestoreLastStation() {
     }, [], { autoplay: false, onlyIfIdle: true });
     if (playback.station?.url !== saved.url) return;
     try {
-      const catalog = await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${area}/${country}.json`, { timeout: 10_000 });
+      const catalog = await $fetch<Record<string, RadioCatalogEntry>>(siteAssetUrl(`/radio/${area}/${country}.json`), { timeout: 10_000 });
       if (disposed || route.fullPath !== path || playback.playRequest !== request || playback.requestedStationUrl || playback.station?.url !== saved.url || playback.playing) return;
       const meta = catalog[id];
       if (!meta || !meta.stream) return;

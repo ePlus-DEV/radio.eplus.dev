@@ -29,6 +29,7 @@ import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import { HOMEPAGE_FEATURED_STATION_PATHS, selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
+const siteAssetUrl = useSiteAssetUrl();
 const runtimeConfig = useRuntimeConfig();
 const noIndex = Boolean(runtimeConfig.public.noIndex);
 const { t } = useI18n();
@@ -46,7 +47,7 @@ const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalog
       const { join } = await import('node:path');
       catalog = JSON.parse(await readFile(join(process.cwd(), 'public/radio', `${country}.json`), 'utf8')) as Record<string, RadioCatalogEntry>;
     } else {
-      catalog = await $fetch<Record<string, RadioCatalogEntry>>(`/radio/${country}.json`);
+      catalog = await $fetch<Record<string, RadioCatalogEntry>>(siteAssetUrl(`/radio/${country}.json`));
     }
     const ids = new Set(HOMEPAGE_FEATURED_STATION_PATHS
       .filter(path => path.startsWith(`${country}/`))

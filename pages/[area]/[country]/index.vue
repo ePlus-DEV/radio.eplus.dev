@@ -61,6 +61,7 @@ interface CountryCatalogPayload {
   stations: Record<string, Channel>;
 }
 
+const siteAssetUrl = useSiteAssetUrl();
 const playback = usePlaybackStore();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
@@ -78,7 +79,7 @@ const i18n = computed(
 );
 const countryName = computed(() => t(i18n.value));
 const countryFlag = computed(
-  () => `/img/${area.value}/flags/${slug.value}.png`,
+  () => siteAssetUrl(`/img/${area.value}/flags/${slug.value}.png`),
 );
 const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
@@ -88,7 +89,7 @@ const countryUrl = computed(() => `${siteUrl.value}${countryPath.value}`);
 const countryImage = computed(() => `${siteUrl.value}${countryFlag.value}`);
 
 const catalogUrl = computed(
-  () => `/radio/${area.value}/${slug.value}.json`,
+  () => siteAssetUrl(`/radio/${area.value}/${slug.value}.json`),
 );
 const catalogKey = computed(
   () => `country-catalog:${area.value}:${slug.value}`,

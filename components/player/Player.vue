@@ -15,7 +15,7 @@
       <div class="radio-player-console grid min-h-[var(--radio-player-height)] grid-cols-[minmax(0,1fr)_2.75rem_2.75rem] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:gap-4">
         <div class="relative flex min-w-0 items-center gap-2.5 sm:gap-3">
           <div class="radio-themed-artwork radio-player-artwork relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--radio-border)] p-1.5 sm:h-14 sm:w-14">
-            <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
+            <img v-if="nowPlayingArtwork" :src="siteAssetUrl(nowPlayingArtwork)" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
             <UIcon v-else name="i-lucide-radio" class="h-5 w-5 text-[var(--radio-text-muted)]" />
             <span v-if="playing" class="absolute bottom-1 right-1 flex h-4 w-4 items-end justify-center gap-px rounded-full bg-[var(--radio-inverse-bg)] pb-1 text-[var(--radio-inverse-text)]" aria-hidden="true">
               <span class="radio-bar is-playing h-1 w-px bg-current"></span><span class="radio-bar is-playing h-2 w-px bg-current"></span><span class="radio-bar is-playing h-1.5 w-px bg-current"></span>
@@ -96,7 +96,7 @@
   <section v-show="!nowPlayingOpen && playerMini" class="radio-player-mini fixed bottom-5 right-5 z-[70] w-[min(22rem,calc(100vw-2rem))] rounded-3xl border border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] p-3 shadow-2xl shadow-black/40" :aria-label="$t('player.window_player')">
     <div class="flex items-center gap-3">
       <div class="radio-themed-artwork relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[var(--radio-border)] p-1.5">
-        <img v-if="nowPlayingArtwork" :src="nowPlayingArtwork" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
+        <img v-if="nowPlayingArtwork" :src="siteAssetUrl(nowPlayingArtwork)" :alt="nowPlayingTitle" class="max-h-full max-w-full object-contain" />
         <UIcon v-else name="i-lucide-radio" class="h-6 w-6 text-[var(--radio-text-muted)]" />
       </div>
       <div class="min-w-0 flex-1">
@@ -192,6 +192,7 @@ import {
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
+import { resolveLiveTrack } from "~/utils/live-track.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -430,26 +431,10 @@ const sidebarCount = computed(
   () => stationCount.value || scheduleCount.value,
 );
 
-const nowPlayingTitle = computed(() => {
-  const songTitle = props.song?.currentMedia?.title?.trim();
-  if (songTitle) return songTitle;
-
-  const playlistTitle = props.playlist?.[0]?.track_title?.trim();
-  if (playlistTitle) return playlistTitle;
-
-  return props.streamName || "Live radio";
-});
+const liveTrack = computed(() => resolveLiveTrack(props.song, props.playlist));
+const nowPlayingTitle = computed(() => liveTrack.value?.title || props.streamName || "Live radio");
 const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
-
-const nowPlayingArtist = computed(() => {
-  const songArtist = props.song?.currentMedia?.artists?.trim();
-  if (songArtist) return songArtist;
-
-  const playlistArtist = props.playlist?.[0]?.track_artist?.trim();
-  if (playlistArtist) return playlistArtist;
-
-  return "";
-});
+const nowPlayingArtist = computed(() => liveTrack.value?.artist || "");
 
 const nowPlayingArtwork = computed(
   () =>
@@ -1238,6 +1223,7 @@ onUnmounted(() => {
   window.removeEventListener("online", updateOnlineStatus);
   window.removeEventListener("offline", updateOnlineStatus);
 });
+const siteAssetUrl = useSiteAssetUrl();
 </script>
 
 <style scoped>

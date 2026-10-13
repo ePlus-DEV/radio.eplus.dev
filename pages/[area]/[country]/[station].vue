@@ -12,7 +12,7 @@
       <div class="relative grid gap-6 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:items-center">
         <div class="radio-themed-artwork flex aspect-square w-40 max-w-full items-center justify-center justify-self-start rounded-3xl border border-[var(--radio-border)] p-5 shadow-sm shadow-slate-900/5 sm:w-48 lg:w-56">
           <img
-            :src="thumb || stationMeta?.features || config.public.placeholderStation"
+            :src="siteAssetUrl(thumb || stationMeta?.features || config.public.placeholderStation)"
             :alt="stationName"
             class="max-h-full max-w-full object-contain"
           />
@@ -84,6 +84,7 @@ import {
   buildRadioStationSchema,
 } from "~/utils/seo-structured-data.mjs";
 
+const siteAssetUrl = useSiteAssetUrl();
 const route = useRoute();
 const { t } = useI18n();
 const config = useRuntimeConfig();
@@ -102,7 +103,7 @@ const i18n = computed(
 const countryName = computed(() => t(i18n.value));
 
 const stationCatalogUrl = computed(
-  () => `/radio/${area.value}/${slug.value}.json`,
+  () => siteAssetUrl(`/radio/${area.value}/${slug.value}.json`),
 );
 const stationCatalogKey = computed(
   () => `station-catalog:${area.value}:${slug.value}`,
@@ -220,8 +221,12 @@ const stationArtwork = computed(() => {
   return image.startsWith("http") ? image : `${siteUrl.value}${image}`;
 });
 // Use the catalog-generated share card, not a tiny logo thumbnail.
-const seoImage = computed(() =>
-  `${siteUrl.value}/og/stations/${area.value}/${slug.value}/${stationSlug.value}.jpg`,
+// Staging previews use the existing shared social image instead of publishing
+// thousands of production-only station OG JPEGs. Station detail HTML, catalog
+// JSON, playable streams and browser navigation remain unchanged.
+const seoImage = computed(() => noIndex
+  ? `${siteUrl.value}/brand/social-preview.png`
+  : `${siteUrl.value}/og/stations/${area.value}/${slug.value}/${stationSlug.value}.jpg`,
 );
 const canonicalUrl = computed(
   () => `${siteUrl.value}${stationPath.value}`,
@@ -273,7 +278,7 @@ useHead(() => ({
     { key: "station-og-image-alt", property: "og:image:alt", content: `${stationName.value} — ePlus OnAir live radio` },
     { key: "station-og-image-width", property: "og:image:width", content: "1200" },
     { key: "station-og-image-height", property: "og:image:height", content: "630" },
-    { key: "station-og-image-type", property: "og:image:type", content: "image/jpeg" },
+    { key: "station-og-image-type", property: "og:image:type", content: noIndex ? "image/png" : "image/jpeg" },
     { key: "station-twitter-card", name: "twitter:card", content: "summary_large_image" },
     { key: "station-twitter-title", name: "twitter:title", content: seoTitle.value },
     { key: "station-twitter-description", name: "twitter:description", content: seoDescription.value },
@@ -323,8 +328,13 @@ const playSelected = (station: RadioStationOption): void => {
   }), stations.value, { autoplay: true });
 };
 
-// Only a station selection changes playback. Leaving this page does not own
-// audio teardown or stop the application-level schedule polling.
-watch(stationMeta, (meta) => { if (meta) activateStation(); }, { immediate: true });
+// Browsing another station's details never interrupts the current audio.
+// A direct deep link may prepare an idle player, but never starts playback.
+// Only explicit Play (detail button, queue or Next/Previous) starts a stream.
+watch([stationMeta, stationPath, () => playback.requestedStationUrl], ([meta, path, requested]) => {
+  if (!meta) return;
+  if (requested === path) activateStation(true);
+  else if (!playback.station && !requested) activateStation();
+}, { immediate: true });
 </script>
 

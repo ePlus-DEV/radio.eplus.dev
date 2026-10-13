@@ -19,7 +19,7 @@
             loading="lazy"
             class="h-full w-full object-cover"
             :alt="item.track_title + ' - ' + item.track_artist"
-            :src="item.track_image !== '' ? item.track_image : thumb"
+            :src="siteAssetUrl(item.track_image !== '' ? item.track_image : thumb)"
           />
           <span
             v-if="index === 0"
@@ -61,4 +61,5 @@ defineProps<{
   playlist: PlaylistItem[];
   thumb: string;
 }>();
+const siteAssetUrl = useSiteAssetUrl();
 </script>

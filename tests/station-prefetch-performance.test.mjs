@@ -18,7 +18,7 @@ test("large station/country listings do not prefetch whole pages on viewport ent
 test("favorites and recently played keep normal navigation without bulk prefetch", async () => {
   const source = await readFile("components/panel/ListeningLibrary.vue", "utf8");
   assert.match(source, /<NuxtLink\s+:to="station\.url"\s+:prefetch="false"/);
-  assert.match(source, /@click="playSelected\(\$event, station\.url\)"/);
+  assert.match(source, /@click="openStationDetails\(\$event\)"/);
   assert.match(source, /@click="togglePlayback\(station, group\.items\)"/);
 });
 

@@ -1,11 +1,22 @@
 # GitHub Actions: active workflows
 
-The repository deliberately keeps **two** active GitHub Actions workflows.
+The repository currently has **two established CI/data workflows** plus one
+**prepared, disabled-by-default Pages deployment workflow**.
 
 | Workflow | Trigger | Responsibility |
 | --- | --- | --- |
 | `.github/workflows/build.yml` (`CI`) | Pull requests for source, data, assets, workflows and dependency configuration | Unit tests; Nuxt prerender; SEO, sitemap and artwork checks; opt-in browser tests |
 | `.github/workflows/instant-audio-sync.yml` (`Radio data sync`) | Manual (`workflow_dispatch`) | Discover stations/flags, validate candidate streams and artwork, then propose a data PR |
+
+## Prepared GitHub Pages publishing (disabled by default)
+
+`.github/workflows/deploy-github-pages.yml` is the planned third workflow. It runs
+only on trusted `main` / `develop` pushes or manual dispatch and is **gated** by
+repository Actions variables `PAGES_DEV_READY` / `PAGES_PROD_READY`. Both are
+off until an organization administrator creates the public Pages destinations,
+configures branch publishing and stores `PAGES_DEPLOY_TOKEN` in this private
+source repository. It pushes only the Nuxt static output, never source files.
+See [GitHub Pages migration](./GITHUB_PAGES.md) for exact one-time setup and rollback.
 
 ## PR validation policy
 

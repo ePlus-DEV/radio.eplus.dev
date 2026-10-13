@@ -171,7 +171,7 @@ const suggestionQueries = [
   "Power 98 Love Songs",
   "Rap Việt",
   "EDM",
-  "Bolero",
+  "Acoustic",
 ];
 const popularHits = computed(() => searchLocalStations(localIndex.value, "", 5));
 const searchHistory = ref<string[]>([]);

@@ -77,7 +77,7 @@
           >
             <img
               loading="lazy"
-              :src="station.image || thumb"
+              :src="siteAssetUrl(station.image || thumb)"
               :alt="station.title"
               class="max-h-full max-w-full object-contain"
             />
@@ -197,7 +197,7 @@
             <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[var(--radio-surface)] ring-1 ring-inset ring-[var(--radio-border)]">
               <img
                 loading="lazy"
-                :src="item.track_image || thumb"
+                :src="siteAssetUrl(item.track_image || thumb)"
                 :alt="item.track_title || stationName"
                 class="h-full w-full object-cover"
               />
@@ -351,5 +351,6 @@ const playlistKey = (item: PlaylistItem, index: number): string =>
 
 const programKey = (item: ProgramItem, index: number): string =>
   [item.encodeId, item.startTime, item.title, index].join("-");
+const siteAssetUrl = useSiteAssetUrl();
 </script>
 

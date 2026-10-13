@@ -8,7 +8,7 @@
               class="flex h-10 w-10 items-center justify-center rounded-xl bg-transparent"
             >
               <img
-                src="/brand/logo-share.png"
+                :src="siteAssetUrl('/brand/logo-share.png')"
                 width="28"
                 height="28"
                 alt="ePlus OnAir"
@@ -146,5 +146,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", handleScroll);
 });
+const siteAssetUrl = useSiteAssetUrl();
 </script>
 

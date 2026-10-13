@@ -40,7 +40,9 @@ test("Homepage featured stations contain VOV Giao Thong and Zing only", async ()
   const ids = featured.map(([id]) => id);
   assert.deepEqual(ids, [...VIETNAM_FEATURED_STATION_IDS]);
   assert.equal(ids[0], "vov-gt-hcm");
-  assert.equal(ids.length, 10);
+  assert.equal(ids.length, 8);
+  assert.deepEqual(ids.slice(-2), ["c-pop-zing-mp3", "acoustic-radio-zing-mp3"]);
+  assert.ok(["kpop-radio-zing-mp3", "bolero-zing-mp3", "cham-radio-zing-mp3"].every(id => !ids.includes(id)));
   assert.ok(ids.slice(1).every(id => id.includes("zing-mp3")));
   for (const unavailable of ["vov1", "vov2", "vov3", "vov5"]) {
     assert.ok(!ids.includes(unavailable), `Do not feature known unavailable station ${unavailable}`);
@@ -60,6 +62,8 @@ test("Homepage featured radio includes Heart UK and Power 98 Love Songs with uni
     "asia/singapore": JSON.parse(sg),
   });
   assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, VIETNAM_FEATURED_STATION_IDS.length + 2);
+  assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, 10);
+  assert.equal(featured.length, 10);
   assert.deepEqual(featured.map(entry => entry.path), [...HOMEPAGE_FEATURED_STATION_PATHS]);
   assert.equal(featured[0].path, "asia/viet-nam/vov-gt-hcm");
   assert.equal(featured.find(entry => entry.id === "heart-uk")?.meta.title, "Heart UK");
@@ -69,6 +73,7 @@ test("Homepage featured radio includes Heart UK and Power 98 Love Songs with uni
     "asia/singapore/power",
   ]);
   assert.equal(new Set(featured.map(entry => entry.path)).size, featured.length);
+  assert.deepEqual(featured.slice(-2).map(entry => entry.id), ["c-pop-zing-mp3", "acoustic-radio-zing-mp3"]);
   for (const unavailable of ["vov1", "vov2", "vov3", "vov5"]) {
     assert.ok(!featured.some(entry => entry.id === unavailable));
   }

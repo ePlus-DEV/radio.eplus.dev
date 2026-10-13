@@ -4,6 +4,22 @@ Last updated: **2026-10-08**
 
 This file is the durable SEO checklist for ePlus OnAir. It records what is implemented, what is intentionally not implemented, and the reasons behind those decisions.
 
+## GitHub Pages project previews (not a live-domain cutover)
+
+GitHub Pages publishes to the existing public repositories without renames
+or custom domains:
+
+- `develop` → `ePlus-DEV/onair-staging-pages` →
+  `https://eplus-dev.github.io/onair-staging-pages/`
+- `main` → `ePlus-DEV/onair-production-pages` →
+  `https://eplus-dev.github.io/onair-production-pages/` when enabled
+
+Both project previews use `NUXT_PUBLIC_NO_INDEX=true`, no sitemap,
+no canonical/JSON-LD, no production GA4, and a shared brand OG image.
+`NUXT_APP_BASE_URL` must be the respective repo subpath so links and
+static assets load. Production `radio.eplus.dev` on DigitalOcean is unchanged.
+See [GitHub Pages guide](./GITHUB_PAGES.md).
+
 ## Staging branch noindex policy
 
 `develop` is staged at `https://radio-new.eplus.dev` and must **not** be indexed.
@@ -81,6 +97,22 @@ Page metadata:
 - explicit Open Graph URL
 - page-specific image where available
 - image alt text on station/country social metadata
+
+### Browser tab title during playback
+
+The app shell updates only the browser tab's <title> while a station is
+actually playing. If the realtime provider supplies a song, the tab prioritizes
+that title and artist (for example, `▶ Price Tag — Jessie J · Heart UK | ePlus OnAir`).
+If no track metadata exists, it falls back to `▶ Heart UK | ePlus OnAir`.
+The bottom player and tab share a single track extraction rule for Zing currentMedia
+and Webrad playlist metadata. Track state is tied to the active station URL and
+cleared when switching stations, preventing stale songs from appearing.
+This uses a reactive title template rather than mutating `document.title` directly.
+
+Pause/stop/failed playback return to the current route's normal title, even
+after navigating while listening. During SSR/static prerender, there is no
+active audio session: route titles, canonical URLs, Open Graph metadata and
+structured data remain unchanged.
 
 ## Structured data
 
