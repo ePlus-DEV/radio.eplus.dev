@@ -11,6 +11,8 @@ export const usePlaybackStore = defineStore('playback', {
     playing: false,
     waiting: false,
     queueOpen: false,
+    // Global dock/mini state so the app shell does not reserve hidden dock space.
+    playerMini: false,
     liveTrack: null as { stationUrl: string; title: string; artist: string } | null,
   }),
   actions: {
