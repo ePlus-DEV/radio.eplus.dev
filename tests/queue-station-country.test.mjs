@@ -31,10 +31,10 @@ test('queue template resolves every station country from its own URL', async () 
     readFile('lang/en-US.json', 'utf8'),
     readFile('lang/vi-VN.json', 'utf8'),
   ]);
-  assert.match(queue, /stationCountryLabel\\(station\\)/);
-  assert.match(queue, /queueCountryKey\\(props\\.stations\\)/);
+  assert.match(queue, /stationCountryLabel\(station\)/);
+  assert.match(queue, /queueCountryKey\(props\.stations\)/);
   assert.match(queue, /v-if="queueCountryLabel"/);
-  assert.doesNotMatch(queue, /\\{\\{ countryName \\|\\| stationName \\}\\}/);
+  assert.doesNotMatch(queue, /\{\{ countryName \|\| stationName \}\}/);
   assert.equal(JSON.parse(en).world.europe.united_kingdom, 'United Kingdom');
   assert.equal(JSON.parse(en).world.asia.singapore, 'Singapore');
   assert.equal(JSON.parse(vi).world.asia.viet_nam, 'Việt Nam');
