@@ -6,7 +6,7 @@ create an organization-root Pages repository or modify DigitalOcean/DNS via CI.
 
 | Source branch | GitHub Environment | Pages output repo | Custom domain |
 | --- | --- | --- | --- |
-| `develop` | `development` | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev` |
+| `dev` | `devment` | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev` |
 | `main` | `production` | `ePlus-DEV/onair-production-pages` | `https://radio.eplus.dev` |
 
 Both use `NUXT_APP_BASE_URL=/` because each Pages repo has its **own hostname**.
@@ -17,7 +17,7 @@ generated CSS, JS, image, audio catalog or internal link.
 
 In the **private source repository**: Settings → Environments.
 
-- Environment **`development`** → Environment variable:
+- Environment **`devment`** → Environment variable:
   `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev`
 - Environment **`production`** → Environment variable:
   `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`
@@ -29,7 +29,7 @@ Under Settings → Secrets and variables → Actions, retain the **repository**
 secret `PAGES_DEPLOY_TOKEN` with Contents: Read/write on the two public output
 repositories, and the **repository** opt-in variables:
 
-- `PAGES_DEV_READY=true` for authorized pushes/manual deploys of `develop`.
+- `PAGES_DEV_READY=true` for authorized pushes/manual deploys of `dev`.
 - `PAGES_PROD_READY=false` by default; only enable for an explicitly approved
   `main` publication when the revised workflow actually exists on `main`.
 
@@ -59,16 +59,16 @@ thousands of pages.
 
 ## Deploy order and SEO safeguards
 
-1. Merge reviewed workflow/script changes to `develop`. A workflow-only
+1. Merge reviewed workflow/script changes to `dev`. A workflow-only
    merge does **not** auto-run the expensive deploy (push path filters remain).
-2. Manually dispatch **Deploy ePlus OnAir to GitHub Pages** on `develop` when
-   the `development` Environment variable and `PAGES_DEV_READY` are ready.
+2. Manually dispatch **Deploy ePlus OnAir to GitHub Pages** on `dev` when
+   the `devment` Environment variable and `PAGES_DEV_READY` are ready.
 3. Check GitHub Actions, Pages publish state and `https://new-radio.eplus.dev`:
    homepage, a deep-linked station after refresh, CSS/JS, radio JSON, flags,
    favicon, play/pause, mobile navigation and `robots.txt`.
 4. Only after validating staging, promote the reviewed workflow changes to
    `main` in a **separate** approved release. The source `main` branch does
-   not inherit a new `develop` workflow automatically.
+   not inherit a new `dev` workflow automatically.
 5. Treat `PAGES_PROD_READY` as a manual opt-in. Do not silently merge to
    `main`, change DNS, terminate DigitalOcean or enable search indexing.
 
@@ -85,12 +85,12 @@ The isolated legacy branch
 `deploy/pages-production-preview-20261012` still contains a separate
 one-shot workflow configured for old project Pages paths and **must not be
 rerun** against custom-domain output repos until it is updated or retired.
-This PR updates the common deploy workflow on `develop`, not that isolated
+This PR updates the common deploy workflow on `dev`, not that isolated
 branch. Its previous completed run does not auto-update the static website
 for the new root URLs.
 
 Manual deployment guide:
 - Verify both GitHub Environments and the opt-in variable on the private repo.
 - Verify each Pages output repository has its expected `CNAME`.
-- Merge the config PR to `develop`, manually run the develop deploy, inspect
+- Merge the config PR to `dev`, manually run the dev deploy, inspect
   output assets/SEO, and only then plan production release.
