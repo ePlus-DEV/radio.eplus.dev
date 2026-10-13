@@ -22,11 +22,18 @@ test('custom-domain Pages deployments keep scoped environments and only two outp
   assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: 'true'"));
   assert.ok(workflow.includes('NUXT_APP_BASE_URL:'));
   assert.ok(workflow.includes('PAGES_DEV_READY'));
-  assert.ok(workflow.includes('PAGES_PROD_READY'));
+  assert.ok(workflow.includes("(github.ref_name == 'main')"),
+    'trusted main pushes must trigger a production release');
+  assert.ok(!workflow.includes('vars.PAGES_PROD_READY'),
+    'unset readiness flags must not silently skip production deploys');
+  assert.ok(workflow.includes('".github/workflows/deploy-github-pages.yml"'),
+    'workflow release fixes must trigger the deploy workflow');
   assert.ok(workflow.includes('PAGES_DEPLOY_TOKEN'));
   assert.ok(workflow.includes('ls-remote --exit-code'));
   assert.ok(workflow.includes('repo.permissions?.push !== true'));
   assert.ok(workflow.includes('rsync -a --delete'));
+  assert.ok(workflow.includes("--exclude='/README.md'"),
+    'public Pages repository README must survive incremental publishing');
   assert.ok(workflow.includes('.output/public'));
   assert.ok(workflow.includes('.nojekyll'));
   assert.ok(workflow.includes('printf \'%s\\n\' "$TARGET_DOMAIN" > "$target/CNAME"'));
