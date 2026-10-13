@@ -597,3 +597,27 @@ full player exits so their focus traps do not overlap. Mobile navigation and
 player heights are reserved in the page/footer together with the bottom safe area.
 No elapsed/remaining seek bar is shown for live radio. Next track is shown only
 when supplied by the provider; otherwise the UI explicitly labels next station.
+
+
+## Separate website and station image releases (2026-10-13)
+
+GitHub Pages limits the complete published website to 1 GB; smaller Git pushes
+cannot bypass that. Production HTML plus 4,228 generated station share JPEGs
+exceeded the budget. Pages CI and publishing now use `npm run generate:site`
+with `ONAIR_SKIP_STATION_OG=true`. Existing station logos, favicons and the
+shared brand PNG remain available; only generated station OG JPEGs are omitted.
+The generator deletes stale local `public/og/stations` output in this mode.
+
+`npm run generate:images` generates only station JPEGs. The manual **Publish
+station images separately** workflow reuses unchanged images from the public
+Pages repository's independent `station-images` branch, uploads changes in
+100 MiB batches and commits a verified complete manifest last. It never pushes
+to the website's `main` branch. Website builds use the shared PNG until
+`STATION_OG_BASE_URL` is set to the immutable completed-upload URL reported by
+that workflow. The external manifest audit rejects incomplete image uploads.
+Later image uploads cannot mutate assets referenced by an existing deployment.
+
+Run images from the intended source ref, and rerun the image workflow before
+switching the website URL after station additions or artwork changes. Do not
+point metadata at a mutable or partially uploaded image branch. Keep the
+1 GB website audit enabled and preserve existing noindex/canonical settings.

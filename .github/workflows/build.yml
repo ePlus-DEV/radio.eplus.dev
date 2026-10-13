@@ -67,6 +67,9 @@ jobs:
         run: npm test
 
   test:
+    env:
+      ONAIR_SKIP_STATION_OG: 'true'
+      NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
     name: "Test and prerender"
     if: github.event.pull_request.head.ref != 'bot/instant-audio-sync' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
@@ -172,9 +175,11 @@ jobs:
           NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
           NUXT_APP_BASE_URL: /
+          ONAIR_SKIP_STATION_OG: 'true'
+          NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
           ONAIR_SEARCH_INDEX_CACHE_HIT: ${{ steps.search_cache.outputs.cache-hit }}
           ONAIR_SOCIAL_PREVIEW_CACHE_HIT: ${{ steps.social_cache.outputs.cache-hit }}
-        run: npm run generate
+        run: npm run generate:site
 
       - name: "Validate Pages project subpath and static assets"
         if: steps.scope.outputs.prerender == 'true' && github.base_ref == 'develop'
@@ -222,3 +227,4 @@ jobs:
       - name: "Verify persistent player and responsive UI"
         if: ${{ vars.ENABLE_BROWSER_TESTS == 'true' && steps.scope.outputs.prerender == 'true' }}
         run: npm run test:ui
+
