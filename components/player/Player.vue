@@ -36,11 +36,10 @@
             </UTooltip>
             <p v-if="nowPlayingArtist" dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs"><span class="sm:hidden">{{ streamName }} · {{ nowPlayingArtist }}</span><span class="hidden sm:inline">{{ nowPlayingArtist }}</span></p>
             <p v-else dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">
-              <span class="sm:hidden">{{ streamName }} · {{ countryName || $t(country) }}</span><span class="hidden sm:inline">&nbsp;</span>
+              <span class="sm:hidden">{{ streamName }} · {{ countryName || $t(country) }}</span>
             </p>
             <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>
-            <p v-else class="radio-player-meta mt-1 hidden text-[10px] sm:block sm:text-xs">&nbsp;</p>
-          </div>
+           </div>
         </div>
 
         <div class="radio-player-controls z-20 flex items-center justify-center gap-0.5 sm:gap-2">
@@ -295,7 +294,7 @@ const muted = ref(false);
 const systemVolumeOnly = ref(false);
 const mobileQueueOpen = ref(false);
 const playerCompact = ref(false);
-const playerMini = ref(false);
+const playerMini = toRef(playback, 'playerMini');
 const playerStatusVisible = computed(() => streamError.value || !online.value || waiting.value || !hasPlayableSource.value || Boolean(sleepRemaining.value));
 const togglePlayerCompact = (): void => {
   playerCompact.value = !playerCompact.value;
