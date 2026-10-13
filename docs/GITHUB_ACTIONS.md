@@ -15,7 +15,7 @@ All four share concurrency group `onair-repository-work` with queued runs retain
 
 - `develop` → Environment `development` → `ePlus-DEV/onair-staging-pages` → `new-radio.eplus.dev`, when `PAGES_DEV_READY=true`.
 - `main` → Environment `production` → `ePlus-DEV/onair-production-pages` → `radio.eplus.dev`, automatically for trusted matching pushes.
-- Both Pages outputs are deliberately `noindex` until reviewed cutover.
+- `develop` staging is `noindex` and excludes its sitemap/GA4; `main` production is indexable with a sitemap, canonical tags and production-only GA4. The Pages output validator must reject a `noindex` production build.
 - `PAGES_DEPLOY_TOKEN` must have scoped write access to the two output repos; never pass it to PR workflows.
 
 Website generation is `npm run generate:site`; image generation is `npm run generate:images`. Splitting them keeps website output within GitHub Pages' 1 GB published-site limit. The publisher restores `CNAME` and retains each output repo's root `README.md` despite `rsync --delete`.

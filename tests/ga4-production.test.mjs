@@ -9,14 +9,19 @@ test('GA4 can run only on the canonical production website', () => {
   assert.equal(GA4_MEASUREMENT_ID, 'G-ETDY41KBBJ');
   const production = { nodeEnv: 'production', siteUrl: 'https://radio.eplus.dev', noIndex: false };
   assert.equal(isGa4ProductionBuild(production), true);
+  assert.equal(isGa4ProductionBuild({ ...production, noIndex: true }), true,
+    'a temporary production Pages noindex must not disable analytics');
   for (const context of [
     { ...production, nodeEnv: 'development' },
     { ...production, nodeEnv: 'test' },
-    { ...production, noIndex: true },
     { ...production, siteUrl: 'http://localhost:3000' },
+    { ...production, siteUrl: 'https://new-radio.eplus.dev' },
     { ...production, siteUrl: 'https://radio-new.eplus.dev' },
+    { ...production, siteUrl: 'https://eplus-dev.github.io/onair-production-pages/' },
     { ...production, siteUrl: 'https://arcade.eplus.dev' },
     { ...production, siteUrl: 'http://radio.eplus.dev' },
+    { ...production, siteUrl: 'https://radio.eplus.dev:8443' },
+    { ...production, siteUrl: 'https://radio.eplus.dev/fake-path' },
     { ...production, siteUrl: 'not-a-url' },
   ]) assert.equal(isGa4ProductionBuild(context), false, JSON.stringify(context));
 });
