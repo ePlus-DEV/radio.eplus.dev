@@ -32,10 +32,10 @@ const noIndex = isStagingDeployment({
   noIndex: process.env.NUXT_PUBLIC_NO_INDEX,
 });
 // Nuxt production builds also power previews; require our canonical public origin.
+// Analytics depends on the canonical production origin, not SEO noindex.
 const ga4Enabled = isGa4ProductionBuild({
   nodeEnv: process.env.NODE_ENV,
   siteUrl,
-  noIndex,
 });
 const stationOg = stationOgDeployment({ siteUrl, noIndex: noIndex ? "true" : "false" });
 const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "ePlus OnAir";

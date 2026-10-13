@@ -4,32 +4,31 @@ Last updated: **2026-10-08**
 
 This file is the durable SEO checklist for ePlus OnAir. It records what is implemented, what is intentionally not implemented, and the reasons behind those decisions.
 
-## GitHub Pages project previews (not a live-domain cutover)
+## GitHub Pages and production indexing policy
 
-GitHub Pages publishes to the existing public repositories without renames
-or custom domains:
+GitHub Pages publishes generated static output from the private source into
+two public repositories with **custom hostnames** and `NUXT_APP_BASE_URL=/`:
 
-- `develop` → `ePlus-DEV/onair-staging-pages` →
-  `https://eplus-dev.github.io/onair-staging-pages/`
-- `main` → `ePlus-DEV/onair-production-pages` →
-  `https://eplus-dev.github.io/onair-production-pages/` when enabled
+- `develop` → `ePlus-DEV/onair-staging-pages` → `https://new-radio.eplus.dev`:
+  **noindex**, no sitemap/canonical/JSON-LD, no GA4.
+- `main` → `ePlus-DEV/onair-production-pages` → `https://radio.eplus.dev`:
+  **indexable**, canonical/JSON-LD, production sitemap and GA4 `G-ETDY41KBBJ`.
 
-Both project previews use `NUXT_PUBLIC_NO_INDEX=true`, no sitemap,
-no canonical/JSON-LD, no production GA4, and a shared brand OG image.
-`NUXT_APP_BASE_URL` must be the respective repo subpath so links and
-static assets load. Production `radio.eplus.dev` on DigitalOcean is unchanged.
+Never set `NUXT_PUBLIC_NO_INDEX=true` globally in a shared Pages workflow.
+Use branch-specific indexing and verify the generated output before publishing.
+Do not assume GitHub Pages publishing itself changes production DNS or TLS.
 See [GitHub Pages guide](./GITHUB_PAGES.md).
 
 ## Staging branch noindex policy
 
-`develop` is staged at `https://radio-new.eplus.dev` and must **not** be indexed.
+`develop` is staged at `https://new-radio.eplus.dev` and must **not** be indexed.
 Build-time configuration for **staging only**:
 ```env
-NUXT_PUBLIC_SITE_URL=https://radio-new.eplus.dev
+NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev
 NUXT_PUBLIC_NO_INDEX=true
 ```
 There is no dependency on a custom deploy environment or checkout branch.
-Both `radio-new.eplus.dev` (documented staging) and `new-radio.eplus.dev` (preview alias) activate noindex if supplied as `NUXT_PUBLIC_SITE_URL`. The configured static-site build and DNS target must actually match the deployed domain.
+Both `new-radio.eplus.dev` (current staging) and the legacy `radio-new.eplus.dev` hostname automatically activate noindex if supplied as `NUXT_PUBLIC_SITE_URL`; the workflow must use the current configured origin.
 On production, keep `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` and do
 not enable `NUXT_PUBLIC_NO_INDEX`.
 

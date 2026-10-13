@@ -37,7 +37,7 @@ The publish step uses `rsync --delete` for generated files but protects the root
 
 ## SEO and station preview images
 
-Both Pages outputs intentionally contain page-level `noindex` until a **separate** approved production SEO/DNS cutover. Neither a `main` merge nor a successful Pages publish authorizes enabling indexing. Recheck production sitemap, canonical, robots, GA4 production gating and DNS before that decision.
+**The build policies differ by branch:** `develop` is always `noindex`, has no canonical/JSON-LD/sitemap and never runs production GA4. `main` is **indexable** (`index, follow`) and publishes canonical tags, structured data, a production sitemap and GA4 (`G-ETDY41KBBJ`). The Pages deploy gate uses the matching `production` / `staging` audit, so a production `noindex` artifact fails before publishing. Verify production DNS/TLS separately; pushing code does not itself change DNS.
 
 Website builds exclude per-station Open Graph JPEG files to remain below the Pages site size limit. Use **Publish station images separately** to upload reusable JPEGs incrementally to the public repository's `station-images` branch (up to 100 MiB per push). Only set `STATION_OG_BASE_URL` after the complete manifest is available; otherwise keep the shared brand social image. See [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md).
 

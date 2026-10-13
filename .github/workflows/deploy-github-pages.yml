@@ -65,13 +65,14 @@ jobs:
     env:
       NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
       NUXT_APP_BASE_URL: /
-      # Keep both Pages outputs noindex until an explicitly reviewed production cutover.
-      NUXT_PUBLIC_NO_INDEX: 'true'
+      # Indexing is branch-specific: development never indexed, main indexed.
+      # Never force noindex globally; that breaks production SEO and GA4.
+      NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}
       TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
       TARGET_DOMAIN: ${{ github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev' }}
       ONAIR_SKIP_STATION_OG: 'true'
       NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
-      TARGET_KIND: 'staging'
+      TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
       SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
     steps:
       - name: Skip an obsolete queued website release
