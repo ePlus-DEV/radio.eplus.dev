@@ -58,4 +58,6 @@ test("staging does not render thousands of station OG images", async () => {
   assert.match(station, /noIndex\s*\?/);
   assert.match(station, /\/brand\/social-preview\.png/);
   assert.match(validator, /const stationImage = staging \? homeImage :/);
+  assert.match(validator, /isStagingDeployment\(\{ siteUrl: origin, noIndex: process\.env\.NUXT_PUBLIC_NO_INDEX \}\)/);
+  assert.match(validator, /if \(!staging\) \{/);
 });

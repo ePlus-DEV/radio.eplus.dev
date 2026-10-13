@@ -7,13 +7,18 @@ import { checkPagesBuild } from '../scripts/check-pages-build.mjs';
 
 const read = file => readFile(file, 'utf8');
 
-test('project Pages targets stay exactly the existing two public repositories', async () => {
+test('custom-domain Pages deployments keep scoped environments and only two output repositories', async () => {
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
   assert.ok(workflow.includes('branches: [develop, main]'));
   assert.ok(workflow.includes('ePlus-DEV/onair-staging-pages'));
   assert.ok(workflow.includes('ePlus-DEV/onair-production-pages'));
-  assert.ok(workflow.includes('https://eplus-dev.github.io/onair-staging-pages'));
-  assert.ok(workflow.includes('https://eplus-dev.github.io/onair-production-pages'));
+  assert.ok(workflow.includes("name: ${{ github.ref_name == 'main' && 'production' || 'development' }}"));
+  assert.ok(workflow.includes('NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
+  assert.ok(workflow.includes('SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
+  assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev'"));
+  assert.ok(workflow.includes('NUXT_APP_BASE_URL: /'));
+  assert.ok(workflow.includes('https://$TARGET_DOMAIN'));
+  assert.ok(!workflow.includes('https://eplus-dev.github.io/onair-'));
   assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: 'true'"));
   assert.ok(workflow.includes('NUXT_APP_BASE_URL:'));
   assert.ok(workflow.includes('PAGES_DEV_READY'));
@@ -24,8 +29,9 @@ test('project Pages targets stay exactly the existing two public repositories', 
   assert.ok(workflow.includes('rsync -a --delete'));
   assert.ok(workflow.includes('.output/public'));
   assert.ok(workflow.includes('.nojekyll'));
-  assert.ok(workflow.includes('rm -f "$target/CNAME"'));
-  assert.ok(workflow.includes('assert-project-pages-output.mjs'));
+  assert.ok(workflow.includes('printf \'%s\\n\' "$TARGET_DOMAIN" > "$target/CNAME"'));
+  assert.ok(!workflow.includes('rm -f "$target/CNAME"'));
+  assert.ok(workflow.includes('assert-project-pages-output.mjs .output/public custom-domain'));
   assert.ok(workflow.indexOf('Verify exact Pages repository and PAT') <
     workflow.indexOf('Install dependencies'), 'preflight must precede heavy build');
   assert.ok(!workflow.includes('ePlus-DEV/ePlus-DEV.github.io'));
