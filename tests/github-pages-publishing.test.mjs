@@ -32,6 +32,8 @@ test('custom-domain Pages deployments keep scoped environments and only two outp
   assert.ok(workflow.includes('ls-remote --exit-code'));
   assert.ok(workflow.includes('repo.permissions?.push !== true'));
   assert.ok(workflow.includes('rsync -a --delete'));
+  assert.ok(workflow.includes("--exclude='/README.md'"),
+    'public Pages repository README must survive incremental publishing');
   assert.ok(workflow.includes('.output/public'));
   assert.ok(workflow.includes('.nojekyll'));
   assert.ok(workflow.includes('printf \'%s\\n\' "$TARGET_DOMAIN" > "$target/CNAME"'));
