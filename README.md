@@ -20,7 +20,7 @@
 - The destination repositories use their own `main` branches for the **static website output**; these are not the private source branch.
 - The custom hostnames and DNS must be verified separately. A successful GitHub push alone does not prove the live DNS is served by Pages.
 
-**Production indexing safeguard:** GitHub Pages output currently uses `NUXT_PUBLIC_NO_INDEX=true` for **both** environments pending an explicit SEO/DNS cutover. This does **not** describe every possible legacy DigitalOcean deployment. Do not enable production indexing merely because a branch is named `main`.
+**SEO isolation:** `develop` staging is always `noindex`; `main` production builds are indexable (`index, follow`) with canonical URLs and a sitemap. Production-only GA4 (`G-ETDY41KBBJ`) is enabled on the canonical production hostname. Verify DNS and HTTPS separately from GitHub Pages deployment.
 
 ## Features
 
@@ -104,7 +104,7 @@ Smaller pushes do **not** lift GitHub Pages' published-site 1 GB limit; keep the
 ## SEO and analytics
 
 - The canonical production origin is `https://radio.eplus.dev`; staging uses `https://new-radio.eplus.dev` and must remain `noindex`.
-- The Pages production artifact remains intentionally `noindex` until an explicit production cutover removes that policy and verifies sitemap, robots, canonical URL, and production-only GA4 (`G-ETDY41KBBJ`).
+- The `main` Pages production artifact is **indexable**, with canonical/structured data, sitemap and production-only GA4 (`G-ETDY41KBBJ`); `develop` Pages staging remains strictly `noindex`, without a sitemap or production GA4.
 - `NUXT_PUBLIC_SITE_URL`, `NUXT_PUBLIC_NO_INDEX`, and `STATION_OG_BASE_URL` affect the generated static pages at build time.
 - Do not configure the deprecated `radio-new.eplus.dev` or old `eplus-dev.github.io/onair-...` project paths as the current Pages origins.
 
