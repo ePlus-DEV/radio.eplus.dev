@@ -16,6 +16,24 @@ test('documentation and workflow-only PRs use fast CI but retain unit tests', as
   assert.match(yaml, /echo "prerender=\$prerender" >> "\$GITHUB_OUTPUT"/);
 });
 
+test('post-build audit scripts use fast CI while asset-generating scripts still require a build', async () => {
+  const yaml = await workflow();
+  assert.match(yaml, /scripts\/assert-\*\.mjs\|scripts\/check-pages-build\.mjs/);
+  assert.doesNotMatch(yaml, /\|scripts\/generate-\*\.mjs\)/);
+  assert.doesNotMatch(yaml, /\|scripts\/build-\*\.mjs\)/);
+});
+
+test('generated search catalog and social preview are restored only for full CI with content-derived keys', async () => {
+  const yaml = await workflow();
+  assert.match(yaml, /uses: actions\/cache@v4/);
+  assert.match(yaml, /path: public\/search\/stations\.json/);
+  assert.match(yaml, /hashFiles\('public\/radio\/\*\*\/\*\.json', 'utils\/featured-stations\.mjs', 'scripts\/build-station-search-index\.mjs'\)/);
+  assert.match(yaml, /path: public\/brand\/social-preview\.png/);
+  assert.match(yaml, /hashFiles\('public\/brand\/social-preview\.svg', 'scripts\/generate-social-preview\.mjs', 'package-lock\.json'\)/);
+  assert.match(yaml, /ONAIR_SEARCH_INDEX_CACHE_HIT:/);
+  assert.match(yaml, /ONAIR_SOCIAL_PREVIEW_CACHE_HIT:/);
+});
+
 test('prerender, output audits and browser checks are gated together', async () => {
   const yaml = await workflow();
   for (const step of [
