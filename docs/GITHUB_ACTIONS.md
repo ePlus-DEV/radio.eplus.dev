@@ -35,3 +35,15 @@ See [GitHub Pages migration](./GITHUB_PAGES.md) for exact one-time setup and rol
 `.github/dependabot.yml` remains enabled for weekly **GitHub Actions dependency updates**. Dependabot continues to open PRs, but maintainers must review and merge them manually. Never re-enable automatic merging without an explicit security and branch-protection decision.
 
 Deleting workflow files stops future runs; older run history may remain visible in GitHub Actions.
+
+## Repository-wide execution queue
+
+All four workflows, including `publish-station-images.yml`, share
+`onair-repository-work`. `queue: max` preserves distinct waiting runs;
+`cancel-in-progress: false` lets the active run finish. Only one workflow
+executes at a time, even across PRs, source branches and deployment targets.
+
+Queued CI runs skip closed PRs or superseded head SHAs before expensive work.
+Queued website deployments skip commits superseded on their source branch.
+Multiple pending runs are waiting work, not concurrently executing jobs.
+Old runs dispatched before this configuration keep their earlier settings.
