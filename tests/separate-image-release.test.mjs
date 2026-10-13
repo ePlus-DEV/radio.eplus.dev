@@ -69,8 +69,13 @@ test('real Git upload pushes independent batches, supports retries and never cha
       manifest.entries['a/b/' + id + '.jpg'] = { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
     }
     await writeFile(join(root, 'og/stations/manifest.json'), JSON.stringify(manifest));
+    // Fail the first push after its commit exists locally, then resume.
+    git('remote', 'set-url', 'origin', join(dir, 'unavailable.git'));
+    await assert.rejects(publishImageBatches({ root, budget: 1500 }));
+    assert.equal(git('rev-list', '--count', 'HEAD').trim(), '1');
+    git('remote', 'set-url', 'origin', remote);
     const result = await publishImageBatches({ root, budget: 1500 });
-    assert.equal(result.batches, 3);
+    assert.equal(result.batches, 2);
     assert.equal(git('rev-parse', 'origin/main').trim(), websiteSha);
     assert.equal(git('rev-list', '--count', 'HEAD').trim(), '3');
     assert.match(git('show', 'HEAD:og/stations/manifest.json'), /"complete":true/);

@@ -72,7 +72,8 @@ await assertImage(homeImage, [137, 80, 78, 71, 13, 10, 26, 10]);
 if (policy.mode !== "external") {
   await assertImage(stationImage, policy.mode === "shared" ? [137, 80, 78, 71, 13, 10, 26, 10] : [255, 216, 255]);
 }
-console.log(staging
-  ? "PASS: staging uses existing shared Open Graph artwork for all pages, without station-specific image generation."
-  : "PASS: production homepage and station have unique, route-specific OG images and descriptions.");
-
+console.log(policy.mode === "shared"
+  ? "PASS: station pages use the shared Open Graph PNG while image uploads are deferred."
+  : policy.mode === "external"
+    ? "PASS: station pages reference the separately published Open Graph image set."
+    : "PASS: production homepage and station have unique, route-specific OG images and descriptions.");
