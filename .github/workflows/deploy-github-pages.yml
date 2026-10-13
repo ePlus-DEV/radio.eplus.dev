@@ -3,7 +3,7 @@ name: "Deploy ePlus OnAir to GitHub Pages"
 # Deploy only merged, trusted source. Never give publishing credentials to PRs.
 on:
   push:
-    branches: [develop, main]
+    branches: [dev, main]
     # Only changes to the delivered website justify regenerating thousands of
     # station pages. Workflows, docs, tests and one-off crawlers do not.
     paths:
