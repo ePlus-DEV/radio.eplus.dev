@@ -1,14 +1,20 @@
 /**
- * Keep Google Analytics restricted to the canonical public website.
- * Nuxt preview/staging builds can use NODE_ENV=production too.
+ * Enable GA4 for the canonical production origin, independent of SEO indexing.
+ *
+ * The temporary Pages production artifact is intentionally noindex during the
+ * hosting/DNS cutover. noindex controls search engines, NOT site analytics.
+ * Staging and previews are blocked by their build-time origin and the
+ * client-side location.hostname check in plugins/ga4.client.ts.
  */
 export const GA4_MEASUREMENT_ID = 'G-ETDY41KBBJ';
 
-export function isGa4ProductionBuild({ nodeEnv = '', siteUrl = '', noIndex = false } = {}) {
-  if (nodeEnv !== 'production' || noIndex) return false;
+export function isGa4ProductionBuild({ nodeEnv = '', siteUrl = '' } = {}) {
+  if (nodeEnv !== 'production') return false;
   try {
     const url = new URL(String(siteUrl));
-    return url.protocol === 'https:' && url.hostname === 'radio.eplus.dev';
+    return url.origin === 'https://radio.eplus.dev'
+      && (url.pathname === '/' || url.pathname === '')
+      && !url.search && !url.hash;
   } catch {
     return false;
   }
