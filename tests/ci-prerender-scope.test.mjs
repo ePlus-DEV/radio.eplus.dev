@@ -12,7 +12,7 @@ test('documentation and workflow-only PRs use fast CI but retain unit tests', as
   assert.match(yaml, /prerender=false\s+if \[ ! -s/);
   assert.match(yaml, /README\.md\|AGENTS\.md\|docs\/\*\|tests\/\*\|\.github\/workflows\/\*\|\.github\/dependabot\.yml/);
   assert.match(yaml, /\*\)\s+prerender=true\s+;;/);
-  assert.match(yaml, /- name: "Run unit tests"\s+run: npm test/);
+  assert.match(yaml, /- name: "Run unit tests"\s+(?:if: [^\n]+\s+)?run: npm test/);
   assert.match(yaml, /echo "prerender=\$prerender" >> "\$GITHUB_OUTPUT"/);
 });
 

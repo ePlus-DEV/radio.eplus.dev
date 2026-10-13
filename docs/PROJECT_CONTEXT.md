@@ -621,3 +621,21 @@ Run images from the intended source ref, and rerun the image workflow before
 switching the website URL after station additions or artwork changes. Do not
 point metadata at a mutable or partially uploaded image branch. Keep the
 1 GB website audit enabled and preserve existing noindex/canonical settings.
+
+## One repository workflow at a time (2026-10-13)
+
+CI, Pages website deployment, manual station-image uploads and radio sync all
+use workflow-level concurrency group `onair-repository-work`, with
+`queue: max` and `cancel-in-progress: false`. Groups based on PR number,
+branch, target or workflow name do not enforce a repository-wide limit.
+Do not restore those separate groups. Never give child jobs the same lock as
+their parent workflow: that can deadlock a workflow holding the shared lock.
+
+Distinct queued work is preserved, rather than silently replacing another
+PR's required CI or a pending production deployment. When a queued CI run
+starts, its preflight skips closed PRs and superseded head commits before
+Node setup, installation and tests. Website deployment similarly skips an old
+branch commit before generating or publishing files. The next current run
+performs the normal checks. An active upload/deploy finishes before the next
+workflow starts. Previously dispatched runs retain their old concurrency
+configuration until completion.
