@@ -8,6 +8,8 @@ on:
     # station pages. Workflows, docs, tests and one-off crawlers do not.
     paths:
       - "app.vue"
+      # Ensure trusted deployment workflow changes trigger the intended release.
+      - ".github/workflows/deploy-github-pages.yml"
       - "app.config.ts"
       - "error.vue"
       - "nuxt.config.ts"
@@ -49,11 +51,11 @@ concurrency:
 jobs:
   publish:
     name: "Publish ${{ github.ref_name }} to Pages"
-    # Keep both targets disabled until the public Pages repositories, credentials
-    # and branch publishing settings have been configured and verified.
+    # Production publishes on trusted main pushes after exact-target preflight.
+    # Staging remains explicitly opt-in via PAGES_DEV_READY.
     if: >-
       (github.ref_name == 'develop' && vars.PAGES_DEV_READY == 'true') ||
-      (github.ref_name == 'main' && vars.PAGES_PROD_READY == 'true')
+      (github.ref_name == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 90
     # Same variable name is scoped independently in the two GitHub Environments.
