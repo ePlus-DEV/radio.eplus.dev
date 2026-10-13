@@ -8,7 +8,7 @@
 
 @layer base {
   :root, html.light, html.dark {
-    --radio-player-height: 96px;
+    --radio-player-height: 80px;
     --radio-mobile-nav-height: 0px;
     --radio-mobile-player-gap: 0px;
     --ui-bg: var(--radio-surface);
@@ -129,6 +129,11 @@
     padding-bottom: calc(var(--radio-player-height) + var(--radio-mobile-nav-height) + var(--radio-mobile-player-gap) + env(safe-area-inset-bottom));
   }
 
+  /* The floating mini-player does not occupy the fixed bottom dock slot. */
+  .radio-shell-player-mini {
+    padding-bottom: calc(var(--radio-mobile-nav-height) + env(safe-area-inset-bottom));
+  }
+
   .radio-player-dock {
     min-height: calc(var(--radio-player-height) + env(safe-area-inset-bottom));
     padding-bottom: env(safe-area-inset-bottom);
@@ -148,6 +153,11 @@
       align-self: start;
       min-height: 0;
       height: calc(100dvh - 104px - var(--radio-player-height) - 16px - env(safe-area-inset-bottom));
+    }
+
+    /* Expand sidebar when the full-height player dock is hidden. */
+    .radio-shell-player-mini .radio-desktop-sidebar {
+      height: calc(100dvh - 104px - 16px - env(safe-area-inset-bottom));
     }
 
     .radio-desktop-sidebar-scroll {
