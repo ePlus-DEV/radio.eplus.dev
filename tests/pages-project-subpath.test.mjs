@@ -55,7 +55,7 @@ test('custom-domain Pages output uses root URLs and rejects legacy project prefi
     assert.equal(await assertProjectPagesOutput(root, 'custom-domain'), true);
     await writeFile(join(deep, 'index.html'), render('/onair-staging-pages/'));
     await assert.rejects(assertProjectPagesOutput(root, 'custom-domain'),
-      /Nuxt JS\/CSS URLs must use/);
+      /invalid project-path\/root-domain assets/);
     await writeFile(join(deep, 'index.html'), render('/'));
     await writeFile(join(root, 'index.html'), render('/').replace('href="/asia"', 'href="/onair-production-pages/asia"'));
     await assert.rejects(assertProjectPagesOutput(root, 'custom-domain'),
