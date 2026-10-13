@@ -1,87 +1,96 @@
-# ePlus OnAir GitHub Pages — existing public repositories, no custom domains
+# ePlus OnAir — GitHub Pages custom-domain deployment
 
-Keep source private at `ePlus-DEV/radio.eplus.dev`. Publish only static
-`.output/public` into the two **existing public** output repositories:
+The private source stays at `ePlus-DEV/radio.eplus.dev`. Static build output is
+published only to the two **existing** public repositories. Never rename them,
+create an organization-root Pages repository or modify DigitalOcean/DNS via CI.
 
-| Branch | Public repository | Test URL, no custom DNS | SEO |
+| Source branch | GitHub Environment | Pages output repo | Custom domain |
 | --- | --- | --- | --- |
-| `develop` | `ePlus-DEV/onair-staging-pages` | https://eplus-dev.github.io/onair-staging-pages/ | noindex |
-| `main` | `ePlus-DEV/onair-production-pages` | https://eplus-dev.github.io/onair-production-pages/ | noindex preview |
+| `develop` | `development` | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev` |
+| `main` | `production` | `ePlus-DEV/onair-production-pages` | `https://radio.eplus.dev` |
 
-**DO NOT RENAME repositories.** There is no need for an
-`ePlus-DEV.github.io` organization-root repository. A GitHub **project**
-Pages URL always includes the output repository name until you configure a
-custom domain.
+Both use `NUXT_APP_BASE_URL=/` because each Pages repo has its **own hostname**.
+Do not use `/onair-staging-pages/` or `/onair-production-pages/` in any
+generated CSS, JS, image, audio catalog or internal link.
 
-These are previews only. The live `https://radio.eplus.dev` remains on
-DigitalOcean with its existing domain, GA4 and production SEO unchanged.
+## Configure the two scoped variables
 
-## One-time GitHub settings
+In the **private source repository**: Settings → Environments.
 
-In **each public repository**:
+- Environment **`development`** → Environment variable:
+  `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev`
+- Environment **`production`** → Environment variable:
+  `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`
 
-1. Settings → Pages → Build and deployment: **Deploy from a branch**
-2. Branch: `main`, folder: `/(root)`, Save
-3. Leave **Custom domain empty** until you explicitly decide to add one
+The variables have the **same name** but belong to different Environments.
+They must not be two duplicate repository-level variables.
 
-In the **private source repository** under
-Settings → Secrets and variables → Actions:
+Under Settings → Secrets and variables → Actions, retain the **repository**
+secret `PAGES_DEPLOY_TOKEN` with Contents: Read/write on the two public output
+repositories, and the **repository** opt-in variables:
 
-- Secret: `PAGES_DEPLOY_TOKEN` with **Contents: Read/write** on both public
-  output repositories, or classic PAT with `public_repo` scope.
-- Variable: `PAGES_DEV_READY=true` to allow `develop` publishing.
-- Variable: `PAGES_PROD_READY=false` until you are ready to publish a
-  **public production-branch preview**. Change it to `true` when ready.
-- `PAGES_DEV_SITE_URL` is **unused by this no-domain workflow**; do not
-  rely on previous custom-domain settings.
+- `PAGES_DEV_READY=true` for authorized pushes/manual deploys of `develop`.
+- `PAGES_PROD_READY=false` by default; only enable for an explicitly approved
+  `main` publication when the revised workflow actually exists on `main`.
 
-No DNS records or custom-domain settings are needed for either test URL.
-The workflow generates no `CNAME`.
+Do not give `PAGES_DEPLOY_TOKEN` to pull request jobs. If a GitHub Environment
+has deployment branch restrictions or required reviewers, configure them to
+match the intended source branch and approvals.
 
-## Behavior and safety
+## GitHub Pages / DNS
 
-`.github/workflows/deploy-github-pages.yml` publishes trusted merges/pushes
-affecting web content or a manually dispatched trusted branch. It **does not
-deploy** on docs, unit-tests, GitHub-workflow-only or one-time radio-crawler
-changes. Unlike normal CI, a deployment only runs if the corresponding
-`PAGES_*_READY` gate is `true`.
+Each public output repository: Settings → Pages → Deploy from branch →
+`main` → `/(root)`. Custom domains:
 
-The workflow first authenticates the token and checks the **exact output
-repository** and write permission. It runs this **before** `npm ci` or the
-heavy `npm run generate`, so a missing repository or expired PAT fails fast.
+- `onair-staging-pages`: `new-radio.eplus.dev`
+- `onair-production-pages`: `radio.eplus.dev`
 
-Nuxt receives:
-- DEV: `NUXT_APP_BASE_URL=/onair-staging-pages/`
-- PROD preview: `NUXT_APP_BASE_URL=/onair-production-pages/`
+For a subdomain, the DNS CNAME points to `eplus-dev.github.io` **without any
+repository pathname**. Do not change an existing `radio.eplus.dev` DigitalOcean
+DNS record as part of a workflow/PR change. Cut over only after an explicit
+production migration decision and verified content/HTTPS readiness. Enable
+**Enforce HTTPS** once GitHub's certificate is ready.
 
-It also receives the matching `NUXT_PUBLIC_SITE_URL` including the project
-subpath, and `NUXT_PUBLIC_NO_INDEX=true` on **both** preview sites. Asset
-URLs, static JSON fetches, navigation and favicons must respect this base.
-Run the project URL/deep-link validator before pushing.
+The publishing workflow writes the appropriate root `CNAME` **after** the
+`rsync --delete` step, so later deploys cannot accidentally drop the GitHub
+Pages custom-domain binding. A pre-build check validates the Environment URL
+against the expected domain, before installing npm packages or generating
+thousands of pages.
 
-The workflow retains the GitHub Pages 1 GB content-size limit and copies
-existing source `public/img/`, `public/radio/`, and `public/brand/` files
-unchanged. While previewing without domains, per-station production OG JPEG
-generation is disabled and a shared brand social image is used instead.
+## Deploy order and SEO safeguards
 
-## First deployment and verification
+1. Merge reviewed workflow/script changes to `develop`. A workflow-only
+   merge does **not** auto-run the expensive deploy (push path filters remain).
+2. Manually dispatch **Deploy ePlus OnAir to GitHub Pages** on `develop` when
+   the `development` Environment variable and `PAGES_DEV_READY` are ready.
+3. Check GitHub Actions, Pages publish state and `https://new-radio.eplus.dev`:
+   homepage, a deep-linked station after refresh, CSS/JS, radio JSON, flags,
+   favicon, play/pause, mobile navigation and `robots.txt`.
+4. Only after validating staging, promote the reviewed workflow changes to
+   `main` in a **separate** approved release. The source `main` branch does
+   not inherit a new `develop` workflow automatically.
+5. Treat `PAGES_PROD_READY` as a manual opt-in. Do not silently merge to
+   `main`, change DNS, terminate DigitalOcean or enable search indexing.
 
-After merging the configuration PR into `develop`, publish with a manual
-workflow dispatch on `develop` (or with a trusted website-related push).
-Verify the source Actions job, the public Pages repository content and its
-Pages deployment separately; a green Nuxt build is not yet a green Pages site.
+**Both output repositories intentionally remain `noindex`** during this
+custom-domain setup, including the PRO preview. The current production
+site may already be serving `radio.eplus.dev` elsewhere, so do not interpret
+the `production` Environment name alone as permission to enable indexing.
+Before canonical production cutover, separately assess sitemap, robots,
+GA4 measurement `G-ETDY41KBBJ`, production OG images and GitHub Pages' 1 GB
+output-size limit; switch `NUXT_PUBLIC_NO_INDEX` off only in a deliberate
+reviewed production release.
 
-Check **homepage**, direct station URLs, refreshing a station, local radio
-JSON, logos, flags, CSS/JS, audio playback and navigation. Both preview sites
-must remain `noindex`, and neither should publish a sitemap or `CNAME`.
+The isolated legacy branch
+`deploy/pages-production-preview-20261012` still contains a separate
+one-shot workflow configured for old project Pages paths and **must not be
+rerun** against custom-domain output repos until it is updated or retired.
+This PR updates the common deploy workflow on `develop`, not that isolated
+branch. Its previous completed run does not auto-update the static website
+for the new root URLs.
 
-When you are ready to test `main`, enable `PAGES_PROD_READY=true` and run
-the same workflow on `main` **only after the workflow has been promoted to
-main**. This does not change `radio.eplus.dev` or DigitalOcean.
-
-## Future custom domains
-
-Adding real domains is a **separate, explicitly approved change**. Then
-update Nuxt URL/base-path/SEO rules, GitHub Pages CNAME configuration and DNS
-together, and validate site indexing and size again. Do not automatically
-assume production domain cutover or flip indexing based on branch name alone.
+Manual deployment guide:
+- Verify both GitHub Environments and the opt-in variable on the private repo.
+- Verify each Pages output repository has its expected `CNAME`.
+- Merge the config PR to `develop`, manually run the develop deploy, inspect
+  output assets/SEO, and only then plan production release.
