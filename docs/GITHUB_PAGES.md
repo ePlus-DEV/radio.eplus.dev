@@ -6,7 +6,7 @@ create an organization-root Pages repository or modify DigitalOcean/DNS via CI.
 
 | Source branch | GitHub Environment | Pages output repo | Custom domain |
 | --- | --- | --- | --- |
-| `dev` | `devment` | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev` |
+| `dev` | `development` | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev` |
 | `main` | `production` | `ePlus-DEV/onair-production-pages` | `https://radio.eplus.dev` |
 
 Both use `NUXT_APP_BASE_URL=/` because each Pages repo has its **own hostname**.
@@ -17,7 +17,7 @@ generated CSS, JS, image, audio catalog or internal link.
 
 In the **private source repository**: Settings → Environments.
 
-- Environment **`devment`** → Environment variable:
+- Environment **`development`** → Environment variable:
   `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev`
 - Environment **`production`** → Environment variable:
   `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`
@@ -62,7 +62,7 @@ thousands of pages.
 1. Merge reviewed workflow/script changes to `dev`. A workflow-only
    merge does **not** auto-run the expensive deploy (push path filters remain).
 2. Manually dispatch **Deploy ePlus OnAir to GitHub Pages** on `dev` when
-   the `devment` Environment variable and `PAGES_DEV_READY` are ready.
+   the `development` Environment variable and `PAGES_DEV_READY` are ready.
 3. Check GitHub Actions, Pages publish state and `https://new-radio.eplus.dev`:
    homepage, a deep-linked station after refresh, CSS/JS, radio JSON, flags,
    favicon, play/pause, mobile navigation and `robots.txt`.
