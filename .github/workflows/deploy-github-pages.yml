@@ -3,7 +3,7 @@ name: "Deploy ePlus OnAir to GitHub Pages"
 # Deploy only merged, trusted source. Never give publishing credentials to PRs.
 on:
   push:
-    branches: [dev, main]
+    branches: [develop, main]
     # Only changes to the delivered website justify regenerating thousands of
     # station pages. Workflows, docs, tests and one-off crawlers do not.
     paths:
@@ -49,7 +49,7 @@ jobs:
     # Keep both targets disabled until the public Pages repositories, credentials
     # and branch publishing settings have been configured and verified.
     if: >-
-      (github.ref_name == 'dev' && vars.PAGES_DEV_READY == 'true') ||
+      (github.ref_name == 'develop' && vars.PAGES_DEV_READY == 'true') ||
       (github.ref_name == 'main' && vars.PAGES_PROD_READY == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 90
