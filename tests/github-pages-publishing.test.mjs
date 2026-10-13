@@ -9,7 +9,7 @@ const read = file => readFile(file, 'utf8');
 
 test('custom-domain Pages deployments keep scoped environments and only two output repositories', async () => {
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
-  assert.ok(workflow.includes('branches: [dev, main]'));
+  assert.ok(workflow.includes('branches: [develop, main]'));
   assert.ok(workflow.includes('ePlus-DEV/onair-staging-pages'));
   assert.ok(workflow.includes('ePlus-DEV/onair-production-pages'));
   assert.ok(workflow.includes("name: ${{ github.ref_name == 'main' && 'production' || 'development' }}"));
