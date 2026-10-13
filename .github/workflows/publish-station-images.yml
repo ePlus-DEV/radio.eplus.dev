@@ -13,8 +13,11 @@ on:
 permissions:
   contents: read
 
+# All repository work shares one queue, including different PRs/branches.
+# Preserve distinct queued work; never interrupt an active deploy/image upload.
 concurrency:
-  group: station-images-${{ inputs.target }}
+  group: onair-repository-work
+  queue: max
   cancel-in-progress: false
 
 jobs:
