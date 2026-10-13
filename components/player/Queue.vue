@@ -30,10 +30,10 @@
         class="mt-2.5 flex items-center gap-2"
       >
         <span
-          v-if="countryName"
+          v-if="queueCountryLabel"
           class="hidden items-center rounded-full border h-9 shrink-0 border-[var(--radio-border)] bg-[var(--radio-surface)] px-2.5 text-[11px] font-semibold text-[var(--radio-text-muted)] sm:inline-flex"
         >
-          {{ countryName }}
+          {{ queueCountryLabel }}
         </span>
 
         <label
@@ -96,7 +96,7 @@
               {{ station.title }}
             </span>
             <span class="mt-0.5 block truncate text-[11px] text-[var(--radio-text-muted)]">
-              {{ countryName || stationName }}
+              {{ stationCountryLabel(station) }}
             </span>
           </span>
 
@@ -235,6 +235,7 @@
 <script setup lang="ts">
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
+import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -281,6 +282,14 @@ defineEmits<{
 
 const query = ref("");
 const hasStations = computed(() => props.stations.length > 0);
+// A featured playlist can mix regions: never reuse the active station country
+// for every queue item (e.g. Heart UK and Power 98 Love Songs).
+const sharedCountryKey = computed(() => queueCountryKey(props.stations));
+const queueCountryLabel = computed(() => sharedCountryKey.value ? t(sharedCountryKey.value) : "");
+const stationCountryLabel = (station: RadioStationOption): string => {
+  const key = stationCountryKey(station.url);
+  return key ? t(key) : (queueCountryLabel.value || "");
+};
 const hasSchedule = computed(
   () => props.playlist.length > 0 || props.program.length > 0,
 );
