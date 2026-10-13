@@ -1,3 +1,4 @@
+import { stationOgDeployment, stationSocialImage } from "../utils/station-og-deployment.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -50,23 +51,29 @@ const home = await loadPage("/");
 const stationRoute = "/asia/viet-nam/vov-gt-hcm";
 const station = await loadPage(stationRoute);
 const homeImage = "/brand/social-preview.png";
-const stationImage = staging ? homeImage : "/og/stations/asia/viet-nam/vov-gt-hcm.jpg";
+const policy = stationOgDeployment({ siteUrl: origin });
+const share = stationSocialImage({ ...policy, origin, imagePath: "/og/stations/asia/viet-nam/vov-gt-hcm.jpg" });
+const stationImage = policy.mode === "shared" ? homeImage : "/og/stations/asia/viet-nam/vov-gt-hcm.jpg";
 assert.deepEqual(values(home, "name", "twitter:card"), ["summary_large_image"], "Homepage must contain a single valid Twitter card");
 assert.deepEqual(values(station, "name", "twitter:card"), ["summary_large_image"], "Station must contain a single valid Twitter card");
 exactMeta(home, "og:image", origin + homeImage);
 exactMeta(home, "og:url", origin + "/");
-exactMeta(station, "og:image", origin + stationImage);
+exactMeta(station, "og:image", share.url);
 exactMeta(station, "og:url", origin + stationRoute);
 specificMeta(station, "og:title", "VOV Giao");
 specificMeta(station, "og:description", "VOV Giao thông TPHCM ra đời");
-assert.deepEqual(values(station, "name", "twitter:image"), [origin + stationImage]);
+assert.deepEqual(values(station, "name", "twitter:image"), [share.url]);
 if (!staging) {
   assert.ok(!values(station, "name", "robots").some(x => x.includes("noindex")), "Production must be indexable");
 } else {
   assert.ok(values(station, "name", "robots").some(x => x.includes("noindex")), "Staging must remain noindex");
 }
 await assertImage(homeImage, [137, 80, 78, 71, 13, 10, 26, 10]);
-await assertImage(stationImage, staging ? [137, 80, 78, 71, 13, 10, 26, 10] : [255, 216, 255]);
-console.log(staging
-  ? "PASS: staging uses existing shared Open Graph artwork for all pages, without station-specific image generation."
-  : "PASS: production homepage and station have unique, route-specific OG images and descriptions.");
+if (policy.mode !== "external") {
+  await assertImage(stationImage, policy.mode === "shared" ? [137, 80, 78, 71, 13, 10, 26, 10] : [255, 216, 255]);
+}
+console.log(policy.mode === "shared"
+  ? "PASS: station pages use the shared Open Graph PNG while image uploads are deferred."
+  : policy.mode === "external"
+    ? "PASS: station pages reference the separately published Open Graph image set."
+    : "PASS: production homepage and station have unique, route-specific OG images and descriptions.");

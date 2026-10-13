@@ -63,6 +63,8 @@ jobs:
       NUXT_PUBLIC_NO_INDEX: 'true'
       TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
       TARGET_DOMAIN: ${{ github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev' }}
+      ONAIR_SKIP_STATION_OG: 'true'
+      NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
       TARGET_KIND: 'staging'
       SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
     steps:
@@ -136,12 +138,13 @@ jobs:
         run: npm test
 
       - name: Generate static website
-        run: npm run generate
+        run: npm run generate:site
 
       - name: Check SEO for chosen environment
         run: |
           node scripts/assert-sitemap-xml.mjs
           node scripts/assert-route-social-meta.mjs
+          node scripts/assert-all-station-social-meta.mjs
           node scripts/assert-brand-assets.mjs
           if [ "$TARGET_KIND" = staging ]; then
             node scripts/assert-staging-noindex.mjs
@@ -190,3 +193,4 @@ jobs:
           auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
           git -C "$target" -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push origin HEAD:main
           echo "Published $TARGET_KIND to $TARGET_REPOSITORY"
+

@@ -1,3 +1,4 @@
+import { stationOgDeployment, stationSocialImage } from "../utils/station-og-deployment.mjs";
 import assert from "node:assert/strict";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
@@ -57,11 +58,20 @@ export async function auditAllStationOg({
   origin = defaultOrigin,
   concurrency = 12,
   maxFailuresToShow = 20,
+  policy = { mode: 'generated', baseUrl: '' },
+  fetchImpl = globalThis.fetch,
 } = {}) {
   origin = origin.replace(/\/$/, "");
   const stations = await readCatalog(root);
   assert.ok(stations.length, "Empty station catalog");
   const output = join(root, ".output", "public");
+  let manifest = null;
+  if (policy.mode === "external") {
+    const response = await fetchImpl(policy.baseUrl + "/og/stations/manifest.json", { signal: AbortSignal.timeout(15000) });
+    assert.ok(response.ok, "Complete external image manifest must be available");
+    manifest = await response.json();
+    assert.equal(manifest.complete, true, "External image upload is not complete");
+  }
   const failures = [];
   const paths = new Set();
   let next = 0, failed = 0, verified = 0;
@@ -73,22 +83,29 @@ export async function auditAllStationOg({
     assert.ok(!paths.has(image), "Duplicate station image path: " + image);
     paths.add(image);
     const html = await readStationHtml(output, route);
-    exact(html, "property", "og:image", origin + image);
+    const share = stationSocialImage({ ...policy, origin, imagePath: image });
+    exact(html, "property", "og:image", share.url);
     exact(html, "property", "og:url", origin + route);
-    exact(html, "name", "twitter:image", origin + image);
+    exact(html, "name", "twitter:image", share.url);
     exact(html, "name", "twitter:card", "summary_large_image");
     exact(html, "property", "og:image:width", "1200");
     exact(html, "property", "og:image:height", "630");
-    exact(html, "property", "og:image:type", "image/jpeg");
+    exact(html, "property", "og:image:type", share.type);
     present(html, "property", "og:title");
     present(html, "property", "og:description");
     present(html, "name", "description");
-    const filename = join(output, image.slice(1));
-    assert.ok((await stat(filename)).size > 1000, image + ": missing or tiny JPEG");
-    const info = await sharp(filename).metadata();
-    assert.equal(info.format, "jpeg", image + ": format");
-    assert.equal(info.width, 1200, image + ": width");
-    assert.equal(info.height, 630, image + ": height");
+    if (policy.mode === "external") {
+      const entry = manifest.entries?.[image.slice("/og/stations/".length)];
+      assert.ok(entry?.bytes > 1000 && /^[a-f0-9]{64}$/.test(entry.sha256), image + ": missing verified external image");
+    } else {
+      const localImage = policy.mode === "shared" ? "/brand/social-preview.png" : image;
+      const filename = join(output, localImage.slice(1));
+      assert.ok((await stat(filename)).size > 1000, localImage + ": missing or tiny image");
+      const info = await sharp(filename).metadata();
+      assert.equal(info.format, policy.mode === "shared" ? "png" : "jpeg", localImage + ": format");
+      assert.equal(info.width, 1200, localImage + ": width");
+      assert.equal(info.height, 630, localImage + ": height");
+    }
   }
 
   async function worker() {
@@ -106,7 +123,9 @@ export async function auditAllStationOg({
   return { stations: stations.length, verified, failed, failures, origin };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const result = await auditAllStationOg({ origin: process.env.SEO_EXPECTED_SITE_URL || defaultOrigin });
+  const origin = process.env.SEO_EXPECTED_SITE_URL || defaultOrigin;
+  const result = await auditAllStationOg({ origin, policy: stationOgDeployment({ siteUrl: origin }) });
   console.log("Station OG audit:", JSON.stringify(result, null, 2));
   if (result.failed) process.exitCode = 1;
 }
+
