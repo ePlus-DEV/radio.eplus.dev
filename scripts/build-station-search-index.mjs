@@ -47,7 +47,34 @@ export async function buildStationSearchIndex({
   return result;
 }
 
+/**
+ * A cache-hit is supplied only by GitHub Actions when the radio catalog,
+ * ranking rules and generator hash exactly match the saved artifact.
+ * Local builds and invalid/missing restored files always regenerate.
+ */
+export async function cachedSearchIndexCount(
+  outputFile = 'public/search/stations.json',
+  cacheHit = process.env.ONAIR_SEARCH_INDEX_CACHE_HIT === 'true',
+) {
+  if (!cacheHit) return null;
+  try {
+    const saved = JSON.parse(await readFile(outputFile, 'utf8'));
+    if (!Array.isArray(saved) || saved.length === 0 ||
+      !saved.every(item => typeof item.objectID === 'string' && typeof item.station_name === 'string')) {
+      return null;
+    }
+    return saved.length;
+  } catch {
+    return null;
+  }
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const stations = await buildStationSearchIndex();
-  process.stdout.write(`Built local radio search index: ${stations.length} stations\n`);
+  const count = await cachedSearchIndexCount();
+  if (count !== null) {
+    process.stdout.write(`Reused cached local radio search index: ${count} stations\n`);
+  } else {
+    const stations = await buildStationSearchIndex();
+    process.stdout.write(`Built local radio search index: ${stations.length} stations\n`);
+  }
 }
