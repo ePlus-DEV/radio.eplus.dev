@@ -41,6 +41,30 @@ test('Pages output audit checks CSS, brand and direct-station routes', async () 
   }
 });
 
+test('custom-domain Pages output uses root URLs and rejects legacy project prefixes', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'radio-custom-domain-'));
+  const render = (base) =>
+    '<html><head><link href="' + base + '_nuxt/main.css"></head><body>' +
+    '<a href="' + base + 'asia">Region</a>' +
+    '<img src="' + base + 'brand/logo-share.png"></body></html>';
+  try {
+    const deep = join(root, 'asia/viet-nam/vov-gt-hcm');
+    await mkdir(deep, { recursive: true });
+    await writeFile(join(root, 'index.html'), render('/'));
+    await writeFile(join(deep, 'index.html'), render('/'));
+    assert.equal(await assertProjectPagesOutput(root, 'custom-domain'), true);
+    await writeFile(join(deep, 'index.html'), render('/onair-staging-pages/'));
+    await assert.rejects(assertProjectPagesOutput(root, 'custom-domain'),
+      /invalid project-path\/root-domain assets/);
+    await writeFile(join(deep, 'index.html'), render('/'));
+    await writeFile(join(root, 'index.html'), render('/').replace('href="/asia"', 'href="/onair-production-pages/asia"'));
+    await assert.rejects(assertProjectPagesOutput(root, 'custom-domain'),
+      /invalid project-path\/root-domain assets/);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('Nuxt and fetchers preserve DigitalOcean root while supporting Pages subpaths', async () => {
   const nuxt = await readFile('nuxt.config.ts', 'utf8');
   assert.ok(nuxt.includes('baseURL,'));

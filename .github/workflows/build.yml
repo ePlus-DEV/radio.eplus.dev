@@ -39,6 +39,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
@@ -78,6 +79,28 @@ jobs:
           # history so the scope check can reliably diff it against the PR base.
           fetch-depth: 0
 
+      # A PR may be retargeted while previous jobs are still queued. Its
+      # historical event may say 'dev' even when the live PR targets 'develop'.
+      # A mismatched event must fail BEFORE npm ci / thousands of routes.
+      - name: "Confirm live PR base before expensive CI"
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EVENT_BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          live_base="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.base.ref')"
+          case "$live_base" in
+            develop|main) ;;
+            *) echo "::error::Unsupported target branch: $live_base"; exit 1 ;;
+          esac
+          if [ "$live_base" != "$EVENT_BASE_REF" ]; then
+            echo "::error::PR was retargeted from $EVENT_BASE_REF to $live_base while this run was queued. Wait for a fresh PR synchronize run."
+            exit 1
+          fi
+          echo "::notice::Confirmed PR target $live_base; safe to select its CI/SEO profile."
+
       - name: "Determine whether full prerender is needed"
         id: scope
         shell: bash
@@ -96,8 +119,8 @@ jobs:
           while IFS= read -r path; do
             case "$path" in
               README.md|AGENTS.md|docs/*|tests/*|.github/workflows/*|.github/dependabot.yml|scripts/assert-*.mjs|scripts/check-pages-build.mjs)
-                # Post-build audit scripts cannot change generated site assets.
-                # They remain covered by npm test, so no 4k-page prerender.
+                # Post-build audit scripts do not affect generated site assets.
+                # Unit tests still validate these audits without 4k-page prerender.
                 ;;
               *)
                 prerender=true
@@ -124,8 +147,7 @@ jobs:
       - name: "Run unit tests"
         run: npm test
 
-      # Cache only deterministic pregenerate artifacts, not all 4k+ HTML
-      # pages. Keys include every source that affects each artifact.
+      # Cache small deterministic pregenerate assets, not thousands of HTML pages.
       - name: "Restore generated radio search index"
         id: search_cache
         if: steps.scope.outputs.prerender == 'true'
@@ -147,28 +169,28 @@ jobs:
         # CI uses the same two public variables as the real staging host.
         # A checkout/branch name must not change the generated SEO policy.
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://eplus-dev.github.io/onair-staging-pages' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
-          NUXT_APP_BASE_URL: ${{ github.base_ref == 'develop' && '/onair-staging-pages/' || '/' }}
+          NUXT_APP_BASE_URL: /
           ONAIR_SEARCH_INDEX_CACHE_HIT: ${{ steps.search_cache.outputs.cache-hit }}
           ONAIR_SOCIAL_PREVIEW_CACHE_HIT: ${{ steps.social_cache.outputs.cache-hit }}
         run: npm run generate
 
       - name: "Validate Pages project subpath and static assets"
         if: steps.scope.outputs.prerender == 'true' && github.base_ref == 'develop'
-        run: node scripts/assert-project-pages-output.mjs .output/public onair-staging-pages
+        run: node scripts/assert-project-pages-output.mjs .output/public custom-domain
 
       - name: "Validate generated sitemap and staging indexability"
         if: steps.scope.outputs.prerender == 'true'
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://eplus-dev.github.io/onair-staging-pages' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: node scripts/assert-sitemap-xml.mjs
 
       - name: "Assert route-specific prerendered Open Graph metadata"
         if: steps.scope.outputs.prerender == 'true'
         env:
-          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://eplus-dev.github.io/onair-staging-pages' || 'https://radio.eplus.dev' }}
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-route-social-meta.mjs
 
       # DEV uses the shared brand preview: it must not generate or audit
@@ -176,7 +198,7 @@ jobs:
       - name: "Audit all stations Open Graph HTML and JPEG images"
         if: steps.scope.outputs.prerender == 'true' && github.base_ref != 'develop'
         env:
-          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://eplus-dev.github.io/onair-staging-pages' || 'https://radio.eplus.dev' }}
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-all-station-social-meta.mjs
 
       - name: "Verify ePlus OnAir logo, social image and favicons"
