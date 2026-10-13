@@ -30,10 +30,10 @@
         class="mt-2.5 flex items-center gap-2"
       >
         <span
-          v-if="countryName"
+          v-if="queueCountryLabel"
           class="hidden items-center rounded-full border h-9 shrink-0 border-[var(--radio-border)] bg-[var(--radio-surface)] px-2.5 text-[11px] font-semibold text-[var(--radio-text-muted)] sm:inline-flex"
         >
-          {{ countryName }}
+          {{ queueCountryLabel }}
         </span>
 
         <label
@@ -62,11 +62,11 @@
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
         <button
           v-for="station in filteredStations"
-          :key="station.id"
+          :key="station.url || station.id"
           type="button"
           class="group flex w-full min-w-0 items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left transition"
           :class="
-            station.id === activeStationId
+            isActiveStation(station)
               ? 'bg-rose-500/10 ring-1 ring-inset ring-rose-500/15'
               : 'hover:bg-[var(--radio-hover)]'
           "
@@ -88,7 +88,7 @@
               dir="auto"
               class="block truncate text-sm font-semibold"
               :class="
-                station.id === activeStationId
+                isActiveStation(station)
                   ? 'text-rose-700 dark:text-rose-300'
                   : 'text-[var(--radio-text)]'
               "
@@ -96,12 +96,12 @@
               {{ station.title }}
             </span>
             <span class="mt-0.5 block truncate text-[11px] text-[var(--radio-text-muted)]">
-              {{ countryName || stationName }}
+              {{ stationCountryLabel(station) }}
             </span>
           </span>
 
           <span
-            v-if="station.id === activeStationId"
+            v-if="isActiveStation(station)"
             class="inline-flex shrink-0 items-center gap-1 text-[9px] font-bold uppercase tracking-[0.12em] text-rose-500"
           >
             <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
@@ -235,6 +235,7 @@
 <script setup lang="ts">
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
+import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -260,6 +261,7 @@ const props = withDefaults(
     program?: ProgramItem[];
     stations?: RadioStationOption[];
     activeStationId?: string;
+    activeStationUrl?: string;
     thumb: string;
     stationName: string;
     countryName?: string;
@@ -270,6 +272,7 @@ const props = withDefaults(
     program: () => [],
     stations: () => [],
     activeStationId: "",
+    activeStationUrl: "",
     countryName: "",
     scheduleLoading: false,
   },
@@ -281,6 +284,16 @@ defineEmits<{
 
 const query = ref("");
 const hasStations = computed(() => props.stations.length > 0);
+const sharedCountryKey = computed(() => queueCountryKey(props.stations));
+const queueCountryLabel = computed(() => sharedCountryKey.value ? t(sharedCountryKey.value) : "");
+const stationCountryLabel = (station: RadioStationOption): string => {
+  const key = stationCountryKey(station.url);
+  return key ? t(key) : (queueCountryLabel.value || props.stationName);
+};
+const isActiveStation = (station: RadioStationOption): boolean =>
+  Boolean(station.url && props.activeStationUrl)
+    ? station.url === props.activeStationUrl
+    : station.id === props.activeStationId;
 const hasSchedule = computed(
   () => props.playlist.length > 0 || props.program.length > 0,
 );
