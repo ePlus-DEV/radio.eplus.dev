@@ -60,9 +60,7 @@ jobs:
     environment:
       name: ${{ github.ref_name == 'main' && 'production' || 'development' }}
     env:
-      # Exact fallback URLs support a new production Environment where the
-      # optional custom variable has not yet been populated.
-      NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL || (github.ref_name == 'main' && 'https://radio.eplus.dev' || 'https://new-radio.eplus.dev') }}
+      NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
       NUXT_APP_BASE_URL: /
       # Keep both Pages outputs noindex until an explicitly reviewed production cutover.
       NUXT_PUBLIC_NO_INDEX: 'true'
