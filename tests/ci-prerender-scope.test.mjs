@@ -29,6 +29,6 @@ test('prerender, output audits and browser checks are gated together', async () 
     const escaped = step.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     assert.match(yaml, new RegExp('- name: "' + escaped + '"\\s+if: steps\\.scope\\.outputs\\.prerender == .true.'));
   }
-  assert.match(yaml, /github\.base_ref == 'dev' && steps\.scope\.outputs\.prerender == 'true'/);
+  assert.match(yaml, /github\.base_ref == 'develop' && steps\.scope\.outputs\.prerender == 'true'/);
   assert.equal((yaml.match(/vars\.ENABLE_BROWSER_TESTS == 'true' && steps\.scope\.outputs\.prerender == 'true'/g) || []).length, 2);
 });
