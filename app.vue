@@ -1,7 +1,7 @@
 <template>
   <UApp :locale="uiLocale" :toaster="null">
   <NuxtLoadingIndicator color="#f43f5e" :height="3" :throttle="150" />
-  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen }" class="radio-shell min-h-screen w-full overflow-x-clip bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
+  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen, 'radio-shell-player-mini': clientReady && playback.playerMini }" class="radio-shell min-h-screen w-full overflow-x-clip bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
     <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
       <AppSidebar />
@@ -29,7 +29,7 @@
       <PlayerSession />
       <template #fallback>
         <div class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)]" aria-hidden="true">
-          <div class="radio-player-inner mx-auto flex min-h-[96px] max-w-[1920px] items-center gap-4 px-3 sm:grid sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:px-6">
+          <div class="radio-player-inner mx-auto flex min-h-[80px] max-w-[1920px] items-center gap-4 px-3 sm:grid sm:grid-cols-[minmax(0,0.95fr)_auto_minmax(0,0.95fr)] sm:px-6">
             <div class="flex min-w-0 items-center gap-3">
               <div class="h-11 w-11 shrink-0 animate-pulse rounded-xl bg-[var(--radio-surface-soft)] sm:h-14 sm:w-14"></div>
               <div class="min-w-0 flex-1 space-y-2">
