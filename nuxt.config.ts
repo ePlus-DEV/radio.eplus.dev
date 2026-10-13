@@ -1,3 +1,4 @@
+import { stationOgDeployment } from "./utils/station-og-deployment.mjs";
 import { defineNuxtConfig } from "nuxt/config";
 import { prefixPublicAsset } from "./utils/public-site-path.mjs";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
@@ -36,6 +37,7 @@ const ga4Enabled = isGa4ProductionBuild({
   siteUrl,
   noIndex,
 });
+const stationOg = stationOgDeployment({ siteUrl, noIndex: noIndex ? "true" : "false" });
 const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "ePlus OnAir";
 const defaultDescription =
   process.env.DESCRIPTION ||
@@ -100,6 +102,8 @@ export default defineNuxtConfig({
       defaultDescription,
       radioCatalogStats,
       noIndex,
+      stationOgMode: stationOg.mode,
+      stationOgBaseUrl: stationOg.baseUrl,
     },
   },
   css: ["~/assets/css/main.css"],
@@ -306,3 +310,4 @@ export default defineNuxtConfig({
     },
   },
 });
+

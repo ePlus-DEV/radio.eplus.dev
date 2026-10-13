@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
+import { mkdtemp, mkdir, writeFile, readFile, rm } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { tmpdir } from "node:os";
 import sharp from "sharp";
@@ -101,3 +101,37 @@ test("all-station audit passes valid pages and detects a wrong OG image on anoth
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test('site-only audit verifies shared cards and external audit refuses incomplete uploads', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'onair-og-release-audit-'));
+  try {
+    await setupFixture(root);
+    await mkdir(join(root, '.output/public/brand'), { recursive: true });
+    await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#c93668' } })
+      .png().toFile(join(root, '.output/public/brand/social-preview.png'));
+    for (const id of ['vov1', 'vov2']) {
+      const file = join(root, '.output/public/asia/viet-nam', id, 'index.html');
+      const html = await readFile(file, 'utf8');
+      await writeFile(file, html.replaceAll(origin + '/og/stations/asia/viet-nam/' + id + '.jpg', origin + '/brand/social-preview.png').replaceAll('image/jpeg', 'image/png'));
+    }
+    const shared = await auditAllStationOg({ root, origin, policy: { mode: 'shared' } });
+    assert.equal(shared.verified, 2);
+    assert.equal(shared.failed, 0);
+
+    await setupFixture(root);
+    const baseUrl = 'https://images.example/complete-commit';
+    const manifest = { complete: true, entries: {} };
+    for (const id of ['vov1', 'vov2']) {
+      const file = join(root, '.output/public/asia/viet-nam', id, 'index.html');
+      await writeFile(file, (await readFile(file, 'utf8')).replaceAll(origin + '/og/stations/', baseUrl + '/og/stations/'));
+      manifest.entries['asia/viet-nam/' + id + '.jpg'] = { bytes: 2000, sha256: 'a'.repeat(64) };
+    }
+    const options = { root, origin, policy: { mode: 'external', baseUrl }, fetchImpl: async () => new Response(JSON.stringify(manifest)) };
+    assert.equal((await auditAllStationOg(options)).failed, 0);
+    delete manifest.entries['asia/viet-nam/vov2.jpg'];
+    assert.equal((await auditAllStationOg(options)).failed, 1);
+    manifest.complete = false;
+    await assert.rejects(auditAllStationOg(options), /not complete/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+

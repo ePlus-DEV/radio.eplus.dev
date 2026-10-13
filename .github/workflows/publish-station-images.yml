@@ -1,0 +1,93 @@
+name: "Publish station images separately"
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Pages image repository"
+        type: choice
+        options: [production, development]
+        default: production
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: station-images-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  images:
+    if: github.ref_name == 'main' || github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: ${{ inputs.target }}
+    env:
+      TARGET_REPOSITORY: ${{ inputs.target == 'production' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: npm
+      - name: Prepare independent image branch
+        env:
+          PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$PAGES_DEPLOY_TOKEN"
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth"
+          target="$RUNNER_TEMP/onair-station-images"
+          # Distinguish a missing branch from a network/authentication error.
+          branches="$(GIT_TERMINAL_PROMPT=0 git ls-remote "https://github.com/$TARGET_REPOSITORY.git" refs/heads/station-images)"
+          if [ -n "$branches" ]; then
+            git clone --depth 1 --single-branch --branch station-images "https://github.com/$TARGET_REPOSITORY.git" "$target"
+            mkdir -p public/og/stations
+            rsync -a "$target/og/stations/" public/og/stations/
+          else
+            git init --initial-branch=station-images "$target"
+            git -C "$target" remote add origin "https://github.com/$TARGET_REPOSITORY.git"
+          fi
+          git -C "$target" config user.name 'github-actions[bot]'
+          git -C "$target" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - run: npm ci
+      - name: Generate only station images, reusing unchanged JPEGs
+        run: npm run generate:images
+      - name: Upload changed images in batches of at most 100 MiB
+        id: upload
+        env:
+          PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/onair-station-images"
+          mkdir -p "$target/og/stations"
+          rsync -a --delete public/og/stations/ "$target/og/stations/"
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth"
+          node scripts/publish-image-batches.mjs "$target"
+      - name: Report complete image set
+        env:
+          IMAGES_SHA: ${{ steps.upload.outputs.images_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          image_base="https://raw.githubusercontent.com/$TARGET_REPOSITORY/$IMAGES_SHA"
+          # A commit URL is immutable: subsequent partial uploads cannot break
+          # a website already pointing to this completed set.
+          {
+            echo 'All station images uploaded successfully.'
+            echo
+            echo 'Set STATION_OG_BASE_URL to the following URL in the source repository/environment, then run the website deploy:'
+            echo "$image_base"
+          } >> "$GITHUB_STEP_SUMMARY"

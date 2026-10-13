@@ -76,6 +76,7 @@
 
 
 <script setup lang="ts">
+import { stationSocialImage } from "~/utils/station-og-deployment.mjs";
 import type { RadioCatalogEntry as StationCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
@@ -220,14 +221,15 @@ const stationArtwork = computed(() => {
   if (!image) return `${siteUrl.value}/brand/social-preview.png`;
   return image.startsWith("http") ? image : `${siteUrl.value}${image}`;
 });
-// Use the catalog-generated share card, not a tiny logo thumbnail.
-// Staging previews use the existing shared social image instead of publishing
-// thousands of production-only station OG JPEGs. Station detail HTML, catalog
-// JSON, playable streams and browser navigation remain unchanged.
-const seoImage = computed(() => noIndex
-  ? `${siteUrl.value}/brand/social-preview.png`
-  : `${siteUrl.value}/og/stations/${area.value}/${slug.value}/${stationSlug.value}.jpg`,
-);
+// Site-only releases use the shared card until a complete image upload has
+// supplied an immutable external base URL. Never reference partial uploads.
+const stationShareImage = computed(() => stationSocialImage({
+  mode: String(config.public.stationOgMode),
+  baseUrl: String(config.public.stationOgBaseUrl || ""),
+  origin: siteUrl.value,
+  imagePath: `/og/stations/${area.value}/${slug.value}/${stationSlug.value}.jpg`,
+}));
+const seoImage = computed(() => stationShareImage.value.url);
 const canonicalUrl = computed(
   () => `${siteUrl.value}${stationPath.value}`,
 );
@@ -278,7 +280,7 @@ useHead(() => ({
     { key: "station-og-image-alt", property: "og:image:alt", content: `${stationName.value} — ePlus OnAir live radio` },
     { key: "station-og-image-width", property: "og:image:width", content: "1200" },
     { key: "station-og-image-height", property: "og:image:height", content: "630" },
-    { key: "station-og-image-type", property: "og:image:type", content: noIndex ? "image/png" : "image/jpeg" },
+    { key: "station-og-image-type", property: "og:image:type", content: stationShareImage.value.type },
     { key: "station-twitter-card", name: "twitter:card", content: "summary_large_image" },
     { key: "station-twitter-title", name: "twitter:title", content: seoTitle.value },
     { key: "station-twitter-description", name: "twitter:description", content: seoDescription.value },
@@ -337,4 +339,5 @@ watch([stationMeta, stationPath, () => playback.requestedStationUrl], ([meta, pa
   else if (!playback.station && !requested) activateStation();
 }, { immediate: true });
 </script>
+
 

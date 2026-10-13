@@ -1,9 +1,9 @@
-import { readdir, readFile, mkdir, writeFile, rename } from "node:fs/promises";
+import { readdir, readFile, mkdir, writeFile, rename, rm } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
-import { isStagingDeployment } from "../utils/seo-deployment.mjs";
+import { stationOgDeployment } from "../utils/station-og-deployment.mjs";
 
 // Crawlers generally require a static image. Generate station-specific 1200x630
 // JPEGs from our local catalog and logos before Nuxt builds/prerenders.
@@ -309,14 +309,13 @@ export async function generateStationOgImages({
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  // Preview/staging builds must remain lightweight. Only production needs
-  // per-station Open Graph JPEGs; keep the renderer export for unit tests.
-  const staging = isStagingDeployment({
-    siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
-    noIndex: process.env.NUXT_PUBLIC_NO_INDEX,
-  });
-  if (staging) {
-    console.log("Staging: skip production-only station OG thumbnails; static artwork and radio catalogs are reused from the repository.");
+  const imagesOnly = process.argv.includes("--images-only");
+  const policy = stationOgDeployment();
+  if (!imagesOnly && policy.mode !== "generated") {
+    // A warm local checkout/cache must not leak old JPEGs into a site-only
+    // release and silently exceed the hosting budget.
+    await rm(join(process.cwd(), "public/og/stations"), { recursive: true, force: true });
+    console.log("Site build: omit station OG images; use shared or separately published artwork.");
   } else {
     const summary = await generateStationOgImages();
     console.log("Station OG images generated:", summary);
