@@ -19,7 +19,16 @@ test('custom-domain Pages deployments keep scoped environments and only two outp
   assert.ok(workflow.includes('NUXT_APP_BASE_URL: /'));
   assert.ok(workflow.includes('https://$TARGET_DOMAIN'));
   assert.ok(!workflow.includes('https://eplus-dev.github.io/onair-'));
-  assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: 'true'"));
+  assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}"),
+    'staging must be noindex, while production must stay indexable');
+  assert.ok(workflow.includes("TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}"),
+    'Pages output validation must reject noindex production bundles');
+  assert.ok(!workflow.includes("NUXT_PUBLIC_NO_INDEX: 'true'"),
+    'never force noindex on production');
+  assert.ok(!workflow.includes("TARGET_KIND: 'staging'"),
+    'production deploy must use the production SEO audit');
+  assert.ok(workflow.includes('if [ "$TARGET_KIND" = staging ]; then'),
+    'only staging runs noindex-only audit');
   assert.ok(workflow.includes('NUXT_APP_BASE_URL:'));
   assert.ok(workflow.includes('PAGES_DEV_READY'));
   assert.ok(workflow.includes("(github.ref_name == 'main')"),
