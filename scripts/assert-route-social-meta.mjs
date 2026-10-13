@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { isStagingDeployment } from "../utils/seo-deployment.mjs";
 
 // Assert actual generated static HTML, not only metadata in Vue sources.
 const origin = (process.env.SEO_EXPECTED_SITE_URL || "https://radio.eplus.dev").replace(/\/$/, "");
 const output = ".output/public";
-const staging = origin !== "https://radio.eplus.dev";
+const staging = isStagingDeployment({ siteUrl: origin, noIndex: process.env.NUXT_PUBLIC_NO_INDEX });
 async function loadPage(route) {
   const segments = route.split("/").filter(Boolean);
   const candidates = [join(output, ...segments, "index.html"), join(output, ...segments) + ".html"];
@@ -59,7 +60,7 @@ exactMeta(station, "og:url", origin + stationRoute);
 specificMeta(station, "og:title", "VOV Giao");
 specificMeta(station, "og:description", "VOV Giao thông TPHCM ra đời");
 assert.deepEqual(values(station, "name", "twitter:image"), [origin + stationImage]);
-if (origin === "https://radio.eplus.dev") {
+if (!staging) {
   assert.ok(!values(station, "name", "robots").some(x => x.includes("noindex")), "Production must be indexable");
 } else {
   assert.ok(values(station, "name", "robots").some(x => x.includes("noindex")), "Staging must remain noindex");
