@@ -41,8 +41,11 @@ on:
 permissions:
   contents: read
 
+# All repository work shares one queue, including different PRs/branches.
+# Preserve distinct queued work; never interrupt an active deploy/image upload.
 concurrency:
-  group: pages-${{ github.ref_name }}
+  group: onair-repository-work
+  queue: max
   cancel-in-progress: false
 
 jobs:
@@ -71,9 +74,25 @@ jobs:
       TARGET_KIND: 'staging'
       SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
     steps:
+      - name: Skip an obsolete queued website release
+        id: current
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          live_sha="$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_REF_NAME" --jq '.sha')"
+          if [ "$live_sha" != "$GITHUB_SHA" ]; then
+            echo "::notice::Skip obsolete deployment: a newer commit exists on $GITHUB_REF_NAME."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
       # Cheap preflight BEFORE npm ci and 4,000+ page prerender. This catches
       # missing target repositories, expired PATs and wrong credentials fast.
       - name: Verify exact Pages repository and PAT before building
+        if: steps.current.outputs.run == 'true'
         shell: bash
         env:
           PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
@@ -124,26 +143,32 @@ jobs:
           echo "Validated target $TARGET_REPOSITORY and read/write PAT permissions."
 
       - name: Check out private source
+        if: steps.current.outputs.run == 'true'
         uses: actions/checkout@v7
         with:
           persist-credentials: false
 
       - name: Set up Node.js
+        if: steps.current.outputs.run == 'true'
         uses: actions/setup-node@v7
         with:
           node-version: "24.15.0"
           cache: npm
 
       - name: Install dependencies
+        if: steps.current.outputs.run == 'true'
         run: npm ci
 
       - name: Run unit tests
+        if: steps.current.outputs.run == 'true'
         run: npm test
 
       - name: Generate static website
+        if: steps.current.outputs.run == 'true'
         run: npm run generate:site
 
       - name: Check SEO for chosen environment
+        if: steps.current.outputs.run == 'true'
         run: |
           node scripts/assert-sitemap-xml.mjs
           node scripts/assert-route-social-meta.mjs
@@ -154,12 +179,15 @@ jobs:
           fi
 
       - name: Check project Pages links and artwork before publishing
+        if: steps.current.outputs.run == 'true'
         run: node scripts/assert-project-pages-output.mjs .output/public custom-domain
 
       - name: Check Pages output and GitHub hosting size limit
+        if: steps.current.outputs.run == 'true'
         run: node scripts/check-pages-build.mjs .output/public "$TARGET_KIND"
 
       - name: Publish generated output to public repository
+        if: steps.current.outputs.run == 'true'
         shell: bash
         env:
           PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
