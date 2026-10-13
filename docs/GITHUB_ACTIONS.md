@@ -1,49 +1,31 @@
-# GitHub Actions: active workflows
+# ePlus OnAir — GitHub Actions
 
-The repository currently has **two established CI/data workflows** plus one
-**prepared, disabled-by-default Pages deployment workflow**.
+Four workflows are currently in use. Check the checked-in YAML for the authoritative behavior.
 
-| Workflow | Trigger | Responsibility |
+| File | Trigger | Responsibility |
 | --- | --- | --- |
-| `.github/workflows/build.yml` (`CI`) | Pull requests for source, data, assets, workflows and dependency configuration | Unit tests; Nuxt prerender; SEO, sitemap and artwork checks; opt-in browser tests |
-| `.github/workflows/instant-audio-sync.yml` (`Radio data sync`) | Manual (`workflow_dispatch`) | Discover stations/flags, validate candidate streams and artwork, then propose a data PR |
+| `build.yml` | Pull requests | Core tests, optional full prerender/SEO audits, optional browser tests |
+| `deploy-github-pages.yml` | Trusted `main` / `develop` push or manual dispatch | Build and publish a static website to the environment's public Pages repo |
+| `instant-audio-sync.yml` | Manual dispatch | Research/sync radio data and propose changes for review |
+| `publish-station-images.yml` | Manual dispatch | Publish individual station OG JPEGs and manifest on the destination's separate `station-images` branch |
 
-## Prepared GitHub Pages publishing (disabled by default)
+All four share concurrency group `onair-repository-work` with queued runs retained and `cancel-in-progress: false`. The website workflow checks branch SHA freshness and skips an obsolete queued build. CI checks for closed or stale PR heads before expensive work.
 
-`.github/workflows/deploy-github-pages.yml` is the planned third workflow. It runs
-only on trusted `main` / `develop` pushes or manual dispatch and is **gated** by
-repository Actions variables `PAGES_DEV_READY` / `PAGES_PROD_READY`. Both are
-off until an organization administrator creates the public Pages destinations,
-configures branch publishing and stores `PAGES_DEPLOY_TOKEN` in this private
-source repository. It pushes only the Nuxt static output, never source files.
-See [GitHub Pages migration](./GITHUB_PAGES.md) for exact one-time setup and rollback.
+## Release targets
 
-## PR validation policy
+- `develop` → Environment `development` → `ePlus-DEV/onair-staging-pages` → `new-radio.eplus.dev`, when `PAGES_DEV_READY=true`.
+- `main` → Environment `production` → `ePlus-DEV/onair-production-pages` → `radio.eplus.dev`, automatically for trusted matching pushes.
+- Both Pages outputs are deliberately `noindex` until reviewed cutover.
+- `PAGES_DEPLOY_TOKEN` must have scoped write access to the two output repos; never pass it to PR workflows.
 
-- Regular PRs to `develop` or `main`: `CI` runs the usual unit tests and full Nuxt prerender.
-- The repository-owned `bot/instant-audio-sync` branch: `CI` runs a separate lightweight script syntax + unit-test job. This prevents a duplicate full build of thousands of station pages.
-- The radio sync action is manual-only. It no longer launches a second, redundant validation workflow for pull requests.
-- The bot creates a PR against `main` and never directly pushes catalog updates into `main`.
-- Browser tests remain opt-in with `ENABLE_BROWSER_TESTS=true`.
+Website generation is `npm run generate:site`; image generation is `npm run generate:images`. Splitting them keeps website output within GitHub Pages' 1 GB published-site limit. The publisher restores `CNAME` and retains each output repo's root `README.md` despite `rsync --delete`.
 
-## Removed automations (2026-10-12)
+## CI testing
 
-- `voh-missing-radio-import.yml`: one-time discovery tied to a finished feature branch. The research/import script and tests remain in the repository for manual use.
-- `changelog.yml`: release-triggered legacy `git-chglog` workflow; the most recent v3 and v3.1 jobs failed, and the release process does not depend on its generated PR.
-- `dependabot-auto-merge.yml`: the repository has `allow_auto_merge=false`, so its `gh pr merge --auto` command was incompatible with repository settings; moreover, most runs were skipped for non-Dependabot PRs.
+Regular PR changes run unit tests; app/data/SEO changes also trigger full Nuxt prerender and output audits. Certain docs/workflow/test-only changes can use a faster path. Browser tests are opt-in using `ENABLE_BROWSER_TESTS=true`.
 
-`.github/dependabot.yml` remains enabled for weekly **GitHub Actions dependency updates**. Dependabot continues to open PRs, but maintainers must review and merge them manually. Never re-enable automatic merging without an explicit security and branch-protection decision.
+## Retired workflows
 
-Deleting workflow files stops future runs; older run history may remain visible in GitHub Actions.
+Old one-off VOH import, changelog and incompatible Dependabot auto-merge workflows have been removed. PR #256 (one-off VOH testing reshuffle) was closed without merging and should not be treated as active release guidance.
 
-## Repository-wide execution queue
-
-All four workflows, including `publish-station-images.yml`, share
-`onair-repository-work`. `queue: max` preserves distinct waiting runs;
-`cancel-in-progress: false` lets the active run finish. Only one workflow
-executes at a time, even across PRs, source branches and deployment targets.
-
-Queued CI runs skip closed PRs or superseded head SHAs before expensive work.
-Queued website deployments skip commits superseded on their source branch.
-Multiple pending runs are waiting work, not concurrently executing jobs.
-Old runs dispatched before this configuration keep their earlier settings.
+See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md) for setup, diagnostics and image strategy.
