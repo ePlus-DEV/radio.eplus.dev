@@ -95,7 +95,9 @@ jobs:
           fi
           while IFS= read -r path; do
             case "$path" in
-              README.md|AGENTS.md|docs/*|tests/*|.github/workflows/*|.github/dependabot.yml)
+              README.md|AGENTS.md|docs/*|tests/*|.github/workflows/*|.github/dependabot.yml|scripts/assert-*.mjs|scripts/check-pages-build.mjs)
+                # Post-build audit scripts cannot change generated site assets.
+                # They remain covered by npm test, so no 4k-page prerender.
                 ;;
               *)
                 prerender=true
@@ -122,6 +124,24 @@ jobs:
       - name: "Run unit tests"
         run: npm test
 
+      # Cache only deterministic pregenerate artifacts, not all 4k+ HTML
+      # pages. Keys include every source that affects each artifact.
+      - name: "Restore generated radio search index"
+        id: search_cache
+        if: steps.scope.outputs.prerender == 'true'
+        uses: actions/cache@v4
+        with:
+          path: public/search/stations.json
+          key: ${{ runner.os }}-onair-search-v1-${{ hashFiles('public/radio/**/*.json', 'utils/featured-stations.mjs', 'scripts/build-station-search-index.mjs') }}
+
+      - name: "Restore generated social preview"
+        id: social_cache
+        if: steps.scope.outputs.prerender == 'true'
+        uses: actions/cache@v4
+        with:
+          path: public/brand/social-preview.png
+          key: ${{ runner.os }}-onair-social-v1-${{ hashFiles('public/brand/social-preview.svg', 'scripts/generate-social-preview.mjs', 'package-lock.json') }}
+
       - name: "Generate prerendered site"
         if: steps.scope.outputs.prerender == 'true'
         # CI uses the same two public variables as the real staging host.
@@ -130,6 +150,8 @@ jobs:
           NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://eplus-dev.github.io/onair-staging-pages' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
           NUXT_APP_BASE_URL: ${{ github.base_ref == 'develop' && '/onair-staging-pages/' || '/' }}
+          ONAIR_SEARCH_INDEX_CACHE_HIT: ${{ steps.search_cache.outputs.cache-hit }}
+          ONAIR_SOCIAL_PREVIEW_CACHE_HIT: ${{ steps.social_cache.outputs.cache-hit }}
         run: npm run generate
 
       - name: "Validate Pages project subpath and static assets"
