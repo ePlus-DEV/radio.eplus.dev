@@ -2,7 +2,9 @@ import { stationIdentity } from './listening-library.mjs';
 
 export const LISTENING_DURATION_KEY = 'radio_listening_duration_v1';
 export const MAX_TRACKED_STATIONS = 100;
-export const MAX_LISTENING_GAP_MS = 120_000;
+// A background tab can have timers suspended while native radio keeps playing.
+// Guard against pathological clock gaps without truncating normal long listens.
+export const MAX_LISTENING_GAP_MS = 6 * 60 * 60 * 1000;
 export const emptyListeningDuration = () => ({
   totalMs: 0,
   todayKey: '',
