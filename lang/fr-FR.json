@@ -465,6 +465,7 @@
     "recent_empty": "Écoutez une station pour la retrouver ici.",
     "favorites_empty": "Touchez le cœur pour ajouter une station aux favoris.",
     "clear_recent": "Effacer l’historique récent",
+    "remove_recent": "Retirer de l’historique",
     "add_favorite": "Ajouter aux favoris",
     "remove_favorite": "Retirer des favoris",
     "loading": "Chargement de vos stations…"
