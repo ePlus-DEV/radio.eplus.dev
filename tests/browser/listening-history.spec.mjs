@@ -250,3 +250,31 @@ test('successful media play starts duration when the playing event is delayed or
     return match ? Number(match[1]) : 0;
   }, { timeout: 8_000 }).toBeGreaterThanOrEqual(2);
 });
+
+test('daily listening chart switches 7/30/90-day views and survives reload', async ({ page }) => {
+  await ready(page, '/');
+  await page.evaluate(() => {
+    const today = new Date();
+    const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+    const key = date => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+    const heart = '/europe/united-kingdom/heart-uk';
+    localStorage.setItem('radio_listening_duration_v1', JSON.stringify({
+      totalMs: 135_000, todayKey: key(today), todayMs: 45_000,
+      byStation: { [heart]: { title: 'Heart UK', ms: 135_000 } },
+      byDay: { [key(yesterday)]: 90_000, [key(today)]: 45_000 },
+    }));
+  });
+  await page.goto('/library#stats');
+  const chart = page.locator('figure[aria-label="Listening time by day"]');
+  await expect(chart).toContainText('Listening time by day');
+  await expect(chart).toContainText('2m 15s');
+  await expect(chart.locator('button[title]')).toHaveCount(7);
+  await chart.locator('button[title]').nth(5).click(); // Yesterday.
+  await expect(chart.locator('figcaption')).toContainText('1m 30s');
+  await chart.getByRole('button', { name: '30 days' }).click();
+  await expect(chart.locator('button[title]')).toHaveCount(30);
+  await chart.getByRole('button', { name: '90 days' }).click();
+  await expect(chart.locator('button[title]')).toHaveCount(90);
+  await page.reload();
+  await expect(page.locator('figure[aria-label="Listening time by day"]')).toContainText('2m 15s');
+});
