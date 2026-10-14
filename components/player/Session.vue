@@ -15,6 +15,8 @@
     :playlist="playlist"
     :song="song"
     :queue-loading="loading"
+    :schedule-source-url="scheduleSourceUrl"
+    :schedule-is-reference="scheduleIsReference"
     :lyrics-available="isZingStation"
     @select-station="selectStation"
     @open-lyrics="lyricsOpen = true"
@@ -34,7 +36,7 @@ import type { RadioSource, RadioStationOption } from '~/types/radio';
 const playback = usePlaybackStore();
 useRestoreLastStation();
 const { station } = storeToRefs(playback);
-const { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation } = useStationRealtime();
+const { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation, scheduleSourceUrl, scheduleIsReference } = useStationRealtime();
 const emptySource: RadioSource = { src: '', type: 'audio/mpeg' };
 const emptySources: RadioSource[] = [];
 
