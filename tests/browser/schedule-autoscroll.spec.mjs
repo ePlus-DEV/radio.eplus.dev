@@ -93,3 +93,34 @@ test('manual browsing in a missing-guide window does not get auto-recentered', a
   await queue(page).getByRole('button', { name: 'Jump to current time' }).click();
   await expect.poll(() => scroll.evaluate(node => node.scrollTop)).toBeGreaterThan(0);
 });
+
+test('1-second time bar moves during an unlisted gap and transfers into scheduled show', async ({ page }) => {
+  await page.setViewportSize({ width: 1536, height: 900 });
+  await page.clock.install({ time: new Date('2026-10-14T09:29:00Z') });
+  await page.goto('/asia/viet-nam/vov-gt-hcm');
+  await page.waitForFunction(() => Boolean(document.querySelector('#__nuxt')?.__vue_app__));
+  await page.locator('.radio-player-dock').getByRole('button', { name: 'Channels & schedule' }).click();
+  await queue(page).getByRole('tab', { name: /Schedule/ }).click();
+
+  const marker = queue(page).locator('[data-schedule-now]');
+  const time = marker.locator('[data-schedule-clock]');
+  const line = marker.locator('[data-schedule-time-progress]');
+  await expect(time).toHaveText('16:29:00');
+  const initialProgress = await line.evaluate(element => parseFloat(element.style.width));
+  expect(initialProgress).toBeCloseTo(93.333, 1);
+
+  await page.clock.runFor(2_000);
+  await expect(time).toHaveText('16:29:02');
+  const advancedProgress = await line.evaluate(element => parseFloat(element.style.width));
+  expect(advancedProgress).toBeGreaterThan(initialProgress);
+
+  await page.clock.runFor(58_000); // Exactly 16:30 ICT.
+  await expect(marker).toHaveCount(0);
+  const programme = queue(page).locator('[data-program-index="7"]');
+  await expect(programme.locator('[data-schedule-clock]')).toContainText('16:30:00');
+  const showProgress = programme.locator('[data-schedule-time-progress]');
+  await expect(showProgress).toHaveCount(1);
+  expect(await showProgress.evaluate(element => parseFloat(element.style.width))).toBe(0);
+  await page.clock.runFor(2_000);
+  expect(await showProgress.evaluate(element => parseFloat(element.style.width))).toBeGreaterThan(0);
+});
