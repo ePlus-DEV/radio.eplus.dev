@@ -24,6 +24,11 @@
       </div>
 
       <p v-if="scheduleLoading" class="mt-2 text-[11px] text-[var(--radio-text-muted)]" aria-live="polite">{{ $t('player.schedule_loading') }}</p>
+      <div v-if="activeTab === 'schedule' && program.length" class="mt-2 flex justify-end">
+        <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-locate-fixed"
+          class="min-h-9" :aria-label="$t('panel.schedule_jump_to_now')"
+          @click="recenterSchedule">{{ $t('panel.schedule_jump_to_now') }}</UButton>
+      </div>
       <div v-if="activeTab === 'schedule' && scheduleSourceUrl" class="mt-3 space-y-1 text-xs leading-5">
         <p class="text-[var(--radio-text-muted)]">
           {{ $t(scheduleIsReference ? 'panel.schedule_reference_note' : 'panel.schedule_official_note') }}
@@ -69,7 +74,10 @@
       </div>
     </div>
 
-    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5">
+    <div ref="scheduleScrollContainer" class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5"
+      tabindex="0" :aria-label="activeTab === 'schedule' ? $t('panel.schedule') : $t('panel.channels')"
+      @wheel.passive="markScheduleBrowsed" @touchstart.passive="markScheduleBrowsed"
+      @pointerdown="markScheduleBrowsed" @keydown="onScheduleScrollKeydown">
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
         <button
           v-for="station in filteredStations"
@@ -142,6 +150,7 @@
           <div
             v-for="(item, index) in program"
             :key="programKey(item, index)"
+            :data-program-index="index"
             class="relative grid grid-cols-[72px_minmax(0,1fr)] gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
               isCurrentProgram(item, index)
@@ -250,6 +259,7 @@
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
+import { schedulePosition } from "~/utils/station-schedule.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -326,6 +336,80 @@ const activeTab = ref<"stations" | "schedule">(
   hasStations.value ? "stations" : "schedule",
 );
 const preferScheduleAfterLoad = ref(false);
+const scheduleScrollContainer = ref<HTMLElement | null>(null);
+const scheduleNow = ref(Math.floor(Date.now() / 1000));
+const manuallyBrowsingSchedule = ref(false);
+const schedulePositionNow = computed(() =>
+  schedulePosition(props.program, scheduleNow.value, props.scheduleIsReference),
+);
+
+// Move just the INNER queue scroller: scrollIntoView() would move the entire
+// mobile slideover/page and could hide the fixed player/header.
+let scrollGeneration = 0;
+const jumpToSchedulePosition = async () => {
+  const generation = ++scrollGeneration;
+  if (activeTab.value !== 'schedule') return;
+  await nextTick();
+  if (generation !== scrollGeneration || activeTab.value !== 'schedule') return;
+  const container = scheduleScrollContainer.value;
+  const index = schedulePositionNow.value.scrollIndex;
+  const row = index < 0 ? null : container?.querySelector<HTMLElement>(
+    `[data-program-index="${index}"]`,
+  );
+  if (!container || !row) return;
+  const containerRect = container.getBoundingClientRect();
+  const rowRect = row.getBoundingClientRect();
+  const desiredTop = container.scrollTop + rowRect.top - containerRect.top
+    - Math.max(0, (container.clientHeight - rowRect.height) / 3);
+  container.scrollTop = Math.max(0, desiredTop);
+};
+
+const recenterSchedule = () => {
+  manuallyBrowsingSchedule.value = false;
+  scheduleNow.value = Math.floor(Date.now() / 1000);
+  void jumpToSchedulePosition();
+};
+const markScheduleBrowsed = () => {
+  if (activeTab.value === 'schedule') manuallyBrowsingSchedule.value = true;
+};
+const onScheduleScrollKeydown = (event: KeyboardEvent) => {
+  if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
+    markScheduleBrowsed();
+  }
+};
+
+// Recenter once on opening the tab, after a provider schedule arrives, or
+// after changing station. Ordinary list re-renders do not steal manual scroll.
+watch(
+  [activeTab, () => props.program, () => props.activeStationUrl, () => props.scheduleIsReference],
+  ([tab]) => {
+    if (tab !== 'schedule') return;
+    manuallyBrowsingSchedule.value = false;
+    void jumpToSchedulePosition();
+  },
+  { flush: 'post', immediate: true },
+);
+
+// Update the highlight at a programme boundary. Follow it only if the visitor
+// has not manually scrolled away. No polling/scrolling every animation frame.
+watch(() => schedulePositionNow.value.scrollIndex, (next, previous) => {
+  if (next !== previous && activeTab.value === 'schedule' && !manuallyBrowsingSchedule.value) {
+    void jumpToSchedulePosition();
+  }
+}, { flush: 'post' });
+
+let scheduleClockTimer: ReturnType<typeof setInterval> | null = null;
+onMounted(() => {
+  scheduleNow.value = Math.floor(Date.now() / 1000);
+  scheduleClockTimer = setInterval(() => {
+    scheduleNow.value = Math.floor(Date.now() / 1000);
+  }, 15_000);
+  if (activeTab.value === 'schedule') void jumpToSchedulePosition();
+});
+onBeforeUnmount(() => {
+  if (scheduleClockTimer !== null) clearInterval(scheduleClockTimer);
+  scrollGeneration += 1;
+});
 
 const filteredStations = computed(() => {
   const keyword = normalizeStationQuery(query.value);
@@ -385,10 +469,8 @@ const formatProgramTime = (timestamp: number): string => props.scheduleIsReferen
   : dayjs.unix(timestamp).format('HH:mm');
 // Provider EPG usually puts the current programme first. The reference
 // guide must never falsely highlight its first (morning) slot as "on air".
-const isCurrentProgram = (item: ProgramItem, index: number): boolean =>
-  props.scheduleIsReference
-    ? Boolean(item.startTime && item.endTime && item.startTime <= Date.now() / 1000 && item.endTime > Date.now() / 1000)
-    : index === 0;
+const isCurrentProgram = (_item: ProgramItem, index: number): boolean =>
+  schedulePositionNow.value.currentIndex === index;
 
 const playlistKey = (item: PlaylistItem, index: number): string =>
   [item.track_title, item.track_artist, item.track_played, index].join("-");
