@@ -57,7 +57,7 @@
               @click="selectedDayKey = day.key"
             >
               <span
-                class="w-full max-w-12 rounded-t-sm transition-[height,background-color] duration-200"
+                class="block w-full max-w-12 rounded-t-sm transition-[height,background-color] duration-200"
                 :class="selectedDay.key === day.key ? 'bg-rose-500' : day.ms > 0 ? 'bg-rose-300 group-hover:bg-rose-400 dark:bg-rose-500/60' : 'bg-[var(--radio-border)]'"
                 :style="{ height: barHeight(day.ms) }"
                 aria-hidden="true"
@@ -103,7 +103,7 @@ const playback = usePlaybackStore();
 const { t } = useI18n();
 duration.hydrate();
 const { locale } = useI18n();
-const rangeDays = ref<7 | 30 | 90>(7);
+const rangeDays = ref(7);
 const selectedDayKey = ref('');
 const chartItems = computed(() => dailyListeningSeries(duration.stats, rangeDays.value, new Date(), duration.liveMs));
 const periodTotalMs = computed(() => chartItems.value.reduce((sum, day) => sum + day.ms, 0));
