@@ -219,3 +219,34 @@ test('listening time dashboard ticks each second during actual playback and free
   expect(JSON.parse(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).totalMs)
     .toBeGreaterThanOrEqual(2_000);
 });
+
+test('successful media play starts duration when the playing event is delayed or missing', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(HTMLMediaElement.prototype, 'paused', {
+      configurable: true, get() { return this.__testPaused !== false; },
+    });
+    Object.defineProperty(HTMLMediaElement.prototype, 'readyState', {
+      configurable: true, get() { return HTMLMediaElement.HAVE_FUTURE_DATA; },
+    });
+    HTMLMediaElement.prototype.play = function () {
+      this.__testPaused = false;
+      return Promise.resolve(); // No 'playing' event.
+    };
+    HTMLMediaElement.prototype.pause = function () {
+      this.__testPaused = true;
+      this.dispatchEvent(new Event('pause'));
+    };
+    HTMLMediaElement.prototype.load = function () {};
+  });
+  await ready(page, '/europe/belgium/studio-brussel');
+  const dock = page.locator('.radio-player-dock');
+  await dock.getByRole('button', { name: 'Play radio', exact: true }).click();
+  await page.locator('aside.radio-desktop-sidebar a[href="/library#stats"]').click();
+  const stats = page.locator('section[aria-label="Listening time"]');
+  await expect(stats).toContainText('Counting listening time live');
+  await expect.poll(async () => {
+    const text = (await stats.locator('.grid .radio-surface').first().locator('p').nth(1).innerText()).trim();
+    const match = /^(\d+)s$/.exec(text);
+    return match ? Number(match[1]) : 0;
+  }, { timeout: 8_000 }).toBeGreaterThanOrEqual(2);
+});
