@@ -467,6 +467,7 @@
     "clear_recent": "Xóa lịch sử nghe",
     "remove_recent": "Xóa khỏi lịch sử",
     "listening_stats": "Thời gian nghe",
+    "listening_live": "Đang đếm thời gian nghe trực tiếp",
     "listening_stats_description": "Chỉ tính thời gian radio thực sự phát trên thiết bị này; không tính lúc tạm dừng, chờ tải hoặc stream lỗi.",
     "listening_total": "Tổng thời gian nghe",
     "listening_today": "Hôm nay",
