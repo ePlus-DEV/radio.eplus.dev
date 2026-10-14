@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "資料出售與分享",
-          "body": "我們不會販售個人資料。正式網站使用 Google Analytics 4 統計造訪與頁面瀏覽量。使用搜尋與電台服務時，相關服務商也可能收到資訊。"
+          "body": "我們不會販售個人資料。正式網站使用 Google Analytics 4 統計造訪量、頁面瀏覽量及各電台收聽時長。個人的收聽時長統計亦儲存在您的裝置上。使用搜尋或電台服務時，相關服務商可能收到資訊。"
         },
         "changes": {
           "title": "政策變更",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "網站造訪統計",
-          "body": "ePlus OnAir 正式網站在頁面開啟時即透過 Google Analytics 4 統計造訪與頁面瀏覽量。關閉這則通知不會停止統計。"
+          "body": "正式網站使用 Google Analytics 4 統計造訪量、頁面瀏覽量及各電台收聽時長。關閉 Cookie 通知不會停止統計。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -503,7 +503,7 @@
     "title": "Cookie 與流量分析通知",
     "body": "ePlus OnAir 會在此裝置上儲存您的收聽與顯示偏好。",
     "accept": "知道了",
-    "analytics_body": "ePlus OnAir 會儲存您的偏好，並在正式網站使用 Google Analytics 4 統計造訪量。這只是資訊提示，關閉後統計仍會繼續。",
+    "analytics_body": "ePlus OnAir 會儲存您的偏好，並在正式網站使用 Google Analytics 4 統計造訪量及電台收聽時長。此通知僅供告知，關閉後統計仍會繼續。",
     "learn_more": "Cookie 政策"
   }
 }
