@@ -192,3 +192,30 @@ test('listening time tab shows stored lifetime, today and per-station durations'
   await page.reload();
   await expect(page.locator('section[aria-label="Listening time"]')).toContainText('Heart UK');
 });
+
+test('listening time dashboard ticks each second during actual playback and freezes on pause', async ({ page }) => {
+  await mockAudio(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  const dock = page.locator('.radio-player-dock');
+  await dock.getByRole('button', { name: 'Play radio', exact: true }).click();
+  await page.locator('aside.radio-desktop-sidebar a[href="/library#stats"]').click();
+
+  const stats = page.locator('section[aria-label="Listening time"]');
+  await expect(stats).toContainText('Counting listening time live');
+  const total = stats.locator('.grid .radio-surface').first().locator('p').nth(1);
+  const displayedSeconds = async () => {
+    const value = (await total.innerText()).trim();
+    const match = /^(\d+)s$/.exec(value);
+    return match ? Number(match[1]) : null;
+  };
+
+  // No reload required: reactive preview updates before the 5s storage checkpoint.
+  await expect.poll(displayedSeconds, { timeout: 8_000 }).toBeGreaterThanOrEqual(2);
+  await dock.getByRole('button', { name: 'Pause radio', exact: true }).click();
+  await expect(stats).not.toContainText('Counting listening time live');
+  const pausedSeconds = await displayedSeconds();
+  await page.waitForTimeout(1_600);
+  expect(await displayedSeconds()).toBe(pausedSeconds);
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).totalMs)
+    .toBeGreaterThanOrEqual(2_000);
+});
