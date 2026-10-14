@@ -384,10 +384,15 @@ const onScheduleScrollKeydown = (event: KeyboardEvent) => {
 // after changing station. Ordinary list re-renders do not steal manual scroll.
 watch(
   [activeTab, () => props.program, () => props.activeStationUrl, () => props.scheduleIsReference, () => props.visible],
-  ([tab]) => {
-    if (tab !== 'schedule' || !props.visible) return;
-    manuallyBrowsingSchedule.value = false;
-    void jumpToSchedulePosition();
+  ([tab, program, station, isReference, visible], [previousTab, previousProgram, previousStation, previousReference, previousVisible] = []) => {
+    if (tab !== 'schedule' || !visible) return;
+    const opened = previousTab !== 'schedule' || !previousVisible;
+    const changedStation = station !== previousStation || isReference !== previousReference;
+    const justLoaded = Boolean(program?.length && !previousProgram?.length);
+    // Only an explicit open/station switch resets manual browsing. A background
+    // provider refresh must never yank a user who is reading earlier programmes.
+    if (opened || changedStation || justLoaded) manuallyBrowsingSchedule.value = false;
+    if (!manuallyBrowsingSchedule.value) void jumpToSchedulePosition();
   },
   { flush: 'post', immediate: true },
 );
