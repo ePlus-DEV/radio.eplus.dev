@@ -1,6 +1,9 @@
 import { stationIdentity } from './listening-library.mjs';
 
 export const LISTENING_DURATION_KEY = 'radio_listening_duration_v1';
+export const LISTENING_TRACKING_ENABLED_KEY = 'radio_listening_tracking_enabled_v1';
+// Tracking is enabled for existing users unless they explicitly opt out.
+export const parseListeningTrackingEnabled = value => value !== '0';
 export const MAX_TRACKED_STATIONS = 100;
 export const MAX_TRACKED_DAYS = 365;
 // A background tab can have timers suspended while native radio keeps playing.
@@ -175,6 +178,13 @@ export function createListeningDurationTracker({
     unreportedMs = 0;
   };
 
+  // A privacy opt-out or "clear statistics" must not flush a final duration
+  // checkpoint (or send a GA4 report) that the user has just disallowed.
+  const discard = () => {
+    active = null;
+    unreportedMs = 0;
+  };
+
   return {
     start(station) {
       const valid = stationIdentity(station);
@@ -186,6 +196,7 @@ export function createListeningDurationTracker({
     },
     flush,
     stop,
+    discard,
     // Preview accrued time without writing to storage. This is read by the
     // visible statistics dashboard each second; flush still persists every 5s.
     get pendingMs() {
