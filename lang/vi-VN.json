@@ -148,6 +148,7 @@
     "description": "Mô tả",
     "category": "Thể Loại",
     "schedule": "Lịch phát sóng",
+    "schedule_jump_to_now": "Đến khung giờ hiện tại",
     "schedule_reference_note": "Khung giờ tham khảo từ đài phát thanh; chương trình có thể thay đổi theo ngày. Xem lịch chính thức để kiểm tra mới nhất.",
     "schedule_official_note": "Nguồn lịch chính thức của đài phát thanh.",
     "schedule_official_link": "Xem lịch chính thức",
