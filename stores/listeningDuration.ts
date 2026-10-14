@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import {
   LISTENING_DURATION_KEY,
-  addListeningDuration,
+  addListeningDurationAcrossDays,
   emptyListeningDuration,
   localDayKey,
   parseListeningDuration,
@@ -45,7 +45,7 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
           if (stored) this.stats = parseListeningDuration(stored);
         } catch { /* Keep tracking in memory for this session. */ }
       }
-      this.stats = addListeningDuration(this.stats, station, durationMs);
+      this.stats = addListeningDurationAcrossDays(this.stats, station, durationMs);
       if (import.meta.client) {
         try { localStorage.setItem(LISTENING_DURATION_KEY, JSON.stringify(this.stats)); }
         catch { /* Keep tracking in memory for this session. */ }
