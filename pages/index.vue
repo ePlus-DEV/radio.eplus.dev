@@ -25,6 +25,7 @@
 import worldData from "~/data/world";
 import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
+import { useListeningStore } from "~/stores/listening";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import { HOMEPAGE_FEATURED_STATION_PATHS, selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
@@ -37,6 +38,7 @@ const siteUrl = computed(() =>
   String(runtimeConfig.public.siteUrl).replace(/\/$/, ""),
 );
 const playback = usePlaybackStore();
+const listening = useListeningStore();
 // Load only curated stations into the Nuxt payload, not entire country catalogs.
 const featuredCountries = [...new Set(HOMEPAGE_FEATURED_STATION_PATHS.map(path => path.split('/').slice(0, 2).join('/')))];
 const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalogs', async () => {
@@ -138,6 +140,13 @@ const playFeatured = (station: RadioStationOption): void => {
 };
 
 watch(featuredCatalogs, () => {
+  // Prerendering must not serialize a default radio into Pinia: the restore
+  // composable cannot apply the saved station when onlyIfIdle finds it busy.
+  if (import.meta.server) return;
+  listening.hydrate();
+  // The user's last selection wins over the homepage's featured fallback.
+  // PlayerSession restores its current stream without starting playback.
+  if (listening.library.lastStation) return;
   const first = featuredEntries.value[0];
   if (!first) return;
   playback.activate(createPlaybackStation({

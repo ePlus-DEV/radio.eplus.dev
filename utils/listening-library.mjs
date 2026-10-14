@@ -40,6 +40,12 @@ export function rememberStation(library, station, state, heard = false) {
   };
 }
 
+/** Remove one entry from history without changing favorites or active station preference. */
+export function removeRecentStation(library, stationUrl) {
+  if (typeof stationUrl !== 'string' || !stationUrl) return library;
+  return { ...library, recent: library.recent.filter(entry => entry.url !== stationUrl) };
+}
+
 export function toggleFavoriteStation(library, station) {
   const item = stationIdentity(station);
   if (!item) return library;

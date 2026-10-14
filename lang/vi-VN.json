@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "Bán và chia sẻ dữ liệu",
-          "body": "Chúng tôi không bán dữ liệu cá nhân. Website chính thức sử dụng Google Analytics 4 để đếm lượt truy cập và lượt xem trang. Dịch vụ tìm kiếm và các đài radio cũng có thể nhận thông tin khi bạn sử dụng."
+          "body": "Chúng tôi không bán dữ liệu cá nhân. Website chính thức dùng Google Analytics 4 để đo lượt truy cập, lượt xem trang và thời gian nghe radio theo từng đài. Thống kê thời gian nghe cá nhân cũng được lưu trên thiết bị của bạn. Dịch vụ tìm kiếm và các đài radio có thể nhận thông tin khi bạn sử dụng."
         },
         "changes": {
           "title": "Thay đổi chính sách",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "Thống kê lượt truy cập",
-          "body": "Website ePlus OnAir chính thức sử dụng Google Analytics 4 để đếm lượt truy cập và lượt xem trang ngay khi mở trang. Đóng thông báo cookie không dừng việc đo lường này."
+          "body": "Website ePlus OnAir chính thức dùng Google Analytics 4 để thống kê lượt truy cập, lượt xem trang và thời gian nghe radio theo từng đài. Đóng thông báo cookie không dừng việc đo lường này."
         },
         "third_party": {
           "title": "Dịch vụ bên thứ ba",
@@ -465,6 +465,30 @@
     "recent_empty": "Phát một kênh để lưu vào danh sách nghe gần đây.",
     "favorites_empty": "Bấm biểu tượng trái tim để lưu kênh yêu thích.",
     "clear_recent": "Xóa lịch sử nghe",
+    "remove_recent": "Xóa khỏi lịch sử",
+    "listening_stats": "Thời gian nghe",
+    "listening_live": "Đang đếm thời gian nghe trực tiếp",
+    "listening_daily_chart": "Biểu đồ thời gian nghe theo ngày",
+    "listening_daily_hint": "Chọn một cột để xem thời gian nghe của ngày đó.",
+    "listening_chart_range": "Khoảng thời gian biểu đồ",
+    "listening_last_7": "7 ngày",
+    "listening_last_30": "30 ngày",
+    "listening_last_90": "90 ngày",
+    "listening_period_total": "Tổng thời gian nghe trong kỳ",
+    "listening_daily_empty": "Chưa có thời gian nghe theo ngày.",
+    "listening_stats_description": "Chỉ tính thời gian radio thực sự phát trên thiết bị này; không tính lúc tạm dừng, chờ tải hoặc stream lỗi.",
+    "listening_total": "Tổng thời gian nghe",
+    "listening_today": "Hôm nay",
+    "listening_stations": "Số đài đã nghe",
+    "listening_top_stations": "Thời gian theo từng đài",
+    "listening_empty": "Phát một đài radio để bắt đầu thống kê thời gian nghe.",
+    "listening_hour_short": " giờ",
+    "listening_minute_short": " phút",
+    "listening_second_short": " giây",
+    "confirm_clear_recent_title": "Xóa toàn bộ lịch sử nghe?",
+    "confirm_clear_recent_description": "Bạn có chắc muốn xóa tất cả đài trong Nghe gần đây? Danh sách yêu thích và thống kê thời gian nghe sẽ được giữ lại.",
+    "confirm_clear_recent_yes": "Có, xóa lịch sử",
+    "confirm_clear_recent_no": "Không, giữ lại",
     "add_favorite": "Thêm vào yêu thích",
     "remove_favorite": "Bỏ yêu thích",
     "loading": "Đang tải các đài của bạn…"
@@ -488,7 +512,7 @@
     "title": "Thông báo cookie và đo lường",
     "body": "ePlus OnAir lưu các lựa chọn nghe và giao diện của bạn trên thiết bị này.",
     "accept": "Đã hiểu",
-    "analytics_body": "ePlus OnAir ghi nhớ tùy chọn của bạn và dùng Google Analytics 4 để thống kê lượt truy cập trên website chính thức. Đây là thông báo cung cấp thông tin; đóng thông báo không tắt việc đo lường.",
+    "analytics_body": "ePlus OnAir lưu tùy chọn của bạn và sử dụng Google Analytics 4 trên website chính thức để thống kê lượt truy cập và thời gian nghe radio. Đây là thông báo cung cấp thông tin; đóng thông báo không tắt việc đo lường.",
     "learn_more": "Chính sách cookie"
   }
 }

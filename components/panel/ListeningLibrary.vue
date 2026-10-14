@@ -4,22 +4,22 @@
       <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h2 class="flex items-center gap-2 text-lg font-semibold"><UIcon :name="group.icon" class="h-5 w-5 text-rose-600 dark:text-rose-400" />{{ $t(`library.${group.key}`) }}<span class="text-xs font-normal text-[var(--radio-text-muted)]">{{ group.items.length }}</span></h2>
         <NuxtLink v-if="compact && group.items.length" :to="`/library#${group.key}`" class="radio-interactive rounded-lg p-2 text-xs font-semibold text-rose-700 dark:text-rose-300">{{ $t('redesign.see_all') }}</NuxtLink>
-        <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="listening.clearRecent()">{{ $t('library.clear_recent') }}</UButton>
+        <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="clearRecentOpen = true">{{ $t('library.clear_recent') }}</UButton>
       </div>
       <div v-if="group.items.length" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         <article
           v-for="station in compact ? group.items.slice(0, 4) : group.items"
           :key="station.url"
-          class="radio-station-card relative min-w-0 rounded-2xl border p-2"
+          class="radio-station-card flex min-w-0 items-center gap-1 rounded-2xl border p-2"
           :class="isActive(station.url) ? 'border-rose-500/40' : ''"
         >
           <UTooltip :text="station.title">
-            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-24" @click="openStationDetails($event)">
+            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 flex-1 items-center gap-2 rounded-xl sm:gap-3" @click="openStationDetails($event)">
               <StationArtwork :src="station.image" :alt="station.title" class="radio-library-artwork radio-themed-artwork h-12 w-12 shrink-0 rounded-xl object-contain p-1.5" />
               <span dir="auto" class="block min-w-0 truncate text-sm font-semibold">{{ station.title }}</span>
             </NuxtLink>
           </UTooltip>
-          <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-0.5">
+          <div class="flex shrink-0 items-center gap-0.5">
             <UButton
               color="neutral"
               :variant="isActive(station.url) ? 'soft' : 'ghost'"
@@ -41,12 +41,38 @@
               :aria-label="$t(isFavorite(station.url) ? 'library.remove_favorite' : 'library.add_favorite')"
               @click="listening.toggleFavorite(station)"
             />
+            <UButton
+              v-if="group.key === 'recent'"
+              color="neutral"
+              variant="ghost"
+              icon="i-lucide-trash-2"
+              class="h-10 w-10 shrink-0 justify-center rounded-full text-[var(--radio-text-muted)] hover:text-rose-500"
+              :aria-label="$t('library.remove_recent') + ': ' + station.title"
+              @click="listening.removeRecent(station.url)"
+            />
           </div>
         </article>
       </div>
       <p v-else class="rounded-2xl border border-dashed border-[var(--radio-border)] p-4 text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t(`library.${group.key}_empty`) }}</p>
       <p v-if="failedStationUrl && group.items.some(station => station.url === failedStationUrl)" role="alert" class="mt-2 text-xs text-rose-500">{{ $t('alert.stream_error') }}</p>
     </section>
+    <UModal
+      v-model:open="clearRecentOpen"
+      :title="$t('library.confirm_clear_recent_title')"
+      :description="$t('library.confirm_clear_recent_description')"
+      :ui="{ content: 'max-w-md' }"
+    >
+      <template #footer>
+        <div class="flex w-full flex-wrap justify-end gap-2">
+          <UButton color="neutral" variant="outline" class="min-h-11" @click="clearRecentOpen = false">
+            {{ $t('library.confirm_clear_recent_no') }}
+          </UButton>
+          <UButton color="error" class="min-h-11" @click="confirmClearRecent">
+            {{ $t('library.confirm_clear_recent_yes') }}
+          </UButton>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
 
@@ -65,6 +91,12 @@ const playback = usePlaybackStore();
 const config = useRuntimeConfig();
 const route = useRoute();
 listening.hydrate();
+
+const clearRecentOpen = ref(false);
+const confirmClearRecent = () => {
+  listening.clearRecent();
+  clearRecentOpen.value = false;
+};
 
 const pendingStationUrl = ref<string | null>(null);
 const failedStationUrl = ref<string | null>(null);
