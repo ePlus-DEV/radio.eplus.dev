@@ -148,6 +148,7 @@
     "description": "Description",
     "category": "Category",
     "schedule": "Schedule",
+    "schedule_jump_to_now": "Jump to current time",
     "schedule_reference_note": "Reference programme times from the broadcaster. Daily programming may change; check the official guide for the latest schedule.",
     "schedule_official_note": "Official broadcast schedule source.",
     "schedule_official_link": "View official schedule",
