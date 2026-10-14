@@ -19,6 +19,62 @@
         <p class="mt-2 text-2xl font-bold tabular-nums">{{ stations.length }}</p>
       </div>
     </div>
+
+    <figure class="radio-surface space-y-4 p-4 sm:p-5" :aria-label="$t('library.listening_daily_chart')">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-semibold">{{ $t('library.listening_daily_chart') }}</h2>
+          <p class="mt-1 text-xs text-[var(--radio-text-muted)]">{{ $t('library.listening_daily_hint') }}</p>
+        </div>
+        <div class="flex flex-wrap gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1" role="group" :aria-label="$t('library.listening_chart_range')">
+          <button
+            v-for="days in [7, 30, 90]"
+            :key="days"
+            type="button"
+            class="min-h-9 rounded-lg px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            :class="rangeDays === days ? 'bg-[var(--radio-surface)] text-rose-600 shadow-sm dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:text-[var(--radio-text)]'"
+            :aria-pressed="rangeDays === days"
+            @click="rangeDays = days"
+          >{{ $t(`library.listening_last_${days}`) }}</button>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
+        <span class="text-[var(--radio-text-muted)]">{{ $t('library.listening_period_total') }}</span>
+        <span class="font-bold tabular-nums">{{ formatDuration(periodTotalMs) }}</span>
+      </div>
+      <div class="radio-scrollbar overflow-x-auto pb-2">
+        <div
+          class="flex h-48 w-full items-stretch gap-1 border-b border-[var(--radio-border)] pt-4"
+          :style="{ minWidth: rangeDays === 90 ? '1440px' : rangeDays === 30 ? '720px' : '0' }"
+        >
+          <div v-for="(day, index) in chartItems" :key="day.key" class="flex min-w-0 flex-1 flex-col items-center">
+            <button
+              type="button"
+              class="group relative flex min-h-0 w-full flex-1 items-end justify-center rounded-t focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+              :aria-label="formatDay(day.key) + ': ' + formatDuration(day.ms)"
+              :aria-pressed="selectedDay.key === day.key"
+              :title="formatDay(day.key) + ' · ' + formatDuration(day.ms)"
+              @click="selectedDayKey = day.key"
+            >
+              <span
+                class="w-full max-w-12 rounded-t-sm transition-[height,background-color] duration-200"
+                :class="selectedDay.key === day.key ? 'bg-rose-500' : day.ms > 0 ? 'bg-rose-300 group-hover:bg-rose-400 dark:bg-rose-500/60' : 'bg-[var(--radio-border)]'"
+                :style="{ height: barHeight(day.ms) }"
+                aria-hidden="true"
+              ></span>
+            </button>
+            <span class="mt-2 h-4 text-[10px] tabular-nums text-[var(--radio-text-muted)]" aria-hidden="true">
+              {{ showDayLabel(index) ? formatTick(day.key) : '' }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <figcaption class="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-[var(--radio-surface-soft)] px-3 py-2 text-sm">
+        <span class="text-[var(--radio-text-muted)]">{{ formatDay(selectedDay.key) }}</span>
+        <span class="font-semibold tabular-nums">{{ formatDuration(selectedDay.ms) }}</span>
+      </figcaption>
+      <p v-if="!hasDailyListening" class="text-xs text-[var(--radio-text-muted)]">{{ $t('library.listening_daily_empty') }}</p>
+    </figure>
     <div class="radio-surface p-4 sm:p-5">
       <h2 class="mb-4 text-lg font-semibold">{{ $t('library.listening_top_stations') }}</h2>
       <div v-if="stations.length" class="space-y-4">
@@ -40,11 +96,37 @@
 <script setup lang="ts">
 import { useListeningDurationStore } from '~/stores/listeningDuration';
 import { usePlaybackStore } from '~/stores/playback';
+import { dailyListeningSeries, localDayKey } from '~/utils/listening-duration.mjs';
 
 const duration = useListeningDurationStore();
 const playback = usePlaybackStore();
 const { t } = useI18n();
 duration.hydrate();
+const { locale } = useI18n();
+const rangeDays = ref<7 | 30 | 90>(7);
+const selectedDayKey = ref('');
+const chartItems = computed(() => dailyListeningSeries(duration.stats, rangeDays.value, new Date(), duration.liveMs));
+const periodTotalMs = computed(() => chartItems.value.reduce((sum, day) => sum + day.ms, 0));
+const peakMs = computed(() => Math.max(1, ...chartItems.value.map(day => day.ms)));
+const hasDailyListening = computed(() => chartItems.value.some(day => day.ms > 0));
+const selectedDay = computed(() => chartItems.value.find(day => day.key === selectedDayKey.value)
+  || chartItems.value[chartItems.value.length - 1]
+  || { key: localDayKey(), ms: 0 });
+const barHeight = (ms: number): string => ms > 0 ? `${Math.max(3, Math.round(ms / peakMs.value * 100))}%` : '2px';
+const showDayLabel = (index: number): boolean => rangeDays.value === 7
+  || index === 0 || index === chartItems.value.length - 1
+  || index % (rangeDays.value === 30 ? 5 : 15) === 0;
+const parseDay = (dayKey: string) => {
+  const [year, month, day] = dayKey.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+const formatDay = (dayKey: string) => new Intl.DateTimeFormat(locale.value, {
+  day: '2-digit', month: 'short', year: 'numeric',
+}).format(parseDay(dayKey));
+const formatTick = (dayKey: string) => new Intl.DateTimeFormat(locale.value, {
+  day: '2-digit', month: '2-digit',
+}).format(parseDay(dayKey));
+
 
 const isLive = computed(() => duration.activeStationUrl !== '');
 const totalListeningMs = computed(() => duration.stats.totalMs + duration.liveMs);
