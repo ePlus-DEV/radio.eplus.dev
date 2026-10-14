@@ -148,6 +148,7 @@
     "description": "Description",
     "category": "Catégorie",
     "schedule": "Programme",
+    "schedule_jump_to_now": "Aller à l'heure actuelle",
     "schedule_reference_note": "Horaires indicatifs de la station, susceptibles de changer selon le jour. Consultez le programme officiel.",
     "schedule_official_note": "Source officielle des programmes.",
     "schedule_official_link": "Voir le programme officiel",
