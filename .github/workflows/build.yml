@@ -169,7 +169,7 @@ jobs:
       - name: "Restore generated radio search index"
         id: search_cache
         if: steps.scope.outputs.prerender == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: public/search/stations.json
           key: ${{ runner.os }}-onair-search-v1-${{ hashFiles('public/radio/**/*.json', 'utils/featured-stations.mjs', 'scripts/build-station-search-index.mjs') }}
@@ -177,7 +177,7 @@ jobs:
       - name: "Restore generated social preview"
         id: social_cache
         if: steps.scope.outputs.prerender == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: public/brand/social-preview.png
           key: ${{ runner.os }}-onair-social-v1-${{ hashFiles('public/brand/social-preview.svg', 'scripts/generate-social-preview.mjs', 'package-lock.json') }}
