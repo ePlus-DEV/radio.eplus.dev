@@ -465,6 +465,7 @@
     "recent_empty": "播放電台後會顯示在這裡。",
     "favorites_empty": "點擊愛心即可收藏電台。",
     "clear_recent": "清除收聽記錄",
+    "remove_recent": "從歷史記錄中移除",
     "add_favorite": "加入收藏",
     "remove_favorite": "取消收藏",
     "loading": "正在載入您的電台…"
