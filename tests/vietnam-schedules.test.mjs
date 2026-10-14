@@ -16,6 +16,10 @@ test('Vietnam station schedules map only exact supported station paths to offici
   assert.equal(getVietnamSchedule('/asia/viet-nam/vov-mekong').sourceUrl, 'https://vovgiaothong.vn/lich-phat-song-mk/');
   assert.equal(getVietnamSchedule('/asia/viet-nam/vov1').sourceUrl, 'https://vov1.vov.vn/');
   assert.equal(getVietnamSchedule('/asia/viet-nam/vov3').sourceUrl, 'https://vov3.vov.vn/lich-phat-song');
+  for (const id of ['voh-fm-99.9-mhz', 'voh-fm-95.6-mhz', 'voh-fm-87.7-mhz', 'voh-am-610khz']) {
+    assert.equal(getVietnamSchedule('/asia/viet-nam/' + id).sourceUrl, 'https://voh.com.vn/radios/schedule');
+    assert.deepEqual(vietnamReferencePrograms('/asia/viet-nam/' + id), []);
+  }
   for (const path of ['/europe/united-kingdom/vov-gt-hcm', '/asia/viet-nam/other', '/asia/viet-nam/vov1?test=1', null, '', '/asia/viet-nam/../vov1']) {
     assert.equal(getVietnamSchedule(path), null);
     assert.deepEqual(vietnamReferencePrograms(path), []);
@@ -24,7 +28,7 @@ test('Vietnam station schedules map only exact supported station paths to offici
 
 test('radio station guides have validated, chronological, non-overlapping source windows', () => {
   for (const [id, info] of Object.entries(VIETNAM_SCHEDULES)) {
-    assert.match(info.sourceUrl, /^https:\/\/(?:vovgiaothong\.vn|vov1\.vov\.vn|vov3\.vov\.vn)\//);
+    assert.match(info.sourceUrl, /^https:\/\/(?:vovgiaothong\.vn|vov1\.vov\.vn|vov3\.vov\.vn|voh\.com\.vn)\//);
     let priorEnd = 0;
     for (const [start, end, name] of info.slots) {
       assert.match(start, /^\d\d:\d\d$/);
