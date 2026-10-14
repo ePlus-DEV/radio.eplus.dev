@@ -61,3 +61,34 @@ boundary, the synthetic gap marker disappears and the real schedule row takes
 over. See `referenceScheduleGap` in `utils/station-schedule.mjs` and the
 regressions in `tests/station-schedule.test.mjs` and
 `tests/browser/schedule-autoscroll.spec.mjs`.
+
+## Vertical broadcast timeline
+
+The reference-guide Queue now uses a real **hourly vertical EPG**, instead
+of equally tall programme cards. Every hour on the left has an aligned grid
+line, and each station programme occupies a duration-proportional column
+block (76 CSS pixels per hour). The visible ruler continues past **midnight**
+with the next Vietnam calendar date and early next-day hours.
+
+A **green now line** crosses the grid at the correct clock position. Its
+HH:mm:ss badge and position advance once per second using the
+`Asia/Ho_Chi_Minh` clock, regardless of the user's local timezone. This is
+a **schedule clock**, *not audio playback progress*; radio can be paused or
+offline while the reference clock still indicates wall time.
+
+At an unpublished interval such as the 16:15–16:30 VOV Giao thông HCM gap,
+the grid remains visually empty of invented programme blocks and shows the
+neutral message plus the next listed programme beside the current-time line.
+No false "currently broadcasting" claim is made. At the 16:30 boundary, the
+new real programme becomes highlighted automatically.
+
+When the Queue/Schedule opens, the scrollbar centers the **now line** inside
+the list. The listener can scroll to other periods without being pulled back;
+a dedicated **Jump to current time** button restores the view. The existing
+compact list remains in place for non-reference provider EPGs that lack
+reliable programme start/end timestamps.
+
+`referenceTimelineLayout` and `scheduleTimelineProgress` in
+`utils/station-schedule.mjs` contain the timezone-aware geometry and
+boundary maths. Regression coverage includes program length, next-day
+ticks, a 16:29 gap and the 16:30 transition.

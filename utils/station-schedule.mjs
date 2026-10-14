@@ -86,3 +86,51 @@ export const scheduleTimelineProgress = (startSeconds, endSeconds, nowSeconds) =
       || !Number.isFinite(nowSeconds) || endSeconds <= startSeconds) return null;
   return Math.min(100, Math.max(0, (nowSeconds - startSeconds) * 100 / (endSeconds - startSeconds)));
 };
+
+// Fixed-scale broadcast timeline. Unix timestamps stay in Vietnam's ICT zone:
+// no browser-local timezone or daylight-saving conversion can move a programme.
+export const SCHEDULE_TIMELINE_HOUR_PX = 76;
+export const referenceTimelineLayout = (programs, nowSeconds, hourPixels = SCHEDULE_TIMELINE_HOUR_PX) => {
+  if (!Array.isArray(programs) || !programs.length || !Number.isFinite(nowSeconds)
+    || !Number.isFinite(hourPixels) || hourPixels <= 0) return null;
+  const sorted = programs.filter(item =>
+    Number.isFinite(item?.startTime) && Number.isFinite(item?.endTime)
+    && item.endTime > item.startTime
+  ).slice().sort((a, b) => a.startTime - b.startTime);
+  if (!sorted.length) return null;
+  const vietnamOffset = 7 * 3600;
+  const dayStart = Math.floor((sorted[0].startTime + vietnamOffset) / 86400) * 86400 - vietnamOffset;
+  // Display a continuous hourly ruler through 03:00 of the following day.
+  // Keep longer source events visible without clipping them at midnight.
+  const lastEnd = Math.max(...sorted.map(item => item.endTime));
+  const hourCount = Math.max(27, Math.ceil((lastEnd - dayStart) / 3600) + 2);
+  const timeTop = seconds => (seconds - dayStart) / 3600 * hourPixels;
+  const programsLayout = sorted.map((item, index) => ({
+    index,
+    item,
+    top: timeTop(item.startTime),
+    height: Math.max(1, timeTop(item.endTime) - timeTop(item.startTime)),
+    active: item.startTime <= nowSeconds && nowSeconds < item.endTime,
+  }));
+  const gap = referenceScheduleGap(sorted, nowSeconds);
+  const previous = gap?.insertIndex > 0 ? sorted[gap.insertIndex - 1] : null;
+  const next = gap && gap.insertIndex < sorted.length ? sorted[gap.insertIndex] : null;
+  return {
+    dayStart,
+    height: hourCount * hourPixels,
+    hours: Array.from({ length: hourCount + 1 }, (_, index) => ({
+      time: dayStart + index * 3600,
+      top: index * hourPixels,
+      nextDay: index > 0 && index % 24 === 0,
+    })),
+    programmes: programsLayout,
+    nowTop: nowSeconds >= dayStart && nowSeconds <= dayStart + hourCount * 3600
+      ? timeTop(nowSeconds) : null,
+    // An unknown interval is neutral metadata, never a live station status.
+    gap: gap ? {
+      ...gap,
+      startTime: previous?.endTime ?? dayStart,
+      endTime: next?.startTime ?? dayStart + hourCount * 3600,
+    } : null,
+  };
+};
