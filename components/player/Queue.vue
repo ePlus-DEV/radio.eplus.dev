@@ -24,6 +24,22 @@
       </div>
 
       <p v-if="scheduleLoading" class="mt-2 text-[11px] text-[var(--radio-text-muted)]" aria-live="polite">{{ $t('player.schedule_loading') }}</p>
+      <div v-if="activeTab === 'schedule' && program.length" class="mt-2 flex justify-end">
+        <UButton color="neutral" variant="ghost" size="xs" icon="i-lucide-locate-fixed"
+          class="min-h-9" :aria-label="$t('panel.schedule_jump_to_now')"
+          @click="recenterSchedule">{{ $t('panel.schedule_jump_to_now') }}</UButton>
+      </div>
+      <div v-if="activeTab === 'schedule' && scheduleSourceUrl" class="mt-3 space-y-1 text-xs leading-5">
+        <p class="text-[var(--radio-text-muted)]">
+          {{ $t(scheduleIsReference ? 'panel.schedule_reference_note' : 'panel.schedule_official_note') }}
+        </p>
+        <a :href="scheduleSourceUrl" target="_blank" rel="noopener noreferrer"
+          class="inline-flex min-h-9 items-center gap-1.5 font-semibold text-rose-700 underline-offset-4 hover:underline dark:text-rose-300">
+          {{ $t('panel.schedule_official_link') }}
+          <UIcon name="i-lucide-external-link" class="h-3.5 w-3.5" aria-hidden="true" />
+        </a>
+        <p v-if="scheduleIsReference" class="text-[11px] text-[var(--radio-text-muted)]">{{ $t('panel.schedule_vietnam_timezone') }}</p>
+      </div>
 
       <div
         v-if="activeTab === 'stations' && hasStations"
@@ -58,7 +74,10 @@
       </div>
     </div>
 
-    <div class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5">
+    <div ref="scheduleScrollContainer" class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5"
+      tabindex="0" :aria-label="activeTab === 'schedule' ? $t('panel.schedule') : $t('panel.channels')"
+      @wheel.passive="markScheduleBrowsed" @touchstart.passive="markScheduleBrowsed"
+      @pointerdown="markScheduleBrowsed" @keydown="onScheduleScrollKeydown">
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
         <button
           v-for="station in filteredStations"
@@ -131,15 +150,16 @@
           <div
             v-for="(item, index) in program"
             :key="programKey(item, index)"
+            :data-program-index="index"
             class="relative grid grid-cols-[72px_minmax(0,1fr)] gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
-              index === 0
+              isCurrentProgram(item, index)
                 ? 'bg-[var(--radio-surface-soft)] ring-1 ring-inset ring-[var(--radio-border)]'
                 : 'hover:bg-[var(--radio-hover)]'
             "
           >
             <span
-              v-if="index === 0"
+              v-if="isCurrentProgram(item, index)"
               class="absolute inset-y-2 left-0 w-0.5 rounded-full bg-rose-500"
               aria-hidden="true"
             ></span>
@@ -148,12 +168,12 @@
               class="rounded-lg bg-[var(--radio-surface)] px-2 py-1.5 text-xs font-semibold tabular-nums text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)]"
             >
               <template v-if="item.startTime">
-                <div>{{ dayjs.unix(item.startTime).format("HH:mm") }}</div>
+                <div>{{ formatProgramTime(item.startTime) }}</div>
                 <div
                   v-if="item.endTime"
                   class="mt-0.5 text-[10px] font-normal text-[var(--radio-text-muted)]"
                 >
-                  {{ dayjs.unix(item.endTime).format("HH:mm") }}
+                  {{ formatProgramTime(item.endTime) }}
                 </div>
               </template>
               <template v-else>—</template>
@@ -177,7 +197,7 @@
           </div>
         </template>
 
-        <template v-else>
+        <template v-else-if="playlist.length">
           <div
             v-for="(item, index) in playlist"
             :key="playlistKey(item, index)"
@@ -227,6 +247,9 @@
             </span>
           </div>
         </template>
+        <p v-else-if="scheduleSourceUrl" class="p-3 text-sm leading-6 text-[var(--radio-text-muted)]">
+          {{ $t('panel.schedule_provider_only') }}
+        </p>
       </div>
     </div>
   </section>
@@ -236,6 +259,7 @@
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
+import { schedulePosition } from "~/utils/station-schedule.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -266,6 +290,9 @@ const props = withDefaults(
     stationName: string;
     countryName?: string;
     scheduleLoading?: boolean;
+    scheduleSourceUrl?: string;
+    scheduleIsReference?: boolean;
+    visible?: boolean;
   }>(),
   {
     playlist: () => [],
@@ -275,6 +302,9 @@ const props = withDefaults(
     activeStationUrl: "",
     countryName: "",
     scheduleLoading: false,
+    scheduleSourceUrl: "",
+    scheduleIsReference: false,
+    visible: true,
   },
 );
 
@@ -295,7 +325,7 @@ const isActiveStation = (station: RadioStationOption): boolean =>
     ? station.url === props.activeStationUrl
     : station.id === props.activeStationId;
 const hasSchedule = computed(
-  () => props.playlist.length > 0 || props.program.length > 0,
+  () => props.playlist.length > 0 || props.program.length > 0 || Boolean(props.scheduleSourceUrl),
 );
 const scheduleCount = computed(
   () => props.program.length || props.playlist.length,
@@ -308,6 +338,85 @@ const activeTab = ref<"stations" | "schedule">(
   hasStations.value ? "stations" : "schedule",
 );
 const preferScheduleAfterLoad = ref(false);
+const scheduleScrollContainer = ref<HTMLElement | null>(null);
+const scheduleNow = ref(Math.floor(Date.now() / 1000));
+const manuallyBrowsingSchedule = ref(false);
+const schedulePositionNow = computed(() =>
+  schedulePosition(props.program, scheduleNow.value, props.scheduleIsReference),
+);
+
+// Move just the INNER queue scroller: scrollIntoView() would move the entire
+// mobile slideover/page and could hide the fixed player/header.
+let scrollGeneration = 0;
+const jumpToSchedulePosition = async () => {
+  const generation = ++scrollGeneration;
+  if (activeTab.value !== 'schedule' || !props.visible) return;
+  await nextTick();
+  if (generation !== scrollGeneration || activeTab.value !== 'schedule' || !props.visible) return;
+  const container = scheduleScrollContainer.value;
+  const index = schedulePositionNow.value.scrollIndex;
+  const row = index < 0 ? null : container?.querySelector<HTMLElement>(
+    `[data-program-index="${index}"]`,
+  );
+  if (!container || !row || container.clientHeight === 0) return;
+  const containerRect = container.getBoundingClientRect();
+  const rowRect = row.getBoundingClientRect();
+  const desiredTop = container.scrollTop + rowRect.top - containerRect.top
+    - Math.max(0, (container.clientHeight - rowRect.height) / 3);
+  container.scrollTop = Math.max(0, desiredTop);
+};
+
+const recenterSchedule = () => {
+  manuallyBrowsingSchedule.value = false;
+  scheduleNow.value = Math.floor(Date.now() / 1000);
+  void jumpToSchedulePosition();
+};
+const markScheduleBrowsed = () => {
+  if (activeTab.value === 'schedule') manuallyBrowsingSchedule.value = true;
+};
+const onScheduleScrollKeydown = (event: KeyboardEvent) => {
+  if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
+    markScheduleBrowsed();
+  }
+};
+
+// Recenter once on opening the tab, after a provider schedule arrives, or
+// after changing station. Ordinary list re-renders do not steal manual scroll.
+watch(
+  [activeTab, () => props.program, () => props.activeStationUrl, () => props.scheduleIsReference, () => props.visible],
+  ([tab, program, station, isReference, visible], previous) => {
+    if (tab !== 'schedule' || !visible) return;
+    const opened = previous?.[0] !== 'schedule' || !previous?.[4];
+    const changedStation = station !== previous?.[2] || isReference !== previous?.[3];
+    const justLoaded = Boolean(program?.length && !previous?.[1]?.length);
+    // Only an explicit open/station switch resets manual browsing. A background
+    // provider refresh must never yank a user who is reading earlier programmes.
+    if (opened || changedStation || justLoaded) manuallyBrowsingSchedule.value = false;
+    if (!manuallyBrowsingSchedule.value) void jumpToSchedulePosition();
+  },
+  { flush: 'post', immediate: true },
+);
+
+// Update the highlight at a programme boundary. Follow it only if the visitor
+// has not manually scrolled away. No polling/scrolling every animation frame.
+watch(() => schedulePositionNow.value.scrollIndex, (next, previous) => {
+  if (next !== previous && activeTab.value === 'schedule' && props.visible && !manuallyBrowsingSchedule.value) {
+    void jumpToSchedulePosition();
+  }
+}, { flush: 'post' });
+
+let scheduleClockTimer: ReturnType<typeof setInterval> | null = null;
+onMounted(() => {
+  scheduleNow.value = Math.floor(Date.now() / 1000);
+  scheduleClockTimer = setInterval(() => {
+    scheduleNow.value = Math.floor(Date.now() / 1000);
+  }, 15_000);
+  if (activeTab.value === 'schedule' && props.visible) void jumpToSchedulePosition();
+});
+onBeforeUnmount(() => {
+  if (scheduleClockTimer !== null) clearInterval(scheduleClockTimer);
+  scrollGeneration += 1;
+});
 
 const filteredStations = computed(() => {
   const keyword = normalizeStationQuery(query.value);
@@ -358,6 +467,17 @@ watch([hasStations, hasSchedule], ([stationsReady, scheduleReady]) => {
     activeTab.value = "stations";
   }
 });
+
+const vietnamTimeFormatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+});
+const formatProgramTime = (timestamp: number): string => props.scheduleIsReference
+  ? vietnamTimeFormatter.format(new Date(timestamp * 1000))
+  : dayjs.unix(timestamp).format('HH:mm');
+// Provider EPG usually puts the current programme first. The reference
+// guide must never falsely highlight its first (morning) slot as "on air".
+const isCurrentProgram = (_item: ProgramItem, index: number): boolean =>
+  schedulePositionNow.value.currentIndex === index;
 
 const playlistKey = (item: PlaylistItem, index: number): string =>
   [item.track_title, item.track_artist, item.track_played, index].join("-");
