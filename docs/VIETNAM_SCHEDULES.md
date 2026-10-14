@@ -12,6 +12,10 @@ reference guide for three VOV Traffic services:
 | `vov-mekong` (Mê Kông) | https://vovgiaothong.vn/lich-phat-song-mk/ | Reference programme blocks |
 | `vov1` | https://vov1.vov.vn/ | Official link only (daily schedules vary) |
 | `vov3` | https://vov3.vov.vn/lich-phat-song | Official link only (daily schedules vary) |
+| `voh-fm-99.9-mhz` | https://voh.com.vn/radios/schedule | Official link only |
+| `voh-fm-95.6-mhz` | https://voh.com.vn/radios/schedule | Official link only |
+| `voh-fm-87.7-mhz` | https://voh.com.vn/radios/schedule | Official link only |
+| `voh-am-610khz` | https://voh.com.vn/radios/schedule | Official link only |
 
 The programmes are reference time blocks extracted from the broadcaster's
 public guides in October 2026, not a live EPG and not a promise that each slot
