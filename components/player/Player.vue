@@ -134,7 +134,7 @@
         <p dir="auto" class="truncate text-sm font-semibold">{{ song.nextMedia.title }}</p>
         <p dir="auto" class="mt-1 truncate text-xs text-[var(--radio-text-muted)]">{{ song.nextMedia.artists }}</p>
       </div>
-      <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :active-station-url="stationUrl" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
+      <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :active-station-url="stationUrl" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :schedule-source-url="scheduleSourceUrl" :schedule-is-reference="scheduleIsReference" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
     </aside>
   </Teleport>
 
@@ -167,7 +167,7 @@
         <p class="text-[10px] font-semibold uppercase tracking-wider text-rose-500">{{ $t('panel.next') }}</p>
         <p dir="auto" class="mt-2 truncate text-sm">{{ song.nextMedia.title }}</p>
       </div>
-      <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :active-station-url="stationUrl" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
+      <PlayerQueue class="min-h-0 flex-1" :playlist="playlist || []" :program="program || []" :stations="stations || []" :active-station-id="activeStationId" :active-station-url="stationUrl" :country-name="countryName || $t(country)" :schedule-loading="queueLoading" :schedule-source-url="scheduleSourceUrl" :schedule-is-reference="scheduleIsReference" :thumb="thumb" :station-name="streamName" @select-station="selectStation" />
     </template>
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
@@ -237,6 +237,8 @@ const props = defineProps<{
   activeStationId?: string;
   countryName?: string;
   queueLoading?: boolean;
+  scheduleSourceUrl?: string;
+  scheduleIsReference?: boolean;
   stationUrl?: string;
   lyricsAvailable?: boolean;
   playRequest?: number;

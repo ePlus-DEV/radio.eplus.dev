@@ -1,6 +1,7 @@
 import { usePlaybackStore } from '~/stores/playback';
 import type { RadioProgram, RadioSong, RadioTrack } from '~/types/radio';
 import { isZingScheduleUrl } from '~/utils/station-schedule.mjs';
+import { getVietnamSchedule, vietnamReferencePrograms } from '~/utils/vietnam-schedules.mjs';
 import { createStationPolling } from '~/utils/station-polling.mjs';
 import { resolveLiveTrack } from '~/utils/live-track.mjs';
 
@@ -17,6 +18,9 @@ export function useStationRealtime() {
   let clientReady = false;
 
   const isZingStation = computed(() => isZingScheduleUrl(playback.station?.schedule));
+  const referenceSchedule = computed(() => getVietnamSchedule(playback.station?.url));
+  const scheduleSourceUrl = computed(() => referenceSchedule.value?.sourceUrl || '');
+  const scheduleIsReference = computed(() => Boolean(referenceSchedule.value));
   const timestampUrl = (url: string) => /[?&](?:time|timestamp)=$/i.test(url) ? `${url}${Math.floor(Date.now() / 1000)}` : url;
 
   const fetchLyric = async (id: string, signal: AbortSignal): Promise<string[]> => {
@@ -71,7 +75,9 @@ export function useStationRealtime() {
   });
 
   const activate = () => {
-    program.value = [];
+    // When the broadcaster provides a daily reference guide but no accessible
+    // realtime EPG API, show its sourced time slots without fake network calls.
+    program.value = vietnamReferencePrograms(playback.station?.url);
     playlist.value = [];
     song.value = undefined;
     playback.setLiveTrack(playback.station?.url || '', null);
@@ -81,13 +87,23 @@ export function useStationRealtime() {
     polling.start(playback.station?.schedule || '');
   };
   watch(() => playback.station?.url, activate);
+  let referenceTimer: ReturnType<typeof setInterval> | null = null;
   onMounted(() => {
     clientReady = true;
     activate();
+    // Update the local Vietnam date at midnight; leave provider EPG polling
+    // untouched and never reinitialize audio merely because the date changed.
+    referenceTimer = setInterval(() => {
+      const path = playback.station?.url;
+      if (!referenceSchedule.value?.slots.length) return;
+      const next = vietnamReferencePrograms(path);
+      if (next[0]?.startTime !== program.value[0]?.startTime) program.value = next;
+    }, 60_000);
   });
   onBeforeUnmount(() => {
     clientReady = false;
     polling.stop();
+    if (referenceTimer) clearInterval(referenceTimer);
   });
-  return { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation };
+  return { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation, scheduleSourceUrl, scheduleIsReference };
 }

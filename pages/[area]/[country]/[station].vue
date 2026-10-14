@@ -63,6 +63,34 @@
       </div>
     </section>
 
+    <section v-if="officialSchedule" class="radio-surface space-y-4 px-4 py-5 sm:px-6" :aria-label="$t('panel.schedule')">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-semibold">{{ $t('panel.schedule') }}</h2>
+          <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)]">
+            {{ $t('panel.schedule_vietnam_timezone') }}
+          </p>
+        </div>
+        <a :href="officialSchedule.sourceUrl" target="_blank" rel="noopener noreferrer"
+          class="radio-interactive inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--radio-border)] px-3 text-sm font-semibold text-rose-700 hover:bg-[var(--radio-hover)] dark:text-rose-300">
+          {{ $t('panel.schedule_official_link') }}
+          <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />
+        </a>
+      </div>
+      <p class="text-sm leading-6 text-[var(--radio-text-muted)]">
+        {{ $t(officialPrograms.length ? 'panel.schedule_reference_note' : 'panel.schedule_provider_only') }}
+      </p>
+      <ol v-if="officialPrograms.length" class="grid gap-2 sm:grid-cols-2">
+        <li v-for="item in officialPrograms" :key="item.startTime"
+          class="flex min-w-0 gap-3 rounded-xl bg-[var(--radio-surface-soft)] px-3 py-2.5">
+          <span class="shrink-0 text-xs font-semibold tabular-nums text-rose-700 dark:text-rose-300">
+            {{ formatVietnamTime(item.startTime) }}–{{ formatVietnamTime(item.endTime) }}
+          </span>
+          <span dir="auto" class="min-w-0 text-sm leading-5 text-[var(--radio-text)]">{{ item.title }}</span>
+        </li>
+      </ol>
+    </section>
+
     <PanelStation
       @select-station="playSelected"
       :stations="stations"
@@ -80,6 +108,7 @@ import { stationSocialImage } from "~/utils/station-og-deployment.mjs";
 import type { RadioCatalogEntry as StationCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
+import { getVietnamSchedule, vietnamReferencePrograms } from '~/utils/vietnam-schedules.mjs';
 import {
   buildBreadcrumbSchema,
   buildRadioStationSchema,
@@ -198,6 +227,13 @@ const areaName = computed(() =>
 const stationPath = computed(
   () => `/${area.value}/${slug.value}/${stationSlug.value}`,
 );
+const officialSchedule = computed(() => getVietnamSchedule(stationPath.value));
+const officialPrograms = computed(() => vietnamReferencePrograms(stationPath.value));
+const vietnamTimeFormatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+});
+const formatVietnamTime = (unix?: number) => unix ? vietnamTimeFormatter.format(new Date(unix * 1000)) : '—';
+
 const stationName = computed(
   () =>
     stationMeta.value?.title ||
