@@ -186,8 +186,8 @@ test('timeline uses proportional clock time rather than equal-height station car
   assert.equal(layout.programmes[6].active, true);
   assert.equal(layout.nowTop, 15 * 76);
   assert.equal(layout.gap, null);
-  assert.equal(scheduleTimelineProgress(programmes[6].startTime, programmes[6].endTime, now),
-    (30 / 105) * 100);
+  assert.ok(Math.abs(scheduleTimelineProgress(programmes[6].startTime, programmes[6].endTime, now)
+    - (30 / 105) * 100) < 1e-9);
 });
 
 test('timeline puts the green NOW line at 16:29 in the unpublished 16:15–16:30 window', async () => {
@@ -203,7 +203,7 @@ test('timeline puts the green NOW line at 16:29 in the unpublished 16:15–16:30
   const liveLayout = referenceTimelineLayout(programmes, before + 60);
   assert.equal(liveLayout.gap, null);
   assert.equal(liveLayout.programmes[7].active, true);
-  assert.equal(liveLayout.nowTop - gapLayout.nowTop, 76 / 60);
+  assert.ok(Math.abs((liveLayout.nowTop - gapLayout.nowTop) - 76 / 60) < 1e-9);
 });
 
 test('timeline continues past midnight with next-date axis and bounded progress', () => {
