@@ -115,7 +115,7 @@ test('explicit Heart UK selection survives home reload even before stream starts
   });
   await ready(page, '/');
   const dock = page.locator('.radio-player-dock');
-  await page.locator('#featured-radio').getByRole('button', { name: 'Play: Heart UK' }).click();
+  await page.locator('#featured-radio').getByRole('button', { name: 'Play radio: Heart UK' }).click();
 
   await expect.poll(async () => (await history(page))?.lastStation?.url)
     .toBe('/europe/united-kingdom/heart-uk');
