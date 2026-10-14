@@ -286,7 +286,7 @@ const listeningDuration = useListeningDurationStore();
 const listeningDurationTracker = createListeningDurationTracker({
   onDuration: (station, elapsedMs) => listeningDuration.record(station, elapsedMs),
   onReport: (station, elapsedMs) => {
-    if (!runtimeConfig.public.ga4Enabled || window.location.hostname !== 'radio.eplus.dev') return;
+    if (!listeningDuration.enabled || !runtimeConfig.public.ga4Enabled || window.location.hostname !== 'radio.eplus.dev') return;
     const seconds = Math.floor(elapsedMs / 1000);
     if (!seconds) return;
     const gaWindow = window as Window & { gtag?: (...args: unknown[]) => void };
@@ -1076,8 +1076,10 @@ const onMediaPlaying = (): void => {
   // a failed/stopped source. Never let it resurrect playback or pollute history.
   if (userPaused.value || !hasPlayableSource.value || !activeResolvedSrc || !playback.station) return;
   listening.remember(playback.station, 'play', true);
-  listeningDurationTracker.start(playback.station);
-  listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
+  if (listeningDuration.enabled) {
+    listeningDurationTracker.start(playback.station);
+    listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
+  }
   clearReconnectTimer();
   clearFallbackProbeTimer();
   attemptCount.value = 0;
@@ -1213,6 +1215,19 @@ watch(() => props.country, () => {
   if (area && country) $store.setTimezone(area.replace(/_/g, "-"), country.replace(/_/g, "-"));
 });
 
+// A privacy opt-out or explicit data deletion must discard buffered time without
+// writing storage or emitting a final GA4 listening-duration report.
+const resetListeningTracking = (): void => {
+  listeningDurationTracker.discard();
+  listeningDuration.setLivePreview('', 0);
+  if (listeningDuration.enabled && playing.value && !waiting.value && !userPaused.value
+    && !streamError.value && activeResolvedSrc && playback.station) {
+    listeningDurationTracker.start(playback.station);
+    listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
+  }
+};
+watch(() => listeningDuration.enabled, resetListeningTracking, { flush: 'sync' });
+
 onMounted(() => {
   listeningDuration.hydrate();
   // Update the statistics dashboard every second while only persisting
@@ -1223,6 +1238,7 @@ onMounted(() => {
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs);
   }, 1_000);
   window.addEventListener('pagehide', stopListeningDuration);
+  window.addEventListener('radio:listening-duration-reset', resetListeningTracking);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
   playerCompact.value = localStorage.getItem('radio:player-compact') === '1';
@@ -1266,6 +1282,7 @@ onUnmounted(() => {
   stopListeningDuration();
   if (durationInterval) clearInterval(durationInterval);
   window.removeEventListener('pagehide', stopListeningDuration);
+  window.removeEventListener('radio:listening-duration-reset', resetListeningTracking);
   sleepTimer.cancel();
   document.removeEventListener("visibilitychange", checkSleepDeadline);
   window.removeEventListener("pageshow", checkSleepDeadline);
