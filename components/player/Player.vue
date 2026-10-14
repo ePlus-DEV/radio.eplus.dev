@@ -179,6 +179,8 @@
 
 <script lang="ts" setup>
 import { useListeningStore } from "~/stores/listening";
+import { useListeningDurationStore } from "~/stores/listeningDuration";
+import { createListeningDurationTracker } from "~/utils/listening-duration.mjs";
 import { usePlaybackStore } from "~/stores/playback";
 import { usesSystemVolumeControls } from "~/utils/mobile-volume.mjs";
 import type { RadioSource, RadioStationOption } from "~/types/radio";
@@ -278,6 +280,25 @@ const setQueueOpen = (value: boolean): void => {
 };
 const toggleQueue = () => { if (wideViewport.value) setQueueOpen(!playback.queueOpen); else mobileQueueOpen.value = !mobileQueueOpen.value; };
 const runtimeConfig = useRuntimeConfig();
+const listeningDuration = useListeningDurationStore();
+// Count only media-playing intervals. Persist small checkpoints so a reload
+// does not lose a long uninterrupted listening session.
+const listeningDurationTracker = createListeningDurationTracker({
+  onDuration: (station, elapsedMs) => listeningDuration.record(station, elapsedMs),
+  onReport: (station, elapsedMs) => {
+    if (!runtimeConfig.public.ga4Enabled || window.location.hostname !== 'radio.eplus.dev') return;
+    const seconds = Math.floor(elapsedMs / 1000);
+    if (!seconds) return;
+    const gaWindow = window as Window & { gtag?: (...args: unknown[]) => void };
+    gaWindow.gtag?.('event', 'radio_listen_duration', {
+      station_path: station.url,
+      station_name: station.title,
+      listen_seconds: seconds,
+    });
+  },
+});
+let durationInterval: ReturnType<typeof setInterval> | null = null;
+const stopListeningDuration = () => listeningDurationTracker.stop();
 const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
 const waiting = ref(false);
@@ -750,6 +771,7 @@ const configureHlsSource = async (
 };
 
 const stopPlaybackFailure = (): void => {
+  stopListeningDuration();
   clearReconnectTimer();
   clearFallbackProbeTimer();
   destroyHls();
@@ -768,6 +790,7 @@ const applySource = async (
   index: number,
   autoplay = false,
 ): Promise<void> => {
+  stopListeningDuration();
   const media = mediaElement.value;
   const rawSource = sourceList.value[index];
   if (!media || !rawSource) {
@@ -866,6 +889,7 @@ const onPlay = async (): Promise<void> => {
 };
 
 const onPause = (): void => {
+  stopListeningDuration();
   sleepTimer.cancel();
   listening.remember(playback.station, 'pause');
   const media = mediaElement.value;
@@ -1040,6 +1064,7 @@ const onMediaPlaying = (): void => {
   // a failed/stopped source. Never let it resurrect playback or pollute history.
   if (userPaused.value || !hasPlayableSource.value || !activeResolvedSrc || !playback.station) return;
   listening.remember(playback.station, 'play', true);
+  listeningDurationTracker.start(playback.station);
   clearReconnectTimer();
   clearFallbackProbeTimer();
   attemptCount.value = 0;
@@ -1050,6 +1075,7 @@ const onMediaPlaying = (): void => {
 };
 
 const onMediaWaiting = (): void => {
+  stopListeningDuration();
   if (!userPaused.value) {
     waiting.value = true;
     startFallbackProbe();
@@ -1057,15 +1083,18 @@ const onMediaWaiting = (): void => {
 };
 
 const onMediaPause = (): void => {
+  stopListeningDuration();
   playing.value = false;
 };
 
 const onMediaEnded = (): void => {
+  stopListeningDuration();
   playing.value = false;
   if (!userPaused.value) scheduleReconnect();
 };
 
 const onMediaError = (): void => {
+  stopListeningDuration();
   if (!activeResolvedSrc || userPaused.value) return;
 
   // hls.js reports richer network/media failures through Hls.Events.ERROR.
@@ -1140,6 +1169,7 @@ watch(
     // Recently Played is updated only after real playback starts.
     if (request !== previousRequest) listening.remember(playback.station, 'play');
     const autoplay = !userPaused.value || request !== previousRequest;
+    stopListeningDuration();
     sourceVersion += 1;
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
@@ -1171,6 +1201,9 @@ watch(() => props.country, () => {
 });
 
 onMounted(() => {
+  listeningDuration.hydrate();
+  durationInterval = setInterval(() => listeningDurationTracker.flush(), 5_000);
+  window.addEventListener('pagehide', stopListeningDuration);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
   playerCompact.value = localStorage.getItem('radio:player-compact') === '1';
@@ -1211,6 +1244,9 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  stopListeningDuration();
+  if (durationInterval) clearInterval(durationInterval);
+  window.removeEventListener('pagehide', stopListeningDuration);
   sleepTimer.cancel();
   document.removeEventListener("visibilitychange", checkSleepDeadline);
   window.removeEventListener("pageshow", checkSleepDeadline);
