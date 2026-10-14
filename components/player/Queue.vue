@@ -151,6 +151,7 @@
             <PlayerScheduleGap
               v-if="scheduleGap?.insertIndex === index"
               :timestamp="scheduleNow"
+              :start-time="gapStartTime(scheduleGap.insertIndex)"
               :next-title="scheduleGap.nextTitle"
               :next-start-time="scheduleGap.nextStartTime"
             />
@@ -168,6 +169,14 @@
               class="absolute inset-y-2 left-0 w-0.5 rounded-full bg-rose-500"
               aria-hidden="true"
             ></span>
+            <div v-if="isCurrentProgram(item, index) && scheduleIsReference"
+              class="pointer-events-none absolute inset-x-2 bottom-0 h-1 rounded-full bg-rose-500/15"
+              aria-hidden="true">
+              <div data-schedule-time-progress class="relative h-full rounded-full bg-rose-500 transition-[width] duration-1000 ease-linear"
+                :style="{ width: (programmeProgress(item) ?? 0) + '%' }">
+                <span class="absolute right-0 top-1/2 h-2.5 w-2.5 translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--radio-surface)] bg-rose-500 shadow-sm"></span>
+              </div>
+            </div>
 
             <div
               class="rounded-lg bg-[var(--radio-surface)] px-2 py-1.5 text-xs font-semibold tabular-nums text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)]"
@@ -198,12 +207,18 @@
               >
                 {{ item.description }}
               </p>
+              <p v-if="isCurrentProgram(item, index) && scheduleIsReference"
+                data-schedule-clock role="timer"
+                class="mt-1 text-[11px] font-semibold tabular-nums text-rose-700 dark:text-rose-300">
+                {{ $t('panel.schedule_now_marker') }} · {{ formattedScheduleNow }}
+              </p>
             </div>
           </div>
           </template>
           <PlayerScheduleGap
             v-if="scheduleGap?.insertIndex === program.length"
             :timestamp="scheduleNow"
+            :start-time="gapStartTime(scheduleGap.insertIndex)"
             :next-title="scheduleGap.nextTitle"
             :next-start-time="scheduleGap.nextStartTime"
           />
@@ -271,7 +286,7 @@
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
-import { schedulePosition, referenceScheduleGap } from "~/utils/station-schedule.mjs";
+import { schedulePosition, referenceScheduleGap, scheduleTimelineProgress } from "~/utils/station-schedule.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -359,6 +374,17 @@ const schedulePositionNow = computed(() =>
 const scheduleGap = computed(() => props.scheduleIsReference
   ? referenceScheduleGap(props.program, scheduleNow.value)
   : null);
+// Only a known interval has a meaningful progress percentage.
+const gapStartTime = (index: number): number | null =>
+  index > 0 ? props.program[index - 1]?.endTime ?? null : null;
+const programmeProgress = (item: ProgramItem): number | null =>
+  scheduleTimelineProgress(item.startTime, item.endTime, scheduleNow.value);
+const vietnamSecondsFormatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Ho_Chi_Minh',
+  hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+});
+const formattedScheduleNow = computed(() =>
+  vietnamSecondsFormatter.format(new Date(scheduleNow.value * 1000)));
 
 // Move just the INNER queue scroller: scrollIntoView() would move the entire
 // mobile slideover/page and could hide the fixed player/header.
@@ -435,8 +461,12 @@ let scheduleClockTimer: ReturnType<typeof setInterval> | null = null;
 onMounted(() => {
   scheduleNow.value = Math.floor(Date.now() / 1000);
   scheduleClockTimer = setInterval(() => {
-    scheduleNow.value = Math.floor(Date.now() / 1000);
-  }, 15_000);
+    // Clock and the timeline fill move once per second. Only update the
+    // visible reference guide; real-time provider EPG is unaffected.
+    if (activeTab.value === 'schedule' && props.visible && props.scheduleIsReference) {
+      scheduleNow.value = Math.floor(Date.now() / 1000);
+    }
+  }, 1_000);
   if (activeTab.value === 'schedule' && props.visible) void jumpToSchedulePosition();
 });
 onBeforeUnmount(() => {
