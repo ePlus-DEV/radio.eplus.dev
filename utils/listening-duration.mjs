@@ -108,6 +108,12 @@ export function createListeningDurationTracker({
     },
     flush,
     stop,
+    // Preview accrued time without writing to storage. This is read by the
+    // visible statistics dashboard each second; flush still persists every 5s.
+    get pendingMs() {
+      if (!active) return 0;
+      return Math.max(0, Math.min(MAX_LISTENING_GAP_MS, now() - lastAt));
+    },
     get activeUrl() { return active?.url || ''; },
   };
 }
