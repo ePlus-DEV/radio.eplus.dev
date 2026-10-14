@@ -10,16 +10,16 @@
         <article
           v-for="station in compact ? group.items.slice(0, 4) : group.items"
           :key="station.url"
-          class="radio-station-card relative min-w-0 rounded-2xl border p-2"
+          class="radio-station-card flex min-w-0 items-center gap-1 rounded-2xl border p-2"
           :class="isActive(station.url) ? 'border-rose-500/40' : ''"
         >
           <UTooltip :text="station.title">
-            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 items-center gap-3 rounded-xl pr-24" @click="openStationDetails($event)">
+            <NuxtLink :to="station.url" :prefetch="false" class="radio-interactive flex min-h-16 min-w-0 flex-1 items-center gap-2 rounded-xl sm:gap-3" @click="openStationDetails($event)">
               <StationArtwork :src="station.image" :alt="station.title" class="radio-library-artwork radio-themed-artwork h-12 w-12 shrink-0 rounded-xl object-contain p-1.5" />
               <span dir="auto" class="block min-w-0 truncate text-sm font-semibold">{{ station.title }}</span>
             </NuxtLink>
           </UTooltip>
-          <div class="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-0.5">
+          <div class="flex shrink-0 items-center gap-0.5">
             <UButton
               color="neutral"
               :variant="isActive(station.url) ? 'soft' : 'ghost'"
@@ -40,6 +40,15 @@
               :aria-pressed="isFavorite(station.url)"
               :aria-label="$t(isFavorite(station.url) ? 'library.remove_favorite' : 'library.add_favorite')"
               @click="listening.toggleFavorite(station)"
+            />
+            <UButton
+              v-if="group.key === 'recent'"
+              color="neutral"
+              variant="ghost"
+              icon="i-lucide-trash-2"
+              class="h-10 w-10 shrink-0 justify-center rounded-full text-[var(--radio-text-muted)] hover:text-rose-500"
+              :aria-label="$t('library.remove_recent') + ': ' + station.title"
+              @click="listening.removeRecent(station.url)"
             />
           </div>
         </article>
