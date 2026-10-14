@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "データの販売と共有",
-          "body": "個人情報を販売することはありません。公式サイトでは Google Analytics 4 でアクセス数とページ閲覧数を確認しています。検索や再生の際には、各サービスにも情報が伝わる場合があります。"
+          "body": "個人情報を販売しません。公式サイトでは Google Analytics 4 を使用してアクセス数、ページ閲覧数、放送局別の聴取時間を計測します。個人の聴取時間統計は端末内にも保存されます。検索やラジオ提供元に情報が伝わる場合があります。"
         },
         "changes": {
           "title": "ポリシーの変更",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "サイトのアクセス数",
-          "body": "ePlus OnAir の公式サイトでは、ページを開いた時点から Google Analytics 4 でアクセス数とページ閲覧数を計測します。このお知らせを閉じても計測は止まりません。"
+          "body": "公式サイトでは Google Analytics 4 を使ってアクセス数、ページ閲覧数、放送局別の聴取時間を計測します。この案内を閉じても計測は止まりません。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -465,6 +465,30 @@
     "recent_empty": "再生したラジオ局がここに表示されます。",
     "favorites_empty": "ハートを押すとお気に入りに保存できます。",
     "clear_recent": "履歴を消去",
+    "remove_recent": "履歴から削除",
+    "listening_stats": "聴取時間",
+    "listening_live": "聴取時間をリアルタイムで計測中",
+    "listening_daily_chart": "日別の聴取時間",
+    "listening_daily_hint": "棒グラフを選ぶと、その日の聴取時間が表示されます。",
+    "listening_chart_range": "グラフの期間",
+    "listening_last_7": "7日間",
+    "listening_last_30": "30日間",
+    "listening_last_90": "90日間",
+    "listening_period_total": "期間中の聴取時間",
+    "listening_daily_empty": "日別の聴取データはまだありません。",
+    "listening_stats_description": "この端末で実際に再生された時間のみを記録します。一時停止、読み込み待ち、再生エラーは含みません。",
+    "listening_total": "合計聴取時間",
+    "listening_today": "今日",
+    "listening_stations": "聴取した局数",
+    "listening_top_stations": "局ごとの聴取時間",
+    "listening_empty": "ラジオ局を再生すると聴取時間が記録されます。",
+    "listening_hour_short": "時間",
+    "listening_minute_short": "分",
+    "listening_second_short": "秒",
+    "confirm_clear_recent_title": "聴取履歴をすべて削除しますか？",
+    "confirm_clear_recent_description": "最近聴いた局をすべて削除しますか？お気に入りと聴取時間の統計は保持されます。",
+    "confirm_clear_recent_yes": "はい、履歴を削除",
+    "confirm_clear_recent_no": "いいえ、保持する",
     "add_favorite": "お気に入りに追加",
     "remove_favorite": "お気に入りから削除",
     "loading": "保存した放送局を読み込み中…"
@@ -488,7 +512,7 @@
     "title": "Cookieとアクセス解析のお知らせ",
     "body": "ePlus OnAir は、お使いの端末に再生や表示の設定を保存します。",
     "accept": "了解",
-    "analytics_body": "ePlus OnAir は設定を記憶し、公式サイトで Google Analytics 4 によりアクセス数を計測します。これはご案内です。閉じても計測は止まりません。",
+    "analytics_body": "ePlus OnAir は設定を保存し、公式サイトで Google Analytics 4 を使ってアクセス数とラジオ聴取時間を計測します。この案内を閉じても計測は止まりません。",
     "learn_more": "Cookieポリシー"
   }
 }

@@ -7,8 +7,8 @@
           <fa :icon="['fas', 'house']" class="w-4" />
           <span>{{ $t('redesign.discover') }}</span>
         </NuxtLink>
-        <NuxtLink v-for="item in [{ hash: 'favorites', icon: 'i-lucide-heart' }, { hash: 'recent', icon: 'i-lucide-history' }]" :key="item.hash" :to="`/library#${item.hash}`" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold" :class="route.path === '/library' && route.hash === `#${item.hash}` ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)]'">
-          <UIcon :name="item.icon" class="h-4 w-4" /><span>{{ $t(`library.${item.hash}`) }}</span>
+        <NuxtLink v-for="item in [{ hash: 'favorites', icon: 'i-lucide-heart' }, { hash: 'recent', icon: 'i-lucide-history' }, { hash: 'stats', icon: 'i-lucide-chart-no-axes-column-increasing' }]" :key="item.hash" :to="`/library#${item.hash}`" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold" :class="route.path === '/library' && route.hash === `#${item.hash}` ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)]'">
+          <UIcon :name="item.icon" class="h-4 w-4" /><span>{{ $t(item.hash === 'stats' ? 'library.listening_stats' : `library.${item.hash}`) }}</span>
         </NuxtLink>
         <NuxtLink to="/statistics" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/statistics' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">

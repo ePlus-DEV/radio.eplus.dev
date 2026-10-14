@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "Vente et partage de données",
-          "body": "Nous ne vendons pas vos données personnelles. Le site principal utilise Google Analytics 4 pour compter les visites et les pages vues. Les services de recherche et de radio peuvent aussi recevoir des informations lorsque vous les utilisez."
+          "body": "Nous ne vendons pas vos données personnelles. Le site principal utilise Google Analytics 4 pour mesurer les visites, les pages vues et la durée d’écoute par station. Les statistiques personnelles d’écoute sont également enregistrées sur votre appareil. Les fournisseurs de recherche et de radio peuvent recevoir des informations pendant leur utilisation."
         },
         "changes": {
           "title": "Modifications de cette politique",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "Statistiques de fréquentation",
-          "body": "Le site principal de ePlus OnAir utilise Google Analytics 4 dès l’ouverture d’une page pour compter les visites et les pages vues. Fermer cet avis n’arrête pas cette mesure."
+          "body": "Le site principal utilise Google Analytics 4 pour mesurer les visites, les pages vues et la durée d’écoute par station. Fermer cet avis n’arrête pas la mesure."
         },
         "third_party": {
           "title": "Third-party services",
@@ -465,6 +465,30 @@
     "recent_empty": "Écoutez une station pour la retrouver ici.",
     "favorites_empty": "Touchez le cœur pour ajouter une station aux favoris.",
     "clear_recent": "Effacer l’historique récent",
+    "remove_recent": "Retirer de l’historique",
+    "listening_stats": "Durée d’écoute",
+    "listening_live": "Calcul du temps d’écoute en direct",
+    "listening_daily_chart": "Temps d’écoute par jour",
+    "listening_daily_hint": "Sélectionnez une barre pour voir la durée du jour.",
+    "listening_chart_range": "Période du graphique",
+    "listening_last_7": "7 jours",
+    "listening_last_30": "30 jours",
+    "listening_last_90": "90 jours",
+    "listening_period_total": "Temps d’écoute sur la période",
+    "listening_daily_empty": "Aucune durée d’écoute quotidienne enregistrée.",
+    "listening_stats_description": "Seule la lecture réelle sur cet appareil est comptabilisée, sans les pauses, chargements ou erreurs de flux.",
+    "listening_total": "Temps d’écoute total",
+    "listening_today": "Aujourd’hui",
+    "listening_stations": "Stations écoutées",
+    "listening_top_stations": "Durée par station",
+    "listening_empty": "Lancez une station pour commencer à comptabiliser votre temps d’écoute.",
+    "listening_hour_short": " h",
+    "listening_minute_short": " min",
+    "listening_second_short": " s",
+    "confirm_clear_recent_title": "Effacer tout l’historique d’écoute ?",
+    "confirm_clear_recent_description": "Supprimer toutes les stations récemment écoutées ? Les favoris et les statistiques d’écoute seront conservés.",
+    "confirm_clear_recent_yes": "Oui, effacer",
+    "confirm_clear_recent_no": "Non, conserver",
     "add_favorite": "Ajouter aux favoris",
     "remove_favorite": "Retirer des favoris",
     "loading": "Chargement de vos stations…"
@@ -488,7 +512,7 @@
     "title": "Informations sur les cookies et la mesure d'audience",
     "body": "ePlus OnAir mémorise sur cet appareil vos préférences d’écoute et d’affichage.",
     "accept": "Compris",
-    "analytics_body": "ePlus OnAir mémorise vos préférences et utilise Google Analytics 4 pour compter les visites sur son site principal. Cet avis est informatif : le fermer n’arrête pas la mesure.",
+    "analytics_body": "ePlus OnAir conserve vos préférences et utilise Google Analytics 4 sur son site principal pour mesurer les visites et la durée d’écoute des radios. Fermer cet avis informatif n’arrête pas la mesure.",
     "learn_more": "Politique cookies"
   }
 }
