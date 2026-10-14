@@ -86,3 +86,55 @@ test('delete one history entry from library without affecting favorites, playbac
   await expect(page.locator('section[aria-label="Recently played"]')).toContainText('MNM');
   await expect(page.locator('section[aria-label="Recently played"]')).not.toContainText('Studio Brussel');
 });
+
+test('home reload restores Heart UK rather than the first featured VOV station', async ({ page }) => {
+  await page.addInitScript(() => {
+    const heart = { url: '/europe/united-kingdom/heart-uk', title: 'Heart UK', image: '/brand/onair-mark.svg' };
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify({
+      recent: [heart], favorites: [], lastStation: heart, lastState: 'pause',
+    }));
+  });
+  await ready(page, '/');
+  const dock = page.locator('.radio-player-dock');
+  await expect(dock.getByRole('link', { name: /Heart UK/ })).toBeVisible();
+  await expect(dock.getByRole('button', { name: 'Play radio', exact: true })).toBeVisible();
+  expect((await history(page)).lastStation.url).toBe('/europe/united-kingdom/heart-uk');
+
+  await page.reload();
+  await expect(dock.getByRole('link', { name: /Heart UK/ })).toBeVisible();
+  await expect(dock.getByRole('button', { name: 'Play radio', exact: true })).toBeVisible();
+  expect((await history(page)).lastStation.url).toBe('/europe/united-kingdom/heart-uk');
+});
+
+test('explicit Heart UK selection survives home reload even before stream starts', async ({ page }) => {
+  await page.addInitScript(() => {
+    // Audio stays pending: selection must persist without a successful "playing" event.
+    HTMLMediaElement.prototype.play = () => new Promise(() => {});
+    HTMLMediaElement.prototype.pause = function () { this.dispatchEvent(new Event('pause')); };
+    HTMLMediaElement.prototype.load = () => {};
+  });
+  await ready(page, '/');
+  const dock = page.locator('.radio-player-dock');
+  await page.locator('#featured-radio').getByRole('button', { name: 'Play radio: Heart UK' }).click();
+
+  await expect.poll(async () => (await history(page))?.lastStation?.url)
+    .toBe('/europe/united-kingdom/heart-uk');
+  expect((await history(page)).recent).toEqual([]);
+
+  await page.reload();
+  await expect(dock.getByRole('link', { name: /Heart UK/ })).toBeVisible();
+  await expect(dock.getByRole('button', { name: 'Play radio', exact: true })).toBeVisible();
+  expect((await history(page)).lastStation.url).toBe('/europe/united-kingdom/heart-uk');
+});
+
+test('saved station also outranks country fallback on reload', async ({ page }) => {
+  await page.addInitScript(() => {
+    const heart = { url: '/europe/united-kingdom/heart-uk', title: 'Heart UK', image: '/brand/onair-mark.svg' };
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify({
+      recent: [heart], favorites: [], lastStation: heart, lastState: 'pause',
+    }));
+  });
+  await ready(page, '/asia/viet-nam');
+  await expect(page.locator('.radio-player-dock').getByRole('link', { name: /Heart UK/ })).toBeVisible();
+  await expect(page.locator('.radio-player-dock').getByRole('button', { name: 'Play radio', exact: true })).toBeVisible();
+});

@@ -1135,6 +1135,10 @@ watch(
       if (request !== previousRequest) void onPlay();
       return;
     }
+    // An explicit station selection must survive reload even when the stream
+    // never reaches the media "playing" event. Do not mark it as heard yet:
+    // Recently Played is updated only after real playback starts.
+    if (request !== previousRequest) listening.remember(playback.station, 'play');
     const autoplay = !userPaused.value || request !== previousRequest;
     sourceVersion += 1;
     activeSourceIndex.value = 0;

@@ -50,6 +50,7 @@
 <script setup lang="ts">
 import type { RadioCatalogEntry as Channel, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
+import { useListeningStore } from "~/stores/listening";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
 import {
   buildBreadcrumbSchema,
@@ -63,6 +64,7 @@ interface CountryCatalogPayload {
 
 const siteAssetUrl = useSiteAssetUrl();
 const playback = usePlaybackStore();
+const listening = useListeningStore();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const noIndex = Boolean(runtimeConfig.public.noIndex);
@@ -255,6 +257,13 @@ const playSelected = (station: RadioStationOption): void => {
 
 // A fresh entry can prepare this country's featured station. Browsing another
 // country while listening keeps the selected station and its queue intact.
-watch(catalog, () => listenDefault(), { immediate: true });
+watch(catalog, () => {
+  // Browsing a country cannot seed a prerendered default before the client's
+  // saved lastStation is restored by PlayerSession.
+  if (import.meta.server) return;
+  listening.hydrate();
+  if (listening.library.lastStation) return;
+  listenDefault();
+}, { immediate: true });
 </script>
 
