@@ -467,6 +467,7 @@
     "clear_recent": "Clear recent history",
     "remove_recent": "Remove from history",
     "listening_stats": "Listening time",
+    "listening_live": "Counting listening time live",
     "listening_stats_description": "Time is counted only while radio actually plays on this device. Pauses, buffering and failed streams are excluded.",
     "listening_total": "Total listening time",
     "listening_today": "Today",
