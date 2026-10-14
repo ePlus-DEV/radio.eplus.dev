@@ -6,6 +6,7 @@ import {
   normalizeScheduleUrl,
   schedulePosition,
   referenceScheduleGap,
+  scheduleTimelineProgress,
 } from "../utils/station-schedule.mjs";
 
 test("normalizes only real HTTP schedule URLs", () => {
@@ -114,4 +115,53 @@ test('Queue UI scrolls to missing-programme marker, never displays the next show
   assert.match(marker, /panel\.schedule_gap_unknown/);
   assert.match(marker, /panel\.schedule_gap_next/);
   assert.doesNotMatch(marker, /player\.live|schedule_loading/);
+});
+
+test('live timeline percentage advances smoothly with wall-clock seconds', () => {
+  assert.equal(scheduleTimelineProgress(100, 200, 100), 0);
+  assert.equal(scheduleTimelineProgress(100, 200, 125), 25);
+  assert.equal(scheduleTimelineProgress(100, 200, 150), 50);
+  assert.equal(scheduleTimelineProgress(100, 200, 199), 99);
+  assert.equal(scheduleTimelineProgress(100, 200, 200), 100);
+  assert.equal(scheduleTimelineProgress(100, 200, 90), 0);
+  assert.equal(scheduleTimelineProgress(100, 200, 250), 100);
+  assert.equal(scheduleTimelineProgress(null, 200, 150), null);
+  assert.equal(scheduleTimelineProgress(100, null, 150), null);
+  assert.equal(scheduleTimelineProgress(200, 200, 150), null);
+  assert.equal(scheduleTimelineProgress(300, 200, 150), null);
+  assert.equal(scheduleTimelineProgress(100, 200, Number.NaN), null);
+});
+
+test('VOV HCM at 16:29 shows 93.33% of the 16:15–16:30 gap, ticking every second', async () => {
+  const { vietnamReferencePrograms } = await import('../utils/vietnam-schedules.mjs');
+  const now = Date.parse('2026-10-14T09:29:00Z') / 1000; // ICT +07:00.
+  const programs = vietnamReferencePrograms('/asia/viet-nam/vov-gt-hcm', new Date(now * 1000));
+  const gap = referenceScheduleGap(programs, now);
+  assert.equal(gap.insertIndex, 7);
+  const start = programs[gap.insertIndex - 1].endTime;
+  const end = gap.nextStartTime;
+  assert.equal(new Date(start * 1000).toISOString(), '2026-10-14T09:15:00.000Z');
+  assert.equal(scheduleTimelineProgress(start, end, now), 100 * 14 / 15);
+  assert.ok(scheduleTimelineProgress(start, end, now + 1) > scheduleTimelineProgress(start, end, now));
+  assert.equal(scheduleTimelineProgress(start, end, end), 100);
+  assert.equal(referenceScheduleGap(programs, end), null);
+  const show = programs[gap.insertIndex];
+  assert.equal(scheduleTimelineProgress(show.startTime, show.endTime, end), 0);
+  assert.ok(scheduleTimelineProgress(show.startTime, show.endTime, end + 1) > 0);
+});
+
+test('live time bar is wired to a one-second clock only for visible reference guides', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const q = await readFile(new URL('../components/player/Queue.vue', import.meta.url), 'utf8');
+  const gap = await readFile(new URL('../components/player/ScheduleGap.vue', import.meta.url), 'utf8');
+  assert.match(q, /scheduleTimelineProgress\(item\.startTime, item\.endTime, scheduleNow\.value\)/);
+  assert.match(q, /scheduleClockTimer = setInterval\(/);
+  assert.match(q, /\}, 1_000\)/);
+  assert.match(q, /props\.visible && props\.scheduleIsReference/);
+  assert.match(q, /data-schedule-clock role="timer"/);
+  assert.match(q, /data-schedule-time-progress/);
+  assert.match(q, /:start-time="gapStartTime\(scheduleGap\.insertIndex\)"/);
+  assert.match(gap, /second: '2-digit'/);
+  assert.match(gap, /data-schedule-time-progress/);
+  assert.match(gap, /timelineProgress \+ '%'/);
 });
