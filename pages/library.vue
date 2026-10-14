@@ -10,19 +10,22 @@
     <nav class="radio-library-tabs rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1.5"
       :aria-label="$t('redesign.library')">
       <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
-        <NuxtLink
-          v-for="tab in tabs"
-          :key="tab.value"
-          :to="libraryTabHref(tab.value)"
-          :title="tab.label"
-          :aria-current="clientReady && active === tab.value ? 'location' : undefined"
-          class="radio-interactive flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-xl px-2.5 py-2.5 text-center text-sm font-semibold motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:px-3"
-          :class="clientReady && active === tab.value
-            ? 'bg-rose-600 text-white shadow-sm shadow-rose-950/15 dark:bg-rose-600'
-            : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
-        >
-          <UIcon :name="tab.icon" class="h-4 w-4 shrink-0" aria-hidden="true" />
-          <span class="min-w-0 truncate">{{ tab.label }}</span>
+        <NuxtLink v-for="tab in tabs" :key="tab.value" :to="libraryTabHref(tab.value)" custom v-slot="{ href, navigate }">
+          <!-- Vue Router's automatic isExactActive ignores hashes. Render the
+               anchor ourselves so aria-current reflects the actual panel. -->
+          <a
+            :href="href"
+            :title="tab.label"
+            :aria-current="clientReady && active === tab.value ? 'location' : undefined"
+            class="radio-interactive flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-xl px-2.5 py-2.5 text-center text-sm font-semibold motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:px-3"
+            :class="clientReady && active === tab.value
+              ? 'bg-rose-600 text-white shadow-sm shadow-rose-950/15 dark:bg-rose-600'
+              : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
+            @click="navigate"
+          >
+            <UIcon :name="tab.icon" class="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span class="min-w-0 truncate">{{ tab.label }}</span>
+          </a>
         </NuxtLink>
       </div>
     </nav>
