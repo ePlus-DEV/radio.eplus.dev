@@ -90,3 +90,33 @@ test('duration tracker ignores duplicate playing and caps unusually long sleep g
   tracker.stop();
   assert.deepEqual(elapsed, [899_900, MAX_LISTENING_GAP_MS]);
 });
+
+test('live preview updates without persisting, then resets after checkpoint and pause', () => {
+  let now = 100;
+  const saved = [];
+  const tracker = createListeningDurationTracker({
+    now: () => now,
+    onDuration: (target, ms) => saved.push({ url: target.url, ms }),
+  });
+  assert.equal(tracker.pendingMs, 0);
+  tracker.start(station('heart-uk'));
+  assert.equal(tracker.activeUrl, '/europe/united-kingdom/heart-uk');
+  now = 1_600;
+  assert.equal(tracker.pendingMs, 1_500);
+  assert.deepEqual(saved, [], 'live preview must not write persistent time each second');
+
+  now = 5_100;
+  tracker.flush();
+  assert.equal(tracker.pendingMs, 0);
+  assert.deepEqual(saved, [{ url: '/europe/united-kingdom/heart-uk', ms: 5_000 }]);
+
+  now = 6_100;
+  assert.equal(tracker.pendingMs, 1_000);
+  tracker.stop();
+  assert.deepEqual(saved.map(entry => entry.ms), [5_000, 1_000]);
+  assert.equal(tracker.pendingMs, 0);
+  assert.equal(tracker.activeUrl, '');
+
+  now += 4_000;
+  assert.equal(tracker.pendingMs, 0, 'no live preview accrues while paused');
+});
