@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "データの販売と共有",
-          "body": "個人情報を販売することはありません。公式サイトでは Google Analytics 4 でアクセス数とページ閲覧数を確認しています。検索や再生の際には、各サービスにも情報が伝わる場合があります。"
+          "body": "個人情報を販売しません。公式サイトでは Google Analytics 4 を使用してアクセス数、ページ閲覧数、放送局別の聴取時間を計測します。個人の聴取時間統計は端末内にも保存されます。検索やラジオ提供元に情報が伝わる場合があります。"
         },
         "changes": {
           "title": "ポリシーの変更",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "サイトのアクセス数",
-          "body": "ePlus OnAir の公式サイトでは、ページを開いた時点から Google Analytics 4 でアクセス数とページ閲覧数を計測します。このお知らせを閉じても計測は止まりません。"
+          "body": "公式サイトでは Google Analytics 4 を使ってアクセス数、ページ閲覧数、放送局別の聴取時間を計測します。この案内を閉じても計測は止まりません。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -503,7 +503,7 @@
     "title": "Cookieとアクセス解析のお知らせ",
     "body": "ePlus OnAir は、お使いの端末に再生や表示の設定を保存します。",
     "accept": "了解",
-    "analytics_body": "ePlus OnAir は設定を記憶し、公式サイトで Google Analytics 4 によりアクセス数を計測します。これはご案内です。閉じても計測は止まりません。",
+    "analytics_body": "ePlus OnAir は設定を保存し、公式サイトで Google Analytics 4 を使ってアクセス数とラジオ聴取時間を計測します。この案内を閉じても計測は止まりません。",
     "learn_more": "Cookieポリシー"
   }
 }
