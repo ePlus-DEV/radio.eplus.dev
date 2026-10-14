@@ -42,7 +42,7 @@
         <span class="text-[var(--radio-text-muted)]">{{ $t('library.listening_period_total') }}</span>
         <span class="font-bold tabular-nums">{{ formatDuration(periodTotalMs) }}</span>
       </div>
-      <div class="radio-scrollbar overflow-x-auto pb-2">
+      <div ref="chartScroll" class="radio-scrollbar overflow-x-auto pb-2">
         <div
           class="flex h-48 w-full items-stretch gap-1 border-b border-[var(--radio-border)] pt-4"
           :style="{ minWidth: rangeDays === 90 ? '1440px' : rangeDays === 30 ? '720px' : '0' }"
@@ -104,6 +104,12 @@ const { t } = useI18n();
 duration.hydrate();
 const { locale } = useI18n();
 const rangeDays = ref(7);
+const chartScroll = ref<HTMLElement | null>(null);
+watch(rangeDays, async () => {
+  // Show the newest days first when switching to wide 30/90-day charts.
+  await nextTick();
+  if (chartScroll.value) chartScroll.value.scrollLeft = chartScroll.value.scrollWidth;
+});
 const selectedDayKey = ref('');
 const chartItems = computed(() => dailyListeningSeries(duration.stats, rangeDays.value, new Date(), duration.liveMs));
 const periodTotalMs = computed(() => chartItems.value.reduce((sum, day) => sum + day.ms, 0));
