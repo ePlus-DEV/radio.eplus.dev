@@ -100,7 +100,8 @@ export function addListeningDuration(stats, station, durationMs, dayKey = localD
 
 /** Allocate each checkpoint to its actual local calendar day, even at midnight. */
 export function splitListeningDurationByDay(durationMs, endDate = new Date()) {
-  const elapsed = safeMs(durationMs);
+  // Trackers already cap unflushed intervals; enforce the same bound here.
+  const elapsed = Math.min(MAX_LISTENING_GAP_MS, safeMs(durationMs));
   if (!elapsed || !(endDate instanceof Date) || !Number.isFinite(endDate.getTime())) return {};
   const result = {};
   let current = endDate.getTime() - elapsed;
