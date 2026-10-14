@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "Sale and sharing of data",
-          "body": "We do not sell your personal data. We use Google Analytics 4 to count visits and page views on the main website. Search and radio providers may also receive information when you use their services."
+          "body": "We do not sell your personal data. The main website uses Google Analytics 4 to measure visits, page views, and radio listening duration by station. Listening-time totals are also stored locally on your device. Search and radio providers may receive information when you use them."
         },
         "changes": {
           "title": "Changes to this policy",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "Website visit statistics",
-          "body": "The main ePlus OnAir website uses Google Analytics 4 to count visits and page views as soon as a page opens. Closing the cookie notice does not stop this measurement."
+          "body": "The main ePlus OnAir website uses Google Analytics 4 to count visits, page views, and radio listening time by station. The notice is informational; closing it does not stop measurement."
         },
         "third_party": {
           "title": "Third-party services",
@@ -503,7 +503,7 @@
     "title": "Cookies and analytics notice",
     "body": "ePlus OnAir saves your listening and display preferences on this device.",
     "accept": "Got it",
-    "analytics_body": "ePlus OnAir remembers your preferences and uses Google Analytics 4 to count visits to the main website. This message is for your information; closing it does not turn off measurement.",
+    "analytics_body": "ePlus OnAir saves your preferences and uses Google Analytics 4 on its main website to measure visits and radio listening duration. Closing this informational notice does not stop measurement.",
     "learn_more": "Cookie Policy"
   }
 }
