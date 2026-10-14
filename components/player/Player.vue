@@ -1036,6 +1036,9 @@ const onMediaCanPlay = (): void => {
 };
 
 const onMediaPlaying = (): void => {
+  // A queued "playing" event can arrive after the user has paused or after
+  // a failed/stopped source. Never let it resurrect playback or pollute history.
+  if (userPaused.value || !hasPlayableSource.value || !activeResolvedSrc || !playback.station) return;
   listening.remember(playback.station, 'play', true);
   clearReconnectTimer();
   clearFallbackProbeTimer();
