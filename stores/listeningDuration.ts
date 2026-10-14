@@ -8,7 +8,13 @@ import {
 } from '~/utils/listening-duration.mjs';
 
 export const useListeningDurationStore = defineStore('listeningDuration', {
-  state: () => ({ stats: emptyListeningDuration(), ready: false }),
+  state: () => ({
+    stats: emptyListeningDuration(),
+    ready: false,
+    // Live preview is not persisted: recorded checkpoints remain authoritative.
+    activeStationUrl: '',
+    liveMs: 0,
+  }),
   getters: {
     todayMs: state => state.stats.todayKey === localDayKey() ? state.stats.todayMs : 0,
   },
@@ -23,6 +29,10 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
           this.stats = parseListeningDuration(event.newValue);
         }
       });
+    },
+    setLivePreview(stationUrl: string, elapsedMs: number) {
+      this.activeStationUrl = stationUrl;
+      this.liveMs = stationUrl && Number.isFinite(elapsedMs) ? Math.max(0, elapsedMs) : 0;
     },
     record(station: { url: string; title: string; image: string; countryKey?: string } | null, durationMs: number) {
       if (!station || durationMs <= 0) return;
