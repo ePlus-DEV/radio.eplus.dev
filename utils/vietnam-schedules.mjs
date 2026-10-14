@@ -64,7 +64,7 @@ const clockMinutes = clock => {
 };
 
 export const getVietnamSchedule = stationPath => {
-  const match = /^\/asia\/viet-nam\/([a-z0-9-]+)$/.exec(stationPath || '');
+  const match = /^\/asia\/viet-nam\/([a-z0-9.-]+)$/.exec(stationPath || '');
   return match ? VIETNAM_SCHEDULES[match[1]] || null : null;
 };
 
