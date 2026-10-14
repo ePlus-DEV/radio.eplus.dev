@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   LISTENING_DURATION_KEY,
+  LISTENING_TRACKING_ENABLED_KEY,
+  parseListeningTrackingEnabled,
   MAX_LISTENING_GAP_MS,
   MAX_TRACKED_DAYS,
   addListeningDurationAcrossDays,
@@ -183,4 +185,40 @@ test('daily storage is bounded to 365 days while retaining lifetime and station 
   assert.equal(Object.keys(parseListeningDuration(JSON.stringify(stats)).byDay).length, MAX_TRACKED_DAYS);
   assert.equal(dailyListeningSeries(stats, 30, new Date(2025, 1, 2)).length, 30);
   assert.equal(dailyListeningSeries(stats, 90, new Date(2025, 1, 2)).length, 90);
+});
+
+test('listening tracking preference defaults on but honors an explicit persistent opt-out', () => {
+  assert.equal(LISTENING_TRACKING_ENABLED_KEY, 'radio_listening_tracking_enabled_v1');
+  assert.equal(parseListeningTrackingEnabled(null), true);
+  assert.equal(parseListeningTrackingEnabled('1'), true);
+  assert.equal(parseListeningTrackingEnabled('0'), false);
+});
+
+test('privacy opt-out and data deletion discard buffered listening instead of reporting', () => {
+  let now = 0;
+  const stored = [];
+  const reports = [];
+  const tracker = createListeningDurationTracker({
+    now: () => now,
+    onDuration: (_station, ms) => stored.push(ms),
+    onReport: (_station, ms) => reports.push(ms),
+  });
+  tracker.start(station('heart-uk'));
+  now = 22_000;
+  assert.equal(tracker.pendingMs, 22_000);
+  tracker.discard();
+  assert.equal(tracker.activeUrl, '');
+  assert.equal(tracker.pendingMs, 0);
+  assert.deepEqual(stored, []);
+  assert.deepEqual(reports, []);
+  now += 60_000;
+  tracker.stop();
+  assert.deepEqual(stored, []);
+  assert.deepEqual(reports, []);
+  // Tracking can be restarted from exactly the moment the visitor opts in.
+  tracker.start(station('heart-uk'));
+  now += 2_000;
+  tracker.stop();
+  assert.deepEqual(stored, [2_000]);
+  assert.deepEqual(reports, [2_000]);
 });

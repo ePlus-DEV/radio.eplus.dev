@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import {
   LISTENING_DURATION_KEY,
+  LISTENING_TRACKING_ENABLED_KEY,
+  parseListeningTrackingEnabled,
   addListeningDurationAcrossDays,
   emptyListeningDuration,
   localDayKey,
@@ -11,6 +13,7 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
   state: () => ({
     stats: emptyListeningDuration(),
     ready: false,
+    enabled: true,
     // Live preview is not persisted: recorded checkpoints remain authoritative.
     activeStationUrl: '',
     liveMs: 0,
@@ -21,14 +24,44 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
   actions: {
     hydrate() {
       if (!import.meta.client || this.ready) return;
-      try { this.stats = parseListeningDuration(localStorage.getItem(LISTENING_DURATION_KEY)); }
-      catch { /* Blocked storage should not interrupt playback. */ }
+      try {
+        this.enabled = parseListeningTrackingEnabled(localStorage.getItem(LISTENING_TRACKING_ENABLED_KEY));
+        this.stats = parseListeningDuration(localStorage.getItem(LISTENING_DURATION_KEY));
+      } catch { /* Blocked storage should not interrupt playback or the controls. */ }
       this.ready = true;
       window.addEventListener('storage', (event: StorageEvent) => {
+        if (event.key === LISTENING_TRACKING_ENABLED_KEY || event.key === null) {
+          this.enabled = parseListeningTrackingEnabled(event.key === null
+            ? localStorage.getItem(LISTENING_TRACKING_ENABLED_KEY) : event.newValue);
+        }
         if (event.key === LISTENING_DURATION_KEY || event.key === null) {
-          this.stats = parseListeningDuration(event.newValue);
+          this.stats = parseListeningDuration(event.key === null
+            ? localStorage.getItem(LISTENING_DURATION_KEY) : event.newValue);
+          if (event.newValue === null) window.dispatchEvent(new Event('radio:listening-duration-reset'));
         }
       });
+    },
+    setTrackingEnabled(enabled: boolean) {
+      this.hydrate();
+      this.enabled = Boolean(enabled);
+      if (!this.enabled) this.setLivePreview('', 0);
+      if (import.meta.client) {
+        try {
+          localStorage.setItem(LISTENING_TRACKING_ENABLED_KEY, this.enabled ? '1' : '0');
+        } catch { /* Keep the in-memory privacy choice for this session. */ }
+      }
+    },
+    clearStatistics() {
+      this.hydrate();
+      this.stats = emptyListeningDuration();
+      this.setLivePreview('', 0);
+      if (import.meta.client) {
+        try { localStorage.removeItem(LISTENING_DURATION_KEY); }
+        catch { /* In-memory statistics have still been cleared. */ }
+        // Player discards its unflushed buffer so deleted time never returns.
+        // If playback continues with tracking enabled, a fresh session starts.
+        window.dispatchEvent(new Event('radio:listening-duration-reset'));
+      }
     },
     setLivePreview(stationUrl: string, elapsedMs: number) {
       this.activeStationUrl = stationUrl;
@@ -37,6 +70,7 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
     record(station: { url: string; title: string; image: string; countryKey?: string } | null, durationMs: number) {
       if (!station || durationMs <= 0) return;
       this.hydrate();
+      if (!this.enabled) return;
       // Refresh from shared storage before adding time, so different tabs do
       // not blindly overwrite values from the previous write.
       if (import.meta.client) {

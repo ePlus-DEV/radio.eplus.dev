@@ -5,6 +5,31 @@
       <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" aria-hidden="true"></span>
       {{ $t('library.listening_live') }}
     </div>
+    <div class="radio-surface flex flex-col justify-between gap-4 p-4 sm:flex-row sm:items-center sm:p-5">
+      <div class="min-w-0 space-y-1">
+        <h2 class="text-base font-semibold">{{ $t('library.listening_tracking_title') }}</h2>
+        <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('library.listening_tracking_description') }}</p>
+      </div>
+      <div class="flex shrink-0 flex-wrap items-center gap-3">
+        <button
+          type="button"
+          role="switch"
+          :aria-checked="duration.enabled"
+          :aria-label="$t('library.listening_tracking_title')"
+          class="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+          @click="duration.setTrackingEnabled(!duration.enabled)"
+        >
+          <span class="relative h-6 w-11 shrink-0 rounded-full transition-colors" :class="duration.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
+            <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform" :class="duration.enabled ? 'translate-x-5' : ''"></span>
+          </span>
+          <span>{{ $t(duration.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}</span>
+        </button>
+        <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">
+          {{ $t('library.listening_delete_stats') }}
+        </UButton>
+      </div>
+    </div>
+    <p v-if="!duration.enabled" class="text-sm font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_tracking_paused') }}</p>
     <div class="grid gap-3 sm:grid-cols-3">
       <div class="radio-surface p-5">
         <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_total') }}</p>
@@ -90,6 +115,23 @@
       </div>
       <p v-else class="text-sm text-[var(--radio-text-muted)]">{{ $t('library.listening_empty') }}</p>
     </div>
+    <UModal
+      v-model:open="clearStatsOpen"
+      :title="$t('library.listening_confirm_delete_title')"
+      :description="$t('library.listening_confirm_delete_description')"
+      :ui="{ content: 'max-w-md' }"
+    >
+      <template #footer>
+        <div class="flex w-full flex-wrap justify-end gap-2">
+          <UButton color="neutral" variant="outline" class="min-h-11" @click="clearStatsOpen = false">
+            {{ $t('library.listening_confirm_delete_no') }}
+          </UButton>
+          <UButton color="error" class="min-h-11" @click="confirmDeleteStatistics">
+            {{ $t('library.listening_confirm_delete_yes') }}
+          </UButton>
+        </div>
+      </template>
+    </UModal>
   </section>
 </template>
 
@@ -102,6 +144,11 @@ const duration = useListeningDurationStore();
 const playback = usePlaybackStore();
 const { t, locale } = useI18n();
 duration.hydrate();
+const clearStatsOpen = ref(false);
+const confirmDeleteStatistics = () => {
+  duration.clearStatistics();
+  clearStatsOpen.value = false;
+};
 const rangeDays = ref(7);
 const chartScroll = ref<HTMLElement | null>(null);
 watch(rangeDays, async () => {
