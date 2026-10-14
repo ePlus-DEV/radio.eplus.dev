@@ -6,7 +6,6 @@ import {
   localDayKey,
   parseListeningDuration,
 } from '~/utils/listening-duration.mjs';
-import type { PlaybackStation } from '~/types/radio';
 
 export const useListeningDurationStore = defineStore('listeningDuration', {
   state: () => ({ stats: emptyListeningDuration(), ready: false }),
@@ -25,7 +24,7 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
         }
       });
     },
-    record(station: PlaybackStation | null, durationMs: number) {
+    record(station: { url: string; title: string; image: string; countryKey?: string } | null, durationMs: number) {
       if (!station || durationMs <= 0) return;
       this.hydrate();
       // Refresh from shared storage before adding time, so different tabs do
