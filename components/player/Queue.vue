@@ -292,6 +292,7 @@ const props = withDefaults(
     scheduleLoading?: boolean;
     scheduleSourceUrl?: string;
     scheduleIsReference?: boolean;
+    visible?: boolean;
   }>(),
   {
     playlist: () => [],
@@ -303,6 +304,7 @@ const props = withDefaults(
     scheduleLoading: false,
     scheduleSourceUrl: "",
     scheduleIsReference: false,
+    visible: true,
   },
 );
 
@@ -348,15 +350,15 @@ const schedulePositionNow = computed(() =>
 let scrollGeneration = 0;
 const jumpToSchedulePosition = async () => {
   const generation = ++scrollGeneration;
-  if (activeTab.value !== 'schedule') return;
+  if (activeTab.value !== 'schedule' || !props.visible) return;
   await nextTick();
-  if (generation !== scrollGeneration || activeTab.value !== 'schedule') return;
+  if (generation !== scrollGeneration || activeTab.value !== 'schedule' || !props.visible) return;
   const container = scheduleScrollContainer.value;
   const index = schedulePositionNow.value.scrollIndex;
   const row = index < 0 ? null : container?.querySelector<HTMLElement>(
     `[data-program-index="${index}"]`,
   );
-  if (!container || !row) return;
+  if (!container || !row || container.clientHeight === 0) return;
   const containerRect = container.getBoundingClientRect();
   const rowRect = row.getBoundingClientRect();
   const desiredTop = container.scrollTop + rowRect.top - containerRect.top
@@ -381,9 +383,9 @@ const onScheduleScrollKeydown = (event: KeyboardEvent) => {
 // Recenter once on opening the tab, after a provider schedule arrives, or
 // after changing station. Ordinary list re-renders do not steal manual scroll.
 watch(
-  [activeTab, () => props.program, () => props.activeStationUrl, () => props.scheduleIsReference],
+  [activeTab, () => props.program, () => props.activeStationUrl, () => props.scheduleIsReference, () => props.visible],
   ([tab]) => {
-    if (tab !== 'schedule') return;
+    if (tab !== 'schedule' || !props.visible) return;
     manuallyBrowsingSchedule.value = false;
     void jumpToSchedulePosition();
   },
@@ -393,7 +395,7 @@ watch(
 // Update the highlight at a programme boundary. Follow it only if the visitor
 // has not manually scrolled away. No polling/scrolling every animation frame.
 watch(() => schedulePositionNow.value.scrollIndex, (next, previous) => {
-  if (next !== previous && activeTab.value === 'schedule' && !manuallyBrowsingSchedule.value) {
+  if (next !== previous && activeTab.value === 'schedule' && props.visible && !manuallyBrowsingSchedule.value) {
     void jumpToSchedulePosition();
   }
 }, { flush: 'post' });
@@ -404,7 +406,7 @@ onMounted(() => {
   scheduleClockTimer = setInterval(() => {
     scheduleNow.value = Math.floor(Date.now() / 1000);
   }, 15_000);
-  if (activeTab.value === 'schedule') void jumpToSchedulePosition();
+  if (activeTab.value === 'schedule' && props.visible) void jumpToSchedulePosition();
 });
 onBeforeUnmount(() => {
   if (scheduleClockTimer !== null) clearInterval(scheduleClockTimer);
