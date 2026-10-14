@@ -100,9 +100,8 @@ import { dailyListeningSeries, localDayKey } from '~/utils/listening-duration.mj
 
 const duration = useListeningDurationStore();
 const playback = usePlaybackStore();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 duration.hydrate();
-const { locale } = useI18n();
 const rangeDays = ref(7);
 const chartScroll = ref<HTMLElement | null>(null);
 watch(rangeDays, async () => {
@@ -136,7 +135,10 @@ const formatTick = (dayKey: string) => new Intl.DateTimeFormat(locale.value, {
 
 const isLive = computed(() => duration.activeStationUrl !== '');
 const totalListeningMs = computed(() => duration.stats.totalMs + duration.liveMs);
-const todayListeningMs = computed(() => duration.todayMs + duration.liveMs);
+// Use the same midnight-aware daily buckets as the chart, including live seconds.
+const todayListeningMs = computed(() => dailyListeningSeries(
+  duration.stats, 7, new Date(), duration.liveMs,
+).at(-1)?.ms || 0);
 const stations = computed(() => {
   const entries = Object.entries(duration.stats.byStation)
     .map(([url, value]) => ({ url, title: value.title, ms: value.ms }));
