@@ -606,6 +606,14 @@ const tryPlay = async (): Promise<void> => {
     waiting.value = false;
     playing.value = true;
     streamError.value = false;
+    // Some stream integrations resolve play() before dispatching "playing".
+    // Keep listening statistics aligned with the real media state, not just
+    // the visual Player status; never count if the element is still paused
+    // or has no decoded/buffered audio data.
+    if (!media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+      && listeningDurationTracker.activeUrl !== playback.station?.url) {
+      onMediaPlaying();
+    }
 
   } catch (error) {
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
