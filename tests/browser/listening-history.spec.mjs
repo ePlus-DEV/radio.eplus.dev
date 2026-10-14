@@ -278,3 +278,72 @@ test('daily listening chart switches 7/30/90-day views and survives reload', asy
   await page.reload();
   await expect(page.locator('figure[aria-label="Listening time by day"]')).toContainText('2m 15s');
 });
+
+test('personal listening-time tracking can be disabled without stopping radio and persists after reload', async ({ page }) => {
+  await mockAudio(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  const dock = page.locator('.radio-player-dock');
+  await dock.getByRole('button', { name: 'Play radio', exact: true }).click();
+  await page.goto('/library#stats');
+  const stats = page.locator('section[aria-label="Listening time"]');
+  const tracking = stats.getByRole('switch', { name: 'Track listening time' });
+  await expect(tracking).toHaveAttribute('aria-checked', 'true');
+  await expect(stats).toContainText('Counting listening time live');
+  await tracking.click();
+  await expect(tracking).toHaveAttribute('aria-checked', 'false');
+  await expect(stats).not.toContainText('Counting listening time live');
+  await expect(dock.getByRole('button', { name: 'Pause radio', exact: true })).toBeVisible();
+
+  const storedBefore = await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'));
+  await page.waitForTimeout(1_700);
+  expect(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).toBe(storedBefore);
+  expect(await page.evaluate(() => localStorage.getItem('radio_listening_tracking_enabled_v1'))).toBe('0');
+  await page.reload();
+  await expect(page.getByRole('switch', { name: 'Track listening time' })).toHaveAttribute('aria-checked', 'false');
+
+  // Playback remains manual after reload; a new Play must not count when disabled.
+  await dock.getByRole('button', { name: 'Play radio', exact: true }).click();
+  await expect(dock.getByRole('button', { name: 'Pause radio', exact: true })).toBeVisible();
+  const saved = await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'));
+  await page.waitForTimeout(1_500);
+  expect(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).toBe(saved);
+  await page.getByRole('switch', { name: 'Track listening time' }).click();
+  await expect(stats).toContainText('Counting listening time live');
+});
+
+test('clear listening statistics requires confirmation and does not erase favorites or recent stations', async ({ page }) => {
+  await ready(page, '/');
+  await page.evaluate(() => {
+    const heart = { url: '/europe/united-kingdom/heart-uk', title: 'Heart UK', image: '/brand/onair-mark.svg' };
+    const today = new Date();
+    const key = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-');
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify({
+      recent: [heart], favorites: [heart], lastStation: heart, lastState: 'pause',
+    }));
+    localStorage.setItem('radio_listening_duration_v1', JSON.stringify({
+      totalMs: 120_000, todayKey: key, todayMs: 120_000, byDay: { [key]: 120_000 },
+      byStation: { [heart.url]: { title: heart.title, ms: 120_000 } },
+    }));
+  });
+  await page.goto('/library#stats');
+  const stats = page.locator('section[aria-label="Listening time"]');
+  await expect(stats).toContainText('2m 0s');
+  const clear = stats.getByRole('button', { name: 'Delete listening statistics' });
+  await clear.click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toContainText('Delete all listening statistics?');
+  await dialog.getByRole('button', { name: 'Cancel' }).click();
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).totalMs).toBe(120_000);
+
+  await clear.click();
+  await dialog.getByRole('button', { name: 'Yes, delete statistics' }).click();
+  await expect(dialog).not.toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).toBeNull();
+  await expect(stats).toContainText('No daily listening time recorded yet.');
+  const lib = await history(page);
+  expect(lib.recent).toHaveLength(1);
+  expect(lib.favorites).toHaveLength(1);
+  expect(lib.lastStation.title).toBe('Heart UK');
+  await page.reload();
+  await expect(page.locator('section[aria-label="Listening time"]')).toContainText('0s');
+});
