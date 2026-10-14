@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { LISTENING_LIBRARY_KEY, emptyListeningLibrary, parseListeningLibrary, rememberStation, toggleFavoriteStation } from '~/utils/listening-library.mjs';
+import { LISTENING_LIBRARY_KEY, emptyListeningLibrary, parseListeningLibrary, rememberStation, removeRecentStation, toggleFavoriteStation } from '~/utils/listening-library.mjs';
 import type { PlaybackStation } from '~/types/radio';
 
 export const useListeningStore = defineStore('listening', {
@@ -29,6 +29,11 @@ export const useListeningStore = defineStore('listening', {
     toggleFavorite(station: { url: string; title: string; image: string; countryKey?: string }) {
       this.hydrate();
       this.library = toggleFavoriteStation(this.library, station);
+      this.save();
+    },
+    removeRecent(stationUrl: string) {
+      this.hydrate();
+      this.library = removeRecentStation(this.library, stationUrl);
       this.save();
     },
     clearRecent() { this.hydrate(); this.library.recent = []; this.save(); },

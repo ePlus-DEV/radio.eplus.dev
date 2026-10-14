@@ -48,3 +48,12 @@ test('favorite and recent cards can play without leaving the page while retainin
   assert.match(source, /generation !== selectionGeneration/);
   assert.match(source, /onBeforeUnmount\(\(\) => \{ \+\+selectionGeneration;/);
 });
+
+test('recent-history cards expose individual remove actions while favorite cards do not', async () => {
+  const source = await readFile(new URL('../components/panel/ListeningLibrary.vue', import.meta.url), 'utf8');
+  assert.ok(source.includes("v-if=\"group.key === 'recent'\""));
+  assert.ok(source.includes('icon="i-lucide-trash-2"'));
+  assert.ok(source.includes('@click="listening.removeRecent(station.url)"'));
+  assert.ok(source.includes("$t('library.remove_recent') + ': ' + station.title"));
+  assert.ok(source.includes('@click="listening.toggleFavorite(station)"'));
+});
