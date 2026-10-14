@@ -148,6 +148,7 @@
     "description": "描述",
     "category": "分类",
     "schedule": "节目表",
+    "schedule_jump_to_now": "跳转到当前时段",
     "schedule_reference_note": "以下为广播台提供的参考时段，节目可能因日期而变化。请查看官方节目表获取最新信息。",
     "schedule_official_note": "广播台官方节目表来源。",
     "schedule_official_link": "查看官方节目表",
