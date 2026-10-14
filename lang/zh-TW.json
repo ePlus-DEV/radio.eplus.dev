@@ -148,6 +148,7 @@
     "description": "描述",
     "category": "類別",
     "schedule": "節目表",
+    "schedule_jump_to_now": "跳至目前時段",
     "schedule_reference_note": "以下為電台提供的參考時段，節目可能依日期調整。請查看官方節目表取得最新資訊。",
     "schedule_official_note": "電台官方節目表來源。",
     "schedule_official_link": "查看官方節目表",
