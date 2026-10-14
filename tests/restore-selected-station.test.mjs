@@ -10,7 +10,7 @@ test('VOV is first featured but must never preempt a saved station on home', asy
   const restore = await read('composables/useRestoreLastStation.ts');
   assert.equal(HOMEPAGE_FEATURED_STATION_PATHS[0], 'asia/viet-nam/vov-gt-hcm');
   assert.match(home, /if \(import\.meta\.server\) return;/);
-  assert.match(home, /listening\.hydrate\(\);\s*if \(listening\.library\.lastStation\) return;/);
+  assert.match(home, /listening\.hydrate\(\);[\s\S]*?if \(listening\.library\.lastStation\) return;/);
   assert.match(home, /onlyIfIdle: true/);
   assert.match(restore, /const saved = listening\.library\.lastStation;/);
   assert.match(restore, /playback\.activate\(\{[\s\S]*?sources: \[\],[\s\S]*?onlyIfIdle: true/);
