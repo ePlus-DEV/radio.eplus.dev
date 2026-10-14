@@ -145,8 +145,18 @@
         </div>
       </div>
 
-      <div v-else-if="activeTab === 'schedule' && hasSchedule" class="space-y-1">
-        <template v-if="program.length">
+      <div v-else-if="activeTab === 'schedule' && hasSchedule"
+        :class="scheduleIsReference && program.length ? '' : 'space-y-1'">
+        <!-- Broadcast timeline is a time-scaled canvas. Keep legacy remote
+             provider EPG as a compact list because it lacks reliable intervals. -->
+        <PlayerScheduleTimeline
+          v-if="scheduleIsReference && program.length"
+          :program="program"
+          :timestamp="scheduleNow"
+          :thumb="thumb"
+          :station-name="stationName"
+        />
+        <template v-else-if="program.length">
           <template v-for="(item, index) in program" :key="programKey(item, index)">
             <PlayerScheduleGap
               v-if="scheduleGap?.insertIndex === index"
@@ -396,11 +406,13 @@ const jumpToSchedulePosition = async () => {
   if (generation !== scrollGeneration || activeTab.value !== 'schedule' || !props.visible) return;
   const container = scheduleScrollContainer.value;
   const index = schedulePositionNow.value.scrollIndex;
-  const row = scheduleGap.value
+  const row = props.scheduleIsReference
     ? container?.querySelector<HTMLElement>('[data-schedule-now]')
-    : index < 0 ? null : container?.querySelector<HTMLElement>(
-      `[data-program-index="${index}"]`,
-    );
+    : scheduleGap.value
+      ? container?.querySelector<HTMLElement>('[data-schedule-now]')
+      : index < 0 ? null : container?.querySelector<HTMLElement>(
+        `[data-program-index="${index}"]`,
+      );
   if (!container || !row || container.clientHeight === 0) return;
   const containerRect = container.getBoundingClientRect();
   const rowRect = row.getBoundingClientRect();
