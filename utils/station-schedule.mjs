@@ -47,3 +47,33 @@ export const schedulePosition = (programs, nowSeconds, isReference = false) => {
     scrollIndex: upcomingIndex !== -1 ? upcomingIndex : programs.length - 1,
   };
 };
+
+// A missing block of *reference metadata* is not evidence that the radio has
+// stopped broadcasting. Show a neutral "programme not listed" time marker,
+// rather than attributing the next programme to the current moment.
+// Index is where the marker belongs among chronologically ordered programmes.
+export const referenceScheduleGap = (programs, nowSeconds) => {
+  if (!Array.isArray(programs) || !programs.length || !Number.isFinite(nowSeconds)) return null;
+  for (let index = 0; index < programs.length; index++) {
+    const next = programs[index];
+    if (!Number.isFinite(next?.startTime) || !Number.isFinite(next?.endTime)) return null;
+    if (next.startTime <= nowSeconds && nowSeconds < next.endTime) return null;
+    if (nowSeconds < next.startTime) {
+      const previous = programs[index - 1];
+      // Explicit inter-programme gaps and time before the first listed slot.
+      if (!previous || (Number.isFinite(previous.endTime) && nowSeconds >= previous.endTime)) {
+        return {
+          insertIndex: index,
+          nextTitle: next.title || '',
+          nextStartTime: next.startTime,
+        };
+      }
+      return null;
+    }
+  }
+  // Today's published guide has finished. Don't label this as off-air.
+  const last = programs[programs.length - 1];
+  return Number.isFinite(last?.endTime) && nowSeconds >= last.endTime
+    ? { insertIndex: programs.length, nextTitle: '', nextStartTime: null }
+    : null;
+};
