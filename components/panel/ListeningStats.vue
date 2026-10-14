@@ -125,12 +125,15 @@ const parseDay = (dayKey: string) => {
   const [year, month, day] = dayKey.split('-').map(Number);
   return new Date(year, month - 1, day);
 };
-const formatDay = (dayKey: string) => new Intl.DateTimeFormat(locale.value, {
+// Reuse Intl formatters: the live chart can redraw 90 bars every second.
+const dayFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
   day: '2-digit', month: 'short', year: 'numeric',
-}).format(parseDay(dayKey));
-const formatTick = (dayKey: string) => new Intl.DateTimeFormat(locale.value, {
+}));
+const tickFormatter = computed(() => new Intl.DateTimeFormat(locale.value, {
   day: '2-digit', month: '2-digit',
-}).format(parseDay(dayKey));
+}));
+const formatDay = (dayKey: string) => dayFormatter.value.format(parseDay(dayKey));
+const formatTick = (dayKey: string) => tickFormatter.value.format(parseDay(dayKey));
 
 
 const isLive = computed(() => duration.activeStationUrl !== '');
