@@ -9,7 +9,6 @@ import {
   referenceTimelineLayout,
   SCHEDULE_TIMELINE_HOUR_PX,
   scheduleTimelineProgress,
-  scheduleTimelineProgress,
 } from "../utils/station-schedule.mjs";
 
 test("normalizes only real HTTP schedule URLs", () => {
