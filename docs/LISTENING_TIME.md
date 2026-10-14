@@ -33,6 +33,29 @@ is required.
 **Recently played is a separate list:** clearing its entries requires a Yes/No confirmation
 and does not clear favorites, last selected station, or the listening time statistics.
 
+## User privacy controls
+
+In **Library → Listening time**, listeners can:
+
+- Switch **Track listening time** off or on without interrupting the radio. The
+  setting is saved in `radio_listening_tracking_enabled_v1` (`0` means off;
+  missing or `1` means on). Opting out immediately discards any unflushed
+  interval, hides the live-counting badge, and prevents future
+  `radio_listen_duration` GA4 events, including pause/stop reports. Previously
+  saved personal statistics stay visible, and Recently played continues to
+  work separately.
+- Select **Delete listening statistics** to open a Yes/No confirmation modal.
+  Confirming removes `radio_listening_duration_v1` (lifetime totals, per-day
+  history and per-station time), resets all visible charts and discards any
+  active buffered duration. The tracking preference, favorites, Recently
+  played and playback preferences are not deleted. If tracking remains enabled
+  and the radio is playing, a new counting session starts from zero.
+
+The privacy setting and deletion are synchronized between same-origin browser
+tabs through `storage` events. Clearing statistics does **not** delete events
+already received by Google Analytics; users should be told that this controls
+future radio listening-duration analytics, not all GA4 pageview analytics.
+
 ## Google Analytics 4 (production only)
 
 The existing `ga4.client.ts` dynamically initializes `gtag.js` for `radio.eplus.dev`
