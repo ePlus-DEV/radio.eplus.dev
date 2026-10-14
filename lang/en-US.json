@@ -465,6 +465,7 @@
     "recent_empty": "Play a station to see it here.",
     "favorites_empty": "Tap the heart on a station to save it here.",
     "clear_recent": "Clear recent history",
+    "remove_recent": "Remove from history",
     "add_favorite": "Add to favorites",
     "remove_favorite": "Remove from favorites",
     "loading": "Loading your stations…"
