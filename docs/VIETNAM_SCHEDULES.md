@@ -46,3 +46,18 @@ not make requests while SSR prerenders thousands of pages.
   caching, and a fallback when the broadcaster fails.
 - Run `npm test`; the dedicated checks are in
   `tests/vietnam-schedules.test.mjs`.
+
+## Gaps between listed programmes
+
+Reference schedules can omit a period (for example VOV Giao thông TP.HCM
+**16:15–16:30**). The player now renders a neutral **current-time marker**
+inside the gap, with Vietnam's clock and the next listed programme/time.
+The absence of EPG metadata must **not** be represented as the radio going
+off-air, a confirmed broadcast title, or a technical stream failure.
+
+The queue auto-centers the marker on opening Schedule, while preserving
+manual scrolling until the user asks to jump back. At the next valid programme
+boundary, the synthetic gap marker disappears and the real schedule row takes
+over. See `referenceScheduleGap` in `utils/station-schedule.mjs` and the
+regressions in `tests/station-schedule.test.mjs` and
+`tests/browser/schedule-autoscroll.spec.mjs`.

@@ -147,9 +147,14 @@
 
       <div v-else-if="activeTab === 'schedule' && hasSchedule" class="space-y-1">
         <template v-if="program.length">
+          <template v-for="(item, index) in program" :key="programKey(item, index)">
+            <PlayerScheduleGap
+              v-if="scheduleGap?.insertIndex === index"
+              :timestamp="scheduleNow"
+              :next-title="scheduleGap.nextTitle"
+              :next-start-time="scheduleGap.nextStartTime"
+            />
           <div
-            v-for="(item, index) in program"
-            :key="programKey(item, index)"
             :data-program-index="index"
             class="relative grid grid-cols-[72px_minmax(0,1fr)] gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
@@ -195,6 +200,13 @@
               </p>
             </div>
           </div>
+          </template>
+          <PlayerScheduleGap
+            v-if="scheduleGap?.insertIndex === program.length"
+            :timestamp="scheduleNow"
+            :next-title="scheduleGap.nextTitle"
+            :next-start-time="scheduleGap.nextStartTime"
+          />
         </template>
 
         <template v-else-if="playlist.length">
@@ -259,7 +271,7 @@
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
-import { schedulePosition } from "~/utils/station-schedule.mjs";
+import { schedulePosition, referenceScheduleGap } from "~/utils/station-schedule.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -344,6 +356,9 @@ const manuallyBrowsingSchedule = ref(false);
 const schedulePositionNow = computed(() =>
   schedulePosition(props.program, scheduleNow.value, props.scheduleIsReference),
 );
+const scheduleGap = computed(() => props.scheduleIsReference
+  ? referenceScheduleGap(props.program, scheduleNow.value)
+  : null);
 
 // Move just the INNER queue scroller: scrollIntoView() would move the entire
 // mobile slideover/page and could hide the fixed player/header.
@@ -355,9 +370,11 @@ const jumpToSchedulePosition = async () => {
   if (generation !== scrollGeneration || activeTab.value !== 'schedule' || !props.visible) return;
   const container = scheduleScrollContainer.value;
   const index = schedulePositionNow.value.scrollIndex;
-  const row = index < 0 ? null : container?.querySelector<HTMLElement>(
-    `[data-program-index="${index}"]`,
-  );
+  const row = scheduleGap.value
+    ? container?.querySelector<HTMLElement>('[data-schedule-now]')
+    : index < 0 ? null : container?.querySelector<HTMLElement>(
+      `[data-program-index="${index}"]`,
+    );
   if (!container || !row || container.clientHeight === 0) return;
   const containerRect = container.getBoundingClientRect();
   const rowRect = row.getBoundingClientRect();
@@ -399,11 +416,20 @@ watch(
 
 // Update the highlight at a programme boundary. Follow it only if the visitor
 // has not manually scrolled away. No polling/scrolling every animation frame.
-watch(() => schedulePositionNow.value.scrollIndex, (next, previous) => {
-  if (next !== previous && activeTab.value === 'schedule' && props.visible && !manuallyBrowsingSchedule.value) {
-    void jumpToSchedulePosition();
-  }
-}, { flush: 'post' });
+watch(
+  [
+    () => schedulePositionNow.value.scrollIndex,
+    () => schedulePositionNow.value.currentIndex,
+    () => scheduleGap.value?.insertIndex,
+  ],
+  (next, previous) => {
+    if (next.some((value, index) => value !== previous?.[index])
+      && activeTab.value === 'schedule' && props.visible && !manuallyBrowsingSchedule.value) {
+      void jumpToSchedulePosition();
+    }
+  },
+  { flush: 'post' },
+);
 
 let scheduleClockTimer: ReturnType<typeof setInterval> | null = null;
 onMounted(() => {

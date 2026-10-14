@@ -42,21 +42,54 @@ test('VOV Giao thông guide opens at the current Vietnam programme, not the firs
   await expect.poll(() => scroll.evaluate(element => element.scrollTop)).toBeGreaterThan(40);
 });
 
-test('guide in a gap focuses the next slot without labeling it as live', async ({ page }) => {
+test('16:29 ICT shows a Now marker in an unlisted interval, then switches to 16:30 programme', async ({ page }) => {
   await page.setViewportSize({ width: 1536, height: 900 });
-  // 08:20 UTC = 15:20; instead test 11:30 ICT gap between 11:00 and 12:30.
-  await page.clock.install({ time: new Date('2026-10-14T04:30:00Z') });
+  // 09:29 UTC = 16:29 ICT, exactly between FM91 (ends 16:15)
+  // and Giờ cao điểm chiều (starts 16:30).
+  await page.clock.install({ time: new Date('2026-10-14T09:29:00Z') });
   await page.goto('/asia/viet-nam/vov-gt-hcm');
   await page.waitForFunction(() => Boolean(document.querySelector('#__nuxt')?.__vue_app__));
   await page.locator('.radio-player-dock').getByRole('button', { name: 'Channels & schedule' }).click();
   await queue(page).getByRole('tab', { name: /Schedule/ }).click();
 
-  const nextSlot = queue(page).locator('[data-program-index="5"]'); // 12:30
-  await expect(nextSlot).toBeVisible();
-  await expect.poll(() => nextSlot.evaluate(row => {
+  const marker = queue(page).locator('[data-schedule-now]');
+  await expect(marker).toBeVisible();
+  await expect(marker).toContainText('16:29');
+  await expect(marker).toContainText('No programme details are listed for this time');
+  await expect(marker).toContainText('Giờ cao điểm chiều');
+  await expect(marker).toContainText('16:30');
+  await expect.poll(() => marker.evaluate(row => {
     const viewport = row.closest('.radio-scrollbar').getBoundingClientRect();
     const box = row.getBoundingClientRect();
     return box.top >= viewport.top && box.bottom <= viewport.bottom;
   })).toBe(true);
+
+  const nextSlot = queue(page).locator('[data-program-index="7"]');
   await expect(nextSlot.locator('.absolute.inset-y-2')).toHaveCount(0);
+
+  // No invented live programme during the gap; exactly at 16:30 the
+  // synthetic marker vanishes and the next actual reference slot is active.
+  await page.clock.runFor(60_000);
+  await expect(marker).toHaveCount(0);
+  await expect(nextSlot.locator('.absolute.inset-y-2')).toHaveCount(1);
+});
+
+test('manual browsing in a missing-guide window does not get auto-recentered', async ({ page }) => {
+  await page.setViewportSize({ width: 1536, height: 900 });
+  await page.clock.install({ time: new Date('2026-10-14T04:30:00Z') }); // 11:30 ICT
+  await page.goto('/asia/viet-nam/vov-gt-hcm');
+  await page.waitForFunction(() => Boolean(document.querySelector('#__nuxt')?.__vue_app__));
+  await page.locator('.radio-player-dock').getByRole('button', { name: 'Channels & schedule' }).click();
+  await queue(page).getByRole('tab', { name: /Schedule/ }).click();
+
+  const scroll = scrollArea(page);
+  const marker = queue(page).locator('[data-schedule-now]');
+  await expect(marker).toContainText('11:30');
+  await expect(marker).toContainText('12:30');
+  await scroll.evaluate(node => { node.scrollTop = 0; });
+  await scroll.dispatchEvent('wheel', { deltaY: -200, bubbles: true });
+  await page.clock.runFor(16_000);
+  expect(await scroll.evaluate(node => node.scrollTop)).toBe(0);
+  await queue(page).getByRole('button', { name: 'Jump to current time' }).click();
+  await expect.poll(() => scroll.evaluate(node => node.scrollTop)).toBeGreaterThan(0);
 });
