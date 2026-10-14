@@ -12,10 +12,23 @@ The player checks in every five seconds and persists time as whole milliseconds 
 with a six-hour safety cap on any one missing checkpoint.
 
 The dashboard shows total lifetime time, time **today in the listener's local timezone**,
-and the breakdown by station. Up to 100 different stations are retained for the
-per-station breakdown, while the total is preserved independently. No listening time
-before this release can be reconstructed. Private/incognito or cleared browser storage
-starts fresh. No cross-device synchronization or account is required.
+and the breakdown by station. It also has an interactive **daily listening-time bar
+chart** at `/library#stats` with selectable **7 / 30 / 90 days**: click or
+keyboard-activate a bar to inspect the exact daily duration. The chart uses the
+same live preview as the player and updates without a page reload.
+
+The `byDay` dictionary is kept alongside `totalMs`, `todayMs`, and
+`byStation` in `radio_listening_duration_v1`. Each five-second checkpoint is
+split at **local midnight**, including timezone/DST boundaries. Per-day
+history keeps the most recent 365 recorded calendar days; lifetime totals
+are preserved even as old chart buckets are pruned. Up to 100 station totals
+are retained. Existing v1 statistics migrate the *one known today bucket*
+without erasing historical totals; previous calendar days were not recorded
+and **cannot be reconstructed**.
+
+No listening time before initial tracking can be reconstructed. Private/incognito
+or cleared browser storage starts fresh. No cross-device synchronization or account
+is required.
 
 **Recently played is a separate list:** clearing its entries requires a Yes/No confirmation
 and does not clear favorites, last selected station, or the listening time statistics.

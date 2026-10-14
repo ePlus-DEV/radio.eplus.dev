@@ -192,3 +192,89 @@ test('listening time tab shows stored lifetime, today and per-station durations'
   await page.reload();
   await expect(page.locator('section[aria-label="Listening time"]')).toContainText('Heart UK');
 });
+
+test('listening time dashboard ticks each second during actual playback and freezes on pause', async ({ page }) => {
+  await mockAudio(page);
+  await ready(page, '/europe/belgium/studio-brussel');
+  const dock = page.locator('.radio-player-dock');
+  await dock.getByRole('button', { name: 'Play radio', exact: true }).click();
+  await page.locator('aside.radio-desktop-sidebar a[href="/library#stats"]').click();
+
+  const stats = page.locator('section[aria-label="Listening time"]');
+  await expect(stats).toContainText('Counting listening time live');
+  const total = stats.locator('.grid .radio-surface').first().locator('p').nth(1);
+  const displayedSeconds = async () => {
+    const value = (await total.innerText()).trim();
+    const match = /^(\d+)s$/.exec(value);
+    return match ? Number(match[1]) : null;
+  };
+
+  // No reload required: reactive preview updates before the 5s storage checkpoint.
+  await expect.poll(displayedSeconds, { timeout: 8_000 }).toBeGreaterThanOrEqual(2);
+  await dock.getByRole('button', { name: 'Pause radio', exact: true }).click();
+  await expect(stats).not.toContainText('Counting listening time live');
+  const pausedSeconds = await displayedSeconds();
+  await page.waitForTimeout(1_600);
+  expect(await displayedSeconds()).toBe(pausedSeconds);
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).totalMs)
+    .toBeGreaterThanOrEqual(2_000);
+});
+
+test('successful media play starts duration when the playing event is delayed or missing', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(HTMLMediaElement.prototype, 'paused', {
+      configurable: true, get() { return this.__testPaused !== false; },
+    });
+    Object.defineProperty(HTMLMediaElement.prototype, 'readyState', {
+      configurable: true, get() { return HTMLMediaElement.HAVE_FUTURE_DATA; },
+    });
+    HTMLMediaElement.prototype.play = function () {
+      this.__testPaused = false;
+      return Promise.resolve(); // No 'playing' event.
+    };
+    HTMLMediaElement.prototype.pause = function () {
+      this.__testPaused = true;
+      this.dispatchEvent(new Event('pause'));
+    };
+    HTMLMediaElement.prototype.load = function () {};
+  });
+  await ready(page, '/europe/belgium/studio-brussel');
+  const dock = page.locator('.radio-player-dock');
+  await dock.getByRole('button', { name: 'Play radio', exact: true }).click();
+  await page.locator('aside.radio-desktop-sidebar a[href="/library#stats"]').click();
+  const stats = page.locator('section[aria-label="Listening time"]');
+  await expect(stats).toContainText('Counting listening time live');
+  await expect.poll(async () => {
+    const text = (await stats.locator('.grid .radio-surface').first().locator('p').nth(1).innerText()).trim();
+    const match = /^(\d+)s$/.exec(text);
+    return match ? Number(match[1]) : 0;
+  }, { timeout: 8_000 }).toBeGreaterThanOrEqual(2);
+});
+
+test('daily listening chart switches 7/30/90-day views and survives reload', async ({ page }) => {
+  await ready(page, '/');
+  await page.evaluate(() => {
+    const today = new Date();
+    const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+    const key = date => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+    const heart = '/europe/united-kingdom/heart-uk';
+    localStorage.setItem('radio_listening_duration_v1', JSON.stringify({
+      totalMs: 135_000, todayKey: key(today), todayMs: 45_000,
+      byStation: { [heart]: { title: 'Heart UK', ms: 135_000 } },
+      byDay: { [key(yesterday)]: 90_000, [key(today)]: 45_000 },
+    }));
+  });
+  await page.goto('/library#stats');
+  const chart = page.locator('figure[aria-label="Listening time by day"]');
+  await expect(chart).toContainText('Listening time by day');
+  await expect(chart).toContainText('2m 15s');
+  await expect(chart.locator('button[title]')).toHaveCount(7);
+  await chart.locator('button[title]').nth(5).click(); // Yesterday.
+  await expect(chart.locator('figcaption')).toContainText('1m 30s');
+  await chart.getByRole('button', { name: '30 days' }).click();
+  await expect(chart.locator('button[title]')).toHaveCount(30);
+  await chart.getByRole('button', { name: '90 days' }).click();
+  await expect(chart.locator('button[title]')).toHaveCount(90);
+  await page.reload();
+  await expect(page.locator('figure[aria-label="Listening time by day"]')).toContainText('2m 15s');
+});
