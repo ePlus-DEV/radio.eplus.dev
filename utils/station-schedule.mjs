@@ -77,3 +77,12 @@ export const referenceScheduleGap = (programs, nowSeconds) => {
     ? { insertIndex: programs.length, nextTitle: '', nextStartTime: null }
     : null;
 };
+
+// Percentage of actual elapsed wall-clock time in a scheduled interval.
+// Used only as a reference-guide timeline, not an audio playback progress bar.
+// Invalid or unknown bounds intentionally have no calculable position.
+export const scheduleTimelineProgress = (startSeconds, endSeconds, nowSeconds) => {
+  if (!Number.isFinite(startSeconds) || !Number.isFinite(endSeconds)
+      || !Number.isFinite(nowSeconds) || endSeconds <= startSeconds) return null;
+  return Math.min(100, Math.max(0, (nowSeconds - startSeconds) * 100 / (endSeconds - startSeconds)));
+};
