@@ -59,3 +59,30 @@ test('listening history updates an already-open library tab', async ({ page, con
   await expect(libraryTab.locator('section[aria-label="Recently played"]')).toContainText('Studio Brussel');
   await libraryTab.close();
 });
+
+test('delete one history entry from library without affecting favorites, playback preference or other stations', async ({ page }) => {
+  await ready(page, '/');
+  await page.evaluate(() => {
+    const first = { url: '/europe/belgium/studio-brussel', title: 'Studio Brussel', image: '/brand/onair-mark.svg' };
+    const second = { url: '/europe/belgium/mnm', title: 'MNM', image: '/brand/onair-mark.svg' };
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify({
+      recent: [first, second], favorites: [first], lastStation: first, lastState: 'pause',
+    }));
+  });
+  await page.goto('/library#recent');
+  const recent = page.locator('section[aria-label="Recently played"]');
+  await expect(recent).toContainText('Studio Brussel');
+  await expect(recent).toContainText('MNM');
+  await recent.getByRole('button', { name: 'Remove from history: Studio Brussel' }).click();
+  await expect(recent).not.toContainText('Studio Brussel');
+  await expect(recent).toContainText('MNM');
+  await expect(page).toHaveURL(/\/library#recent$/);
+  const saved = await history(page);
+  expect(saved.recent.map(item => item.title)).toEqual(['MNM']);
+  expect(saved.favorites.map(item => item.title)).toEqual(['Studio Brussel']);
+  expect(saved.lastStation.title).toBe('Studio Brussel');
+  expect(saved.lastState).toBe('pause');
+  await page.reload();
+  await expect(page.locator('section[aria-label="Recently played"]')).toContainText('MNM');
+  await expect(page.locator('section[aria-label="Recently played"]')).not.toContainText('Studio Brussel');
+});
