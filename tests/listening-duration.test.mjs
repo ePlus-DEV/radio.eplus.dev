@@ -81,5 +81,12 @@ test('duration tracker ignores duplicate playing and caps unusually long sleep g
   tracker.start(station('heart-uk')); // duplicate media playing event must not reset the clock
   now = 900_000;
   tracker.stop();
-  assert.deepEqual(elapsed, [MAX_LISTENING_GAP_MS]);
+  // A normal 15-minute listening session must not be clipped by the 6h cap.
+  assert.deepEqual(elapsed, [899_900]);
+
+  // A much longer missing checkpoint is capped to guard unusual sleep gaps.
+  tracker.start(station('heart-uk'));
+  now += MAX_LISTENING_GAP_MS + 60_000;
+  tracker.stop();
+  assert.deepEqual(elapsed, [899_900, MAX_LISTENING_GAP_MS]);
 });
