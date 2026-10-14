@@ -6,6 +6,8 @@ import {
   normalizeScheduleUrl,
   schedulePosition,
   referenceScheduleGap,
+  referenceTimelineLayout,
+  SCHEDULE_TIMELINE_HOUR_PX,
   scheduleTimelineProgress,
 } from "../utils/station-schedule.mjs";
 
@@ -164,4 +166,61 @@ test('live time bar is wired to a one-second clock only for visible reference gu
   assert.match(gap, /second: '2-digit'/);
   assert.match(gap, /data-schedule-time-progress/);
   assert.match(gap, /timelineProgress \+ '%'/);
+});
+
+test('timeline uses proportional clock time rather than equal-height station cards', async () => {
+  const { vietnamReferencePrograms } = await import('../utils/vietnam-schedules.mjs');
+  const now = Date.parse('2026-10-14T08:00:00Z') / 1000; // 15:00 ICT
+  const programmes = vietnamReferencePrograms('/asia/viet-nam/vov-gt-hcm', new Date(now * 1000));
+  const layout = referenceTimelineLayout(programmes, now);
+  assert.ok(layout);
+  assert.equal(SCHEDULE_TIMELINE_HOUR_PX, 76);
+  assert.equal(new Date(layout.dayStart * 1000).toISOString(), '2026-10-13T17:00:00.000Z');
+  assert.equal(layout.height, 27 * 76);
+  assert.equal(layout.hours.length, 28);
+  assert.equal(layout.hours[24].nextDay, true);
+  assert.equal(layout.hours[24].time, layout.dayStart + 86400);
+  assert.equal(layout.programmes[0].top, 4 * 76);
+  assert.equal(layout.programmes[0].height, 76); // 04:00–05:00
+  assert.equal(layout.programmes[6].height, 1.75 * 76); // FM91 14:30–16:15
+  assert.equal(layout.programmes[6].active, true);
+  assert.equal(layout.nowTop, 15 * 76);
+  assert.equal(layout.gap, null);
+  assert.ok(Math.abs(scheduleTimelineProgress(programmes[6].startTime, programmes[6].endTime, now)
+    - (30 / 105) * 100) < 1e-9);
+});
+
+test('timeline puts the green NOW line at 16:29 in the unpublished 16:15–16:30 window', async () => {
+  const { vietnamReferencePrograms } = await import('../utils/vietnam-schedules.mjs');
+  const before = Date.parse('2026-10-14T09:29:00Z') / 1000;
+  const programmes = vietnamReferencePrograms('/asia/viet-nam/vov-gt-hcm', new Date(before * 1000));
+  const gapLayout = referenceTimelineLayout(programmes, before);
+  assert.ok(Math.abs(gapLayout.nowTop - (16 + 29 / 60) * 76) < 1e-7);
+  assert.equal(gapLayout.programmes.some(block => block.active), false);
+  assert.equal(gapLayout.gap.startTime, Date.parse('2026-10-14T09:15:00Z') / 1000);
+  assert.equal(gapLayout.gap.endTime, Date.parse('2026-10-14T09:30:00Z') / 1000);
+  assert.equal(gapLayout.gap.nextTitle, 'Giờ cao điểm chiều');
+  const liveLayout = referenceTimelineLayout(programmes, before + 60);
+  assert.equal(liveLayout.gap, null);
+  assert.equal(liveLayout.programmes[7].active, true);
+  assert.ok(Math.abs((liveLayout.nowTop - gapLayout.nowTop) - 76 / 60) < 1e-9);
+});
+
+test('timeline continues past midnight with next-date axis and bounded progress', () => {
+  const programmes = [{
+    startTime: Date.parse('2026-10-14T12:00:00Z') / 1000,
+    endTime: Date.parse('2026-10-15T01:30:00Z') / 1000,
+    title: 'Night programme',
+  }];
+  const now = Date.parse('2026-10-14T20:50:00Z') / 1000; // 03:50 ICT next day
+  const layout = referenceTimelineLayout(programmes, now);
+  assert.ok(layout.hours.some(hour => hour.nextDay));
+  assert.equal(layout.programmes[0].height, 13.5 * 76);
+  assert.equal(layout.nowTop, (27 + 50 / 60) * 76);
+  assert.ok(layout.height > layout.nowTop);
+  assert.equal(scheduleTimelineProgress(100, 200, 50), 0);
+  assert.equal(scheduleTimelineProgress(100, 200, 250), 100);
+  assert.equal(scheduleTimelineProgress(100, 100, 100), null);
+  assert.equal(scheduleTimelineProgress(undefined, 200, 150), null);
+  assert.equal(referenceTimelineLayout([], now), null);
 });
