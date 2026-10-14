@@ -298,7 +298,11 @@ const listeningDurationTracker = createListeningDurationTracker({
   },
 });
 let durationInterval: ReturnType<typeof setInterval> | null = null;
-const stopListeningDuration = () => listeningDurationTracker.stop();
+let durationTickCount = 0;
+const stopListeningDuration = () => {
+  listeningDurationTracker.stop();
+  listeningDuration.setLivePreview('', 0);
+};
 const mediaElement = ref<HTMLAudioElement | null>(null);
 const online = ref(true);
 const waiting = ref(false);
@@ -1065,6 +1069,7 @@ const onMediaPlaying = (): void => {
   if (userPaused.value || !hasPlayableSource.value || !activeResolvedSrc || !playback.station) return;
   listening.remember(playback.station, 'play', true);
   listeningDurationTracker.start(playback.station);
+  listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
   clearReconnectTimer();
   clearFallbackProbeTimer();
   attemptCount.value = 0;
@@ -1202,7 +1207,13 @@ watch(() => props.country, () => {
 
 onMounted(() => {
   listeningDuration.hydrate();
-  durationInterval = setInterval(() => listeningDurationTracker.flush(), 5_000);
+  // Update the statistics dashboard every second while only persisting
+  // checkpoints every five seconds to avoid excessive localStorage writes.
+  durationInterval = setInterval(() => {
+    durationTickCount += 1;
+    if (durationTickCount % 5 === 0) listeningDurationTracker.flush();
+    listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs);
+  }, 1_000);
   window.addEventListener('pagehide', stopListeningDuration);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
