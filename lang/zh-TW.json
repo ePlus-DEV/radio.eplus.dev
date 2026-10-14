@@ -297,7 +297,7 @@
         },
         "sharing": {
           "title": "資料出售與分享",
-          "body": "我們不會販售個人資料。正式網站使用 Google Analytics 4 統計造訪與頁面瀏覽量。使用搜尋與電台服務時，相關服務商也可能收到資訊。"
+          "body": "我們不會販售個人資料。正式網站使用 Google Analytics 4 統計造訪量、頁面瀏覽量及各電台收聽時長。個人的收聽時長統計亦儲存在您的裝置上。使用搜尋或電台服務時，相關服務商可能收到資訊。"
         },
         "changes": {
           "title": "政策變更",
@@ -390,7 +390,7 @@
         },
         "analytics": {
           "title": "網站造訪統計",
-          "body": "ePlus OnAir 正式網站在頁面開啟時即透過 Google Analytics 4 統計造訪與頁面瀏覽量。關閉這則通知不會停止統計。"
+          "body": "正式網站使用 Google Analytics 4 統計造訪量、頁面瀏覽量及各電台收聽時長。關閉 Cookie 通知不會停止統計。"
         },
         "third_party": {
           "title": "Third-party services",
@@ -466,6 +466,20 @@
     "favorites_empty": "點擊愛心即可收藏電台。",
     "clear_recent": "清除收聽記錄",
     "remove_recent": "從歷史記錄中移除",
+    "listening_stats": "收聽時長",
+    "listening_stats_description": "僅統計此裝置上電台實際播放的時間，不包含暫停、緩衝或播放失敗的時間。",
+    "listening_total": "總收聽時長",
+    "listening_today": "今天",
+    "listening_stations": "收聽電台數",
+    "listening_top_stations": "各電台收聽時長",
+    "listening_empty": "播放電台後即可開始統計收聽時長。",
+    "listening_hour_short": "小時",
+    "listening_minute_short": "分",
+    "listening_second_short": "秒",
+    "confirm_clear_recent_title": "清除所有收聽記錄？",
+    "confirm_clear_recent_description": "確定移除最近收聽中的所有電台嗎？收藏和收聽時長統計將保留。",
+    "confirm_clear_recent_yes": "是，清除記錄",
+    "confirm_clear_recent_no": "否，保留記錄",
     "add_favorite": "加入收藏",
     "remove_favorite": "取消收藏",
     "loading": "正在載入您的電台…"
@@ -489,7 +503,7 @@
     "title": "Cookie 與流量分析通知",
     "body": "ePlus OnAir 會在此裝置上儲存您的收聽與顯示偏好。",
     "accept": "知道了",
-    "analytics_body": "ePlus OnAir 會儲存您的偏好，並在正式網站使用 Google Analytics 4 統計造訪量。這只是資訊提示，關閉後統計仍會繼續。",
+    "analytics_body": "ePlus OnAir 會儲存您的偏好，並在正式網站使用 Google Analytics 4 統計造訪量及電台收聽時長。此通知僅供告知，關閉後統計仍會繼續。",
     "learn_more": "Cookie 政策"
   }
 }

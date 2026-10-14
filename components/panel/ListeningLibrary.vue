@@ -4,7 +4,7 @@
       <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h2 class="flex items-center gap-2 text-lg font-semibold"><UIcon :name="group.icon" class="h-5 w-5 text-rose-600 dark:text-rose-400" />{{ $t(`library.${group.key}`) }}<span class="text-xs font-normal text-[var(--radio-text-muted)]">{{ group.items.length }}</span></h2>
         <NuxtLink v-if="compact && group.items.length" :to="`/library#${group.key}`" class="radio-interactive rounded-lg p-2 text-xs font-semibold text-rose-700 dark:text-rose-300">{{ $t('redesign.see_all') }}</NuxtLink>
-        <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="listening.clearRecent()">{{ $t('library.clear_recent') }}</UButton>
+        <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="clearRecentOpen = true">{{ $t('library.clear_recent') }}</UButton>
       </div>
       <div v-if="group.items.length" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         <article
@@ -56,6 +56,23 @@
       <p v-else class="rounded-2xl border border-dashed border-[var(--radio-border)] p-4 text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t(`library.${group.key}_empty`) }}</p>
       <p v-if="failedStationUrl && group.items.some(station => station.url === failedStationUrl)" role="alert" class="mt-2 text-xs text-rose-500">{{ $t('alert.stream_error') }}</p>
     </section>
+    <UModal
+      v-model:open="clearRecentOpen"
+      :title="$t('library.confirm_clear_recent_title')"
+      :description="$t('library.confirm_clear_recent_description')"
+      :ui="{ content: 'max-w-md' }"
+    >
+      <template #footer>
+        <div class="flex w-full flex-wrap justify-end gap-2">
+          <UButton color="neutral" variant="outline" class="min-h-11" @click="clearRecentOpen = false">
+            {{ $t('library.confirm_clear_recent_no') }}
+          </UButton>
+          <UButton color="error" class="min-h-11" @click="confirmClearRecent">
+            {{ $t('library.confirm_clear_recent_yes') }}
+          </UButton>
+        </div>
+      </template>
+    </UModal>
   </div>
 </template>
 
@@ -74,6 +91,12 @@ const playback = usePlaybackStore();
 const config = useRuntimeConfig();
 const route = useRoute();
 listening.hydrate();
+
+const clearRecentOpen = ref(false);
+const confirmClearRecent = () => {
+  listening.clearRecent();
+  clearRecentOpen.value = false;
+};
 
 const pendingStationUrl = ref<string | null>(null);
 const failedStationUrl = ref<string | null>(null);
