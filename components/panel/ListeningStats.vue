@@ -1,14 +1,18 @@
 <template>
   <section :aria-label="$t('library.listening_stats')" class="space-y-6">
     <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('library.listening_stats_description') }}</p>
+    <div v-if="isLive" class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-300">
+      <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" aria-hidden="true"></span>
+      {{ $t('library.listening_live') }}
+    </div>
     <div class="grid gap-3 sm:grid-cols-3">
       <div class="radio-surface p-5">
         <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_total') }}</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(duration.stats.totalMs) }}</p>
+        <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(totalListeningMs) }}</p>
       </div>
       <div class="radio-surface p-5">
         <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_today') }}</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(duration.todayMs) }}</p>
+        <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(todayListeningMs) }}</p>
       </div>
       <div class="radio-surface p-5">
         <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_stations') }}</p>
@@ -35,15 +39,29 @@
 
 <script setup lang="ts">
 import { useListeningDurationStore } from '~/stores/listeningDuration';
+import { usePlaybackStore } from '~/stores/playback';
 
 const duration = useListeningDurationStore();
+const playback = usePlaybackStore();
 const { t } = useI18n();
 duration.hydrate();
 
-const stations = computed(() => Object.entries(duration.stats.byStation)
-  .map(([url, value]) => ({ url, title: value.title, ms: value.ms }))
-  .filter(station => station.ms > 0)
-  .sort((a, b) => b.ms - a.ms));
+const isLive = computed(() => duration.activeStationUrl !== '');
+const totalListeningMs = computed(() => duration.stats.totalMs + duration.liveMs);
+const todayListeningMs = computed(() => duration.todayMs + duration.liveMs);
+const stations = computed(() => {
+  const entries = Object.entries(duration.stats.byStation)
+    .map(([url, value]) => ({ url, title: value.title, ms: value.ms }));
+  const liveUrl = duration.activeStationUrl;
+  if (liveUrl && duration.liveMs > 0) {
+    const existing = entries.find(entry => entry.url === liveUrl);
+    if (existing) existing.ms += duration.liveMs;
+    else if (playback.station?.url === liveUrl) {
+      entries.push({ url: liveUrl, title: playback.station.title, ms: duration.liveMs });
+    }
+  }
+  return entries.filter(station => station.ms > 0).sort((a, b) => b.ms - a.ms);
+});
 const maxStationMs = computed(() => stations.value[0]?.ms || 1);
 const formatDuration = (value: number): string => {
   const seconds = Math.floor(value / 1000);
