@@ -148,6 +148,7 @@
     "description": "説明",
     "category": "カテゴリー",
     "schedule": "スケジュール",
+    "schedule_jump_to_now": "現在の時間帯へ",
     "schedule_reference_note": "放送局の参考番組表です。日によって変更される場合があります。最新情報は公式番組表をご確認ください。",
     "schedule_official_note": "放送局の公式番組表。",
     "schedule_official_link": "公式番組表を見る",
