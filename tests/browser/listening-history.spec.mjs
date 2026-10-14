@@ -138,3 +138,57 @@ test('saved station also outranks country fallback on reload', async ({ page }) 
   await expect(page.locator('.radio-player-dock').getByRole('link', { name: /Heart UK/ })).toBeVisible();
   await expect(page.locator('.radio-player-dock').getByRole('button', { name: 'Play radio', exact: true })).toBeVisible();
 });
+
+test('clear all listening history requires Yes/No confirmation and keeps duration statistics', async ({ page }) => {
+  await ready(page, '/');
+  await page.evaluate(() => {
+    const heart = { url: '/europe/united-kingdom/heart-uk', title: 'Heart UK', image: '/brand/onair-mark.svg' };
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify({
+      recent: [heart], favorites: [heart], lastStation: heart, lastState: 'pause',
+    }));
+    localStorage.setItem('radio_listening_duration_v1', JSON.stringify({
+      totalMs: 90_000, todayKey: '2026-10-14', todayMs: 90_000,
+      byStation: { [heart.url]: { title: heart.title, ms: 90_000 } },
+    }));
+  });
+  await page.goto('/library#recent');
+  const recent = page.locator('section[aria-label="Recently played"]');
+  const clear = page.getByRole('button', { name: 'Clear recent history' });
+  await expect(recent).toContainText('Heart UK');
+  await clear.click();
+  const modal = page.getByRole('dialog');
+  await expect(modal).toContainText('Clear listening history?');
+  expect((await history(page)).recent).toHaveLength(1);
+  await modal.getByRole('button', { name: 'No, keep it' }).click();
+  await expect(recent).toContainText('Heart UK');
+
+  await clear.click();
+  await modal.getByRole('button', { name: 'Yes, clear history' }).click();
+  await expect(recent).not.toContainText('Heart UK');
+  const saved = await history(page);
+  expect(saved.recent).toEqual([]);
+  expect(saved.favorites).toHaveLength(1);
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('radio_listening_duration_v1'))).totalMs).toBe(90_000);
+});
+
+test('listening time tab shows stored lifetime, today and per-station durations', async ({ page }) => {
+  await ready(page, '/');
+  await page.evaluate(() => {
+    const heart = '/europe/united-kingdom/heart-uk';
+    localStorage.setItem('radio_listening_duration_v1', JSON.stringify({
+      totalMs: 2 * 60 * 60 * 1000 + 30 * 60 * 1000,
+      todayKey: [new Date().getFullYear(), String(new Date().getMonth() + 1).padStart(2, '0'), String(new Date().getDate()).padStart(2, '0')].join('-'),
+      todayMs: 45 * 60 * 1000,
+      byStation: { [heart]: { title: 'Heart UK', ms: 30 * 60 * 1000 } },
+    }));
+  });
+  await page.goto('/library#stats');
+  const stats = page.locator('section[aria-label="Listening time"]');
+  await expect(stats).toContainText('Total listening time');
+  await expect(stats).toContainText('Today');
+  await expect(stats).toContainText('Heart UK');
+  await expect(stats).toContainText('2h 30m');
+  await expect(stats).toContainText('45m');
+  await page.reload();
+  await expect(page.locator('section[aria-label="Listening time"]')).toContainText('Heart UK');
+});
