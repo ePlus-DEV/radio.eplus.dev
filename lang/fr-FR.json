@@ -467,6 +467,7 @@
     "clear_recent": "Effacer l’historique récent",
     "remove_recent": "Retirer de l’historique",
     "listening_stats": "Durée d’écoute",
+    "listening_live": "Calcul du temps d’écoute en direct",
     "listening_stats_description": "Seule la lecture réelle sur cet appareil est comptabilisée, sans les pauses, chargements ou erreurs de flux.",
     "listening_total": "Temps d’écoute total",
     "listening_today": "Aujourd’hui",
