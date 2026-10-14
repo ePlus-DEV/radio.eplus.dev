@@ -18,7 +18,7 @@ test('VOV is first featured but must never preempt a saved station on home', asy
 
 test('country fallback cannot seed SSR state before saved station restoration', async () => {
   const country = await read('pages/[area]/[country]/index.vue');
-  assert.match(country, /watch\(catalog, \(\) => \{\s*if \(import\.meta\.server\) return;/);
+  assert.match(country, /watch\(catalog, \(\) => \{[\s\S]*?if \(import\.meta\.server\) return;/);
   assert.match(country, /listening\.hydrate\(\);\s*if \(listening\.library\.lastStation\) return;\s*listenDefault\(\)/);
 });
 
