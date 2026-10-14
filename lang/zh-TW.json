@@ -467,6 +467,7 @@
     "clear_recent": "清除收聽記錄",
     "remove_recent": "從歷史記錄中移除",
     "listening_stats": "收聽時長",
+    "listening_live": "正在即時統計收聽時長",
     "listening_stats_description": "僅統計此裝置上電台實際播放的時間，不包含暫停、緩衝或播放失敗的時間。",
     "listening_total": "總收聽時長",
     "listening_today": "今天",
