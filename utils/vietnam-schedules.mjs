@@ -49,6 +49,12 @@ export const VIETNAM_SCHEDULES = Object.freeze({
   // live guide instead of inventing a repeating timetable.
   vov1: { sourceUrl: 'https://vov1.vov.vn/', slots: [] },
   vov3: { sourceUrl: 'https://vov3.vov.vn/lich-phat-song', slots: [] },
+  // VOH publishes per-channel daily schedules; do not freeze its rotating
+  // shows into a made-up recurring guide.
+  'voh-fm-99.9-mhz': { sourceUrl: 'https://voh.com.vn/radios/schedule', slots: [] },
+  'voh-fm-95.6-mhz': { sourceUrl: 'https://voh.com.vn/radios/schedule', slots: [] },
+  'voh-fm-87.7-mhz': { sourceUrl: 'https://voh.com.vn/radios/schedule', slots: [] },
+  'voh-am-610khz': { sourceUrl: 'https://voh.com.vn/radios/schedule', slots: [] },
 });
 
 const clockMinutes = clock => {
