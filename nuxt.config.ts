@@ -86,8 +86,6 @@ export default defineNuxtConfig({
       apiZingLiveStreamProgramDetail:
         process.env.NUXT_PUBLIC_API_ZING_LIVE_STREAM_PROGRAM_DETAIL,
       apiZingGetLyric: process.env.NUXT_PUBLIC_API_ZING_GET_LYRIC,
-      digitaloceanEndpoint: process.env.NUXT_PUBLIC_DIGITALOCEAN_ENDPOINT,
-      digitaloceanApiKey: process.env.NUXT_PUBLIC_DIGITALOCEAN_API_KEY,
       x: process.env.NUXT_PUBLIC_X,
       facebook: process.env.NUXT_PUBLIC_FACEBOOK,
       github: process.env.NUXT_PUBLIC_GITHUB,
