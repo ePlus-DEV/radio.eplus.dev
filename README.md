@@ -5,7 +5,7 @@
 **Website:** https://radio.eplus.dev · **Staging:** https://new-radio.eplus.dev
 
 > [!IMPORTANT]
-> This **private repository is the canonical source** for ePlus OnAir: Nuxt application, player, station catalog, tests, and release automation. The older `ePlus-DEV/get-radio` crawler is legacy history, not an active deployment source. Public Pages repositories hold generated artifacts, not application source.
+> This **public repository is the canonical source** for ePlus OnAir: Nuxt application, player, station catalog, tests, and release automation. The older `ePlus-DEV/get-radio` crawler is legacy history, not an active deployment source. Public Pages repositories hold generated artifacts, not application source.
 
 ## Repository and environment map
 
@@ -17,7 +17,7 @@
 - `develop` is the integration and staging branch. Open feature/bugfix PRs against it.
 - `main` is the released source. Promote reviewed changes from `develop` through a release PR. Hotfixes start at `main` and must be brought back to `develop`.
 - `master` is a legacy backup with separate history. Never reset, force-push, or deploy it as the current application.
-- The destination repositories use their own `main` branches for the **static website output**; these are not the private source branch.
+- The destination repositories use their own `main` branches for the **static website output**; these are not the application source branch.
 - The custom hostnames and DNS must be verified separately. A successful GitHub push alone does not prove the live DNS is served by Pages.
 
 **SEO isolation:** `develop` staging is always `noindex`; `main` production builds are indexable (`index, follow`) with canonical URLs and a sitemap. Production-only GA4 (`G-ETDY41KBBJ`) is enabled on the canonical production hostname. Verify DNS and HTTPS separately from GitHub Pages deployment.
@@ -80,7 +80,7 @@ npm run test:ui          # Optional Playwright browser tests
 5. The deployment updates `main` in the matching public Pages repository, re-creates `CNAME`, and **preserves its root `README.md`** during the destructive generated-site sync.
 6. Confirm the Actions job succeeded and inspect the destination commit, deep-linked pages, images, and the configured custom hostname. Keep DNS/SEO cutover as an independent, reviewed task.
 
-Required setup in the private source repository: GitHub Environments `development` / `production`, with `NUXT_PUBLIC_SITE_URL` set respectively to `https://new-radio.eplus.dev` / `https://radio.eplus.dev`; `PAGES_DEPLOY_TOKEN` must have scoped write access to both public Pages repositories. Do not expose this token to untrusted PR workflows.
+Required setup in the source repository (store all credentials as GitHub **Secrets**, never in code): GitHub Environments `development` / `production`, with `NUXT_PUBLIC_SITE_URL` set respectively to `https://new-radio.eplus.dev` / `https://radio.eplus.dev`; `PAGES_DEPLOY_TOKEN` must have scoped write access to both public Pages repositories. Do not expose this token to untrusted PR workflows.
 
 All four workflows share a repository-wide concurrency queue. The workflows are:
 
@@ -110,8 +110,16 @@ Smaller pushes do **not** lift GitHub Pages' published-site 1 GB limit; keep the
 
 See [SEO architecture](./docs/SEO.md).
 
+## Security when working in this public repository
+
+- **Never commit real values** to `.env.example`, code, tests, documentation or issue/PR comments. See [security policy](./SECURITY.md).
+- Keep only browser-safe keys under `NUXT_PUBLIC_*`. Never include provider admin/write keys, Cloudinary secrets, DigitalOcean tokens or GitHub publishing tokens.
+- Place deployment PATs in GitHub **Environment Secrets**, restrict them to the exact Pages output repositories and Contents write access, and require approval for the `production` environment where practical.
+- Use read-only CI for untrusted fork pull requests. Do not make `pull_request_target` workflows checkout untrusted PR code and run it with secrets.
+- A credential in Git history must be **revoked/rotated** even if removed from the latest commit; deleting a line does not undo exposure.
+
 ## Contribution and maintainership
 
-Follow [AGENTS.md](./AGENTS.md), [project context](./docs/PROJECT_CONTEXT.md), and [radio synchronization notes](./docs/instant-audio-sync.md). Keep UI text translated, validate station streams and artwork paths, test changes, and avoid committing secrets.
+Follow [CONTRIBUTING.md](./CONTRIBUTING.md), [AGENTS.md](./AGENTS.md), [project context](./docs/PROJECT_CONTEXT.md), and [radio synchronization notes](./docs/instant-audio-sync.md). Keep UI text translated, validate station streams and artwork paths, test changes, and avoid committing secrets.
 
-**License:** Maintained by ePlus.DEV; consult repository licensing information before redistribution.
+**License:** No open-source license has been selected yet. Public visibility alone does not grant reuse or redistribution rights. Before accepting code contributions or advertising this as open source, choose and add a LICENSE (for example MIT or Apache-2.0 after checking third-party assets and dependencies).

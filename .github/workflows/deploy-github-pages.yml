@@ -108,7 +108,7 @@ jobs:
             exit 1
           fi
           if [ -z "$PAGES_DEPLOY_TOKEN" ]; then
-            echo "::error::Missing PAGES_DEPLOY_TOKEN in the private source repository."
+            echo "::error::Missing PAGES_DEPLOY_TOKEN in the source repository's environment secrets."
             exit 1
           fi
           auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
@@ -143,7 +143,7 @@ jobs:
           fi
           echo "Validated target $TARGET_REPOSITORY and read/write PAT permissions."
 
-      - name: Check out private source
+      - name: Check out trusted source
         if: steps.current.outputs.run == 'true'
         uses: actions/checkout@v7
         with:

@@ -6,7 +6,7 @@ This file is the durable SEO checklist for ePlus OnAir. It records what is imple
 
 ## GitHub Pages and production indexing policy
 
-GitHub Pages publishes generated static output from the private source into
+GitHub Pages publishes generated static output from the public source repository into
 two public repositories with **custom hostnames** and `NUXT_APP_BASE_URL=/`:
 
 - `develop` → `ePlus-DEV/onair-staging-pages` → `https://new-radio.eplus.dev`:

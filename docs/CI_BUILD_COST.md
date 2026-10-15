@@ -1,6 +1,6 @@
 # ePlus OnAir CI build-cost policy
 
-The private source uses **`develop` for staging** and **`main` for production**.
+The public source repository uses **`develop` for staging** and **`main` for production**.
 This document is about PR validation only, not publishing or DNS.
 
 ## Two CI paths
