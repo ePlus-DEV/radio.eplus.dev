@@ -145,11 +145,27 @@
         </div>
       </div>
 
-      <div v-else-if="activeTab === 'schedule' && hasSchedule" class="space-y-1">
-        <template v-if="program.length">
+      <div v-else-if="activeTab === 'schedule' && hasSchedule"
+        :class="scheduleIsReference && program.length ? '' : 'space-y-1'">
+        <!-- Broadcast timeline is a time-scaled canvas. Keep legacy remote
+             provider EPG as a compact list because it lacks reliable intervals. -->
+        <PlayerScheduleTimeline
+          v-if="scheduleIsReference && program.length"
+          :program="program"
+          :timestamp="scheduleNow"
+          :thumb="thumb"
+          :station-name="stationName"
+        />
+        <template v-else-if="program.length">
+          <template v-for="(item, index) in program" :key="programKey(item, index)">
+            <PlayerScheduleGap
+              v-if="scheduleGap?.insertIndex === index"
+              :timestamp="scheduleNow"
+              :start-time="gapStartTime(scheduleGap.insertIndex)"
+              :next-title="scheduleGap.nextTitle"
+              :next-start-time="scheduleGap.nextStartTime"
+            />
           <div
-            v-for="(item, index) in program"
-            :key="programKey(item, index)"
             :data-program-index="index"
             class="relative grid grid-cols-[72px_minmax(0,1fr)] gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
@@ -163,6 +179,14 @@
               class="absolute inset-y-2 left-0 w-0.5 rounded-full bg-rose-500"
               aria-hidden="true"
             ></span>
+            <div v-if="isCurrentProgram(item, index) && scheduleIsReference"
+              class="pointer-events-none absolute inset-x-2 bottom-0 h-1 rounded-full bg-rose-500/15"
+              aria-hidden="true">
+              <div data-schedule-time-progress class="relative h-full rounded-full bg-rose-500 transition-[width] duration-1000 ease-linear"
+                :style="{ width: (programmeProgress(item) ?? 0) + '%' }">
+                <span class="absolute right-0 top-1/2 h-2.5 w-2.5 translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--radio-surface)] bg-rose-500 shadow-sm"></span>
+              </div>
+            </div>
 
             <div
               class="rounded-lg bg-[var(--radio-surface)] px-2 py-1.5 text-xs font-semibold tabular-nums text-[var(--radio-text)] ring-1 ring-inset ring-[var(--radio-border)]"
@@ -193,8 +217,21 @@
               >
                 {{ item.description }}
               </p>
+              <p v-if="isCurrentProgram(item, index) && scheduleIsReference"
+                data-schedule-clock role="timer"
+                class="mt-1 text-[11px] font-semibold tabular-nums text-rose-700 dark:text-rose-300">
+                {{ $t('panel.schedule_now_marker') }} · {{ formattedScheduleNow }}
+              </p>
             </div>
           </div>
+          </template>
+          <PlayerScheduleGap
+            v-if="scheduleGap?.insertIndex === program.length"
+            :timestamp="scheduleNow"
+            :start-time="gapStartTime(scheduleGap.insertIndex)"
+            :next-title="scheduleGap.nextTitle"
+            :next-start-time="scheduleGap.nextStartTime"
+          />
         </template>
 
         <template v-else-if="playlist.length">
@@ -259,7 +296,7 @@
 import type { RadioStationOption } from "~/types/radio";
 import { normalizeStationQuery } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
-import { schedulePosition } from "~/utils/station-schedule.mjs";
+import { schedulePosition, referenceScheduleGap, scheduleTimelineProgress } from "~/utils/station-schedule.mjs";
 
 const dayjs = useDayjs();
 const { t } = useI18n();
@@ -344,6 +381,20 @@ const manuallyBrowsingSchedule = ref(false);
 const schedulePositionNow = computed(() =>
   schedulePosition(props.program, scheduleNow.value, props.scheduleIsReference),
 );
+const scheduleGap = computed(() => props.scheduleIsReference
+  ? referenceScheduleGap(props.program, scheduleNow.value)
+  : null);
+// Only a known interval has a meaningful progress percentage.
+const gapStartTime = (index: number): number | null =>
+  index > 0 ? props.program[index - 1]?.endTime ?? null : null;
+const programmeProgress = (item: ProgramItem): number | null =>
+  scheduleTimelineProgress(item.startTime, item.endTime, scheduleNow.value);
+const vietnamSecondsFormatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Ho_Chi_Minh',
+  hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+});
+const formattedScheduleNow = computed(() =>
+  vietnamSecondsFormatter.format(new Date(scheduleNow.value * 1000)));
 
 // Move just the INNER queue scroller: scrollIntoView() would move the entire
 // mobile slideover/page and could hide the fixed player/header.
@@ -355,9 +406,13 @@ const jumpToSchedulePosition = async () => {
   if (generation !== scrollGeneration || activeTab.value !== 'schedule' || !props.visible) return;
   const container = scheduleScrollContainer.value;
   const index = schedulePositionNow.value.scrollIndex;
-  const row = index < 0 ? null : container?.querySelector<HTMLElement>(
-    `[data-program-index="${index}"]`,
-  );
+  const row = props.scheduleIsReference
+    ? container?.querySelector<HTMLElement>('[data-schedule-now]')
+    : scheduleGap.value
+      ? container?.querySelector<HTMLElement>('[data-schedule-now]')
+      : index < 0 ? null : container?.querySelector<HTMLElement>(
+        `[data-program-index="${index}"]`,
+      );
   if (!container || !row || container.clientHeight === 0) return;
   const containerRect = container.getBoundingClientRect();
   const rowRect = row.getBoundingClientRect();
@@ -399,18 +454,31 @@ watch(
 
 // Update the highlight at a programme boundary. Follow it only if the visitor
 // has not manually scrolled away. No polling/scrolling every animation frame.
-watch(() => schedulePositionNow.value.scrollIndex, (next, previous) => {
-  if (next !== previous && activeTab.value === 'schedule' && props.visible && !manuallyBrowsingSchedule.value) {
-    void jumpToSchedulePosition();
-  }
-}, { flush: 'post' });
+watch(
+  [
+    () => schedulePositionNow.value.scrollIndex,
+    () => schedulePositionNow.value.currentIndex,
+    () => scheduleGap.value?.insertIndex,
+  ],
+  (next, previous) => {
+    if (next.some((value, index) => value !== previous?.[index])
+      && activeTab.value === 'schedule' && props.visible && !manuallyBrowsingSchedule.value) {
+      void jumpToSchedulePosition();
+    }
+  },
+  { flush: 'post' },
+);
 
 let scheduleClockTimer: ReturnType<typeof setInterval> | null = null;
 onMounted(() => {
   scheduleNow.value = Math.floor(Date.now() / 1000);
   scheduleClockTimer = setInterval(() => {
-    scheduleNow.value = Math.floor(Date.now() / 1000);
-  }, 15_000);
+    // Clock and the timeline fill move once per second. Only update the
+    // visible reference guide; real-time provider EPG is unaffected.
+    if (activeTab.value === 'schedule' && props.visible && props.scheduleIsReference) {
+      scheduleNow.value = Math.floor(Date.now() / 1000);
+    }
+  }, 1_000);
   if (activeTab.value === 'schedule' && props.visible) void jumpToSchedulePosition();
 });
 onBeforeUnmount(() => {
