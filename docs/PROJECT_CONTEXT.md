@@ -639,3 +639,9 @@ branch commit before generating or publishing files. The next current run
 performs the normal checks. An active upload/deploy finishes before the next
 workflow starts. Previously dispatched runs retain their old concurrency
 configuration until completion.
+
+## Playback reliability follow-up (2026-10-18)
+
+- `waiting` clears actual-playing state; only the media `playing` event restores it. Network `stalled` must not clear playing when readyState still has future buffered data.
+- Volume/mute preferences use `radio:audio-preferences:v1`, restored before volume listeners, with guarded storage and range validation. iOS system volume is never assigned programmatically. Preferences never authorize autoplay.
+- Metadata polling skips offline and hidden idle sessions, but continues for visible schedules and background playback. Successful lyrics are cached by media ID (20 entries); failed requests remain retryable.

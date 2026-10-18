@@ -23,14 +23,23 @@ export function useStationRealtime() {
   const scheduleIsReference = computed(() => Boolean(referenceSchedule.value));
   const timestampUrl = (url: string) => /[?&](?:time|timestamp)=$/i.test(url) ? `${url}${Math.floor(Date.now() / 1000)}` : url;
 
+  const lyricCache = new Map<string, string[]>();
   const fetchLyric = async (id: string, signal: AbortSignal): Promise<string[]> => {
     if (!import.meta.client) return [];
+    if (lyricCache.has(id)) return lyricCache.get(id)!;
     if (!config.public.apiZingGetLyric) return [t('panel.no_lyric')];
     try {
       const result = await $fetch<{ err: number; data?: { sentences?: { words: { data: string }[] }[] } }>(
         `${config.public.apiZingGetLyric}${id}&time=${Math.floor(Date.now() / 1000)}`, { signal, timeout: 10_000 },
       );
-      if (result.err === 0 && result.data?.sentences?.length) return result.data.sentences.map(s => s.words.map(w => w.data).join(' '));
+      if (result.err === 0 && result.data?.sentences?.length) {
+        const lines = result.data.sentences.map(s => s.words.map(w => w.data).join(' '));
+        if (!signal.aborted) {
+          if (lyricCache.size >= 20) lyricCache.delete(lyricCache.keys().next().value!);
+          lyricCache.set(id, lines);
+        }
+        return lines;
+      }
     } catch (error) {
       if (signal.aborted) throw error;
     }
@@ -63,6 +72,8 @@ export function useStationRealtime() {
 
   const polling = createStationPolling({
     load: fetchSchedule,
+    // Keep metadata fresh for background playback and visible schedule browsing.
+    shouldPoll: () => navigator.onLine && (!document.hidden || playback.playing || playback.waiting),
     onData: (value: RealtimeData | undefined) => {
       if (!value) return;
       program.value = value.program;
