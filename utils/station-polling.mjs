@@ -1,7 +1,7 @@
 // A polling lifetime follows the selected station, independent of the route.
 // Abort saves work; the generation check also protects against providers that
 // complete a request even after it has been aborted.
-export function createStationPolling({ load, onData, onError, onLoading, interval = 60_000, setTimer = setTimeout, clearTimer = clearTimeout }) {
+export function createStationPolling({ load, onData, onError, onLoading, interval = 60_000, shouldPoll = () => true, setTimer = setTimeout, clearTimer = clearTimeout }) {
   let generation = 0;
   let timer;
   let controller;
@@ -27,6 +27,7 @@ export function createStationPolling({ load, onData, onError, onLoading, interva
 
     const poll = async () => {
       try {
+        if (!shouldPoll()) return;
         const data = await load(url, signal);
         if (version !== generation || signal.aborted) return;
         onData(data);

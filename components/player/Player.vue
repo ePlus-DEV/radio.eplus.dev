@@ -2,11 +2,11 @@
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
-        <template v-if="streamError">
+        <span v-if="!online">{{ $t('text.offline') }}</span>
+        <template v-else-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
           <UButton size="xs" variant="link" class="shrink-0 p-0 text-[10px]" @click="retryCurrentSource">{{ $t('player.retry') }}</UButton>
         </template>
-        <span v-else-if="!online">{{ $t('text.offline') }}</span>
         <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t('player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
@@ -259,8 +259,8 @@ const favoriteActive = computed(() => listening.library.favorites.some((item: { 
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
 const { t } = useI18n();
 const nowPlayingOpen = ref(false);
-const playerStatus = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
-const liveStateLabel = computed(() => t(streamError.value ? 'alert.stream_error' : !online.value ? 'text.offline' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'player.ready'));
+const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
+const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
   if (streamError.value) return "bg-red-500/10 text-red-700 dark:text-red-300";
   if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
@@ -314,6 +314,7 @@ const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
 const attemptCount = ref(0);
+const AUDIO_PREFERENCES_KEY = "radio:audio-preferences:v1";
 const volume = ref(1);
 const muted = ref(false);
 // iOS browsers reserve playback volume for the hardware/system controls.
@@ -1093,10 +1094,16 @@ const onMediaPlaying = (): void => {
 
 const onMediaWaiting = (): void => {
   stopListeningDuration();
+  playing.value = false;
   if (!userPaused.value) {
     waiting.value = true;
     startFallbackProbe();
   }
+};
+
+// stalled describes network delivery; buffered audio may still be playing.
+const onMediaStalled = (): void => {
+  if ((mediaElement.value?.readyState ?? 0) < 3) onMediaWaiting();
 };
 
 const onMediaPause = (): void => {
@@ -1129,6 +1136,9 @@ const onVolumeChange = (): void => {
   if (!media) return;
   volume.value = media.volume;
   muted.value = media.muted;
+  try {
+    localStorage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify({ volume: media.volume, muted: media.muted }));
+  } catch { /* Storage restrictions must not interrupt audio. */ }
 };
 
 const bindMediaEvents = (): void => {
@@ -1138,7 +1148,7 @@ const bindMediaEvents = (): void => {
   media.addEventListener("canplay", onMediaCanPlay);
   media.addEventListener("playing", onMediaPlaying);
   media.addEventListener("waiting", onMediaWaiting);
-  media.addEventListener("stalled", onMediaWaiting);
+  media.addEventListener("stalled", onMediaStalled);
   media.addEventListener("pause", onMediaPause);
   media.addEventListener("ended", onMediaEnded);
   media.addEventListener("error", onMediaError);
@@ -1152,7 +1162,7 @@ const unbindMediaEvents = (): void => {
   media.removeEventListener("canplay", onMediaCanPlay);
   media.removeEventListener("playing", onMediaPlaying);
   media.removeEventListener("waiting", onMediaWaiting);
-  media.removeEventListener("stalled", onMediaWaiting);
+  media.removeEventListener("stalled", onMediaStalled);
   media.removeEventListener("pause", onMediaPause);
   media.removeEventListener("ended", onMediaEnded);
   media.removeEventListener("error", onMediaError);
@@ -1256,6 +1266,18 @@ onMounted(() => {
   window.addEventListener("resize", updateViewport);
   online.value = navigator.onLine;
 
+  // Restore before binding volumechange so partial restoration cannot overwrite preferences.
+  const savedMedia = mediaElement.value;
+  if (savedMedia) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(AUDIO_PREFERENCES_KEY) || 'null');
+      if (saved && typeof saved.muted === 'boolean') savedMedia.muted = saved.muted;
+      if (!systemVolumeOnly.value && typeof saved?.volume === 'number'
+        && Number.isFinite(saved.volume) && saved.volume >= 0 && saved.volume <= 1) {
+        savedMedia.volume = saved.volume;
+      }
+    } catch { /* Ignore malformed or unavailable preferences. */ }
+  }
   bindMediaEvents();
   registerMediaSession();
   updateMediaSession();

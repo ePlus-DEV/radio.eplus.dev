@@ -72,3 +72,22 @@ test('catalog activation preserves explicit proxy sources and ignores invalid le
     ['https://example/live.m3u8', false], ['https://proxy/https://example/backup.mp3', true],
   ]);
 });
+
+test('suspended polling makes no request and resumes without losing its station', async () => {
+  let allowed = false;
+  let callback;
+  const calls = [];
+  const polling = createStationPolling({
+    shouldPoll: () => allowed,
+    load: async url => { calls.push(url); return url; },
+    onData: () => {}, onLoading: () => {},
+    setTimer: fn => { callback = fn; return 1; }, clearTimer: () => {},
+  });
+  polling.start('current-station');
+  await tick();
+  assert.deepEqual(calls, []);
+  allowed = true;
+  await callback();
+  assert.deepEqual(calls, ['current-station']);
+  polling.stop();
+});
