@@ -30,7 +30,7 @@
     "@nuxtjs/algolia": "^1.11.2",
     "@nuxtjs/color-mode": "^4.0.1",
     "@nuxtjs/i18n": "^10.6.0",
-    "@nuxtjs/sitemap": "^8.6.1",
+    "@nuxtjs/sitemap": "^9.1.0",
     "@pinia/nuxt": "^1.0.2",
     "@tailwindcss/vite": "^4.3.3",
     "@vesp/nuxt-fontawesome": "^2.0.0",
