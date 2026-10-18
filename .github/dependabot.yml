@@ -10,20 +10,3 @@ updates:
       interval: "weekly"
     labels:
       - "dependencies"
-
-  # Keep runtime/frontend dependencies visible to maintainers without
-  # opening dozens of near-identical public dependency PRs.
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 3
-    groups:
-      minor-and-patch:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-    labels:
-      - "dependencies"
