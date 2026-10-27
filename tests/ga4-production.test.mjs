@@ -93,6 +93,15 @@ test('generated HTML audit rejects missing, duplicate and preview GA4 tags', asy
     await assertGa4Output(root, 'production');
     await assert.rejects(assertGa4Output(root, 'staging'), /staging must not embed Google tag/);
 
+    // HTML permits whitespace before the final '>' in a script end tag.
+    // Security regression: do not miss the GA4 bootstrap for </script >.
+    const spacedScriptEnd = production.replaceAll('</script>', '</script >');
+    await writeFile(home, spacedScriptEnd);
+    await writeFile(station, spacedScriptEnd);
+    await assertGa4Output(root, 'production');
+    await writeFile(home, production);
+    await writeFile(station, production);
+
     const duplicate = production.replace('</head>', '<script>' + bootstrap + '</script></head>');
     await writeFile(home, duplicate);
     await assert.rejects(assertGa4Output(root, 'production'), /missing or duplicate/);
