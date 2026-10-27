@@ -15,7 +15,7 @@ export async function assertGa4Output(root, target) {
   for (const page of pages) {
     const html = await readFile(join(root, page), 'utf8');
     const head = html.split('</head>')[0] || '';
-    const inlineScripts = [...head.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)]
+    const inlineScripts = [...head.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)]
       .map((match) => match[1]);
     const gaBootstraps = inlineScripts.filter((code) =>
       code.includes('www.googletagmanager.com/gtag/js?id='));
