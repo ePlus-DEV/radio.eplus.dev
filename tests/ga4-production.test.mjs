@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { GA4_MEASUREMENT_ID, isGa4ProductionBuild } from '../utils/ga4-config.mjs';
+import { readFile, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { runInNewContext } from 'node:vm';
+import { GA4_MEASUREMENT_ID, isGa4ProductionBuild, getGa4HeadScripts } from '../utils/ga4-config.mjs';
+import { assertGa4Output } from '../scripts/assert-ga4-output.mjs';
 
 const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
@@ -26,24 +30,80 @@ test('GA4 can run only on the canonical production website', () => {
   ]) assert.equal(isGa4ProductionBuild(context), false, JSON.stringify(context));
 });
 
-test('Nuxt automatically loads production GA4 and tracks SPA page views once', async () => {
-  const [config, plugin] = await Promise.all([
-    read('nuxt.config.ts'),
-    read('plugins/ga4.client.ts'),
-  ]);
+test('Nuxt includes exactly one guarded GA4 bootstrap in prerendered HTML', async () => {
+  const config = await read('nuxt.config.ts');
   assert.match(config, /ga4Enabled = isGa4ProductionBuild\(/);
   assert.match(config, /ga4MeasurementId: ga4Enabled \? GA4_MEASUREMENT_ID : ""/);
-  assert.match(plugin, /config\.public\.ga4Enabled/);
-  assert.match(plugin, /hostname !== 'radio\.eplus\.dev'/);
-  assert.match(plugin, /script\.src = `https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=/);
-  assert.match(plugin, /document\.head\.appendChild\(script\)/);
-  assert.match(plugin, /send_page_view: false/);
-  assert.match(plugin, /if \(path === lastPagePath\) return/);
-  assert.match(plugin, /trackPageView\(\);/);
-  assert.match(plugin, /router\.afterEach\(/);
-  assert.match(plugin, /nuxtApp\.hook\('page:finish', trackPageView\)/);
-  assert.doesNotMatch(plugin, /localStorage|ANALYTICS_CONSENT|applyConsent|permitted\(\)|ga-disable/);
-  assert.doesNotMatch(config, /googletagmanager\.com/); // Don't insert GA4 via SSR on previews.
+  assert.match(config, /script: getGa4HeadScripts\(ga4Enabled\)/);
+  assert.doesNotMatch(config, /nuxt-gtag/);
+  await assert.rejects(read('plugins/ga4.client.ts'), { code: 'ENOENT' },
+    'Never reintroduce the hydration-dependent duplicate tag loader');
+
+  const disabled = getGa4HeadScripts(false);
+  assert.deepEqual(disabled, [], 'No analytics tags in staging');
+  const scripts = getGa4HeadScripts(true);
+  assert.equal(scripts.length, 1);
+  const source = scripts[0].textContent;
+  assert.match(source, /window\.location\.hostname !== 'radio\.eplus\.dev'/);
+  assert.match(source, /window\.gtag\('config', 'G-ETDY41KBBJ'\)/);
+  assert.doesNotMatch(source, /send_page_view:\s*false/);
+  assert.doesNotMatch(source, /'event',\s*'page_view'/);
+  assert.equal((source.match(/googletagmanager\.com\/gtag\/js\?id=/g) || []).length, 1);
+});
+
+test('HTML GA4 loader runs before Nuxt hydration on canonical hostname only', () => {
+  const source = getGa4HeadScripts(true)[0].textContent;
+  const simulate = (hostname) => {
+    const scripts = [];
+    const window = { location: { hostname } };
+    const document = {
+      head: { appendChild(script) { scripts.push(script); } },
+      createElement(name) { assert.equal(name, 'script'); return {}; },
+    };
+    runInNewContext(source, { window, document, Date });
+    return { window, scripts };
+  };
+  const live = simulate('radio.eplus.dev');
+  assert.equal(live.scripts.length, 1);
+  assert.equal(live.scripts[0].async, true);
+  assert.equal(live.scripts[0].src,
+    'https://www.googletagmanager.com/gtag/js?id=G-ETDY41KBBJ');
+  assert.equal(typeof live.window.gtag, 'function');
+  assert.deepEqual(live.window.dataLayer.map((args) => Array.from(args).slice(0, 1)),
+    [['js'], ['config']]);
+  assert.equal(live.window.dataLayer[1][1], 'G-ETDY41KBBJ');
+  for (const host of ['new-radio.eplus.dev', 'example.github.io', 'localhost']) {
+    const preview = simulate(host);
+    assert.deepEqual(preview.scripts, [], host);
+    assert.equal(preview.window.gtag, undefined, host);
+  }
+});
+
+test('generated HTML audit rejects missing, duplicate and preview GA4 tags', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'onair-ga4-'));
+  const home = join(root, 'index.html');
+  const station = join(root, 'asia/viet-nam/vov-gt-hcm/index.html');
+  try {
+    await mkdir(dirname(station), { recursive: true });
+    const bootstrap = getGa4HeadScripts(true)[0].textContent;
+    const production = '<html><head><script>' + bootstrap + '</script></head><body></body></html>';
+    await writeFile(home, production);
+    await writeFile(station, production);
+    await assertGa4Output(root, 'production');
+    await assert.rejects(assertGa4Output(root, 'staging'), /staging must not embed Google tag/);
+
+    const duplicate = production.replace('</head>', '<script>' + bootstrap + '</script></head>');
+    await writeFile(home, duplicate);
+    await assert.rejects(assertGa4Output(root, 'production'), /missing or duplicate/);
+
+    const staging = '<html><head><title>Staging</title></head><body></body></html>';
+    await writeFile(home, staging);
+    await writeFile(station, staging);
+    await assertGa4Output(root, 'staging');
+    await assert.rejects(assertGa4Output(root, 'production'), /missing or duplicate/);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
 
 test('tracking notification is informational and cannot gate analytics', async () => {
