@@ -95,7 +95,7 @@ test('generated HTML audit rejects missing, duplicate and preview GA4 tags', asy
 
     // HTML end tags can include whitespace and malformed attributes; CodeQL
     // previously flagged a regex that missed these valid parser boundaries.
-    for (const endTag of ['</script >', '</script\\t\\n bar>']) {
+    for (const endTag of ['</script >', '</script\t\n bar>']) {
       const variant = production
         .replace('<script>', '<script data-example="quoted > value">')
         .replaceAll('</script>', endTag);
@@ -107,7 +107,7 @@ test('generated HTML audit rejects missing, duplicate and preview GA4 tags', asy
     // Reject an external Google tag as a second installation, including
     // quoted attributes with a > character and multiline start tags.
     const duplicateExternal = production.replace('</head>',
-      '<script data-test="quoted > text"\\n src="https://www.googletagmanager.com/gtag/js?id=G-ETDY41KBBJ"></script></head>');
+      '<script data-test="quoted > text"\n src="https://www.googletagmanager.com/gtag/js?id=G-ETDY41KBBJ"></script></head>');
     await writeFile(home, duplicateExternal);
     await assert.rejects(assertGa4Output(root, 'production'),
       /no second unconditional Google tag script/);
