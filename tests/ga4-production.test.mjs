@@ -69,8 +69,9 @@ test('HTML GA4 loader runs before Nuxt hydration on canonical hostname only', ()
   assert.equal(live.scripts[0].src,
     'https://www.googletagmanager.com/gtag/js?id=G-ETDY41KBBJ');
   assert.equal(typeof live.window.gtag, 'function');
-  assert.deepEqual(live.window.dataLayer.map((args) => Array.from(args).slice(0, 1)),
-    [['js'], ['config']]);
+  // Convert the VM-created array into the host realm before strict equality.
+  const commands = Array.from(live.window.dataLayer, (args) => Array.from(args)[0]);
+  assert.deepEqual(commands, ['js', 'config']);
   assert.equal(live.window.dataLayer[1][1], 'G-ETDY41KBBJ');
   for (const host of ['new-radio.eplus.dev', 'example.github.io', 'localhost']) {
     const preview = simulate(host);
