@@ -93,15 +93,27 @@ test('generated HTML audit rejects missing, duplicate and preview GA4 tags', asy
     await assertGa4Output(root, 'production');
     await assert.rejects(assertGa4Output(root, 'staging'), /staging must not embed Google tag/);
 
-    // HTML permits whitespace before the final '>' in a script end tag.
-    // Security regression: do not miss the GA4 bootstrap for </script >.
-    const spacedScriptEnd = production.replaceAll('</script>', '</script >');
-    await writeFile(home, spacedScriptEnd);
-    await writeFile(station, spacedScriptEnd);
-    await assertGa4Output(root, 'production');
+    // HTML end tags can include whitespace and malformed attributes; CodeQL
+    // previously flagged a regex that missed these valid parser boundaries.
+    for (const endTag of ['</script >', '</script\\t\\n bar>']) {
+      const variant = production
+        .replace('<script>', '<script data-example="quoted > value">')
+        .replaceAll('</script>', endTag);
+      await writeFile(home, variant);
+      await writeFile(station, variant);
+      await assertGa4Output(root, 'production');
+    }
+
+    // Reject an external Google tag as a second installation, including
+    // quoted attributes with a > character and multiline start tags.
+    const duplicateExternal = production.replace('</head>',
+      '<script data-test="quoted > text"\\n src="https://www.googletagmanager.com/gtag/js?id=G-ETDY41KBBJ"></script></head>');
+    await writeFile(home, duplicateExternal);
+    await assert.rejects(assertGa4Output(root, 'production'),
+      /no second unconditional Google tag script/);
+
     await writeFile(home, production);
     await writeFile(station, production);
-
     const duplicate = production.replace('</head>', '<script>' + bootstrap + '</script></head>');
     await writeFile(home, duplicate);
     await assert.rejects(assertGa4Output(root, 'production'), /missing or duplicate/);
