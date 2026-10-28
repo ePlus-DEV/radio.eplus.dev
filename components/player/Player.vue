@@ -1,11 +1,12 @@
 <template>
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
+      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl"
+        class="absolute inset-x-3 bottom-[calc(100%+0.5rem)] max-h-[40dvh] overflow-y-auto shadow-lg sm:left-auto sm:right-6 sm:w-96" @retry="retryCurrentSource" />
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <span v-if="!online">{{ $t('text.offline') }}</span>
         <template v-else-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
-          <UButton size="xs" variant="link" class="shrink-0 p-0 text-[10px]" @click="retryCurrentSource">{{ $t('player.retry') }}</UButton>
         </template>
         <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t('player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
@@ -110,6 +111,7 @@
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
+    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
     <div class="mt-3 flex items-center justify-between gap-1">
       <div class="flex items-center gap-1">
         <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="cursor-pointer rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
@@ -172,7 +174,7 @@
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
     <template #content>
-      <PlayerNowPlaying :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
     </template>
   </UModal>
 </template>
@@ -192,6 +194,8 @@ import {
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
+import { playbackHealth } from "~/utils/playback-health.mjs";
+import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 
 interface CurrentMedia {
@@ -310,6 +314,9 @@ const online = ref(true);
 const waiting = ref(false);
 const playing = ref(false);
 const streamError = ref(false);
+const unsupportedSource = ref(false);
+const health = computed(() => playbackHealth({ online: online.value, error: streamError.value, unsupported: unsupportedSource.value, waiting: waiting.value }));
+const reportUrl = computed(() => stationReportUrl(props.stationUrl, props.streamName, health.value));
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
@@ -344,7 +351,6 @@ let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let sourceVersion = 0;
 let playVersion = 0;
 let activeResolvedSrc = "";
-let removeAutoPlayUnlockListeners: (() => void) | null = null;
 
 const RECONNECT_BASE_DELAY = 1200;
 const FALLBACK_PROBE_TIMEOUT = 10_000;
@@ -573,27 +579,6 @@ const clearFallbackProbeTimer = (): void => {
   fallbackProbeTimer = null;
 };
 
-const registerAutoPlayUnlock = (): void => {
-  if (!import.meta.client || removeAutoPlayUnlockListeners) return;
-
-  const unlock = () => {
-    removeAutoPlayUnlockListeners?.();
-    removeAutoPlayUnlockListeners = null;
-    void onPlay();
-  };
-
-  const events = ["pointerdown", "keydown", "touchstart"];
-  events.forEach((eventName) => {
-    window.addEventListener(eventName, unlock, { once: true });
-  });
-
-  removeAutoPlayUnlockListeners = () => {
-    events.forEach((eventName) => {
-      window.removeEventListener(eventName, unlock);
-    });
-  };
-};
-
 const tryPlay = async (): Promise<void> => {
   const media = mediaElement.value;
   if (!media || userPaused.value) return;
@@ -629,8 +614,10 @@ const tryPlay = async (): Promise<void> => {
         : "";
 
     if (name === "NotAllowedError") {
-      pendingAutoPlay.value = true;
-      registerAutoPlayUnlock();
+      // A blocked Play needs another explicit Play/Retry action. Unrelated
+      // gestures (sharing, importing favorites, browsing) must not start audio.
+      pendingAutoPlay.value = false;
+      userPaused.value = true;
       return;
     }
 
@@ -644,6 +631,7 @@ const tryPlay = async (): Promise<void> => {
       return;
     }
 
+    unsupportedSource.value = name === "NotSupportedError";
     scheduleReconnect();
   }
 };
@@ -707,6 +695,7 @@ const configureHlsSource = async (
       media.canPlayType("application/x-mpegURL");
 
     if (!nativeHls) {
+      unsupportedSource.value = true;
       scheduleReconnect();
       return;
     }
@@ -774,6 +763,7 @@ const configureHlsSource = async (
       return;
     }
 
+    unsupportedSource.value = data.type === Hls.ErrorTypes.MEDIA_ERROR;
     console.warn("Fatal HLS playback error", {
       type: data.type,
       details: data.details,
@@ -824,6 +814,7 @@ const applySource = async (
 
   const version = ++sourceVersion;
   activeSourceIndex.value = index;
+  unsupportedSource.value = false;
   streamError.value = false;
   playing.value = false;
   pendingAutoPlay.value = autoplay && !userPaused.value;
@@ -888,6 +879,7 @@ const scheduleReconnect = (): void => {
 
 const onPlay = async (): Promise<void> => {
   if (!hasPlayableSource.value) return;
+  if (streamError.value) { retryCurrentSource(); return; }
 
   listening.remember(playback.station, 'play');
   userPaused.value = false;
@@ -914,8 +906,6 @@ const onPause = (): void => {
   pendingAutoPlay.value = false;
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  removeAutoPlayUnlockListeners?.();
-  removeAutoPlayUnlockListeners = null;
 
   media?.pause();
   waiting.value = false;
@@ -938,6 +928,8 @@ const sleepMenuItems = computed(() => [
 const checkSleepDeadline = () => { if (!document.hidden) sleepTimer.check(); };
 
 const retryCurrentSource = (): void => {
+  if (!online.value || !hasPlayableSource.value) return;
+  listening.remember(playback.station, 'play');
   attemptCount.value = 0;
   userPaused.value = false;
   void applySource(activeSourceIndex.value, true);
@@ -1128,6 +1120,7 @@ const onMediaError = (): void => {
 
   waiting.value = false;
   playing.value = false;
+  unsupportedSource.value = [3, 4].includes(mediaElement.value?.error?.code ?? 0);
   scheduleReconnect();
 };
 
@@ -1201,14 +1194,13 @@ watch(
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
     attemptCount.value = 0;
+    unsupportedSource.value = false;
     streamError.value = false;
     playing.value = false;
     waiting.value = false;
     pendingAutoPlay.value = false;
     clearReconnectTimer();
     clearFallbackProbeTimer();
-    removeAutoPlayUnlockListeners?.();
-    removeAutoPlayUnlockListeners = null;
     destroyHls();
     const media = mediaElement.value;
     if (media) {
@@ -1317,8 +1309,6 @@ onUnmounted(() => {
   unbindMediaEvents();
   destroyHls();
 
-  removeAutoPlayUnlockListeners?.();
-  removeAutoPlayUnlockListeners = null;
 
   window.removeEventListener("resize", updateViewport);
   window.removeEventListener("online", updateOnlineStatus);

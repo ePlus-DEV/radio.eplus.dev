@@ -534,5 +534,33 @@
     "accept": "知道了",
     "analytics_body": "ePlus OnAir 会保存您的偏好，并在正式网站使用 Google Analytics 4 统计访问量和电台收听时长。此通知仅用于告知，关闭后统计仍会继续。",
     "learn_more": "Cookie 政策"
+  },
+  "sharing": {
+    "share": "分享电台",
+    "copied": "已复制链接。",
+    "manual": "请选择并复制此链接："
+  },
+  "recovery": {
+    "offline": "你似乎已离线。请检查网络后重试。",
+    "unsupported": "刚才的音源无法解码或不受此浏览器支持。请尝试其他音源。",
+    "exhausted": "多次重试后仍无法播放。请重试或选择其他音源；电台可能仍可在其他设备播放。",
+    "connecting": "正在连接或缓冲…",
+    "report": "报告播放问题",
+    "report_hint": "打开 GitHub 草稿供你检查并提交，不包含音频流链接或收听历史。"
+  },
+  "transfer": {
+    "title": "迁移收藏",
+    "export": "导出收藏",
+    "import": "导入收藏",
+    "export_error": "无法导出收藏，请重试。",
+    "description": "预览并合并其他设备的收藏，保留当前收藏。",
+    "limit": "请选择 ePlus OnAir 收藏 JSON 文件（最大 256 KiB、200 个电台）。",
+    "choose": "选择收藏文件",
+    "invalid": "文件无效、过大或版本不受支持。",
+    "preview": "新增：{add} · 已收藏：{duplicate} · 目录中不存在：{missing} · 超过 200 台上限：{overflow}",
+    "done": "已向此浏览器添加 {count} 个收藏电台。",
+    "confirm": "添加到收藏",
+    "favorites_only": "仅收藏电台",
+    "no_favorites": "此国家没有符合条件的收藏电台。"
   }
 }
