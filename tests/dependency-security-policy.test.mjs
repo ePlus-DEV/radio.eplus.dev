@@ -28,15 +28,19 @@ test('PR CI audits the entire installed production tree for high or critical adv
     'retain the existing trusted PR CI scope guard');
 });
 
-test('fontless uses patched esbuild without downgrading other build tools', async () => {
-  const [manifestSource, lockSource] = await Promise.all([
-    read('package.json'), read('package-lock.json')
-  ]);
-  const manifest = JSON.parse(manifestSource);
-  const lock = JSON.parse(lockSource).packages;
+test('production lockfile excludes the vulnerable nested esbuild copy', async () => {
+  const manifest = JSON.parse(await read('package.json'));
+  const lock = JSON.parse(await read('package-lock.json'));
   assert.deepEqual(manifest.overrides?.fontless, { esbuild: '0.28.2' });
-  assert.equal(lock['node_modules/esbuild']?.version, '0.28.2');
-  assert.equal(lock['node_modules/fontless/node_modules/esbuild'], undefined,
-    'Vulnerable esbuild 0.27.7 must not remain nested under fontless');
-  assert.equal(lock['node_modules/nuxt']?.version, '4.6.3');
+  assert.equal(lock.packages['node_modules/esbuild']?.version, '0.28.2');
+  assert.equal(lock.packages['node_modules/nuxt']?.version, '4.6.3');
+  assert.equal(lock.packages['node_modules/fontless/node_modules/esbuild'], undefined);
+  assert.equal(
+    Object.keys(lock.packages).filter((path) =>
+      path.startsWith('node_modules/fontless/node_modules/@esbuild/')).length,
+    0,
+    'No outdated nested esbuild platform binaries should remain',
+  );
+  assert.equal(lock.packages['node_modules/@nuxt/ui']?.version, '4.12.0',
+    'Preserve Dependabot PR #308 when backporting security fix');
 });
