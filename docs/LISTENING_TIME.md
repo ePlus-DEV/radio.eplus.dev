@@ -58,10 +58,19 @@ future radio listening-duration analytics, not all GA4 pageview analytics.
 
 ## Google Analytics 4 (production only)
 
-The existing `ga4.client.ts` dynamically initializes `gtag.js` for `radio.eplus.dev`
-only. The player sends a custom `radio_listen_duration` event at about 30-second
-intervals and on play interruptions or pauses (only if at least one second remains).
-Staging and localhost do not emit this event.
+Production's prerendered HTML includes one Google tag bootstrap in `<head>`
+(via `utils/ga4-config.mjs` and `nuxt.config.ts`). The script verifies the browser
+hostname is exactly `radio.eplus.dev` before loading official `gtag.js` and
+initializing measurement ID `G-ETDY41KBBJ`. This sends the first `page_view`
+even if Nuxt hydration fails. GA4 Enhanced Measurement handles subsequent
+browser-history page changes; keep its **Page changes based on browser history
+events** option enabled in the GA4 Web stream. Do not load a second tag or
+reintroduce a manual Nuxt page-view sender, which could double count.
+
+The player uses the same global `window.gtag` to send a custom
+`radio_listen_duration` event at about 30-second intervals and on play
+interruptions or pauses (only if at least one second remains). Staging,
+previews on other hostnames, and localhost do not send this event.
 
 | Event parameter | Type | Usage |
 | --- | --- | --- |

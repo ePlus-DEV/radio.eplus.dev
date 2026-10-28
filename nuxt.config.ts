@@ -2,7 +2,7 @@ import { stationOgDeployment } from "./utils/station-og-deployment.mjs";
 import { defineNuxtConfig } from "nuxt/config";
 import { prefixPublicAsset } from "./utils/public-site-path.mjs";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
-import { GA4_MEASUREMENT_ID, isGa4ProductionBuild } from "./utils/ga4-config.mjs";
+import { GA4_MEASUREMENT_ID, isGa4ProductionBuild, getGa4HeadScripts } from "./utils/ga4-config.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
@@ -137,6 +137,9 @@ export default defineNuxtConfig({
     baseURL,
     head: {
       titleTemplate: `%s | ${siteName}`,
+      // Install the Google tag in prerendered HTML, not after Nuxt hydration.
+      // The bootstrap checks the canonical hostname again for PR previews.
+      script: getGa4HeadScripts(ga4Enabled),
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },

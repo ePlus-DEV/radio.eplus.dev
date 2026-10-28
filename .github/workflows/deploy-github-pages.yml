@@ -183,6 +183,10 @@ jobs:
         if: steps.current.outputs.run == 'true'
         run: node scripts/assert-project-pages-output.mjs .output/public custom-domain
 
+      - name: Validate GA4 tag installation in generated HTML
+        if: steps.current.outputs.run == 'true'
+        run: node scripts/assert-ga4-output.mjs .output/public "$TARGET_KIND"
+
       - name: Check Pages output and GitHub hosting size limit
         if: steps.current.outputs.run == 'true'
         run: node scripts/check-pages-build.mjs .output/public "$TARGET_KIND"
