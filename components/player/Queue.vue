@@ -52,6 +52,9 @@
           {{ queueCountryLabel }}
         </span>
 
+        <UButton color="neutral" :variant="favoritesOnly ? 'soft' : 'ghost'" icon="i-lucide-heart"
+          class="min-h-11 shrink-0" :aria-pressed="favoritesOnly" :aria-label="$t('transfer.favorites_only')" :title="$t('transfer.favorites_only')"
+          @click="favoritesOnly = !favoritesOnly" />
         <label
           class="flex h-9 min-h-9 min-w-0 flex-1 items-center gap-2 rounded-xl border-[var(--radio-border)] bg-[var(--radio-surface)] px-3 shadow-none outline-none transition focus-within:border-rose-300 focus-within:ring-2 focus-within:ring-rose-400/15"
         >
@@ -141,7 +144,7 @@
           v-if="filteredStations.length === 0"
           class="flex min-h-32 items-center justify-center px-5 text-center text-xs text-[var(--radio-text-muted)]"
         >
-          {{ $t("panel.no_channels") }}
+          {{ $t(favoritesOnly ? 'transfer.no_favorites' : 'panel.no_channels') }}
         </div>
       </div>
 
@@ -293,8 +296,9 @@
 </template>
 
 <script setup lang="ts">
+import { useListeningStore } from '~/stores/listening';
 import type { RadioStationOption } from "~/types/radio";
-import { normalizeStationQuery } from "~/utils/station-search.mjs";
+import { filterQueueStations } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
 import { schedulePosition, referenceScheduleGap, scheduleTimelineProgress } from "~/utils/station-schedule.mjs";
 
@@ -350,6 +354,9 @@ defineEmits<{
 }>();
 
 const query = ref("");
+const favoritesOnly = ref(false);
+const listening = useListeningStore();
+onMounted(() => listening.hydrate());
 const hasStations = computed(() => props.stations.length > 0);
 const sharedCountryKey = computed(() => queueCountryKey(props.stations));
 const queueCountryLabel = computed(() => sharedCountryKey.value ? t(sharedCountryKey.value) : "");
@@ -486,14 +493,10 @@ onBeforeUnmount(() => {
   scrollGeneration += 1;
 });
 
-const filteredStations = computed(() => {
-  const keyword = normalizeStationQuery(query.value);
-  if (!keyword) return props.stations;
-
-  return props.stations.filter((station) =>
-    normalizeStationQuery(station.title).includes(keyword),
-  );
-});
+// Filter the presentation only; transport navigation still uses the original queue.
+const filteredStations = computed(() => filterQueueStations(
+  props.stations, query.value, listening.library.favorites.map((station: { url: string }) => station.url), favoritesOnly.value,
+));
 
 watch(
   () => props.activeStationId,

@@ -29,15 +29,22 @@
 
 | Priority | Improvement | Acceptance criteria |
 | --- | --- | --- |
-| P1 | Stream health reporting | Distinguish offline network, unsupported source and exhausted retries; provide a clear retry action without treating temporary buffering as failure. |
+| Done | Stream health reporting | Visible offline/unsupported/exhausted states, retry/source actions and a user-submitted GitHub report draft; buffering remains non-terminal. |
 | P1 | Real-device Safari/iOS review | Check background playback, headset/lock-screen actions, keyboard viewport, safe areas and reload silence on an iPhone. |
 | P1 | Playback module extraction | Separate audio lifecycle, retry recovery, Media Session and UI from the large player component while preserving route persistence. |
-| P2 | Persist user volume/mute | Restore supported volume controls safely without autoplay; iOS retains its system-volume guidance. |
-| P2 | Favorites in the channel drawer | Add a favorites-only filter and consistent accent-insensitive filtering while keeping the original country order for Previous/Next. |
-| P2 | Metadata polling efficiency | Suspend unnecessary work when hidden and paused/offline, retain lock-screen metadata during playback, and avoid refetching unchanged lyrics. |
+| Done | Persist user volume/mute | Implemented on 2026-10-18; preferences never authorize autoplay and iOS retains system volume. |
+| Done | Favorites in the channel drawer | Favorites-only filter uses accent-insensitive search and preserves original transport navigation order. |
+| Done | Metadata polling efficiency | Implemented on 2026-10-18; hidden idle/offline polling is suspended and successful lyrics are cached. |
 | P2 | Large-country catalogs | Measure scroll/render cost first; add pagination or windowing without removing SSR discovery links. |
 | P2 | Catalog artwork resilience | Extend the fallback component to catalog/search cards and validate local image paths; personal and fullscreen artwork already has a fallback. |
 | P2 | Performance measurements | Compare real LCP, INP, CLS, transferred bytes and request counts on mobile before choosing additional optimization. |
-| P3 | Favorites export/import | Validate a versioned JSON format and let users move their lists without an account. |
+| Done | Favorites export/import | Versioned JSON, current-catalog preview, merge/deduplication and a 200-station limit; no account needed. |
 
 Personal data currently stays in localStorage on the device. Cross-device sync, PWA offline playback and casting are separate features, not part of this change.
+
+## Listening tools — issue #310
+
+- Station detail and Now Playing share the canonical production station URL. Native share falls back to clipboard and then a selectable link; no share action requests playback.
+- `/library` provides favorites JSON export/import. Import loads the shared static search index only when opened, previews current catalog metadata and missing/duplicate/overflow counts, and merges only after confirmation. Existing favorites, history and playback intent are preserved.
+- Playback failures expose retry, alternate sources and a GitHub issue draft without exporting stream URLs or listening history. The draft requires the listener to review and submit it.
+- Real-device Safari/iOS review and playback module extraction remain follow-up work.

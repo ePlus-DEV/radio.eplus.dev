@@ -534,5 +534,33 @@
     "accept": "Đã hiểu",
     "analytics_body": "ePlus OnAir lưu tùy chọn của bạn và sử dụng Google Analytics 4 trên website chính thức để thống kê lượt truy cập và thời gian nghe radio. Đây là thông báo cung cấp thông tin; đóng thông báo không tắt việc đo lường.",
     "learn_more": "Chính sách cookie"
+  },
+  "sharing": {
+    "share": "Chia sẻ đài",
+    "copied": "Đã sao chép liên kết.",
+    "manual": "Chọn và sao chép liên kết này:"
+  },
+  "recovery": {
+    "offline": "Có vẻ bạn đang mất mạng. Kiểm tra kết nối trước khi thử lại.",
+    "unsupported": "Nguồn vừa thử không giải mã được hoặc chưa được trình duyệt hỗ trợ. Hãy thử nguồn khác.",
+    "exhausted": "Chưa thể phát sau các lần thử lại. Hãy thử lại hoặc chọn nguồn khác; đài vẫn có thể hoạt động trên thiết bị khác.",
+    "connecting": "Đang kết nối hoặc tải âm thanh…",
+    "report": "Báo lỗi phát",
+    "report_hint": "Mở bản nháp GitHub để bạn kiểm tra rồi gửi. Không kèm URL luồng phát hay lịch sử nghe."
+  },
+  "transfer": {
+    "title": "Chuyển danh sách yêu thích",
+    "export": "Xuất yêu thích",
+    "import": "Nhập yêu thích",
+    "export_error": "Không thể xuất danh sách yêu thích. Hãy thử lại.",
+    "description": "Xem trước rồi gộp yêu thích từ thiết bị khác. Danh sách hiện tại được giữ lại.",
+    "limit": "Chọn tệp JSON yêu thích của ePlus OnAir (tối đa 256 KiB và 200 đài).",
+    "choose": "Chọn tệp yêu thích",
+    "invalid": "Tệp không hợp lệ, quá lớn hoặc có phiên bản chưa được hỗ trợ.",
+    "preview": "Thêm: {add} · Đã lưu: {duplicate} · Không còn trong catalog: {missing} · Vượt giới hạn 200 đài: {overflow}",
+    "done": "Đã thêm {count} đài yêu thích vào trình duyệt này.",
+    "confirm": "Thêm vào yêu thích",
+    "favorites_only": "Chỉ đài yêu thích",
+    "no_favorites": "Không có đài yêu thích phù hợp trong quốc gia này."
   }
 }

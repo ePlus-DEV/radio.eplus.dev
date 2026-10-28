@@ -646,3 +646,29 @@ configuration until completion.
 - `waiting` clears actual-playing state; only the media `playing` event restores it. Network `stalled` must not clear playing when readyState still has future buffered data.
 - Volume/mute preferences use `radio:audio-preferences:v1`, restored before volume listeners, with guarded storage and range validation. iOS system volume is never assigned programmatically. Preferences never authorize autoplay.
 - Metadata polling skips offline and hidden idle sessions, but continues for visible schedules and background playback. Successful lyrics are cached by media ID (20 entries); failed requests remain retryable.
+
+## Listening tools and portability (2026-10-28)
+
+Favorites export uses `eplus-onair-favorites` version 1 with station paths only.
+Import rejects malformed/version-mismatched files, limits input to 256 KiB and
+200 entries, and resolves identities against the current static search catalog.
+Never trust imported names, images, streams or playback preferences. Preview
+recomputes when local favorites change; confirmation merges without toggling
+existing entries or touching history, selected station or play/pause intent.
+The import dialog is mounted on demand so visiting the library does not add a
+search-index request. Queue favorites filtering affects presentation only;
+Previous/Next still use the original station order.
+
+Station sharing always uses the canonical production page without query or
+autoplay parameters. Native sharing falls back to clipboard then manual copy;
+a cancelled share does not copy or report success. A browser-blocked Play requires
+another explicit Play/Retry; generic pointer/key events must never unlock audio. Reporting opens a GitHub
+issue draft with station page, name and a coarse failure category only. It
+never submits automatically or includes stream URLs, history or credentials.
+
+Playback recovery distinguishes offline, connecting/buffering, unsupported or
+undecodable last source, and exhausted retries. The existing bounded HLS/native
+recovery owns the lifecycle; status UI must not start an independent retry loop.
+Retry after a terminal error starts a fresh attempt budget even from Play.
+The dock recovery card floats above the existing dock so shell height and safe
+areas do not change; fullscreen and mini player show the same recovery actions.

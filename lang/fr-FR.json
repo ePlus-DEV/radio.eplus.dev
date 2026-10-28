@@ -534,5 +534,33 @@
     "accept": "Compris",
     "analytics_body": "ePlus OnAir conserve vos préférences et utilise Google Analytics 4 sur son site principal pour mesurer les visites et la durée d’écoute des radios. Fermer cet avis informatif n’arrête pas la mesure.",
     "learn_more": "Politique cookies"
+  },
+  "sharing": {
+    "share": "Partager la station",
+    "copied": "Lien copié.",
+    "manual": "Sélectionnez et copiez ce lien :"
+  },
+  "recovery": {
+    "offline": "Vous semblez hors ligne. Vérifiez votre connexion avant de réessayer.",
+    "unsupported": "La dernière source ne peut pas être décodée ou est incompatible avec ce navigateur. Essayez une autre source.",
+    "exhausted": "La lecture a échoué après plusieurs tentatives. Réessayez ou changez de source ; la station peut fonctionner sur un autre appareil.",
+    "connecting": "Connexion ou mise en mémoire tampon…",
+    "report": "Signaler un problème de lecture",
+    "report_hint": "Ouvre un brouillon GitHub à vérifier et envoyer. Aucune URL de flux ni aucun historique d’écoute ne sont inclus."
+  },
+  "transfer": {
+    "title": "Transférer vos favoris",
+    "export": "Exporter les favoris",
+    "import": "Importer des favoris",
+    "export_error": "Impossible d’exporter les favoris. Réessayez.",
+    "description": "Vérifiez et fusionnez les favoris d’un autre appareil. Vos favoris actuels sont conservés.",
+    "limit": "Choisissez un fichier JSON de favoris ePlus OnAir (256 Kio et 200 stations maximum).",
+    "choose": "Choisir un fichier de favoris",
+    "invalid": "Ce fichier est invalide, trop volumineux ou utilise une version non prise en charge.",
+    "preview": "À ajouter : {add} · Déjà enregistrés : {duplicate} · Absents du catalogue : {missing} · Au-delà de 200 stations : {overflow}",
+    "done": "{count} favoris ajoutés à ce navigateur.",
+    "confirm": "Ajouter aux favoris",
+    "favorites_only": "Favoris uniquement",
+    "no_favorites": "Aucune station favorite correspondante dans ce pays."
   }
 }
