@@ -24,7 +24,6 @@
               <div class="mb-3 flex flex-wrap items-center gap-2 text-xs" role="status">
                 <span class="rounded-full px-3 py-1.5" :class="error ? 'bg-red-500/10 text-red-700 dark:text-red-300' : waiting ? 'bg-amber-500/10 text-amber-700 dark:text-amber-300' : playing ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]'">{{ status }}</span>
                 <span v-if="sleepRemaining" class="text-[var(--radio-text-muted)]">{{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
-                <UButton v-if="error" variant="link" @click="$emit('retry')">{{ $t('player.retry') }}</UButton>
               </div>
               <h3 dir="auto" class="break-words text-2xl font-bold leading-tight lg:text-5xl">{{ title }}</h3>
               <p v-if="artist" dir="auto" class="mt-2 break-words text-sm text-[var(--radio-text-muted)] lg:text-base">{{ artist }}</p>
@@ -47,6 +46,8 @@
             </UTooltip>
           </div>
 
+          <PlayerRecovery :health="health" :online="online" :playable="playable" :source-items="sourceItems" :report-url="reportUrl" class="mb-4" @retry="$emit('retry')" />
+          <StationShare v-if="stationPath" :path="stationPath" :title="stationName" class="mb-4" />
           <div class="grid grid-cols-3 gap-2 lg:max-w-lg">
             <UDropdownMenu :items="sleepItems" :content="{ align: 'start', side: 'top' }">
               <UTooltip :text="$t('player.sleep_timer')">
@@ -84,6 +85,7 @@ defineProps<{
   playing: boolean; waiting: boolean; playable: boolean; favorite: boolean; error: boolean;
   canNavigate: boolean; previousLabel: string; nextLabel: string; sleepRemaining: number;
   sleepItems: DropdownMenuItem[]; sourceItems: DropdownMenuItem[]; lyricsAvailable?: boolean;
+  health: string; online: boolean; reportUrl: string; stationPath?: string;
   nextTitle?: string; nextArtist?: string; nextStationTitle?: string;
 }>();
 defineEmits(['close', 'favorite', 'previous', 'next', 'toggle', 'queue', 'lyrics', 'retry']);

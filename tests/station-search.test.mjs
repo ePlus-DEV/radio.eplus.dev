@@ -59,7 +59,7 @@ test('UI has featured carousel, compact country cards, and fallback search', asy
   assert.match(featured, /snap-x snap-mandatory/);
   assert.match(featured, /sm:grid/);
   assert.match(countries, /aspect-\[7\/4\]/);
-  assert.match(queue, /normalizeStationQuery/);
+  assert.match(queue, /filterQueueStations/);
   assert.match(box, /searchLocalStations/);
   assert.match(box, /defineExpose\(\{ focus \}\)/);
   assert.match(await readFile('composables/useStationSearchIndex.ts', 'utf8'), /\/search\/stations\.json/);

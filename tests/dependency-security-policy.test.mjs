@@ -33,6 +33,7 @@ test('production lockfile excludes the vulnerable nested esbuild copy', async ()
   const lock = JSON.parse(await read('package-lock.json'));
   assert.deepEqual(manifest.overrides?.fontless, { esbuild: '0.28.2' });
   assert.equal(lock.packages['node_modules/esbuild']?.version, '0.28.2');
+  assert.equal(lock.packages['node_modules/nuxt']?.version, '4.6.3');
   assert.equal(lock.packages['node_modules/fontless/node_modules/esbuild'], undefined);
   assert.equal(
     Object.keys(lock.packages).filter((path) =>

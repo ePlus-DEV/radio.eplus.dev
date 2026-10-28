@@ -46,3 +46,9 @@ export function searchLocalStations(stations, query, limit = 20) {
   });
   return ranked.slice(0, limit).map(({ station }) => station);
 }
+
+export function filterQueueStations(stations, query, favoriteUrls, favoritesOnly) {
+  const term = normalizeStationQuery(query);
+  const favorites = new Set(favoriteUrls);
+  return stations.filter(station => (!favoritesOnly || favorites.has(station.url)) && (!term || normalizeStationQuery(station.title).includes(term)));
+}

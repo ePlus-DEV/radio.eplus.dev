@@ -40,6 +40,7 @@
             <UButton :icon="isActive && playback.playing ? 'i-lucide-pause' : 'i-lucide-play'" size="xl" class="radio-station-detail-action cursor-pointer rounded-full px-6" @click="playStation">
               {{ isActive && playback.playing ? $t('player.pause') : $t('player.play') }}
             </UButton>
+            <StationShare :path="stationPath" :title="stationName" />
             <UButton color="neutral" variant="soft" icon="i-lucide-list-music" class="hidden rounded-full 2xl:inline-flex" @click="playback.queueOpen = true">
               {{ $t('player.queue') }}
             </UButton>

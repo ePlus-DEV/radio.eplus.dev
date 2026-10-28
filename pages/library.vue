@@ -31,6 +31,7 @@
     </nav>
 
     <ClientOnly>
+      <PanelFavoritesTransfer v-if="active === 'all' || active === 'favorites'" />
       <PanelListeningStats v-if="active === 'stats'" />
       <PanelListeningLibrary v-else :group="active" />
       <template #fallback>
