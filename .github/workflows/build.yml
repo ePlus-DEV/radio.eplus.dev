@@ -200,6 +200,10 @@ jobs:
         if: steps.scope.outputs.prerender == 'true' && github.base_ref == 'develop'
         run: node scripts/assert-project-pages-output.mjs .output/public custom-domain
 
+      - name: "Verify GA4 installation in generated production/staging HTML"
+        if: steps.scope.outputs.prerender == 'true'
+        run: node scripts/assert-ga4-output.mjs .output/public "${{ github.base_ref == 'develop' && 'staging' || 'production' }}"
+
       - name: "Validate generated sitemap and staging indexability"
         if: steps.scope.outputs.prerender == 'true'
         env:
