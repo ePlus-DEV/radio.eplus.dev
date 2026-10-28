@@ -540,11 +540,12 @@ Prefer documenting the **reason** for a rule, not only the final code, so later 
 
 ## 18. Nuxt development tooling compatibility
 
-Nuxt devtools still imports Simple Git's legacy default export. Simple Git 4 no
-longer provides that export, so the repository pins `simple-git` to `3.36.0`
-until Nuxt devtools supports Simple Git 4's named exports. Keep this compatibility
-pin with `devtools: { enabled: true }`; otherwise `nuxt prepare` and local
-development can fail during module initialization.
+Nuxt 4.6.3 and DevTools 3.4.4 no longer require the vulnerable `simple-git`
+3.x dependency. The old `simple-git: 3.36.0` override was removed after a
+Critical security advisory. Keep `devtools: { enabled: true }` and verify that
+the resolved lockfile contains no `simple-git` dependency. Do not restore the
+legacy override to address a future tooling issue; upgrade the compatible
+upstream dependency instead. CI runs a high/critical production npm audit.
 
 Nitro 2.13.4's string externals rules never match Windows module ids that use
 backslashes (nitrojs/nitro#4732, nuxt/nuxt#36467). Without a workaround, the
@@ -639,3 +640,9 @@ branch commit before generating or publishing files. The next current run
 performs the normal checks. An active upload/deploy finishes before the next
 workflow starts. Previously dispatched runs retain their old concurrency
 configuration until completion.
+
+## Playback reliability follow-up (2026-10-18)
+
+- `waiting` clears actual-playing state; only the media `playing` event restores it. Network `stalled` must not clear playing when readyState still has future buffered data.
+- Volume/mute preferences use `radio:audio-preferences:v1`, restored before volume listeners, with guarded storage and range validation. iOS system volume is never assigned programmatically. Preferences never authorize autoplay.
+- Metadata polling skips offline and hidden idle sessions, but continues for visible schedules and background playback. Successful lyrics are cached by media ID (20 entries); failed requests remain retryable.

@@ -165,6 +165,13 @@ jobs:
         if: steps.current.outputs.run == 'true'
         run: npm test
 
+      # Review the installed production dependency tree (including transitives),
+      # not just top-level package.json versions. Fail CI on high/critical alerts.
+      # Keep the existing single CI job and the original full prerender gates.
+      - name: "Audit production npm dependencies (high/critical)"
+        if: steps.current.outputs.run == 'true'
+        run: npm audit --omit=dev --audit-level=high
+
       # Cache small deterministic pregenerate assets, not thousands of HTML pages.
       - name: "Restore generated radio search index"
         id: search_cache

@@ -1,12 +1,54 @@
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
+# Security updates always target the repository default branch (main).
+# Do not set target-branch: develop here: it disables this package ecosystem
+# configuration for Dependabot security updates.
+# Updates require ordinary PR review, complete CI and a tested release.
 version: 2
 updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    # Cap routine version-update PRs; security PRs are not subject to this cap.
+    open-pull-requests-limit: 2
+    labels:
+      - "dependencies"
+    groups:
+      # Fix compatible vulnerable transitive/runtime packages in one reviewable PR.
+      # Vulnerabilities requiring major upgrades get their own independent PR.
+      npm-security-nonbreaking:
+        applies-to: security-updates
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
+      # Keep routine dependency upkeep from flooding the repository.
+      npm-version-nonbreaking:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "08:15"
+      timezone: "Asia/Ho_Chi_Minh"
+    open-pull-requests-limit: 2
     labels:
       - "dependencies"
+    groups:
+      actions-version-nonbreaking:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
