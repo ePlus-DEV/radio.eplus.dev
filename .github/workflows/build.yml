@@ -157,6 +157,28 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
+      # Temporary: resolve the exact npm integrity hashes for this security
+      # hotfix against production's newer dependency tree. Remove after commit.
+      - name: "Resolve production security lockfile"
+        if: steps.current.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-fund --no-audit
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const lock = JSON.parse(fs.readFileSync('package-lock.json', 'utf8'));
+          if (lock.packages['node_modules/fontless/node_modules/esbuild']) {
+            throw new Error('Vulnerable nested esbuild remains installed');
+          }
+          if (lock.packages['node_modules/esbuild']?.version !== '0.28.2') {
+            throw new Error('Expected safe esbuild version 0.28.2');
+          }
+          const data = Buffer.from(JSON.stringify(lock, null, 2) + '\n').toString('base64');
+          for (let i = 0; i < data.length; i += 4096) {
+            console.log('ONAIR_RELEASE_ESBUILD_LOCK:' + data.slice(i, i + 4096));
+          }
+          NODE
+
       - name: "Install dependencies"
         if: steps.current.outputs.run == 'true'
         run: npm ci
