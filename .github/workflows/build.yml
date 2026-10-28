@@ -157,22 +157,6 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
-      # Temporary: fetch the verified npm integrity metadata for the patched
-      # transitive dependency. Remove this step after committing the lockfile.
-      - name: "Generate verified lockfile update"
-        if: steps.current.outputs.run == 'true'
-        run: |
-          set -euo pipefail
-          npm install --package-lock-only --ignore-scripts --no-fund --no-audit
-          node - <<'NODE'
-          const fs = require('node:fs');
-          const lock = fs.readFileSync('package-lock.json');
-          const b64 = lock.toString('base64');
-          for (let i = 0; i < b64.length; i += 4096) {
-            console.log('ONAIR_SECURITY_LOCK_B64:' + b64.slice(i, i + 4096));
-          }
-          NODE
-
       - name: "Install dependencies"
         if: steps.current.outputs.run == 'true'
         run: npm ci
