@@ -67,7 +67,10 @@ export default defineNuxtConfig({
   },
   // Nuxt DevTools imports Simple Git's legacy default export, so keep the
   // Simple Git override on the 3.x line until DevTools supports Simple Git 4.
-  devtools: { enabled: true },
+  // Nuxt DevTools 3 requires vulnerable simple-git 3.x and imports its removed
+  // default export. Disable DevTools until an upstream compatible version is
+  // available. Never downgrade simple-git to re-enable this optional UI.
+  devtools: { enabled: false },
   ssr: true,
   pages: true,
   // Thousands of prerendered station routes otherwise duplicate CSS in each
