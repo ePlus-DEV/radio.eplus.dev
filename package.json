@@ -37,7 +37,7 @@
     "dayjs-nuxt": "^2.1.11",
     "hls.js": "^1.7.3",
     "moment": "^2.31.0",
-    "nuxt": "4.6.1",
+    "nuxt": "4.6.3",
     "nuxt-site-config": "^4.2.3",
     "pinia": "^4.0.3",
     "tailwindcss": "^4.3.3",
@@ -48,7 +48,7 @@
     "node": "24.15.0"
   },
   "overrides": {
-    "simple-git": "3.36.0",
+    "simple-git": "4.0.2",
     "@simple-git/argv-parser": "2.0.1"
   },
   "devDependencies": {
