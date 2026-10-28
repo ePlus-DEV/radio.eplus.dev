@@ -157,6 +157,25 @@ jobs:
           node-version: "24.15.0"
           cache: "npm"
 
+      # TEMPORARY (remove immediately after committing the regenerated lockfile).
+      # This PR needs fresh npm registry integrity hashes for Nuxt 4.6.3 and
+      # patched transitive dependencies; do not guess or edit those hashes.
+      - name: "Resolve patched lockfile snapshot"
+        if: steps.current.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm audit fix --package-lock-only --ignore-scripts --no-fund || echo "Security audit will enforce the final result after npm ci"
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const text = fs.readFileSync('package-lock.json').toString('base64');
+          for (let i = 0; i < text.length; i += 4096) {
+            console.log('ONAIR_LOCK_B64:' + text.slice(i, i + 4096));
+          }
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          console.log('ONAIR_PACKAGE_JSON_B64:' + Buffer.from(JSON.stringify(pkg, null, 2) + '\n').toString('base64'));
+          NODE
+
       - name: "Install dependencies"
         if: steps.current.outputs.run == 'true'
         run: npm ci
