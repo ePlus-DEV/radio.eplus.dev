@@ -27,3 +27,19 @@ test('PR CI audits the entire installed production tree for high or critical adv
   assert.match(ci, /steps\.current\.outputs\.run == 'true'/,
     'retain the existing trusted PR CI scope guard');
 });
+
+test('production lockfile excludes the vulnerable nested esbuild copy', async () => {
+  const manifest = JSON.parse(await read('package.json'));
+  const lock = JSON.parse(await read('package-lock.json'));
+  assert.deepEqual(manifest.overrides?.fontless, { esbuild: '0.28.2' });
+  assert.equal(lock.packages['node_modules/esbuild']?.version, '0.28.2');
+  assert.equal(lock.packages['node_modules/fontless/node_modules/esbuild'], undefined);
+  assert.equal(
+    Object.keys(lock.packages).filter((path) =>
+      path.startsWith('node_modules/fontless/node_modules/@esbuild/')).length,
+    0,
+    'No outdated nested esbuild platform binaries should remain',
+  );
+  assert.equal(lock.packages['node_modules/@nuxt/ui']?.version, '4.12.0',
+    'Preserve Dependabot PR #308 when backporting security fix');
+});
