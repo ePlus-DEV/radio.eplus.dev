@@ -67,6 +67,8 @@ export default defineNuxtConfig({
   },
   // Nuxt DevTools imports Simple Git's legacy default export, so keep the
   // Simple Git override on the 3.x line until DevTools supports Simple Git 4.
+  // DevTools 3.4.4+ no longer depends on vulnerable simple-git 3.x.
+  // Keep the developer experience without restoring a vulnerable override.
   devtools: { enabled: true },
   ssr: true,
   pages: true,
