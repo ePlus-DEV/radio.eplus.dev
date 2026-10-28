@@ -27,3 +27,16 @@ test('PR CI audits the entire installed production tree for high or critical adv
   assert.match(ci, /steps\.current\.outputs\.run == 'true'/,
     'retain the existing trusted PR CI scope guard');
 });
+
+test('fontless uses patched esbuild without downgrading other build tools', async () => {
+  const [manifestSource, lockSource] = await Promise.all([
+    read('package.json'), read('package-lock.json')
+  ]);
+  const manifest = JSON.parse(manifestSource);
+  const lock = JSON.parse(lockSource).packages;
+  assert.deepEqual(manifest.overrides?.fontless, { esbuild: '0.28.2' });
+  assert.equal(lock['node_modules/esbuild']?.version, '0.28.2');
+  assert.equal(lock['node_modules/fontless/node_modules/esbuild'], undefined,
+    'Vulnerable esbuild 0.27.7 must not remain nested under fontless');
+  assert.equal(lock['node_modules/nuxt']?.version, '4.6.3');
+});
