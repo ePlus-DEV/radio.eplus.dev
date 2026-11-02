@@ -18,7 +18,8 @@ test('custom-domain Pages deployments keep scoped environments and only two outp
   assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev'"));
   assert.ok(workflow.includes('NUXT_APP_BASE_URL: /'));
   assert.ok(workflow.includes('https://$TARGET_DOMAIN'));
-  assert.ok(!workflow.includes('https://eplus-dev.github.io/onair-'));
+  assert.doesNotMatch(workflow, /\beplus-dev\.github\.io\b/i,
+    'legacy GitHub Pages host must never be present in deployment workflow');
   assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}"),
     'staging must be noindex, while production must stay indexable');
   assert.ok(workflow.includes("TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}"),
