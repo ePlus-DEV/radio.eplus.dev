@@ -594,5 +594,18 @@
     "confirm_stats_hint": "Tổng thời gian và biểu đồ nghe sẽ bị xóa. Danh sách yêu thích không thay đổi.",
     "cancel": "Hủy",
     "confirm": "Xóa"
+  },
+  "online_stats": {
+    "total": "Tổng thời gian online",
+    "today": "Online hôm nay",
+    "listening": "Nghe radio",
+    "online": "Online",
+    "tracking": "Ghi nhận thời gian online",
+    "definition": "Chỉ tính khi tab website đang hiển thị, được chọn và có kết nối mạng; ngừng tính sau 5 phút không tương tác. Radio vẫn có thể phát nền mà không cộng thời gian online.",
+    "chart_kind": "Chọn loại thời gian",
+    "daily_chart": "Thời gian online theo ngày",
+    "daily_hint": "Chọn ngày để xem thời gian sử dụng website.",
+    "period_total": "Thời gian online trong khoảng đã chọn",
+    "daily_empty": "Chưa có thời gian online trong khoảng này."
   }
 }
