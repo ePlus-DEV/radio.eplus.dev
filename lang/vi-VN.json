@@ -598,6 +598,7 @@
   "online_stats": {
     "total": "Tổng thời gian online",
     "today": "Online hôm nay",
+    "listening_today": "Nghe radio hôm nay",
     "listening": "Nghe radio",
     "online": "Online",
     "tracking": "Ghi nhận thời gian online",
