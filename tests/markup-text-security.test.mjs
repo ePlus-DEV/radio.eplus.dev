@@ -34,5 +34,6 @@ test('sitemap validation uses single-pass entity decoding before checking URL or
 test('deployment workflow tests compare the complete legacy host, not a URL substring', async () => {
   const source = await readFile(new URL('./github-pages-publishing.test.mjs', import.meta.url), 'utf8');
   assert.match(source, /assert\.doesNotMatch\(workflow/);
-  assert.doesNotMatch(source, /workflow\.includes\('https:\/\//);
+  assert.match(source, /legacy GitHub Pages host must never be present/);
+  assert.doesNotMatch(source, /workflow\.includes\('https:\/\/eplus-dev\.github\.io\/onair-/);
 });
