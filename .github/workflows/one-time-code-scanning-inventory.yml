@@ -39,5 +39,10 @@ jobs:
               ( $alerts | group_by(.rule.id) | sort_by(-length) | .[]
                 | "  \(.[0].rule.id) | \(.[0].rule.security_severity_level // .[0].rule.severity // "unknown") | \(length)" )
           ' "$file"
+          echo "Affected source locations (rule, file, line only):"
+          jq -r '
+            [ .[][] | select(.state == "open") ] | sort_by(.rule.id)
+            | .[] | "  \(.rule.id) | \(.most_recent_instance.location.path // "unknown") | line \(.most_recent_instance.location.start_line // 0)"
+          ' "$file"
           rm -f "$file"
           echo "No alert bodies, source paths, tokens or SARIF uploaded."
