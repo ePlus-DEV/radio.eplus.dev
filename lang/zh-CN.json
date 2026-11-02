@@ -606,6 +606,9 @@
     "daily_chart": "每日在线时长",
     "daily_hint": "选择日期查看网站使用时长。",
     "period_total": "所选期间在线时长",
-    "daily_empty": "所选期间尚无在线记录。"
+    "daily_empty": "所选期间尚无在线记录。",
+    "clear_title": "删除在线与收听统计？",
+    "clear_description": "删除本浏览器的在线时长、收听时长、每日图表和电台统计？收藏与最近收听记录不会受到影响。",
+    "clear_action": "删除时间统计"
   }
 }
