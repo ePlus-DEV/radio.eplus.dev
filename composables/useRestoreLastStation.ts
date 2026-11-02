@@ -1,17 +1,21 @@
 import { useListeningStore } from '~/stores/listening';
 import { usePlaybackStore } from '~/stores/playback';
+import { useListenerPreferencesStore } from '~/stores/listenerPreferences';
 import { createPlaybackStation } from '~/utils/playback-station.mjs';
 import type { RadioCatalogEntry } from '~/types/radio';
 
 export function useRestoreLastStation() {
   const listening = useListeningStore();
   const playback = usePlaybackStore();
+  const preferences = useListenerPreferencesStore();
   const route = useRoute();
   const config = useRuntimeConfig();
   const siteAssetUrl = useSiteAssetUrl();
   listening.hydrate();
   let disposed = false;
   onMounted(async () => {
+    preferences.hydrate();
+    if (!preferences.restoreStation) return;
     const saved = listening.library.lastStation;
     // Explicit station deep links take precedence over the saved station.
     if (!saved || route.path.split('/').filter(Boolean).length >= 3 || playback.playRequest || playback.requestedStationUrl || playback.playing) return;
