@@ -598,6 +598,7 @@
   "online_stats": {
     "total": "Total online time",
     "today": "Online today",
+    "listening_today": "Listening today",
     "listening": "Listening",
     "online": "Online",
     "tracking": "Track online time",
