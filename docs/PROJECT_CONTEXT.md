@@ -690,3 +690,48 @@ areas do not change; fullscreen and mini player show the same recovery actions.
 - Regression guard: `tests/markup-text-security.test.mjs`. Keep CodeQL and
   required npm audit checks enabled; a successful CodeQL workflow only means
   the analysis completed, not that the Security alert backlog is empty.
+
+
+## 2026-11-02 — Listener Settings and live-radio resume
+
+User preferences live in `stores/listenerPreferences.ts` and
+`utils/listener-preferences.mjs` under `radio:listener-preferences:v1`.
+These settings are local to each browser, validated against a five-boolean
+schema with safe defaults, and synchronized between tabs using the `storage`
+event. They **do not overwrite or migrate** existing independent keys for
+favorites, recently played, audio volume, theme, locale, listening statistics,
+or the cookie notice. Blocked localStorage is not a playback failure.
+
+Settings are reachable at `/settings` in Header and Sidebar. The page
+is statically prerendered but `noindex`, and is intentionally omitted from
+the production sitemap. Its translations must stay complete across all seven
+locales. Listener-specific information is hydrated on the client to avoid
+embedding private data in static HTML.
+
+The player remains mounted globally outside `NuxtPage`. `resumeLive`
+defaults to true: only after an explicit Pause and subsequent Play on an
+existing linear stream, it discards buffered MP3/AAC and native-HLS playback
+by reapplying the active source (resolving .pls/.m3u again). With hls.js,
+a finite `liveSyncPosition` can be used only if it is within the last valid
+seekable window; otherwise the active HLS source/manifest is reloaded. Do not
+seek on new station selection, on page reload, or beyond the available
+window. Reuse the existing bounded fallback/retry logic and never
+automatically play on a browser reload.
+
+`autoReconnect` controls automatic playback fallback/recovery. When off,
+network/media errors become user-retryable instead of initiating endless
+background attempts. `restoreStation` controls restoring the previously
+selected station without ever auto-playing. `rememberVolume` gates reading
+and writing the preexisting volume key without deleting it. `reduceMotion`
+adds the opt-in class `radio-reduce-motion` to the document root; it does not
+override the browser's own motion accessibility controls.
+
+The listening-duration toggle remains a separate opt-in/out for LOCAL
+statistics only and **does not disable GA4 analytics**. Do not call the
+informational cookie banner "tracking consent". Destructive controls for
+recent listening history and local statistics must require confirmation
+and preserve favorites.
+
+Regression tests: `tests/listener-settings.test.mjs`, existing
+`tests/player-hls-startup.test.mjs` and player/SEO tests. Keep
+`npm test`, `npm run generate`, and CodeQL CI green before merging.

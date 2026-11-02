@@ -184,6 +184,8 @@ import { useListeningStore } from "~/stores/listening";
 import { useListeningDurationStore } from "~/stores/listeningDuration";
 import { createListeningDurationTracker } from "~/utils/listening-duration.mjs";
 import { usePlaybackStore } from "~/stores/playback";
+import { useListenerPreferencesStore } from "~/stores/listenerPreferences";
+import { shouldReconnectToLive, safeLiveSyncPosition } from "~/utils/listener-preferences.mjs";
 import { usesSystemVolumeControls } from "~/utils/mobile-volume.mjs";
 import type { RadioSource, RadioStationOption } from "~/types/radio";
 import {
@@ -256,6 +258,7 @@ const emit = defineEmits<{
 
 const $store = useMainStore();
 const playback = usePlaybackStore();
+const preferences = useListenerPreferencesStore();
 const listening = useListeningStore();
 listening.hydrate();
 const PLAYER_QUEUE_OPEN_KEY = 'radio:player-queue-open';
@@ -351,6 +354,8 @@ let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let sourceVersion = 0;
 let playVersion = 0;
 let activeResolvedSrc = "";
+let liveResumePending = false;
+let pausedAtMs = 0;
 
 const RECONNECT_BASE_DELAY = 1200;
 const FALLBACK_PROBE_TIMEOUT = 10_000;
@@ -625,6 +630,7 @@ const tryPlay = async (): Promise<void> => {
       name === "AbortError" ||
       (hlsInstance && name === "NotSupportedError" && media.readyState === 0)
     ) {
+      if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
       pendingAutoPlay.value = true;
       waiting.value = true;
       startFallbackProbe();
@@ -638,6 +644,7 @@ const tryPlay = async (): Promise<void> => {
 
 const startFallbackProbe = (): void => {
   clearFallbackProbeTimer();
+  if (!preferences.autoReconnect) return;
 
   if (
     activeSourceIndex.value + 1 >= sourceList.value.length ||
@@ -737,6 +744,7 @@ const configureHlsSource = async (
 
   hlsInstance.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
     if (version !== sourceVersion || !data?.fatal || !hlsInstance) return;
+    if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
 
     waiting.value = false;
     playing.value = false;
@@ -813,6 +821,8 @@ const applySource = async (
   }
 
   const version = ++sourceVersion;
+  liveResumePending = false;
+  pausedAtMs = 0;
   activeSourceIndex.value = index;
   unsupportedSource.value = false;
   streamError.value = false;
@@ -860,6 +870,7 @@ const advanceFallbackSource = (): boolean => {
 
 const scheduleReconnect = (): void => {
   if (!online.value || userPaused.value || reconnectTimer) return;
+  if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
 
   clearFallbackProbeTimer();
 
@@ -887,6 +898,33 @@ const onPlay = async (): Promise<void> => {
   pendingAutoPlay.value = true;
 
   if (activeResolvedSrc && mediaElement.value) {
+    if (shouldReconnectToLive({
+      resumeLive: preferences.resumeLive,
+      hasPaused: liveResumePending,
+      activeSource: activeResolvedSrc,
+    })) {
+      liveResumePending = false;
+      // Seek within the current sliding HLS live window when possible.
+      // A long pause can leave an old HLS playlist and stale liveSyncPosition.
+      // Force a fresh manifest after 10 seconds instead of trusting old segments.
+      const recentPause = pausedAtMs > 0 && Date.now() - pausedAtMs <= 10_000;
+      const target = hlsInstance && recentPause
+        ? safeLiveSyncPosition(hlsInstance.liveSyncPosition, mediaElement.value)
+        : null;
+      if (target !== null) {
+        try {
+          mediaElement.value.currentTime = target;
+          startFallbackProbe();
+          await tryPlay();
+          return;
+        } catch { /* Expired live window: reconnect with a fresh manifest. */ }
+      }
+      // Native MP3/AAC and Safari/native HLS discard buffered old audio.
+      // Resolving the source again preserves station and fallback identity.
+      attemptCount.value = 0;
+      await applySource(activeSourceIndex.value, true);
+      return;
+    }
     startFallbackProbe();
     await tryPlay();
     return;
@@ -908,6 +946,8 @@ const onPause = (): void => {
   clearFallbackProbeTimer();
 
   media?.pause();
+  liveResumePending = Boolean(activeResolvedSrc);
+  pausedAtMs = Date.now();
   waiting.value = false;
   playing.value = false;
 };
@@ -1129,9 +1169,11 @@ const onVolumeChange = (): void => {
   if (!media) return;
   volume.value = media.volume;
   muted.value = media.muted;
-  try {
-    localStorage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify({ volume: media.volume, muted: media.muted }));
-  } catch { /* Storage restrictions must not interrupt audio. */ }
+  if (preferences.rememberVolume) {
+    try {
+      localStorage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify({ volume: media.volume, muted: media.muted }));
+    } catch { /* Storage restrictions must not interrupt audio. */ }
+  }
 };
 
 const bindMediaEvents = (): void => {
@@ -1161,6 +1203,10 @@ const unbindMediaEvents = (): void => {
   media.removeEventListener("error", onMediaError);
   media.removeEventListener("volumechange", onVolumeChange);
 };
+
+watch(() => preferences.autoReconnect, (enabled) => {
+  if (!enabled) { clearReconnectTimer(); clearFallbackProbeTimer(); }
+});
 
 watch([playing, waiting], ([isPlaying, isWaiting]) => {
   playback.playing = isPlaying;
@@ -1233,6 +1279,7 @@ const resetListeningTracking = (): void => {
 watch(() => listeningDuration.enabled, resetListeningTracking, { flush: 'sync' });
 
 onMounted(() => {
+  preferences.hydrate();
   listeningDuration.hydrate();
   // Update the statistics dashboard every second while only persisting
   // checkpoints every five seconds to avoid excessive localStorage writes.
@@ -1260,7 +1307,7 @@ onMounted(() => {
 
   // Restore before binding volumechange so partial restoration cannot overwrite preferences.
   const savedMedia = mediaElement.value;
-  if (savedMedia) {
+  if (savedMedia && preferences.rememberVolume) {
     try {
       const saved = JSON.parse(localStorage.getItem(AUDIO_PREFERENCES_KEY) || 'null');
       if (saved && typeof saved.muted === 'boolean') savedMedia.muted = saved.muted;

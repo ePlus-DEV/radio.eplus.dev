@@ -434,3 +434,11 @@
     .radio-skeleton { animation: none; background-image: none; }
   }
 }
+
+/* Explicit listener accessibility preference; OS reduced-motion still applies. */
+html.radio-reduce-motion *, html.radio-reduce-motion *::before, html.radio-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}
