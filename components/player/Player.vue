@@ -630,6 +630,7 @@ const tryPlay = async (): Promise<void> => {
       name === "AbortError" ||
       (hlsInstance && name === "NotSupportedError" && media.readyState === 0)
     ) {
+      if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
       pendingAutoPlay.value = true;
       waiting.value = true;
       startFallbackProbe();
