@@ -55,7 +55,7 @@
         <p class="mt-2 text-xl font-bold tabular-nums sm:text-2xl">{{ formatDuration(totalOnlineMs) }}</p>
       </div>
       <div class="radio-surface p-5">
-        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_today') }}</p>
+        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</p>
         <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(todayListeningMs) }}</p>
       </div>
       <div class="radio-surface p-4 sm:p-5">
