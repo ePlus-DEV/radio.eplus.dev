@@ -1,6 +1,7 @@
 <template>
   <section :aria-label="$t('library.listening_stats')" class="space-y-6">
     <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('library.listening_stats_description') }}</p>
+    <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.definition') }}</p>
     <div v-if="isLive" class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-300">
       <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" aria-hidden="true"></span>
       {{ $t('library.listening_live') }}
@@ -25,7 +26,7 @@
           <span>{{ $t(duration.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}</span>
         </button>
         <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">
-          {{ $t('library.listening_delete_stats') }}
+          {{ $t('online_stats.clear_action') }}
         </UButton>
       </div>
     </div>
@@ -63,7 +64,7 @@
       </div>
     </div>
 
-    <figure class="radio-surface space-y-4 p-4 sm:p-5" :aria-label="$t('library.listening_daily_chart')">
+    <figure class="radio-surface space-y-4 p-4 sm:p-5"  :aria-label="$t(chartMode === 'listening' ? 'library.listening_daily_chart' : 'online_stats.daily_chart')">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 class="text-lg font-semibold">{{ $t(chartMode === 'listening' ? 'library.listening_daily_chart' : 'online_stats.daily_chart') }}</h2>
@@ -71,7 +72,7 @@
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <div class="flex gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1" role="group" :aria-label="$t('online_stats.chart_kind')">
-            <button v-for="mode in ['listening', 'online'] as const" :key="mode" type="button"
+            <button v-for="mode in chartModes" :key="mode" type="button"
               class="min-h-9 rounded-lg px-3 py-1.5 text-xs font-semibold transition"
               :class="chartMode === mode ? 'bg-[var(--radio-surface)] text-rose-600 shadow-sm dark:text-rose-300' : 'text-[var(--radio-text-muted)]'"
               :aria-pressed="chartMode === mode" @click="chartMode = mode">
@@ -145,8 +146,8 @@
     </div>
     <UModal
       v-model:open="clearStatsOpen"
-      :title="$t('library.listening_confirm_delete_title')"
-      :description="$t('library.listening_confirm_delete_description')"
+      :title="$t('online_stats.clear_title')"
+      :description="$t('online_stats.clear_description')"
       :ui="{ content: 'max-w-md' }"
     >
       <template #footer>
@@ -184,6 +185,7 @@ const confirmDeleteStatistics = () => {
 };
 const rangeDays = ref(7);
 const chartMode = ref<'listening' | 'online'>('listening');
+const chartModes = ['listening', 'online'] as const;
 const chartScroll = ref<HTMLElement | null>(null);
 watch([rangeDays, chartMode], async () => {
   // Show the newest days first when switching to wide 30/90-day charts.
