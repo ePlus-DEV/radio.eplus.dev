@@ -606,6 +606,9 @@
     "daily_chart": "Online time by day",
     "daily_hint": "Select a day to inspect foreground website time.",
     "period_total": "Online time in selected period",
-    "daily_empty": "No online time recorded in this period."
+    "daily_empty": "No online time recorded in this period.",
+    "clear_title": "Delete online and listening statistics?",
+    "clear_description": "Delete online time and radio listening time, daily charts and per-station totals on this browser? Favorites and Recently played are unaffected.",
+    "clear_action": "Delete time statistics"
   }
 }
