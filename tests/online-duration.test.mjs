@@ -132,7 +132,7 @@ test('all seven locales explain online time and independent listening metrics', 
   for (const locale of ['en-US', 'vi-VN', 'ja-JP', 'fr-FR', 'ru-RU', 'zh-CN', 'zh-TW']) {
     const copy = JSON.parse(await read('lang/' + locale + '.json')).online_stats;
     for (const key of ['total', 'today', 'tracking', 'definition', 'listening', 'online',
-      'chart_kind', 'daily_chart', 'daily_hint', 'period_total', 'daily_empty',
+      'chart_kind', 'daily_chart', 'daily_hint', 'period_total', 'daily_empty', 'listening_today',
       'clear_title', 'clear_description', 'clear_action']) {
       assert.ok(typeof copy?.[key] === 'string' && copy[key].trim(), locale + ' missing ' + key);
     }
