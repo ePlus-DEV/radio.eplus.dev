@@ -672,3 +672,21 @@ recovery owns the lifecycle; status UI must not start an independent retry loop.
 Retry after a terminal error starts a fresh attempt budget even from Play.
 The dock recovery card floats above the existing dock so shell height and safe
 areas do not change; fullscreen and mini player show the same recovery actions.
+
+## CodeQL security invariant — external metadata and publishing checks (2026-11-02)
+
+- Third-party radio station titles/headings are always **plain text**, never trusted markup.
+  Use `stripMarkupToText` from `utils/markup-text.mjs`; do not restore
+  regex-based tag filtering such as `/<[^>]+>/` or script/style regex stripping.
+  This is a text extractor, **not** an HTML sanitizer; do not pass its result to
+  `v-html`, `innerHTML` or other HTML sinks.
+- Decode HTML/XML text entities in **one pass** with `decodeTextEntitiesOnce`.
+  In particular `&amp;quot;` must become `&quot;`, not a quotation mark;
+  otherwise nested decoding can turn text into markup.
+- Sitemap validation must decode `<loc>` entries once, then validate with
+  `new URL()` and strict canonical `origin`, query and hash checks.
+- GitHub Pages policy tests should detect a forbidden **full hostname**,
+  not rely on partial URL substring comparisons.
+- Regression guard: `tests/markup-text-security.test.mjs`. Keep CodeQL and
+  required npm audit checks enabled; a successful CodeQL workflow only means
+  the analysis completed, not that the Security alert backlog is empty.
