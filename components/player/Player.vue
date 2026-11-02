@@ -355,6 +355,7 @@ let sourceVersion = 0;
 let playVersion = 0;
 let activeResolvedSrc = "";
 let liveResumePending = false;
+let pausedAtMs = 0;
 
 const RECONNECT_BASE_DELAY = 1200;
 const FALLBACK_PROBE_TIMEOUT = 10_000;
@@ -820,6 +821,7 @@ const applySource = async (
 
   const version = ++sourceVersion;
   liveResumePending = false;
+  pausedAtMs = 0;
   activeSourceIndex.value = index;
   unsupportedSource.value = false;
   streamError.value = false;
@@ -902,7 +904,10 @@ const onPlay = async (): Promise<void> => {
     })) {
       liveResumePending = false;
       // Seek within the current sliding HLS live window when possible.
-      const target = hlsInstance
+      // A long pause can leave an old HLS playlist and stale liveSyncPosition.
+      // Force a fresh manifest after 10 seconds instead of trusting old segments.
+      const recentPause = pausedAtMs > 0 && Date.now() - pausedAtMs <= 10_000;
+      const target = hlsInstance && recentPause
         ? safeLiveSyncPosition(hlsInstance.liveSyncPosition, mediaElement.value)
         : null;
       if (target !== null) {
@@ -941,6 +946,7 @@ const onPause = (): void => {
 
   media?.pause();
   liveResumePending = Boolean(activeResolvedSrc);
+  pausedAtMs = Date.now();
   waiting.value = false;
   playing.value = false;
 };
