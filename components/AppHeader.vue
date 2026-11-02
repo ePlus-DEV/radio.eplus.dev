@@ -10,6 +10,7 @@
         <UIcon name="i-lucide-search" class="h-5 w-5 shrink-0" /><span class="truncate text-sm">{{ $t('popup.search.text') }}</span><kbd class="ml-auto hidden text-xs sm:block">/</kbd>
       </button>
       <div class="ml-auto flex shrink-0 items-center gap-1"><ThemeDarkMode /><LangSwitcher />
+        <UButton to="/settings" color="neutral" variant="ghost" icon="i-lucide-settings-2" class="h-11 w-11 justify-center" :aria-label="$t('listener_settings.title')" :title="$t('listener_settings.title')" />
         <UButton color="neutral" variant="ghost" icon="i-lucide-menu" class="hidden h-11 w-11 justify-center sm:flex xl:hidden" :aria-label="$t('redesign.navigation')" :aria-expanded="mobileOpen" @click="mobileOpen = !mobileOpen" />
       </div>
     </nav>
