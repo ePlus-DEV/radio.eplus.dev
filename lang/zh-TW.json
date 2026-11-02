@@ -606,6 +606,9 @@
     "daily_chart": "每日線上時長",
     "daily_hint": "選擇日期查看網站使用時間。",
     "period_total": "所選期間線上時長",
-    "daily_empty": "所選期間尚無線上紀錄。"
+    "daily_empty": "所選期間尚無線上紀錄。",
+    "clear_title": "刪除線上與收聽統計？",
+    "clear_description": "刪除此瀏覽器的線上時長、收聽時長、每日圖表及電台統計？收藏與最近收聽紀錄不受影響。",
+    "clear_action": "刪除時間統計"
   }
 }
