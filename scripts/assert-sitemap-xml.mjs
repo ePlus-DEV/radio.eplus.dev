@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { isStagingDeployment } from "../utils/seo-deployment.mjs";
+import { decodeTextEntitiesOnce } from "../utils/markup-text.mjs";
 
 const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").replace(/\/$/, "");
 const noIndex = isStagingDeployment({ siteUrl, noIndex: process.env.NUXT_PUBLIC_NO_INDEX });
@@ -27,7 +28,7 @@ if (noIndex) {
   assert.doesNotMatch(xml, /<xhtml:link\b/, "Non-prefix locale routes must not emit hreflang alternatives");
 
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) =>
-    m[1].replaceAll("&amp;", "&").replaceAll("&apos;", "'").replaceAll("&quot;", '"'));
+    decodeTextEntitiesOnce(m[1]));
   assert.ok(locations.length > 0 && locations.length <= 50000, "Invalid sitemap URL count");
   assert.equal(new Set(locations).size, locations.length, "Duplicate <loc> entries found");
   assert.ok(locations.includes(siteUrl + "/"), "Canonical home URL missing");
