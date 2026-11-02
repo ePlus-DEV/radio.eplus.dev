@@ -15,6 +15,11 @@
           <fa :icon="['fas', 'chart-simple']" class="w-4" />
           <span>{{ $t('navmenu.statistics') }}</span>
         </NuxtLink>
+        <NuxtLink to="/settings" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
+          :class="route.path === '/settings' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
+          <UIcon name="i-lucide-settings-2" class="h-4 w-4" />
+          <span>{{ $t('listener_settings.title') }}</span>
+        </NuxtLink>
         <NuxtLink to="/about" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/about' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
           <fa :icon="['fas', 'circle-info']" class="w-4" />
