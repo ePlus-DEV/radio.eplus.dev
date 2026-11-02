@@ -29,28 +29,55 @@
         </UButton>
       </div>
     </div>
+    <div class="radio-surface flex flex-wrap items-center justify-between gap-3 p-4 sm:p-5">
+      <div class="min-w-0 flex-1">
+        <p class="text-sm font-semibold">{{ $t('online_stats.tracking') }}</p>
+        <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.definition') }}</p>
+      </div>
+      <button type="button" role="switch" :aria-checked="online.enabled" :aria-label="$t('online_stats.tracking')"
+        class="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-rose-500"
+        @click="online.setTrackingEnabled(!online.enabled)">
+        <span class="relative h-6 w-11 shrink-0 rounded-full transition-colors" :class="online.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
+          <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform" :class="online.enabled ? 'translate-x-5' : ''"></span>
+        </span>
+        <span>{{ $t(online.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}</span>
+      </button>
+    </div>
     <p v-if="!duration.enabled" class="text-sm font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_tracking_paused') }}</p>
-    <div class="grid gap-3 sm:grid-cols-3">
+    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
       <div class="radio-surface p-5">
         <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_total') }}</p>
         <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(totalListeningMs) }}</p>
+      </div>
+      <div class="radio-surface p-4 sm:p-5">
+        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.total') }}</p>
+        <p class="mt-2 text-xl font-bold tabular-nums sm:text-2xl">{{ formatDuration(totalOnlineMs) }}</p>
       </div>
       <div class="radio-surface p-5">
         <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_today') }}</p>
         <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(todayListeningMs) }}</p>
       </div>
-      <div class="radio-surface p-5">
-        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_stations') }}</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{{ stations.length }}</p>
+      <div class="radio-surface p-4 sm:p-5">
+        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</p>
+        <p class="mt-2 text-xl font-bold tabular-nums sm:text-2xl">{{ formatDuration(todayOnlineMs) }}</p>
       </div>
     </div>
 
     <figure class="radio-surface space-y-4 p-4 sm:p-5" :aria-label="$t('library.listening_daily_chart')">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 class="text-lg font-semibold">{{ $t('library.listening_daily_chart') }}</h2>
-          <p class="mt-1 text-xs text-[var(--radio-text-muted)]">{{ $t('library.listening_daily_hint') }}</p>
+          <h2 class="text-lg font-semibold">{{ $t(chartMode === 'listening' ? 'library.listening_daily_chart' : 'online_stats.daily_chart') }}</h2>
+          <p class="mt-1 text-xs text-[var(--radio-text-muted)]">{{ $t(chartMode === 'listening' ? 'library.listening_daily_hint' : 'online_stats.daily_hint') }}</p>
         </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="flex gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1" role="group" :aria-label="$t('online_stats.chart_kind')">
+            <button v-for="mode in ['listening', 'online'] as const" :key="mode" type="button"
+              class="min-h-9 rounded-lg px-3 py-1.5 text-xs font-semibold transition"
+              :class="chartMode === mode ? 'bg-[var(--radio-surface)] text-rose-600 shadow-sm dark:text-rose-300' : 'text-[var(--radio-text-muted)]'"
+              :aria-pressed="chartMode === mode" @click="chartMode = mode">
+              {{ $t(mode === 'listening' ? 'online_stats.listening' : 'online_stats.online') }}
+            </button>
+          </div>
         <div class="flex flex-wrap gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1" role="group" :aria-label="$t('library.listening_chart_range')">
           <button
             v-for="days in [7, 30, 90]"
@@ -62,9 +89,10 @@
             @click="rangeDays = days"
           >{{ $t(`library.listening_last_${days}`) }}</button>
         </div>
+        </div>
       </div>
       <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
-        <span class="text-[var(--radio-text-muted)]">{{ $t('library.listening_period_total') }}</span>
+        <span class="text-[var(--radio-text-muted)]">{{ $t(chartMode === 'listening' ? 'library.listening_period_total' : 'online_stats.period_total') }}</span>
         <span class="font-bold tabular-nums">{{ formatDuration(periodTotalMs) }}</span>
       </div>
       <div ref="chartScroll" class="radio-scrollbar overflow-x-auto pb-2">
@@ -98,10 +126,10 @@
         <span class="text-[var(--radio-text-muted)]">{{ formatDay(selectedDay.key) }}</span>
         <span class="font-semibold tabular-nums">{{ formatDuration(selectedDay.ms) }}</span>
       </figcaption>
-      <p v-if="!hasDailyListening" class="text-xs text-[var(--radio-text-muted)]">{{ $t('library.listening_daily_empty') }}</p>
+      <p v-if="!hasDailyListening" class="text-xs text-[var(--radio-text-muted)]">{{ $t(chartMode === 'listening' ? 'library.listening_daily_empty' : 'online_stats.daily_empty') }}</p>
     </figure>
     <div class="radio-surface p-4 sm:p-5">
-      <h2 class="mb-4 text-lg font-semibold">{{ $t('library.listening_top_stations') }}</h2>
+      <h2 class="mb-4 text-lg font-semibold">{{ $t('library.listening_top_stations') }} <span class="text-sm font-normal text-[var(--radio-text-muted)]">({{ stations.length }})</span></h2>
       <div v-if="stations.length" class="space-y-4">
         <div v-for="station in stations" :key="station.url" class="space-y-1.5">
           <div class="flex items-center justify-between gap-3 text-sm">
@@ -137,27 +165,35 @@
 
 <script setup lang="ts">
 import { useListeningDurationStore } from '~/stores/listeningDuration';
+import { useOnlineDurationStore } from '~/stores/onlineDuration';
+import { dailyOnlineSeries } from '~/utils/online-duration.mjs';
 import { usePlaybackStore } from '~/stores/playback';
 import { dailyListeningSeries, localDayKey } from '~/utils/listening-duration.mjs';
 
 const duration = useListeningDurationStore();
+const online = useOnlineDurationStore();
 const playback = usePlaybackStore();
 const { t, locale } = useI18n();
 duration.hydrate();
+online.hydrate();
 const clearStatsOpen = ref(false);
 const confirmDeleteStatistics = () => {
   duration.clearStatistics();
+  online.clearStatistics();
   clearStatsOpen.value = false;
 };
 const rangeDays = ref(7);
+const chartMode = ref<'listening' | 'online'>('listening');
 const chartScroll = ref<HTMLElement | null>(null);
-watch(rangeDays, async () => {
+watch([rangeDays, chartMode], async () => {
   // Show the newest days first when switching to wide 30/90-day charts.
   await nextTick();
   if (chartScroll.value) chartScroll.value.scrollLeft = chartScroll.value.scrollWidth;
 });
 const selectedDayKey = ref('');
-const chartItems = computed(() => dailyListeningSeries(duration.stats, rangeDays.value, new Date(), duration.liveMs));
+const chartItems = computed(() => chartMode.value === 'listening'
+  ? dailyListeningSeries(duration.stats, rangeDays.value, new Date(), duration.liveMs)
+  : dailyOnlineSeries(online.stats, rangeDays.value, new Date(), online.liveMs));
 const periodTotalMs = computed(() => chartItems.value.reduce((sum, day) => sum + day.ms, 0));
 const peakMs = computed(() => Math.max(1, ...chartItems.value.map(day => day.ms)));
 const hasDailyListening = computed(() => chartItems.value.some(day => day.ms > 0));
@@ -185,6 +221,8 @@ const formatTick = (dayKey: string) => tickFormatter.value.format(parseDay(dayKe
 
 const isLive = computed(() => duration.activeStationUrl !== '');
 const totalListeningMs = computed(() => duration.stats.totalMs + duration.liveMs);
+const totalOnlineMs = computed(() => online.stats.totalMs + online.liveMs);
+const todayOnlineMs = computed(() => dailyOnlineSeries(online.stats, 7, new Date(), online.liveMs).at(-1)?.ms || 0);
 // Use the same midnight-aware daily buckets as the chart, including live seconds.
 const todayListeningMs = computed(() => dailyListeningSeries(
   duration.stats, 7, new Date(), duration.liveMs,
