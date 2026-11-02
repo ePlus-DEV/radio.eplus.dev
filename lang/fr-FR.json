@@ -594,5 +594,18 @@
     "confirm_stats_hint": "Les durées et graphiques seront supprimés. Vos favoris sont conservés.",
     "cancel": "Annuler",
     "confirm": "Supprimer"
+  },
+  "online_stats": {
+    "total": "Temps total en ligne",
+    "today": "En ligne aujourd'hui",
+    "listening": "Écoute",
+    "online": "En ligne",
+    "tracking": "Suivre le temps en ligne",
+    "definition": "Seul l'onglet visible, actif et connecté compte. Le comptage s'arrête après 5 minutes d'inactivité. La radio peut continuer en arrière-plan sans compter.",
+    "chart_kind": "Type de durée",
+    "daily_chart": "Temps en ligne par jour",
+    "daily_hint": "Choisissez un jour pour voir le temps passé sur le site.",
+    "period_total": "Temps en ligne sur la période",
+    "daily_empty": "Aucun temps en ligne enregistré sur cette période."
   }
 }
