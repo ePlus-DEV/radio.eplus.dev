@@ -606,6 +606,9 @@
     "daily_chart": "Thời gian online theo ngày",
     "daily_hint": "Chọn ngày để xem thời gian sử dụng website.",
     "period_total": "Thời gian online trong khoảng đã chọn",
-    "daily_empty": "Chưa có thời gian online trong khoảng này."
+    "daily_empty": "Chưa có thời gian online trong khoảng này.",
+    "clear_title": "Xóa thống kê online và nghe radio?",
+    "clear_description": "Xóa thời gian online, thời gian nghe, biểu đồ theo ngày và thống kê theo đài trên trình duyệt này? Danh sách yêu thích và lịch sử nghe không bị ảnh hưởng.",
+    "clear_action": "Xóa thống kê thời gian"
   }
 }
