@@ -81,7 +81,7 @@
           </div>
           <div class="flex flex-wrap gap-2">
             <UButton color="neutral" variant="soft" icon="i-lucide-history" class="min-h-11" @click="clearHistoryOpen = true">{{ t('listener_settings.clear_history') }}</UButton>
-            <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">{{ t('listener_settings.clear_stats') }}</UButton>
+            <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">{{ t('online_stats.clear_action') }}</UButton>
           </div>
           <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('listener_settings.local_note') }}</p>
         </section>
@@ -96,7 +96,7 @@
         </div>
       </template>
     </UModal>
-    <UModal v-model:open="clearStatsOpen" :title="t('listener_settings.confirm_stats')" :description="t('listener_settings.confirm_stats_hint')" :ui="{ content: 'max-w-md' }">
+    <UModal v-model:open="clearStatsOpen" :title="t('online_stats.clear_title')" :description="t('online_stats.clear_description')" :ui="{ content: 'max-w-md' }">
       <template #footer>
         <div class="flex w-full justify-end gap-2">
           <UButton color="neutral" variant="outline" @click="clearStatsOpen = false">{{ t('listener_settings.cancel') }}</UButton>
