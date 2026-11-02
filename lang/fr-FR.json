@@ -598,6 +598,7 @@
   "online_stats": {
     "total": "Temps total en ligne",
     "today": "En ligne aujourd'hui",
+    "listening_today": "Écoute aujourd'hui",
     "listening": "Écoute",
     "online": "En ligne",
     "tracking": "Suivre le temps en ligne",
