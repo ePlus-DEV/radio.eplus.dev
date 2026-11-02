@@ -598,6 +598,7 @@
   "online_stats": {
     "total": "線上總時長",
     "today": "今日線上時長",
+    "listening_today": "今日收聽時長",
     "listening": "收聽",
     "online": "線上",
     "tracking": "記錄線上時長",
