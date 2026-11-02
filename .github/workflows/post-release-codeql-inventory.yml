@@ -1,0 +1,30 @@
+# One-time read-only check after production release PR #320.
+name: "Verify post-release Code Scanning alert count"
+on:
+  push:
+    branches:
+      - audit/code-scanning-inventory-20261102
+permissions:
+  contents: read
+  security-events: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: "Count open CodeQL alerts on main, without printing sensitive payloads"
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          file="$RUNNER_TEMP/open-alerts.json"
+          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/code-scanning/alerts?state=open&per_page=100" > "$file"
+          echo "=== Post-release open Code Scanning alerts ==="
+          jq -r '
+            [ .[][] | select(.state == "open") ] as $alerts
+            | "Total: \($alerts|length)",
+              ( $alerts | group_by(.rule.id) | .[]
+                | "\(.[0].rule.id) | \(.[0].rule.security_severity_level // .[0].rule.severity // "unknown") | \(length)" )
+          ' "$file"
+          rm -f "$file"
