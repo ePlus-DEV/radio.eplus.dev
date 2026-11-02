@@ -110,6 +110,7 @@ import { useListeningStore } from '~/stores/listening';
 
 const { t, locale, locales, setLocale } = useI18n();
 const colorMode = useColorMode();
+const config = useRuntimeConfig();
 const preferences = useListenerPreferencesStore();
 const duration = useListeningDurationStore();
 const listening = useListeningStore();
@@ -135,7 +136,7 @@ onMounted(() => {
 });
 useHead(() => ({
   title: t('listener_settings.title'),
-  meta: [{ name: 'robots', content: 'noindex, follow' }],
+  meta: [{ name: 'robots', content: config.public.noIndex ? 'noindex, nofollow, noarchive' : 'noindex, follow' }],
 }));
 </script>
 
