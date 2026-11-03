@@ -8,6 +8,9 @@ import {
   localDayKey,
   parseListeningDuration,
 } from '~/utils/listening-duration.mjs';
+import { createRawStorageSnapshot } from '~/utils/local-duration-snapshot.mjs';
+
+const durationSnapshot = createRawStorageSnapshot();
 
 export const useListeningDurationStore = defineStore('listeningDuration', {
   state: () => ({
@@ -26,7 +29,9 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
       if (!import.meta.client || this.ready) return;
       try {
         this.enabled = parseListeningTrackingEnabled(localStorage.getItem(LISTENING_TRACKING_ENABLED_KEY));
-        this.stats = parseListeningDuration(localStorage.getItem(LISTENING_DURATION_KEY));
+        this.stats = durationSnapshot.external(
+          localStorage.getItem(LISTENING_DURATION_KEY), parseListeningDuration, emptyListeningDuration,
+        );
       } catch { /* Blocked storage should not interrupt playback or the controls. */ }
       this.ready = true;
       window.addEventListener('storage', (event: StorageEvent) => {
@@ -35,8 +40,10 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
             ? localStorage.getItem(LISTENING_TRACKING_ENABLED_KEY) : event.newValue);
         }
         if (event.key === LISTENING_DURATION_KEY || event.key === null) {
-          this.stats = parseListeningDuration(event.key === null
-            ? localStorage.getItem(LISTENING_DURATION_KEY) : event.newValue);
+          this.stats = durationSnapshot.external(
+            event.key === null ? localStorage.getItem(LISTENING_DURATION_KEY) : event.newValue,
+            parseListeningDuration, emptyListeningDuration,
+          );
           if (event.newValue === null) window.dispatchEvent(new Event('radio:listening-duration-reset'));
         }
       });
@@ -56,7 +63,10 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
       this.stats = emptyListeningDuration();
       this.setLivePreview('', 0);
       if (import.meta.client) {
-        try { localStorage.removeItem(LISTENING_DURATION_KEY); }
+        try {
+          localStorage.removeItem(LISTENING_DURATION_KEY);
+          durationSnapshot.saved(null);
+        }
         catch { /* In-memory statistics have still been cleared. */ }
         // Player discards its unflushed buffer so deleted time never returns.
         // If playback continues with tracking enabled, a fresh session starts.
@@ -76,12 +86,18 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
       if (import.meta.client) {
         try {
           const stored = localStorage.getItem(LISTENING_DURATION_KEY);
-          if (stored) this.stats = parseListeningDuration(stored);
+          this.stats = durationSnapshot.read(
+            stored, this.stats, parseListeningDuration, emptyListeningDuration,
+          );
         } catch { /* Keep tracking in memory for this session. */ }
       }
       this.stats = addListeningDurationAcrossDays(this.stats, station, durationMs);
       if (import.meta.client) {
-        try { localStorage.setItem(LISTENING_DURATION_KEY, JSON.stringify(this.stats)); }
+        try {
+          const raw = JSON.stringify(this.stats);
+          localStorage.setItem(LISTENING_DURATION_KEY, raw);
+          durationSnapshot.saved(raw);
+        }
         catch { /* Keep tracking in memory for this session. */ }
       }
     },
