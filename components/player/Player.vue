@@ -1146,6 +1146,7 @@ const onMediaPlaying = (): void => {
   if (listeningDuration.enabled) {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
+    syncDurationClock();
   }
   clearReconnectTimer();
   clearFallbackProbeTimer();
