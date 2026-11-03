@@ -1,67 +1,82 @@
 <template>
   <section :aria-label="$t('library.listening_stats')" class="space-y-6">
-    <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('library.listening_stats_description') }}</p>
-    <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.definition') }}</p>
-    <div v-if="isLive" class="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-      <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" aria-hidden="true"></span>
-      {{ $t('library.listening_live') }}
-    </div>
-    <div class="radio-surface flex flex-col justify-between gap-4 p-4 sm:flex-row sm:items-center sm:p-5">
-      <div class="min-w-0 space-y-1">
-        <h2 class="text-base font-semibold">{{ $t('library.listening_tracking_title') }}</h2>
-        <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('library.listening_tracking_description') }}</p>
+    <header class="flex flex-wrap items-center justify-between gap-3">
+      <div class="max-w-2xl">
+        <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('online_stats.compare_intro') }}</p>
       </div>
-      <div class="flex shrink-0 flex-wrap items-center gap-3">
-        <button
-          type="button"
-          role="switch"
-          :aria-checked="duration.enabled"
-          :aria-label="$t('library.listening_tracking_title')"
-          class="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-          @click="duration.setTrackingEnabled(!duration.enabled)"
-        >
-          <span class="relative h-6 w-11 shrink-0 rounded-full transition-colors" :class="duration.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
-            <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform" :class="duration.enabled ? 'translate-x-5' : ''"></span>
+      <NuxtLink to="/settings" class="radio-interactive inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:text-[var(--radio-text)]">
+        <UIcon name="i-lucide-settings-2" class="h-4 w-4" />
+        {{ $t('online_stats.manage_settings') }}
+      </NuxtLink>
+    </header>
+
+    <!-- Two genuinely different measurements; no stacked or additive total. -->
+    <div class="grid gap-4 lg:grid-cols-2">
+      <article class="radio-surface relative min-w-0 overflow-hidden rounded-3xl border border-[var(--radio-border)] p-5 sm:p-6" :aria-label="$t('online_stats.listening')">
+        <div class="absolute inset-x-0 top-0 h-1 bg-rose-500" aria-hidden="true"></div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex min-w-0 items-center gap-2.5">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500">
+              <UIcon name="i-lucide-headphones" class="h-5 w-5" />
+            </span>
+            <h2 class="min-w-0 text-base font-bold">{{ $t('online_stats.listening') }}</h2>
+          </div>
+          <span v-if="isLive" class="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-2.5 py-1 text-[11px] font-semibold text-rose-600 dark:text-rose-300">
+            <span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+            {{ $t('library.listening_live') }}
           </span>
-          <span>{{ $t(duration.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}</span>
-        </button>
-        <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">
-          {{ $t('online_stats.clear_action') }}
-        </UButton>
-      </div>
+        </div>
+        <p class="mt-5 text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_total') }}</p>
+        <p class="mt-1 text-3xl font-bold tracking-tight tabular-nums text-[var(--radio-text)] sm:text-4xl">{{ formatDuration(totalListeningMs) }}</p>
+        <div class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-rose-500/10 px-3 py-2.5">
+          <span class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</span>
+          <strong class="shrink-0 text-base font-bold tabular-nums text-rose-600 dark:text-rose-300">{{ formatDuration(todayListeningMs) }}</strong>
+        </div>
+        <p class="mt-3 min-h-10 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_explanation') }}</p>
+        <div class="mt-3 flex justify-end border-t border-[var(--radio-border)] pt-2">
+          <button type="button" role="switch" :aria-checked="duration.enabled" :aria-label="$t('library.listening_tracking_title')"
+            class="inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-xs font-medium text-[var(--radio-text-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            @click="duration.setTrackingEnabled(!duration.enabled)">
+            {{ $t('library.listening_tracking_title') }}
+            <span class="relative h-5 w-9 shrink-0 rounded-full transition-colors" :class="duration.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
+              <span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="duration.enabled ? 'translate-x-4' : ''"></span>
+            </span>
+          </button>
+        </div>
+      </article>
+
+      <article class="radio-surface relative min-w-0 overflow-hidden rounded-3xl border border-[var(--radio-border)] p-5 sm:p-6" :aria-label="$t('online_stats.online')">
+        <div class="absolute inset-x-0 top-0 h-1 bg-emerald-500" aria-hidden="true"></div>
+        <div class="flex items-center gap-2.5">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500">
+            <UIcon name="i-lucide-monitor-dot" class="h-5 w-5" />
+          </span>
+          <h2 class="min-w-0 text-base font-bold">{{ $t('online_stats.online') }}</h2>
+        </div>
+        <p class="mt-5 text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.total') }}</p>
+        <p class="mt-1 text-3xl font-bold tracking-tight tabular-nums text-[var(--radio-text)] sm:text-4xl">{{ formatDuration(totalOnlineMs) }}</p>
+        <div class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-emerald-500/10 px-3 py-2.5">
+          <span class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</span>
+          <strong class="shrink-0 text-base font-bold tabular-nums text-emerald-700 dark:text-emerald-300">{{ formatDuration(todayOnlineMs) }}</strong>
+        </div>
+        <p class="mt-3 min-h-10 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.online_explanation') }}</p>
+        <div class="mt-3 flex justify-end border-t border-[var(--radio-border)] pt-2">
+          <button type="button" role="switch" :aria-checked="online.enabled" :aria-label="$t('online_stats.tracking')"
+            class="inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-xs font-medium text-[var(--radio-text-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+            @click="online.setTrackingEnabled(!online.enabled)">
+            {{ $t('online_stats.tracking') }}
+            <span class="relative h-5 w-9 shrink-0 rounded-full transition-colors" :class="online.enabled ? 'bg-emerald-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
+              <span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="online.enabled ? 'translate-x-4' : ''"></span>
+            </span>
+          </button>
+        </div>
+      </article>
     </div>
-    <div class="radio-surface flex flex-wrap items-center justify-between gap-3 p-4 sm:p-5">
-      <div class="min-w-0 flex-1">
-        <p class="text-sm font-semibold">{{ $t('online_stats.tracking') }}</p>
-        <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.definition') }}</p>
-      </div>
-      <button type="button" role="switch" :aria-checked="online.enabled" :aria-label="$t('online_stats.tracking')"
-        class="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-rose-500"
-        @click="online.setTrackingEnabled(!online.enabled)">
-        <span class="relative h-6 w-11 shrink-0 rounded-full transition-colors" :class="online.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
-          <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform" :class="online.enabled ? 'translate-x-5' : ''"></span>
-        </span>
-        <span>{{ $t(online.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}</span>
-      </button>
-    </div>
-    <p v-if="!duration.enabled" class="text-sm font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_tracking_paused') }}</p>
-    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
-      <div class="radio-surface p-5">
-        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_total') }}</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(totalListeningMs) }}</p>
-      </div>
-      <div class="radio-surface p-4 sm:p-5">
-        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.total') }}</p>
-        <p class="mt-2 text-xl font-bold tabular-nums sm:text-2xl">{{ formatDuration(totalOnlineMs) }}</p>
-      </div>
-      <div class="radio-surface p-5">
-        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</p>
-        <p class="mt-2 text-2xl font-bold tabular-nums">{{ formatDuration(todayListeningMs) }}</p>
-      </div>
-      <div class="radio-surface p-4 sm:p-5">
-        <p class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</p>
-        <p class="mt-2 text-xl font-bold tabular-nums sm:text-2xl">{{ formatDuration(todayOnlineMs) }}</p>
-      </div>
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.new_counter_note') }}</p>
+      <UButton color="neutral" variant="ghost" icon="i-lucide-trash-2" size="sm" class="min-h-10" @click="clearStatsOpen = true">
+        {{ $t('online_stats.clear_action') }}
+      </UButton>
     </div>
 
     <figure class="radio-surface space-y-4 p-4 sm:p-5"  :aria-label="$t(chartMode === 'listening' ? 'library.listening_daily_chart' : 'online_stats.daily_chart')">
@@ -74,7 +89,7 @@
           <div class="flex gap-1 rounded-xl bg-[var(--radio-surface-soft)] p-1" role="group" :aria-label="$t('online_stats.chart_kind')">
             <button v-for="mode in chartModes" :key="mode" type="button"
               class="min-h-9 rounded-lg px-3 py-1.5 text-xs font-semibold transition"
-              :class="chartMode === mode ? 'bg-[var(--radio-surface)] text-rose-600 shadow-sm dark:text-rose-300' : 'text-[var(--radio-text-muted)]'"
+               :class="chartMode === mode ? (mode === 'online' ? 'bg-[var(--radio-surface)] text-emerald-700 shadow-sm dark:text-emerald-300' : 'bg-[var(--radio-surface)] text-rose-600 shadow-sm dark:text-rose-300') : 'text-[var(--radio-text-muted)]'"
               :aria-pressed="chartMode === mode" @click="chartMode = mode">
               {{ $t(mode === 'listening' ? 'online_stats.listening' : 'online_stats.online') }}
             </button>
@@ -112,7 +127,7 @@
             >
               <span
                 class="block w-full max-w-12 rounded-t-sm transition-[height,background-color] duration-200"
-                :class="selectedDay.key === day.key ? 'bg-rose-500' : day.ms > 0 ? 'bg-rose-300 group-hover:bg-rose-400 dark:bg-rose-500/60' : 'bg-[var(--radio-border)]'"
+                 :class="chartMode === 'online' ? (selectedDay.key === day.key ? 'bg-emerald-500' : day.ms > 0 ? 'bg-emerald-400/70 group-hover:bg-emerald-400' : 'bg-[var(--radio-border)]') : (selectedDay.key === day.key ? 'bg-rose-500' : day.ms > 0 ? 'bg-rose-300 group-hover:bg-rose-400 dark:bg-rose-500/60' : 'bg-[var(--radio-border)]')"
                 :style="{ height: barHeight(day.ms) }"
                 aria-hidden="true"
               ></span>
