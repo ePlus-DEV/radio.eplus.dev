@@ -155,7 +155,7 @@ const { search } = useAlgoliaSearch(
 
 const input = ref("");
 const inputEl = useTemplateRef("inputEl");
-const { index: localIndex, loading: localLoading, error: localError } = useStationSearchIndex();
+const { index: localIndex, loading: localLoading, error: localError, load: loadLocalIndex } = useStationSearchIndex();
 const remoteHits = shallowRef<unknown[]>([]);
 const remoteQuery = ref("");
 const algoliaFailed = ref(false);
@@ -173,7 +173,9 @@ const suggestionQueries = [
   "EDM",
   "Acoustic",
 ];
-const popularHits = computed(() => searchLocalStations(localIndex.value, "", 5));
+const popularHits = computed(() =>
+  resultsOpen.value || !inline.value ? searchLocalStations(localIndex.value, "", 5) : []
+);
 const searchHistory = ref<string[]>([]);
 const HISTORY_KEY = "radio:search-history";
 let typingTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -198,6 +200,7 @@ watch(input, (value: string) => {
 
 const openResults = (): void => {
   resultsOpen.value = true;
+  void loadLocalIndex();
 };
 
 const closeResults = (): void => {
@@ -206,7 +209,7 @@ const closeResults = (): void => {
 };
 
 const focus = (): void => {
-  resultsOpen.value = true;
+  openResults();
   inputEl.value?.inputRef?.focus();
 };
 

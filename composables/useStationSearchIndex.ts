@@ -28,19 +28,28 @@ function loaderFor(url: string) {
 export function useStationSearchIndex() {
   const searchUrl = useSiteAssetUrl()('/search/stations.json');
   const index = shallowRef<StationSearchItem[]>([]);
-  const loading = ref(true);
+  const loading = ref(false);
   const error = ref(false);
   let disposed = false;
-  onMounted(async () => {
-    try {
-      const items = await loaderFor(searchUrl)();
-      if (!disposed) index.value = items;
-    } catch {
-      if (!disposed) error.value = true;
-    } finally {
-      if (!disposed) loading.value = false;
-    }
-  });
+  let requested: Promise<void> | undefined;
+
+  // Never fetch a multi-station catalog simply because the global header mounts.
+  // Load on search focus/open; the cached loader deduplicates across mobile
+  // modal and desktop header, and failed requests remain retryable.
+  const load = (): Promise<void> => {
+    if (index.value.length) return Promise.resolve();
+    if (requested) return requested;
+    loading.value = true;
+    error.value = false;
+    requested = loaderFor(searchUrl)()
+      .then(items => { if (!disposed) index.value = items; })
+      .catch(() => { if (!disposed) error.value = true; })
+      .finally(() => {
+        requested = undefined;
+        if (!disposed) loading.value = false;
+      });
+    return requested;
+  };
   onBeforeUnmount(() => { disposed = true; });
-  return { index, loading, error };
+  return { index, loading, error, load };
 }

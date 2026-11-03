@@ -13,12 +13,14 @@
 </template>
 
 <script setup lang="ts">
+import { observeCountrySize } from '~/utils/shared-country-resize.mjs';
+
 const props = defineProps<{ text: string }>();
 
 const viewport = ref<HTMLElement | null>(null);
 const content = ref<HTMLElement | null>(null);
 const overflowPixels = ref(0);
-let resizeObserver: ResizeObserver | undefined;
+let stopObserving: (() => void) | undefined;
 
 function measureOverflow() {
   if (!viewport.value || !content.value) return;
@@ -28,19 +30,14 @@ function measureOverflow() {
 
 onMounted(() => {
   void nextTick(measureOverflow);
-  if (typeof ResizeObserver !== "undefined") {
-    resizeObserver = new ResizeObserver(measureOverflow);
-    if (viewport.value) resizeObserver.observe(viewport.value);
-    if (content.value) resizeObserver.observe(content.value);
-  }
-  window.addEventListener("resize", measureOverflow);
+  // One shared ResizeObserver observes all cards instead of one per card.
+  if (viewport.value) stopObserving = observeCountrySize(viewport.value, measureOverflow);
 });
 
 watch(() => props.text, () => { void nextTick(measureOverflow); });
 
 onBeforeUnmount(() => {
-  resizeObserver?.disconnect();
-  window.removeEventListener("resize", measureOverflow);
+  stopObserving?.();
 });
 </script>
 
@@ -55,6 +52,7 @@ onBeforeUnmount(() => {
   overflow: visible;
   text-overflow: clip;
   animation: country-marquee-slide var(--country-marquee-duration) linear infinite alternate;
+  animation-play-state: paused;
 }
 @keyframes country-marquee-slide {
   0%, 14% { transform: translateX(0); }
@@ -62,8 +60,11 @@ onBeforeUnmount(() => {
 }
 @media (hover: hover) {
   .country-marquee-viewport:hover .country-marquee-content--overflow {
-    animation-play-state: paused;
+    animation-play-state: running;
   }
+}
+.country-marquee-viewport:focus-within .country-marquee-content--overflow {
+  animation-play-state: running;
 }
 @media (prefers-reduced-motion: reduce) {
   .country-marquee-content--overflow {
