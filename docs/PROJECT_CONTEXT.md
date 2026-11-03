@@ -795,3 +795,26 @@ The Library stats page visually separates two independent measures:
 The trend geometry is a dependency-free helper at `utils/activity-trend.mjs`,
 covered by `tests/activity-trend.test.mjs`. Empty and invalid data must remain
 legible. Do not confuse relative chart height with comparable absolute quantities.
+
+
+## 2026-11-03 — P1 client-load optimizations (Issue #328)
+
+The header's `SearchBox` mounts on every route (even when hidden by CSS
+on mobile), but must **not** fetch the full `search/stations.json` on mount.
+`useStationSearchIndex` exposes an explicit `load()` action and uses
+`createCachedLoader` to share one in-flight or successful download across
+header/modal instances. Invoke it on user search focus/open; failures must
+remain retryable, with the same offline/Algolia fallback behavior and recent
+history. Avoid evaluating local rankings while the inline search is closed.
+
+`CountryMarquee` uses `observeCountrySize` to share one ResizeObserver
+between all cards instead of creating one observer and window resize listener
+for every station/country label. The one-listener fallback covers browsers
+without ResizeObserver. Overflow names remain accessible via title/tooltips;
+marquee animation is paused by default and runs only on hover/focus.
+Respect reduced-motion settings and clean up observers on unmount.
+
+Regression guard: `tests/performance-ui.test.mjs`. These are structural
+improvements; record DevTools/Lighthouse metrics before claiming quantified
+LCP/INP savings. Preserve the globally mounted radio player, station data,
+static SEO output and existing color tokens.
