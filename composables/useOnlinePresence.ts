@@ -17,7 +17,7 @@ export function useOnlinePresence() {
       onDuration: (ms: number, endDate: Date) => online.record(ms, endDate),
     });
 
-    let timer: ReturnType<typeof setTimeout> | null = null;
+    let timer: number | null = null;
     let ticks = 0;
     let lastEngagementAt = performance.now();
     const statsVisible = () => route.path === '/library' && route.hash === '#stats';
