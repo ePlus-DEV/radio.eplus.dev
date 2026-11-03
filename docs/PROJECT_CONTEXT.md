@@ -770,3 +770,23 @@ or cross-device sync is offered.
 Regression coverage: `tests/online-duration.test.mjs` plus existing
 `tests/listening-duration.test.mjs`. Keep translations and privacy
 copy accurate for all seven locales.
+
+
+
+## 2026-11-03 — Reading online vs listening time in the UI
+
+The Library stats page visually separates two independent measures:
+- **Listening** has the rose accent and headphones icon; includes background audio when playing.
+- **Online** has the emerald accent and browser icon; counts only visible/focused/active site use.
+- Each metric has its own lifetime/today values and its own compact daily trend chart.
+  Their y-axes are intentionally **independent** because a brand-new online counter
+  and older listening totals may differ by several orders of magnitude. Never overlay
+  the two metrics on one scale or stack/add their durations.
+- A shared 7/30/90-day range and keyboard-operable day slider allow inspecting
+  the same calendar day across both metrics without a tall, sparse bar chart.
+- Preserve existing localStorage data, independent tracking toggles, and the
+  explicit confirmation before clearing statistics. Keep all seven locales aligned.
+
+The trend geometry is a dependency-free helper at `utils/activity-trend.mjs`,
+covered by `tests/activity-trend.test.mjs`. Empty and invalid data must remain
+legible. Do not confuse relative chart height with comparable absolute quantities.
