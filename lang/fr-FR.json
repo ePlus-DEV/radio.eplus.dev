@@ -628,6 +628,14 @@
     "chart_tooltip_hint": "Survolez le graphique ou touchez un jour pour voir les durées exactes.",
     "scale_max": "Maximum",
     "chart_hover_label": "Graphique quotidien. Survolez-le ou utilisez les flèches pour inspecter un jour.",
-    "combined_scales_note": "Les courbes utilisent des échelles distinctes (rose et vert). Survolez pour voir les durées réelles ; elles peuvent se chevaucher."
+    "combined_scales_note": "Les courbes utilisent des échelles distinctes (rose et vert). Survolez pour voir les durées réelles ; elles peuvent se chevaucher.",
+    "weekly_activity": "7 derniers jours",
+    "vs_previous_week": "par rapport aux 7 jours précédents",
+    "stations_played": "Stations écoutées",
+    "most_listened_station": "Station la plus écoutée",
+    "listening_peak": "Écoute maximale",
+    "online_peak": "Temps en ligne maximal",
+    "show_all": "Tout afficher",
+    "show_less": "Réduire"
   }
 }
