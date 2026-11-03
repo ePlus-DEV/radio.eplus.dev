@@ -610,6 +610,17 @@
     "daily_empty": "No online time recorded in this period.",
     "clear_title": "Delete online and listening statistics?",
     "clear_description": "Delete online time and radio listening time, daily charts and per-station totals on this browser? Favorites and Recently played are unaffected.",
-    "clear_action": "Delete time statistics"
+    "clear_action": "Delete time statistics",
+    "compare_intro": "Two separate measurements: time listening to radio and time actively using the website.",
+    "manage_settings": "Tracking settings",
+    "listening_explanation": "Counts only when radio audio is actually playing, including in the background.",
+    "online_explanation": "Counts active time on this website tab; stops after 5 minutes without interaction.",
+    "new_counter_note": "Online history starts when this feature is introduced; your earlier listening history is preserved.",
+    "daily_compare": "Daily activity trends",
+    "listening_trend": "Daily radio listening trend",
+    "online_trend": "Daily online time trend",
+    "selected_day": "Selected day",
+    "select_day": "Select a day to inspect",
+    "independent_scales": "Each chart has its own scale. Do not add online and listening time together."
   }
 }

@@ -610,6 +610,17 @@
     "daily_empty": "Chưa có thời gian online trong khoảng này.",
     "clear_title": "Xóa thống kê online và nghe radio?",
     "clear_description": "Xóa thời gian online, thời gian nghe, biểu đồ theo ngày và thống kê theo đài trên trình duyệt này? Danh sách yêu thích và lịch sử nghe không bị ảnh hưởng.",
-    "clear_action": "Xóa thống kê thời gian"
+    "clear_action": "Xóa thống kê thời gian",
+    "compare_intro": "Hai loại thời gian được tính độc lập: nghe radio và sử dụng website.",
+    "manage_settings": "Cài đặt theo dõi",
+    "listening_explanation": "Chỉ tính khi radio đang phát thật, kể cả khi bạn chuyển sang tab khác.",
+    "online_explanation": "Chỉ tính khi bạn đang dùng tab website; tạm dừng sau 5 phút không tương tác.",
+    "new_counter_note": "Thống kê online được tính từ khi tính năng ra mắt; dữ liệu nghe radio trước đó được giữ nguyên.",
+    "daily_compare": "Xu hướng sử dụng theo ngày",
+    "listening_trend": "Xu hướng thời gian nghe radio theo ngày",
+    "online_trend": "Xu hướng thời gian online theo ngày",
+    "selected_day": "Ngày đang xem",
+    "select_day": "Chọn ngày để xem chi tiết",
+    "independent_scales": "Hai biểu đồ có thang đo riêng; không cộng hai khoảng thời gian này."
   }
 }

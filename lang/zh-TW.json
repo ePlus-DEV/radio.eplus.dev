@@ -610,6 +610,17 @@
     "daily_empty": "所選期間尚無線上紀錄。",
     "clear_title": "刪除線上與收聽統計？",
     "clear_description": "刪除此瀏覽器的線上時長、收聽時長、每日圖表及電台統計？收藏與最近收聽紀錄不受影響。",
-    "clear_action": "刪除時間統計"
+    "clear_action": "刪除時間統計",
+    "compare_intro": "分別統計收聽電台的時間與實際使用網站的時間。",
+    "manage_settings": "紀錄設定",
+    "listening_explanation": "僅統計電台實際播放的時間，包含背景播放。",
+    "online_explanation": "僅統計目前網站分頁的活躍時間；5分鐘未操作後暫停。",
+    "new_counter_note": "線上時長從本功能推出後開始紀錄；原有收聽紀錄會保留。",
+    "daily_compare": "每日使用趨勢",
+    "listening_trend": "每日電台收聽趨勢",
+    "online_trend": "每日線上時長趨勢",
+    "selected_day": "選取日期",
+    "select_day": "選取要查看的日期",
+    "independent_scales": "兩張圖採用不同刻度，請勿將線上與收聽時間相加。"
   }
 }
