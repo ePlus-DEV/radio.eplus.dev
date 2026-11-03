@@ -628,6 +628,14 @@
     "chart_tooltip_hint": "Hover over the chart or tap a date to see exact durations.",
     "scale_max": "Peak",
     "chart_hover_label": "Daily time chart. Hover or use arrow keys to inspect a date.",
-    "combined_scales_note": "The two lines use separate scales (pink and green); hover for actual time. Their durations can overlap."
+    "combined_scales_note": "The two lines use separate scales (pink and green); hover for actual time. Their durations can overlap.",
+    "weekly_activity": "Last 7 days",
+    "vs_previous_week": "vs previous 7 days",
+    "stations_played": "Stations listened to",
+    "most_listened_station": "Most listened station",
+    "listening_peak": "Peak listening",
+    "online_peak": "Peak online",
+    "show_all": "View all",
+    "show_less": "Show less"
   }
 }
