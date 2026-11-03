@@ -621,6 +621,13 @@
     "online_trend": "Daily online time trend",
     "selected_day": "Selected day",
     "select_day": "Select a day to inspect",
-    "independent_scales": "Each chart has its own scale. Do not add online and listening time together."
+    "independent_scales": "Both metrics have independent scales; do not add their durations.",
+    "filter_both": "Both",
+    "filter_listening": "Listening",
+    "filter_online": "Online",
+    "chart_tooltip_hint": "Hover over the chart or tap a date to see exact durations.",
+    "scale_max": "Peak",
+    "chart_hover_label": "Daily time chart. Hover or use arrow keys to inspect a date.",
+    "combined_scales_note": "The two lines use separate scales (pink and green); hover for actual time. Their durations can overlap."
   }
 }
