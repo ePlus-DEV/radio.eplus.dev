@@ -59,8 +59,11 @@
 <script setup lang="ts">
 import { en, vi, ja, zh_cn, zh_tw, fr, ru } from '@nuxt/ui/locale';
 import { usePlaybackStore } from '~/stores/playback';
+import { useOnlinePresence } from '~/composables/useOnlinePresence';
 import { buildPlaybackTitleTemplate } from '~/utils/playback-tab-title.mjs';
 const playback = usePlaybackStore();
+// Global online presence survives route changes and is independent of audio playback.
+useOnlinePresence();
 const router = useRouter();
 const nuxtApp = useNuxtApp();
 

@@ -594,5 +594,22 @@
     "confirm_stats_hint": "收听时长和图表将删除，收藏不受影响。",
     "cancel": "取消",
     "confirm": "删除"
+  },
+  "online_stats": {
+    "total": "在线总时长",
+    "today": "今日在线时长",
+    "listening_today": "今日收听时长",
+    "listening": "收听",
+    "online": "在线",
+    "tracking": "记录在线时长",
+    "definition": "仅统计联网、可见且获得焦点的标签页。连续5分钟没有操作后暂停计时。后台播放电台不计入在线时长。",
+    "chart_kind": "时长类型",
+    "daily_chart": "每日在线时长",
+    "daily_hint": "选择日期查看网站使用时长。",
+    "period_total": "所选期间在线时长",
+    "daily_empty": "所选期间尚无在线记录。",
+    "clear_title": "删除在线与收听统计？",
+    "clear_description": "删除本浏览器的在线时长、收听时长、每日图表和电台统计？收藏与最近收听记录不会受到影响。",
+    "clear_action": "删除时间统计"
   }
 }

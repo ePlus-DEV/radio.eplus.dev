@@ -70,6 +70,10 @@
             <span class="min-w-0"><span class="settings-label">{{ t('library.listening_tracking_title') }}</span><span class="settings-hint">{{ t('listener_settings.tracking_hint') }}</span></span>
             <span :class="toggleClass(duration.enabled)" class="settings-switch" aria-hidden="true"><span class="settings-switch-thumb" /></span>
           </button>
+          <button type="button" role="switch" :aria-checked="online.enabled" class="settings-row" @click="online.setTrackingEnabled(!online.enabled)">
+            <span class="min-w-0"><span class="settings-label">{{ t('online_stats.tracking') }}</span><span class="settings-hint">{{ t('online_stats.definition') }}</span></span>
+            <span :class="toggleClass(online.enabled)" class="settings-switch" aria-hidden="true"><span class="settings-switch-thumb" /></span>
+          </button>
           <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('listener_settings.analytics_note') }}</p>
           <div class="flex flex-wrap gap-2">
             <UButton to="/library#favorites" color="neutral" variant="outline" icon="i-lucide-heart" class="min-h-11">{{ t('listener_settings.favorites') }}</UButton>
@@ -77,7 +81,7 @@
           </div>
           <div class="flex flex-wrap gap-2">
             <UButton color="neutral" variant="soft" icon="i-lucide-history" class="min-h-11" @click="clearHistoryOpen = true">{{ t('listener_settings.clear_history') }}</UButton>
-            <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">{{ t('listener_settings.clear_stats') }}</UButton>
+            <UButton color="error" variant="soft" icon="i-lucide-trash-2" class="min-h-11" @click="clearStatsOpen = true">{{ t('online_stats.clear_action') }}</UButton>
           </div>
           <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('listener_settings.local_note') }}</p>
         </section>
@@ -92,7 +96,7 @@
         </div>
       </template>
     </UModal>
-    <UModal v-model:open="clearStatsOpen" :title="t('listener_settings.confirm_stats')" :description="t('listener_settings.confirm_stats_hint')" :ui="{ content: 'max-w-md' }">
+    <UModal v-model:open="clearStatsOpen" :title="t('online_stats.clear_title')" :description="t('online_stats.clear_description')" :ui="{ content: 'max-w-md' }">
       <template #footer>
         <div class="flex w-full justify-end gap-2">
           <UButton color="neutral" variant="outline" @click="clearStatsOpen = false">{{ t('listener_settings.cancel') }}</UButton>
@@ -106,6 +110,7 @@
 <script setup lang="ts">
 import { useListenerPreferencesStore } from '~/stores/listenerPreferences';
 import { useListeningDurationStore } from '~/stores/listeningDuration';
+import { useOnlineDurationStore } from '~/stores/onlineDuration';
 import { useListeningStore } from '~/stores/listening';
 
 const { t, locale, locales, setLocale } = useI18n();
@@ -113,6 +118,7 @@ const colorMode = useColorMode();
 const config = useRuntimeConfig();
 const preferences = useListenerPreferencesStore();
 const duration = useListeningDurationStore();
+const online = useOnlineDurationStore();
 const listening = useListeningStore();
 const clearHistoryOpen = ref(false);
 const clearStatsOpen = ref(false);
@@ -127,11 +133,12 @@ const onLanguageChange = (event: Event) => {
   if (locales.value.some(item => item.code === value)) void setLocale(value);
 };
 const clearHistory = () => { listening.clearRecent(); clearHistoryOpen.value = false; };
-const clearStats = () => { duration.clearStatistics(); clearStatsOpen.value = false; };
+const clearStats = () => { duration.clearStatistics(); online.clearStatistics(); clearStatsOpen.value = false; };
 
 onMounted(() => {
   preferences.hydrate();
   duration.hydrate();
+  online.hydrate();
   listening.hydrate();
 });
 useHead(() => ({

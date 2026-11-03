@@ -594,5 +594,22 @@
     "confirm_stats_hint": "收聽時間和圖表將刪除，收藏不受影響。",
     "cancel": "取消",
     "confirm": "刪除"
+  },
+  "online_stats": {
+    "total": "線上總時長",
+    "today": "今日線上時長",
+    "listening_today": "今日收聽時長",
+    "listening": "收聽",
+    "online": "線上",
+    "tracking": "記錄線上時長",
+    "definition": "僅統計連網、可見且取得焦點的分頁。連續5分鐘沒有操作後暫停計時。背景播放電台不計入線上時長。",
+    "chart_kind": "時長類型",
+    "daily_chart": "每日線上時長",
+    "daily_hint": "選擇日期查看網站使用時間。",
+    "period_total": "所選期間線上時長",
+    "daily_empty": "所選期間尚無線上紀錄。",
+    "clear_title": "刪除線上與收聽統計？",
+    "clear_description": "刪除此瀏覽器的線上時長、收聽時長、每日圖表及電台統計？收藏與最近收聽紀錄不受影響。",
+    "clear_action": "刪除時間統計"
   }
 }

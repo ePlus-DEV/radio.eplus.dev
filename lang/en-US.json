@@ -594,5 +594,22 @@
     "confirm_stats_hint": "Listening totals and chart data will be cleared. Favorites stay intact.",
     "cancel": "Cancel",
     "confirm": "Delete"
+  },
+  "online_stats": {
+    "total": "Total online time",
+    "today": "Online today",
+    "listening_today": "Listening today",
+    "listening": "Listening",
+    "online": "Online",
+    "tracking": "Track online time",
+    "definition": "Only counts a focused, visible tab while connected; stops after 5 minutes without activity. Audio may continue in the background without counting online time.",
+    "chart_kind": "Time metric",
+    "daily_chart": "Online time by day",
+    "daily_hint": "Select a day to inspect foreground website time.",
+    "period_total": "Online time in selected period",
+    "daily_empty": "No online time recorded in this period.",
+    "clear_title": "Delete online and listening statistics?",
+    "clear_description": "Delete online time and radio listening time, daily charts and per-station totals on this browser? Favorites and Recently played are unaffected.",
+    "clear_action": "Delete time statistics"
   }
 }
