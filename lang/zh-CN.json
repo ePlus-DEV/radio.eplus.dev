@@ -610,6 +610,17 @@
     "daily_empty": "所选期间尚无在线记录。",
     "clear_title": "删除在线与收听统计？",
     "clear_description": "删除本浏览器的在线时长、收听时长、每日图表和电台统计？收藏与最近收听记录不会受到影响。",
-    "clear_action": "删除时间统计"
+    "clear_action": "删除时间统计",
+    "compare_intro": "分别统计收听电台的时长和实际使用网站的时长。",
+    "manage_settings": "记录设置",
+    "listening_explanation": "仅统计电台实际播放的时间，包括后台播放。",
+    "online_explanation": "仅统计当前网站标签页的活跃时间；5分钟无操作后暂停。",
+    "new_counter_note": "在线时长从本功能上线后开始记录；原有收听记录保留。",
+    "daily_compare": "每日使用趋势",
+    "listening_trend": "每日电台收听趋势",
+    "online_trend": "每日在线时长趋势",
+    "selected_day": "选定日期",
+    "select_day": "选择要查看的日期",
+    "independent_scales": "两张图使用不同的刻度，请勿将在线和收听时长相加。"
   }
 }
