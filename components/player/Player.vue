@@ -1316,13 +1316,7 @@ watch(() => [currentRoute.path, currentRoute.hash], syncDurationClock);
 onMounted(() => {
   preferences.hydrate();
   listeningDuration.hydrate();
-  // Update the statistics dashboard every second while only persisting
-  // checkpoints every five seconds to avoid excessive localStorage writes.
-  durationInterval = setInterval(() => {
-    durationTickCount += 1;
-    if (durationTickCount % 5 === 0) listeningDurationTracker.flush();
-    listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs);
-  }, 1_000);
+  // No idle interval: listening timer starts on an actual media "playing" event.
   window.addEventListener('pagehide', stopListeningDuration);
   window.addEventListener('radio:listening-duration-reset', resetListeningTracking);
   document.addEventListener("visibilitychange", checkSleepDeadline);
@@ -1378,7 +1372,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   stopListeningDuration();
-  if (durationInterval) clearInterval(durationInterval);
   window.removeEventListener('pagehide', stopListeningDuration);
   window.removeEventListener('radio:listening-duration-reset', resetListeningTracking);
   sleepTimer.cancel();
