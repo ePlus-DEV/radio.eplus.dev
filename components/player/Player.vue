@@ -1308,8 +1308,10 @@ const resetListeningTracking = (): void => {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
   }
+  syncDurationClock();
 };
 watch(() => listeningDuration.enabled, resetListeningTracking, { flush: 'sync' });
+watch(() => [currentRoute.path, currentRoute.hash], syncDurationClock);
 
 onMounted(() => {
   preferences.hydrate();
