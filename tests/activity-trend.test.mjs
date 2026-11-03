@@ -49,17 +49,29 @@ test('large differences use independent scales so new online data stays visible'
   assert.equal(online.points[0].y, 8);
 });
 
-test('compact statistics renders two accessible trends and retains daily inspection and opt outs', async () => {
+test('statistics combines two independently scaled series in one interactive chart', async () => {
   const [ui, docs] = await Promise.all([
     read('components/panel/ListeningStats.vue'),
     read('docs/PROJECT_CONTEXT.md'),
   ]);
-  assert.match(ui, /listeningGeometry\.areaPath/);
-  assert.match(ui, /onlineGeometry\.areaPath/);
-  assert.match(ui, /buildActivityTrend\(listeningTrend\.value\)/);
-  assert.match(ui, /buildActivityTrend\(onlineTrend\.value\)/);
+  assert.match(ui, /buildActivityTrend\(listeningTrend\.value, 800, 210\)/);
+  assert.match(ui, /buildActivityTrend\(onlineTrend\.value, 800, 210\)/);
+  assert.match(ui, /:d="listeningGeometry\.linePath"/);
+  assert.match(ui, /:d="onlineGeometry\.linePath"/);
+  assert.match(ui, /<svg v-if="visibleHasData"/);
+  assert.equal((ui.match(/<svg /g) || []).length, 1, 'should display only one chart');
+  assert.match(ui, /:aria-pressed="visibleMetric === option"/);
+  assert.match(ui, /chartFilters: ChartFilter\[\] = \['both', 'listening', 'online'\]/);
+  assert.match(ui, /v-for="days in \[7, 30, 90\]"/);
+  assert.match(ui, /@pointermove="onChartPointerMove"/);
+  assert.match(ui, /@pointerdown="onChartPointerDown"/);
+  assert.match(ui, /role="tooltip"/);
+  assert.match(ui, /inspectedDateKey/);
+  assert.match(ui, /formatDuration\(inspectedListeningMs\)/);
+  assert.match(ui, /formatDuration\(inspectedOnlineMs\)/);
+  assert.match(ui, /@keydown\.left\.prevent="moveSelectedDay\(-1\)"/);
+  assert.match(ui, /@keydown\.right\.prevent="moveSelectedDay\(1\)"/);
   assert.match(ui, /min="0" :max="Math\.max\(0, listeningTrend\.length - 1\)"/);
-  assert.match(ui, /selectDayAtIndex/);
   assert.match(ui, /:aria-checked="duration\.enabled"/);
   assert.match(ui, /:aria-checked="online\.enabled"/);
   assert.match(ui, /duration\.clearStatistics\(\)/);
@@ -68,12 +80,26 @@ test('compact statistics renders two accessible trends and retains daily inspect
   assert.match(docs, /Online presence time versus listening duration/);
 });
 
+test('combined chart retains accurate independent values and selected-day inspection', async () => {
+  const ui = await read('components/panel/ListeningStats.vue');
+  assert.match(ui, /listeningGeometry\.maxMs/);
+  assert.match(ui, /onlineGeometry\.maxMs/);
+  assert.match(ui, /selectedListeningMs/);
+  assert.match(ui, /selectedOnlineMs/);
+  assert.match(ui, /tooltipLeft/);
+  assert.match(ui, /indexFromPointer/);
+  assert.match(ui, /visibleMetric\.value !== 'online'/);
+  assert.match(ui, /visibleMetric\.value !== 'listening'/);
+});
+
 test('seven translations have complete and distinct explanations', async () => {
   for (const locale of ['en-US', 'vi-VN', 'ja-JP', 'fr-FR', 'ru-RU', 'zh-CN', 'zh-TW']) {
     const copy = JSON.parse(await read('lang/' + locale + '.json')).online_stats;
     for (const key of ['compare_intro', 'manage_settings', 'listening_explanation',
       'online_explanation', 'new_counter_note', 'daily_compare', 'listening_trend',
-      'online_trend', 'selected_day', 'select_day', 'independent_scales']) {
+      'online_trend', 'selected_day', 'select_day', 'independent_scales',
+      'filter_both', 'filter_listening', 'filter_online', 'chart_tooltip_hint',
+      'scale_max', 'chart_hover_label', 'combined_scales_note']) {
       assert.ok(typeof copy[key] === 'string' && copy[key].trim(), locale + ' missing ' + key);
     }
   }
