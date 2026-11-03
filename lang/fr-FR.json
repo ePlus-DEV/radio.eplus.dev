@@ -610,6 +610,17 @@
     "daily_empty": "Aucun temps en ligne enregistré sur cette période.",
     "clear_title": "Effacer les statistiques en ligne et d’écoute ?",
     "clear_description": "Supprimer les durées en ligne et d’écoute, les graphiques et les totaux par station dans ce navigateur ? Les favoris et l’historique restent intacts.",
-    "clear_action": "Effacer les statistiques de durée"
+    "clear_action": "Effacer les statistiques de durée",
+    "compare_intro": "Deux durées distinctes : écoute de la radio et utilisation active du site.",
+    "manage_settings": "Réglages du suivi",
+    "listening_explanation": "Compte uniquement lorsque la radio joue réellement, y compris en arrière-plan.",
+    "online_explanation": "Compte le temps actif sur cet onglet et s'arrête après 5 minutes sans interaction.",
+    "new_counter_note": "Le suivi du temps en ligne commence avec cette fonction ; l'ancien historique d'écoute est conservé.",
+    "daily_compare": "Tendances quotidiennes",
+    "listening_trend": "Évolution quotidienne de l'écoute",
+    "online_trend": "Évolution quotidienne du temps en ligne",
+    "selected_day": "Jour sélectionné",
+    "select_day": "Choisir un jour à consulter",
+    "independent_scales": "Chaque graphique possède sa propre échelle. Ne cumulez pas les deux durées."
   }
 }
