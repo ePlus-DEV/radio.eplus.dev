@@ -13,6 +13,7 @@
         </div>
         <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
           <div class="min-w-0">
+            <span class="sr-only">{{ $t('library.listening_total') }}</span>
             <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalListeningMs) }}</p>
             <p class="mt-2 text-xs font-medium text-rose-600 dark:text-rose-300">
               <template v-if="listeningWeekDelta !== null">
@@ -35,6 +36,7 @@
         </div>
         <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
           <div class="min-w-0">
+            <span class="sr-only">{{ $t('online_stats.total') }}</span>
             <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalOnlineMs) }}</p>
             <p class="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
               <template v-if="onlineWeekDelta !== null">
