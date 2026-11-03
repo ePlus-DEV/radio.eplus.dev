@@ -258,6 +258,7 @@ const emit = defineEmits<{
 
 const $store = useMainStore();
 const playback = usePlaybackStore();
+const currentRoute = useRoute();
 const preferences = useListenerPreferencesStore();
 const listening = useListeningStore();
 listening.hydrate();
