@@ -735,3 +735,63 @@ and preserve favorites.
 Regression tests: `tests/listener-settings.test.mjs`, existing
 `tests/player-hls-startup.test.mjs` and player/SEO tests. Keep
 `npm test`, `npm run generate`, and CodeQL CI green before merging.
+
+
+## 2026-11-02 — Online presence time versus listening duration
+
+**Online time is not radio listening time.** Online presence is a local-only
+metric measured by `composables/useOnlinePresence.ts`, mounted **once** in
+`app.vue`, independently of `PlayerSession`. It counts while this
+browser tab is **visible, foreground/focused and connected**; it does not
+require playback. Audio may keep streaming in the background without
+increasing online presence. Idle for five minutes stops online counting
+until actual user interaction or returning focus. Visibility, focus, blur,
+online/offline, pagehide and user activity events maintain the timer.
+
+`utils/online-duration.mjs` defines a monotonic-clock checkpoint tracker,
+bounded to 15 seconds per checkpoint to avoid sleeping/tab-suspension clock
+jumps. It uses the existing midnight-safe local-day splitter and 365-day
+retention limit, but stores online totals in distinct keys:
+`radio_online_duration_v1` and
+`radio_online_tracking_enabled_v1`. Audio listening data stays in
+`radio_listening_duration_v1` and existing station history/favorites
+are untouched. Never mix the two metrics or silently infer online
+duration from media play time or playback duration from page presence.
+
+Both local tracking switches are independent and may be disabled separately
+in Settings and the Listening Statistics view. GA4 analytics remain a
+**separate** concern. Deleting time statistics confirms intent and clears
+both local online and listening totals, resetting pending checkpoints
+without restoring the deleted interval. Daily graphs select Online or
+Listening rather than double-stacking the two and implying their totals
+are disjoint. Values apply to this browser only; no authenticated account
+or cross-device sync is offered.
+
+Regression coverage: `tests/online-duration.test.mjs` plus existing
+`tests/listening-duration.test.mjs`. Keep translations and privacy
+copy accurate for all seven locales.
+
+
+
+## 2026-11-03 — Reading online vs listening time in the UI
+
+The Library stats page visually separates two independent measures:
+- **Listening** has the rose accent and headphones icon; includes background audio when playing.
+- **Online** has the emerald accent and browser icon; counts only visible/focused/active site use.
+- Each metric retains separate lifetime/today cards, but daily history is shown
+  in **one combined interactive SVG chart** with two distinguishable lines.
+  The lines have intentionally **independent scales**, because a brand-new
+  online counter and years of listening totals may differ drastically.
+  Show each scale's maximum in matching colors and explain this explicitly;
+  never imply the same y-axis units/scale or stack/add these overlapping times.
+- Filters support **Both**, **Listening only**, and **Online only** with shared
+  7/30/90-day ranges. Hovering a point shows a date and actual durations in a
+  tooltip; pointer/touch, keyboard left/right, and a separate accessible day
+  slider allow inspecting values on mobile or without hover. Invalid/zero data
+  must remain legible and must not manufacture duration values.
+- Preserve existing localStorage data, independent tracking toggles, and the
+  explicit confirmation before clearing statistics. Keep all seven locales aligned.
+
+The trend geometry is a dependency-free helper at `utils/activity-trend.mjs`,
+covered by `tests/activity-trend.test.mjs`. Empty and invalid data must remain
+legible. Do not confuse relative chart height with comparable absolute quantities.
