@@ -818,3 +818,37 @@ Regression guard: `tests/performance-ui.test.mjs`. These are structural
 improvements; record DevTools/Lighthouse metrics before claiming quantified
 LCP/INP savings. Preserve the globally mounted radio player, station data,
 static SEO output and existing color tokens.
+
+## 2026-11-03 — Approved Library Statistics dashboard visual design
+
+Design fidelity is a product requirement for `/library#stats` (user-approved
+dashboard mockup). The implementation deliberately uses real, local browser
+data and never copies placeholder example metrics into the application.
+
+- The top row contains two compact headline KPI cards: rose radio listening
+  and emerald foreground online time. Their seven-day sparklines and week
+  comparisons are calculated from saved daily data. Do NOT fabricate a growth
+  percentage if the previous comparison week has no data; display the
+  current seven-day duration instead.
+- Four smaller summary tiles show today's listening, today's online time,
+  distinct stations listened to, and the most-listened station.
+- The single interactive daily chart has both colored line/area series,
+  visible grid, true hover/touch tooltip, date range and metric filters.
+  Daily values must remain accurate with independent line scales because
+  online and listening durations may overlap. The day slider also works on
+  keyboard/mobile and must not be removed only for visual similarity.
+- Beneath the chart, show real peak days and independent tracking switches
+  (not decorative controls). The list of stations uses persisted durations,
+  available artwork with a valid fallback, time shares based on ranked entries,
+  and functional expand/collapse for more than five stations.
+- The dark midnight/navy/purple page palette is scoped to the Statistics
+  Library route via `radio-stats-shell`; all other routes and light mode
+  keep established `--radio-*` semantics. Player session stays outside
+  `NuxtPage`, not remounted when switching Library sections.
+- `pages/library.vue` presents the compact icon heading and segmented
+  navigation from the mockup. `components/panel/ListeningStats.vue` owns
+  dashboard internals. `tests/library-stats-design.test.mjs` guards layout,
+  privacy/data semantics, interactivity and all seven locale labels.
+
+This is a scoped front-end restyle. Do not introduce sample stations,
+fake recommendations/schedules, or a separate chart dependency.
