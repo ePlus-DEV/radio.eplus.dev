@@ -610,6 +610,17 @@
     "daily_empty": "この期間のオンライン記録はありません。",
     "clear_title": "オンラインと再生の統計を削除しますか？",
     "clear_description": "このブラウザーのオンライン時間、再生時間、日別グラフ、局別の集計を削除しますか？お気に入りと再生履歴は保持されます。",
-    "clear_action": "時間の統計を削除"
+    "clear_action": "時間の統計を削除",
+    "compare_intro": "ラジオを聴いた時間とサイトを利用した時間を別々に集計します。",
+    "manage_settings": "記録設定",
+    "listening_explanation": "ラジオの音声が実際に再生されている間だけ集計します。バックグラウンド再生も含みます。",
+    "online_explanation": "このサイトのタブを操作している間だけ集計し、操作が5分間ないと停止します。",
+    "new_counter_note": "オンライン時間は機能導入以降の記録です。以前の再生時間は維持されます。",
+    "daily_compare": "日別の利用傾向",
+    "listening_trend": "日別ラジオ再生時間の推移",
+    "online_trend": "日別オンライン時間の推移",
+    "selected_day": "選択した日",
+    "select_day": "詳細を見る日を選択",
+    "independent_scales": "2つのグラフは別々の目盛りです。時間を合算しないでください。"
   }
 }
