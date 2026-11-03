@@ -628,6 +628,14 @@
     "chart_tooltip_hint": "将鼠标移到图表上或点击日期查看准确时长。",
     "scale_max": "峰值",
     "chart_hover_label": "每日时长图表。悬停或使用方向键查看具体日期。",
-    "combined_scales_note": "两条线使用独立刻度（粉色和绿色）。悬停可查看实际时长；两段时间可能重叠。"
+    "combined_scales_note": "两条线使用独立刻度（粉色和绿色）。悬停可查看实际时长；两段时间可能重叠。",
+    "weekly_activity": "最近7天",
+    "vs_previous_week": "与前7天相比",
+    "stations_played": "已收听电台数",
+    "most_listened_station": "收听最多的电台",
+    "listening_peak": "收听峰值",
+    "online_peak": "在线峰值",
+    "show_all": "查看全部",
+    "show_less": "收起"
   }
 }
