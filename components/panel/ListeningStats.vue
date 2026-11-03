@@ -17,7 +17,7 @@
             <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalListeningMs) }}</p>
             <p class="mt-2 text-xs font-medium text-rose-600 dark:text-rose-300">
               <template v-if="listeningWeekDelta !== null">
-                <UIcon name="i-lucide-trending-up" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
+                <UIcon :name="listeningWeekDelta >= 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
                 {{ formatWeekDelta(listeningWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
               </template>
               <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(listeningWeekTotal) }}</template>
@@ -40,7 +40,7 @@
             <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalOnlineMs) }}</p>
             <p class="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
               <template v-if="onlineWeekDelta !== null">
-                <UIcon name="i-lucide-trending-up" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
+                <UIcon :name="onlineWeekDelta >= 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
                 {{ formatWeekDelta(onlineWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
               </template>
               <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(onlineWeekTotal) }}</template>
@@ -197,10 +197,22 @@
 
       <!-- Visible on touch and keyboard; chart hover alone must never be required. -->
       <div class="mt-2 px-1">
-        <label class="flex items-center justify-between gap-3 text-[11px] text-[var(--radio-text-muted)]" for="radio-stats-day">
-          <span>{{ $t('online_stats.selected_day') }}</span>
-          <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDay(selectedDateKey) }}</strong>
-        </label>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-[var(--radio-text-muted)]">
+          <label class="mr-auto inline-flex items-center gap-2" for="radio-stats-day">
+            <span>{{ $t('online_stats.selected_day') }}</span>
+            <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDay(selectedDateKey) }}</strong>
+          </label>
+          <span v-if="showListening" class="inline-flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-rose-500" aria-hidden="true"></span>
+            {{ $t('online_stats.listening') }}
+            <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDuration(selectedListeningMs) }}</strong>
+          </span>
+          <span v-if="showOnline" class="inline-flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+            {{ $t('online_stats.online') }}
+            <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDuration(selectedOnlineMs) }}</strong>
+          </span>
+        </div>
         <input id="radio-stats-day" type="range" min="0" :max="Math.max(0, listeningTrend.length - 1)" step="1"
           :value="selectedDayIndex" @input="selectDayAtIndex"
           class="mt-2 h-1.5 w-full cursor-pointer accent-rose-500"
@@ -275,11 +287,10 @@
             :class="index === 0 ? 'stats-rank-first' : index === 1 ? 'stats-rank-second' : index === 2 ? 'stats-rank-third' : ''">
             {{ index + 1 }}
           </span>
-          <NuxtLink :to="station.url" :prefetch="false" tabindex="-1" aria-hidden="true"
-            class="stats-ranking-artwork flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg">
-            <img :src="siteAssetUrl(stationImage(station.url))" :alt="''" loading="lazy"
+          <span class="stats-ranking-artwork flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg" aria-hidden="true">
+            <img :src="siteAssetUrl(stationImage(station.url))" alt="" loading="lazy"
               class="h-full w-full object-contain p-1" @error="onStationImageError" />
-          </NuxtLink>
+          </span>
           <div class="min-w-0">
             <div class="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs">
               <NuxtLink :to="station.url" :prefetch="false" class="min-w-0 truncate font-semibold hover:text-rose-500"
