@@ -1,13 +1,18 @@
 <template>
-  <div class="space-y-6">
-    <header>
-      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{{ $t('redesign.library') }}</h1>
-      <p class="mt-2 text-sm text-[var(--radio-text-muted)]">{{ $t('redesign.library_description') }}</p>
+  <div class="radio-library-page space-y-4 sm:space-y-5">
+    <header class="flex items-center gap-3">
+      <span class="library-title-icon inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl" aria-hidden="true">
+        <UIcon name="i-lucide-chart-no-axes-column-increasing" class="h-6 w-6" />
+      </span>
+      <div class="min-w-0">
+        <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl">{{ $t('redesign.library') }}</h1>
+        <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)] sm:text-sm">{{ $t('redesign.library_description') }}</p>
+      </div>
     </header>
 
     <!-- These are real URL links, not controlled UTabs buttons:
          navigation history and deep links must remain first-class. -->
-    <nav class="radio-library-tabs rounded-2xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1.5"
+    <nav class="radio-library-tabs rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1"
       :aria-label="$t('redesign.library')">
       <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
         <NuxtLink v-for="tab in tabs" :key="tab.value" :to="libraryTabHref(tab.value)" custom v-slot="{ href, navigate }">
@@ -17,7 +22,7 @@
             :href="href"
             :title="tab.label"
             :aria-current="clientReady && active === tab.value ? 'location' : undefined"
-            class="radio-interactive flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-xl px-2.5 py-2.5 text-center text-sm font-semibold motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:px-3"
+            class="radio-interactive library-tab flex min-h-10 min-w-0 items-center justify-center gap-2 rounded-lg px-2.5 py-2 text-center text-xs font-semibold motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:text-sm"
             :class="clientReady && active === tab.value
               ? 'bg-rose-600 text-white shadow-sm shadow-rose-950/15 dark:bg-rose-600'
               : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
@@ -61,3 +66,22 @@ const tabs = computed(() => [
 ]);
 useHead(() => ({ title: t('redesign.library'), meta: [{ name: 'robots', content: config.public.noIndex ? 'noindex, nofollow, noarchive' : 'noindex, follow' }] }));
 </script>
+
+<style scoped>
+.library-title-icon {
+  color: #f43f8e;
+  background: rgb(244 63 142 / .12);
+}
+:global(html.dark) .library-title-icon {
+  color: #f472b6;
+  background: linear-gradient(140deg, #311c45, #211f41);
+  box-shadow: 0 0 24px -17px #f43f8e;
+}
+:global(html.dark) .radio-library-tabs {
+  background: linear-gradient(100deg, #1b223b, #171d34);
+  border-color: rgb(148 163 184 / .18);
+}
+:global(html.dark) .library-tab[aria-current='location'] {
+  background: linear-gradient(95deg, #e11d58, #ed205f);
+}
+</style>
