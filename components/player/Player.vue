@@ -308,8 +308,39 @@ const listeningDurationTracker = createListeningDurationTracker({
   },
 });
 let durationInterval: ReturnType<typeof setInterval> | null = null;
+let durationClockPeriod = 0;
 let durationTickCount = 0;
+const stopDurationClock = (): void => {
+  if (durationInterval !== null) clearInterval(durationInterval);
+  durationInterval = null;
+  durationClockPeriod = 0;
+};
+const syncDurationClock = (): void => {
+  if (!import.meta.client) return;
+  const station = listeningDurationTracker.activeUrl;
+  if (!listeningDuration.enabled || !station) {
+    stopDurationClock();
+    return;
+  }
+  const statsVisible = currentRoute.path === '/library' && currentRoute.hash === '#stats';
+  const nextPeriod = statsVisible ? 1_000 : 5_000;
+  if (durationInterval !== null && durationClockPeriod === nextPeriod) return;
+  stopDurationClock();
+  durationTickCount = 0;
+  listeningDuration.setLivePreview(station, listeningDurationTracker.pendingMs);
+  durationClockPeriod = nextPeriod;
+  durationInterval = setInterval(() => {
+    durationTickCount += 1;
+    if (nextPeriod === 5_000 || durationTickCount % 5 === 0) listeningDurationTracker.flush();
+    if (nextPeriod === 1_000) {
+      listeningDuration.setLivePreview(
+        listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs,
+      );
+    }
+  }, nextPeriod);
+};
 const stopListeningDuration = () => {
+  stopDurationClock();
   listeningDurationTracker.stop();
   listeningDuration.setLivePreview('', 0);
 };
