@@ -1,7 +1,7 @@
 <template>
   <UApp :locale="uiLocale" :toaster="null">
   <NuxtLoadingIndicator color="#f43f5e" :height="3" :throttle="150" />
-  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen, 'radio-shell-player-mini': clientReady && playback.playerMini }" class="radio-shell min-h-screen w-full overflow-x-clip bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
+  <div :class="{ 'radio-shell-queue': clientReady && playback.station && playback.queueOpen, 'radio-shell-player-mini': clientReady && playback.playerMini, 'radio-stats-shell': clientReady && route.path === '/library' && route.hash === '#stats' }" class="radio-shell min-h-screen w-full overflow-x-clip bg-[var(--radio-page-bg)] text-[var(--radio-text)] transition-colors">
     <AppHeader />
     <div class="radio-app-content mx-auto w-full max-w-[1920px] xl:grid xl:grid-cols-[224px_minmax(0,1fr)] xl:gap-6 xl:px-6">
       <AppSidebar />
