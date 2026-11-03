@@ -248,21 +248,53 @@
       <p class="mt-2 text-[10px] leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.combined_scales_note') }}</p>
     </figure>
 
-    <div class="radio-surface p-4 sm:p-5">
-      <h2 class="mb-4 text-lg font-semibold">{{ $t('library.listening_top_stations') }} <span class="text-sm font-normal text-[var(--radio-text-muted)]">({{ stations.length }})</span></h2>
-      <div v-if="stations.length" class="space-y-4">
-        <div v-for="station in stations" :key="station.url" class="space-y-1.5">
-          <div class="flex items-center justify-between gap-3 text-sm">
-            <NuxtLink :to="station.url" :prefetch="false" class="min-w-0 truncate font-medium hover:text-rose-500">{{ station.title }}</NuxtLink>
-            <span class="shrink-0 tabular-nums text-[var(--radio-text-muted)]">{{ formatDuration(station.ms) }}</span>
-          </div>
-          <div class="h-1.5 overflow-hidden rounded-full bg-[var(--radio-surface-soft)]" aria-hidden="true">
-            <div class="h-full rounded-full bg-rose-500" :style="{ width: `${Math.min(100, Math.max(1, 100 * station.ms / maxStationMs))}%` }"></div>
+    <section class="stats-ranking stats-surface rounded-2xl p-4 sm:p-5" :aria-label="$t('library.listening_top_stations')">
+      <header class="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <h2 class="flex items-center gap-2 text-base font-bold">
+          <UIcon name="i-lucide-chart-no-axes-column-increasing" class="h-5 w-5 text-rose-500" aria-hidden="true" />
+          {{ $t('library.listening_top_stations') }} <span class="text-xs font-normal text-[var(--radio-text-muted)]">({{ stations.length }})</span>
+        </h2>
+        <div class="flex items-center gap-2">
+          <button v-if="stations.length > 5" type="button"
+            class="inline-flex min-h-9 items-center gap-1 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:text-rose-500 focus-visible:outline-2 focus-visible:outline-rose-500"
+            :aria-expanded="showAllStations" @click="showAllStations = !showAllStations">
+            {{ $t(showAllStations ? 'online_stats.show_less' : 'online_stats.show_all') }}
+            <UIcon :name="showAllStations ? 'i-lucide-chevron-up' : 'i-lucide-arrow-right'" class="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+          <UButton color="neutral" variant="ghost" icon="i-lucide-trash-2" size="xs"
+            class="min-h-9" :aria-label="$t('online_stats.clear_action')" :title="$t('online_stats.clear_action')"
+            @click="clearStatsOpen = true" />
+        </div>
+      </header>
+      <div v-if="stations.length" class="space-y-1">
+        <div v-for="(station, index) in visibleStations" :key="station.url"
+          class="stats-ranking-row grid grid-cols-[22px_32px_minmax(0,1fr)] items-center gap-2.5 rounded-lg px-1.5 py-2 sm:grid-cols-[25px_36px_minmax(0,1fr)] sm:gap-3">
+          <span class="stats-rank flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-extrabold tabular-nums"
+            :class="index === 0 ? 'stats-rank-first' : index === 1 ? 'stats-rank-second' : index === 2 ? 'stats-rank-third' : ''">
+            {{ index + 1 }}
+          </span>
+          <NuxtLink :to="station.url" :prefetch="false" tabindex="-1" aria-hidden="true"
+            class="stats-ranking-artwork flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg">
+            <img :src="siteAssetUrl(stationImage(station.url))" :alt="''" loading="lazy"
+              class="h-full w-full object-contain p-1" @error="onStationImageError" />
+          </NuxtLink>
+          <div class="min-w-0">
+            <div class="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs">
+              <NuxtLink :to="station.url" :prefetch="false" class="min-w-0 truncate font-semibold hover:text-rose-500"
+                :title="station.title">{{ station.title }}</NuxtLink>
+              <div class="ml-auto flex shrink-0 items-center gap-3 tabular-nums text-[var(--radio-text-muted)]">
+                <span>{{ formatDuration(station.ms) }}</span>
+                <span class="w-9 text-right text-[11px]">{{ formatStationShare(station.ms) }}</span>
+              </div>
+            </div>
+            <div class="stats-track mt-1.5 h-1.5 overflow-hidden rounded-full" aria-hidden="true">
+              <div class="stats-progress h-full rounded-full" :style="{ width: percentOfMaxStation(station.ms) }"></div>
+            </div>
           </div>
         </div>
       </div>
-      <p v-else class="text-sm text-[var(--radio-text-muted)]">{{ $t('library.listening_empty') }}</p>
-    </div>
+      <p v-else class="py-5 text-center text-sm text-[var(--radio-text-muted)]">{{ $t('library.listening_empty') }}</p>
+    </section>
     <UModal
       v-model:open="clearStatsOpen"
       :title="$t('online_stats.clear_title')"
