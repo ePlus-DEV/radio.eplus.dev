@@ -442,3 +442,31 @@ html.radio-reduce-motion *, html.radio-reduce-motion *::before, html.radio-reduc
   scroll-behavior: auto !important;
   transition-duration: 0.01ms !important;
 }
+
+/*
+ * Approved Library Statistics dashboard palette (November 2026).
+ * Scoped to this route, dark mode only. Other pages keep their established
+ * semantic theme and the global audio player remains mounted exactly once.
+ */
+html.dark .radio-shell.radio-stats-shell,
+html[data-theme="dark"] .radio-shell.radio-stats-shell {
+  --radio-page-bg: #0e1228;
+  --radio-surface: #1b2038;
+  --radio-surface-elevated: #1b223e;
+  --radio-surface-soft: #151c33;
+  --radio-surface-muted: #11182d;
+  --radio-border: rgb(149 164 206 / 0.19);
+  --radio-border-strong: rgb(149 164 206 / 0.28);
+  --radio-hover: rgb(244 114 182 / .09);
+  --radio-track: #151a30;
+  --radio-header-bg: rgb(12 17 38 / .94);
+  background-color: var(--radio-page-bg);
+  background-image:
+    radial-gradient(ellipse 530px 480px at -110px 53%, rgb(122 33 165 / .18), transparent 75%),
+    radial-gradient(ellipse 550px 430px at calc(100% + 160px) 79%, rgb(83 34 138 / .16), transparent 78%);
+  background-repeat: no-repeat;
+}
+html.dark .radio-stats-shell .radio-player-dock {
+  background: linear-gradient(100deg, #171a33, #1a203e);
+  border-color: rgb(149 164 206 / .25);
+}

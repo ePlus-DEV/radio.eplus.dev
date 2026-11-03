@@ -3,6 +3,8 @@
     "content": "抱歉，找不到您要瀏覽的頁面。"
   },
   "navmenu": {
+    "more": "更多",
+    "information": "網站資訊",
     "homepage": "首頁",
     "about": "關於我們",
     "blog": "部落格",
@@ -628,6 +630,14 @@
     "chart_tooltip_hint": "將滑鼠移至圖表或點選日期查看實際時長。",
     "scale_max": "最高",
     "chart_hover_label": "每日時長圖表。懸停或使用方向鍵檢視日期。",
-    "combined_scales_note": "兩條線採用獨立刻度（粉紅與綠色）。懸停可查看實際時長；兩段時間可能重疊。"
+    "combined_scales_note": "兩條線採用獨立刻度（粉紅與綠色）。懸停可查看實際時長；兩段時間可能重疊。",
+    "weekly_activity": "最近7天",
+    "vs_previous_week": "與前7天相比",
+    "stations_played": "已收聽電台數",
+    "most_listened_station": "收聽最多的電台",
+    "listening_peak": "收聽高峰",
+    "online_peak": "線上高峰",
+    "show_all": "查看全部",
+    "show_less": "收合"
   }
 }

@@ -3,6 +3,8 @@
     "content": "お探しのページは見つかりませんでした。"
   },
   "navmenu": {
+    "more": "その他",
+    "information": "サイト情報",
     "homepage": "ホームページ",
     "about": "このサイトについて",
     "blog": "ブログ",
@@ -628,6 +630,14 @@
     "chart_tooltip_hint": "グラフにカーソルを合わせるか、タップすると日別の時間を確認できます。",
     "scale_max": "最大",
     "chart_hover_label": "日別の時間グラフ。ホバーか矢印キーで日付を確認できます。",
-    "combined_scales_note": "2本の線はそれぞれ別の目盛りを使います。実際の時間はホバーで確認してください。時間帯は重なる場合があります。"
+    "combined_scales_note": "2本の線はそれぞれ別の目盛りを使います。実際の時間はホバーで確認してください。時間帯は重なる場合があります。",
+    "weekly_activity": "過去7日間",
+    "vs_previous_week": "前の7日間との比較",
+    "stations_played": "聴いた局数",
+    "most_listened_station": "最も聴いた局",
+    "listening_peak": "再生時間の最大値",
+    "online_peak": "オンライン時間の最大値",
+    "show_all": "すべて表示",
+    "show_less": "折りたたむ"
   }
 }

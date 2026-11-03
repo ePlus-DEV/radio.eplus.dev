@@ -795,3 +795,83 @@ The Library stats page visually separates two independent measures:
 The trend geometry is a dependency-free helper at `utils/activity-trend.mjs`,
 covered by `tests/activity-trend.test.mjs`. Empty and invalid data must remain
 legible. Do not confuse relative chart height with comparable absolute quantities.
+
+
+## 2026-11-03 — P1 client-load optimizations (Issue #328)
+
+The header's `SearchBox` mounts on every route (even when hidden by CSS
+on mobile), but must **not** fetch the full `search/stations.json` on mount.
+`useStationSearchIndex` exposes an explicit `load()` action and uses
+`createCachedLoader` to share one in-flight or successful download across
+header/modal instances. Invoke it on user search focus/open; failures must
+remain retryable, with the same offline/Algolia fallback behavior and recent
+history. Avoid evaluating local rankings while the inline search is closed.
+
+`CountryMarquee` uses `observeCountrySize` to share one ResizeObserver
+between all cards instead of creating one observer and window resize listener
+for every station/country label. The one-listener fallback covers browsers
+without ResizeObserver. Overflow names remain accessible via title/tooltips;
+marquee animation is paused by default and runs only on hover/focus.
+Respect reduced-motion settings and clean up observers on unmount.
+
+Regression guard: `tests/performance-ui.test.mjs`. These are structural
+improvements; record DevTools/Lighthouse metrics before claiming quantified
+LCP/INP savings. Preserve the globally mounted radio player, station data,
+static SEO output and existing color tokens.
+
+## 2026-11-03 — Approved Library Statistics dashboard visual design
+
+Design fidelity is a product requirement for `/library#stats` (user-approved
+dashboard mockup). The implementation deliberately uses real, local browser
+data and never copies placeholder example metrics into the application.
+
+- The top row contains two compact headline KPI cards: rose radio listening
+  and emerald foreground online time. Their seven-day sparklines and week
+  comparisons are calculated from saved daily data. Do NOT fabricate a growth
+  percentage if the previous comparison week has no data; display the
+  current seven-day duration instead.
+- Four smaller summary tiles show today's listening, today's online time,
+  distinct stations listened to, and the most-listened station.
+- The single interactive daily chart has both colored line/area series,
+  visible grid, true hover/touch tooltip, date range and metric filters.
+  Daily values must remain accurate with independent line scales because
+  online and listening durations may overlap. The day slider also works on
+  keyboard/mobile and must not be removed only for visual similarity.
+- Beneath the chart, show real peak days and independent tracking switches
+  (not decorative controls). The list of stations uses persisted durations,
+  available artwork with a valid fallback, time shares based on ranked entries,
+  and functional expand/collapse for more than five stations.
+- The dark midnight/navy/purple page palette is scoped to the Statistics
+  Library route via `radio-stats-shell`; all other routes and light mode
+  keep established `--radio-*` semantics. Player session stays outside
+  `NuxtPage`, not remounted when switching Library sections.
+- `pages/library.vue` presents the compact icon heading and segmented
+  navigation from the mockup. `components/panel/ListeningStats.vue` owns
+  dashboard internals. `tests/library-stats-design.test.mjs` guards layout,
+  privacy/data semantics, interactivity and all seven locale labels.
+
+This is a scoped front-end restyle. Do not introduce sample stations,
+fake recommendations/schedules, or a separate chart dependency.
+
+
+## 2026-11-03 — Preserve More and informational pages on phones
+
+The phone bottom navigation (`<640px`) must include four actions:
+Discover, Search, Library, and **More**. More opens the same `USlideover`
+owned by `AppHeader`; both components share the Nuxt `useState` key
+`radio:mobile-navigation-open`. Route changes, Escape and the slideover close
+interaction dismiss the menu. Do not replace More with a Settings shortcut:
+Settings is a destination **inside** the navigation, not a substitute for
+navigation.
+
+The mobile-only `AppSidebar` Information group exposes all live public
+site pages already linked from the footer: About, Statistics, Contact,
+Privacy Policy, Terms of Use, and Cookie Policy. A separate Settings link is
+placed at the bottom of this group; all page links remain navigable, and
+the expandable region list follows them. Hide the standalone Settings gear
+on narrow phones to make room, but retain tablet/desktop controls.
+
+Make this behavior accessible (clear text and icons, touch targets, active
+page state, 320px and dark/light modes) and translated into all seven locales.
+Regression coverage lives in `tests/mobile-more-navigation.test.mjs`.
+Do not touch PlayerSession or the global audio dock for navigation fixes.

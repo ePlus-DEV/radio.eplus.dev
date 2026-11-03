@@ -8,19 +8,19 @@
           <span>{{ $t('redesign.discover') }}</span>
         </NuxtLink>
         <NuxtLink v-for="item in [{ hash: 'favorites', icon: 'i-lucide-heart' }, { hash: 'recent', icon: 'i-lucide-history' }, { hash: 'stats', icon: 'i-lucide-chart-no-axes-column-increasing' }]" :key="item.hash" :to="`/library#${item.hash}`" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold" :class="route.path === '/library' && route.hash === `#${item.hash}` ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)]'">
-          <UIcon :name="item.icon" class="h-4 w-4" /><span>{{ $t(item.hash === 'stats' ? 'library.listening_stats' : `library.${item.hash}`) }}</span>
+          <UIcon :name="item.icon" class="h-4 w-4" /><span>{{ $t(item.hash === 'stats' ? 'redesign.library' : `library.${item.hash}`) }}</span>
         </NuxtLink>
-        <NuxtLink to="/statistics" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
+        <NuxtLink v-if="!mobile" to="/statistics" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/statistics' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
           <fa :icon="['fas', 'chart-simple']" class="w-4" />
           <span>{{ $t('navmenu.statistics') }}</span>
         </NuxtLink>
-        <NuxtLink to="/settings" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
+        <NuxtLink v-if="!mobile" to="/settings" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/settings' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
           <UIcon name="i-lucide-settings-2" class="h-4 w-4" />
           <span>{{ $t('listener_settings.title') }}</span>
         </NuxtLink>
-        <NuxtLink to="/about" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
+        <NuxtLink v-if="!mobile" to="/about" class="radio-interactive flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition"
           :class="route.path === '/about' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'">
           <fa :icon="['fas', 'circle-info']" class="w-4" />
           <span>{{ $t('navmenu.about') }}</span>
@@ -29,6 +29,28 @@
           <fa :icon="['fas', 'magnifying-glass']" class="w-4" />
           <span>{{ $t('popup.search.text') }}</span>
         </button>
+      </div>
+      <!-- Shortcuts to real site pages were unreachable on phones because the
+           header hamburger was tablet-only. Keep them high in the mobile drawer,
+           and put Settings here rather than replacing the More navigation. -->
+      <div v-if="mobile" class="border-t border-[var(--radio-border)] pt-4">
+        <p class="mb-2 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--radio-text-muted)]">{{ $t('navmenu.information') }}</p>
+        <nav class="space-y-1" :aria-label="$t('navmenu.information')">
+          <NuxtLink v-for="item in informationLinks" :key="item.to" :to="item.to"
+            class="radio-interactive flex min-h-11 items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition"
+            :class="route.path === item.to ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
+            :aria-current="route.path === item.to ? 'page' : undefined">
+            <UIcon :name="item.icon" class="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{{ $t(item.label) }}</span>
+          </NuxtLink>
+          <NuxtLink to="/settings"
+            class="radio-interactive mt-2 flex min-h-11 items-center gap-3 rounded-xl border-t border-[var(--radio-border)] px-4 py-2.5 text-sm font-semibold transition"
+            :class="route.path === '/settings' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
+            :aria-current="route.path === '/settings' ? 'page' : undefined">
+            <UIcon name="i-lucide-settings-2" class="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{{ $t('listener_settings.title') }}</span>
+          </NuxtLink>
+        </nav>
       </div>
       <div class="border-t border-[var(--radio-border)] pt-5">
         <p class="mb-3 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--radio-text-muted)]">{{ $t('player.explore') }}</p>
@@ -57,6 +79,16 @@ import worldData from "~/data/world";
 
 defineProps<{ mobile?: boolean }>();
 const route = useRoute();
+// Only real prerendered routes. Match the established footer links so all
+// informational pages remain reachable at phone widths.
+const informationLinks = [
+  { to: '/about', label: 'navmenu.about', icon: 'i-lucide-info' },
+  { to: '/statistics', label: 'navmenu.statistics', icon: 'i-lucide-chart-no-axes-column' },
+  { to: '/contact', label: 'navmenu.contact', icon: 'i-lucide-mail' },
+  { to: '/privacy-policy', label: 'navmenu.privacy', icon: 'i-lucide-shield-check' },
+  { to: '/terms-of-use', label: 'navmenu.terms', icon: 'i-lucide-file-text' },
+  { to: '/cookie-policy', label: 'navmenu.cookie', icon: 'i-lucide-cookie' },
+] as const;
 const areas = Object.entries(worldData).map(([key, countries]) => ({
   key,
   slug: key.replace(/_/g, "-"),
