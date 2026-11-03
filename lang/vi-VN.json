@@ -628,6 +628,14 @@
     "chart_tooltip_hint": "Rê chuột vào biểu đồ hoặc chạm để xem thời gian chính xác từng ngày.",
     "scale_max": "Cao nhất",
     "chart_hover_label": "Biểu đồ thời gian theo ngày. Rê chuột hoặc dùng phím mũi tên để xem chi tiết.",
-    "combined_scales_note": "Hai đường dùng thang đo riêng (hồng và xanh); rê chuột để xem thời gian thực. Hai khoảng thời gian có thể trùng nhau."
+    "combined_scales_note": "Hai đường dùng thang đo riêng (hồng và xanh); rê chuột để xem thời gian thực. Hai khoảng thời gian có thể trùng nhau.",
+    "weekly_activity": "7 ngày gần đây",
+    "vs_previous_week": "so với 7 ngày trước",
+    "stations_played": "Tổng kênh đã nghe",
+    "most_listened_station": "Kênh nghe nhiều nhất",
+    "listening_peak": "Cao nhất (nghe radio)",
+    "online_peak": "Cao nhất (online)",
+    "show_all": "Xem tất cả",
+    "show_less": "Thu gọn"
   }
 }
