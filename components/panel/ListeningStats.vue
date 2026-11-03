@@ -317,6 +317,7 @@
 
 <script setup lang="ts">
 import { useListeningDurationStore } from '~/stores/listeningDuration';
+import { useListeningStore } from '~/stores/listening';
 import { useOnlineDurationStore } from '~/stores/onlineDuration';
 import { dailyOnlineSeries } from '~/utils/online-duration.mjs';
 import { usePlaybackStore } from '~/stores/playback';
@@ -326,10 +327,14 @@ import { buildActivityTrend } from '~/utils/activity-trend.mjs';
 const duration = useListeningDurationStore();
 const online = useOnlineDurationStore();
 const playback = usePlaybackStore();
+const listening = useListeningStore();
+const siteAssetUrl = useSiteAssetUrl();
 const { t, locale } = useI18n();
 duration.hydrate();
 online.hydrate();
+listening.hydrate();
 const clearStatsOpen = ref(false);
+const showAllStations = ref(false);
 const confirmDeleteStatistics = () => {
   duration.clearStatistics();
   online.clearStatistics();
@@ -347,6 +352,35 @@ const listeningTrend = computed(() => dailyListeningSeries(duration.stats, range
 const onlineTrend = computed(() => dailyOnlineSeries(online.stats, rangeDays.value, new Date(), online.liveMs));
 const listeningGeometry = computed(() => buildActivityTrend(listeningTrend.value, 800, 210));
 const onlineGeometry = computed(() => buildActivityTrend(onlineTrend.value, 800, 210));
+const last14Listening = computed(() => dailyListeningSeries(duration.stats, 14, new Date(), duration.liveMs));
+const last14Online = computed(() => dailyOnlineSeries(online.stats, 14, new Date(), online.liveMs));
+const listeningHeroDays = computed(() => last14Listening.value.slice(-7));
+const onlineHeroDays = computed(() => last14Online.value.slice(-7));
+const listeningHeroPeak = computed(() => Math.max(0, ...listeningHeroDays.value.map(day => day.ms)));
+const onlineHeroPeak = computed(() => Math.max(0, ...onlineHeroDays.value.map(day => day.ms)));
+const sumDays = (days: { ms: number }[]): number => days.reduce((sum, day) => sum + day.ms, 0);
+const listeningWeekTotal = computed(() => sumDays(listeningHeroDays.value));
+const onlineWeekTotal = computed(() => sumDays(onlineHeroDays.value));
+const comparePreviousWeek = (days: { ms: number }[]): number | null => {
+  const previous = sumDays(days.slice(0, 7));
+  return previous > 0 ? Math.round(100 * (sumDays(days.slice(-7)) - previous) / previous) : null;
+};
+const listeningWeekDelta = computed(() => comparePreviousWeek(last14Listening.value));
+const onlineWeekDelta = computed(() => comparePreviousWeek(last14Online.value));
+const formatWeekDelta = (value: number): string => (value > 0 ? '+' : '') + new Intl.NumberFormat(locale.value).format(value) + '%';
+const sparkHeight = (ms: number, peak: number): string => peak > 0 && ms > 0 ? `${Math.max(7, ms / peak * 100)}%` : '2px';
+const gridColumnIndices = computed(() => {
+  const count = listeningTrend.value.length;
+  if (count <= 1) return [0];
+  return Array.from(new Set(Array.from({ length: Math.min(7, count) },
+    (_, index) => Math.round(index * (count - 1) / (Math.min(7, count) - 1)))));
+});
+const peakDay = (series: { key: string; ms: number }[]) => series.reduce(
+  (best, day) => day.ms > best.ms ? day : best,
+  series.at(-1) || { key: localDayKey(), ms: 0 },
+);
+const peakListeningDay = computed(() => peakDay(listeningTrend.value));
+const peakOnlineDay = computed(() => peakDay(onlineTrend.value));
 const visibleHasData = computed(() =>
   (showListening.value && listeningGeometry.value.hasData) ||
   (showOnline.value && onlineGeometry.value.hasData));
@@ -370,10 +404,18 @@ const tooltipLeft = computed(() => {
   const percent = count > 1 ? 100 * inspectedDayIndex.value / (count - 1) : 50;
   return `${Math.min(89, Math.max(11, percent))}%`;
 });
+let chartBounds: DOMRect | null = null;
+const cacheChartBounds = (event: PointerEvent): void => {
+  chartBounds = (event.currentTarget as SVGSVGElement).getBoundingClientRect();
+};
+const clearChartHover = (): void => {
+  chartBounds = null;
+  hoveredDayIndex.value = null;
+};
 const indexFromPointer = (event: PointerEvent): number | null => {
-  const svg = event.currentTarget as SVGSVGElement;
-  const bounds = svg.getBoundingClientRect();
-  if (!bounds.width || listeningTrend.value.length === 0) return null;
+  if (!chartBounds) cacheChartBounds(event);
+  const bounds = chartBounds;
+  if (!bounds?.width || listeningTrend.value.length === 0) return null;
   // Translate the actual pointer into the SVG plot's [5, 795] x-window.
   const x = (event.clientX - bounds.left) / bounds.width * 800;
   const fraction = Math.min(1, Math.max(0, (x - 5) / 790));
@@ -381,12 +423,14 @@ const indexFromPointer = (event: PointerEvent): number | null => {
 };
 const onChartPointerMove = (event: PointerEvent) => {
   if (event.pointerType === 'touch' && event.buttons === 0) return;
-  hoveredDayIndex.value = indexFromPointer(event);
+  const index = indexFromPointer(event);
+  if (index !== hoveredDayIndex.value) hoveredDayIndex.value = index;
 };
 const onChartPointerDown = (event: PointerEvent) => {
+  cacheChartBounds(event);
   const index = indexFromPointer(event);
   if (index === null) return;
-  hoveredDayIndex.value = index;
+  if (index !== hoveredDayIndex.value) hoveredDayIndex.value = index;
   selectedDayKey.value = listeningTrend.value[index].key;
 };
 const moveSelectedDay = (delta: number) => {
@@ -400,7 +444,7 @@ const selectDayAtIndex = (event: Event) => {
   selectedDayKey.value = listeningTrend.value[raw].key;
   hoveredDayIndex.value = null;
 };
-watch([rangeDays, visibleMetric], () => { hoveredDayIndex.value = null; });
+watch([rangeDays, visibleMetric], clearChartHover);
 const parseDay = (key: string) => {
   const [year, month, day] = key.split('-').map(Number);
   return new Date(year, month - 1, day);
@@ -428,6 +472,32 @@ const stations = computed(() => {
   return entries.filter(station => station.ms > 0).sort((a, b) => b.ms - a.ms);
 });
 const maxStationMs = computed(() => stations.value[0]?.ms || 1);
+const visibleStations = computed(() => showAllStations.value ? stations.value : stations.value.slice(0, 5));
+const totalRankedMs = computed(() => stations.value.reduce((total, station) => total + station.ms, 0));
+const percentOfMaxStation = (ms: number): string => `${Math.min(100, Math.max(1, 100 * ms / maxStationMs.value))}%`;
+const formatStationShare = (ms: number): string => {
+  if (totalRankedMs.value <= 0 || ms <= 0) return '0%';
+  const pct = 100 * ms / totalRankedMs.value;
+  return pct < 1 ? '<1%' : `${Math.round(pct)}%`;
+};
+const stationArtwork = computed(() => {
+  const urls = new Map<string, string>();
+  for (const station of [
+    ...(listening.library.recent || []),
+    ...(listening.library.favorites || []),
+    ...(playback.station ? [playback.station] : []),
+    ...playback.stations,
+  ]) {
+    if (station?.url && station.image) urls.set(station.url, station.image);
+  }
+  return urls;
+});
+const stationImage = (url: string): string => stationArtwork.value.get(url) || '/brand/onair-mark.svg';
+const onStationImageError = (event: Event): void => {
+  const image = event.target as HTMLImageElement;
+  const fallback = siteAssetUrl('/brand/onair-mark.svg');
+  if (!image.src.endsWith(fallback)) image.src = fallback;
+};
 const formatDuration = (value: number): string => {
   const seconds = Math.floor(value / 1000);
   const hours = Math.floor(seconds / 3600);
