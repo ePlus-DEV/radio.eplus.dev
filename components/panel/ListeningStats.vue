@@ -128,8 +128,9 @@
           class="mt-3 block h-44 w-full cursor-crosshair touch-pan-y rounded-lg outline-offset-2 focus-visible:outline-2 focus-visible:outline-rose-500 sm:h-52"
           viewBox="0 0 800 210" preserveAspectRatio="none" role="img" tabindex="0"
           :aria-label="$t('online_stats.chart_hover_label')"
+          @pointerenter="cacheChartBounds"
           @pointermove="onChartPointerMove" @pointerdown="onChartPointerDown"
-          @pointerleave="hoveredDayIndex = null"
+          @pointerleave="clearChartHover"
           @focus="hoveredDayIndex = selectedDayIndex" @blur="hoveredDayIndex = null"
           @keydown.left.prevent="moveSelectedDay(-1)"
           @keydown.right.prevent="moveSelectedDay(1)">
@@ -289,10 +290,20 @@ const tooltipLeft = computed(() => {
   const percent = count > 1 ? 100 * inspectedDayIndex.value / (count - 1) : 50;
   return `${Math.min(89, Math.max(11, percent))}%`;
 });
+let chartBounds: DOMRect | null = null;
+const cacheChartBounds = (event: PointerEvent): void => {
+  chartBounds = (event.currentTarget as SVGSVGElement).getBoundingClientRect();
+};
+const clearChartHover = (): void => {
+  chartBounds = null;
+  hoveredDayIndex.value = null;
+};
 const indexFromPointer = (event: PointerEvent): number | null => {
-  const svg = event.currentTarget as SVGSVGElement;
-  const bounds = svg.getBoundingClientRect();
-  if (!bounds.width || listeningTrend.value.length === 0) return null;
+  // Cache the SVG bounds for the entire pointer session instead of causing
+  // a layout read for every mousemove (up to hundreds per second).
+  if (!chartBounds) cacheChartBounds(event);
+  const bounds = chartBounds;
+  if (!bounds?.width || listeningTrend.value.length === 0) return null;
   // Translate the actual pointer into the SVG plot's [5, 795] x-window.
   const x = (event.clientX - bounds.left) / bounds.width * 800;
   const fraction = Math.min(1, Math.max(0, (x - 5) / 790));
@@ -300,12 +311,15 @@ const indexFromPointer = (event: PointerEvent): number | null => {
 };
 const onChartPointerMove = (event: PointerEvent) => {
   if (event.pointerType === 'touch' && event.buttons === 0) return;
-  hoveredDayIndex.value = indexFromPointer(event);
+  const nextIndex = indexFromPointer(event);
+  if (nextIndex !== hoveredDayIndex.value) hoveredDayIndex.value = nextIndex;
 };
 const onChartPointerDown = (event: PointerEvent) => {
+  // A tap after a mobile scroll should use the current viewport position.
+  cacheChartBounds(event);
   const index = indexFromPointer(event);
   if (index === null) return;
-  hoveredDayIndex.value = index;
+  if (hoveredDayIndex.value !== index) hoveredDayIndex.value = index;
   selectedDayKey.value = listeningTrend.value[index].key;
 };
 const moveSelectedDay = (delta: number) => {
@@ -319,7 +333,7 @@ const selectDayAtIndex = (event: Event) => {
   selectedDayKey.value = listeningTrend.value[raw].key;
   hoveredDayIndex.value = null;
 };
-watch([rangeDays, visibleMetric], () => { hoveredDayIndex.value = null; });
+watch([rangeDays, visibleMetric], clearChartHover);
 const parseDay = (key: string) => {
   const [year, month, day] = key.split('-').map(Number);
   return new Date(year, month - 1, day);
