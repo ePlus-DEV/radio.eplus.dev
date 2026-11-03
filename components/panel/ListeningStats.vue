@@ -1,82 +1,86 @@
 <template>
-  <section :aria-label="$t('library.listening_stats')" class="space-y-6">
-    <header class="flex flex-wrap items-center justify-between gap-3">
-      <div class="max-w-2xl">
-        <p class="text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('online_stats.compare_intro') }}</p>
-      </div>
-      <NuxtLink to="/settings" class="radio-interactive inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:text-[var(--radio-text)]">
-        <UIcon name="i-lucide-settings-2" class="h-4 w-4" />
-        {{ $t('online_stats.manage_settings') }}
-      </NuxtLink>
-    </header>
-
-    <!-- Two genuinely different measurements; no stacked or additive total. -->
-    <div class="grid gap-4 lg:grid-cols-2">
-      <article class="radio-surface relative min-w-0 overflow-hidden rounded-3xl border border-[var(--radio-border)] p-5 sm:p-6" :aria-label="$t('online_stats.listening')">
-        <div class="absolute inset-x-0 top-0 h-1 bg-rose-500" aria-hidden="true"></div>
-        <div class="flex items-center justify-between gap-2">
-          <div class="flex min-w-0 items-center gap-2.5">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500">
-              <UIcon name="i-lucide-headphones" class="h-5 w-5" />
-            </span>
-            <h2 class="min-w-0 text-base font-bold">{{ $t('online_stats.listening') }}</h2>
-          </div>
-          <span v-if="isLive" class="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-2.5 py-1 text-[11px] font-semibold text-rose-600 dark:text-rose-300">
-            <span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+  <section :aria-label="$t('library.listening_stats')" class="radio-stats-dashboard space-y-4">
+    <!-- The two live totals intentionally stay separate: online is not listen time. -->
+    <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+      <article class="stats-hero stats-hero-listening relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.listening')">
+        <div class="relative z-10 flex items-center gap-2.5">
+          <span class="stats-icon stats-icon-listening"><UIcon name="i-lucide-headphones" class="h-5 w-5" /></span>
+          <h2 class="text-sm font-bold">{{ $t('online_stats.listening') }}</h2>
+          <span v-if="isLive" class="ml-auto inline-flex items-center gap-1 rounded-full bg-rose-500/10 px-2 py-1 text-[10px] font-semibold text-rose-500">
+            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-current" aria-hidden="true"></span>
             {{ $t('library.listening_live') }}
           </span>
         </div>
-        <p class="mt-5 text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('library.listening_total') }}</p>
-        <p class="mt-1 text-3xl font-bold tracking-tight tabular-nums text-[var(--radio-text)] sm:text-4xl">{{ formatDuration(totalListeningMs) }}</p>
-        <div class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-rose-500/10 px-3 py-2.5">
-          <span class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</span>
-          <strong class="shrink-0 text-base font-bold tabular-nums text-rose-600 dark:text-rose-300">{{ formatDuration(todayListeningMs) }}</strong>
-        </div>
-        <p class="mt-3 min-h-10 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_explanation') }}</p>
-        <div class="mt-3 flex justify-end border-t border-[var(--radio-border)] pt-2">
-          <button type="button" role="switch" :aria-checked="duration.enabled" :aria-label="$t('library.listening_tracking_title')"
-            class="inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-xs font-medium text-[var(--radio-text-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-            @click="duration.setTrackingEnabled(!duration.enabled)">
-            {{ $t('library.listening_tracking_title') }}
-            <span class="relative h-5 w-9 shrink-0 rounded-full transition-colors" :class="duration.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
-              <span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="duration.enabled ? 'translate-x-4' : ''"></span>
-            </span>
-          </button>
+        <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
+          <div class="min-w-0">
+            <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalListeningMs) }}</p>
+            <p class="mt-2 text-xs font-medium text-rose-600 dark:text-rose-300">
+              <template v-if="listeningWeekDelta !== null">
+                <UIcon name="i-lucide-trending-up" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
+                {{ formatWeekDelta(listeningWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
+              </template>
+              <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(listeningWeekTotal) }}</template>
+            </p>
+          </div>
+          <div class="stats-sparkline stats-sparkline-rose" aria-hidden="true">
+            <span v-for="(day, index) in listeningHeroDays" :key="index" :style="{ height: sparkHeight(day.ms, listeningHeroPeak) }" />
+          </div>
         </div>
       </article>
 
-      <article class="radio-surface relative min-w-0 overflow-hidden rounded-3xl border border-[var(--radio-border)] p-5 sm:p-6" :aria-label="$t('online_stats.online')">
-        <div class="absolute inset-x-0 top-0 h-1 bg-emerald-500" aria-hidden="true"></div>
-        <div class="flex items-center gap-2.5">
-          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500">
-            <UIcon name="i-lucide-monitor-dot" class="h-5 w-5" />
-          </span>
-          <h2 class="min-w-0 text-base font-bold">{{ $t('online_stats.online') }}</h2>
+      <article class="stats-hero stats-hero-online relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.online')">
+        <div class="relative z-10 flex items-center gap-2.5">
+          <span class="stats-icon stats-icon-online"><UIcon name="i-lucide-monitor" class="h-5 w-5" /></span>
+          <h2 class="text-sm font-bold">{{ $t('online_stats.online') }}</h2>
         </div>
-        <p class="mt-5 text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.total') }}</p>
-        <p class="mt-1 text-3xl font-bold tracking-tight tabular-nums text-[var(--radio-text)] sm:text-4xl">{{ formatDuration(totalOnlineMs) }}</p>
-        <div class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-emerald-500/10 px-3 py-2.5">
-          <span class="text-xs font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</span>
-          <strong class="shrink-0 text-base font-bold tabular-nums text-emerald-700 dark:text-emerald-300">{{ formatDuration(todayOnlineMs) }}</strong>
-        </div>
-        <p class="mt-3 min-h-10 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.online_explanation') }}</p>
-        <div class="mt-3 flex justify-end border-t border-[var(--radio-border)] pt-2">
-          <button type="button" role="switch" :aria-checked="online.enabled" :aria-label="$t('online_stats.tracking')"
-            class="inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-xs font-medium text-[var(--radio-text-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-            @click="online.setTrackingEnabled(!online.enabled)">
-            {{ $t('online_stats.tracking') }}
-            <span class="relative h-5 w-9 shrink-0 rounded-full transition-colors" :class="online.enabled ? 'bg-emerald-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
-              <span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="online.enabled ? 'translate-x-4' : ''"></span>
-            </span>
-          </button>
+        <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
+          <div class="min-w-0">
+            <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalOnlineMs) }}</p>
+            <p class="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
+              <template v-if="onlineWeekDelta !== null">
+                <UIcon name="i-lucide-trending-up" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
+                {{ formatWeekDelta(onlineWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
+              </template>
+              <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(onlineWeekTotal) }}</template>
+            </p>
+          </div>
+          <div class="stats-sparkline stats-sparkline-emerald" aria-hidden="true">
+            <span v-for="(day, index) in onlineHeroDays" :key="index" :style="{ height: sparkHeight(day.ms, onlineHeroPeak) }" />
+          </div>
         </div>
       </article>
     </div>
-    <div class="flex flex-wrap items-center justify-between gap-2">
-      <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.new_counter_note') }}</p>
-      <UButton color="neutral" variant="ghost" icon="i-lucide-trash-2" size="sm" class="min-h-10" @click="clearStatsOpen = true">
-        {{ $t('online_stats.clear_action') }}
-      </UButton>
+
+    <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
+        <span class="stats-icon stats-icon-listening shrink-0"><UIcon name="i-lucide-calendar-days" class="h-4 w-4" /></span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</p>
+          <p class="mt-1 text-sm font-bold tabular-nums text-rose-600 dark:text-rose-300 sm:text-base">{{ formatDuration(todayListeningMs) }}</p>
+        </div>
+      </div>
+      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
+        <span class="stats-icon stats-icon-online shrink-0"><UIcon name="i-lucide-calendar-clock" class="h-4 w-4" /></span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</p>
+          <p class="mt-1 text-sm font-bold tabular-nums text-emerald-700 dark:text-emerald-300 sm:text-base">{{ formatDuration(todayOnlineMs) }}</p>
+        </div>
+      </div>
+      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
+        <span class="stats-icon stats-icon-indigo shrink-0"><UIcon name="i-lucide-circle-play" class="h-4 w-4" /></span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.stations_played') }}</p>
+          <p class="mt-1 text-base font-bold tabular-nums">{{ stations.length }}</p>
+        </div>
+      </div>
+      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
+        <span class="stats-icon stats-icon-amber shrink-0"><UIcon name="i-lucide-star" class="h-4 w-4" /></span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.most_listened_station') }}</p>
+          <NuxtLink v-if="stations.length" :to="stations[0].url" :prefetch="false" class="mt-1 block truncate text-xs font-bold hover:text-rose-500" :title="stations[0].title">{{ stations[0].title }}</NuxtLink>
+          <p v-else class="mt-1 text-sm font-semibold">—</p>
+        </div>
+      </div>
     </div>
 
     <figure class="radio-surface space-y-4 rounded-3xl p-4 sm:p-6" :aria-label="$t('online_stats.daily_compare')">
