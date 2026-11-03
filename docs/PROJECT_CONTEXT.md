@@ -852,3 +852,26 @@ data and never copies placeholder example metrics into the application.
 
 This is a scoped front-end restyle. Do not introduce sample stations,
 fake recommendations/schedules, or a separate chart dependency.
+
+
+## 2026-11-03 — Preserve More and informational pages on phones
+
+The phone bottom navigation (`<640px`) must include four actions:
+Discover, Search, Library, and **More**. More opens the same `USlideover`
+owned by `AppHeader`; both components share the Nuxt `useState` key
+`radio:mobile-navigation-open`. Route changes, Escape and the slideover close
+interaction dismiss the menu. Do not replace More with a Settings shortcut:
+Settings is a destination **inside** the navigation, not a substitute for
+navigation.
+
+The mobile-only `AppSidebar` Information group exposes all live public
+site pages already linked from the footer: About, Statistics, Contact,
+Privacy Policy, Terms of Use, and Cookie Policy. A separate Settings link is
+placed at the bottom of this group; all page links remain navigable, and
+the expandable region list follows them. Hide the standalone Settings gear
+on narrow phones to make room, but retain tablet/desktop controls.
+
+Make this behavior accessible (clear text and icons, touch targets, active
+page state, 320px and dark/light modes) and translated into all seven locales.
+Regression coverage lives in `tests/mobile-more-navigation.test.mjs`.
+Do not touch PlayerSession or the global audio dock for navigation fixes.

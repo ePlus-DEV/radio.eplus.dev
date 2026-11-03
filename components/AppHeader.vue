@@ -10,19 +10,20 @@
         <UIcon name="i-lucide-search" class="h-5 w-5 shrink-0" /><span class="truncate text-sm">{{ $t('popup.search.text') }}</span><kbd class="ml-auto hidden text-xs sm:block">/</kbd>
       </button>
       <div class="ml-auto flex shrink-0 items-center gap-1"><ThemeDarkMode /><LangSwitcher />
-        <UButton to="/settings" color="neutral" variant="ghost" icon="i-lucide-settings-2" class="h-11 w-11 justify-center" :aria-label="$t('listener_settings.title')" :title="$t('listener_settings.title')" />
+        <UButton to="/settings" color="neutral" variant="ghost" icon="i-lucide-settings-2" class="hidden h-11 w-11 justify-center sm:inline-flex" :aria-label="$t('listener_settings.title')" :title="$t('listener_settings.title')" />
         <UButton color="neutral" variant="ghost" icon="i-lucide-menu" class="hidden h-11 w-11 justify-center sm:flex xl:hidden" :aria-label="$t('redesign.navigation')" :aria-expanded="mobileOpen" @click="mobileOpen = !mobileOpen" />
       </div>
     </nav>
   </header>
-  <USlideover v-model:open="mobileOpen" side="left" :title="$t('player.explore')" :ui="{ content: 'w-80', body: 'p-3 sm:p-3' }"><template #body><AppSidebar mobile /></template></USlideover>
+  <USlideover v-model:open="mobileOpen" side="left" :title="$t('navmenu.more')" :ui="{ content: 'w-80', body: 'p-3 sm:p-3' }"><template #body><AppSidebar mobile /></template></USlideover>
   <UModal v-model:open="searchOpen" :title="$t('popup.search.text')" :description="$t('popup.search.popular_channels')" :ui="{ content: 'max-w-2xl' }"><template #content><SearchBox @close="closeSearch" /></template></UModal>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute();
 const searchOpen = ref(false);
-const mobileOpen = ref(false);
+// The bottom More tab and tablet Header hamburger control the same drawer.
+const mobileOpen = useState<boolean>('radio:mobile-navigation-open', () => false);
 const headerSearch = useTemplateRef("headerSearch");
 
 const openSearch = (): void => {
