@@ -778,12 +778,17 @@ copy accurate for all seven locales.
 The Library stats page visually separates two independent measures:
 - **Listening** has the rose accent and headphones icon; includes background audio when playing.
 - **Online** has the emerald accent and browser icon; counts only visible/focused/active site use.
-- Each metric has its own lifetime/today values and its own compact daily trend chart.
-  Their y-axes are intentionally **independent** because a brand-new online counter
-  and older listening totals may differ by several orders of magnitude. Never overlay
-  the two metrics on one scale or stack/add their durations.
-- A shared 7/30/90-day range and keyboard-operable day slider allow inspecting
-  the same calendar day across both metrics without a tall, sparse bar chart.
+- Each metric retains separate lifetime/today cards, but daily history is shown
+  in **one combined interactive SVG chart** with two distinguishable lines.
+  The lines have intentionally **independent scales**, because a brand-new
+  online counter and years of listening totals may differ drastically.
+  Show each scale's maximum in matching colors and explain this explicitly;
+  never imply the same y-axis units/scale or stack/add these overlapping times.
+- Filters support **Both**, **Listening only**, and **Online only** with shared
+  7/30/90-day ranges. Hovering a point shows a date and actual durations in a
+  tooltip; pointer/touch, keyboard left/right, and a separate accessible day
+  slider allow inspecting values on mobile or without hover. Invalid/zero data
+  must remain legible and must not manufacture duration values.
 - Preserve existing localStorage data, independent tracking toggles, and the
   explicit confirmation before clearing statistics. Keep all seven locales aligned.
 
