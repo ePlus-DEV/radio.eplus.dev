@@ -621,6 +621,13 @@
     "online_trend": "Évolution quotidienne du temps en ligne",
     "selected_day": "Jour sélectionné",
     "select_day": "Choisir un jour à consulter",
-    "independent_scales": "Chaque graphique possède sa propre échelle. Ne cumulez pas les deux durées."
+    "independent_scales": "Chaque mesure a sa propre échelle ; ne cumulez pas les deux durées.",
+    "filter_both": "Les deux",
+    "filter_listening": "Écoute",
+    "filter_online": "En ligne",
+    "chart_tooltip_hint": "Survolez le graphique ou touchez un jour pour voir les durées exactes.",
+    "scale_max": "Maximum",
+    "chart_hover_label": "Graphique quotidien. Survolez-le ou utilisez les flèches pour inspecter un jour.",
+    "combined_scales_note": "Les courbes utilisent des échelles distinctes (rose et vert). Survolez pour voir les durées réelles ; elles peuvent se chevaucher."
   }
 }

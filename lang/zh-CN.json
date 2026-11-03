@@ -621,6 +621,13 @@
     "online_trend": "每日在线时长趋势",
     "selected_day": "选定日期",
     "select_day": "选择要查看的日期",
-    "independent_scales": "两张图使用不同的刻度，请勿将在线和收听时长相加。"
+    "independent_scales": "两项指标采用独立刻度，请勿将时长相加。",
+    "filter_both": "全部",
+    "filter_listening": "收听",
+    "filter_online": "在线",
+    "chart_tooltip_hint": "将鼠标移到图表上或点击日期查看准确时长。",
+    "scale_max": "峰值",
+    "chart_hover_label": "每日时长图表。悬停或使用方向键查看具体日期。",
+    "combined_scales_note": "两条线使用独立刻度（粉色和绿色）。悬停可查看实际时长；两段时间可能重叠。"
   }
 }

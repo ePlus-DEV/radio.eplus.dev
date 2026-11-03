@@ -621,6 +621,13 @@
     "online_trend": "日別オンライン時間の推移",
     "selected_day": "選択した日",
     "select_day": "詳細を見る日を選択",
-    "independent_scales": "2つのグラフは別々の目盛りです。時間を合算しないでください。"
+    "independent_scales": "2つの指標には別々の目盛りを使います。時間を合算しないでください。",
+    "filter_both": "両方",
+    "filter_listening": "ラジオ再生",
+    "filter_online": "オンライン",
+    "chart_tooltip_hint": "グラフにカーソルを合わせるか、タップすると日別の時間を確認できます。",
+    "scale_max": "最大",
+    "chart_hover_label": "日別の時間グラフ。ホバーか矢印キーで日付を確認できます。",
+    "combined_scales_note": "2本の線はそれぞれ別の目盛りを使います。実際の時間はホバーで確認してください。時間帯は重なる場合があります。"
   }
 }

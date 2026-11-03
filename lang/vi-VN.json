@@ -621,6 +621,13 @@
     "online_trend": "Xu hướng thời gian online theo ngày",
     "selected_day": "Ngày đang xem",
     "select_day": "Chọn ngày để xem chi tiết",
-    "independent_scales": "Hai biểu đồ có thang đo riêng; không cộng hai khoảng thời gian này."
+    "independent_scales": "Hai chỉ số dùng thang đo riêng; không cộng tổng thời gian lại.",
+    "filter_both": "Cả hai",
+    "filter_listening": "Nghe radio",
+    "filter_online": "Online",
+    "chart_tooltip_hint": "Rê chuột vào biểu đồ hoặc chạm để xem thời gian chính xác từng ngày.",
+    "scale_max": "Cao nhất",
+    "chart_hover_label": "Biểu đồ thời gian theo ngày. Rê chuột hoặc dùng phím mũi tên để xem chi tiết.",
+    "combined_scales_note": "Hai đường dùng thang đo riêng (hồng và xanh); rê chuột để xem thời gian thực. Hai khoảng thời gian có thể trùng nhau."
   }
 }
