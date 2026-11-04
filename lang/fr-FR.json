@@ -598,6 +598,18 @@
     "confirm": "Supprimer"
   },
   "online_stats": {
+    "station_all_description": "Consultez les durées d’écoute enregistrées sur cet appareil.",
+    "station_search": "Rechercher une station…",
+    "station_sort": "Trier les stations",
+    "station_sort_most": "Les plus écoutées",
+    "station_sort_least": "Les moins écoutées",
+    "station_sort_name": "Nom A–Z",
+    "station_results": "Stations {from}–{to} sur {total}",
+    "station_no_results": "Aucune station ne correspond à votre recherche.",
+    "station_pagination": "Pagination des stations",
+    "station_previous": "Précédent",
+    "station_page": "Page {page} sur {total}",
+    "station_next": "Suivant",
     "total": "Temps total en ligne",
     "today": "En ligne aujourd'hui",
     "listening_today": "Écoute aujourd'hui",
