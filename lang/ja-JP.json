@@ -598,6 +598,18 @@
     "confirm": "削除"
   },
   "online_stats": {
+    "station_all_description": "この端末に保存された全放送局の聴取時間を表示します。",
+    "station_search": "放送局を検索…",
+    "station_sort": "並び替え",
+    "station_sort_most": "再生時間が長い順",
+    "station_sort_least": "再生時間が短い順",
+    "station_sort_name": "名前順（A–Z）",
+    "station_results": "{total}局中 {from}～{to}局を表示",
+    "station_no_results": "一致する放送局がありません。",
+    "station_pagination": "放送局リストのページ",
+    "station_previous": "前へ",
+    "station_page": "{page} / {total} ページ",
+    "station_next": "次へ",
     "total": "オンライン合計時間",
     "today": "今日のオンライン時間",
     "listening_today": "今日のラジオ再生",
