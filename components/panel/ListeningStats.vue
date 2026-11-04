@@ -15,7 +15,7 @@
     <div class="stats-overview grid grid-cols-2 gap-2.5">
       <article class="stats-kpi stats-kpi-listening min-w-0 rounded-xl p-3.5" :aria-label="$t('library.listening_total')">
         <div class="stats-kpi-label flex items-center gap-1.5">
-          <UIcon name="i-lucide-headphones" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <UIcon name="i-lucide-headphones" class="h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
           <span class="truncate">{{ $t('online_stats.listening') }}</span>
           <span v-if="isLive" class="stats-live ml-auto h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-rose-500" :title="$t('library.listening_live')" />
         </div>
@@ -28,7 +28,7 @@
       </article>
       <article class="stats-kpi stats-kpi-online min-w-0 rounded-xl p-3.5" :aria-label="$t('online_stats.total')">
         <div class="stats-kpi-label flex items-center gap-1.5">
-          <UIcon name="i-lucide-monitor" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <UIcon name="i-lucide-monitor" class="h-4 w-4 shrink-0 text-emerald-500" aria-hidden="true" />
           <span class="truncate">{{ $t('online_stats.online') }}</span>
         </div>
         <p class="stats-kpi-value mt-2 tabular-nums">{{ formatDuration(totalOnlineMs) }}</p>
@@ -40,14 +40,14 @@
       </article>
       <article class="stats-kpi stats-kpi-stations min-w-0 rounded-xl p-3.5">
         <div class="stats-kpi-label flex items-center gap-1.5">
-          <UIcon name="i-lucide-radio-tower" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <UIcon name="i-lucide-radio-tower" class="h-4 w-4 shrink-0 text-indigo-400" aria-hidden="true" />
           <span class="truncate">{{ $t('online_stats.stations_played') }}</span>
         </div>
         <p class="stats-kpi-value mt-2 tabular-nums">{{ stations.length }}</p>
       </article>
       <article class="stats-kpi stats-kpi-favorite min-w-0 rounded-xl p-3.5">
         <div class="stats-kpi-label flex items-center gap-1.5">
-          <UIcon name="i-lucide-star" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <UIcon name="i-lucide-star" class="h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
           <span class="truncate">{{ $t('online_stats.most_listened_station') }}</span>
         </div>
         <NuxtLink v-if="stations.length" :to="stations[0].url" :prefetch="false"
@@ -59,7 +59,7 @@
     </div>
 
     <div class="stats-insights-grid grid min-w-0 gap-3">
-    <figure class="stats-chart stats-surface min-w-0 overflow-hidden rounded-2xl p-3.5 sm:p-5" :aria-label="$t('online_stats.daily_compare')">
+      <figure class="stats-chart stats-surface min-w-0 overflow-hidden rounded-2xl p-3.5 sm:p-5" :aria-label="$t('online_stats.daily_compare')">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="min-w-0">
           <h2 class="flex items-center gap-2 text-base font-bold sm:text-lg">
@@ -95,8 +95,7 @@
           <span class="text-[var(--radio-text-muted)]">{{ $t('online_stats.online') }}</span>
           <strong class="tabular-nums text-emerald-700 dark:text-emerald-300">{{ formatDuration(onlinePeriodTotal) }}</strong>
         </div>
-        <p class="ml-auto text-[10px] text-[var(--radio-text-muted)]">{{ $t('online_stats.independent_scales') }}</p>
-      </div>
+              </div>
 
       <div class="stats-chart-plot relative mt-2 min-w-0 px-0 pb-1 pt-2">
         <div class="mb-1 flex flex-wrap justify-between gap-2 text-[10px] font-semibold">
@@ -448,10 +447,6 @@ const formatDuration = (value: number): string => {
 .stats-kpi-station { font-size: 1.05rem; line-height: 1.35; }
 .stats-kpi-meta { font-size: .7rem; line-height: 1.35; color: var(--radio-text-muted); }
 .stats-kpi-context { font-size: .65rem; line-height: 1.35; color: var(--radio-text-muted); }
-.stats-kpi-listening .stats-kpi-label :deep(svg) { color: #f43f8e; }
-.stats-kpi-online .stats-kpi-label :deep(svg) { color: #0baa99; }
-.stats-kpi-stations .stats-kpi-label :deep(svg) { color: #818cf8; }
-.stats-kpi-favorite .stats-kpi-label :deep(svg) { color: #d59b22; }
 :global(html.dark) .stats-kpi { background: #1b2238; border-color: rgb(148 163 184 / .17); }
 :global(html.dark) .stats-kpi-listening { background: #221e35; }
 :global(html.dark) .stats-kpi-online { background: #192b35; }
