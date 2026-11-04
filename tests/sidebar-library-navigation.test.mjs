@@ -47,6 +47,21 @@ test('Library grouping works in mobile More without hiding public Statistics or 
   assert.match(sidebar, /if \(path === '\/library'\) libraryOpen\.value = true/);
 });
 
+test('mobile More hides duplicate Library group; mobile Library page retains its four tabs', async () => {
+  const [sidebar, library, mobile] = await Promise.all([
+    read('components/AppSidebar.vue'),
+    read('pages/library.vue'),
+    read('components/MobileNavigation.vue'),
+  ]);
+  assert.match(sidebar, /<div v-if="!mobile" class="space-y-1">\s*<button type="button"/);
+  assert.match(mobile, /<NuxtLink to="\/library"/);
+  assert.match(library, /v-for="tab in tabs"/);
+  for (const name of ['all', 'favorites', 'recent', 'stats']) {
+    assert.match(library, new RegExp("value: '" + name + "'"));
+  }
+  assert.match(sidebar, /v-if="mobile"[\s\S]*?informationLinks/);
+});
+
 test('existing localized Library labels cover all four nested destinations', async () => {
   for (const locale of ['vi-VN', 'en-US', 'ja-JP', 'fr-FR', 'ru-RU', 'zh-CN', 'zh-TW']) {
     const copy = JSON.parse(await read('lang/' + locale + '.json'));
