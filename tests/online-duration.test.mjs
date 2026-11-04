@@ -121,7 +121,7 @@ test('online tracking is in the global app, separate from player, with visibilit
   assert.match(stats, /online_stats\.total/);
   assert.match(stats, /totalOnlineMs/);
   assert.match(stats, /dailyOnlineSeries/);
-  assert.match(stats, /online\.setTrackingEnabled/);
+  assert.doesNotMatch(stats, /setTrackingEnabled\\(/, 'tracking controls moved to Settings');
   assert.match(settings, /online\.setTrackingEnabled/);
   assert.match(settings, /duration\.clearStatistics\(\); online\.clearStatistics\(\)/);
   assert.match(store, /ONLINE_DURATION_KEY/);
