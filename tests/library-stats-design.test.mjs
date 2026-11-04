@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 
-test('compact dashboard uses exactly four KPI cards and chart/ranking grid', async () => {
+test('compact dashboard uses four KPI cards, full-width trend and separate top-station section', async () => {
   const component = await read('components/panel/ListeningStats.vue');
   const page = await read('pages/library.vue');
 
@@ -16,7 +16,8 @@ test('compact dashboard uses exactly four KPI cards and chart/ranking grid', asy
   assert.match(component, /stats-kpi-stations/);
   assert.match(component, /stats-kpi-favorite/);
   assert.doesNotMatch(component, /class="stats-mini /, 'no duplicated KPI row');
-  assert.match(component, /stats-insights-grid/);
+  assert.match(component, /stats-insights-stack/);
+  assert.match(component, /class="stats-insights-stack flex min-w-0 flex-col gap-3"/);
   assert.match(component, /listeningWeekDelta !== null/);
   assert.match(component, /onlineWeekDelta !== null/);
   assert.match(component, /previous > 0 \? Math\.round/, 'no fabricated week growth without baseline');
@@ -45,12 +46,21 @@ test('chart keeps filtering, dual scales, hover, touch and accessible day inspec
   assert.match(component, /independent_scales/);
 });
 
-test('ranking represents each station share honestly, supports real artwork and expansion', async () => {
+test('ranking uses real listening share, a bounded top three, and a paginated modal', async () => {
   const component = await read('components/panel/ListeningStats.vue');
   assert.match(component, /const stations = computed\(\(\) =>/);
   assert.match(component, /duration\.stats\.byStation/);
-  assert.match(component, /const visibleStations = computed\(\(\) =>/);
-  assert.match(component, /showAllStations = !showAllStations/);
+  assert.match(component, /stations\\.slice\\(0, 3\\)/);
+  assert.match(component, /stations\\.length > 3/);
+  assert.match(component, /allStationsOpen = true/);
+  assert.match(component, /v-model:open="allStationsOpen"/);
+  assert.match(component, /paginateListeningStations/);
+  assert.match(component, /stationPageData\\.items/);
+  assert.match(component, /stationPageData\\.totalPages > 1/);
+  assert.match(component, /stationQuery/);
+  assert.match(component, /stationSort/);
+  assert.match(component, /stationPageData\\.hasPrevious/);
+  assert.match(component, /stationPageData\\.hasNext/);
   assert.match(component, /stationImage\(station\.url\)/);
   assert.match(component, /formatStationShare\(station\.ms\)/);
   assert.match(component, /percentOfTotalStation\(station\.ms\)/);
@@ -59,6 +69,7 @@ test('ranking represents each station share honestly, supports real artwork and 
   assert.match(component, /listening\.library\.favorites/);
   assert.match(component, /loading="lazy"/);
   assert.match(component, /library\.listening_empty/);
+  assert.match(component, /online_stats\.station_no_results/);
 });
 
 test('tracking and delete actions live in settings, not cluttering the trend chart', async () => {
@@ -98,6 +109,10 @@ test('all seven locales include the reused dashboard and privacy labels', async 
       'weekly_activity', 'vs_previous_week', 'stations_played',
       'most_listened_station', 'listening_peak', 'online_peak', 'show_all', 'show_less',
       'compare_intro', 'manage_settings', 'independent_scales',
+      'station_all_description', 'station_search', 'station_sort',
+      'station_sort_most', 'station_sort_least', 'station_sort_name',
+      'station_results', 'station_no_results', 'station_pagination',
+      'station_previous', 'station_next', 'station_page',
     ]) {
       assert.ok(typeof copy.online_stats[key] === 'string' && copy.online_stats[key].trim(), lang + ': missing ' + key);
     }
