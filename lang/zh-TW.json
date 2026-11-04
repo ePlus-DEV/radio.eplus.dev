@@ -598,6 +598,18 @@
     "confirm": "刪除"
   },
   "online_stats": {
+    "station_all_description": "查看此裝置上儲存的所有電台收聽時長。",
+    "station_search": "搜尋電台…",
+    "station_sort": "電台排序",
+    "station_sort_most": "收聽最多",
+    "station_sort_least": "收聽最少",
+    "station_sort_name": "名稱 A–Z",
+    "station_results": "顯示第 {from}–{to} 個，共 {total} 個電台",
+    "station_no_results": "找不到符合條件的電台。",
+    "station_pagination": "電台清單分頁",
+    "station_previous": "上一頁",
+    "station_page": "第 {page} / {total} 頁",
+    "station_next": "下一頁",
     "total": "線上總時長",
     "today": "今日線上時長",
     "listening_today": "今日收聽時長",

@@ -598,6 +598,18 @@
     "confirm": "Delete"
   },
   "online_stats": {
+    "station_all_description": "Browse all saved station durations on this device.",
+    "station_search": "Search stations…",
+    "station_sort": "Sort stations",
+    "station_sort_most": "Most listened",
+    "station_sort_least": "Least listened",
+    "station_sort_name": "Name A–Z",
+    "station_results": "Showing {from}–{to} of {total} stations",
+    "station_no_results": "No stations match your search.",
+    "station_pagination": "Station list pages",
+    "station_previous": "Previous",
+    "station_page": "Page {page} of {total}",
+    "station_next": "Next",
     "total": "Total online time",
     "today": "Online today",
     "listening_today": "Listening today",

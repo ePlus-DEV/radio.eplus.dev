@@ -72,10 +72,8 @@ test('statistics combines two independently scaled series in one interactive cha
   assert.match(ui, /@keydown\.left\.prevent="moveSelectedDay\(-1\)"/);
   assert.match(ui, /@keydown\.right\.prevent="moveSelectedDay\(1\)"/);
   assert.match(ui, /min="0" :max="Math\.max\(0, listeningTrend\.length - 1\)"/);
-  assert.match(ui, /:aria-checked="duration\.enabled"/);
-  assert.match(ui, /:aria-checked="online\.enabled"/);
-  assert.match(ui, /duration\.clearStatistics\(\)/);
-  assert.match(ui, /online\.clearStatistics\(\)/);
+  assert.doesNotMatch(ui, /setTrackingEnabled\(/, 'privacy switches belong in Settings');
+  assert.doesNotMatch(ui, /clearStatistics\(/, 'delete action belongs in Settings');
   assert.doesNotMatch(ui, /chartScroll|chartMode|ref="chartScroll"/);
   assert.match(docs, /Online presence time versus listening duration/);
 });
