@@ -1,91 +1,65 @@
 <template>
-  <section :aria-label="$t('library.listening_stats')" class="radio-stats-dashboard space-y-4">
-    <!-- The two live totals intentionally stay separate: online is not listen time. -->
-    <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-      <article class="stats-hero stats-hero-listening relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.listening')">
-        <div class="relative z-10 flex items-center gap-2.5">
-          <span class="stats-icon stats-icon-listening"><UIcon name="i-lucide-headphones" class="h-5 w-5" /></span>
-          <h2 class="text-sm font-bold">{{ $t('online_stats.listening') }}</h2>
-          <span v-if="isLive" class="ml-auto inline-flex items-center gap-1 rounded-full bg-rose-500/10 px-2 py-1 text-[10px] font-semibold text-rose-500">
-            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-current" aria-hidden="true"></span>
-            {{ $t('library.listening_live') }}
-          </span>
-        </div>
-        <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
-          <div class="min-w-0">
-            <span class="sr-only">{{ $t('library.listening_total') }}</span>
-            <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalListeningMs) }}</p>
-            <p class="mt-2 text-xs font-medium text-rose-600 dark:text-rose-300">
-              <template v-if="listeningWeekDelta !== null">
-                <UIcon :name="listeningWeekDelta >= 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
-                {{ formatWeekDelta(listeningWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
-              </template>
-              <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(listeningWeekTotal) }}</template>
-            </p>
-          </div>
-          <div class="stats-sparkline stats-sparkline-rose" aria-hidden="true">
-            <span v-for="(day, index) in listeningHeroDays" :key="index" :style="{ height: sparkHeight(day.ms, listeningHeroPeak) }" />
-          </div>
-        </div>
-      </article>
+  <section :aria-label="$t('library.listening_stats')" class="radio-stats-dashboard space-y-3 sm:space-y-4">
+    <header class="flex flex-wrap items-center justify-between gap-3">
+      <div class="min-w-0">
+        <h2 class="text-base font-bold tracking-tight sm:text-lg">{{ $t('library.listening_stats') }}</h2>
+        <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.compare_intro') }}</p>
+      </div>
+      <NuxtLink to="/settings" class="stats-settings-link inline-flex min-h-10 items-center gap-2 rounded-lg px-3 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
+        <UIcon name="i-lucide-sliders-horizontal" class="h-4 w-4" aria-hidden="true" />
+        {{ $t('online_stats.manage_settings') }}
+      </NuxtLink>
+    </header>
 
-      <article class="stats-hero stats-hero-online relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.online')">
-        <div class="relative z-10 flex items-center gap-2.5">
-          <span class="stats-icon stats-icon-online"><UIcon name="i-lucide-monitor" class="h-5 w-5" /></span>
-          <h2 class="text-sm font-bold">{{ $t('online_stats.online') }}</h2>
+    <!-- A single, consistent four-KPI row; no duplicated summary tiles. -->
+    <div class="stats-overview grid grid-cols-2 gap-2.5">
+      <article class="stats-kpi stats-kpi-listening min-w-0 rounded-xl p-3.5" :aria-label="$t('library.listening_total')">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-headphones" class="h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.listening') }}</span>
+          <span v-if="isLive" class="stats-live ml-auto h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-rose-500" :title="$t('library.listening_live')" />
         </div>
-        <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
-          <div class="min-w-0">
-            <span class="sr-only">{{ $t('online_stats.total') }}</span>
-            <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalOnlineMs) }}</p>
-            <p class="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-              <template v-if="onlineWeekDelta !== null">
-                <UIcon :name="onlineWeekDelta >= 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
-                {{ formatWeekDelta(onlineWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
-              </template>
-              <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(onlineWeekTotal) }}</template>
-            </p>
-          </div>
-          <div class="stats-sparkline stats-sparkline-emerald" aria-hidden="true">
-            <span v-for="(day, index) in onlineHeroDays" :key="index" :style="{ height: sparkHeight(day.ms, onlineHeroPeak) }" />
-          </div>
+        <p class="stats-kpi-value mt-2 tabular-nums">{{ formatDuration(totalListeningMs) }}</p>
+        <p class="stats-kpi-meta mt-1">{{ $t('online_stats.listening_today') }} · {{ formatDuration(todayListeningMs) }}</p>
+        <p class="stats-kpi-context mt-1.5">
+          <template v-if="listeningWeekDelta !== null">{{ formatWeekDelta(listeningWeekDelta) }} {{ $t('online_stats.vs_previous_week') }}</template>
+          <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(listeningWeekTotal) }}</template>
+        </p>
+      </article>
+      <article class="stats-kpi stats-kpi-online min-w-0 rounded-xl p-3.5" :aria-label="$t('online_stats.total')">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-monitor" class="h-4 w-4 shrink-0 text-emerald-500" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.online') }}</span>
         </div>
+        <p class="stats-kpi-value mt-2 tabular-nums">{{ formatDuration(totalOnlineMs) }}</p>
+        <p class="stats-kpi-meta mt-1">{{ $t('online_stats.today') }} · {{ formatDuration(todayOnlineMs) }}</p>
+        <p class="stats-kpi-context mt-1.5">
+          <template v-if="onlineWeekDelta !== null">{{ formatWeekDelta(onlineWeekDelta) }} {{ $t('online_stats.vs_previous_week') }}</template>
+          <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(onlineWeekTotal) }}</template>
+        </p>
+      </article>
+      <article class="stats-kpi stats-kpi-stations min-w-0 rounded-xl p-3.5">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-radio-tower" class="h-4 w-4 shrink-0 text-indigo-400" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.stations_played') }}</span>
+        </div>
+        <p class="stats-kpi-value mt-2 tabular-nums">{{ stations.length }}</p>
+      </article>
+      <article class="stats-kpi stats-kpi-favorite min-w-0 rounded-xl p-3.5">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-star" class="h-4 w-4 shrink-0 text-amber-500" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.most_listened_station') }}</span>
+        </div>
+        <NuxtLink v-if="stations.length" :to="stations[0].url" :prefetch="false"
+          class="stats-kpi-station mt-2 block truncate font-bold hover:text-rose-500"
+          :title="stations[0].title">{{ stations[0].title }}</NuxtLink>
+        <p v-else class="stats-kpi-value mt-2">—</p>
+        <p v-if="stations.length" class="stats-kpi-meta mt-1 tabular-nums">{{ formatDuration(stations[0].ms) }} · {{ formatStationShare(stations[0].ms) }}</p>
       </article>
     </div>
 
-    <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-listening shrink-0"><UIcon name="i-lucide-calendar-days" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</p>
-          <p class="mt-1 text-sm font-bold tabular-nums text-rose-600 dark:text-rose-300 sm:text-base">{{ formatDuration(todayListeningMs) }}</p>
-        </div>
-      </div>
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-online shrink-0"><UIcon name="i-lucide-calendar-clock" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</p>
-          <p class="mt-1 text-sm font-bold tabular-nums text-emerald-700 dark:text-emerald-300 sm:text-base">{{ formatDuration(todayOnlineMs) }}</p>
-        </div>
-      </div>
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-indigo shrink-0"><UIcon name="i-lucide-circle-play" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.stations_played') }}</p>
-          <p class="mt-1 text-base font-bold tabular-nums">{{ stations.length }}</p>
-        </div>
-      </div>
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-amber shrink-0"><UIcon name="i-lucide-star" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.most_listened_station') }}</p>
-          <NuxtLink v-if="stations.length" :to="stations[0].url" :prefetch="false" class="mt-1 block truncate text-xs font-bold hover:text-rose-500" :title="stations[0].title">{{ stations[0].title }}</NuxtLink>
-          <p v-else class="mt-1 text-sm font-semibold">—</p>
-        </div>
-      </div>
-    </div>
-
-    <figure class="stats-chart stats-surface overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.daily_compare')">
+    <div class="stats-insights-grid grid min-w-0 gap-3">
+      <figure class="stats-chart stats-surface min-w-0 overflow-hidden rounded-2xl p-3.5 sm:p-5" :aria-label="$t('online_stats.daily_compare')">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="min-w-0">
           <h2 class="flex items-center gap-2 text-base font-bold sm:text-lg">
@@ -110,7 +84,7 @@
         </div>
       </div>
 
-      <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
+      <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
         <div v-if="showListening" class="flex items-center gap-2">
           <span class="h-2.5 w-2.5 rounded-full bg-rose-500" aria-hidden="true"></span>
           <span class="text-[var(--radio-text-muted)]">{{ $t('online_stats.listening') }}</span>
@@ -121,16 +95,15 @@
           <span class="text-[var(--radio-text-muted)]">{{ $t('online_stats.online') }}</span>
           <strong class="tabular-nums text-emerald-700 dark:text-emerald-300">{{ formatDuration(onlinePeriodTotal) }}</strong>
         </div>
-        <p class="ml-auto text-[10px] text-[var(--radio-text-muted)]">{{ $t('online_stats.independent_scales') }}</p>
-      </div>
+              </div>
 
-      <div class="stats-chart-plot relative mt-3 min-w-0 rounded-xl px-2 pb-2 pt-3 sm:px-3">
+      <div class="stats-chart-plot relative mt-2 min-w-0 px-0 pb-1 pt-2">
         <div class="mb-1 flex flex-wrap justify-between gap-2 text-[10px] font-semibold">
           <span v-if="showListening" class="text-rose-600 dark:text-rose-300">{{ $t('online_stats.listening') }} · {{ $t('online_stats.scale_max') }} {{ formatDuration(listeningGeometry.maxMs) }}</span>
           <span v-if="showOnline" class="text-emerald-700 dark:text-emerald-300">{{ $t('online_stats.online') }} · {{ $t('online_stats.scale_max') }} {{ formatDuration(onlineGeometry.maxMs) }}</span>
         </div>
         <svg v-if="visibleHasData"
-          class="mt-2 block h-40 w-full cursor-crosshair touch-pan-y rounded-lg outline-offset-2 focus-visible:outline-2 focus-visible:outline-rose-500 sm:h-48"
+          class="mt-2 block h-40 w-full cursor-crosshair touch-pan-y rounded-lg outline-offset-2 focus-visible:outline-2 focus-visible:outline-rose-500 sm:h-44"
           viewBox="0 0 800 210" preserveAspectRatio="none" role="img" tabindex="0"
           :aria-label="$t('online_stats.chart_hover_label')"
           @pointerenter="cacheChartBounds" @pointermove="onChartPointerMove" @pointerdown="onChartPointerDown"
@@ -173,7 +146,7 @@
           <circle v-if="showOnline && currentOnlinePoint" :cx="currentOnlinePoint.x" :cy="currentOnlinePoint.y"
             r="5.2" fill="#10bfa6" stroke="var(--radio-surface)" stroke-width="2" vector-effect="non-scaling-stroke" />
         </svg>
-        <p v-else class="flex h-40 items-center justify-center text-sm text-[var(--radio-text-muted)] sm:h-48">
+        <p v-else class="flex h-40 items-center justify-center text-sm text-[var(--radio-text-muted)] sm:h-44">
           {{ $t(visibleMetric === 'online' ? 'online_stats.daily_empty' : 'library.listening_daily_empty') }}
         </p>
         <div v-if="hoveredDayIndex !== null && visibleHasData" role="tooltip"
@@ -195,136 +168,83 @@
         </div>
       </div>
 
-      <!-- Visible on touch and keyboard; chart hover alone must never be required. -->
-      <div class="mt-2 px-1">
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-[var(--radio-text-muted)]">
-          <label class="mr-auto inline-flex items-center gap-2" for="radio-stats-day">
-            <span>{{ $t('online_stats.selected_day') }}</span>
-            <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDay(selectedDateKey) }}</strong>
-          </label>
-          <span v-if="showListening" class="inline-flex items-center gap-1.5">
-            <span class="h-2 w-2 rounded-full bg-rose-500" aria-hidden="true"></span>
-            {{ $t('online_stats.listening') }}
-            <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDuration(selectedListeningMs) }}</strong>
+      <!-- Touch and keyboard users can expand the day inspector; hover remains instant. -->
+      <details class="stats-day-inspector mt-3 overflow-hidden rounded-lg">
+        <summary class="stats-day-summary flex min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3 py-2 text-xs">
+          <span class="text-[var(--radio-text-muted)]">{{ $t('online_stats.selected_day') }} <strong class="ml-1 tabular-nums text-[var(--radio-text)]">{{ formatDay(selectedDateKey) }}</strong></span>
+          <span class="flex flex-wrap items-center gap-3">
+            <span v-if="showListening" class="inline-flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-rose-500" aria-hidden="true"></span>
+              <strong class="tabular-nums">{{ formatDuration(selectedListeningMs) }}</strong>
+            </span>
+            <span v-if="showOnline" class="inline-flex items-center gap-1.5">
+              <span class="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+              <strong class="tabular-nums">{{ formatDuration(selectedOnlineMs) }}</strong>
+            </span>
+            <UIcon name="i-lucide-chevron-down" class="stats-day-chevron h-4 w-4 text-[var(--radio-text-muted)]" aria-hidden="true" />
           </span>
-          <span v-if="showOnline" class="inline-flex items-center gap-1.5">
-            <span class="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
-            {{ $t('online_stats.online') }}
-            <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDuration(selectedOnlineMs) }}</strong>
-          </span>
+        </summary>
+        <div class="px-3 pb-3 pt-2">
+          <label for="radio-stats-day" class="text-xs text-[var(--radio-text-muted)]">{{ $t('online_stats.select_day') }}</label>
+          <input id="radio-stats-day" type="range" min="0" :max="Math.max(0, listeningTrend.length - 1)" step="1"
+            :value="selectedDayIndex" @input="selectDayAtIndex"
+            class="mt-2 h-2 w-full cursor-pointer accent-rose-500"
+            :aria-label="$t('online_stats.select_day')" />
         </div>
-        <input id="radio-stats-day" type="range" min="0" :max="Math.max(0, listeningTrend.length - 1)" step="1"
-          :value="selectedDayIndex" @input="selectDayAtIndex"
-          class="mt-2 h-1.5 w-full cursor-pointer accent-rose-500"
-          :aria-label="$t('online_stats.select_day')" />
-      </div>
+      </details>
 
-      <figcaption class="stats-chart-footer mt-3 grid grid-cols-2 gap-2 rounded-xl p-3 lg:grid-cols-4">
-        <div class="flex min-w-0 items-start gap-2">
-          <span class="stats-icon stats-icon-listening shrink-0"><UIcon name="i-lucide-headphones" class="h-4 w-4" /></span>
-          <div class="min-w-0">
-            <p class="text-[10px] text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_peak') }}</p>
-            <p class="mt-0.5 text-sm font-bold tabular-nums text-rose-600 dark:text-rose-300">{{ formatDuration(peakListeningDay.ms) }}</p>
-            <p class="mt-0.5 text-[10px] text-[var(--radio-text-muted)]">{{ formatDay(peakListeningDay.key) }}</p>
-          </div>
-        </div>
-        <div class="flex min-w-0 items-start gap-2">
-          <span class="stats-icon stats-icon-online shrink-0"><UIcon name="i-lucide-monitor" class="h-4 w-4" /></span>
-          <div class="min-w-0">
-            <p class="text-[10px] text-[var(--radio-text-muted)]">{{ $t('online_stats.online_peak') }}</p>
-            <p class="mt-0.5 text-sm font-bold tabular-nums text-emerald-700 dark:text-emerald-300">{{ formatDuration(peakOnlineDay.ms) }}</p>
-            <p class="mt-0.5 text-[10px] text-[var(--radio-text-muted)]">{{ formatDay(peakOnlineDay.key) }}</p>
-          </div>
-        </div>
-        <div class="flex min-w-0 flex-col justify-between gap-2 border-l-0 lg:border-l lg:border-[var(--radio-border)] lg:pl-3">
-          <p class="text-[11px] font-semibold">{{ $t('library.listening_tracking_title') }}</p>
-          <button type="button" role="switch" :aria-checked="duration.enabled" :aria-label="$t('library.listening_tracking_title')"
-            class="inline-flex min-h-9 items-center gap-2 text-left text-[10px] text-[var(--radio-text-muted)] focus-visible:outline-2 focus-visible:outline-rose-500"
-            @click="duration.setTrackingEnabled(!duration.enabled)">
-            <span class="stats-switch relative inline-block h-5 w-9 shrink-0 rounded-full" :class="duration.enabled ? 'bg-rose-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
-              <span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="duration.enabled ? 'translate-x-4' : ''" />
-            </span>
-            {{ $t(duration.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}
-          </button>
-        </div>
-        <div class="flex min-w-0 flex-col justify-between gap-2">
-          <p class="text-[11px] font-semibold">{{ $t('online_stats.tracking') }}</p>
-          <button type="button" role="switch" :aria-checked="online.enabled" :aria-label="$t('online_stats.tracking')"
-            class="inline-flex min-h-9 items-center gap-2 text-left text-[10px] text-[var(--radio-text-muted)] focus-visible:outline-2 focus-visible:outline-rose-500"
-            @click="online.setTrackingEnabled(!online.enabled)">
-            <span class="stats-switch relative inline-block h-5 w-9 shrink-0 rounded-full" :class="online.enabled ? 'bg-emerald-500' : 'bg-[var(--radio-border)]'" aria-hidden="true">
-              <span class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform" :class="online.enabled ? 'translate-x-4' : ''" />
-            </span>
-            {{ $t(online.enabled ? 'library.listening_tracking_on' : 'library.listening_tracking_off') }}
-          </button>
-        </div>
+      <figcaption class="stats-chart-footer mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-[var(--radio-text-muted)]">
+        <span class="inline-flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true"></span>
+          {{ $t('online_stats.listening_peak') }}: <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDuration(peakListeningDay.ms) }}</strong>
+        </span>
+        <span class="inline-flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
+          {{ $t('online_stats.online_peak') }}: <strong class="tabular-nums text-[var(--radio-text)]">{{ formatDuration(peakOnlineDay.ms) }}</strong>
+        </span>
+        <span class="w-full text-[10px] leading-4">{{ $t('online_stats.independent_scales') }}</span>
       </figcaption>
-      <p class="mt-2 text-[10px] leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.combined_scales_note') }}</p>
     </figure>
 
-    <section class="stats-ranking stats-surface rounded-2xl p-4 sm:p-5" :aria-label="$t('library.listening_top_stations')">
-      <header class="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <h2 class="flex items-center gap-2 text-base font-bold">
-          <UIcon name="i-lucide-chart-no-axes-column-increasing" class="h-5 w-5 text-rose-500" aria-hidden="true" />
-          {{ $t('library.listening_top_stations') }} <span class="text-xs font-normal text-[var(--radio-text-muted)]">({{ stations.length }})</span>
+    <section class="stats-ranking stats-surface min-w-0 rounded-2xl p-3.5 sm:p-5" :aria-label="$t('library.listening_top_stations')">
+      <header class="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="flex items-center gap-2 text-sm font-bold sm:text-base">
+          <UIcon name="i-lucide-list-ordered" class="h-4 w-4 text-rose-500" aria-hidden="true" />
+          {{ $t('library.listening_top_stations') }}
+          <span class="text-xs font-normal text-[var(--radio-text-muted)]">({{ stations.length }})</span>
         </h2>
-        <div class="flex items-center gap-2">
-          <button v-if="stations.length > 5" type="button"
-            class="inline-flex min-h-9 items-center gap-1 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:text-rose-500 focus-visible:outline-2 focus-visible:outline-rose-500"
-            :aria-expanded="showAllStations" @click="showAllStations = !showAllStations">
-            {{ $t(showAllStations ? 'online_stats.show_less' : 'online_stats.show_all') }}
-            <UIcon :name="showAllStations ? 'i-lucide-chevron-up' : 'i-lucide-arrow-right'" class="h-3.5 w-3.5" aria-hidden="true" />
-          </button>
-          <UButton color="neutral" variant="ghost" icon="i-lucide-trash-2" size="xs"
-            class="min-h-9" :aria-label="$t('online_stats.clear_action')" :title="$t('online_stats.clear_action')"
-            @click="clearStatsOpen = true" />
-        </div>
+        <button v-if="stations.length > 5" type="button"
+          class="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:text-rose-500 focus-visible:outline-2 focus-visible:outline-rose-500"
+          :aria-expanded="showAllStations" @click="showAllStations = !showAllStations">
+          {{ $t(showAllStations ? 'online_stats.show_less' : 'online_stats.show_all') }}
+          <UIcon :name="showAllStations ? 'i-lucide-chevron-up' : 'i-lucide-arrow-right'" class="h-3.5 w-3.5" aria-hidden="true" />
+        </button>
       </header>
       <div v-if="stations.length" class="space-y-1">
         <div v-for="(station, index) in visibleStations" :key="station.url"
-          class="stats-ranking-row grid grid-cols-[22px_32px_minmax(0,1fr)] items-center gap-2.5 rounded-lg px-1.5 py-2 sm:grid-cols-[25px_36px_minmax(0,1fr)] sm:gap-3">
-          <span class="stats-rank flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-extrabold tabular-nums"
+          class="stats-ranking-row flex min-w-0 items-start gap-2 rounded-lg px-1 py-2">
+          <span class="stats-rank flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold tabular-nums"
             :class="index === 0 ? 'stats-rank-first' : index === 1 ? 'stats-rank-second' : index === 2 ? 'stats-rank-third' : ''">
             {{ index + 1 }}
           </span>
-          <span class="stats-ranking-artwork flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg" aria-hidden="true">
+          <span class="stats-ranking-artwork flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg" aria-hidden="true">
             <img :src="siteAssetUrl(stationImage(station.url))" alt="" loading="lazy"
               class="h-full w-full object-contain p-1" @error="onStationImageError" />
           </span>
-          <div class="min-w-0">
-            <div class="flex min-w-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs">
-              <NuxtLink :to="station.url" :prefetch="false" class="min-w-0 truncate font-semibold hover:text-rose-500"
-                :title="station.title">{{ station.title }}</NuxtLink>
-              <div class="ml-auto flex shrink-0 items-center gap-3 tabular-nums text-[var(--radio-text-muted)]">
-                <span>{{ formatDuration(station.ms) }}</span>
-                <span class="w-9 text-right text-[11px]">{{ formatStationShare(station.ms) }}</span>
-              </div>
+          <div class="min-w-0 flex-1">
+            <NuxtLink :to="station.url" :prefetch="false" class="block truncate text-xs font-semibold hover:text-rose-500"
+              :title="station.title">{{ station.title }}</NuxtLink>
+            <div class="mt-1 flex items-center justify-between gap-2 text-[10px] tabular-nums text-[var(--radio-text-muted)]">
+              <span>{{ formatDuration(station.ms) }}</span>
+              <span>{{ formatStationShare(station.ms) }}</span>
             </div>
             <div class="stats-track mt-1.5 h-1.5 overflow-hidden rounded-full" aria-hidden="true">
-              <div class="stats-progress h-full rounded-full" :style="{ width: percentOfMaxStation(station.ms) }"></div>
+              <div class="stats-progress h-full rounded-full" :style="{ width: percentOfTotalStation(station.ms) }"></div>
             </div>
           </div>
         </div>
       </div>
       <p v-else class="py-5 text-center text-sm text-[var(--radio-text-muted)]">{{ $t('library.listening_empty') }}</p>
     </section>
-    <UModal
-      v-model:open="clearStatsOpen"
-      :title="$t('online_stats.clear_title')"
-      :description="$t('online_stats.clear_description')"
-      :ui="{ content: 'max-w-md' }"
-    >
-      <template #footer>
-        <div class="flex w-full flex-wrap justify-end gap-2">
-          <UButton color="neutral" variant="outline" class="min-h-11" @click="clearStatsOpen = false">
-            {{ $t('library.listening_confirm_delete_no') }}
-          </UButton>
-          <UButton color="error" class="min-h-11" @click="confirmDeleteStatistics">
-            {{ $t('library.listening_confirm_delete_yes') }}
-          </UButton>
-        </div>
-      </template>
-    </UModal>
+    </div>
   </section>
 </template>
 
@@ -346,13 +266,7 @@ const { t, locale } = useI18n();
 duration.hydrate();
 online.hydrate();
 listening.hydrate();
-const clearStatsOpen = ref(false);
 const showAllStations = ref(false);
-const confirmDeleteStatistics = () => {
-  duration.clearStatistics();
-  online.clearStatistics();
-  clearStatsOpen.value = false;
-};
 type ChartFilter = 'both' | 'listening' | 'online';
 const chartFilters: ChartFilter[] = ['both', 'listening', 'online'];
 const visibleMetric = ref<ChartFilter>('both');
@@ -369,8 +283,6 @@ const last14Listening = computed(() => dailyListeningSeries(duration.stats, 14, 
 const last14Online = computed(() => dailyOnlineSeries(online.stats, 14, new Date(), online.liveMs));
 const listeningHeroDays = computed(() => last14Listening.value.slice(-7));
 const onlineHeroDays = computed(() => last14Online.value.slice(-7));
-const listeningHeroPeak = computed(() => Math.max(0, ...listeningHeroDays.value.map(day => day.ms)));
-const onlineHeroPeak = computed(() => Math.max(0, ...onlineHeroDays.value.map(day => day.ms)));
 const sumDays = (days: { ms: number }[]): number => days.reduce((sum, day) => sum + day.ms, 0);
 const listeningWeekTotal = computed(() => sumDays(listeningHeroDays.value));
 const onlineWeekTotal = computed(() => sumDays(onlineHeroDays.value));
@@ -381,7 +293,6 @@ const comparePreviousWeek = (days: { ms: number }[]): number | null => {
 const listeningWeekDelta = computed(() => comparePreviousWeek(last14Listening.value));
 const onlineWeekDelta = computed(() => comparePreviousWeek(last14Online.value));
 const formatWeekDelta = (value: number): string => (value > 0 ? '+' : '') + new Intl.NumberFormat(locale.value).format(value) + '%';
-const sparkHeight = (ms: number, peak: number): string => peak > 0 && ms > 0 ? `${Math.max(7, ms / peak * 100)}%` : '2px';
 const gridColumnIndices = computed(() => {
   const count = listeningTrend.value.length;
   if (count <= 1) return [0];
@@ -484,10 +395,9 @@ const stations = computed(() => {
   }
   return entries.filter(station => station.ms > 0).sort((a, b) => b.ms - a.ms);
 });
-const maxStationMs = computed(() => stations.value[0]?.ms || 1);
 const visibleStations = computed(() => showAllStations.value ? stations.value : stations.value.slice(0, 5));
 const totalRankedMs = computed(() => stations.value.reduce((total, station) => total + station.ms, 0));
-const percentOfMaxStation = (ms: number): string => `${Math.min(100, Math.max(1, 100 * ms / maxStationMs.value))}%`;
+const percentOfTotalStation = (ms: number): string => totalRankedMs.value > 0 ? `${Math.max(0, Math.min(100, ms * 100 / totalRankedMs.value))}%` : '0%';
 const formatStationShare = (ms: number): string => {
   if (totalRankedMs.value <= 0 || ms <= 0) return '0%';
   const pct = 100 * ms / totalRankedMs.value;
@@ -522,133 +432,61 @@ const formatDuration = (value: number): string => {
 </script>
 
 <style scoped>
-/* A scoped implementation of the approved dark dashboard, without changing
-   the global player, layout tokens or the site's light-mode behavior. */
-.radio-stats-dashboard { min-width: 0; }
-.stats-hero,
-.stats-mini,
-.stats-surface { border: 1px solid var(--radio-border); background: var(--radio-surface); color: var(--radio-text); }
-.stats-hero {
-  isolation: isolate;
-  box-shadow: 0 14px 30px -28px rgb(10 10 30 / .5);
+/* Component-scoped refinements preserve the application's existing theme tokens. */
+.radio-stats-dashboard { min-width: 0; container: listening-stats / inline-size; }
+.stats-settings-link { border: 1px solid var(--radio-border); background: var(--radio-surface); color: var(--radio-text-muted); }
+.stats-settings-link:hover { background: var(--radio-hover); color: var(--radio-text); }
+.stats-kpi, .stats-surface {
+  border: 1px solid var(--radio-border);
+  background: var(--radio-surface);
+  color: var(--radio-text);
 }
-.stats-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-}
-.stats-hero-listening {
-  border-color: rgb(244 63 142 / .5);
-  background: linear-gradient(118deg, color-mix(in srgb, var(--radio-surface) 89%, #f43f8e 11%), var(--radio-surface) 85%);
-}
-.stats-hero-listening::before { background: linear-gradient(90deg, #f43f8e, transparent); }
-.stats-hero-online {
-  border-color: rgb(16 191 166 / .52);
-  background: linear-gradient(118deg, color-mix(in srgb, var(--radio-surface) 89%, #10bfa6 11%), var(--radio-surface) 85%);
-}
-.stats-hero-online::before { background: linear-gradient(90deg, #10bfa6, transparent); }
-:global(html.dark) .stats-hero-listening {
-  background: radial-gradient(ellipse at 90% 110%, rgb(235 35 113 / .14), transparent 55%),
-    linear-gradient(115deg, #24172e 0%, #1a1d32 90%);
-  box-shadow: 0 12px 36px -30px rgb(244 63 142 / .55);
-}
-:global(html.dark) .stats-hero-online {
-  background: radial-gradient(ellipse at 90% 110%, rgb(16 191 166 / .12), transparent 55%),
-    linear-gradient(115deg, #112c37 0%, #192038 92%);
-  box-shadow: 0 12px 36px -30px rgb(16 191 166 / .55);
-}
-.stats-icon {
-  display: inline-flex;
-  width: 2.25rem;
-  height: 2.25rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: .85rem;
-}
-.stats-icon-listening { color: #f43f8e; background: rgb(244 63 142 / .13); }
-.stats-icon-online { color: #10bfa6; background: rgb(16 191 166 / .13); }
-.stats-icon-indigo { color: #818cf8; background: rgb(129 140 248 / .14); }
-.stats-icon-amber { color: #fbbf24; background: rgb(251 191 36 / .13); }
-.stats-sparkline {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 4px;
-  flex-shrink: 0;
-  width: 102px;
-  height: 58px;
-  opacity: .95;
-  padding-bottom: 2px;
-}
-.stats-sparkline span {
-  display: block;
-  min-width: 0;
-  flex: 1;
-  border-radius: 5px 5px 2px 2px;
-  transition: height .2s ease;
-}
-.stats-sparkline-rose span { background: linear-gradient(to top, #be185d, #f43f8e); box-shadow: 0 0 13px rgb(244 63 142 / .22); }
-.stats-sparkline-emerald span { background: linear-gradient(to top, #0f766e, #10bfa6); box-shadow: 0 0 13px rgb(16 191 166 / .2); }
-.stats-mini { background: var(--radio-surface); }
-:global(html.dark) .stats-mini {
-  background: linear-gradient(135deg, #24263f 0%, #1a1d34 100%);
-  box-shadow: inset 0 1px rgb(255 255 255 / .04);
-}
-.stats-chart,
-.stats-ranking { box-shadow: 0 12px 36px -34px rgb(0 0 0 / .6); }
-:global(html.dark) .stats-chart,
-:global(html.dark) .stats-ranking {
-  background: linear-gradient(155deg, #1d223b 0%, #171b31 75%);
-  border-color: rgb(148 163 184 / .17);
+.stats-kpi { min-height: 8rem; }
+.stats-kpi-label { font-size: .7rem; font-weight: 650; line-height: 1.15rem; color: var(--radio-text-muted); }
+.stats-kpi-value { font-size: clamp(1.25rem, 2.3vw, 1.8rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.2; overflow-wrap: anywhere; }
+.stats-kpi-station { font-size: 1.05rem; line-height: 1.35; }
+.stats-kpi-meta { font-size: .7rem; line-height: 1.35; color: var(--radio-text-muted); }
+.stats-kpi-context { font-size: .65rem; line-height: 1.35; color: var(--radio-text-muted); }
+:global(html.dark) .stats-kpi { background: #1b2238; border-color: rgb(148 163 184 / .17); }
+:global(html.dark) .stats-kpi-listening { background: #221e35; }
+:global(html.dark) .stats-kpi-online { background: #192b35; }
+:global(html.dark) .stats-surface { background: #1b2238; border-color: rgb(148 163 184 / .17); }
+.stats-insights-grid { grid-template-columns: minmax(0, 1fr); align-items: start; }
+@container listening-stats (min-width: 760px) {
+  .stats-overview { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .stats-insights-grid { grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr); }
 }
 .stats-segment { border: 1px solid var(--radio-border); background: var(--radio-surface-soft); }
 .stats-filter { color: var(--radio-text-muted); white-space: nowrap; }
 .stats-filter:hover { color: var(--radio-text); background: var(--radio-hover); }
-.stats-filter-active {
-  background: #ed205f;
-  color: white !important;
-  box-shadow: 0 3px 12px -5px rgb(244 63 142 / .6);
-}
-.stats-filter-active:hover { background: #e11d58; }
-.stats-chart-plot { background: var(--radio-surface-soft); }
-:global(html.dark) .stats-chart-plot {
-  background: linear-gradient(180deg, #121b33, #12182a);
-}
-.stats-tooltip {
-  background: var(--radio-surface-elevated);
-  border: 1px solid var(--radio-border-strong);
-  color: var(--radio-text);
-}
-:global(html.dark) .stats-tooltip {
-  background: #1b2540;
-  border-color: #46506b;
-  box-shadow: 0 16px 35px rgb(0 0 0 / .35);
-}
-.stats-chart-footer { background: var(--radio-surface-soft); }
-:global(html.dark) .stats-chart-footer { background: linear-gradient(110deg, #242841, #1a2038); }
-.stats-switch { transition: background-color .15s ease; }
+.stats-filter-active { background: #e11d58; color: #fff !important; }
+.stats-filter-active:hover { background: #be185d; }
+.stats-chart-plot { background: transparent; }
+.stats-tooltip { background: var(--radio-surface-elevated); border: 1px solid var(--radio-border-strong); color: var(--radio-text); }
+:global(html.dark) .stats-tooltip { background: #263149; border-color: #45526b; box-shadow: 0 14px 30px rgb(0 0 0 / .3); }
+.stats-day-inspector { background: var(--radio-surface-soft); border: 1px solid var(--radio-border); }
+.stats-day-summary { list-style: none; cursor: pointer; }
+.stats-day-summary::-webkit-details-marker { display: none; }
+.stats-day-summary::marker { content: ''; }
+.stats-day-summary:hover { background: var(--radio-hover); }
+.stats-day-chevron { transition: transform .18s ease; }
+.stats-day-inspector[open] .stats-day-chevron { transform: rotate(180deg); }
+.stats-chart-footer { border-top: 1px solid var(--radio-border); padding-top: .75rem; }
 .stats-ranking-row:hover { background: var(--radio-hover); }
-.stats-ranking-artwork {
-  background: var(--radio-surface-soft);
-  border: 1px solid var(--radio-border);
-}
+.stats-ranking-artwork { background: var(--radio-surface-soft); border: 1px solid var(--radio-border); }
 .stats-rank { color: var(--radio-text); background: var(--radio-surface-soft); }
 .stats-rank-first { background: #9d235e; color: #fff; }
 .stats-rank-second { background: #64748b; color: #fff; }
 .stats-rank-third { background: #9a6246; color: #fff; }
 .stats-track { background: var(--radio-track); }
-.stats-progress {
-  background: linear-gradient(90deg, #f43f8e, #f472b6);
-  box-shadow: 0 0 9px rgb(244 63 142 / .16);
-}
+.stats-progress { background: #f43f8e; }
 @media (max-width: 400px) {
-  .stats-sparkline { width: 72px; gap: 3px; }
-  .stats-hero { padding: 14px; }
+  .stats-kpi { padding: .7rem; }
+  .stats-kpi-label { font-size: .66rem; }
+  .stats-kpi-station { font-size: .92rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .stats-sparkline span, .stats-switch { transition: none; }
+  .stats-live { animation: none; }
+  .stats-day-chevron { transition: none; }
 }
 </style>
