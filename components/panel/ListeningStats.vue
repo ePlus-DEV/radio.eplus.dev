@@ -1,90 +1,64 @@
 <template>
-  <section :aria-label="$t('library.listening_stats')" class="radio-stats-dashboard space-y-4">
-    <!-- The two live totals intentionally stay separate: online is not listen time. -->
-    <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-      <article class="stats-hero stats-hero-listening relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.listening')">
-        <div class="relative z-10 flex items-center gap-2.5">
-          <span class="stats-icon stats-icon-listening"><UIcon name="i-lucide-headphones" class="h-5 w-5" /></span>
-          <h2 class="text-sm font-bold">{{ $t('online_stats.listening') }}</h2>
-          <span v-if="isLive" class="ml-auto inline-flex items-center gap-1 rounded-full bg-rose-500/10 px-2 py-1 text-[10px] font-semibold text-rose-500">
-            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-current" aria-hidden="true"></span>
-            {{ $t('library.listening_live') }}
-          </span>
-        </div>
-        <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
-          <div class="min-w-0">
-            <span class="sr-only">{{ $t('library.listening_total') }}</span>
-            <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalListeningMs) }}</p>
-            <p class="mt-2 text-xs font-medium text-rose-600 dark:text-rose-300">
-              <template v-if="listeningWeekDelta !== null">
-                <UIcon :name="listeningWeekDelta >= 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
-                {{ formatWeekDelta(listeningWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
-              </template>
-              <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(listeningWeekTotal) }}</template>
-            </p>
-          </div>
-          <div class="stats-sparkline stats-sparkline-rose" aria-hidden="true">
-            <span v-for="(day, index) in listeningHeroDays" :key="index" :style="{ height: sparkHeight(day.ms, listeningHeroPeak) }" />
-          </div>
-        </div>
-      </article>
+  <section :aria-label="$t('library.listening_stats')" class="radio-stats-dashboard space-y-3 sm:space-y-4">
+    <header class="flex flex-wrap items-center justify-between gap-3">
+      <div class="min-w-0">
+        <h2 class="text-base font-bold tracking-tight sm:text-lg">{{ $t('library.listening_stats') }}</h2>
+        <p class="mt-1 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('online_stats.compare_intro') }}</p>
+      </div>
+      <NuxtLink to="/settings" class="stats-settings-link inline-flex min-h-10 items-center gap-2 rounded-lg px-3 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
+        <UIcon name="i-lucide-sliders-horizontal" class="h-4 w-4" aria-hidden="true" />
+        {{ $t('online_stats.manage_settings') }}
+      </NuxtLink>
+    </header>
 
-      <article class="stats-hero stats-hero-online relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.online')">
-        <div class="relative z-10 flex items-center gap-2.5">
-          <span class="stats-icon stats-icon-online"><UIcon name="i-lucide-monitor" class="h-5 w-5" /></span>
-          <h2 class="text-sm font-bold">{{ $t('online_stats.online') }}</h2>
+    <!-- A single, consistent four-KPI row; no duplicated summary tiles. -->
+    <div class="stats-overview grid grid-cols-2 gap-2.5">
+      <article class="stats-kpi stats-kpi-listening min-w-0 rounded-xl p-3.5" :aria-label="$t('library.listening_total')">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-headphones" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.listening') }}</span>
+          <span v-if="isLive" class="stats-live ml-auto h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-rose-500" :title="$t('library.listening_live')" />
         </div>
-        <div class="relative z-10 mt-2 flex items-end justify-between gap-3">
-          <div class="min-w-0">
-            <span class="sr-only">{{ $t('online_stats.total') }}</span>
-            <p class="text-2xl font-extrabold tracking-tight tabular-nums sm:text-3xl">{{ formatDuration(totalOnlineMs) }}</p>
-            <p class="mt-2 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-              <template v-if="onlineWeekDelta !== null">
-                <UIcon :name="onlineWeekDelta >= 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'" class="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
-                {{ formatWeekDelta(onlineWeekDelta) }} · {{ $t('online_stats.vs_previous_week') }}
-              </template>
-              <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(onlineWeekTotal) }}</template>
-            </p>
-          </div>
-          <div class="stats-sparkline stats-sparkline-emerald" aria-hidden="true">
-            <span v-for="(day, index) in onlineHeroDays" :key="index" :style="{ height: sparkHeight(day.ms, onlineHeroPeak) }" />
-          </div>
+        <p class="stats-kpi-value mt-2 tabular-nums">{{ formatDuration(totalListeningMs) }}</p>
+        <p class="stats-kpi-meta mt-1">{{ $t('online_stats.listening_today') }} · {{ formatDuration(todayListeningMs) }}</p>
+        <p class="stats-kpi-context mt-1.5">
+          <template v-if="listeningWeekDelta !== null">{{ formatWeekDelta(listeningWeekDelta) }} {{ $t('online_stats.vs_previous_week') }}</template>
+          <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(listeningWeekTotal) }}</template>
+        </p>
+      </article>
+      <article class="stats-kpi stats-kpi-online min-w-0 rounded-xl p-3.5" :aria-label="$t('online_stats.total')">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-monitor" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.online') }}</span>
         </div>
+        <p class="stats-kpi-value mt-2 tabular-nums">{{ formatDuration(totalOnlineMs) }}</p>
+        <p class="stats-kpi-meta mt-1">{{ $t('online_stats.today') }} · {{ formatDuration(todayOnlineMs) }}</p>
+        <p class="stats-kpi-context mt-1.5">
+          <template v-if="onlineWeekDelta !== null">{{ formatWeekDelta(onlineWeekDelta) }} {{ $t('online_stats.vs_previous_week') }}</template>
+          <template v-else>{{ $t('online_stats.weekly_activity') }} · {{ formatDuration(onlineWeekTotal) }}</template>
+        </p>
+      </article>
+      <article class="stats-kpi stats-kpi-stations min-w-0 rounded-xl p-3.5">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-radio-tower" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.stations_played') }}</span>
+        </div>
+        <p class="stats-kpi-value mt-2 tabular-nums">{{ stations.length }}</p>
+      </article>
+      <article class="stats-kpi stats-kpi-favorite min-w-0 rounded-xl p-3.5">
+        <div class="stats-kpi-label flex items-center gap-1.5">
+          <UIcon name="i-lucide-star" class="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span class="truncate">{{ $t('online_stats.most_listened_station') }}</span>
+        </div>
+        <NuxtLink v-if="stations.length" :to="stations[0].url" :prefetch="false"
+          class="stats-kpi-station mt-2 block truncate font-bold hover:text-rose-500"
+          :title="stations[0].title">{{ stations[0].title }}</NuxtLink>
+        <p v-else class="stats-kpi-value mt-2">—</p>
+        <p v-if="stations.length" class="stats-kpi-meta mt-1 tabular-nums">{{ formatDuration(stations[0].ms) }} · {{ formatStationShare(stations[0].ms) }}</p>
       </article>
     </div>
 
-    <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-listening shrink-0"><UIcon name="i-lucide-calendar-days" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.listening_today') }}</p>
-          <p class="mt-1 text-sm font-bold tabular-nums text-rose-600 dark:text-rose-300 sm:text-base">{{ formatDuration(todayListeningMs) }}</p>
-        </div>
-      </div>
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-online shrink-0"><UIcon name="i-lucide-calendar-clock" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.today') }}</p>
-          <p class="mt-1 text-sm font-bold tabular-nums text-emerald-700 dark:text-emerald-300 sm:text-base">{{ formatDuration(todayOnlineMs) }}</p>
-        </div>
-      </div>
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-indigo shrink-0"><UIcon name="i-lucide-circle-play" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.stations_played') }}</p>
-          <p class="mt-1 text-base font-bold tabular-nums">{{ stations.length }}</p>
-        </div>
-      </div>
-      <div class="stats-mini flex min-w-0 items-center gap-3 rounded-xl p-3.5">
-        <span class="stats-icon stats-icon-amber shrink-0"><UIcon name="i-lucide-star" class="h-4 w-4" /></span>
-        <div class="min-w-0">
-          <p class="text-[11px] font-medium text-[var(--radio-text-muted)]">{{ $t('online_stats.most_listened_station') }}</p>
-          <NuxtLink v-if="stations.length" :to="stations[0].url" :prefetch="false" class="mt-1 block truncate text-xs font-bold hover:text-rose-500" :title="stations[0].title">{{ stations[0].title }}</NuxtLink>
-          <p v-else class="mt-1 text-sm font-semibold">—</p>
-        </div>
-      </div>
-    </div>
-
+    <div class="stats-insights-grid grid min-w-0 gap-3">
     <figure class="stats-chart stats-surface overflow-hidden rounded-2xl p-4 sm:p-5" :aria-label="$t('online_stats.daily_compare')">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="min-w-0">
