@@ -759,7 +759,7 @@ are untouched. Never mix the two metrics or silently infer online
 duration from media play time or playback duration from page presence.
 
 Both local tracking switches are independent and may be disabled separately
-in Settings and the Listening Statistics view. GA4 analytics remain a
+in Settings. The Listening Statistics view links to Settings rather than duplicating privacy switches. GA4 analytics remain a
 **separate** concern. Deleting time statistics confirms intent and clears
 both local online and listening totals, resetting pending checkpoints
 without restoring the deleted interval. Daily graphs select Online or
@@ -819,40 +819,44 @@ improvements; record DevTools/Lighthouse metrics before claiming quantified
 LCP/INP savings. Preserve the globally mounted radio player, station data,
 static SEO output and existing color tokens.
 
-## 2026-11-03 — Approved Library Statistics dashboard visual design
+## 2026-11-04 — Compact Listening dashboard redesign (supersedes 2026-11-03 layout)
 
-Design fidelity is a product requirement for `/library#stats` (user-approved
-dashboard mockup). The implementation deliberately uses real, local browser
-data and never copies placeholder example metrics into the application.
+The route `/library#stats` uses the **real** local statistics, never sample data.
+The previous two headline + four miniature KPI arrangement was redundant and
+visually crowded, especially beside the desktop player queue.
 
-- The top row contains two compact headline KPI cards: rose radio listening
-  and emerald foreground online time. Their seven-day sparklines and week
-  comparisons are calculated from saved daily data. Do NOT fabricate a growth
-  percentage if the previous comparison week has no data; display the
-  current seven-day duration instead.
-- Four smaller summary tiles show today's listening, today's online time,
-  distinct stations listened to, and the most-listened station.
-- The single interactive daily chart has both colored line/area series,
-  visible grid, true hover/touch tooltip, date range and metric filters.
-  Daily values must remain accurate with independent line scales because
-  online and listening durations may overlap. The day slider also works on
-  keyboard/mobile and must not be removed only for visual similarity.
-- Beneath the chart, show real peak days and independent tracking switches
-  (not decorative controls). The list of stations uses persisted durations,
-  available artwork with a valid fallback, time shares based on ranked entries,
-  and functional expand/collapse for more than five stations.
-- The dark midnight/navy/purple page palette is scoped to the Statistics
-  Library route via `radio-stats-shell`; all other routes and light mode
-  keep established `--radio-*` semantics. Player session stays outside
-  `NuxtPage`, not remounted when switching Library sections.
-- `pages/library.vue` presents the compact icon heading and segmented
-  navigation from the mockup. `components/panel/ListeningStats.vue` owns
-  dashboard internals. `tests/library-stats-design.test.mjs` guards layout,
-  privacy/data semantics, interactivity and all seven locale labels.
+- **One row of four KPI cards:** lifetime Listening, lifetime Online, distinct
+  stations listened to, most-listened station. Today and any genuine 7-day
+  comparison are small secondary labels within the first two cards. When
+  there is no prior-week baseline, show actual current-week duration rather
+  than an invented `0%` growth value.
+- **Balanced insights grid:** the combined daily chart shares a row with the
+  per-station ranking when the *content container* is at least 760px wide,
+  independent of viewport width or the presence of the queue/sidebar.
+  Under that width, both sections stack; KPI cards become 2x2 on mobile.
+- **One chart:** keep two *independently scaled* series (rose listening,
+  teal online), real data, hover/touch tooltip, Both/Listening/Online and
+  7/30/90-day filters, keyboard arrow navigation and an accessible native
+  range slider nested in a disclosure to reduce default visual clutter.
+  A small peak summary replaces the former four-column subdashboard.
+- **Ranking:** one compact row per station with artwork fallback, real
+  duration, actual share of total ranked listening time and a matching-width
+  progress bar (never 100% bar for a station labeled 49%). Retain View all
+  and Show less for more than five stations.
+- **Privacy controls and destructive actions:** remain functional and
+  confirmable at `/settings`; the dashboard has an obvious Settings link
+  instead of duplicated switches and a second deletion control. Tracking
+  and chart state must never be coupled to appearance.
+- **Design constraints:** use semantic `--radio-*` tokens, subtle borders
+  and solid accents (no heavy card glow), proper light/dark contrast and
+  reduced-motion handling. The audio session remains mounted globally
+  outside `NuxtPage`; no route, localStorage key, saved preference, favorites,
+  station data, metadata or sitemap behavior should change.
 
-This is a scoped front-end restyle. Do not introduce sample stations,
-fake recommendations/schedules, or a separate chart dependency.
-
+Guard with `tests/library-stats-design.test.mjs`,
+`tests/activity-trend.test.mjs` and `tests/online-duration.test.mjs`.
+Responsive smoke tests: 320/375/390/430px and constrained desktop
+with queue open/closed, plus 1440px light/dark and touch/keyboard.
 
 ## 2026-11-03 — Preserve More and informational pages on phones
 
