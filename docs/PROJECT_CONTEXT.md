@@ -908,3 +908,28 @@ Make this behavior accessible (clear text and icons, touch targets, active
 page state, 320px and dark/light modes) and translated into all seven locales.
 Regression coverage lives in `tests/mobile-more-navigation.test.mjs`.
 Do not touch PlayerSession or the global audio dock for navigation fixes.
+
+## 2026-11-04 — Library sidebar grouping and portal-safe station dialog colors
+
+- Desktop sidebar and mobile More drawer show **one Library parent** with four
+  expandable children: All, Favorites, Recently played, Listening time. Do not
+  promote Library hash tabs into independent top-level navigation entries.
+  Retain canonical `/library`, `/library#favorites`, `/library#recent`
+  and `/library#stats` deep links, reload and Back/Forward behavior.
+  Expand Library automatically while navigating to `/library`; the parent
+  is a disclosure button with `aria-expanded` and labeled child navigation.
+  The public `/statistics` page remains a separate destination.
+- The Listening time **All stations** `UModal` is teleported to the document
+  root, outside the Statistics page scope. Component-scoped CSS and
+  route-scoped `--radio-*` values cannot reliably style its popup.
+  Define semantic document-level modal colors in `assets/css/main.css` under
+  both light/dark themes and apply a unique `radio-station-stats-modal`
+  class to the Nuxt UI content. Inputs, ranking rows and artwork inherit the
+  modal palette. Avoid hard-coding a default dark dialog surface that differs
+  from the Statistics dashboard.
+- Do not change persisted listening data, paging (10 per page), the native
+  Nuxt UI modal focus/close behavior, player session, SEO URLs or sitemap.
+  Regression guards: `tests/sidebar-library-navigation.test.mjs` and
+  `tests/station-modal-theme.test.mjs`, in addition to existing design/SEO
+  and mobile navigation tests.
+
