@@ -598,6 +598,18 @@
     "confirm": "Удалить"
   },
   "online_stats": {
+    "station_all_description": "Время прослушивания всех станций, сохранённое на этом устройстве.",
+    "station_search": "Поиск станции…",
+    "station_sort": "Сортировать станции",
+    "station_sort_most": "Сначала самые прослушиваемые",
+    "station_sort_least": "Сначала наименее прослушиваемые",
+    "station_sort_name": "По названию А–Я",
+    "station_results": "Станции {from}–{to} из {total}",
+    "station_no_results": "Станции не найдены.",
+    "station_pagination": "Страницы списка станций",
+    "station_previous": "Назад",
+    "station_page": "Страница {page} из {total}",
+    "station_next": "Вперёд",
     "total": "Всего онлайн",
     "today": "Онлайн сегодня",
     "listening_today": "Прослушивание сегодня",
