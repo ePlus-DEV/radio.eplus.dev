@@ -598,6 +598,18 @@
     "confirm": "Xóa"
   },
   "online_stats": {
+    "station_all_description": "Xem thời gian nghe của tất cả đài đã lưu trên thiết bị này.",
+    "station_search": "Tìm tên đài…",
+    "station_sort": "Sắp xếp đài",
+    "station_sort_most": "Nghe nhiều nhất",
+    "station_sort_least": "Nghe ít nhất",
+    "station_sort_name": "Tên A–Z",
+    "station_results": "Hiển thị {from}–{to} / {total} đài",
+    "station_no_results": "Không tìm thấy đài phù hợp.",
+    "station_pagination": "Phân trang danh sách đài",
+    "station_previous": "Trước",
+    "station_page": "Trang {page} / {total}",
+    "station_next": "Sau",
     "total": "Tổng thời gian online",
     "today": "Online hôm nay",
     "listening_today": "Nghe radio hôm nay",
