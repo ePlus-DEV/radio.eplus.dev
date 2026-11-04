@@ -550,7 +550,7 @@ const formatDuration = (value: number): string => {
 .stats-day-chevron { transition: transform .18s ease; }
 .stats-day-inspector[open] .stats-day-chevron { transform: rotate(180deg); }
 .stats-chart-footer { border-top: 1px solid var(--radio-border); padding-top: .75rem; }
-.stats-station-card { border: 1px solid var(--radio-border); background: var(--radio-surface-soft); }
+.stats-station-card { max-width: 380px; border: 1px solid var(--radio-border); background: var(--radio-surface-soft); }
 .stats-station-input { border: 1px solid var(--radio-border); background: var(--radio-surface-soft); color: var(--radio-text); }
 .stats-station-input:focus { border-color: #f43f8e; }
 .stats-ranking-row:hover { background: var(--radio-hover); }
