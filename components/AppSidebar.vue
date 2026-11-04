@@ -9,7 +9,7 @@
         </NuxtLink>
         <!-- The Library has one primary navigation entry. Its hash-backed panels
              are secondary links, not separate top-level pages. -->
-        <div class="space-y-1">
+        <div v-if="!mobile" class="space-y-1">
           <button type="button"
             class="radio-interactive flex min-h-11 w-full items-center gap-3 rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition"
             :class="route.path === '/library' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
