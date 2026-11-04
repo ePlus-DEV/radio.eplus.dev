@@ -821,7 +821,7 @@ static SEO output and existing color tokens.
 
 ## 2026-11-04 — Compact Listening dashboard redesign (supersedes 2026-11-03 layout)
 
-The route `/library#stats` uses the **real** local statistics, never sample data.
+The route `/library#stats` uses the **real** local statistics, never sample data. The chart/ranking adjacency described below is superseded by the newer 2026-11-04 dynamic station ranking decision.
 The previous two headline + four miniature KPI arrangement was redundant and
 visually crowded, especially beside the desktop player queue.
 
@@ -857,6 +857,35 @@ Guard with `tests/library-stats-design.test.mjs`,
 `tests/activity-trend.test.mjs` and `tests/online-duration.test.mjs`.
 Responsive smoke tests: 320/375/390/430px and constrained desktop
 with queue open/closed, plus 1440px light/dark and touch/keyboard.
+
+## 2026-11-04 — Dynamic station ranking and independent chart layout
+
+Supersedes the earlier side-by-side chart/ranking grid: a variable-size list
+must **not** determine the chart's height or create a tall, uneven column.
+
+- The combined Listening/Online chart takes the full central content width;
+  its height remains predictable regardless of station count. Preserve
+  actual values, independent scale labels, hover/touch/keyboard inspection,
+  and 7/30/90-day filters.
+- A separate compact **Top 3** section sits below the chart. Render only
+  existing station records: zero stations show a compact empty message;
+  one or two stations show only those cards without dummy placeholders or
+  forced tall empty cards; 3+ stations show up to three. Cap a card's width
+  to avoid oversized single-station displays. Responsive wrapping must
+  respect the content column with or without the player queue.
+- A "View all" control appears only when there are **more than three**
+  stations. It opens a Nuxt UI dialog, not an in-page unbounded expander.
+  Search is case/accent-insensitive, sorting offers most listened, least
+  listened and A–Z, and pages contain at most **10 stations**.
+  Clamp out-of-range pages when filtering or data changes. Use real local
+  listener duration records and do not mutate persisted arrays.
+- The progress bar and text use the exact same denominator (all saved
+  ranked listening duration), even when showing only Top 3 or a filtered
+  modal. Keep artwork fallback, station navigation, keyboard operability
+  and focus management through the Nuxt UI dialog.
+- Localize controls in all seven supported languages and regression-test
+  0/1/2/3, 20+ entries, filtering, page boundaries and sort order.
+  No player, localStorage key, user preferences, SEO or sitemap changes.
 
 ## 2026-11-03 — Preserve More and informational pages on phones
 
