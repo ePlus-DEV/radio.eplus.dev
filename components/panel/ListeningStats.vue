@@ -58,7 +58,7 @@
       </article>
     </div>
 
-    <div class="stats-insights-grid grid min-w-0 gap-3">
+    <div class="stats-insights-stack flex min-w-0 flex-col gap-3">
       <figure class="stats-chart stats-surface min-w-0 overflow-hidden rounded-2xl p-3.5 sm:p-5" :aria-label="$t('online_stats.daily_compare')">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="min-w-0">
@@ -205,46 +205,116 @@
     </figure>
 
     <section class="stats-ranking stats-surface min-w-0 rounded-2xl p-3.5 sm:p-5" :aria-label="$t('library.listening_top_stations')">
-      <header class="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <h2 class="flex items-center gap-2 text-sm font-bold sm:text-base">
-          <UIcon name="i-lucide-list-ordered" class="h-4 w-4 text-rose-500" aria-hidden="true" />
-          {{ $t('library.listening_top_stations') }}
-          <span class="text-xs font-normal text-[var(--radio-text-muted)]">({{ stations.length }})</span>
-        </h2>
-        <button v-if="stations.length > 5" type="button"
-          class="inline-flex min-h-9 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[var(--radio-text-muted)] transition hover:text-rose-500 focus-visible:outline-2 focus-visible:outline-rose-500"
-          :aria-expanded="showAllStations" @click="showAllStations = !showAllStations">
-          {{ $t(showAllStations ? 'online_stats.show_less' : 'online_stats.show_all') }}
-          <UIcon :name="showAllStations ? 'i-lucide-chevron-up' : 'i-lucide-arrow-right'" class="h-3.5 w-3.5" aria-hidden="true" />
+      <header class="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex min-w-0 items-center gap-2">
+          <UIcon name="i-lucide-list-ordered" class="h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
+          <h2 class="text-sm font-bold sm:text-base">{{ $t('library.listening_top_stations') }}</h2>
+          <span class="text-xs text-[var(--radio-text-muted)]">({{ stations.length }})</span>
+        </div>
+        <button v-if="stations.length > 3" type="button"
+          class="stats-settings-link inline-flex min-h-10 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+          @click="allStationsOpen = true">
+          {{ $t('online_stats.show_all') }}
+          <UIcon name="i-lucide-arrow-up-right" class="h-4 w-4" aria-hidden="true" />
         </button>
       </header>
-      <div v-if="stations.length" class="space-y-1">
-        <div v-for="(station, index) in visibleStations" :key="station.url"
-          class="stats-ranking-row flex min-w-0 items-start gap-2 rounded-lg px-1 py-2">
-          <span class="stats-rank flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold tabular-nums"
-            :class="index === 0 ? 'stats-rank-first' : index === 1 ? 'stats-rank-second' : index === 2 ? 'stats-rank-third' : ''">
-            {{ index + 1 }}
-          </span>
-          <span class="stats-ranking-artwork flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg" aria-hidden="true">
-            <img :src="siteAssetUrl(stationImage(station.url))" alt="" loading="lazy"
-              class="h-full w-full object-contain p-1" @error="onStationImageError" />
-          </span>
-          <div class="min-w-0 flex-1">
-            <NuxtLink :to="station.url" :prefetch="false" class="block truncate text-xs font-semibold hover:text-rose-500"
+
+      <!-- No fixed card height or filler stations: 0, 1, 2 and 3 remain compact. -->
+      <div v-if="stations.length" class="stats-top-stations flex flex-wrap items-stretch gap-3">
+        <article v-for="(station, index) in stations.slice(0, 3)" :key="station.url"
+          class="stats-station-card min-w-0 flex-[1_1_230px] rounded-xl p-3">
+          <div class="flex min-w-0 items-center gap-2.5">
+            <span class="stats-rank flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold tabular-nums"
+              :class="index === 0 ? 'stats-rank-first' : index === 1 ? 'stats-rank-second' : 'stats-rank-third'">{{ index + 1 }}</span>
+            <span class="stats-ranking-artwork flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg" aria-hidden="true">
+              <img :src="siteAssetUrl(stationImage(station.url))" alt="" loading="lazy"
+                class="h-full w-full object-contain p-1" @error="onStationImageError" />
+            </span>
+            <NuxtLink :to="station.url" :prefetch="false" class="min-w-0 flex-1 truncate text-xs font-semibold hover:text-rose-500"
               :title="station.title">{{ station.title }}</NuxtLink>
-            <div class="mt-1 flex items-center justify-between gap-2 text-[10px] tabular-nums text-[var(--radio-text-muted)]">
-              <span>{{ formatDuration(station.ms) }}</span>
-              <span>{{ formatStationShare(station.ms) }}</span>
-            </div>
-            <div class="stats-track mt-1.5 h-1.5 overflow-hidden rounded-full" aria-hidden="true">
-              <div class="stats-progress h-full rounded-full" :style="{ width: percentOfTotalStation(station.ms) }"></div>
-            </div>
           </div>
-        </div>
+          <div class="mt-3 flex items-center justify-between gap-2 text-xs tabular-nums text-[var(--radio-text-muted)]">
+            <span>{{ formatDuration(station.ms) }}</span>
+            <span>{{ formatStationShare(station.ms) }}</span>
+          </div>
+          <div class="stats-track mt-2 h-1.5 overflow-hidden rounded-full" aria-hidden="true">
+            <div class="stats-progress h-full rounded-full" :style="{ width: percentOfTotalStation(station.ms) }"></div>
+          </div>
+        </article>
       </div>
-      <p v-else class="py-5 text-center text-sm text-[var(--radio-text-muted)]">{{ $t('library.listening_empty') }}</p>
+      <p v-else class="rounded-xl border border-dashed border-[var(--radio-border)] p-4 text-sm text-[var(--radio-text-muted)]">
+        {{ $t('library.listening_empty') }}
+      </p>
     </section>
     </div>
+    <UModal v-model:open="allStationsOpen" :title="$t('library.listening_top_stations')"
+      :description="$t('online_stats.station_all_description')"
+      :ui="{ content: 'max-w-3xl', body: 'min-w-0' }">
+      <template #body>
+        <div class="space-y-4">
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <label class="min-w-0 flex-1">
+              <span class="sr-only">{{ $t('online_stats.station_search') }}</span>
+              <input v-model="stationQuery" type="search" autocomplete="off"
+                class="stats-station-input min-h-11 w-full rounded-lg px-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+                :placeholder="$t('online_stats.station_search')" />
+            </label>
+            <label class="sm:w-52">
+              <span class="sr-only">{{ $t('online_stats.station_sort') }}</span>
+              <select v-model="stationSort" class="stats-station-input min-h-11 w-full rounded-lg px-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+                :aria-label="$t('online_stats.station_sort')">
+                <option value="duration-desc">{{ $t('online_stats.station_sort_most') }}</option>
+                <option value="duration-asc">{{ $t('online_stats.station_sort_least') }}</option>
+                <option value="name-asc">{{ $t('online_stats.station_sort_name') }}</option>
+              </select>
+            </label>
+          </div>
+          <p class="text-xs text-[var(--radio-text-muted)]">
+            {{ $t('online_stats.station_results', { from: stationPageData.from, to: stationPageData.to, total: stationPageData.total }) }}
+          </p>
+          <div v-if="stationPageData.items.length" class="radio-scrollbar max-h-[46dvh] space-y-1 overflow-y-auto overscroll-contain pr-1">
+            <article v-for="station in stationPageData.items" :key="station.url"
+              class="stats-ranking-row flex min-w-0 items-center gap-3 rounded-lg px-2 py-2.5">
+              <span class="stats-rank flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums">
+                {{ station.rank }}
+              </span>
+              <span class="stats-ranking-artwork flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg" aria-hidden="true">
+                <img :src="siteAssetUrl(stationImage(station.url))" alt="" loading="lazy"
+                  class="h-full w-full object-contain p-1" @error="onStationImageError" />
+              </span>
+              <div class="min-w-0 flex-1">
+                <NuxtLink :to="station.url" :prefetch="false" class="block truncate text-sm font-semibold hover:text-rose-500"
+                  :title="station.title">{{ station.title }}</NuxtLink>
+                <div class="mt-1 flex flex-wrap items-center justify-between gap-2 text-xs tabular-nums text-[var(--radio-text-muted)]">
+                  <span>{{ formatDuration(station.ms) }}</span>
+                  <span>{{ formatStationShare(station.ms) }}</span>
+                </div>
+                <div class="stats-track mt-1.5 h-1 overflow-hidden rounded-full" aria-hidden="true">
+                  <div class="stats-progress h-full rounded-full" :style="{ width: percentOfTotalStation(station.ms) }"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <p v-else class="rounded-lg border border-dashed border-[var(--radio-border)] p-4 text-center text-sm text-[var(--radio-text-muted)]">
+            {{ $t('online_stats.station_no_results') }}
+          </p>
+          <nav v-if="stationPageData.totalPages > 1" class="flex items-center justify-between gap-3 border-t border-[var(--radio-border)] pt-3"
+            :aria-label="$t('online_stats.station_pagination')">
+            <UButton size="sm" color="neutral" variant="outline" icon="i-lucide-chevron-left"
+              :disabled="!stationPageData.hasPrevious" @click="stationPage = stationPageData.currentPage - 1">
+              {{ $t('online_stats.station_previous') }}
+            </UButton>
+            <span class="text-xs tabular-nums text-[var(--radio-text-muted)]">
+              {{ $t('online_stats.station_page', { page: stationPageData.currentPage, total: stationPageData.totalPages }) }}
+            </span>
+            <UButton size="sm" color="neutral" variant="outline" trailing-icon="i-lucide-chevron-right"
+              :disabled="!stationPageData.hasNext" @click="stationPage = stationPageData.currentPage + 1">
+              {{ $t('online_stats.station_next') }}
+            </UButton>
+          </nav>
+        </div>
+      </template>
+    </UModal>
   </section>
 </template>
 
@@ -256,6 +326,7 @@ import { dailyOnlineSeries } from '~/utils/online-duration.mjs';
 import { usePlaybackStore } from '~/stores/playback';
 import { dailyListeningSeries, localDayKey } from '~/utils/listening-duration.mjs';
 import { buildActivityTrend } from '~/utils/activity-trend.mjs';
+import { paginateListeningStations } from '~/utils/listening-station-pagination.mjs';
 
 const duration = useListeningDurationStore();
 const online = useOnlineDurationStore();
@@ -266,7 +337,10 @@ const { t, locale } = useI18n();
 duration.hydrate();
 online.hydrate();
 listening.hydrate();
-const showAllStations = ref(false);
+const allStationsOpen = ref(false);
+const stationQuery = ref('');
+const stationSort = ref('duration-desc');
+const stationPage = ref(1);
 type ChartFilter = 'both' | 'listening' | 'online';
 const chartFilters: ChartFilter[] = ['both', 'listening', 'online'];
 const visibleMetric = ref<ChartFilter>('both');
@@ -395,7 +469,11 @@ const stations = computed(() => {
   }
   return entries.filter(station => station.ms > 0).sort((a, b) => b.ms - a.ms);
 });
-const visibleStations = computed(() => showAllStations.value ? stations.value : stations.value.slice(0, 5));
+const stationPageData = computed(() => paginateListeningStations(
+  stations.value.map((station, index) => ({ ...station, rank: index + 1 })),
+  { query: stationQuery.value, sort: stationSort.value, page: stationPage.value, locale: locale.value },
+));
+watch([stationQuery, stationSort], () => { stationPage.value = 1; });
 const totalRankedMs = computed(() => stations.value.reduce((total, station) => total + station.ms, 0));
 const percentOfTotalStation = (ms: number): string => totalRankedMs.value > 0 ? `${Math.max(0, Math.min(100, ms * 100 / totalRankedMs.value))}%` : '0%';
 const formatStationShare = (ms: number): string => {
@@ -451,10 +529,10 @@ const formatDuration = (value: number): string => {
 :global(html.dark) .stats-kpi-listening { background: #221e35; }
 :global(html.dark) .stats-kpi-online { background: #192b35; }
 :global(html.dark) .stats-surface { background: #1b2238; border-color: rgb(148 163 184 / .17); }
-.stats-insights-grid { grid-template-columns: minmax(0, 1fr); align-items: start; }
+.stats-insights-stack { min-width: 0; }
 @container listening-stats (min-width: 760px) {
   .stats-overview { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .stats-insights-grid { grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr); }
+  .stats-top-stations > .stats-station-card { flex: 0 1 calc((100% - 1.5rem) / 3); }
 }
 .stats-segment { border: 1px solid var(--radio-border); background: var(--radio-surface-soft); }
 .stats-filter { color: var(--radio-text-muted); white-space: nowrap; }
@@ -472,6 +550,9 @@ const formatDuration = (value: number): string => {
 .stats-day-chevron { transition: transform .18s ease; }
 .stats-day-inspector[open] .stats-day-chevron { transform: rotate(180deg); }
 .stats-chart-footer { border-top: 1px solid var(--radio-border); padding-top: .75rem; }
+.stats-station-card { border: 1px solid var(--radio-border); background: var(--radio-surface-soft); }
+.stats-station-input { border: 1px solid var(--radio-border); background: var(--radio-surface-soft); color: var(--radio-text); }
+.stats-station-input:focus { border-color: #f43f8e; }
 .stats-ranking-row:hover { background: var(--radio-hover); }
 .stats-ranking-artwork { background: var(--radio-surface-soft); border: 1px solid var(--radio-border); }
 .stats-rank { color: var(--radio-text); background: var(--radio-surface-soft); }
