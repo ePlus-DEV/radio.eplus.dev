@@ -598,6 +598,18 @@
     "confirm": "删除"
   },
   "online_stats": {
+    "station_all_description": "查看此设备上保存的所有电台收听时长。",
+    "station_search": "搜索电台…",
+    "station_sort": "电台排序",
+    "station_sort_most": "收听最多",
+    "station_sort_least": "收听最少",
+    "station_sort_name": "名称 A–Z",
+    "station_results": "显示第 {from}–{to} 个，共 {total} 个电台",
+    "station_no_results": "没有匹配的电台。",
+    "station_pagination": "电台列表分页",
+    "station_previous": "上一页",
+    "station_page": "第 {page} / {total} 页",
+    "station_next": "下一页",
     "total": "在线总时长",
     "today": "今日在线时长",
     "listening_today": "今日收听时长",
