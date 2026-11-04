@@ -48,6 +48,13 @@
     --radio-badge-text: #334155;
     --radio-badge-border: #cbd5e1;
 
+    /* Library station dialog is teleported outside .radio-stats-dashboard.
+       Keep its colors on the document theme, not a scoped page selector. */
+    --radio-station-dialog-bg: #ffffff;
+    --radio-station-dialog-field: #f1f5f9;
+    --radio-station-dialog-hover: #f8fafc;
+    --radio-station-dialog-border: #dbe3ef;
+
   }
 
   html.dark,
@@ -73,6 +80,11 @@
     --radio-badge-bg: #303c55;
     --radio-badge-text: #f1f5f9;
     --radio-badge-border: rgb(148 163 184 / 0.4);
+
+    --radio-station-dialog-bg: #1b2238;
+    --radio-station-dialog-field: #121a2e;
+    --radio-station-dialog-hover: #263149;
+    --radio-station-dialog-border: rgb(148 163 184 / 0.26);
 
   }
 
@@ -317,6 +329,39 @@
   .radio-search-panel-row:focus-visible {
     background: color-mix(in srgb, var(--radio-surface-soft) 76%, rgb(244 63 94) 24%);
   }
+
+
+  /* Nuxt UI UModal is teleported to document body, so scoped Library
+     component styles never reach its dialog or station rows. */
+  .radio-station-stats-modal {
+    background-color: var(--radio-station-dialog-bg);
+    color: var(--radio-text);
+    border: 1px solid var(--radio-station-dialog-border);
+    box-shadow: 0 28px 72px -30px rgb(0 0 0 / 0.65);
+  }
+
+  .radio-station-stats-overlay {
+    background-color: rgb(2 6 23 / 0.68);
+    backdrop-filter: blur(2px);
+  }
+
+  .radio-station-stats-modal .stats-station-input {
+    background: var(--radio-station-dialog-field);
+    color: var(--radio-text);
+    border: 1px solid var(--radio-station-dialog-border);
+  }
+
+  .radio-station-stats-modal .stats-station-input::placeholder { color: var(--radio-text-muted); }
+  .radio-station-stats-modal .stats-station-input:hover { border-color: var(--radio-border-strong); }
+  .radio-station-stats-modal .stats-station-input:focus-visible { border-color: #f43f8e; outline-color: #f43f8e; }
+  .radio-station-stats-modal select.stats-station-input option { background: var(--radio-station-dialog-field); color: var(--radio-text); }
+  .radio-station-stats-modal .stats-ranking-row:hover,
+  .radio-station-stats-modal .stats-ranking-row:focus-within { background: var(--radio-station-dialog-hover); }
+  .radio-station-stats-modal .stats-ranking-artwork,
+  .radio-station-stats-modal .stats-rank { background: var(--radio-station-dialog-field); }
+  .radio-station-stats-modal .stats-ranking-artwork { border: 1px solid var(--radio-station-dialog-border); }
+  .radio-station-stats-modal .stats-track { background: var(--radio-track); }
+  .radio-station-stats-modal .stats-progress { background: #f43f8e; }
 
   .radio-interactive {
     @apply transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;

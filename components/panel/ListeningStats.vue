@@ -249,7 +249,11 @@
     </div>
     <UModal v-model:open="allStationsOpen" :title="$t('library.listening_top_stations')"
       :description="$t('online_stats.station_all_description')"
-      :ui="{ content: 'max-w-3xl', body: 'min-w-0' }">
+      :ui="{
+        content: 'radio-station-stats-modal max-w-3xl bg-[var(--radio-station-dialog-bg)] text-[var(--radio-text)]',
+        overlay: 'radio-station-stats-overlay',
+        body: 'min-w-0',
+      }">
       <template #body>
         <div class="space-y-4">
           <div class="flex flex-col gap-3 sm:flex-row">
