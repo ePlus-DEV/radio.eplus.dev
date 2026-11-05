@@ -15,15 +15,15 @@ Do not put previews inside the staging or production output repository. As of 20
 1. Create a **PUBLIC** GitHub repository named `ePlus-DEV/onair-pr-previews`. Initialize it with a README and an initial `main` branch. Do not use a name containing `.github.io`; it is a project Pages site. Do not create a `CNAME` file.
 2. In that repo's **Settings -> Pages**, set **Build and deployment -> Source: Deploy from a branch**, `main` / `/(root)`. Use its GitHub default hostname, not the production or staging custom domain.
 3. Ensure the existing **fine-grained `PAGES_DEPLOY_TOKEN`** already grants `Contents: Read and write` to *this new output repo*, in addition to its existing staging/production repositories. This token belongs to the source repository's **development Environment Secret**. Do not put it in an ordinary PR build job, project files or comments.
-4. The workflow reuses **existing** `PAGES_DEV_READY=true` (already used by staging). **No new feature flag or token is required.** Merge the PR Preview feature into `develop`; no production deployment changes are needed. Do **not** fast-track changes to `main`.
+4. The workflow reuses **existing** `PAGES_DEV_READY=true` (already used by staging). **No new feature flag or token is required.** Keep `.github/workflows/pr-preview-pages.yml` on **both `main` (GitHub default branch) and `develop`**: the `pull_request_target` workflow is loaded from `main` but only targets PRs against `develop`. No application or production deployment changes are required.
 
-The source repo's `.github/workflows/pr-preview-pages.yml` creates and updates an individual directory for each PR, and removes the directory when its PR is closed or merged. The workflow posts/updates a **single** link comment on each PR. Its GitHub Pages link includes a project path and a PR path.
+The source repo's `.github/workflows/pr-preview-pages.yml` creates and updates an individual directory for each qualifying PR, and removes the directory when its PR is closed or merged. Opening/reopening/updating a same-repository feature PR targeting `develop` triggers the preview; **merging into `develop` does not trigger a preview for that merge**. The workflow posts/updates a **single** bot comment only **after** the public Pages URL serves the expected PR commit SHA from `preview-commit.txt` and returns a successful HTML response with `noindex`. Its GitHub Pages link includes a project path and a PR path.
 
 A different Pages origin/custom-domain or repo name requires updating **all** matching base URLs and path assertions in the workflow and `utils/pr-preview.mjs`; do not set a custom domain without adjusting those paths.
 
 ## Security model
 
-- The workflow uses `pull_request_target` so its **workflow definition comes from the trusted target branch**, but **the untrusted checkout and npm build run in a separate read-only job, with `persist-credentials: false` and no deploy secrets or Environment access**.
+- The workflow uses `pull_request_target`: its **trusted workflow definition must come from the GitHub default branch `main`**, while the trigger's `branches: [develop]` filters the PR base branch. Keep the same workflow file on both `main` and `develop`. **The untrusted checkout and npm build run in a separate read-only job**, with `persist-credentials: false`, no deploy secrets and no Environment access.
 - Only same-repository PRs targeting `develop` are built; fork PRs and bot synchronization branches are excluded.
 - The trusted publication job downloads the static artifact and **never executes scripts from the PR or checks out its code**. It rechecks current PR state/base/head SHA before publishing. A closed or updated PR cannot publish an obsolete commit.
 - The existing `PAGES_DEPLOY_TOKEN` is reused for authenticated Git clone/push of `ePlus-DEV/onair-pr-previews`. It never changes the source `develop`/`main` branches or other Pages output repos.
@@ -47,10 +47,17 @@ Build gate checks run existing unit tests, `assert-staging-noindex`, `assert-ga4
 
 1. Open a small PR against `develop` from a branch in `ePlus-DEV/radio.eplus.dev`.
 2. Check GitHub Actions **PR Preview — GitHub Pages**: read-only build, then trusted publish.
-3. Follow the comment link; verify homepage (dark/light), mobile navigation, player, library and the Vietnam station deep link.
+3. The bot must post the link **only after the URL really responds with a successful `noindex` HTML page and the current PR head SHA marker**; then verify homepage (dark/light), mobile navigation, player, library and the Vietnam station deep link. If the link shows GitHub Pages 404, this is a failed verification, even if build/push/deployment checks were green.
 4. Verify HTML has `noindex`, no production GA4 and that CSS, JS, logo, favicon, images and station JSON load under the PR path. Note that GitHub Pages branch publishing may take additional time after the commit.
-5. Push a second commit; confirm the **same** link is updated. Close the PR; confirm its directory disappears from the Pages output repository.
+5. Push a second commit; confirm the **same** link is updated only after the current commit is publicly served. **Close the smoke-test PR without merging**; confirm its directory disappears from the Pages output repository. PR [#367](https://github.com/ePlus-DEV/radio.eplus.dev/pull/367) is the earlier closed/unmerged smoke test.
 
 If the action fails before publish: ensure the new Pages repository has a `main` branch, the token has **Contents write** to that exact repo, the `development` Environment permits the job, and the already configured `PAGES_DEV_READY` is enabled. If a build becomes too large, add only necessary representative routes rather than copying all 4,000+ station pages into each PR.
+
+## Maintenance rule: keep it simple
+
+- Small documentation, README, agent rule and workflow-only fixes may be **committed directly to the appropriate branch** when explicitly authorized and permitted by branch protection. Do not open multiple redundant PRs for small workflow-only fixes.
+- Changes to the `pull_request_target` workflow must be applied to **`main` first** (its execution source), then synchronized with `develop` to avoid reverting on future releases. Do not change the app, SEO text, GA4, production publishing or credentials as part of a small workflow fix.
+- Use PR review/CI gates for feature work, sensitive permissions/security changes, or when branch policies require review.
+- Never report a live preview based solely on successful Git commits or successful GitHub Pages deployment; verify public HTTP delivery and the expected head SHA. A failed live check must prevent the bot's "Open Preview" link.
 
 Official references: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits), [Publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site), [Security of pull_request_target](https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/).
