@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createPinia, setActivePinia } from 'pinia';
+import { usePlaybackStore } from '../stores/playback.ts';
 import { parseHlsId3Tag, extractHlsId3Tracks, createTimedHlsTrackBuffer, extractNativeHlsId3Track } from '../utils/hls-song-metadata.mjs';
 
 const ascii = text => [...text].map(c => c.charCodeAt(0));
@@ -84,6 +86,38 @@ test('Safari native timed ID3 cue extraction requires a concurrent title/artist 
   assert.equal(extractNativeHlsId3Track([cue('PRIV', 'Not a song'), cue('TPE1', 'Singer')]), null);
   assert.equal(extractNativeHlsId3Track([{ value: { key: 'TIT2', data: 'Title' } }]), null);
   assert.equal(extractNativeHlsId3Track(null), null);
+});
+
+
+test('real HLS song takes priority over stale TuneIn Describe without leaking across stations', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  const stationUrl = '/global-radio/apple-music/apple-music-1';
+  playback.activateGlobalRadio({
+    id: 'apple-music-1', url: stationUrl, title: 'Apple Music 1',
+    image: '', sources: [],
+  }, 'https://music.apple.com/', Date.now() + 120_000, [], { autoplay: false });
+  playback.setLiveTrack(stationUrl, { title: 'Provider Song', artist: 'Provider Artist' });
+  assert.equal(playback.liveTrack.source, 'provider');
+  assert.equal(playback.setHlsLiveTrack(stationUrl, { title: 'HLS Song', artist: 'HLS Artist' }), true);
+  assert.deepEqual({
+    title: playback.liveTrack.title, artist: playback.liveTrack.artist,
+    source: playback.liveTrack.source,
+  }, { title: 'HLS Song', artist: 'HLS Artist', source: 'hls' });
+  playback.setLiveTrack(stationUrl, null);
+  playback.setLiveTrack(stationUrl, { title: 'Outdated Song', artist: 'Old Artist' });
+  assert.equal(playback.liveTrack.title, 'HLS Song');
+  assert.equal(playback.setHlsLiveTrack('/global-radio/apple-music/wrong', { title: 'X', artist: 'Y' }), false);
+  assert.equal(playback.setHlsLiveTrack(stationUrl, { title: 'Incomplete', artist: '' }), false);
+  playback.clearHlsLiveTrack(stationUrl);
+  assert.equal(playback.liveTrack, null);
+  playback.setLiveTrack(stationUrl, { title: 'Provider Returns', artist: 'Artist' });
+  assert.equal(playback.liveTrack.source, 'provider');
+  playback.activateGlobalRadio({
+    id: 'apple-music-hits', url: '/global-radio/apple-music/apple-music-hits',
+    title: 'Apple Music Hits', image: '', sources: [],
+  }, 'https://music.apple.com/', Date.now() + 120_000, [], { autoplay: false });
+  assert.equal(playback.liveTrack, null);
 });
 
 test('wire actual hls.js metadata to existing player and queue, not another stream', async () => {
