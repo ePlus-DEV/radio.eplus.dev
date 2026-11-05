@@ -3,13 +3,16 @@
     "content": "Sorry, the page you are looking for does not exist."
   },
   "global_radio": {
+    "seasonal_note": "Seasonal programming may be unavailable outside the holiday period. Check Apple Music or TuneIn for current access.",
+    "seasonal": "Seasonal",
+    "listen_on_tunein": "Listen on TuneIn",
     "eyebrow": "Global network",
     "title": "Global Radio",
     "description": "Discover international radio networks beyond country-based catalogs.",
     "providers": "Radio providers",
     "provider_count": "providers",
     "external_badge": "Opens externally",
-    "apple_description": "Explore six Apple Music live radio stations, organized as a global provider rather than a country catalog.",
+    "apple_description": "Explore six core Apple Music live radio stations plus seasonal Holiday Hits, listed as a global provider rather than a country catalog.",
     "explore_provider": "Explore stations",
     "external_note": "Apple Music radio opens on Apple's website. It does not play through the ePlus OnAir player or count toward local listening statistics.",
     "by_country": "Browse radio by country",
