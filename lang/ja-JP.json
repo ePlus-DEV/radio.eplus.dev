@@ -3,13 +3,16 @@
     "content": "お探しのページは見つかりませんでした。"
   },
   "global_radio": {
+    "seasonal_note": "季節限定の放送はホリデーシーズン以外には利用できない場合があります。Apple MusicまたはTuneInでご確認ください。",
+    "seasonal": "季節限定",
+    "listen_on_tunein": "TuneInで聴く",
     "eyebrow": "国際ラジオネットワーク",
     "title": "グローバルラジオ",
     "description": "国別の一覧とは別に、世界のラジオネットワークを探せます。",
     "providers": "ラジオプロバイダー",
     "provider_count": "プロバイダー",
     "external_badge": "外部サイトで再生",
-    "apple_description": "Apple Musicの6つのライブ放送局を、国別ではなくグローバルなネットワークとして紹介します。",
+    "apple_description": "Apple Musicの主要6局と季節限定のHoliday Hitsを、国別ではなくグローバルな提供元として紹介します。",
     "explore_provider": "放送局を見る",
     "external_note": "Apple Musicの放送局はAppleのサイトで開きます。ePlus OnAir内では再生されず、聴取統計にも含まれません。",
     "by_country": "国別に探す",
