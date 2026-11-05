@@ -93,6 +93,10 @@ All four workflows share a repository-wide concurrency queue. The workflows are:
 
 See [deployment setup and cutover](./docs/GITHUB_PAGES.md) and [workflow policy](./docs/GITHUB_ACTIONS.md).
 
+## Pull request visual previews
+
+PR branches can receive isolated Cloudflare Pages preview links after the owner connects the optional Git integration. The guarded build command is `npm run build:pr-preview`; it forces noindex, disables production analytics, and validates generated assets. No Cloudflare credentials are used in GitHub PR jobs. This project does **not** replace GitHub Pages production/staging deployment. See [PR Preview setup, limitations, and security](./docs/PR_PREVIEWS.md). **Cloudflare account setup is required before previews become live.**
+
 ## Station social images and the GitHub Pages size limit
 
 Normal Pages builds use `npm run generate:site` with `ONAIR_SKIP_STATION_OG=true`, retain in-catalog station artwork, and fall back to the shared brand preview for station Open Graph cards until a complete external image set is configured.
