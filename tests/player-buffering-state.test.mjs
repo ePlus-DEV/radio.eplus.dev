@@ -8,20 +8,27 @@ function handler(name, context) {
   return new Function(...Object.keys(context), body).bind(null, ...Object.values(context));
 }
 test('waiting clears actual-playing state and starts bounded recovery only with play intent', () => {
-  let stops = 0, probes = 0;
+  let stops = 0, probes = 0, clearedStability = 0;
   const playing = { value: true }, waiting = { value: false }, userPaused = { value: false };
-  const run = handler('onMediaWaiting', { playing, waiting, userPaused,
-    stopListeningDuration: () => stops++, startFallbackProbe: () => probes++ });
+  const pendingAutoPlay = { value: false };
+  const run = handler('onMediaWaiting', { playing, waiting, userPaused, pendingAutoPlay,
+    stopListeningDuration: () => stops++, clearStablePlaybackTimer: () => clearedStability++,
+    startFallbackProbe: () => probes++ });
   run();
   assert.equal(playing.value, false);
   assert.equal(waiting.value, true);
+  assert.equal(pendingAutoPlay.value, true);
   assert.equal(stops, 1);
+  assert.equal(clearedStability, 1, 'buffering must invalidate the stable-playback window');
   assert.equal(probes, 1);
   userPaused.value = true;
   waiting.value = false;
+  pendingAutoPlay.value = false;
   run();
   assert.equal(waiting.value, false);
+  assert.equal(pendingAutoPlay.value, false);
   assert.equal(probes, 1);
+  assert.equal(clearedStability, 2);
 });
 test('network stall preserves buffered playback and only recovers when data runs out', () => {
   let waits = 0;
