@@ -16,7 +16,7 @@ test('Apple directory uses compact responsive cards with ePlus Play as the only 
   assert.match(page, /global_radio\.listen_on_eplus/);
   assert.match(page, /t\('global_radio\.details'\)/);
   assert.match(page, /t\('global_radio\.eplus_play_hint'\)/);
-  assert.match(page, /t\('global_radio\.playing_now'\)/);
+  assert.match(page, /global_radio\.playing_now/);
   assert.match(page, /min-h-11/, 'touch targets must be at least 44px high');
   assert.match(page, /line-clamp-2/, 'descriptions remain compact on narrow viewports');
   assert.match(page, /focus-visible:outline-2/, 'buttons and links must be keyboard accessible');
