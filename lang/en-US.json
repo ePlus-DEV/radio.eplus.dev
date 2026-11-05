@@ -469,7 +469,7 @@
     "loading": "Finding stations…",
     "unavailable": "Suggestions could not be loaded.",
     "retry": "Retry",
-    "based_on_your_library": "Suggested from your locally saved favorites and listening history.",
+    "based_on_your_library": "Suggestions use eligible stations in your saved library, respecting your current tracking settings.",
     "curated_intro": "No matching local preferences yet. Here are genuinely featured catalog picks.",
     "reason_genre": "Similar genre to stations you saved",
     "reason_language": "Same language as stations you saved",
