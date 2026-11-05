@@ -3,6 +3,9 @@
     "content": "抱歉，找不到您要瀏覽的頁面。"
   },
   "global_radio": {
+    "listen_on_eplus": "在 ePlus 收聽",
+    "connecting_on_eplus": "連線中…",
+    "resolver_unavailable": "ePlus 暫時無法播放。請使用 Apple Music 或 TuneIn 收聽。",
     "hls_preview_title": "實驗功能：播放臨時 HLS 連結",
     "hls_preview_help": "若有合法授權的 Apple 臨時 HLS URL，可在此瀏覽器測試。Apple Music/TuneIn 可能拒絕跨站播放。本功能不會取得或更新存取金鑰。",
     "hls_preview_input": "臨時簽署 HLS URL",
