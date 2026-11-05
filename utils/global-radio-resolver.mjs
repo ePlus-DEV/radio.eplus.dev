@@ -31,9 +31,45 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
     ? stationPage.pathname.match(/\/ra\.(\d+)$/)?.[1]
     : null;
   const stream = httpsUrl(payload.stream_url);
-  // Explicit allowlist, fixed station association, and HLS-only contract.
+  // Apple/TuneIn serves more than one legitimate playlist layout.
+  // HAR for Holiday Hits confirms /ppa/index-cmaf.m3u8; other station samples
+  // include the Apple radio ID in the path. Keep variants tightly allowlisted.
+  const matchesNumberedPath = stationNumber && new RegExp(
+    '^/3p-tune-in/tune_in/' + stationNumber + '/[a-z0-9_-]+/\\d+\\.m3u8
+  // The signed token is never persisted or logged. Verify the server expiry,
+  // and never trust it if the accessKey embeds an earlier Unix expiration.
+  const expiresSeconds = Number(payload.expires_at);
+  if (!Number.isSafeInteger(expiresSeconds)) return { ok: false, reason: 'invalid_expiry' };
+  let expiresAt = expiresSeconds * 1000;
+  const tokenEpoch = stream.searchParams.get('accessKey').split('_', 1)[0];
+  if (/^\d{10}$/.test(tokenEpoch)) expiresAt = Math.min(expiresAt, Number(tokenEpoch) * 1000);
+  if (expiresAt < now + MIN_STREAM_TTL_MS) return { ok: false, reason: 'expired' };
+  return { ok: true, streamUrl: stream.href, expiresAt };
+}
+
+export async function resolveAuthorizedAppleStream({ endpoint, station, signal, fetcher = fetch }) {
+  const requestUrl = buildAuthorizedResolverRequest(endpoint, station?.id);
+  if (!requestUrl) throw new Error('not_configured');
+  // No credentials, no access keys in request, and never cache signed URLs.
+  const response = await fetcher(requestUrl, {
+    method: 'GET',
+    cache: 'no-store',
+    credentials: 'omit',
+    headers: { Accept: 'application/json' },
+    signal,
+  });
+  if (!response.ok) throw new Error('unavailable');
+  const payload = await response.json();
+  const checked = validateAuthorizedAppleStream(payload, station.id, station.listen_url);
+  if (!checked.ok) throw new Error(checked.reason);
+  return checked;
+}
+, 'i',
+  ).test(stream?.pathname || '');
+  const matchesHolidayPath = stationId === 'apple-music-holiday-hits'
+    && stream?.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8';
   if (!stationNumber || !stream || stream.hostname !== APPLE_HLS_HOST
-    || !new RegExp('^/3p-tune-in/tune_in/' + stationNumber + '/[a-z0-9_-]+/\\d+\\.m3u8$', 'i').test(stream.pathname)
+    || !(matchesNumberedPath || matchesHolidayPath)
     || !stream.searchParams.get('accessKey')) {
     return { ok: false, reason: 'invalid_source' };
   }
