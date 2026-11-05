@@ -74,6 +74,28 @@ test('Global station cards have the same Play/Pause behavior as Country and may 
   assert.match(directory, /redesign\.paused/);
 });
 
+test('saved Global station restores an idle player from fresh HLS, never old accessKey or autoplay', async () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  const provider = await getProvider();
+  const first = provider.stations[0];
+  const queue = createAppleRadioQueue(provider.stations);
+  playback.activateGlobalRadio(
+    createAuthorizedApplePlaybackStation(first, appleStream),
+    first.listen_url, Date.now() + 120_000, queue, { autoplay: false },
+  );
+  assert.equal(playback.playRequest, 0);
+  assert.equal(playback.stations.length, 7);
+  assert.equal(playback.station.sources.length, 1);
+  const restore = await read('composables/useRestoreLastStation.ts');
+  assert.match(restore, /PUBLIC_APPLE_TUNEIN_STATIONS/);
+  assert.match(restore, /resolvePublicTuneInStream\(\{ station \}\)/);
+  assert.match(restore, /siteAssetUrl\('\/catalog\/providers\/apple-music\.json'\)/);
+  assert.match(restore, /\{ autoplay: false \}/);
+  assert.match(restore, /playback\.station \|\| playback\.playing/);
+  assert.doesNotMatch(restore, /localStorage\.setItem\([^\n]*accessKey/);
+});
+
 test('Global queue and Next/Previous requests use the same shared player navigation contract', async () => {
   const session = await read('components/player/Session.vue');
   const detail = await read('pages/global-radio/apple-music/[station].vue');
