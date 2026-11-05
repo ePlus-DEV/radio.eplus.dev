@@ -419,6 +419,24 @@
       }
     }
   },
+  "surprise": {
+    "title": "Surprenez-moi",
+    "heading": "Découvrez une nouvelle station",
+    "description": "Choisissez une station au hasard dans le catalogue réel. La lecture ne démarre qu'après votre clic.",
+    "filters": "Filtres",
+    "action": "Écouter une station au hasard",
+    "loading": "Chargement du catalogue…",
+    "unavailable": "Impossible de charger ou lancer cette station. Réessayez.",
+    "country": "Pays",
+    "any_country": "Tous les pays",
+    "genre": "Genre",
+    "any_genre": "Tous les genres",
+    "language": "Langue",
+    "any_language": "Toutes les langues",
+    "available_count": "{count} stations correspondantes",
+    "empty": "Aucune station ne correspond à ces filtres.",
+    "selected": "Station sélectionnée"
+  },
   "home": {
     "live_badge": "Radio internet en direct",
     "title": "Écoutez les radios du monde entier",
