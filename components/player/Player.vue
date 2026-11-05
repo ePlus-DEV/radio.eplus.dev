@@ -493,7 +493,17 @@ const sidebarCount = computed(
   () => stationCount.value || scheduleCount.value,
 );
 
-const liveTrack = computed(() => resolveLiveTrack(props.song, props.playlist));
+const liveTrack = computed(() => {
+  // TuneIn's playlist here is a session history, not a reliable live feed.
+  // Never report a previously observed song as currently playing merely
+  // because it appears first in the queue.
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    const reported = playback.liveTrack;
+    return reported?.stationUrl === props.stationUrl
+      ? { title: reported.title, artist: reported.artist } : null;
+  }
+  return resolveLiveTrack(props.song, props.playlist);
+});
 const nowPlayingTitle = computed(() => liveTrack.value?.title || props.streamName || "Live radio");
 const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
 const nowPlayingArtist = computed(() => liveTrack.value?.artist || "");
