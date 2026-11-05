@@ -688,8 +688,8 @@ const tryPlay = async (): Promise<void> => {
 };
 
 const startFallbackProbe = (): void => {
-  clearFallbackProbeTimer();
-  if (userPaused.value || !online.value || !sourceList.value.length) return;
+  // Repeated waiting/canplay events must not extend a silent attempt forever.
+  if (fallbackProbeTimer || userPaused.value || !online.value || !sourceList.value.length) return;
 
   const version = sourceVersion;
   fallbackProbeTimer = setTimeout(() => {
@@ -894,15 +894,25 @@ const applySource = async (
   // (including a single or last source) has an upper bound on silence.
   if (pendingAutoPlay.value) startFallbackProbe();
 
-  const source = await resolvePlaylistSource(rawSource);
-  if (version !== sourceVersion || !mediaElement.value) return;
+  try {
+    const source = await resolvePlaylistSource(rawSource);
+    if (version !== sourceVersion || !mediaElement.value) return;
 
-  activeResolvedSrc = source.src;
+    activeResolvedSrc = source.src;
 
-  if (isHlsSource(source)) {
-    await configureHlsSource(source, autoplay, version);
-  } else {
-    configureNativeSource(source, autoplay);
+    if (isHlsSource(source)) {
+      await configureHlsSource(source, autoplay, version);
+    } else {
+      configureNativeSource(source, autoplay);
+    }
+  } catch (error) {
+    // Includes an unavailable hls.js chunk or a failed manifest setup.
+    // Do not leak the station's tokenized stream URL in console/error text.
+    if (version !== sourceVersion || userPaused.value) return;
+    const name = error && typeof error === 'object' && 'name' in error
+      ? String((error as { name?: string }).name || '') : '';
+    sourceFailureReason.value = playbackFailureReason({ exceptionName: name });
+    scheduleReconnect();
   }
 };
 
