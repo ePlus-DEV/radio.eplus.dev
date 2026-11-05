@@ -1,14 +1,14 @@
 <template>
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
-      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl"
+      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :diagnostics="recoveryDiagnostics"
         class="absolute inset-x-3 bottom-[calc(100%+0.5rem)] max-h-[40dvh] overflow-y-auto shadow-lg sm:left-auto sm:right-6 sm:w-96" @retry="retryCurrentSource" />
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <span v-if="!online">{{ $t('text.offline') }}</span>
         <template v-else-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
         </template>
-        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t('player.connecting') }}</span>
+        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t(hasPlayedCurrentSource ? 'recovery.buffering' : 'player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
@@ -111,7 +111,7 @@
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
-    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
+    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :diagnostics="recoveryDiagnostics" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
     <div class="mt-3 flex items-center justify-between gap-1">
       <div class="flex items-center gap-1">
         <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="cursor-pointer rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
@@ -174,7 +174,7 @@
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
     <template #content>
-      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
     </template>
   </UModal>
 </template>
@@ -196,7 +196,7 @@ import {
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
-import { playbackHealth } from "~/utils/playback-health.mjs";
+import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 
@@ -264,10 +264,10 @@ listening.hydrate();
 const PLAYER_QUEUE_OPEN_KEY = 'radio:player-queue-open';
 const favoriteActive = computed(() => listening.library.favorites.some((item: { url: string }) => item.url === props.stationUrl));
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
-const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
-const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'player.ready'));
+const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
+const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
   if (streamError.value) return "bg-red-500/10 text-red-700 dark:text-red-300";
   if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
@@ -318,7 +318,17 @@ const waiting = ref(false);
 const playing = ref(false);
 const streamError = ref(false);
 const unsupportedSource = ref(false);
-const health = computed(() => playbackHealth({ online: online.value, error: streamError.value, unsupported: unsupportedSource.value, waiting: waiting.value }));
+const hasPlayedCurrentSource = ref(false);
+// In-memory observations only; no stream URLs, diagnosis or user history is persisted.
+const lastSourcePlaybackAt = ref<number | null>(null);
+const sourceFailureReason = ref<'network' | 'decode' | 'timeout' | 'unknown' | ''>('');
+const health = computed(() => playbackHealth({
+  online: online.value,
+  error: streamError.value,
+  unsupported: unsupportedSource.value,
+  waiting: waiting.value,
+  hasPlayed: hasPlayedCurrentSource.value,
+}));
 const reportUrl = computed(() => stationReportUrl(props.stationUrl, props.streamName, health.value));
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
@@ -419,6 +429,20 @@ const sourceHost = (source: RadioSource): string => {
     return source.proxied ? t('player.proxy') : t('player.direct');
   }
 };
+
+const recoveryDiagnostics = computed(() => ({
+  sourceIndex: sourceList.value.length ? activeSourceIndex.value + 1 : 0,
+  sourceCount: sourceList.value.length,
+  sourceLabel: sourceList.value[activeSourceIndex.value]
+    ? sourceName(sourceList.value[activeSourceIndex.value], activeSourceIndex.value)
+    : '',
+  retryAttempt: Math.min(attemptCount.value, MAX_STREAM_ATTEMPTS),
+  maxAttempts: MAX_STREAM_ATTEMPTS,
+  failureReason: sourceFailureReason.value,
+  lastPlayedAt: lastSourcePlaybackAt.value
+    ? new Intl.DateTimeFormat(locale.value, { hour: '2-digit', minute: '2-digit' }).format(lastSourcePlaybackAt.value)
+    : '',
+}));
 
 const sourceMenuItems = computed(() => sourceList.value.map((source, index) => ({
   label: `${index + 1}. ${sourceName(source, index)} · ${sourceFormat(source)}`,
@@ -638,6 +662,7 @@ const tryPlay = async (): Promise<void> => {
     }
 
     unsupportedSource.value = name === "NotSupportedError";
+    sourceFailureReason.value = playbackFailureReason({ exceptionName: name });
     scheduleReconnect();
   }
 };
@@ -657,6 +682,7 @@ const startFallbackProbe = (): void => {
     fallbackProbeTimer = null;
 
     if (!playing.value && pendingAutoPlay.value && !userPaused.value) {
+      sourceFailureReason.value = playbackFailureReason({ timeout: true });
       advanceFallbackSource();
     }
   }, FALLBACK_PROBE_TIMEOUT);
@@ -744,6 +770,7 @@ const configureHlsSource = async (
 
   hlsInstance.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
     if (version !== sourceVersion || !data?.fatal || !hlsInstance) return;
+    sourceFailureReason.value = playbackFailureReason({ hlsType: data.type });
     if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
 
     waiting.value = false;
@@ -772,10 +799,11 @@ const configureHlsSource = async (
     }
 
     unsupportedSource.value = data.type === Hls.ErrorTypes.MEDIA_ERROR;
+    // Never log full stream URLs: some providers use tokenized query strings.
     console.warn("Fatal HLS playback error", {
       type: data.type,
       details: data.details,
-      source: source.src,
+      sourceIndex: activeSourceIndex.value + 1,
     });
     scheduleReconnect();
   });
@@ -796,6 +824,7 @@ const stopPlaybackFailure = (): void => {
   playing.value = false;
   pendingAutoPlay.value = false;
   streamError.value = true;
+  if (!sourceFailureReason.value) sourceFailureReason.value = 'unknown';
   userPaused.value = true;
 };
 
@@ -824,6 +853,9 @@ const applySource = async (
   liveResumePending = false;
   pausedAtMs = 0;
   activeSourceIndex.value = index;
+  hasPlayedCurrentSource.value = false;
+  lastSourcePlaybackAt.value = null;
+  sourceFailureReason.value = '';
   unsupportedSource.value = false;
   streamError.value = false;
   playing.value = false;
@@ -1122,6 +1154,9 @@ const onMediaPlaying = (): void => {
   waiting.value = false;
   playing.value = true;
   streamError.value = false;
+  if (!hasPlayedCurrentSource.value) lastSourcePlaybackAt.value = Date.now();
+  hasPlayedCurrentSource.value = true;
+  sourceFailureReason.value = '';
 };
 
 const onMediaWaiting = (): void => {
@@ -1160,7 +1195,9 @@ const onMediaError = (): void => {
 
   waiting.value = false;
   playing.value = false;
-  unsupportedSource.value = [3, 4].includes(mediaElement.value?.error?.code ?? 0);
+  const mediaCode = mediaElement.value?.error?.code ?? 0;
+  unsupportedSource.value = [3, 4].includes(mediaCode);
+  sourceFailureReason.value = playbackFailureReason({ mediaCode });
   scheduleReconnect();
 };
 
@@ -1240,6 +1277,9 @@ watch(
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
     attemptCount.value = 0;
+    hasPlayedCurrentSource.value = false;
+    lastSourcePlaybackAt.value = null;
+    sourceFailureReason.value = '';
     unsupportedSource.value = false;
     streamError.value = false;
     playing.value = false;

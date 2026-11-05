@@ -543,6 +543,15 @@
     "manual": "Chọn và sao chép liên kết này:"
   },
   "recovery": {
+    "buffering": "Đang tải âm thanh trực tiếp…",
+    "source_position": "Nguồn {index}/{total}",
+    "attempt": "Lần thử {attempt}/{limit}",
+    "reason_network": "Trình duyệt báo lỗi mạng. Điều này không có nghĩa đài đã ngừng phát.",
+    "reason_decode": "Nguồn này không giải mã được hoặc có thể dùng định dạng chưa hỗ trợ.",
+    "reason_timeout": "Chưa nhận được âm thanh trước khi hết thời gian chờ. Hãy thử nguồn khác.",
+    "reason_unknown": "Trình duyệt báo lỗi phát, chưa xác định chính xác nguyên nhân.",
+    "last_played": "Lần phát gần nhất trên thiết bị lúc {time}",
+    "local_observation": "Chỉ là ghi nhận trong phiên trên thiết bị, không xác nhận tình trạng toàn bộ đài.",
     "offline": "Có vẻ bạn đang mất mạng. Kiểm tra kết nối trước khi thử lại.",
     "unsupported": "Nguồn vừa thử không giải mã được hoặc chưa được trình duyệt hỗ trợ. Hãy thử nguồn khác.",
     "exhausted": "Chưa thể phát sau các lần thử lại. Hãy thử lại hoặc chọn nguồn khác; đài vẫn có thể hoạt động trên thiết bị khác.",

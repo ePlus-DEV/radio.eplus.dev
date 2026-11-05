@@ -543,6 +543,15 @@
     "manual": "请选择并复制此链接："
   },
   "recovery": {
+    "buffering": "正在缓冲直播音频…",
+    "source_position": "音源 {index}/{total}",
+    "attempt": "尝试 {attempt}/{limit}",
+    "reason_network": "浏览器报告网络问题，但不代表电台已离线。",
+    "reason_decode": "此音源无法解码，或格式可能不受支持。",
+    "reason_timeout": "连接超时前未收到音频，请尝试其他音源。",
+    "reason_unknown": "浏览器报告播放错误，原因尚未确认。",
+    "last_played": "本设备上次播放时间：{time}",
+    "local_observation": "仅为本设备当前会话的记录，不代表电台全局可用状态。",
     "offline": "你似乎已离线。请检查网络后重试。",
     "unsupported": "刚才的音源无法解码或不受此浏览器支持。请尝试其他音源。",
     "exhausted": "多次重试后仍无法播放。请重试或选择其他音源；电台可能仍可在其他设备播放。",

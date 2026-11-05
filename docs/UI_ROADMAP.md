@@ -48,3 +48,28 @@ Personal data currently stays in localStorage on the device. Cross-device sync, 
 - `/library` provides favorites JSON export/import. Import loads the shared static search index only when opened, previews current catalog metadata and missing/duplicate/overflow counts, and merges only after confirmation. Existing favorites, history and playback intent are preserved.
 - Playback failures expose retry, alternate sources and a GitHub issue draft without exporting stream URLs or listening history. The draft requires the listener to review and submit it.
 - Real-device Safari/iOS review and playback module extraction remain follow-up work.
+
+## Playback health session diagnostics — partial delivery for #341
+
+The recovery UI now distinguishes **connecting** (before first playback on
+a source) from **buffering** (after the source was heard once). These are
+transient states, not evidence of a permanently offline broadcaster.
+
+Each recovery panel may show only *in-memory*, local-session evidence:
+active source position and display label, bounded retry count, a categorized
+browser error (network/decode/timeout/unknown), and the local time at which
+that particular source last actually emitted a `playing` event. The
+observed timestamp resets on every source/station switch; it is **not** a
+globally verified station uptime check. Error messages must never claim to
+distinguish CORS from a dead stream reliably.
+
+The playback engine stays Native Audio + hls.js, with the existing
+`MAX_STREAM_ATTEMPTS`, preserved source order, and no generic HLS proxy.
+Stream URLs with credentials or tokens must not be written to the error
+console or user reports. No new persistent storage, account tracking or
+background health probes.
+
+Automated regressions live in `tests/playback-diagnostics.test.mjs`.
+The remaining #341 acceptance criteria include physical Safari/Chrome MP3,
+AAC and HLS playback recovery verification; do not mark #341 completed until
+those checks are recorded, alongside #340's iOS device matrix.
