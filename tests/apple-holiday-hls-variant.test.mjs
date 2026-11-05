@@ -23,7 +23,7 @@ const payload = path => ({
 });
 
 test('Holiday Hits main CMAF master and its signed 256/64 media playlists are accepted', () => {
-  for (const path of ['ppa/index-cmaf.m3u8', 'ppa/usw/256.m3u8', 'ppa/usw/64.m3u8']) {
+  for (const path of ['ppa/index-cmaf.m3u8', 'ppa-ts/index-ts.m3u8', 'ppa/usw/256.m3u8', 'ppa/usw/64.m3u8']) {
     const result = validateAuthorizedAppleStream(payload(path), holidayId, holidayPage, now);
     assert.equal(result.ok, true, path);
     assert.equal(result.streamUrl, signed(path));
@@ -48,7 +48,7 @@ test('Holiday Hits opaque alias is never accepted for another station or unsuppo
 });
 
 test('user-supplied Holiday Hits signed master or 256 media playlist passes local preview check', () => {
-  for (const [path, quality] of [['ppa/index-cmaf.m3u8', 'auto'], ['ppa/usw/256.m3u8', '256']]) {
+  for (const [path, quality] of [['ppa/index-cmaf.m3u8', 'auto'], ['ppa-ts/index-ts.m3u8', 'auto'], ['ppa/usw/256.m3u8', '256']]) {
     const result = inspectAppleHlsPreviewUrl(signed(path), holidayPage, now);
     assert.deepEqual(result, {
       ok: true, reason: 'ready', expiresAt: exp * 1000, stationId: '6825447412', qualityLabel: quality,
