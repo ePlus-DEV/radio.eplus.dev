@@ -25,6 +25,13 @@
             <span v-if="station?.seasonal" class="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1.5 font-semibold text-amber-700 dark:text-amber-300">{{ t('global_radio.seasonal') }}</span>
           </div>
           <p v-if="station?.seasonal" class="mt-4 text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('global_radio.seasonal_note') }}</p>
+          <div v-if="!canListenOnEplus" class="mt-4 flex items-start gap-2 rounded-xl border border-amber-400/30 bg-amber-500/10 p-3">
+            <UIcon name="i-lucide-info" class="mt-0.5 h-4 w-4 shrink-0 text-amber-700 dark:text-amber-300" aria-hidden="true" />
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-amber-800 dark:text-amber-200">{{ t('global_radio.playback_status_title') }}</p>
+              <p class="mt-1 text-xs leading-6 text-[var(--radio-text-muted)]">{{ t('global_radio.playback_status_pending') }}</p>
+            </div>
+          </div>
           <p v-if="resolverError" role="alert" class="mt-4 text-xs text-amber-700 dark:text-amber-300">
             {{ t('global_radio.resolver_unavailable') }}
           </p>
@@ -53,7 +60,7 @@
     <section class="radio-surface rounded-2xl p-4 sm:p-5">
       <h2 class="text-sm font-bold">{{ t('global_radio.how_listen') }}</h2>
       <p class="mt-2 text-sm leading-7 text-[var(--radio-text-muted)]">{{ t('global_radio.apple_access') }}</p>
-      <p class="mt-2 text-xs leading-6 text-[var(--radio-text-muted)]">{{ t('global_radio.external_note') }}</p>
+      <p class="mt-2 text-xs leading-6 text-[var(--radio-text-muted)]">{{ t(canListenOnEplus ? 'global_radio.playback_status_configured' : 'global_radio.external_note') }}</p>
     </section>
     <NuxtLink to="/global-radio/apple-music" class="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-rose-700 hover:underline dark:text-rose-300">
       <UIcon name="i-lucide-arrow-left" class="h-4 w-4" aria-hidden="true" />{{ t('global_radio.back_to_provider') }}
