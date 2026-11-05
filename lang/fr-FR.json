@@ -461,31 +461,6 @@
       }
     }
   },
-  "discovery": {
-    "title": "Explorer les stations",
-    "description": "Trouvez une radio par nom, pays, genre ou langue. Seules les métadonnées publiées sont utilisées.",
-    "browse": "Explorer",
-    "hide": "Masquer les filtres",
-    "loading": "Chargement du catalogue…",
-    "unavailable": "Impossible de charger le catalogue.",
-    "retry": "Réessayer",
-    "search": "Rechercher",
-    "search_placeholder": "Nom de station ou mot-clé…",
-    "country": "Pays",
-    "all_countries": "Tous les pays",
-    "genre": "Genre",
-    "all_genres": "Tous les genres",
-    "language": "Langue",
-    "all_languages": "Toutes les langues",
-    "results": "Stations {from}–{to} sur {total}",
-    "reset": "Réinitialiser",
-    "empty": "Aucune station ne correspond.",
-    "pagination": "Pages des résultats",
-    "previous": "Précédent",
-    "page": "Page {page} sur {total}",
-    "next": "Suivant",
-    "metadata_note": "Certaines stations n'ont ni genre ni langue renseignés. Ceci ne vérifie pas leur disponibilité en direct."
-  },
   "for_you": {
     "title": "Pour vous",
     "description": "Découvrez des stations liées à votre bibliothèque locale, sans compte.",
