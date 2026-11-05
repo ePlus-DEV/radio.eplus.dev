@@ -179,6 +179,8 @@ jobs:
           mkdir -p "$target/pr-preview/pr-$PR_NUMBER"
           rsync -a --delete "$RUNNER_TEMP/pr-output/" "$target/pr-preview/pr-$PR_NUMBER/"
           touch "$target/.nojekyll"
+          # The live URL must prove it serves THIS PR head, not an old artifact.
+          printf "%s\n" "$EXPECTED_HEAD" > "$target/pr-preview/pr-$PR_NUMBER/preview-commit.txt"
 
           # GitHub Pages published output must remain under 1 GB.
           # Enforce a safety margin across ALL open PRs, not only this PR.
@@ -199,6 +201,34 @@ jobs:
           echo "Published PR #$PR_NUMBER to $PREVIEW_TARGET_REPOSITORY"
           echo "### Preview for PR #$PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
           echo "$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify live GitHub Pages preview before commenting
+        if: steps.current.outputs.active == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/"
+          marker="${base}preview-commit.txt"
+          echo "Waiting for GitHub Pages to publish PR #$PR_NUMBER commit $EXPECTED_HEAD"
+          live=false
+          for attempt in $(seq 1 25); do
+            published_sha="$(curl --location --fail --silent --show-error --max-time 10 "$marker" 2>/dev/null || true)"
+            if [ "$published_sha" = "$EXPECTED_HEAD" ]; then
+              if curl --location --fail --silent --show-error --max-time 15 "$base" -o "$RUNNER_TEMP/preview-live.html" &&
+                 grep -q 'noindex' "$RUNNER_TEMP/preview-live.html"; then
+                live=true
+                break
+              fi
+            fi
+            if [ "$attempt" -lt 25 ]; then sleep 8; fi
+          done
+          if [ "$live" != true ]; then
+            echo "::error::GitHub Pages preview is not live at $base for commit $EXPECTED_HEAD. Check Settings -> Pages of $PREVIEW_TARGET_REPOSITORY and its 'pages build and deployment' job."
+            exit 1
+          fi
+          echo "Verified GitHub Pages serves the current PR commit at $base"
+          echo "### Live Preview Verified" >> "$GITHUB_STEP_SUMMARY"
+          echo "$base" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Create or update one PR preview comment
         if: steps.current.outputs.active == 'true'
