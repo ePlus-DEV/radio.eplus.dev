@@ -22,12 +22,21 @@
             <span class="rounded-full border border-[var(--radio-border)] px-3 py-1.5">{{ station?.genre }}</span>
             <span class="rounded-full border border-[var(--radio-border)] px-3 py-1.5">{{ t('global_radio.origin') }}: US</span>
             <span class="rounded-full border border-[var(--radio-border)] px-3 py-1.5">{{ t('global_radio.external_badge') }}</span>
+            <span v-if="station?.seasonal" class="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1.5 font-semibold text-amber-700 dark:text-amber-300">{{ t('global_radio.seasonal') }}</span>
           </div>
+          <p v-if="station?.seasonal" class="mt-4 text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('global_radio.seasonal_note') }}</p>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a v-if="station?.tunein_url" :href="station.tunein_url" target="_blank" rel="noopener noreferrer"
+            class="radio-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-5 text-sm font-bold text-[var(--radio-text)] hover:border-rose-500">
+            {{ t('global_radio.listen_on_tunein') }}
+            <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />
+          </a>
           <a v-if="station" :href="station.listen_url" target="_blank" rel="noopener noreferrer"
-            class="radio-interactive mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-rose-600 px-5 text-sm font-bold text-white hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
+            class="radio-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-rose-600 px-5 text-sm font-bold text-white hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
             {{ t('global_radio.listen_on_apple') }}
             <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />
           </a>
+          </div>
         </div>
       </div>
     </article>
