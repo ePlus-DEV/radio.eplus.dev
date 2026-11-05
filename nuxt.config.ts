@@ -87,6 +87,8 @@ export default defineNuxtConfig({
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
       pinChannelFavorites: process.env.NUXT_PUBLIC_PIN_CHANNEL_FAVORITES,
       corsServer: process.env.NUXT_PUBLIC_CORS_SERVER_1,
+      // Optional approved ePlus API endpoint, never a TuneIn session proxy.
+      globalRadioResolverUrl: process.env.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL || '',
       placeholder: "https://s3.eplus.dev/i/radio-on-air.png",
       placeholderStation: "https://s3.eplus.dev/i/station-on-air.png",
       apiZingLiveStreamProgramDetail:

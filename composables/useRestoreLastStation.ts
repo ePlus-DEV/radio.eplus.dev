@@ -17,6 +17,9 @@ export function useRestoreLastStation() {
     preferences.hydrate();
     if (!preferences.restoreStation) return;
     const saved = listening.library.lastStation;
+    // Global provider URLs may require a new short-lived authorized stream.
+    // Never restore them from the country JSON catalog or auto-play stale keys.
+    if (saved?.url.startsWith('/global-radio/')) return;
     // Explicit station deep links take precedence over the saved station.
     if (!saved || route.path.split('/').filter(Boolean).length >= 3 || playback.playRequest || playback.requestedStationUrl || playback.playing) return;
     const path = route.fullPath;

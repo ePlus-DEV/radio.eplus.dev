@@ -49,6 +49,10 @@
       <span>{{ t('global_radio.apple_access') }} {{ t('global_radio.external_note') }}</span>
     </p>
 
+    <p v-if="resolverError" role="alert" class="rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 text-sm text-amber-800 dark:text-amber-200">
+      {{ t('global_radio.resolver_unavailable') }}
+    </p>
+
     <section :aria-label="t('global_radio.stations')" class="space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <h2 class="text-lg font-bold">{{ t('global_radio.stations') }}</h2>
@@ -81,8 +85,16 @@
           <p class="line-clamp-3 min-h-0 flex-1 text-sm leading-6 text-[var(--radio-text-muted)]">
             {{ station.description }}
           </p>
-          <!-- Only real, functional destinations are clickable. No signed token form. -->
+          <!-- In-app play appears only with an explicitly configured, approved resolver.
+               The default public experience remains the official provider links. -->
           <div class="mt-auto space-y-2">
+            <button v-if="canListenOnEplus" type="button"
+              class="radio-interactive inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-rose-500 bg-rose-600 px-3 text-xs font-bold text-white transition-colors hover:bg-rose-700 disabled:cursor-wait disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+              :disabled="Boolean(pendingStationId)" @click="playOnEplus(station)">
+              <UIcon :name="pendingStationId === station.id ? 'i-lucide-loader-circle' : 'i-lucide-play'"
+                :class="pendingStationId === station.id ? 'h-4 w-4 animate-spin' : 'h-4 w-4'" aria-hidden="true" />
+              {{ t(pendingStationId === station.id ? 'global_radio.connecting_on_eplus' : 'global_radio.listen_on_eplus') }}
+            </button>
             <a :href="station.listen_url" target="_blank" rel="noopener noreferrer"
               class="radio-interactive inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-xs font-bold text-white transition-colors hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
               <UIcon name="i-lucide-external-link" class="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -110,6 +122,12 @@
 <script setup lang="ts">
 const { t } = useI18n();
 const { data: provider } = await useAppleMusicProvider();
+const {
+  enabled: canListenOnEplus,
+  play: playOnEplus,
+  pendingStationId,
+  error: resolverError,
+} = useAuthorizedGlobalRadioPlayback();
 const title = computed(() => 'Apple Music Radio');
 const description = computed(() => t('global_radio.apple_description'));
 useStaticPageSeo({ title, description });

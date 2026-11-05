@@ -3,6 +3,9 @@
     "content": "К сожалению, запрошенная страница не найдена."
   },
   "global_radio": {
+    "listen_on_eplus": "Слушать на ePlus",
+    "connecting_on_eplus": "Подключение…",
+    "resolver_unavailable": "Воспроизведение на ePlus недоступно. Слушайте через Apple Music или TuneIn.",
     "hls_preview_title": "Эксперимент: воспроизвести временный HLS",
     "hls_preview_help": "Можно проверить краткосрочную ссылку HLS от Apple, если у вас есть право её использовать. Apple Music/TuneIn могут заблокировать воспроизведение. Ключи не извлекаются и не обновляются.",
     "hls_preview_input": "Временный подписанный URL HLS",

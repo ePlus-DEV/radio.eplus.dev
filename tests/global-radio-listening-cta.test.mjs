@@ -21,7 +21,7 @@ test('Apple Music directory matches the refreshed card design with accessible wo
   assert.match(page, /focus-visible:outline-2/, 'links must be keyboard accessible');
 });
 
-test('neither public list nor detail asks for signed HLS tokens or shows a fake ePlus player', async () => {
+test('neither public list nor detail asks for signed HLS tokens; in-app play is configured-only', async () => {
   const [page, detail, catalog] = await Promise.all([
     read('pages/global-radio/apple-music/index.vue'),
     read('pages/global-radio/apple-music/[station].vue'),
@@ -31,6 +31,8 @@ test('neither public list nor detail asks for signed HLS tokens or shows a fake 
     assert.doesNotMatch(publicPage, /GlobalRadioTemporaryHlsPreview|accessKey|\.m3u8|preview_on_eplus|preview_requires_url|TemporaryHlsPreview|<audio\b|<UModal\b/);
     assert.doesNotMatch(publicPage, /playback\.(activate|requestStation|play)|requestStation\(/);
     assert.match(publicPage, /rel="noopener noreferrer"/);
+    assert.match(publicPage, /v-if="canListenOnEplus/);
+    assert.match(publicPage, /useAuthorizedGlobalRadioPlayback/);
   }
   assert.match(detail, /useStaticPageSeo/);
   assert.match(page, /useStaticPageSeo/);

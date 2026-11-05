@@ -25,7 +25,17 @@
             <span v-if="station?.seasonal" class="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1.5 font-semibold text-amber-700 dark:text-amber-300">{{ t('global_radio.seasonal') }}</span>
           </div>
           <p v-if="station?.seasonal" class="mt-4 text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('global_radio.seasonal_note') }}</p>
+          <p v-if="resolverError" role="alert" class="mt-4 text-xs text-amber-700 dark:text-amber-300">
+            {{ t('global_radio.resolver_unavailable') }}
+          </p>
           <div class="mt-6 flex flex-wrap items-center gap-3">
+            <button v-if="canListenOnEplus && station" type="button"
+              :disabled="Boolean(pendingStationId)" @click="playOnEplus(station)"
+              class="radio-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-rose-600 px-5 text-sm font-bold text-white transition-colors hover:bg-rose-700 disabled:cursor-wait disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
+              <UIcon :name="pendingStationId ? 'i-lucide-loader-circle' : 'i-lucide-play'"
+                :class="pendingStationId ? 'h-4 w-4 animate-spin' : 'h-4 w-4'" aria-hidden="true" />
+              {{ t(pendingStationId ? 'global_radio.connecting_on_eplus' : 'global_radio.listen_on_eplus') }}
+            </button>
           <a v-if="station?.tunein_url" :href="station.tunein_url" target="_blank" rel="noopener noreferrer"
             class="radio-interactive inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-5 text-sm font-bold text-[var(--radio-text)] hover:border-rose-500">
             {{ t('global_radio.listen_on_tunein') }}
@@ -55,6 +65,12 @@
 const route = useRoute();
 const { t } = useI18n();
 const { data: provider } = await useAppleMusicProvider();
+const {
+  enabled: canListenOnEplus,
+  play: playOnEplus,
+  pendingStationId,
+  error: resolverError,
+} = useAuthorizedGlobalRadioPlayback();
 const stationId = String(route.params.station || '');
 const station = computed(() => provider.value?.stations.find(item => item.id === stationId));
 if (!station.value) {

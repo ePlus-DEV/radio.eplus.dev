@@ -3,6 +3,9 @@
     "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
   "global_radio": {
+    "listen_on_eplus": "Nghe trên ePlus",
+    "connecting_on_eplus": "Đang kết nối…",
+    "resolver_unavailable": "Chưa thể phát trực tiếp trên ePlus. Hãy nghe qua Apple Music hoặc TuneIn.",
     "hls_preview_title": "Thử nghiệm: phát liên kết HLS tạm thời",
     "hls_preview_help": "Nếu bạn có URL HLS ngắn hạn do Apple cấp và được phép sử dụng, có thể thử phát ngay trên trình duyệt này. Apple Music/TuneIn có thể chặn phát từ website khác. Tính năng không lấy hoặc gia hạn accessKey.",
     "hls_preview_input": "URL HLS có chữ ký tạm thời",
