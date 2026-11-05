@@ -11,6 +11,7 @@ permissions:
   contents: read
 
 env:
+  # Same Pages publisher as development: only the output repository differs.
   PREVIEW_TARGET_REPOSITORY: ePlus-DEV/onair-pr-previews
   PREVIEW_SITE_ORIGIN: https://eplus-dev.github.io/onair-pr-previews
   PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -19,7 +20,7 @@ jobs:
   build:
     name: "Build isolated preview (no secrets)"
     if: >-
-      vars.PAGES_PREVIEW_READY == 'true' &&
+      vars.PAGES_DEV_READY == 'true' &&
       github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.ref != 'develop' &&
@@ -215,7 +216,7 @@ jobs:
   cleanup:
     name: "Remove closed PR Preview"
     if: >-
-      vars.PAGES_PREVIEW_READY == 'true' &&
+      vars.PAGES_DEV_READY == 'true' &&
       github.event.action == 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 15
