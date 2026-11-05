@@ -18,7 +18,8 @@ or artist for presentation in the ePlus player.
    with the selected station, and not explicitly marked unavailable or
    commercial. **Never use show titles, station name, current_track blurbs or
    an arbitrary first playlist item as a substitute.**
-3. Pass this metadata to `playback.liveTrack`, consumed by the existing
+3. Pass validated provider or in-stream ID3 metadata to `playback.liveTrack`,
+   consumed by the existing
    `Player.vue`: dock, mini player, full-screen Now Playing, Media Session.
    On missing/failed data, fall back to station name, not a stale song.
 4. As songs change during the **current browser listening session**, keep at
@@ -31,6 +32,46 @@ or artist for presentation in the ePlus player.
    interrupt HLS audio or affect renewal logic.
 6. Localize the optional metadata/unavailable states across seven languages.
    No SEO titles, descriptions, OG data or JSON-LD modified.
+
+
+## HLS song detection in the actual shared player
+
+The existing audio player now **attempts in-stream song detection** instead of
+relying only on the public TuneIn Describe endpoint. This needs no second
+player, external recognition service or scraped TuneIn session.
+
+- On hls.js-capable browsers, listen to Hls.Events.FRAG_PARSING_METADATA for
+  the currently playing Apple station. Parse actual ID3v2.3/v2.4 TIT2
+  (song title) and TPE1 (artist) frames from fragments decoded by the player.
+- Keep decoded metadata aligned to its presentation timestamp (PTS); publish
+  the observed song only when the media playback reaches that position.
+  Discard pending tracks on station/source changes, pause and reconnect.
+- On native HLS browsers (such as Safari/iPhone), observe genuine metadata
+  TextTrack cuechange events for concurrent title/artist ID3 frames, and
+  unbind those listeners on source change or unmount.
+- Prefer a valid, in-stream song over TuneIn Describe's delayed/empty fields.
+  Update the shared dock, full-screen player, OS Media Session, and Queue's
+  session-only history. Never treat a previous history row as live.
+- No URL with accessKey, raw ID3, audio payload, playlist or provider response
+  is logged or persisted. No fabricated title/artist is displayed.
+
+This is **metadata detection**, NOT acoustic fingerprint identification.
+If the stream has no supported ID3 title/artist pair, the UI continues to
+show the station name instead of guessing.
+
+### Verified live-provider status
+
+- CI #42075947598: 7/7 TuneIn Describe responses had empty current_song
+  and current_artist, with has_song=false.
+- CI #42131026067: Apple Music 1, Hits, Chill HLS master/media playlists had
+  no EXT-X-DATERANGE song/artist metadata. PROGRAM-DATE-TIME is only time.
+- The safe HLS probe could not resolve any actual media segment under its
+  strict allowed-host/path rule (segment:null). **In-band ID3 remains
+  unverified**, not proven missing.
+- Unit tests prove parser correctness using synthetic ID3 and verify the
+  player-store wiring, but **do not prove a live Apple stream supplied tags**.
+  Do not merge/release as a fully functioning now-playing feature without
+  browser/live station verification.
 
 ## Provider / accuracy limits
 
@@ -58,7 +99,8 @@ Useful references:
   ePlus relay; inspect only sanitized field names and ordinary artist/title
   values, never HLS access keys. Some stations may correctly return no song.
 - While listening, compare the current-song title and artist with TuneIn's
-  reported metadata; confirm UI on Chrome, iPhone Safari, dock, mini, modal,
+  reported metadata and real audible audio; confirm UI on Chrome, iPhone Safari,
+  dock, mini, modal,
   and OS Media Session. Background play / tab visibility must not break audio.
 - When Describe returns empty/403/malformed data, show the station name, not
   the previous track. Keep already observed session history in Queue.
