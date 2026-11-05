@@ -31,8 +31,9 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
     ? stationPage.pathname.match(/\/ra\.(\d+)$/)?.[1]
     : null;
   const stream = httpsUrl(payload.stream_url);
-  // HAR confirms two playlist shapes. Only the observed Holiday Hits station
-  // may use the opaque /ppa/index-cmaf.m3u8 path.
+  // HAR confirms both Holiday Hits' master manifest and 64/256-kbps
+  // media playlists use the opaque 'ppa' alias instead of a numeric station ID.
+  // Do not generalize this alias to other Apple Music stations.
   const parts = stream?.pathname.split('/') || [];
   const matchesNumberedPath = Boolean(stationNumber)
     && parts.length === 6
@@ -43,7 +44,9 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
     && parts[5].endsWith('.m3u8')
     && /^[0-9]+$/.test(parts[5].slice(0, -5));
   const matchesHolidayPath = stationId === 'apple-music-holiday-hits'
-    && stream?.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8';
+    && stationNumber === '6825447412'
+    && (stream?.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8'
+      || /^\/3p-tune-in\/tune_in\/ppa\/usw\/(?:64|256)\.m3u8$/.test(stream?.pathname || ''));
   if (!stationNumber || !stream || stream.hostname !== APPLE_HLS_HOST
     || !(matchesNumberedPath || matchesHolidayPath)
     || !stream.searchParams.get('accessKey')) {
