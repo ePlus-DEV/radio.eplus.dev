@@ -112,12 +112,16 @@ test('read-only Describe request has no credentials and supports cancellation', 
 
 test('existing player receives song and artist via shared live track and playlist', async () => {
   const realtime = await readFile(new URL('../composables/useStationRealtime.ts', import.meta.url), 'utf8');
+  const player = await readFile(new URL('../components/player/Player.vue', import.meta.url), 'utf8');
   const queue = await readFile(new URL('../components/player/Queue.vue', import.meta.url), 'utf8');
   const session = await readFile(new URL('../components/player/Session.vue', import.meta.url), 'utf8');
   assert.match(realtime, /fetchPublicTuneInMetadata/);
   assert.match(realtime, /addTuneInSessionTrack/);
   assert.match(realtime, /polling\.start\(appleTuneInMetadataMarker/);
   assert.match(realtime, /value\.isTuneInMetadata \? \(value\.nowPlaying \|\| null\)/);
+  assert.match(player, /props.stationUrl\?\.startsWith\('\/global-radio\/apple-music\/'\)/);
+  assert.match(player, /const reported = playback\.liveTrack/);
+  assert.match(player, /return reported\?\.stationUrl === props\.stationUrl/);
   assert.match(queue, /hasTuneInHistory/);
   assert.match(queue, /isLivePlaylistTrack\(item, index\)/);
   assert.match(session, /:playlist="playlist"/);
