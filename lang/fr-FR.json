@@ -3,13 +3,16 @@
     "content": "Désolé, la page demandée est introuvable."
   },
   "global_radio": {
+    "seasonal_note": "Cette station saisonnière peut être indisponible hors de la période des fêtes. Vérifiez sur Apple Music ou TuneIn.",
+    "seasonal": "Saisonnier",
+    "listen_on_tunein": "Écouter sur TuneIn",
     "eyebrow": "Réseau international",
     "title": "Radio mondiale",
     "description": "Découvrez des réseaux de radio internationaux en dehors des catalogues par pays.",
     "providers": "Fournisseurs radio",
     "provider_count": "fournisseurs",
     "external_badge": "Ouverture externe",
-    "apple_description": "Découvrez les six stations en direct d'Apple Music, regroupées par fournisseur mondial.",
+    "apple_description": "Découvrez les six stations principales d'Apple Music et Holiday Hits, une station saisonnière, regroupées par fournisseur mondial.",
     "explore_provider": "Découvrir les stations",
     "external_note": "Les stations Apple Music s'ouvrent sur le site d'Apple. Elles ne sont pas diffusées dans ePlus OnAir ni comptées dans les statistiques locales.",
     "by_country": "Explorer par pays",
