@@ -469,7 +469,7 @@
     "loading": "正在尋找電台…",
     "unavailable": "無法載入推薦。",
     "retry": "重試",
-    "based_on_your_library": "根據本機收藏及收聽歷史推薦。",
+    "based_on_your_library": "根據本機已儲存的電台推薦，並遵守目前的隱私設定。",
     "curated_intro": "目前沒有相符偏好，以下為目錄中真正標記的精選電台。",
     "reason_genre": "與收藏電台相似的類型",
     "reason_language": "與收藏電台相同的語言",
