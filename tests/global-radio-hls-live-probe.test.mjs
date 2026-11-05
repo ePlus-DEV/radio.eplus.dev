@@ -53,10 +53,15 @@ function nextPlaylistUrl(playlist, baseUrl) {
 }
 
 function mediaSegmentUrl(playlist, baseUrl) {
-  const entries = playlist.split(/\r?\n/)
-    .map(x => x.trim())
-    .filter(x => x && !x.startsWith('#') && /\.(?:ts|aac)(?:\?|$)/i.test(x));
-  for (const entry of entries.slice(-3)) {
+  // HLS segment URIs need not end in .ts/.aac; look for the URI immediately
+  // after EXTINF instead of guessing the file extension.
+  const lines = playlist.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  const entries = [];
+  for (let i = 0; i < lines.length - 1; i++) {
+    if (!lines[i].startsWith('#EXTINF:') || lines[i + 1].startsWith('#')) continue;
+    entries.push(lines[i + 1]);
+  }
+  for (const entry of entries.slice(-3).reverse()) {
     const url = new URL(entry, baseUrl).href;
     if (isApproved(url)) return url;
   }
