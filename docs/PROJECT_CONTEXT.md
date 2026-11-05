@@ -933,3 +933,10 @@ Do not touch PlayerSession or the global audio dock for navigation fixes.
   `tests/station-modal-theme.test.mjs`, in addition to existing design/SEO
   and mobile navigation tests.
 
+## 2026-11-05 — Isolated per-PR visual previews
+
+- Production `main` and integration `develop` continue deploying to their own GitHub Pages output repositories; do not publish PR builds into either destination.
+- A distinct Cloudflare Pages Git-integrated project can produce branch preview URLs after one-time owner setup. No GitHub PR workflow should receive deployment credentials, or use `pull_request_target` to execute untrusted changes.
+- Preview builds must explicitly force `NUXT_PUBLIC_NO_INDEX=true`, the actual `CF_PAGES_URL` origin, root `NUXT_APP_BASE_URL=/`, no production GA4 and shared station OG assets. Never infer indexability from a branch name or a production-like `NODE_ENV`.
+- The Pages Free-tier 20-minute build and 20,000-file limits require validating one real deployment before declaring the preview integration operational. See `docs/PR_PREVIEWS.md`.
+- Preview deployment code must not change page copy, route SEO structure, canonical production policy or the current production/staging release workflows.
