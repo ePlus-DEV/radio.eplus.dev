@@ -81,6 +81,15 @@
       </div>
       <div class="border-t border-[var(--radio-border)] pt-5">
         <p class="mb-3 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--radio-text-muted)]">{{ $t('player.explore') }}</p>
+        <NuxtLink to="/global-radio" :prefetch="false"
+          class="radio-interactive mb-4 flex min-h-11 items-center gap-3 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2.5 text-sm font-semibold transition hover:border-rose-500"
+          :class="route.path.startsWith('/global-radio') ? 'text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text)]'"
+          :aria-current="route.path === '/global-radio' ? 'page' : undefined">
+          <UIcon name="i-lucide-globe-2" class="h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
+          <span class="min-w-0 flex-1">{{ $t('global_radio.title') }}</span>
+          <UIcon name="i-lucide-arrow-up-right" class="h-4 w-4 text-[var(--radio-text-muted)]" aria-hidden="true" />
+        </NuxtLink>
+        <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wide text-[var(--radio-text-muted)]">{{ $t('global_radio.by_country') }}</p>
         <nav class="space-y-1" :aria-label="$t('sidebar.radio_regions')">
           <NuxtLink v-for="item in areas" :key="item.slug" :to="`/${item.slug}`"
             class="radio-interactive flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-sm transition"

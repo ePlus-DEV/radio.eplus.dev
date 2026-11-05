@@ -4,6 +4,7 @@ import { prefixPublicAsset } from "./utils/public-site-path.mjs";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
 import { GA4_MEASUREMENT_ID, isGa4ProductionBuild, getGa4HeadScripts } from "./utils/ga4-config.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
+import { getGlobalRadioRoutes } from "./build/globalRadioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
   brandIcons,
@@ -45,6 +46,7 @@ const defaultDescription =
 const radioSeoRoutes = getRadioSeoRoutes();
 const radioCatalogStats = getRadioCatalogStats();
 const staticSeoRoutes = [
+  ...getGlobalRadioRoutes(),
   { loc: "/about", priority: 0.5, changefreq: "monthly" as const },
   { loc: "/statistics", priority: 0.6, changefreq: "daily" as const },
   { loc: "/contact", priority: 0.4, changefreq: "monthly" as const },

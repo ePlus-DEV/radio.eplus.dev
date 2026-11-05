@@ -67,6 +67,22 @@ The primary indexable content hierarchy is:
 
 Country and station catalogs are loaded during SSR/prerender from local repository JSON so crawlers receive real internal links and station metadata without requiring client JavaScript.
 
+### Global provider routes (external playback)
+
+A separate global directory is available at `/global-radio` and
+`/global-radio/apple-music`, with seven Apple Music station detail pages.
+These pages are statically prerendered and included in the production sitemap
+through `build/globalRadioRoutes.ts`. Their canonical URLs and metadata
+use the existing shared `useStaticPageSeo` helper. Staging retains its
+existing `noindex` and no-sitemap behavior.
+
+These provider records are **not** inserted into geographic `world.json`
+or internal HTMLAudio station search. Buttons open Apple Music/TuneIn pages
+externally; they are not playable MP3/HLS resources. Existing country/station
+titles, metadata, routes and JSON-LD remain unchanged.
+
+See `docs/global-radio-providers.md` for provenance and QA.
+
 Realtime data is different:
 
 - schedules
