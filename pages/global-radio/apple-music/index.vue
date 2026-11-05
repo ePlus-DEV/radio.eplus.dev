@@ -44,9 +44,17 @@
       </div>
     </header>
 
-    <p class="flex items-start gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-3 text-xs leading-6 text-[var(--radio-text-muted)]">
+    <section v-if="!canListenOnEplus" class="flex items-start gap-3 rounded-xl border border-amber-400/30 bg-amber-500/10 p-4" :aria-label="t('global_radio.playback_status_title')">
+      <UIcon name="i-lucide-info" class="mt-0.5 h-5 w-5 shrink-0 text-amber-700 dark:text-amber-300" aria-hidden="true" />
+      <div class="min-w-0 space-y-1">
+        <h2 class="text-sm font-bold text-amber-800 dark:text-amber-200">{{ t('global_radio.playback_status_title') }}</h2>
+        <p class="text-xs leading-6 text-[var(--radio-text-muted)]">{{ t('global_radio.playback_status_pending') }}</p>
+        <p class="text-xs leading-6 text-[var(--radio-text-muted)]">{{ t('global_radio.apple_access') }}</p>
+      </div>
+    </section>
+    <p v-else class="flex items-start gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-3 text-xs leading-6 text-[var(--radio-text-muted)]">
       <UIcon name="i-lucide-info" class="mt-1 h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
-      <span>{{ t('global_radio.apple_access') }} {{ t('global_radio.external_note') }}</span>
+      <span>{{ t('global_radio.apple_access') }} {{ t('global_radio.playback_status_configured') }}</span>
     </p>
 
     <p v-if="resolverError" role="alert" class="rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 text-sm text-amber-800 dark:text-amber-200">
@@ -95,6 +103,10 @@
                 :class="pendingStationId === station.id ? 'h-4 w-4 animate-spin' : 'h-4 w-4'" aria-hidden="true" />
               {{ t(pendingStationId === station.id ? 'global_radio.connecting_on_eplus' : 'global_radio.listen_on_eplus') }}
             </button>
+            <span v-if="!canListenOnEplus" class="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-1 text-[11px] font-medium text-[var(--radio-text-muted)]">
+              <UIcon name="i-lucide-circle-alert" class="h-3.5 w-3.5" aria-hidden="true" />
+              {{ t('global_radio.playback_status_short') }}
+            </span>
             <a :href="station.listen_url" target="_blank" rel="noopener noreferrer"
               class="radio-interactive inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-xs font-bold text-white transition-colors hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
               <UIcon name="i-lucide-external-link" class="h-4 w-4 shrink-0" aria-hidden="true" />
