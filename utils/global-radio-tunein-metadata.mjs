@@ -42,11 +42,15 @@ export function parseTuneInStationMetadata(payload, stationId) {
   if (payload?.head?.status != null && Number(payload.head.status) !== 200) {
     throw new Error('unavailable');
   }
-  const rows = Array.isArray(payload?.body) ? payload.body : [];
-  // Station details are returned under body[]. Never interpret schedule,
-  // station name, show titles or "playing" blurbs as a song.
-  for (const row of rows) {
+  // Describe is often an OPML tree: body[] -> outline -> station.
+  // Walk only bounded, in-response station records; do not follow URLs.
+  const pending = Array.isArray(payload?.body) ? payload.body.slice(0, 20) : [];
+  let examined = 0;
+  while (pending.length && examined++ < 40) {
+    const row = pending.shift();
     if (!row || typeof row !== 'object' || Array.isArray(row)) continue;
+    if (Array.isArray(row.children)) pending.push(...row.children.slice(0, 20));
+    if (row.station && typeof row.station === 'object') pending.push(row.station);
     if (row.element && row.element !== 'station') continue;
     if (row.guide_id && row.guide_id !== expected.tunein) continue;
     if (row.preset_id && row.preset_id !== expected.tunein) continue;
