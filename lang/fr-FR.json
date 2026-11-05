@@ -3,6 +3,8 @@
     "content": "Désolé, la page demandée est introuvable."
   },
   "global_radio": {
+    "preview_on_eplus": "Essayer sur ePlus",
+    "preview_requires_url": "La lecture expérimentale nécessite une URL HLS Apple temporaire, valide et autorisée. Il ne s'agit pas d'un flux permanent en un clic.",
     "hls_preview_title": "Expérimental : lire un lien HLS temporaire",
     "hls_preview_help": "Si vous disposez d'une URL HLS temporaire émise par Apple et autorisée, vous pouvez la tester dans ce navigateur. Apple Music/TuneIn peut bloquer cette lecture. Aucune clé n'est obtenue ni renouvelée.",
     "hls_preview_input": "URL HLS temporaire signée",
