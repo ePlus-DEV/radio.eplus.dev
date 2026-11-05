@@ -14,7 +14,7 @@
       <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-url="playback.station?.url" />
     </section>
     <ClientOnly><PanelSurpriseRadio /></ClientOnly>
-    <ClientOnly><PanelResumeCard /><PanelListeningLibrary compact /></ClientOnly>
+    <ClientOnly><PanelResumeCard /><PanelForYou /><PanelListeningLibrary compact /></ClientOnly>
     <!-- External-provider directory lives beside geographic discovery, not inside a fake country. -->
     <section class="radio-surface flex flex-col gap-4 rounded-2xl p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
       :aria-label="$t('global_radio.title')">
