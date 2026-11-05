@@ -62,6 +62,28 @@ correct `station_id` before issuing the response.
 For a normal pending/unauthorized/unavailable provider, respond with a
 non-2xx status and a generic JSON message. The app then keeps official links.
 
+## Activate it after the approved backend exists
+
+**The website is prerendered/static on GitHub Pages.** A variable only in
+`.env.example`, or in a GitHub Environment that the workflow does not pass
+through, has **no effect** on the published site.
+
+1. Implement and independently test the approved ePlus-owned endpoint. The
+   existing Heroku root URL alone is not a verified resolver route.
+2. In **GitHub → ePlus-DEV/radio.eplus.dev → Settings → Environments →
+   development → Variables**, set
+   `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` to the full HTTPS API route.
+   Use production environment separately only when approved for production.
+3. The `deploy-github-pages.yml` workflow explicitly passes
+   `vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` into Nuxt at build time.
+   Deploy `develop` again (via a trusted push or manual workflow dispatch).
+4. On `new-radio.eplus.dev/global-radio/apple-music/`, a configured URL
+   exposes the in-app Play button; an empty variable intentionally does not.
+   Check the generated HTML public Nuxt config to verify activation, without
+   exposing any actual signed stream URL or auth credentials.
+5. Validate playback on real devices. Keep the variable unset until the
+   backend responds correctly with a licensed, fresh stream.
+
 ## Backend requirements before enabling the feature
 
 1. **Authorization:** Use only a provider-approved integration. `Tune.ashx`
