@@ -197,6 +197,7 @@ import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
+import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 
@@ -361,6 +362,7 @@ let HlsCtor: any = null;
 let hlsImportPromise: Promise<any> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
+let stablePlaybackTimer: ReturnType<typeof setTimeout> | null = null;
 let sourceVersion = 0;
 let playVersion = 0;
 let activeResolvedSrc = "";
@@ -368,7 +370,6 @@ let liveResumePending = false;
 let pausedAtMs = 0;
 
 const RECONNECT_BASE_DELAY = 1200;
-const FALLBACK_PROBE_TIMEOUT = 10_000;
 
 let hlsNetworkRecoveryCount = 0;
 let hlsMediaRecoveryCount = 0;
@@ -608,6 +609,25 @@ const clearFallbackProbeTimer = (): void => {
   fallbackProbeTimer = null;
 };
 
+const clearStablePlaybackTimer = (): void => {
+  if (!stablePlaybackTimer) return;
+  clearTimeout(stablePlaybackTimer);
+  stablePlaybackTimer = null;
+};
+
+const startStablePlaybackTimer = (): void => {
+  if (stablePlaybackTimer) return;
+  const version = sourceVersion;
+  stablePlaybackTimer = setTimeout(() => {
+    stablePlaybackTimer = null;
+    const media = mediaElement.value;
+    if (version !== sourceVersion || userPaused.value || !playing.value || waiting.value ||
+      !media || media.paused || media.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+    // Only uninterrupted, decoded playback replenishes the retry budget.
+    attemptCount.value = 0;
+  }, STABLE_PLAYBACK_WINDOW_MS);
+};
+
 const tryPlay = async (): Promise<void> => {
   const media = mediaElement.value;
   if (!media || userPaused.value) return;
@@ -619,17 +639,17 @@ const tryPlay = async (): Promise<void> => {
   try {
     await media.play();
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
-    pendingAutoPlay.value = false;
-    waiting.value = false;
-    playing.value = true;
+    // Resolving play() or receiving canplay does not always mean decoded
+    // audio is being delivered. Keep the watchdog armed until real playback.
+    const hasDecodedAudio = !media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA;
+    pendingAutoPlay.value = !hasDecodedAudio;
+    waiting.value = !hasDecodedAudio;
+    playing.value = hasDecodedAudio;
     streamError.value = false;
-    // Some stream integrations resolve play() before dispatching "playing".
-    // Keep listening statistics aligned with the real media state, not just
-    // the visual Player status; never count if the element is still paused
-    // or has no decoded/buffered audio data.
-    if (!media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
-      && listeningDurationTracker.activeUrl !== playback.station?.url) {
+    if (hasDecodedAudio && listeningDurationTracker.activeUrl !== playback.station?.url) {
       onMediaPlaying();
+    } else if (!hasDecodedAudio) {
+      startFallbackProbe();
     }
 
   } catch (error) {
@@ -669,23 +689,27 @@ const tryPlay = async (): Promise<void> => {
 
 const startFallbackProbe = (): void => {
   clearFallbackProbeTimer();
-  if (!preferences.autoReconnect) return;
+  if (userPaused.value || !online.value || !sourceList.value.length) return;
 
-  if (
-    activeSourceIndex.value + 1 >= sourceList.value.length ||
-    userPaused.value
-  ) {
-    return;
-  }
-
+  const version = sourceVersion;
   fallbackProbeTimer = setTimeout(() => {
     fallbackProbeTimer = null;
-
-    if (!playing.value && pendingAutoPlay.value && !userPaused.value) {
-      sourceFailureReason.value = playbackFailureReason({ timeout: true });
-      advanceFallbackSource();
-    }
-  }, FALLBACK_PROBE_TIMEOUT);
+    // The timer belongs to a particular source/station, never a later one.
+    if (version !== sourceVersion) return;
+    const action = playbackWatchdogAction({
+      waiting: waiting.value,
+      playing: playing.value,
+      userPaused: userPaused.value,
+      online: online.value,
+      autoReconnect: preferences.autoReconnect,
+      attemptCount: attemptCount.value,
+      sourceCount: sourceList.value.length,
+    });
+    if (action === 'ignore') return;
+    sourceFailureReason.value = playbackFailureReason({ timeout: true });
+    if (action === 'stop') stopPlaybackFailure();
+    else advanceFallbackSource();
+  }, STREAM_STALL_TIMEOUT_MS);
 };
 
 const configureNativeSource = (
@@ -815,6 +839,7 @@ const stopPlaybackFailure = (): void => {
   stopListeningDuration();
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
   destroyHls();
 
   const media = mediaElement.value;
@@ -864,6 +889,10 @@ const applySource = async (
 
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
+  // Start before playlist fetch / HLS manifest parsing so every candidate
+  // (including a single or last source) has an upper bound on silence.
+  if (pendingAutoPlay.value) startFallbackProbe();
 
   const source = await resolvePlaylistSource(rawSource);
   if (version !== sourceVersion || !mediaElement.value) return;
@@ -886,7 +915,7 @@ const advanceFallbackSource = (): boolean => {
     return false;
   }
 
-  const nextIndex = nextPlaybackIndex(
+  const nextIndex = nextRecoverySourceIndex(
     activeSourceIndex.value,
     sourceList.value.length,
   );
@@ -976,6 +1005,7 @@ const onPause = (): void => {
   pendingAutoPlay.value = false;
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
 
   media?.pause();
   liveResumePending = Boolean(activeResolvedSrc);
@@ -1119,6 +1149,7 @@ const updateOnlineStatus = (): void => {
   if (!online.value) {
     clearReconnectTimer();
     clearFallbackProbeTimer();
+    clearStablePlaybackTimer();
     waiting.value = false;
     return;
   }
@@ -1130,7 +1161,8 @@ const updateOnlineStatus = (): void => {
 
 const onMediaCanPlay = (): void => {
   clearReconnectTimer();
-  clearFallbackProbeTimer();
+  // canplay only confirms buffered data, not uninterrupted live audio.
+  // Preserve the stall watchdog until the playing event.
   streamError.value = false;
 
   if (pendingAutoPlay.value && !userPaused.value && !playing.value) {
@@ -1149,7 +1181,7 @@ const onMediaPlaying = (): void => {
   }
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  attemptCount.value = 0;
+  startStablePlaybackTimer();
   pendingAutoPlay.value = false;
   waiting.value = false;
   playing.value = true;
@@ -1161,9 +1193,11 @@ const onMediaPlaying = (): void => {
 
 const onMediaWaiting = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   playing.value = false;
   if (!userPaused.value) {
     waiting.value = true;
+    pendingAutoPlay.value = true;
     startFallbackProbe();
   }
 };
@@ -1175,17 +1209,20 @@ const onMediaStalled = (): void => {
 
 const onMediaPause = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   playing.value = false;
 };
 
 const onMediaEnded = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   playing.value = false;
   if (!userPaused.value) scheduleReconnect();
 };
 
 const onMediaError = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   if (!activeResolvedSrc || userPaused.value) return;
 
   // hls.js reports richer network/media failures through Hls.Events.ERROR.
@@ -1242,7 +1279,12 @@ const unbindMediaEvents = (): void => {
 };
 
 watch(() => preferences.autoReconnect, (enabled) => {
-  if (!enabled) { clearReconnectTimer(); clearFallbackProbeTimer(); }
+  if (!enabled) {
+    clearReconnectTimer();
+    // Disabling auto-reconnect must not leave an endless spinner.
+    // A stalled source times out to a manual Retry state instead.
+    if (waiting.value && !userPaused.value && online.value) startFallbackProbe();
+  }
 });
 
 watch([playing, waiting], ([isPlaying, isWaiting]) => {
@@ -1287,6 +1329,7 @@ watch(
     pendingAutoPlay.value = false;
     clearReconnectTimer();
     clearFallbackProbeTimer();
+    clearStablePlaybackTimer();
     destroyHls();
     const media = mediaElement.value;
     if (media) {
@@ -1393,6 +1436,7 @@ onUnmounted(() => {
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
   unbindMediaEvents();
   destroyHls();
 
