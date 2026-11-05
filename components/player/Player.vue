@@ -200,7 +200,7 @@ import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.m
 import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
-import { createTimedHlsTrackBuffer } from "~/utils/hls-song-metadata.mjs";
+import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -359,6 +359,7 @@ const setPlayerMini = (value: boolean): void => {
 };
 
 let hlsInstance: any = null;
+let detachNativeHlsMetadata: (() => void) | null = null;
 const hlsSongBuffer = createTimedHlsTrackBuffer();
 let HlsCtor: any = null;
 let hlsImportPromise: Promise<any> | null = null;
@@ -603,6 +604,8 @@ const ensureHls = async (): Promise<any> => {
 
 const destroyHls = (): void => {
   hlsSongBuffer.clear();
+  detachNativeHlsMetadata?.();
+  detachNativeHlsMetadata = null;
   if (!hlsInstance) return;
   hlsInstance.destroy();
   hlsInstance = null;
@@ -743,6 +746,36 @@ const configureNativeSource = (
   }
 };
 
+// Safari/iOS uses native HLS rather than hls.js on devices without MSE.
+const attachNativeHlsSongMetadata = (media: HTMLAudioElement, version: number): void => {
+  const stationUrl = props.stationUrl;
+  if (!stationUrl?.startsWith('/global-radio/apple-music/')) return;
+  const tracks = media.textTracks;
+  if (!tracks) return;
+  const listeners = new Map<TextTrack, EventListener>();
+  const register = (track: TextTrack | null | undefined) => {
+    if (!track || track.kind !== 'metadata' || listeners.has(track)) return;
+    track.mode = 'hidden';
+    const onCueChange: EventListener = () => {
+      if (version !== sourceVersion || userPaused.value || media.paused
+        || playback.station?.url !== stationUrl) return;
+      const current = extractNativeHlsId3Track(track.activeCues);
+      if (current) playback.setHlsLiveTrack(stationUrl, current);
+    };
+    track.addEventListener('cuechange', onCueChange);
+    listeners.set(track, onCueChange);
+    onCueChange(new Event('cuechange'));
+  };
+  const onAddTrack: EventListener = event => register((event as Event & { track?: TextTrack }).track);
+  tracks.addEventListener('addtrack', onAddTrack);
+  for (let i = 0; i < tracks.length; i++) register(tracks[i]);
+  detachNativeHlsMetadata = () => {
+    tracks.removeEventListener('addtrack', onAddTrack);
+    for (const [track, listener] of listeners) track.removeEventListener('cuechange', listener);
+    listeners.clear();
+  };
+};
+
 const configureHlsSource = async (
   source: RadioSource,
   autoplay: boolean,
@@ -772,6 +805,7 @@ const configureHlsSource = async (
     }
 
     media.src = source.src;
+    attachNativeHlsSongMetadata(media, version);
     media.load();
 
     if (autoplay && !userPaused.value) {
