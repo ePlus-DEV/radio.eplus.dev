@@ -799,10 +799,11 @@ const configureHlsSource = async (
     }
 
     unsupportedSource.value = data.type === Hls.ErrorTypes.MEDIA_ERROR;
+    // Never log full stream URLs: some providers use tokenized query strings.
     console.warn("Fatal HLS playback error", {
       type: data.type,
       details: data.details,
-      source: source.src,
+      sourceIndex: activeSourceIndex.value + 1,
     });
     scheduleReconnect();
   });
