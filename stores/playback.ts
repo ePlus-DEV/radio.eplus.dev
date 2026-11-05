@@ -24,10 +24,12 @@ export const usePlaybackStore = defineStore('playback', {
     liveTrack: null as { stationUrl: string; title: string; artist: string } | null,
   }),
   actions: {
-    activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number) {
+    activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number, stations: RadioStationOption[] = []) {
+      // Country and Global share the same player/queue; only source resolution differs.
       this.liveTrack = null;
       this.station = station;
-      this.stations = [{ id: station.id, title: station.title, image: station.image, url: station.url }];
+      this.stations = stations.length ? stations
+        : [{ id: station.id, title: station.title, image: station.image, url: station.url }];
       this.globalRadioLease = {
         provider: 'apple-music',
         stationId: station.id,
