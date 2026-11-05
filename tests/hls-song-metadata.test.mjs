@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { parseHlsId3Tag, extractHlsId3Tracks, createTimedHlsTrackBuffer } from '../utils/hls-song-metadata.mjs';
+import { parseHlsId3Tag, extractHlsId3Tracks, createTimedHlsTrackBuffer, extractNativeHlsId3Track } from '../utils/hls-song-metadata.mjs';
 
 const ascii = text => [...text].map(c => c.charCodeAt(0));
 const safeSize = n => [(n >> 21) & 0x7f, (n >> 14) & 0x7f, (n >> 7) & 0x7f, n & 0x7f];
@@ -75,11 +75,25 @@ test('waits until media time reaches ID3 PTS and suppresses duplicate tracks', (
   assert.equal(buffer.consume(101), null);
 });
 
+test('Safari native timed ID3 cue extraction requires a concurrent title/artist pair', () => {
+  const cue = (key, value) => ({ value: { key, data: new Uint8Array([3, ...new TextEncoder().encode(value)]) } });
+  assert.deepEqual(extractNativeHlsId3Track([
+    cue('TIT2', 'Song on Air'), cue('TPE1', 'Actual Artist'),
+  ]), { title: 'Song on Air', artist: 'Actual Artist' });
+  assert.equal(extractNativeHlsId3Track([cue('TIT2', 'Song Only')]), null);
+  assert.equal(extractNativeHlsId3Track([cue('PRIV', 'Not a song'), cue('TPE1', 'Singer')]), null);
+  assert.equal(extractNativeHlsId3Track([{ value: { key: 'TIT2', data: 'Title' } }]), null);
+  assert.equal(extractNativeHlsId3Track(null), null);
+});
+
 test('wire actual hls.js metadata to existing player and queue, not another stream', async () => {
   const player = await readFile(new URL('../components/player/Player.vue', import.meta.url), 'utf8');
   const realtime = await readFile(new URL('../composables/useStationRealtime.ts', import.meta.url), 'utf8');
   const store = await readFile(new URL('../stores/playback.ts', import.meta.url), 'utf8');
   assert.match(player, /Hls\.Events\.FRAG_PARSING_METADATA/);
+  assert.match(player, /attachNativeHlsSongMetadata\(media, version\)/);
+  assert.match(player, /extractNativeHlsId3Track\(track\.activeCues\)/);
+  assert.match(player, /detachNativeHlsMetadata\?\.\(\)/);
   assert.match(player, /hlsSongBuffer\.add\(data\?\.samples\)/);
   assert.match(player, /media\.addEventListener\("timeupdate", flushHlsSongMetadata\)/);
   assert.match(player, /media\.removeEventListener\("timeupdate", flushHlsSongMetadata\)/);
