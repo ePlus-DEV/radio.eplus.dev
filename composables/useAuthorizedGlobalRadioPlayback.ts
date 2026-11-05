@@ -1,10 +1,10 @@
 import { usePlaybackStore } from '~/stores/playback';
 import { buildAuthorizedResolverRequest, resolveAuthorizedAppleStream } from '~/utils/global-radio-resolver.mjs';
 import { buildPublicTuneInRequest, resolvePublicTuneInStream } from '~/utils/global-radio-public-tunein.mjs';
-import { createAuthorizedApplePlaybackStation } from '~/utils/global-radio-station.mjs';
+import { createAuthorizedApplePlaybackStation, createAppleRadioQueue } from '~/utils/global-radio-station.mjs';
 import type { GlobalRadioStation } from '~/types/global-radio';
 
-export function useAuthorizedGlobalRadioPlayback() {
+export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioStation[] = () => []) {
   const config = useRuntimeConfig();
   const playback = usePlaybackStore();
   const pendingStationId = ref('');
@@ -18,10 +18,26 @@ export function useAuthorizedGlobalRadioPlayback() {
 
   async function play(station: GlobalRadioStation) {
     if (!import.meta.client || !enabled.value || pendingStationId.value) return;
+    error.value = '';
+    const stationUrl = '/global-radio/apple-music/' + station.id;
+    if (playback.station?.url === stationUrl) {
+      // Same semantics as Country Radio's station card: tap again to pause.
+      if (playback.playing || playback.waiting) {
+        playback.pauseRequest += 1;
+        return;
+      }
+      // A paused, still-valid HLS stream resumes without resetting its
+      // audio element or unnecessarily obtaining another short-lived token.
+      if (playback.globalRadioLease?.stationUrl === stationUrl
+        && playback.globalRadioLease.expiresAt > Date.now() + 45_000
+        && playback.station.sources.length > 0) {
+        playback.playRequest += 1;
+        return;
+      }
+    }
     const controller = new AbortController();
     activeController = controller;
     pendingStationId.value = station.id;
-    error.value = '';
     try {
       // Prefer the publicly available TuneIn stream through ePlus's existing
       // Heroku CORS server. An approved resolver (if configured) is fallback.
@@ -37,7 +53,8 @@ export function useAuthorizedGlobalRadioPlayback() {
       if (controller.signal.aborted || !result.ok) return;
       const source = createAuthorizedApplePlaybackStation(station, result.streamUrl);
       // Use the existing global PlayerSession; never mount a second audio element.
-      playback.activateGlobalRadio(source, station.listen_url, result.expiresAt);
+      playback.activateGlobalRadio(source, station.listen_url, result.expiresAt,
+        createAppleRadioQueue(getStations()));
     } catch {
       if (!controller.signal.aborted) error.value = 'unavailable';
     } finally {
