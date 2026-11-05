@@ -1,5 +1,5 @@
 <template>
-  <details :open="expanded" class="rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-4">
+  <details class="rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-4">
     <summary class="radio-interactive cursor-pointer text-sm font-semibold text-[var(--radio-text)]">
       {{ t('global_radio.hls_preview_title') }}
     </summary>
@@ -45,7 +45,7 @@ import { inspectAppleHlsPreviewUrl } from '~/utils/apple-hls-preview.mjs';
 import { usePlaybackStore } from '~/stores/playback';
 import type { GlobalRadioStation } from '~/types/global-radio';
 
-const props = withDefaults(defineProps<{ station: GlobalRadioStation; expanded?: boolean }>(), { expanded: false });
+const props = defineProps<{ station: GlobalRadioStation }>();
 const { t } = useI18n();
 const playback = usePlaybackStore();
 const temporaryUrl = ref('');
