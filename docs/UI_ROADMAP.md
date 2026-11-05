@@ -96,35 +96,24 @@ Keep stream URLs out of the generated search index. Locale text and
 facets are available in all seven UI languages. Tests:
 `tests/surprise-radio.test.mjs`, `tests/station-search.test.mjs`.
 
-Follow-up: assess faceted discovery metadata quality and catalog-wide
-performance under #342 before adding more complex search/trending UI.
+Follow-up: improve real catalog metadata quality and global-search
+performance without adding another redundant browsing panel to Home.
 
-## Faceted Browse — #342 (initial implementation)
+## 2026-11-05 — Advanced Discovery panel removed (UX de-duplication)
 
-The homepage offers an explicit, collapsed **Browse stations** section after
-Surprise Me. Expanding it is the only trigger for the existing cached static
-search index download; merely mounting the homepage never fetches it.
+The separate homepage `PanelStationDiscovery` and its 6-item paginated
+country/genre/language browser were removed at the user's request because
+they duplicated existing global search and the country/region browser on Home.
+See #342 and its implementation PR #360 for historical context.
 
-- Combine a name/keyword search with exact catalog-sourced country, genre
-  and language filters. Search is accent-insensitive. Unknown/missing genre
-  and language values are left unknown, never inferred from station names.
-- Facet menus reflect the other selected filters and the current query.
-  Changing filters resets page 1. Reset clears all filters.
-- Display six real canonical station links per page, never an unlimited list.
-  Clamp stale page numbers and handle zero, one, a handful, or hundreds of
-  results. Station click navigates to its existing detail route and does not
-  autoplay; the global player remains mounted and untouched.
-- Responsive layout at 320/375/390/430px and large desktops uses semantic
-  `--radio-*` theme colors, visible focus, labeled controls, accessible
-  empty/loading/retry states and translated labels in seven locales.
-- Preserve all original home SEO title/description/schema, existing
-  station canonical URLs and sitemap. Do not add new personal data tracking,
-  fabricated station-health or country metadata. No live stream URLs are
-  included in the public search index.
+Keep existing **global search, country/region catalog links, Surprise Me
+(optional random discovery), and For You**. The published search index and its
+catalog-provided optional genre/language metadata remain useful for Surprise Me
+and For You and must not be deleted as part of this revert.
 
-Regression tests: `tests/station-discovery.test.mjs`; reuse the generator
-and cached loader already covered by `tests/station-search.test.mjs`.
-Visual/browser validation and generated-site SEO checks remain release gates.
+Do not recreate a second broad homepage station browser without a new,
+explicitly reviewed UX design. No SEO, canonical URL or playback behavior
+changes are required for this removal.
 
 ## On-device For You — #343 (first functional delivery)
 
