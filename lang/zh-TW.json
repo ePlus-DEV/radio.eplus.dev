@@ -461,6 +461,31 @@
       }
     }
   },
+  "discovery": {
+    "title": "探索電台",
+    "description": "依名稱、國家、類型或語言尋找。僅使用已發布目錄中的真實資訊。",
+    "browse": "瀏覽電台",
+    "hide": "收合篩選",
+    "loading": "正在載入目錄…",
+    "unavailable": "無法載入電台目錄。",
+    "retry": "重試",
+    "search": "搜尋",
+    "search_placeholder": "電台名稱或關鍵字…",
+    "country": "國家",
+    "all_countries": "所有國家",
+    "genre": "類型",
+    "all_genres": "所有類型",
+    "language": "語言",
+    "all_languages": "所有語言",
+    "results": "顯示第 {from}–{to} 個，共 {total} 個電台",
+    "reset": "重設篩選",
+    "empty": "找不到符合條件的電台。",
+    "pagination": "結果分頁",
+    "previous": "上一頁",
+    "page": "第 {page} / {total} 頁",
+    "next": "下一頁",
+    "metadata_note": "部分電台沒有類型或語言資訊。本清單不代表直播來源目前可用。"
+  },
   "for_you": {
     "title": "為你推薦",
     "description": "無須帳號，根據本機已儲存的電台探索相關內容。",
