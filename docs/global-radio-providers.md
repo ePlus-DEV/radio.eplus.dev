@@ -64,6 +64,14 @@ cannot be treated as a stable source of Apple Music audio.
 
 - Uses `components/global-radio/TemporaryHlsPreview.vue` and
   `utils/apple-hls-preview.mjs`, not the normal catalog/player.
+- The provider's **seven station cards now show a primary “Try on ePlus
+  OnAir” CTA**, opening one shared dialog already expanded for that station.
+  Users must still provide an authorized, valid signed HLS URL; clicking
+  the card alone does not stream audio or extract a key. The original
+  Apple Music and TuneIn links remain visible as alternative destinations.
+  Closing the dialog unmounts and stops the temporary media player; dialog
+  surfaces follow the shared light/dark palette and scroll within mobile
+  height. The existing station detail preview remains available.
 - Accepts only HTTPS `itsliveradio.apple.com/3p-tune-in/tune_in/<id>/...`
   with a single signed `accessKey`; local validation binds the station
   numeric ID to its official Apple Music station detail link.
