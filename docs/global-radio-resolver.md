@@ -2,6 +2,39 @@
 
 Issue: [#358](https://github.com/ePlus-DEV/radio.eplus.dev/issues/358).
 
+## Direct public TuneIn playback — existing Heroku CORS server
+
+The 2026-11-05 GitHub Actions technical probe confirmed, for **all seven** catalog
+stations, that a public `opml.radiotime.com/Tune.ashx` request with only
+`id`, `render=json`, `formats=aac,hls,mp3` returns a fresh signed Apple
+HLS master playlist. The owner's existing
+`https://cors-eplus-bba6d8ad0ca6.herokuapp.com/` CORS proxy returns
+HTTP 200 and allows the staging Origin; the Apple Holiday Hits master
+`/3p-tune-in/tune_in/ppa-ts/index-ts.m3u8` returned HTTP 200 and `#EXTM3U`.
+This technical observation is not a browser audio test or a statement about
+redistribution permissions.
+
+The browser uses one fixed ePlus proxy and a strict 7-station ID allowlist.
+A Play click calls only the official public TuneIn lookup for that station;
+a returned URL must be HTTPS, on the exact Apple live-radio host, with a
+station-matched observed HLS path and a fresh signed `accessKey`. It is then
+passed to the existing shared HLS player. The existing app-level renewal
+timer repeats the lookup before expiration, without user-supplied URLs,
+PAL impersonation, HAR replay, persistent tokens or a second audio element.
+
+This mode requires **no new Heroku backend code or extra GitHub
+environment variable**. The existing optional
+`NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` remains a fallback for other approved
+resolvers. The Heroku proxy availability, browser/Apple CORS, region and
+provider behavior can change; a failed lookup shows the normal error and
+Apple/TuneIn external links remain available.
+
+Technical evidence (sanitized; no access keys): GitHub Action
+`hoangsvit/heroku-cors` run
+https://github.com/hoangsvit/heroku-cors/actions/runs/42027254699
+and source probe
+https://github.com/hoangsvit/heroku-cors/actions/runs/42026930807.
+
 ## What is implemented
 
 - The static Nuxt app can ask a separately operated **ePlus-owned authorized API**
