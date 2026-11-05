@@ -3,13 +3,16 @@
     "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
   "global_radio": {
+    "seasonal_note": "Kênh theo mùa có thể không phát ngoài dịp lễ. Hãy kiểm tra tình trạng phát trực tiếp trên Apple Music hoặc TuneIn.",
+    "seasonal": "Theo mùa",
+    "listen_on_tunein": "Nghe trên TuneIn",
     "eyebrow": "Mạng radio quốc tế",
     "title": "Global Radio",
     "description": "Khám phá các mạng phát thanh quốc tế ngoài danh mục phân loại theo quốc gia.",
     "providers": "Nhà cung cấp radio",
     "provider_count": "nhà cung cấp",
     "external_badge": "Mở bên ngoài",
-    "apple_description": "Khám phá sáu đài radio trực tiếp của Apple Music trong một nhóm toàn cầu, không gán vào một quốc gia giả.",
+    "apple_description": "Khám phá sáu đài radio chính của Apple Music cùng kênh Holiday Hits theo mùa, được xếp theo nhà cung cấp toàn cầu thay vì quốc gia.",
     "explore_provider": "Khám phá các đài",
     "external_note": "Đài Apple Music mở trên trang của Apple, không phát trong ePlus OnAir và không tính vào thống kê nghe cục bộ.",
     "by_country": "Duyệt radio theo quốc gia",
