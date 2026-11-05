@@ -74,6 +74,14 @@ test('Global station cards have the same Play/Pause behavior as Country and may 
   assert.match(directory, /redesign\.paused/);
 });
 
+test('transient TuneIn renewal failure preserves an unexpired playing station', async () => {
+  const renew = await read('plugins/global-radio-renew.client.ts');
+  assert.match(renew, /Date\.now\(\) < lease\.expiresAt - 5_000/);
+  assert.match(renew, /timer = setTimeout\(\(\) => \{ void refresh\(lease, version\); \}, retryInMs\)/);
+  assert.match(renew, /playback\.station = \{ \.\.\.playback\.station, sources: \[\] \}/);
+  assert.match(renew, /playback\.globalRadioLease = null/);
+});
+
 test('saved Global station restores an idle player from fresh HLS, never old accessKey or autoplay', async () => {
   setActivePinia(createPinia());
   const playback = usePlaybackStore();
