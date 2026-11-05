@@ -486,6 +486,24 @@
     "next": "Next",
     "metadata_note": "Genre and language may be missing for some stations; this is not a live availability check."
   },
+  "for_you": {
+    "title": "For You",
+    "description": "Discover stations with a connection to your saved library, without an account.",
+    "show": "Show suggestions",
+    "hide_panel": "Hide suggestions",
+    "loading": "Finding stations…",
+    "unavailable": "Suggestions could not be loaded.",
+    "retry": "Retry",
+    "based_on_your_library": "Suggestions use eligible stations in your saved library, respecting your current tracking settings.",
+    "curated_intro": "No matching local preferences yet. Here are genuinely featured catalog picks.",
+    "reason_genre": "Similar genre to stations you saved",
+    "reason_language": "Same language as stations you saved",
+    "reason_country": "From a country you listened to",
+    "reason_featured": "Featured station from the catalog",
+    "dismiss": "Hide this suggestion",
+    "empty": "No new matching stations yet.",
+    "privacy_note": "Suggestions are calculated on this device. Your favorites and listening history are never sent to the catalog server. Hidden items are restored after reloading."
+  },
   "surprise": {
     "title": "Surprise Me",
     "heading": "Discover a new radio station",

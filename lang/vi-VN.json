@@ -486,6 +486,24 @@
     "next": "Sau",
     "metadata_note": "Một số đài chưa có thể loại/ngôn ngữ; danh sách không xác nhận nguồn phát đang hoạt động."
   },
+  "for_you": {
+    "title": "Dành cho bạn",
+    "description": "Khám phá các đài liên quan đến thư viện đã lưu mà không cần tài khoản.",
+    "show": "Xem gợi ý",
+    "hide_panel": "Ẩn gợi ý",
+    "loading": "Đang tìm đài phù hợp…",
+    "unavailable": "Không tải được gợi ý.",
+    "retry": "Thử lại",
+    "based_on_your_library": "Gợi ý dựa trên các đài đã lưu tại thiết bị, theo cài đặt riêng tư hiện tại.",
+    "curated_intro": "Chưa có sở thích phù hợp. Đây là các đài thực sự được đánh dấu nổi bật trong danh mục.",
+    "reason_genre": "Cùng thể loại với đài bạn lưu",
+    "reason_language": "Cùng ngôn ngữ với đài bạn lưu",
+    "reason_country": "Từ quốc gia bạn từng nghe",
+    "reason_featured": "Đài nổi bật trong danh mục",
+    "dismiss": "Ẩn gợi ý này",
+    "empty": "Chưa có đài mới phù hợp.",
+    "privacy_note": "Gợi ý được tính trên thiết bị. Favorites và lịch sử không được gửi lên máy chủ danh mục. Các mục đã ẩn sẽ hiện lại khi tải lại trang."
+  },
   "surprise": {
     "title": "Nghe ngẫu nhiên",
     "heading": "Khám phá một đài radio mới",

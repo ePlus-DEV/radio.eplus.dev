@@ -125,3 +125,34 @@ search index download; merely mounting the homepage never fetches it.
 Regression tests: `tests/station-discovery.test.mjs`; reuse the generator
 and cached loader already covered by `tests/station-search.test.mjs`.
 Visual/browser validation and generated-site SEO checks remain release gates.
+
+## On-device For You — #343 (first functional delivery)
+
+Homepage renders an opt-in **For You** panel near the listener library.
+The full station search index is fetched only when the listener explicitly
+opens recommendations; it reuses the shared lazy loader and does not eagerly
+grow the Nuxt payload. It does not autoplay or change the global audio engine.
+
+- Compute deterministic suggestions *in the browser* using the existing local
+  Favorites and, if listening-time tracking is enabled, locally saved Recently
+  Played entries. Both can be absent. Favorites/history are never uploaded,
+  copied into a URL, appended to analytics, or persisted to a new storage key.
+- Match actual catalog metadata: shared genre, language and country; emit a
+  truthful short reason on each station card. Never invent a genre, language,
+  stream-health value, playback count or popularity score.
+- Exclude the current station, favorites, recently played and duplicate URLs
+  from suggestions. Limit to four visible cards, and allow a session-only
+  "hide" action that is not persisted. Missing/unknown metadata cannot
+  manufacture matches.
+- When no positive affinity exists (e.g. a new visitor), offer only genuinely
+  marked Featured stations with an honest editorial label; otherwise show a
+  compact empty state. Never label fallback as personalized.
+- Native detail links are explicit navigation and cannot begin audio playback.
+  Preserve Home SEO title/meta/schema, current station routes, seven locales,
+  and local data delete/privacy settings. When listening-time tracking is off,
+  do not use recent history to calculate affinity; still exclude already heard
+  stations to avoid loops.
+
+Regression tests: `tests/personal-radio.test.mjs`. Manual QA includes
+0/1/many favorites and recent stations, off tracking state, mobile
+320–430px, reduced motion, and light/dark contrast.
