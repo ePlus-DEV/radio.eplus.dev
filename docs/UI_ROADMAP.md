@@ -48,3 +48,28 @@ Personal data currently stays in localStorage on the device. Cross-device sync, 
 - `/library` provides favorites JSON export/import. Import loads the shared static search index only when opened, previews current catalog metadata and missing/duplicate/overflow counts, and merges only after confirmation. Existing favorites, history and playback intent are preserved.
 - Playback failures expose retry, alternate sources and a GitHub issue draft without exporting stream URLs or listening history. The draft requires the listener to review and submit it.
 - Real-device Safari/iOS review and playback module extraction remain follow-up work.
+
+## Surprise Me — #344 (first functional delivery)
+
+Homepage offers a **user-initiated** random-radio control. The index is fetched
+only after clicking Random or opening optional filters, reusing the existing
+cached lazy search loader. Public catalog metadata supplies country/category/
+language facets when actually present; blank or unknown language/genre is
+never guessed. The filter result count comes only from real catalog records.
+
+Random selection is uniform within eligible canonical records and skips the
+previously chosen random station whenever a second candidate exists.
+After selection the app fetches the *current* country station catalog to
+resolve the actual stream. Only an explicit click activates the existing
+single `playback` store. It preserves station navigation, never autoplaying
+on initial page load, and cancels pending selection if a route/playback action
+happens during fetch. Missing, disabled or invalid stations fail gracefully.
+The random control cannot guarantee that a remote stream is live; the usual
+player fallback and recovery path remains responsible for playback errors.
+
+Keep stream URLs out of the generated search index. Locale text and
+facets are available in all seven UI languages. Tests:
+`tests/surprise-radio.test.mjs`, `tests/station-search.test.mjs`.
+
+Follow-up: assess faceted discovery metadata quality and catalog-wide
+performance under #342 before adding more complex search/trending UI.
