@@ -29,7 +29,11 @@ export default defineNuxtPlugin(() => {
       // On expiry/authorization failure stop attempting to reuse the old URL.
       // The listener can always open the official Apple/TuneIn destination.
       if (version === generation && !controller.signal.aborted) {
-        playback.pauseRequest += 1;
+        if (playback.station?.url === lease.stationUrl) {
+          playback.pauseRequest += 1;
+          // Prevent the shared player from restarting an expired signed URL.
+          playback.station = { ...playback.station, sources: [] };
+        }
         playback.globalRadioLease = null;
       }
     } finally {
