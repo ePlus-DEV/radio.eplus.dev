@@ -96,7 +96,15 @@ See [deployment setup and cutover](./docs/GITHUB_PAGES.md) and [workflow policy]
 
 ## Pull request previews (GitHub Pages)
 
-Feature PRs targeting `develop` can have a separate static review link, served from the **dedicated** `ePlus-DEV/onair-pr-previews` GitHub Pages project. The preview workflow builds with no credentials, requires noindex/no production GA4, publishes only representative static routes, posts a link on the PR, and cleans up when the PR closes. Production and staging deployments are unchanged. **The new Pages destination must exist and the existing token must be allowed to write to it; no additional token or enablement variable is needed.** See [PR Preview setup](./docs/PR_PREVIEWS.md).
+Feature and bugfix PRs **opened, reopened, or updated** against `develop` get a temporary preview through the existing GitHub Pages publishing mechanism. **Merging a PR into `develop` does not create a preview for that merge.**
+
+- The workflow definition `.github/workflows/pr-preview-pages.yml` **must exist on the default branch `main`**, even though its `pull_request_target` filter is `branches: [develop]`. Keep the same workflow synchronized on `develop`.
+- The build job checks out PR code **without secrets**, runs tests and builds a representative `noindex` site with production GA4 disabled. Only the trusted publisher uses the existing `PAGES_DEPLOY_TOKEN` and `PAGES_DEV_READY=true`, writing to `ePlus-DEV/onair-pr-previews`.
+- GitHub Actions bot **updates one PR comment only after the public Pages URL serves the expected PR commit SHA and a `noindex` HTML page**. Successful artifact upload, `git push`, or Pages deployment alone is **not proof that the link works**.
+- Closing a PR removes only its own `pr-preview/pr-<number>/` folder. Smoke-test PRs such as [#367](https://github.com/ePlus-DEV/radio.eplus.dev/pull/367) must be **closed without merging** after testing.
+- No new hosting provider, deployment token, readiness variable, or production/staging URL is required. For small, authorized documentation/workflow maintenance, prefer a direct commit on the appropriate branch instead of creating unnecessary PRs; follow branch protection and use a PR for product releases or risky changes.
+
+See [PR Preview runbook](./docs/PR_PREVIEWS.md), [workflow policy](./docs/GITHUB_ACTIONS.md), and [agent rules](./AGENTS.md).
 
 ## Station social images and the GitHub Pages size limit
 
