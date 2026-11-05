@@ -461,6 +461,31 @@
       }
     }
   },
+  "discovery": {
+    "title": "Khám phá đài radio",
+    "description": "Tìm đài theo tên, quốc gia, thể loại hoặc ngôn ngữ. Chỉ sử dụng dữ liệu có thật trong danh mục.",
+    "browse": "Duyệt đài",
+    "hide": "Ẩn bộ lọc",
+    "loading": "Đang tải danh mục…",
+    "unavailable": "Không tải được danh mục đài.",
+    "retry": "Thử lại",
+    "search": "Tìm kiếm",
+    "search_placeholder": "Tên đài hoặc từ khóa…",
+    "country": "Quốc gia",
+    "all_countries": "Tất cả quốc gia",
+    "genre": "Thể loại",
+    "all_genres": "Tất cả thể loại",
+    "language": "Ngôn ngữ",
+    "all_languages": "Tất cả ngôn ngữ",
+    "results": "Hiển thị {from}–{to} / {total} đài",
+    "reset": "Xóa bộ lọc",
+    "empty": "Không tìm thấy đài phù hợp.",
+    "pagination": "Phân trang kết quả",
+    "previous": "Trước",
+    "page": "Trang {page} / {total}",
+    "next": "Sau",
+    "metadata_note": "Một số đài chưa có thể loại/ngôn ngữ; danh sách không xác nhận nguồn phát đang hoạt động."
+  },
   "surprise": {
     "title": "Nghe ngẫu nhiên",
     "heading": "Khám phá một đài radio mới",

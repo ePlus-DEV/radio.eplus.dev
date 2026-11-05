@@ -461,6 +461,31 @@
       }
     }
   },
+  "discovery": {
+    "title": "探索电台",
+    "description": "按名称、国家、类型或语言查找。仅使用已发布目录中的真实信息。",
+    "browse": "浏览电台",
+    "hide": "收起筛选",
+    "loading": "正在加载目录…",
+    "unavailable": "无法加载电台目录。",
+    "retry": "重试",
+    "search": "搜索",
+    "search_placeholder": "电台名称或关键词…",
+    "country": "国家",
+    "all_countries": "所有国家",
+    "genre": "类型",
+    "all_genres": "所有类型",
+    "language": "语言",
+    "all_languages": "所有语言",
+    "results": "显示第 {from}–{to} 个，共 {total} 个电台",
+    "reset": "重置筛选",
+    "empty": "没有符合条件的电台。",
+    "pagination": "结果分页",
+    "previous": "上一页",
+    "page": "第 {page} / {total} 页",
+    "next": "下一页",
+    "metadata_note": "部分电台没有类型或语言信息。本列表不代表直播源当前可用。"
+  },
   "surprise": {
     "title": "随机电台",
     "heading": "发现新的广播电台",
