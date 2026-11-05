@@ -46,7 +46,7 @@
             </UTooltip>
           </div>
 
-          <PlayerRecovery :health="health" :online="online" :playable="playable" :source-items="sourceItems" :report-url="reportUrl" class="mb-4" @retry="$emit('retry')" />
+          <PlayerRecovery :health="health" :online="online" :playable="playable" :source-items="sourceItems" :report-url="reportUrl" :diagnostics="diagnostics" class="mb-4" @retry="$emit('retry')" />
           <StationShare v-if="stationPath" :path="stationPath" :title="stationName" class="mb-4" />
           <div class="grid grid-cols-3 gap-2 lg:max-w-lg">
             <UDropdownMenu :items="sleepItems" :content="{ align: 'start', side: 'top' }">
@@ -86,6 +86,12 @@ defineProps<{
   canNavigate: boolean; previousLabel: string; nextLabel: string; sleepRemaining: number;
   sleepItems: DropdownMenuItem[]; sourceItems: DropdownMenuItem[]; lyricsAvailable?: boolean;
   health: string; online: boolean; reportUrl: string; stationPath?: string;
+  diagnostics?: {
+    sourceIndex: number; sourceCount: number; sourceLabel: string;
+    retryAttempt: number; maxAttempts: number;
+    failureReason: 'network' | 'decode' | 'timeout' | 'unknown' | '';
+    lastPlayedAt: string;
+  };
   nextTitle?: string; nextArtist?: string; nextStationTitle?: string;
 }>();
 defineEmits(['close', 'favorite', 'previous', 'next', 'toggle', 'queue', 'lyrics', 'retry']);
