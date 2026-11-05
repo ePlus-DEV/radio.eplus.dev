@@ -469,7 +469,7 @@
     "loading": "Recherche de stations…",
     "unavailable": "Impossible de charger les suggestions.",
     "retry": "Réessayer",
-    "based_on_your_library": "Suggestions issues de vos favoris et écoutes enregistrés localement.",
+    "based_on_your_library": "Suggestions fondées sur votre bibliothèque locale, selon vos paramètres de confidentialité.",
     "curated_intro": "Aucune préférence correspondante. Voici des stations réellement mises en avant.",
     "reason_genre": "Genre similaire à vos favoris",
     "reason_language": "Même langue que vos favoris",
