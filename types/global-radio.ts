@@ -5,6 +5,8 @@ export interface GlobalRadioStation {
   genre: string;
   language: string;
   listen_url: string;
+  tunein_url?: string;
+  seasonal?: boolean;
 }
 
 export interface GlobalRadioProvider {
@@ -18,6 +20,8 @@ export interface GlobalRadioProvider {
   homepage: string;
   requires_account: boolean;
   requires_subscription: boolean;
+  metadata_checked_on?: string;
+  discovery_sources?: string[];
   stations: GlobalRadioStation[];
 }
 
