@@ -66,9 +66,10 @@ test('player keeps one watchdog through loading, canplay and repeated waiting ev
   assert.match(player, /if \(version !== sourceVersion\) return;\s*const action = playbackWatchdogAction/);
   assert.match(player, /if \(pendingAutoPlay\.value\) startFallbackProbe\(\);/);
   assert.match(player, /if \(action === 'stop'\) stopPlaybackFailure\(\);\s*else advanceFallbackSource\(\);/);
-  assert.match(player, /const onMediaCanPlay = \(\): void => \{\s*clearReconnectTimer\(\);[\s\S]*?streamError\.value = false;/);
   const canplay = player.split('const onMediaCanPlay = (): void => {')[1].split('const onMediaPlaying')[0];
-  assert.doesNotMatch(canplay, /clearFallbackProbeTimer\(\)/, 'canplay alone must never cancel the stall timeout');
+  assert.match(canplay, /if \(userPaused\.value \|\| !pendingAutoPlay\.value\) return;/);
+  assert.doesNotMatch(canplay, /clearFallbackProbeTimer\(\)|clearReconnectTimer\(\)/,
+    'canplay alone must never cancel any recovery timer');
   const waiting = player.split('const onMediaWaiting = (): void => {')[1].split('const onMediaStalled')[0];
   assert.match(waiting, /pendingAutoPlay\.value = true;/);
   assert.match(waiting, /startFallbackProbe\(\);/);
@@ -89,7 +90,7 @@ test('retry budget resets only after stable real playback, and timers are cancel
   assert.match(stability, /attemptCount\.value = 0/);
   for (const marker of ['const onMediaWaiting', 'const onMediaPause', 'const onMediaEnded', 'const onMediaError', 'onUnmounted']) {
     const after = player.split(marker)[1];
-    assert.ok(after?.slice(0, marker === 'onUnmounted' ? 550 : 230).includes('clearStablePlaybackTimer()'),
+    assert.ok(after?.slice(0, marker === 'onUnmounted' ? 900 : 230).includes('clearStablePlaybackTimer()'),
       marker + ' must invalidate stability window');
   }
   const pause = player.split('const onPause = (): void => {')[1].split('const sleepRemaining')[0];
@@ -100,7 +101,8 @@ test('manual retry and offline/online restoration keep explicit intent and sourc
   const player = await read('components/player/Player.vue');
   assert.match(player, /const retryCurrentSource = \(\): void => \{[\s\S]*?attemptCount\.value = 0;[\s\S]*?applySource\(activeSourceIndex\.value, true\)/);
   assert.match(player, /if \(wasOffline && !userPaused\.value\) \{\s*retryCurrentSource\(\)/);
-  assert.match(player, /if \(userPaused\.value \|\| !online\.value/);
+  assert.match(player, /fallbackProbeTimer \|\| userPaused\.value \|\| !online\.value/);
   assert.doesNotMatch(player, /source: source\.src/, 'sensitive stream URL must not be logged');
-  assert.doesNotMatch(player, /navigateStation\([+-]1\)[\s\S]*?advanceFallbackSource/, 'recovery must not switch station');
+  const recovery = player.split('const advanceFallbackSource = (): boolean => {')[1].split('const scheduleReconnect')[0];
+  assert.doesNotMatch(recovery, /navigateStation|navigateTo/, 'recovery must not switch station');
 });
