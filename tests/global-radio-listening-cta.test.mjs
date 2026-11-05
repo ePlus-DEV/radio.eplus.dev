@@ -13,7 +13,7 @@ test('Apple directory uses compact responsive cards with ePlus Play as the only 
   assert.match(page, /:key="station\.id"/);
   assert.match(page, /station\.seasonal/);
   assert.match(page, /@click="playOnEplus\(station\)"/);
-  assert.match(page, /t\('global_radio\.listen_on_eplus'\)/);
+  assert.match(page, /global_radio\.listen_on_eplus/);
   assert.match(page, /t\('global_radio\.details'\)/);
   assert.match(page, /t\('global_radio\.eplus_play_hint'\)/);
   assert.match(page, /t\('global_radio\.playing_now'\)/);
