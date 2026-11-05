@@ -24,7 +24,8 @@ export const usePlaybackStore = defineStore('playback', {
     liveTrack: null as { stationUrl: string; title: string; artist: string } | null,
   }),
   actions: {
-    activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number, stations: RadioStationOption[] = []) {
+    activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number,
+      stations: RadioStationOption[] = [], options: { autoplay?: boolean } = {}) {
       // Country and Global share the same player/queue; only source resolution differs.
       this.liveTrack = null;
       this.station = station;
@@ -38,7 +39,9 @@ export const usePlaybackStore = defineStore('playback', {
         expiresAt,
       };
       this.requestedStationUrl = '';
-      this.playRequest += 1;
+      // Match Country's idle restore: selecting a previously played Global
+      // station after reload must never start audio without a user gesture.
+      if (options.autoplay !== false) this.playRequest += 1;
     },
     refreshGlobalRadioStream(stationUrl: string, streamUrl: string, expiresAt: number) {
       if (!this.globalRadioLease || this.station?.url !== stationUrl
