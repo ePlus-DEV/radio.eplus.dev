@@ -17,9 +17,10 @@ export function recommendPersonalStations(index, library = {}, options = {}) {
   const valid = randomStationCandidates(index);
   const byUrl = new Map(valid.map(item => [item.url, item]));
   const favorites = Array.isArray(library?.favorites) ? library.favorites : [];
-  const recent = options.includeRecent === false ? [] : Array.isArray(library?.recent) ? library.recent : [];
+  const allRecent = Array.isArray(library?.recent) ? library.recent : [];
+  const recent = options.includeRecent === false ? [] : allRecent;
 
-  const allSavedUrls = new Set([...favorites, ...recent].map(item => item?.url).filter(Boolean));
+  const allSavedUrls = new Set([...favorites, ...allRecent].map(item => item?.url).filter(Boolean));
   if (library?.lastStation?.url) allSavedUrls.add(library.lastStation.url);
   if (options.currentUrl) allSavedUrls.add(options.currentUrl);
   const excluded = new Set(Array.isArray(options.excludedUrls) ? options.excludedUrls : []);
