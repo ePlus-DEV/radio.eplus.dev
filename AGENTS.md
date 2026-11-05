@@ -221,6 +221,15 @@ Regression guards:
 - `tests/seo-structured-data.test.mjs`
 - `tests/static-site-pages.test.mjs`
 
+## Workflow maintenance and PR Preview rules
+
+- **Do not create PRs just to edit a small README, rules file or GitHub Actions workflow** when a direct commit is explicitly authorized and branch protection permits it. Commit to the appropriate branch and verify the result. Use PR review for application features, changes affecting security/credentials, high-risk CI changes, or any protected branch that requires it.
+- The PR Preview workflow uses `pull_request_target`: GitHub loads its definition from the **default branch `main`**, while `branches: [develop]` filters the PR's base. Maintain the same preview workflow on both `main` and `develop`; updating `develop` alone does **not** activate new default-branch workflow logic.
+- Preview builds run with read-only permissions and **no deployment secrets**. Only the trusted publishing/cleanup jobs receive the existing development Environment `PAGES_DEPLOY_TOKEN`. Do not introduce another token, provider or readiness variable when the existing GitHub Pages setup suffices.
+- Do **not** comment that a preview is live simply because artifact upload, `git push` or Pages deployment passed. Confirm that the public URL serves the **expected PR head SHA** (`preview-commit.txt`) and a real `noindex` HTML page before posting/updating the single bot comment. A 404 is a failure, not a valid preview.
+- PR preview runs on same-repository PRs opened/reopened/updated against `develop`; merging into `develop` does not trigger one. On PR close/merge, delete **only** that PR's preview directory. Test-only smoke PRs (e.g., #367) must be **closed without merging** after successful verification.
+- Keep production/staging workflow, domain, GA4, canonical URLs, route copy, and SEO text untouched unless explicitly asked. Consult `docs/PR_PREVIEWS.md` and `docs/GITHUB_ACTIONS.md` before editing preview automation.
+
 ## CI and validation
 
 Primary PR CI is `.github/workflows/build.yml`, currently named **CI**. It runs both unit tests and a full Nuxt prerender generation.
