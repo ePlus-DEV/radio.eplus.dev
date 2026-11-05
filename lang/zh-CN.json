@@ -461,6 +461,24 @@
       }
     }
   },
+  "for_you": {
+    "title": "为你推荐",
+    "description": "无需账户，根据本机已保存的电台发现相关内容。",
+    "show": "查看推荐",
+    "hide_panel": "收起推荐",
+    "loading": "正在查找电台…",
+    "unavailable": "无法加载推荐。",
+    "retry": "重试",
+    "based_on_your_library": "根据本机收藏和收听历史推荐。",
+    "curated_intro": "暂无匹配偏好，以下是目录中真实标记的精选电台。",
+    "reason_genre": "与你收藏电台相似的类型",
+    "reason_language": "与你收藏电台使用相同语言",
+    "reason_country": "来自你收听过的国家",
+    "reason_featured": "目录精选电台",
+    "dismiss": "隐藏此推荐",
+    "empty": "暂无符合条件的新电台。",
+    "privacy_note": "推荐仅在此设备计算。收藏和历史不会发送到目录服务器。刷新后隐藏的项目会恢复。"
+  },
   "surprise": {
     "title": "随机电台",
     "heading": "发现新的广播电台",
