@@ -48,27 +48,68 @@
             </div>
           </div>
           <p class="line-clamp-3 text-sm leading-6 text-[var(--radio-text-muted)]">{{ station.description }}</p>
-          <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
-            <NuxtLink :to="`/global-radio/apple-music/${station.id}`" class="inline-flex min-h-10 items-center text-xs font-semibold text-rose-700 hover:underline dark:text-rose-300">{{ t('global_radio.details') }}</NuxtLink>
-            <a v-if="station.tunein_url" :href="station.tunein_url" target="_blank" rel="noopener noreferrer"
-              class="radio-interactive inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--radio-border)] px-3 text-xs font-semibold text-[var(--radio-text)] hover:border-rose-500">
-              {{ t('global_radio.listen_on_tunein') }} <UIcon name="i-lucide-external-link" class="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-            <a :href="station.listen_url" target="_blank" rel="noopener noreferrer"
-              class="radio-interactive inline-flex min-h-10 items-center gap-2 rounded-xl bg-rose-600 px-3 text-xs font-bold text-white hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
-              {{ t('global_radio.listen_on_apple') }} <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />
-            </a>
+          <div class="mt-auto space-y-3">
+            <!-- A signed Apple HLS URL is needed; this is NOT automatic Apple playback. -->
+            <button type="button" class="radio-interactive flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 py-2.5 text-xs font-bold text-white transition hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+              :title="t('global_radio.preview_requires_url')"
+              @click="openPreview(station)">
+              <UIcon name="i-lucide-circle-play" class="h-4 w-4 shrink-0" aria-hidden="true" />
+              {{ t('global_radio.preview_on_eplus') }}
+            </button>
+            <div class="flex flex-wrap items-center gap-2">
+              <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
+                class="radio-interactive inline-flex min-h-10 items-center text-xs font-semibold text-rose-700 hover:underline dark:text-rose-300">
+                {{ t('global_radio.details') }}
+              </NuxtLink>
+              <a v-if="station.tunein_url" :href="station.tunein_url" target="_blank" rel="noopener noreferrer"
+                class="radio-interactive inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--radio-border)] px-3 text-xs font-semibold text-[var(--radio-text)] hover:border-rose-500">
+                {{ t('global_radio.listen_on_tunein') }} <UIcon name="i-lucide-external-link" class="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+              <a :href="station.listen_url" target="_blank" rel="noopener noreferrer"
+                class="radio-interactive inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--radio-border)] px-3 text-xs font-semibold text-[var(--radio-text)] hover:border-rose-500">
+                {{ t('global_radio.listen_on_apple') }} <UIcon name="i-lucide-external-link" class="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </article>
       </div>
     </section>
     <p class="text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('global_radio.external_note') }}</p>
+
+    <!-- One modal per page, not seven audio elements mounted in seven cards. -->
+    <UModal v-model:open="previewOpen"
+      :title="previewStation ? `${t('global_radio.preview_on_eplus')} · ${previewStation.title}` : t('global_radio.preview_on_eplus')"
+      :description="t('global_radio.preview_requires_url')"
+      :ui="{
+        content: 'radio-station-stats-modal max-w-2xl bg-[var(--radio-station-dialog-bg)] text-[var(--radio-text)]',
+        overlay: 'radio-station-stats-overlay',
+        body: 'min-w-0 max-h-[75dvh] overflow-y-auto',
+      }">
+      <template #body>
+        <ClientOnly>
+          <GlobalRadioTemporaryHlsPreview v-if="previewOpen && previewStation"
+            :station="previewStation" :expanded="true" />
+        </ClientOnly>
+      </template>
+    </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { GlobalRadioStation } from '~/types/global-radio';
 const { t } = useI18n();
 const { data: provider } = await useAppleMusicProvider();
+const previewOpen = ref(false);
+const previewStation = shallowRef<GlobalRadioStation | null>(null);
+function openPreview(station: GlobalRadioStation) {
+  previewStation.value = station;
+  previewOpen.value = true;
+}
+// Stop and destroy the preview audio whenever the modal closes, even when
+// it was closed through Escape or the overlay rather than the Stop button.
+watch(previewOpen, (open) => {
+  if (!open) previewStation.value = null;
+});
 const title = computed(() => 'Apple Music Radio');
 const description = computed(() => t('global_radio.apple_description'));
 useStaticPageSeo({ title, description });
