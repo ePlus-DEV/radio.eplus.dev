@@ -300,7 +300,7 @@
 <script setup lang="ts">
 import { useListeningStore } from '~/stores/listening';
 import { usePlaybackStore } from '~/stores/playback';
-import { appleTuneInStationId } from '~/utils/global-radio-tunein-history.mjs';
+import { appleTuneInStationId } from '~/utils/global-radio-tunein-metadata.mjs';
 import type { RadioStationOption } from "~/types/radio";
 import { filterQueueStations } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
