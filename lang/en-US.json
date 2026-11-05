@@ -461,6 +461,31 @@
       }
     }
   },
+  "discovery": {
+    "title": "Browse stations",
+    "description": "Find live radio by name, country, genre or language. Filters use published catalog metadata only.",
+    "browse": "Browse stations",
+    "hide": "Hide filters",
+    "loading": "Loading catalog…",
+    "unavailable": "Station catalog could not be loaded.",
+    "retry": "Retry",
+    "search": "Search",
+    "search_placeholder": "Station name or keyword…",
+    "country": "Country",
+    "all_countries": "All countries",
+    "genre": "Genre",
+    "all_genres": "All genres",
+    "language": "Language",
+    "all_languages": "All languages",
+    "results": "Showing {from}–{to} of {total} stations",
+    "reset": "Reset filters",
+    "empty": "No stations match these filters.",
+    "pagination": "Station results pages",
+    "previous": "Previous",
+    "page": "Page {page} of {total}",
+    "next": "Next",
+    "metadata_note": "Genre and language may be missing for some stations; this is not a live availability check."
+  },
   "surprise": {
     "title": "Surprise Me",
     "heading": "Discover a new radio station",
