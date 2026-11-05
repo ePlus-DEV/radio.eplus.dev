@@ -17,6 +17,11 @@ export interface RadioCatalogEntry {
   title: string;
   description?: string;
   type?: string;
+  /** Optional catalog-reported values; not live-verified stream measurements. */
+  codec?: string;
+  bitrate?: number;
+  category?: string;
+  language?: string;
   cros?: boolean;
   stream: string;
   streams?: { url: string; type?: string; cros?: boolean; source?: string; label?: string }[];
