@@ -28,8 +28,8 @@
         <p class="mb-3 text-xs leading-5 text-[var(--radio-text-muted)]">
           {{ $t(recommendations.mode === 'personal' ? 'for_you.based_on_your_library' : 'for_you.curated_intro') }}
         </p>
-        <div v-if="recommendations.items.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          <article v-for="result in recommendations.items" :key="result.station.url" class="relative min-w-0 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-3">
+        <div v-if="recommendations.items.length" class="flex flex-wrap items-stretch gap-3">
+          <article v-for="result in recommendations.items" :key="result.station.url" class="relative min-w-0 max-w-[360px] flex-[1_1_220px] rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-3">
             <div class="flex min-w-0 items-start gap-2.5">
               <img :src="siteAssetUrl(result.station.station_image || '/brand/onair-mark.svg')" alt="" loading="lazy" decoding="async"
                 width="44" height="44" class="radio-themed-artwork h-11 w-11 shrink-0 rounded-lg object-contain p-1" />
