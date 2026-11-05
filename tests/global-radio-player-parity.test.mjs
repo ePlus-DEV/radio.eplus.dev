@@ -107,6 +107,8 @@ test('Global queue and Next/Previous requests use the same shared player navigat
   assert.match(detail, /requested !== stationPath\.value/);
   assert.match(detail, /playback\.requestedStationUrl = ''/);
   assert.match(detail, /void playOnEplus\(current\)/);
+  assert.match(player, /!hasPlayableSource\.value && station\.url\?\.startsWith/);
+  assert.match(player, /emit\("select-station", station\)/);
   assert.match(player, /const canNavigateStations = computed\(\(\) => stationCount\.value > 1\)/);
   assert.match(player, /navigateStation\(1\)/);
   assert.doesNotMatch(detail, /onMounted\([^)]*playOnEplus/, 'opening a detail route must never autoplay');
