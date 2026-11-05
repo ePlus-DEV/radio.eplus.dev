@@ -118,3 +118,32 @@ export function createTimedHlsTrackBuffer() {
     },
   };
 }
+
+
+// WebKit/native HLS exposes timed ID3 frames as metadata TextTrack cues.
+// Only pair explicit TIT2 + TPE1 frames from concurrently active cues.
+export function extractNativeHlsId3Track(cues) {
+  if (!cues || typeof cues.length !== 'number') return null;
+  let title = '';
+  let artist = '';
+  for (let i = 0; i < Math.min(cues.length, MAX_SCHEDULED); i++) {
+    const cue = cues[i];
+    const value = cue?.value;
+    if (!value || typeof value !== 'object'
+      || (value.key !== 'TIT2' && value.key !== 'TPE1')) continue;
+    let text = '';
+    if (typeof value.data === 'string') {
+      const trimmed = value.data.trim();
+      if (trimmed && trimmed.length <= 180
+        && !/[\u0000-\u001f\u007f]/.test(trimmed)) text = trimmed;
+    } else {
+      const bytes = value.data instanceof Uint8Array ? value.data
+        : value.data instanceof ArrayBuffer ? new Uint8Array(value.data) : null;
+      if (bytes) text = frameText(bytes);
+    }
+    if (value.key === 'TIT2') title = text;
+    else artist = text;
+  }
+  return title && artist && title.toLocaleLowerCase() !== artist.toLocaleLowerCase()
+    ? { title, artist } : null;
+}
