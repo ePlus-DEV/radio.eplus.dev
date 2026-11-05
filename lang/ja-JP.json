@@ -3,6 +3,10 @@
     "content": "お探しのページは見つかりませんでした。"
   },
   "global_radio": {
+    "eplus_play_hint": "ePlus OnAirで直接聴けます。ほかの視聴方法は各局の詳細ページにあります。",
+    "playing_now": "再生中",
+    "other_listening_options": "ほかの視聴方法",
+    "external_options_hint": "これらのリンクは提供元のサイトを新しいタブで開きます。",
     "listen_on_eplus": "ePlusで聴く",
     "connecting_on_eplus": "接続中…",
     "resolver_unavailable": "ePlusで再生できません。Apple MusicまたはTuneInでお聴きください。",
