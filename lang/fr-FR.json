@@ -561,6 +561,15 @@
     "manual": "Sélectionnez et copiez ce lien :"
   },
   "recovery": {
+    "buffering": "Mise en mémoire tampon du direct…",
+    "source_position": "Source {index} sur {total}",
+    "attempt": "Tentative {attempt} sur {limit}",
+    "reason_network": "Le navigateur signale un problème réseau. La station n'est pas forcément hors ligne.",
+    "reason_decode": "Impossible de décoder cette source, ou format non pris en charge.",
+    "reason_timeout": "Aucun son reçu avant le délai d'attente. Essayez une autre source.",
+    "reason_unknown": "Erreur de lecture signalée, cause non confirmée.",
+    "last_played": "Dernière lecture ici à {time}",
+    "local_observation": "Observation locale de cette session, pas un état mondial vérifié.",
     "offline": "Vous semblez hors ligne. Vérifiez votre connexion avant de réessayer.",
     "unsupported": "La dernière source ne peut pas être décodée ou est incompatible avec ce navigateur. Essayez une autre source.",
     "exhausted": "La lecture a échoué après plusieurs tentatives. Réessayez ou changez de source ; la station peut fonctionner sur un autre appareil.",
