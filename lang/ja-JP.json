@@ -469,7 +469,7 @@
     "loading": "放送局を検索中…",
     "unavailable": "おすすめを読み込めませんでした。",
     "retry": "再試行",
-    "based_on_your_library": "端末内のお気に入りと再生履歴から提案しています。",
+    "based_on_your_library": "現在のプライバシー設定に従い、端末のライブラリに保存された局から提案しています。",
     "curated_intro": "一致する好みがないため、実際に注目局に指定された局を表示します。",
     "reason_genre": "保存済みの局と同じジャンル",
     "reason_language": "保存済みの局と同じ言語",
