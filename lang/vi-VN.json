@@ -3,6 +3,10 @@
     "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
   "global_radio": {
+    "playback_status_title": "Nghe trực tiếp trên ePlus chưa khả dụng",
+    "playback_status_pending": "ePlus chưa có API cấp nguồn phát hợp lệ cho các đài này. Bạn vẫn có thể nghe qua Apple Music hoặc TuneIn.",
+    "playback_status_short": "Chưa hỗ trợ phát trên ePlus",
+    "playback_status_configured": "API đã được cấu hình; khả năng nghe trực tiếp còn tùy thuộc kết nối và quyền truy cập nguồn phát.",
     "listen_on_eplus": "Nghe trên ePlus",
     "connecting_on_eplus": "Đang kết nối…",
     "resolver_unavailable": "Chưa thể phát trực tiếp trên ePlus. Hãy nghe qua Apple Music hoặc TuneIn.",
