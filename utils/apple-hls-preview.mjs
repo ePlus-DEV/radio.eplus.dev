@@ -22,7 +22,8 @@ export function inspectAppleHlsPreviewUrl(value, stationPageUrl, now = Date.now(
       url.username || url.password || url.port || url.hash) return fail('invalid');
   const match = url.pathname.match(SIGNED_PLAYLIST_PATH);
   const holidayVariant = url.pathname.match(/^\/3p-tune-in\/tune_in\/ppa\/usw\/(64|256)\.m3u8$/);
-  const holidayMaster = url.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8';
+  const holidayMaster = url.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8'
+    || url.pathname === '/3p-tune-in/tune_in/ppa-ts/index-ts.m3u8';
   if (!match && !holidayVariant && !holidayMaster) return fail('invalid');
   const expectedStationId = String(stationPageUrl ?? '').match(/\/ra\.(\d+)(?:[?#]|$)/)?.[1];
   if (!expectedStationId) return fail('station_mismatch');
