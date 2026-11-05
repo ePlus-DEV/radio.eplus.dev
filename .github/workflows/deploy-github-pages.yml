@@ -64,6 +64,9 @@ jobs:
       name: ${{ github.ref_name == 'main' && 'production' || 'development' }}
     env:
       NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+      # Approved ePlus-backed stream resolver, if enabled in each environment.
+      # Nuxt static output captures NUXT_PUBLIC_* only at build time.
+      NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: ${{ vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL }}
       NUXT_APP_BASE_URL: /
       # Indexing is branch-specific: development never indexed, main indexed.
       # Never force noindex globally; that breaks production SEO and GA4.
@@ -155,6 +158,19 @@ jobs:
         with:
           node-version: "24.15.0"
           cache: npm
+
+      - name: Explain Global Radio activation status
+        if: steps.current.outputs.run == 'true'
+        shell: bash
+        run: |
+          if [ -z "${NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL:-}" ]; then
+            echo "::notice::Apple Music in-app playback is disabled on ${TARGET_DOMAIN}: set the approved full HTTPS NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL GitHub Environment variable, then redeploy. No external provider links are affected."
+          else
+            case "$NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL" in
+              https://*) echo "::notice::Apple Music resolver configured for ${TARGET_DOMAIN}; validate server contract and actual playback separately." ;;
+              *) echo "::error::NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL must be a full HTTPS endpoint"; exit 1 ;;
+            esac
+          fi
 
       - name: Install dependencies
         if: steps.current.outputs.run == 'true'
