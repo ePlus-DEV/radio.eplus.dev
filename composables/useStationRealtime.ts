@@ -69,8 +69,8 @@ export function useStationRealtime() {
   }
   const fetchSchedule = async (url: string, signal: AbortSignal): Promise<RealtimeData | undefined> => {
     if (!import.meta.client || !clientReady) return;
-    // Apple Music's signed TuneIn HLS URL must never be used for metadata.
-    // Read the separate, anonymous playlist endpoint for known station IDs.
+    // Poll public station metadata separately from HLS decoding. The audio
+    // player independently observes timed ID3 from the playing HLS stream.
     const tuneInId = stationIdFromTuneInMetadataMarker(url);
     if (tuneInId) {
       const nowPlaying = await fetchPublicTuneInMetadata({ stationId: tuneInId, signal });
@@ -131,6 +131,13 @@ export function useStationRealtime() {
     polling.start(appleTuneInMetadataMarker(playback.station) || playback.station?.schedule || '');
   };
   watch(() => playback.station?.url, activate);
+  // A track observed inside the actual HLS audio should also appear in the
+  // session-only Queue history. TuneIn Describe may never publish songs.
+  watch(() => playback.liveTrack, (track) => {
+    if (!track || track.source !== 'hls' || track.stationUrl !== playback.station?.url
+      || !appleTuneInMetadataMarker(playback.station)) return;
+    playlist.value = addTuneInSessionTrack(playlist.value, track);
+  });
   let referenceTimer: ReturnType<typeof setInterval> | null = null;
   onMounted(() => {
     clientReady = true;
