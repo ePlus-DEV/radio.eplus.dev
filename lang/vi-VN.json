@@ -3,6 +3,8 @@
     "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
   "global_radio": {
+    "preview_on_eplus": "Thử phát trên ePlus",
+    "preview_requires_url": "Phát thử cần URL HLS của Apple còn hạn và được phép sử dụng. Đây chưa phải chế độ phát trực tiếp ổn định chỉ bằng một lần nhấn.",
     "hls_preview_title": "Thử nghiệm: phát liên kết HLS tạm thời",
     "hls_preview_help": "Nếu bạn có URL HLS ngắn hạn do Apple cấp và được phép sử dụng, có thể thử phát ngay trên trình duyệt này. Apple Music/TuneIn có thể chặn phát từ website khác. Tính năng không lấy hoặc gia hạn accessKey.",
     "hls_preview_input": "URL HLS có chữ ký tạm thời",
