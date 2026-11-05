@@ -37,24 +37,24 @@ https://github.com/hoangsvit/heroku-cors/actions/runs/42026930807.
 
 ## What is implemented
 
-- The static Nuxt app can ask a separately operated **ePlus-owned authorized API**
-  to resolve a selected Apple Music Radio station to a *short-lived* HTTPS HLS URL.
-- This does **not** require Cloudflare Workers. The existing Heroku app is a
-  suitable host **once its source is reviewed and the route is implemented**.
-- The shared Nuxt PlayerSession (hls.js/native HLS) plays the returned source.
-  No second audio element, manual URL input, or token persisted in catalogs/storage.
-- A single app-level client timer renews an authorized HLS URL 40s before the
-  earlier of the backend-reported expiry or timestamp found in the signed URL.
-  Failure stops playback and clears the expired stream.
-- When not configured, no in-app Play button appears. Apple Music/TuneIn
-  external links continue working. Existing station SEO stays unchanged.
+- Default: an anonymous, public TuneIn lookup for one of seven fixed station
+  IDs, relayed through the owner's **existing** Heroku CORS server.
+- The returned Apple HLS URL is validated against the selected station,
+  expected MPEG-TS/CMAF path, signed key and token expiry; it is played in the
+  existing global PlayerSession (hls.js/native HLS).
+- Client-side renewal repeats the public lookup before token expiry, without
+  storing tokens or touching the country radio catalog.
+- Apple Music and TuneIn official links remain as fallbacks. No SEO changes.
+- An explicitly configured approved private resolver is still supported as
+  fallback, but is **not required** for the public direct mode.
 
-**Current status:** This PR implements the ePlus frontend/contract only. It has
-not added an endpoint to the owner's live Heroku server, acquired any playback
-rights or tested an authorized Apple/TuneIn stream in production. Do not claim
-the one-click stream is live until all three are confirmed.
+**Current status:** All seven direct TuneIn public resolutions and the
+existing Heroku CORS transport have passed live technical probes. The
+Holiday Hits master playlist loaded with HTTP 200 and valid HLS syntax.
+Actual click-to-audio playback on the deployed ePlus staging site, on both
+Chrome and Safari, remains to be verified before release.
 
-## API contract for the existing ePlus Heroku server
+## Optional private backend resolver API contract (fallback only)
 
 Configure `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` as the *full HTTPS path* to
 an ePlus-owned, approved resolver, for example
@@ -105,7 +105,7 @@ accessKeys or HAR session identifiers belong in this repository.
 For a normal pending/unauthorized/unavailable provider, respond with a
 non-2xx status and a generic JSON message. The app then keeps official links.
 
-## Activate it after the approved backend exists
+## Optional private backend setup (not required for direct playback)
 
 **The website is prerendered/static on GitHub Pages.** A variable only in
 `.env.example`, or in a GitHub Environment that the workflow does not pass
@@ -120,14 +120,13 @@ through, has **no effect** on the published site.
 3. The `deploy-github-pages.yml` workflow explicitly passes
    `vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` into Nuxt at build time.
    Deploy `develop` again (via a trusted push or manual workflow dispatch).
-4. On `new-radio.eplus.dev/global-radio/apple-music/`, a configured URL
-   exposes the in-app Play button; an empty variable intentionally does not.
-   Check the generated HTML public Nuxt config to verify activation, without
-   exposing any actual signed stream URL or auth credentials.
+4. The direct public Play button is independent of this environment variable;
+   the configured backend is only tried if the public lookup fails. Check the
+   generated HTML for correct configuration without exposing signed URLs.
 5. Validate playback on real devices. Keep the variable unset until the
    backend responds correctly with a licensed, fresh stream.
 
-## Backend requirements before enabling the feature
+## Requirements when enabling the optional private backend
 
 1. **Authorization:** Use only a provider-approved integration. `Tune.ashx`
    observed in a user HAR returning a signed stream does *not* grant ePlus
@@ -147,10 +146,10 @@ through, has **no effect** on the published site.
 5. **HLS:** Prefer direct browser fetch from Apple **if permitted and supported**
    instead of proxying large `.ts`/`.m4s` segments through Heroku; signed
    manifests and child resources may have independent access restrictions.
-6. **Release:** Create backend route first and validate with genuine permitted
-   credentials; then set the public endpoint env var in the GitHub Actions
-   build environments and rebuild the static `develop` preview. Only after
-   Safari/Chrome/region/expiry tests should the release be promoted to `main`.
+6. **Release:** The optional backend can be enabled separately. The public
+   direct path requires no new backend route or environment variable. Test
+   staging playback, CORS, region handling and expiry in Safari/Chrome before
+   promoting any change to `main`.
 
 ## Manual acceptance checks
 
