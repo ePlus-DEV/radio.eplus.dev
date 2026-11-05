@@ -261,6 +261,18 @@
     },
     "offline": "インターネットに接続されていないようです。接続を確認してもう一度お試しください。"
   },
+  "station_technical": {
+    "title": "ストリームの技術情報",
+    "catalog_badge": "カタログ情報",
+    "format": "配信形式",
+    "codec": "音声コーデック",
+    "bitrate": "ビットレート",
+    "unknown": "情報なし",
+    "inferred_url": "URLから推測（未検証）",
+    "catalog_reported": "カタログ記載値（未測定）",
+    "kbps": "{count} kbps",
+    "disclaimer": "カタログの参考情報であり、配信状況や再生の保証ではありません。実際のコーデックやビットレートは異なる場合があります。"
+  },
   "player": {
     "title": "ラジオプレーヤー",
     "choose_station": "放送局を選んで聴き始める",
