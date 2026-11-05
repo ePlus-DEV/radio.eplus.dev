@@ -3,6 +3,10 @@
     "content": "抱歉，找不到您要访问的页面。"
   },
   "global_radio": {
+    "playback_status_title": "暂不支持在 ePlus 内直接播放",
+    "playback_status_pending": "ePlus 目前没有这些电台的授权流媒体 API。仍可通过 Apple Music 或 TuneIn 收听。",
+    "playback_status_short": "ePlus 暂不可播放",
+    "playback_status_configured": "API 已配置。实际播放仍取决于网络连接及提供方授权。",
     "listen_on_eplus": "在 ePlus 收听",
     "connecting_on_eplus": "连接中…",
     "resolver_unavailable": "ePlus 暂时无法播放。请在 Apple Music 或 TuneIn 收听。",
