@@ -210,6 +210,8 @@
     "schedule_vietnam_timezone": "ベトナム時間 (UTC+7)",
     "schedule_provider_only": "日によって番組が異なります。最新の番組表は公式サイトでご覧ください。",
     "playlist": "プレイリスト",
+    "tunein_history_note": "局が提供している場合、TuneInから曲の履歴を取得します。表示が遅れることがあります。",
+    "tunein_history_unavailable": "この局の曲履歴は現在TuneInで公開されていません。",
     "next": "次",
     "lyric": "歌詞",
     "no_lyric": "歌詞が見つかりません",
