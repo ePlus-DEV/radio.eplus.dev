@@ -13,6 +13,11 @@ const enabled = process.env.GITHUB_ACTIONS === 'true' && process.env.GITHUB_HEAD
 function summarize(payload, stationId) {
   const nodes = Array.isArray(payload?.body) ? [...payload.body.slice(0, 24)] : [];
   const fieldNames = new Set();
+  let rawSong = false;
+  let rawArtist = false;
+  const hasSongFlags = new Set();
+  const publishSongFlags = new Set();
+  let stationIdMatches = false;
   let inspected = 0;
   while (nodes.length && inspected++ < 48) {
     const node = nodes.shift();
@@ -21,6 +26,11 @@ function summarize(payload, stationId) {
       'current_artist', 'has_song', 'publish_song', 'children', 'station']) {
       if (Object.hasOwn(node, key)) fieldNames.add(key);
     }
+    rawSong ||= typeof node.current_song === 'string' && Boolean(node.current_song.trim());
+    rawArtist ||= typeof node.current_artist === 'string' && Boolean(node.current_artist.trim());
+    if (Object.hasOwn(node, 'has_song')) hasSongFlags.add(String(node.has_song).slice(0, 10));
+    if (Object.hasOwn(node, 'publish_song')) publishSongFlags.add(String(node.publish_song).slice(0, 10));
+    stationIdMatches ||= node.guide_id === PUBLIC_APPLE_TUNEIN_STATIONS[stationId].tunein;
     if (Array.isArray(node.children)) nodes.push(...node.children.slice(0, 16));
     if (node.station && typeof node.station === 'object') nodes.push(node.station);
   }
@@ -28,6 +38,8 @@ function summarize(payload, stationId) {
   return {
     song: Boolean(result?.title),
     artist: Boolean(result?.artist),
+    rawSong, rawArtist, stationIdMatches,
+    hasSongFlags: [...hasSongFlags], publishSongFlags: [...publishSongFlags],
     fields: [...fieldNames].sort(),
     entries: Array.isArray(payload?.body) ? payload.body.length : 0,
     providerStatus: payload?.head?.status == null ? 'missing' : String(payload.head.status).slice(0, 4),
