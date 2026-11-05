@@ -33,4 +33,4 @@ See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPA
 
 ## Isolated GitHub Pages PR previews
 
-Preview publishing is independently gated by `PAGES_PREVIEW_READY=true` and the dedicated `ePlus-DEV/onair-pr-previews` output repository. It uses a read-only build job (no deployment secrets), a trusted publishing job with development-scoped `PAGES_DEPLOY_TOKEN`, and per-PR cleanup. Preview routes are intentionally limited because a full catalog for every PR would exceed the Pages site limit. Details: [PR_PREVIEWS.md](./PR_PREVIEWS.md).
+Preview publishing reuses the existing `PAGES_DEV_READY=true` setting and uses the dedicated `ePlus-DEV/onair-pr-previews` output repository. It uses a read-only build job (no deployment secrets), a trusted publishing job with existing development-scoped `PAGES_DEPLOY_TOKEN`, and per-PR cleanup. Preview routes are intentionally limited because a full catalog for every PR would exceed the Pages site limit. Details: [PR_PREVIEWS.md](./PR_PREVIEWS.md).
