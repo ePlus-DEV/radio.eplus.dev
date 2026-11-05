@@ -64,7 +64,8 @@ test('HLS experimental component keeps token ephemeral and does not touch the in
     read('public/catalog/providers/apple-music.json'),
     read('docs/global-radio-providers.md'),
   ]);
-  assert.match(page, /<ClientOnly>[\s\S]*?<GlobalRadioTemporaryHlsPreview/);
+  assert.doesNotMatch(page, /GlobalRadioTemporaryHlsPreview/,
+    'end users must not be asked to enter signed access keys');
   assert.match(component, /type="password" autocomplete="off"/);
   assert.match(component, /inspectAppleHlsPreviewUrl/);
   assert.match(component, /await import\('hls\.js'\)/);
