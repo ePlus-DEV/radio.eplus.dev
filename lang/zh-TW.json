@@ -3,6 +3,10 @@
     "content": "抱歉，找不到您要瀏覽的頁面。"
   },
   "global_radio": {
+    "eplus_play_hint": "直接在 ePlus OnAir 收聽。其他收聽方式請查看電台詳情。",
+    "playing_now": "正在播放",
+    "other_listening_options": "其他收聽方式",
+    "external_options_hint": "這些連結將在新分頁開啟提供者的網站。",
     "listen_on_eplus": "在 ePlus 收聽",
     "connecting_on_eplus": "連線中…",
     "resolver_unavailable": "ePlus 暫時無法播放。請使用 Apple Music 或 TuneIn 收聽。",
