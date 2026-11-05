@@ -3,6 +3,10 @@
     "content": "К сожалению, запрошенная страница не найдена."
   },
   "global_radio": {
+    "playback_status_title": "Прямое воспроизведение в ePlus пока недоступно",
+    "playback_status_pending": "У ePlus пока нет разрешённого API для этих станций. Их можно слушать через Apple Music или TuneIn.",
+    "playback_status_short": "В ePlus пока недоступно",
+    "playback_status_configured": "API настроен, но воспроизведение зависит от соединения и разрешения провайдера.",
     "listen_on_eplus": "Слушать на ePlus",
     "connecting_on_eplus": "Подключение…",
     "resolver_unavailable": "Воспроизведение на ePlus недоступно. Слушайте через Apple Music или TuneIn.",
