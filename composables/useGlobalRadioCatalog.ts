@@ -9,7 +9,7 @@ async function loadGlobalCatalog<T>(path: string, assetUrl: (path: string) => st
   if (import.meta.server) {
     const { readFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
-    return JSON.parse(await readFile(join(process.cwd(), 'public', path.replace(/^\\//, '')), 'utf8')) as T;
+    return JSON.parse(await readFile(join(process.cwd(), 'public', path.startsWith('/') ? path.slice(1) : path), 'utf8')) as T;
   }
   return await $fetch<T>(assetUrl(path));
 }
