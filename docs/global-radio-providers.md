@@ -55,6 +55,44 @@ date, **not** an uptime check.
   external stations; ePlus OnAir cannot measure external listening time.
 - Original region/country stations and URLs remain unchanged.
 
+## Experimental HLS preview (user-supplied URL, **not** production integration)
+
+The Apple Music provider detail pages expose an opt-in, client-only
+**HLS preview** for a short-lived URL that the visitor has obtained
+legitimately and is authorized to use. This is for compatibility checks and
+cannot be treated as a stable source of Apple Music audio.
+
+- Uses `components/global-radio/TemporaryHlsPreview.vue` and
+  `utils/apple-hls-preview.mjs`, not the normal catalog/player.
+- Accepts only HTTPS `itsliveradio.apple.com/3p-tune-in/tune_in/<id>/...`
+  with a single signed `accessKey`; local validation binds the station
+  numeric ID to its official Apple Music station detail link.
+- A timestamp prefix is inferred from observed examples, **not an official
+  contract**. Preview rejects URLs that appear expired or about to expire,
+  and stops at the inferred deadline. The token is never committed,
+  requested from a server, refreshed, sent to analytics, persisted to
+  localStorage/history, added to the internal stream search index, or
+  represented in shareable URLs. Browser DevTools may still show the actual
+  Apple network requests needed to play audio.
+- HLS loads through an opt-in browser-side test: native HLS on iOS,
+  otherwise hls.js/MSE when supported. Playback pauses the main ePlus OnAir
+  player, and the preview stops if the user resumes the main player or
+  navigates away. It never counts toward listening history or statistics.
+- Cannot guarantee CORS, permission to rehost, regional availability,
+  or Apple/TuneIn authorization; an Apple/TuneIn page remains the supported
+  fallback. **Do not** build a signed URL generator, scrape authenticated
+  provider sessions or proxy HLS manifests to bypass cross-origin controls.
+- The coding environment cannot reliably reach the Apple HLS hostname;
+  live HTTP/CORS or audible playback must be tested manually on actual
+  devices with a valid authorized URL. Source-level tests do **not**
+  establish that it will play from `radio.eplus.dev`.
+
+**Production integration alternative:** Apple documents MusicKit on the
+Web as its supported API for radio playback. That needs an Apple Developer
+setup and valid developer token, authenticated Apple Account access and a
+separate rights/UX review. Keep the experimental preview clearly labeled
+until that authorized flow is available.
+
 ## Future providers
 
 Add `public/catalog/providers/<slug>.json`, register it in the index,
