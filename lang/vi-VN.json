@@ -261,6 +261,18 @@
     },
     "offline": "Có vẻ bạn đã mất kết nối mạng. Hãy kiểm tra Internet rồi thử lại."
   },
+  "station_technical": {
+    "title": "Thông tin kỹ thuật nguồn phát",
+    "catalog_badge": "Dữ liệu tham khảo",
+    "format": "Định dạng nguồn",
+    "codec": "Bộ giải mã âm thanh",
+    "bitrate": "Bitrate",
+    "unknown": "Chưa có dữ liệu",
+    "inferred_url": "Gợi ý từ URL nguồn (chưa xác minh)",
+    "catalog_reported": "Khai báo trong danh mục (chưa đo kiểm)",
+    "kbps": "{count} kbps",
+    "disclaimer": "Các thông tin này chỉ mang tính tham khảo, không xác nhận đài đang hoạt động. Codec và bitrate thực tế có thể khác."
+  },
   "player": {
     "title": "Trình phát radio",
     "choose_station": "Chọn một đài để bắt đầu nghe",
