@@ -1,54 +1,68 @@
-# TuneIn song history for Apple Music Radio
+# TuneIn song/artist metadata — Apple Music Radio
 
-Implemented on top of [PR #372](https://github.com/ePlus-DEV/radio.eplus.dev/pull/372).
+Follow-up to merged [PR #372](https://github.com/ePlus-DEV/radio.eplus.dev/pull/372).
 
-## Scope
+## What PR #372 does (and does not do)
 
-- Only the seven allowlisted Apple Music Radio stations use the anonymous,
-  read-only `https://opml.radiotime.com/Browse.ashx?c=playlist&id=s...&render=json`
-  lookup through the existing ePlus CORS relay.
-- The shared `useStationRealtime` polling lifecycle loads this metadata at
-  most once per 60 seconds, aborts on station switches, and continues while
-  listening in a background tab. No second audio player or background worker.
-- Song rows appear in the existing Queue/Playlist panel (desktop and mobile).
-  Known current-song fields also update shared live track information.
-- Only tracks with an identifiable title AND artist are shown. A DJ show,
-  station name or programme slot is not silently transformed into a song.
-- The most recent historical row is **not** automatically called 'Now Playing':
-  only a TuneIn record explicitly marked current can update the live-track
-  title, media session or LIVE badge.
-- Errors, empty history and unavailable metadata produce a localized
-  informational state. Playback remains independent.
+PR #372 gets a freshly signed Apple HLS source through TuneIn's **Tune.ashx**.
+This is an audio-stream resolver. It does **not** return a current song's title
+or artist for presentation in the ePlus player.
 
-## Important provider limitations
+## What this PR implements
 
-TuneIn's broadcaster AIR `Playing.ashx` is a **write** API, not a way to
-query arbitrary listeners' song history. This integration does not send to
-that API and does not require or store a TuneIn partner ID/key, Apple account,
-user token or signed stream accessKey.
+1. For seven known Apple Music Radio station IDs only, call the anonymous
+   **Describe.ashx** read endpoint with `id=s...` and `render=json`,
+   through the same fixed owner-operated CORS relay as playback.
+2. Parse the nested `body -> outline -> station` response, looking for
+   **current_song** and **current_artist**. Both must be non-empty, associated
+   with the selected station, and not explicitly marked unavailable or
+   commercial. **Never use show titles, station name, current_track blurbs or
+   an arbitrary first playlist item as a substitute.**
+3. Pass this metadata to `playback.liveTrack`, consumed by the existing
+   `Player.vue`: dock, mini player, full-screen Now Playing, Media Session.
+   On missing/failed data, fall back to station name, not a stale song.
+4. As songs change during the **current browser listening session**, keep at
+   most 30 genuinely observed `{ track_title, track_artist }` pairs in the
+   existing desktop/mobile Queue -> Playlist. This is local observation, NOT
+   TuneIn's remote song-play history, and is not persisted or backfilled.
+   Exact start time is unknown, so no timestamp is invented.
+5. Reuse `useStationRealtime`'s existing station-scoped polling (60 seconds).
+   Abort obsolete requests on station changes. Metadata errors do not
+   interrupt HLS audio or affect renewal logic.
+6. Localize the optional metadata/unavailable states across seven languages.
+   No SEO titles, descriptions, OG data or JSON-LD modified.
 
-TuneIn may omit or delay playlist metadata, especially for syndicated Apple
-Music streams. The read-only Browse endpoint is an observed, not guaranteed,
-provider interface; the exact response and availability for all seven Apple
-stations **must be verified on staging**. Empty data is expected and must not
-be filled by fabricated tracks or an unrelated Apple Music personal-playback
-API. A stream resolving successfully does not prove that song history is
-available.
+## Provider / accuracy limits
 
-## Test and staging checklist
+TuneIn's AIR `Playing.ashx` is a broadcaster **WRITE** API that uses partner
+credentials. The client never calls it. `Browse.ashx?c=playlist` is a
+directory browsing surface, **not a verified music-track history feed**, and
+has been removed from this change.
 
-1. Run `npm test` and `npm run build` on the feature branch.
-2. On `new-radio.eplus.dev`, listen to each of the seven Apple channels.
-   Open Queue -> Playlist on desktop, iOS Safari and Android/Chrome.
-3. Compare any displayed title, artist and current-song label to actual
-   TuneIn station metadata; verify metadata isn't mistakenly derived from
-   the DJ programme name.
-4. With empty/faulted upstream playlist, verify the informative empty state
-   and uninterrupted HLS playback. Resume, pause, switch and Next/Previous.
-5. Change stations during a pending metadata request; stale responses must
-   never replace the new station's playlist.
-6. In DevTools confirm that no Apple HLS accessKey or personal token is ever
-   appended to a metadata URL, persisted or logged.
-7. Do not release to `main` until the supported providers and listening
-   experience have passed browser QA. SEO title/description/JSON-LD remain
-   unchanged by this feature.
+The public Describe endpoint is documented to expose `current_song` and
+`current_artist` **when available**; not every station provides them.
+TuneIn states that now-playing metadata without broadcaster AIR integration
+may arrive several minutes late. Do not claim exact audio synchronization,
+song duration, album cover or 24-hour history, and do not fabricate missing
+song titles or artists.
+
+Useful references:
+- https://tunein-api.corehacked.com/endpoints-and-streaming/endpoints/describe-endpoint/response-fields-and-meaning
+- https://help.tunein.com/support/solutions/articles/151000172254-why-is-there-no-song-artist-information-displayed-when-my-station-is-playing-
+- https://tunein.com/broadcasters/api/
+
+## Verify on staging before merge
+
+- Run `npm test` and the full Nuxt prerender / UI checks.
+- Confirm live Describe responses for **all seven Apple stations** through the
+  ePlus relay; inspect only sanitized field names and ordinary artist/title
+  values, never HLS access keys. Some stations may correctly return no song.
+- While listening, compare the current-song title and artist with TuneIn's
+  reported metadata; confirm UI on Chrome, iPhone Safari, dock, mini, modal,
+  and OS Media Session. Background play / tab visibility must not break audio.
+- When Describe returns empty/403/malformed data, show the station name, not
+  the previous track. Keep already observed session history in Queue.
+- Pause/resume/Next/Previous, rapid station changes, HLS lease renewal and
+  country-radio metadata must continue working.
+- Do not merge/release to `main` before browser QA. No claims of observed
+  real-world song synchronization are made based on mocked tests alone.
