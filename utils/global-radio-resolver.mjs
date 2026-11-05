@@ -46,6 +46,7 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
   const matchesHolidayPath = stationId === 'apple-music-holiday-hits'
     && stationNumber === '6825447412'
     && (stream?.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8'
+      || stream?.pathname === '/3p-tune-in/tune_in/ppa-ts/index-ts.m3u8'
       || /^\/3p-tune-in\/tune_in\/ppa\/usw\/(?:64|256)\.m3u8$/.test(stream?.pathname || ''));
   if (!stationNumber || !stream || stream.hostname !== APPLE_HLS_HOST
     || !(matchesNumberedPath || matchesHolidayPath)
