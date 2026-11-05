@@ -1,10 +1,11 @@
 # ePlus OnAir — GitHub Actions
 
-Four workflows are currently in use. Check the checked-in YAML for the authoritative behavior.
+Five workflows are currently in use. Check the checked-in YAML for the authoritative behavior.
 
 | File | Trigger | Responsibility |
 | --- | --- | --- |
 | `build.yml` | Pull requests | Core tests, optional full prerender/SEO audits, optional browser tests |
+| `pr-preview-pages.yml` | PRs targeting `develop`, including close | Isolated, credential-free preview build followed by token-scoped publication to a dedicated Pages repo and closed-PR cleanup |
 | `deploy-github-pages.yml` | Trusted `main` / `develop` push or manual dispatch | Build and publish a static website to the environment's public Pages repo |
 | `instant-audio-sync.yml` | Manual dispatch | Research/sync radio data and propose changes for review |
 | `publish-station-images.yml` | Manual dispatch | Publish individual station OG JPEGs and manifest on the destination's separate `station-images` branch |
@@ -29,3 +30,7 @@ Regular PR changes run unit tests; app/data/SEO changes also trigger full Nuxt p
 Old one-off VOH import, changelog and incompatible Dependabot auto-merge workflows have been removed. PR #256 (one-off VOH testing reshuffle) was closed without merging and should not be treated as active release guidance.
 
 See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md) for setup, diagnostics and image strategy.
+
+## Isolated GitHub Pages PR previews
+
+Preview publishing is independently gated by `PAGES_PREVIEW_READY=true` and the dedicated `ePlus-DEV/onair-pr-previews` output repository. It uses a read-only build job (no deployment secrets), a trusted publishing job with development-scoped `PAGES_DEPLOY_TOKEN`, and per-PR cleanup. Preview routes are intentionally limited because a full catalog for every PR would exceed the Pages site limit. Details: [PR_PREVIEWS.md](./PR_PREVIEWS.md).
