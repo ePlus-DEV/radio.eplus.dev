@@ -31,11 +31,24 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
     ? stationPage.pathname.match(/\/ra\.(\d+)$/)?.[1]
     : null;
   const stream = httpsUrl(payload.stream_url);
-  // Apple/TuneIn serves more than one legitimate playlist layout.
-  // HAR for Holiday Hits confirms /ppa/index-cmaf.m3u8; other station samples
-  // include the Apple radio ID in the path. Keep variants tightly allowlisted.
-  const matchesNumberedPath = stationNumber && new RegExp(
-    '^/3p-tune-in/tune_in/' + stationNumber + '/[a-z0-9_-]+/\\d+\\.m3u8
+  // HAR confirms two playlist shapes. Only the observed Holiday Hits station
+  // may use the opaque /ppa/index-cmaf.m3u8 path.
+  const parts = stream?.pathname.split('/') || [];
+  const matchesNumberedPath = Boolean(stationNumber)
+    && parts.length === 6
+    && parts[1] === '3p-tune-in'
+    && parts[2] === 'tune_in'
+    && parts[3] === stationNumber
+    && /^[a-z0-9_-]+$/i.test(parts[4])
+    && parts[5].endsWith('.m3u8')
+    && /^[0-9]+$/.test(parts[5].slice(0, -5));
+  const matchesHolidayPath = stationId === 'apple-music-holiday-hits'
+    && stream?.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8';
+  if (!stationNumber || !stream || stream.hostname !== APPLE_HLS_HOST
+    || !(matchesNumberedPath || matchesHolidayPath)
+    || !stream.searchParams.get('accessKey')) {
+    return { ok: false, reason: 'invalid_source' };
+  }
   // The signed token is never persisted or logged. Verify the server expiry,
   // and never trust it if the accessKey embeds an earlier Unix expiration.
   const expiresSeconds = Number(payload.expires_at);
