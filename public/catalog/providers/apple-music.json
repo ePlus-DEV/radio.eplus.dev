@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "apple-music",
+  "name": "Apple Music Radio",
+  "description": "Six live, globally available radio stations curated by Apple Music.",
+  "origin_country": "US",
+  "coverage": "global",
+  "playback": "external",
+  "homepage": "https://music.apple.com/us/radio",
+  "requires_account": true,
+  "requires_subscription": false,
+  "stations": [
+    {
+      "id": "apple-music-1",
+      "title": "Apple Music 1",
+      "description": "New music, contemporary artists, hosts and interviews.",
+      "genre": "Contemporary",
+      "language": "en",
+      "listen_url": "https://music.apple.com/us/station/apple-music-1/ra.978194965"
+    },
+    {
+      "id": "apple-music-hits",
+      "title": "Apple Music Hits",
+      "description": "Popular songs and favorites across the decades.",
+      "genre": "Hits",
+      "language": "en",
+      "listen_url": "https://music.apple.com/us/station/apple-music-hits/ra.1498155548"
+    },
+    {
+      "id": "apple-music-country",
+      "title": "Apple Music Country",
+      "description": "Country music, featured artists and exclusive radio shows.",
+      "genre": "Country",
+      "language": "en",
+      "listen_url": "https://music.apple.com/us/station/apple-music-country/ra.1498157166"
+    },
+    {
+      "id": "apple-music-club",
+      "title": "Apple Music Club",
+      "description": "DJ mixes and electronic dance music.",
+      "genre": "Electronic",
+      "language": "en",
+      "listen_url": "https://music.apple.com/us/station/apple-music-club/ra.1740613859"
+    },
+    {
+      "id": "apple-musica-uno",
+      "title": "Apple Música Uno",
+      "description": "Latin music, culture, hosts and artist interviews.",
+      "genre": "Latin",
+      "language": "es",
+      "listen_url": "https://music.apple.com/us/station/apple-m%C3%BAsica-uno/ra.1740613864"
+    },
+    {
+      "id": "apple-music-chill",
+      "title": "Apple Music Chill",
+      "description": "Relaxed and laid-back music selections.",
+      "genre": "Chill",
+      "language": "en",
+      "listen_url": "https://music.apple.com/us/station/apple-music-chill/ra.1740614260"
+    }
+  ]
+}
