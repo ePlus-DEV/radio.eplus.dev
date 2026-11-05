@@ -210,6 +210,8 @@
     "schedule_vietnam_timezone": "Vietnam time (UTC+7)",
     "schedule_provider_only": "The daily schedule varies. See the broadcaster's official guide for updated programmes.",
     "playlist": "Playlist",
+    "tunein_history_note": "Track history is provided by TuneIn when available and may be delayed.",
+    "tunein_history_unavailable": "TuneIn is not providing song history for this station right now.",
     "next": "Next",
     "lyric": "Lyrics",
     "no_lyric": "Lyrics unavailable",
