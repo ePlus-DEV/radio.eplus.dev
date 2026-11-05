@@ -3,6 +3,8 @@
     "content": "Sorry, the page you are looking for does not exist."
   },
   "global_radio": {
+    "preview_on_eplus": "Try on ePlus OnAir",
+    "preview_requires_url": "Experimental playback requires a valid, authorized, short-lived Apple HLS URL. This is not one-click permanent streaming.",
     "hls_preview_title": "Experimental: play a temporary HLS link",
     "hls_preview_help": "If you have an Apple-issued, short-lived HLS URL that you are authorized to use, you can test it locally in this browser. Apple Music/TuneIn may reject cross-site playback. This does not fetch or renew access keys.",
     "hls_preview_input": "Temporary signed HLS URL",
