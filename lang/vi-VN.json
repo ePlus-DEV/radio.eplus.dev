@@ -3,6 +3,10 @@
     "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
   "global_radio": {
+    "eplus_play_hint": "Nghe trực tiếp trên ePlus OnAir. Các cách nghe khác nằm trong chi tiết đài.",
+    "playing_now": "Đang nghe",
+    "other_listening_options": "Cách nghe khác",
+    "external_options_hint": "Các liên kết này mở website nhà cung cấp trong tab mới.",
     "listen_on_eplus": "Nghe trên ePlus",
     "connecting_on_eplus": "Đang kết nối…",
     "resolver_unavailable": "Chưa thể phát trực tiếp trên ePlus. Hãy nghe qua Apple Music hoặc TuneIn.",
