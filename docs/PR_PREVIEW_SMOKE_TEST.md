@@ -7,3 +7,5 @@ This documentation-only pull request validates the existing PR Preview workflow.
 - This test does not change product UI, station catalog, release configuration, or production SEO.
 
 After checking the deployed preview, close this test PR without merging. The cleanup job should remove only its temporary preview directory.
+
+Retry trigger after the preview workflow was registered on the default branch (`main`) in PR #368.
