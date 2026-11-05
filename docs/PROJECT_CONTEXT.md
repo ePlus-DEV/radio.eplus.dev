@@ -936,7 +936,7 @@ Do not touch PlayerSession or the global audio dock for navigation fixes.
 ## 2026-11-05 — GitHub Pages PR previews
 
 - Never deploy PR preview files into staging (`onair-staging-pages`) or production (`onair-production-pages`): the staging main tree was ~962.8 MB when checked.
-- Dedicated public output repo `ePlus-DEV/onair-pr-previews` hosts `/pr-preview/pr-N/` after one-time owner setup; use the exact per-PR subpath in Nuxt build/asset origins.
+- Dedicated public output repo `ePlus-DEV/onair-pr-previews` uses the existing `PAGES_DEV_READY` variable and `PAGES_DEPLOY_TOKEN` to host `/pr-preview/pr-N/` after one-time owner setup; use the exact per-PR subpath in Nuxt build/asset origins.
 - The `pull_request_target` workflow is trusted definition only. Building PR code happens in a read-only job with no secrets and no persisted checkout credentials; the deploy job never executes PR files, and verifies live PR status and SHA before publishing.
 - Preview mode `ONAIR_PR_PREVIEW=true` limits prerender to representative pages and forces noindex/no GA4; normal staging and production generation, SEO text, sitemaps and analytics must remain unchanged.
 - Delete only the closed PR directory, enforce combined output below 900 MB, and keep destination PAT access strictly scoped. See `docs/PR_PREVIEWS.md`.
