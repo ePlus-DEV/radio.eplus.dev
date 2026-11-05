@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "providers": [
+    {
+      "id": "apple-music",
+      "name": "Apple Music Radio",
+      "description": "Six live stations curated by Apple Music.",
+      "coverage": "global",
+      "origin_country": "US",
+      "playback": "external",
+      "catalog": "/catalog/providers/apple-music.json",
+      "href": "/global-radio/apple-music"
+    }
+  ]
+}
