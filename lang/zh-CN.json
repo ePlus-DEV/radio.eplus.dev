@@ -461,6 +461,24 @@
       }
     }
   },
+  "surprise": {
+    "title": "随机电台",
+    "heading": "发现新的广播电台",
+    "description": "从真实目录随机选择。只有点击按钮后才开始播放。",
+    "filters": "筛选",
+    "action": "随机播放",
+    "loading": "正在加载电台目录…",
+    "unavailable": "无法加载或播放该电台，请重试。",
+    "country": "国家",
+    "any_country": "所有国家",
+    "genre": "类型",
+    "any_genre": "所有类型",
+    "language": "语言",
+    "any_language": "所有语言",
+    "available_count": "找到 {count} 个电台",
+    "empty": "没有符合筛选条件的电台。",
+    "selected": "已选择电台"
+  },
   "home": {
     "live_badge": "在线直播电台",
     "title": "畅听全球直播电台",

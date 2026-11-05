@@ -13,6 +13,7 @@
       <div class="mb-4 flex items-center justify-between"><h2 class="text-lg font-semibold">{{ $t('home.featured') }}</h2><span class="text-xs text-[var(--radio-text-muted)]">{{ $t('home.start_listening') }}</span></div>
       <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-url="playback.station?.url" />
     </section>
+    <ClientOnly><PanelSurpriseRadio /></ClientOnly>
     <ClientOnly><PanelResumeCard /><PanelListeningLibrary compact /></ClientOnly>
     <!-- External-provider directory lives beside geographic discovery, not inside a fake country. -->
     <section class="radio-surface flex flex-col gap-4 rounded-2xl p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"

@@ -461,6 +461,24 @@
       }
     }
   },
+  "surprise": {
+    "title": "Nghe ngẫu nhiên",
+    "heading": "Khám phá một đài radio mới",
+    "description": "Chọn ngẫu nhiên từ danh mục đài thực tế. Chỉ phát sau khi bạn nhấn nút.",
+    "filters": "Bộ lọc",
+    "action": "Phát đài bất kỳ",
+    "loading": "Đang tải danh mục đài…",
+    "unavailable": "Không tải hoặc phát được đài này. Hãy thử lại.",
+    "country": "Quốc gia",
+    "any_country": "Tất cả quốc gia",
+    "genre": "Thể loại",
+    "any_genre": "Tất cả thể loại",
+    "language": "Ngôn ngữ",
+    "any_language": "Tất cả ngôn ngữ",
+    "available_count": "Có {count} đài phù hợp",
+    "empty": "Không có đài phù hợp với bộ lọc.",
+    "selected": "Đài vừa chọn"
+  },
   "home": {
     "live_badge": "Radio trực tuyến",
     "title": "Nghe radio trực tiếp khắp thế giới",

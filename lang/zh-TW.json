@@ -461,6 +461,24 @@
       }
     }
   },
+  "surprise": {
+    "title": "隨機電台",
+    "heading": "探索新的廣播電台",
+    "description": "從真實目錄中隨機選擇。只有點擊按鈕後才開始播放。",
+    "filters": "篩選",
+    "action": "隨機播放",
+    "loading": "正在載入電台目錄…",
+    "unavailable": "無法載入或播放該電台，請重試。",
+    "country": "國家",
+    "any_country": "所有國家",
+    "genre": "類型",
+    "any_genre": "所有類型",
+    "language": "語言",
+    "any_language": "所有語言",
+    "available_count": "找到 {count} 個電台",
+    "empty": "沒有符合篩選條件的電台。",
+    "selected": "已選擇電台"
+  },
   "home": {
     "live_badge": "線上直播電台",
     "title": "暢聽全球直播電台",
