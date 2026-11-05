@@ -54,10 +54,20 @@ The client requires a known Apple Music station ID, an exact Apple HLS host
 and an `accessKey`; the earlier of server expiry or the embedded key epoch
 must be at least 45s away. Signed HLS paths are allowlisted as either
 `/3p-tune-in/tune_in/<Apple radio ID>/<region>/<bitrate>.m3u8`, or, only for
-the observed Holiday Hits station, `/3p-tune-in/tune_in/ppa/index-cmaf.m3u8`.
-The latter was confirmed in the user's private HAR, where the path lacks the
-radio number; the licensed backend therefore must verify that it serves the
-correct `station_id` before issuing the response.
+Apple Music Holiday Hits (Apple ID `6825447412`), the following paths:
+- `/3p-tune-in/tune_in/ppa/index-cmaf.m3u8` — master playlist. Prefer this
+  provider-issued URL as the playback entrypoint where permitted: it contains
+  signed child URLs for 64/256 kbps and a backup host.
+- `/3p-tune-in/tune_in/ppa/usw/256.m3u8` and `.../usw/64.m3u8` — directly
+  playable media playlists, confirmed HTTP 200 by the user's private HAR.
+
+The master, media playlists, initialization map and `.m4s` segments carry
+**different accessKey values**. Never synthesize child URLs by copying the
+master token. The observed signed URLs prove a streaming sequence occurred in
+TuneIn; they do not reveal the secret key issuer, authorization requirements,
+or how to generate fresh tokens independently. The approved backend must
+verify the selected station before issuing an entrypoint URL. No real
+accessKeys or HAR session identifiers belong in this repository.
 
 For a normal pending/unauthorized/unavailable provider, respond with a
 non-2xx status and a generic JSON message. The app then keeps official links.
