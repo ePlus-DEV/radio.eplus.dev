@@ -29,6 +29,18 @@ test('valid signed Apple stream is matched against the selected Apple Music stat
   assert.equal(result.expiresAt, expires * 1000);
 });
 
+test('Holiday Hits CMAF path observed in TuneIn HAR is accepted only for that station', () => {
+  const holiday = {
+    id: 'apple-music-holiday-hits',
+    listen_url: 'https://music.apple.com/us/station/holiday-hits/ra.6825447412',
+  };
+  const cmaf = `https://itsliveradio.apple.com/3p-tune-in/tune_in/ppa/index-cmaf.m3u8?accessKey=${expires}_opaque_signature`;
+  const payload = { ...valid, station_id: holiday.id, stream_url: cmaf };
+  assert.equal(validateAuthorizedAppleStream(payload, holiday.id, holiday.listen_url, now).ok, true);
+  assert.equal(validateAuthorizedAppleStream({ ...payload, station_id: station.id },
+    station.id, station.listen_url, now).ok, false);
+});
+
 test('rejects unauthorized, mismatched, expired, malformed or non-Apple stream responses', () => {
   const rejected = [
     { ...valid, authorized: false }, { ...valid, station_id: 'apple-music-hits' },
