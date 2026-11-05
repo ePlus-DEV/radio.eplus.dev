@@ -179,3 +179,32 @@ timeout and budget gaps, **not** the whole P0 issue: #340's iPhone/Safari
 device matrix and real MP3/AAC/HLS end-to-end recovery evidence remain
 required before closing #341 or claiming full device support.
 
+## Station technical metadata — #347 (catalog-only first delivery)
+
+The station detail page has an **optional, collapsed** "Stream details"
+disclosure. It is rendered only when the published catalog contains enough
+information for an actual format/codec/bitrate hint, and never modifies the
+station heading, meta description, canonical, JSON-LD or global player.
+
+- Format from the primary stream URL extension takes precedence over a
+  declared generic MIME because catalog MIME values may be stale (e.g.
+  `.aac` streams marked `audio/mpeg`). The hint is clearly described as
+  inferred from URL, **not measured or verified**.
+- A known MIME may supply a *catalog-reported* format if URL extension is
+  inconclusive. HLS is a streaming format, **not a verified audio codec**.
+- Only explicit, allowlisted `codec` and finite plausible numeric `bitrate`
+  fields can appear as catalog-provided metadata. No HTTP probes, source
+  playback, secret-bearing stream URL display, fabricated last-checked
+  timestamps, or claimed real-time availability.
+- For missing fields, show an honest "Unknown" label in the expanded view.
+  If all three are unavailable, omit the whole disclosure. Native details/
+  summary gives keyboard interaction with no additional page-level state.
+- Seven locales and semantic theme tokens; no new SEO text/route, storage or
+  bundled audio dependencies. Test with
+  `tests/station-technical-details.test.mjs`.
+
+**Not complete:** #347 still needs an independently verified catalog
+metadata pipeline (real codec/bitrate measurements, valid checked-at evidence),
+coverage auditing and manual desktop/mobile dark/light review. Do not close
+the issue based on this read-only UI addition.
+
