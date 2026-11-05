@@ -419,6 +419,24 @@
       }
     }
   },
+  "surprise": {
+    "title": "Surprise Me",
+    "heading": "Discover a new radio station",
+    "description": "Pick a random station from the real catalog. Playback starts only when you press the button.",
+    "filters": "Filters",
+    "action": "Play something random",
+    "loading": "Loading station catalog…",
+    "unavailable": "Could not load or play that station. Try again.",
+    "country": "Country",
+    "any_country": "Any country",
+    "genre": "Genre",
+    "any_genre": "Any genre",
+    "language": "Language",
+    "any_language": "Any language",
+    "available_count": "{count} matching stations",
+    "empty": "No stations match these filters.",
+    "selected": "Now playing"
+  },
   "home": {
     "live_badge": "Live internet radio",
     "title": "Live radio from around the world",
