@@ -2,6 +2,29 @@
   "404": {
     "content": "Désolé, la page demandée est introuvable."
   },
+  "global_radio": {
+    "eyebrow": "Réseau international",
+    "title": "Radio mondiale",
+    "description": "Découvrez des réseaux de radio internationaux en dehors des catalogues par pays.",
+    "providers": "Fournisseurs radio",
+    "provider_count": "fournisseurs",
+    "external_badge": "Ouverture externe",
+    "apple_description": "Découvrez les six stations en direct d'Apple Music, regroupées par fournisseur mondial.",
+    "explore_provider": "Découvrir les stations",
+    "external_note": "Les stations Apple Music s'ouvrent sur le site d'Apple. Elles ne sont pas diffusées dans ePlus OnAir ni comptées dans les statistiques locales.",
+    "by_country": "Explorer par pays",
+    "home": "Accueil",
+    "breadcrumb": "Fil d'Ariane",
+    "open_provider": "Ouvrir Apple Music",
+    "apple_access": "Connectez-vous à votre compte Apple pour écouter. Aucun abonnement Apple Music n'est requis pour ces six stations en direct. La disponibilité varie selon les régions.",
+    "stations": "Stations en direct",
+    "station_count": "stations",
+    "details": "Détails de la station",
+    "listen_on_apple": "Écouter sur Apple Music",
+    "origin": "Pays d'origine",
+    "how_listen": "Comment écouter",
+    "back_to_provider": "Toutes les stations Apple Music Radio"
+  },
   "navmenu": {
     "more": "Plus",
     "information": "Informations",
