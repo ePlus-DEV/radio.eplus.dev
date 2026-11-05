@@ -45,10 +45,6 @@
       <p class="mt-2 text-sm leading-7 text-[var(--radio-text-muted)]">{{ t('global_radio.apple_access') }}</p>
       <p class="mt-2 text-xs leading-6 text-[var(--radio-text-muted)]">{{ t('global_radio.external_note') }}</p>
     </section>
-    <!-- Experimental, session-only; never serialize a signed URL in SSR, route metadata, or storage. -->
-    <ClientOnly>
-      <GlobalRadioTemporaryHlsPreview v-if="station" :station="station" />
-    </ClientOnly>
     <NuxtLink to="/global-radio/apple-music" class="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-rose-700 hover:underline dark:text-rose-300">
       <UIcon name="i-lucide-arrow-left" class="h-4 w-4" aria-hidden="true" />{{ t('global_radio.back_to_provider') }}
     </NuxtLink>

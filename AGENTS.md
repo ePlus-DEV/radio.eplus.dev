@@ -81,10 +81,14 @@ Regression guard: `tests/language-dropdown.test.mjs`.
 - Time-limited `itsliveradio.apple.com` HLS links require access keys and
   must never be hardcoded, indexed, logged, committed or automatically harvested
   from provider sessions. A static signed link is not a production integration.
-- The optional `TemporaryHlsPreview` is a **user-initiated local-only test**
-  for a legitimate signed URL, with expiration and exact-station validation;
-  no token persistence, proxy or refreshing. It pauses normal playback and
-  tears down on route changes or resumed main playback.
+- **Do not expose signed HLS URL or accessKey entry to the public
+  listener interface.** Users must never need developer knowledge to listen.
+  The prototype `TemporaryHlsPreview` is retained as unmounted developer
+  research code, not a supported feature or CTA.
+- All public Global Radio provider cards must link directly to an authorized,
+  functional Apple Music/TuneIn listening destination; **never claim that
+  ePlus OnAir plays Apple Music in-app** until an authorized integration is
+  implemented and verified.
 - Never claim playback works solely because a URL ends in `.m3u8`; Apple
   may restrict requests via key validation, CORS or region/access rules.
   MusicKit is the supported route for an authorized production integration,
