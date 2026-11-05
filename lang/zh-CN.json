@@ -2,6 +2,29 @@
   "404": {
     "content": "抱歉，找不到您要访问的页面。"
   },
+  "global_radio": {
+    "eyebrow": "国际广播网络",
+    "title": "全球电台",
+    "description": "探索不受国家分类限制的国际广播网络。",
+    "providers": "电台提供商",
+    "provider_count": "家提供商",
+    "external_badge": "在外部打开",
+    "apple_description": "探索 Apple Music 的六个直播电台，按全球服务商分类，而非按国家分类。",
+    "explore_provider": "探索电台",
+    "external_note": "Apple Music 电台将在 Apple 网站打开，不会在 ePlus OnAir 内播放，也不会计入本地收听统计。",
+    "by_country": "按国家浏览",
+    "home": "首页",
+    "breadcrumb": "面包屑导航",
+    "open_provider": "打开 Apple Music",
+    "apple_access": "收听需要登录 Apple 账户。这六个直播电台无需订阅 Apple Music，实际可用性因地区而异。",
+    "stations": "直播电台",
+    "station_count": "个电台",
+    "details": "电台详情",
+    "listen_on_apple": "在 Apple Music 收听",
+    "origin": "来源国家",
+    "how_listen": "收听方式",
+    "back_to_provider": "所有 Apple Music Radio 电台"
+  },
   "navmenu": {
     "more": "更多",
     "information": "网站信息",
