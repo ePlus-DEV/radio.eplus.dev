@@ -145,3 +145,37 @@ grow the Nuxt payload. It does not autoplay or change the global audio engine.
 Regression tests: `tests/personal-radio.test.mjs`. Manual QA includes
 0/1/many favorites and recent stations, off tracking state, mobile
 320–430px, reduced motion, and light/dark contrast.
+
+## Stream Health: bounded stall recovery — #341 (follow-up)
+
+The single global Player now runs a **source-version-bound stall watchdog**
+from the beginning of each active MP3/AAC/HLS connection, including playlist
+resolution and HLS manifest parsing. Every source, even a **single source** or
+the last candidate, has a bounded silence timeout. The watchdog cannot be
+reset indefinitely by repeated `waiting` events, and `canplay` / metadata
+alone no longer cancel pending recovery deadlines. A confirmed `playing`
+event cancels the watchdog.
+
+- An unsuccessful attempt advances through the existing ordered candidate
+  list and wraps to the same source for single-source stations. A maximum
+  of six attempts applies to one recovery episode; exhausting the budget
+  stops and exposes a **manual Retry** control. Disabling Auto Reconnect
+  still times out to a manual Retry state rather than loading forever.
+- Very short successful playback must not replenish the retry budget. The
+  count resets only after 30 seconds of uninterrupted playback with decoded
+  audio, and is invalidated on waiting, pause, error, source change and
+  unmount. Manual Retry remains an explicit way to start a new episode.
+- A failed asynchronous HLS loader/setup goes through the normal bounded
+  fallback path; do not surface or log tokenized stream URLs. Keep hls.js
+  when supported, native HLS fallback, the original MP3/AAC playlist logic,
+  source ordering and the no-generic-HLS-proxy rule.
+- No station hopping, autoplay on reload, new audio element, new persistent
+  session data, or SEO changes. Network `offline` still preempts retries;
+  reconnecting online resumes only if the listener has not paused.
+
+Automated policy and integration guards live in
+`tests/playback-recovery-policy.test.mjs`. This closes the deterministic
+timeout and budget gaps, **not** the whole P0 issue: #340's iPhone/Safari
+device matrix and real MP3/AAC/HLS end-to-end recovery evidence remain
+required before closing #341 or claiming full device support.
+
