@@ -461,6 +461,24 @@
       }
     }
   },
+  "for_you": {
+    "title": "為你推薦",
+    "description": "無須帳號，根據本機已儲存的電台探索相關內容。",
+    "show": "查看推薦",
+    "hide_panel": "收合推薦",
+    "loading": "正在尋找電台…",
+    "unavailable": "無法載入推薦。",
+    "retry": "重試",
+    "based_on_your_library": "根據本機收藏及收聽歷史推薦。",
+    "curated_intro": "目前沒有相符偏好，以下為目錄中真正標記的精選電台。",
+    "reason_genre": "與收藏電台相似的類型",
+    "reason_language": "與收藏電台相同的語言",
+    "reason_country": "來自你收聽過的國家",
+    "reason_featured": "目錄精選電台",
+    "dismiss": "隱藏此推薦",
+    "empty": "暫無符合條件的新電台。",
+    "privacy_note": "推薦只在此裝置計算。收藏和歷史不會傳送到目錄伺服器。重新整理後隱藏項目會復原。"
+  },
   "surprise": {
     "title": "隨機電台",
     "heading": "探索新的廣播電台",
