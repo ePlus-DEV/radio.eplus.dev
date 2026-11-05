@@ -35,14 +35,19 @@ export default defineNuxtPlugin(() => {
       if (version !== generation || controller.signal.aborted || !result.ok) return;
       playback.refreshGlobalRadioStream(lease.stationUrl, result.streamUrl, result.expiresAt);
     } catch {
-      // On expiry/authorization failure stop attempting to reuse the old URL.
-      // The listener can always open the official Apple/TuneIn destination.
+      // Country Radio retries transient network failures. Apply the same
+      // principle here while the current signed Global HLS lease is valid.
+      // A temporary TuneIn lookup failure must not stop playable audio early.
       if (version === generation && !controller.signal.aborted) {
-        if (playback.station?.url === lease.stationUrl) {
-          playback.pauseRequest += 1;
-          // Prevent the shared player from restarting an expired signed URL.
-          playback.station = { ...playback.station, sources: [] };
+        if (playback.station?.url !== lease.stationUrl) return;
+        if (Date.now() < lease.expiresAt - 5_000) {
+          const retryInMs = Math.min(10_000, Math.max(1_000, lease.expiresAt - Date.now() - 5_000));
+          timer = setTimeout(() => { void refresh(lease, version); }, retryInMs);
+          return;
         }
+        playback.pauseRequest += 1;
+        // Never let an expired signed Apple URL be reused by the shared player.
+        playback.station = { ...playback.station, sources: [] };
         playback.globalRadioLease = null;
       }
     } finally {
