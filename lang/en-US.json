@@ -3,6 +3,10 @@
     "content": "Sorry, the page you are looking for does not exist."
   },
   "global_radio": {
+    "playback_status_title": "In-app playback is not available yet",
+    "playback_status_pending": "ePlus does not yet have an authorized stream resolver for these stations. You can still listen on Apple Music or TuneIn.",
+    "playback_status_short": "ePlus playback unavailable",
+    "playback_status_configured": "The API endpoint is configured. Actual playback still depends on connectivity and provider authorization.",
     "listen_on_eplus": "Play on ePlus",
     "connecting_on_eplus": "Connecting…",
     "resolver_unavailable": "In-app playback is unavailable. Listen on Apple Music or TuneIn instead.",
