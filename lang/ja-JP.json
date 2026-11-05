@@ -2,6 +2,29 @@
   "404": {
     "content": "お探しのページは見つかりませんでした。"
   },
+  "global_radio": {
+    "eyebrow": "国際ラジオネットワーク",
+    "title": "グローバルラジオ",
+    "description": "国別の一覧とは別に、世界のラジオネットワークを探せます。",
+    "providers": "ラジオプロバイダー",
+    "provider_count": "プロバイダー",
+    "external_badge": "外部サイトで再生",
+    "apple_description": "Apple Musicの6つのライブ放送局を、国別ではなくグローバルなネットワークとして紹介します。",
+    "explore_provider": "放送局を見る",
+    "external_note": "Apple Musicの放送局はAppleのサイトで開きます。ePlus OnAir内では再生されず、聴取統計にも含まれません。",
+    "by_country": "国別に探す",
+    "home": "ホーム",
+    "breadcrumb": "パンくずリスト",
+    "open_provider": "Apple Musicを開く",
+    "apple_access": "再生にはApple Accountへのサインインが必要です。これら6局のライブ放送にはApple Musicのサブスクリプションは不要です。地域により利用状況が異なります。",
+    "stations": "ライブ放送局",
+    "station_count": "局",
+    "details": "放送局の詳細",
+    "listen_on_apple": "Apple Musicで聴く",
+    "origin": "発信国",
+    "how_listen": "聴取方法",
+    "back_to_provider": "Apple Music Radioのすべての局"
+  },
   "navmenu": {
     "more": "その他",
     "information": "サイト情報",
