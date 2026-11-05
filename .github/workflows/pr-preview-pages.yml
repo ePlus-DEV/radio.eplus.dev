@@ -1,0 +1,262 @@
+name: "PR Preview — GitHub Pages"
+
+# The workflow definition always comes from the trusted PR base branch.
+# Untrusted PR code is built in a read-only job without any deployment secrets.
+on:
+  pull_request_target:
+    branches: [develop]
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: read
+
+env:
+  # Same Pages publisher as development: only the output repository differs.
+  PREVIEW_TARGET_REPOSITORY: ePlus-DEV/onair-pr-previews
+  PREVIEW_SITE_ORIGIN: https://eplus-dev.github.io/onair-pr-previews
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+
+jobs:
+  build:
+    name: "Build isolated preview (no secrets)"
+    if: >-
+      vars.PAGES_DEV_READY == 'true' &&
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref != 'develop' &&
+      !startsWith(github.event.pull_request.head.ref, 'bot/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      pull-requests: read
+    concurrency:
+      group: onair-pr-preview-build-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    outputs:
+      active: ${{ steps.current.outputs.active }}
+    env:
+      # Isolated preview host and project subpath; never inherit production SEO.
+      ONAIR_PR_PREVIEW: 'true'
+      ONAIR_SKIP_STATION_OG: 'true'
+      NUXT_PUBLIC_NO_INDEX: 'true'
+      NUXT_PUBLIC_STATION_OG_BASE_URL: ''
+      NUXT_PUBLIC_SITE_URL: https://eplus-dev.github.io/onair-pr-previews/pr-preview/pr-${{ github.event.pull_request.number }}
+      NUXT_APP_BASE_URL: /onair-pr-previews/pr-preview/pr-${{ github.event.pull_request.number }}/
+    steps:
+      - name: Skip stale or retargeted PR runs
+        id: current
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r state base head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
+          if [ "$state" != open ] || [ "$base" != develop ] || [ "$head" != "$EXPECTED_HEAD" ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::Obsolete or untrusted PR: skip build."
+            echo "active=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "active=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check out merge preview (read-only, no credentials retained)
+        if: steps.current.outputs.active == 'true'
+        uses: actions/checkout@v7
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          persist-credentials: false
+
+      - name: Set up Node.js
+        if: steps.current.outputs.active == 'true'
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.current.outputs.active == 'true'
+        run: npm ci
+
+      - name: Run regression tests
+        if: steps.current.outputs.active == 'true'
+        run: npm test
+
+      - name: Generate representative static pages
+        if: steps.current.outputs.active == 'true'
+        run: npm run generate:site
+
+      - name: Check noindex, zero GA4, project path and output size
+        if: steps.current.outputs.active == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/assert-staging-noindex.mjs
+          node scripts/assert-ga4-output.mjs .output/public staging
+          node scripts/assert-pr-preview-output.mjs .output/public "$PR_NUMBER"
+          node scripts/check-pages-build.mjs .output/public staging
+
+      - name: Store preview files (no credentials)
+        if: steps.current.outputs.active == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: onair-pr-preview-${{ github.event.pull_request.number }}
+          path: .output/public/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 2
+
+  publish:
+    name: "Publish PR Preview to isolated Pages repository"
+    needs: build
+    if: >-
+      needs.build.result == 'success' &&
+      needs.build.outputs.active == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: onair-pr-preview-publish
+      cancel-in-progress: false
+    environment:
+      name: development
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+      EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Recheck live PR before publish
+        id: current
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r state base head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
+          if [ "$state" != open ] || [ "$base" != develop ] || [ "$head" != "$EXPECTED_HEAD" ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::PR changed or closed; skip stale publication."
+            echo "active=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "active=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download validated build artifact
+        if: steps.current.outputs.active == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: onair-pr-preview-${{ github.event.pull_request.number }}
+          path: ${{ runner.temp }}/pr-output
+
+      - name: Check destination and publish only this PR directory
+        if: steps.current.outputs.active == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$PAGES_DEPLOY_TOKEN" || { echo "::error::Missing development secret PAGES_DEPLOY_TOKEN."; exit 1; }
+          test -f "$RUNNER_TEMP/pr-output/index.html" || { echo "::error::Missing preview home page."; exit 1; }
+          test -f "$RUNNER_TEMP/pr-output/asia/viet-nam/vov-gt-hcm/index.html" || { echo "::error::Missing preview station detail."; exit 1; }
+          if find "$RUNNER_TEMP/pr-output" -type l -print -quit | grep -q .; then
+            echo "::error::Symlinks are forbidden in the published artifact."
+            exit 1
+          fi
+          grep -q "noindex" "$RUNNER_TEMP/pr-output/index.html" || { echo "::error::Preview is indexable."; exit 1; }
+          grep -q "/onair-pr-previews/pr-preview/pr-$PR_NUMBER/_nuxt/" "$RUNNER_TEMP/pr-output/index.html" || { echo "::error::Preview base path is incorrect."; exit 1; }
+          if grep -q 'G-ETDY41KBBJ' "$RUNNER_TEMP/pr-output/index.html"; then
+            echo "::error::Production GA4 is forbidden in preview."
+            exit 1
+          fi
+
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          target="$RUNNER_TEMP/onair-pr-pages"
+          GIT_TERMINAL_PROMPT=0 git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            clone --depth 1 --branch main "https://github.com/$PREVIEW_TARGET_REPOSITORY.git" "$target" || {
+              echo "::error::Create $PREVIEW_TARGET_REPOSITORY and grant PAGES_DEPLOY_TOKEN Contents: write first."
+              exit 1
+            }
+
+          test ! -L "$target/pr-preview" || { echo "::error::Unsafe preview directory."; exit 1; }
+          mkdir -p "$target/pr-preview/pr-$PR_NUMBER"
+          rsync -a --delete "$RUNNER_TEMP/pr-output/" "$target/pr-preview/pr-$PR_NUMBER/"
+          touch "$target/.nojekyll"
+
+          # GitHub Pages published output must remain under 1 GB.
+          # Enforce a safety margin across ALL open PRs, not only this PR.
+          total="$(find "$target" -path "$target/.git" -prune -o -type f -printf '%s\n' | awk '{ s += $1 } END { printf "%.0f", s }')"
+          echo "Aggregate Pages preview size: $total bytes"
+          if [ "$total" -ge 900000000 ]; then
+            echo "::error::All previews exceed 900 MB. Close stale PRs or reduce preview output before publishing."
+            exit 1
+          fi
+
+          git -C "$target" config user.name "github-actions[bot]"
+          git -C "$target" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$target" add --all
+          if ! git -C "$target" diff --cached --quiet; then
+            git -C "$target" commit -m "preview: PR #$PR_NUMBER from $EXPECTED_HEAD"
+            git -C "$target" -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+          echo "Published PR #$PR_NUMBER to $PREVIEW_TARGET_REPOSITORY"
+          echo "### Preview for PR #$PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+          echo "$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create or update one PR preview comment
+        if: steps.current.outputs.active == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/"
+          body="$(printf '<!-- onair-pr-preview -->\n### ePlus OnAir — PR Preview\n\n[Open preview](%s) · [Check workflow](https://github.com/%s/actions/runs/%s)\n\nStatic preview: representative routes only; full catalog remains on staging after merge. Noindex and production GA4 disabled.\n' "$url" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+          marker_id="$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments?per_page=100" --jq '.[] | select((.body // "") | contains("<!-- onair-pr-preview -->")) | .id' | head -n 1)"
+          if [ -n "$marker_id" ]; then
+            jq -n --arg body "$body" '{body:$body}' | gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --input - >/dev/null
+          else
+            jq -n --arg body "$body" '{body:$body}' | gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --input - >/dev/null
+          fi
+
+  cleanup:
+    name: "Remove closed PR Preview"
+    if: >-
+      vars.PAGES_DEV_READY == 'true' &&
+      github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: onair-pr-preview-publish
+      cancel-in-progress: false
+    environment:
+      name: development
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+    steps:
+      - name: Delete only the preview directory for this closed PR
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$PAGES_DEPLOY_TOKEN" || { echo "::error::Missing development secret PAGES_DEPLOY_TOKEN."; exit 1; }
+          # An obsolete close event must not delete a reopened preview.
+          state="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.state')"
+          if [ "$state" != closed ]; then
+            echo "::notice::PR is open again; skip stale cleanup."
+            exit 0
+          fi
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          target="$RUNNER_TEMP/onair-pr-pages"
+          GIT_TERMINAL_PROMPT=0 git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            clone --depth 1 --branch main "https://github.com/$PREVIEW_TARGET_REPOSITORY.git" "$target"
+          preview="$target/pr-preview/pr-$PR_NUMBER"
+          if [ -d "$preview" ] && [ ! -L "$preview" ]; then
+            rm -rf -- "$preview"
+            git -C "$target" config user.name "github-actions[bot]"
+            git -C "$target" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git -C "$target" add --all
+            if ! git -C "$target" diff --cached --quiet; then
+              git -C "$target" commit -m "preview: remove closed PR #$PR_NUMBER"
+              git -C "$target" -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" push origin HEAD:main
+            fi
+          else
+            echo "No preview directory exists for PR #$PR_NUMBER."
+          fi

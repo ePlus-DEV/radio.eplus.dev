@@ -82,16 +82,21 @@ npm run test:ui          # Optional Playwright browser tests
 
 Required setup in the source repository (store all credentials as GitHub **Secrets**, never in code): GitHub Environments `development` / `production`, with `NUXT_PUBLIC_SITE_URL` set respectively to `https://new-radio.eplus.dev` / `https://radio.eplus.dev`; `PAGES_DEPLOY_TOKEN` must have scoped write access to both public Pages repositories. Do not expose this token to untrusted PR workflows.
 
-All four workflows share a repository-wide concurrency queue. The workflows are:
+The four existing release/data workflows share a repository-wide concurrency queue. PR Preview uses a separate build/publish queue to keep website releases independent. The workflows are:
 
 | Workflow | Purpose |
 | --- | --- |
 | `build.yml` | PR unit/regression tests and conditional prerender/SEO validation |
+| `pr-preview-pages.yml` | Independent lightweight PR review builds, Pages publishing and cleanup (opt-in) |
 | `deploy-github-pages.yml` | Trusted static site publication to staging/production Pages repositories |
 | `instant-audio-sync.yml` | Manual radio catalog sync and contribution PR creation |
 | `publish-station-images.yml` | Manual publication of station social JPEGs separately from website output |
 
 See [deployment setup and cutover](./docs/GITHUB_PAGES.md) and [workflow policy](./docs/GITHUB_ACTIONS.md).
+
+## Pull request previews (GitHub Pages)
+
+Feature PRs targeting `develop` can have a separate static review link, served from the **dedicated** `ePlus-DEV/onair-pr-previews` GitHub Pages project. The preview workflow builds with no credentials, requires noindex/no production GA4, publishes only representative static routes, posts a link on the PR, and cleans up when the PR closes. Production and staging deployments are unchanged. **The new Pages destination must exist and the existing token must be allowed to write to it; no additional token or enablement variable is needed.** See [PR Preview setup](./docs/PR_PREVIEWS.md).
 
 ## Station social images and the GitHub Pages size limit
 
