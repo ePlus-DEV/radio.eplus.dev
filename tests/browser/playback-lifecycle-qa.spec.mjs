@@ -5,6 +5,11 @@ import { test, expect } from '@playwright/test';
 async function setUpMockAudio(page) {
   await page.addInitScript(() => {
     window.radioQaCalls = { play: 0, pause: 0, load: 0 };
+    window.radioQaOnline = true;
+    Object.defineProperty(navigator, 'onLine', {
+      configurable: true,
+      get: () => window.radioQaOnline,
+    });
     HTMLMediaElement.prototype.play = function () {
       window.radioQaCalls.play += 1;
       this.dispatchEvent(new Event('playing'));
@@ -69,7 +74,9 @@ test('offline-to-online events do not override an intentional Pause or duplicate
 
   // Simulate browser connectivity notifications without sending real requests.
   await page.evaluate(() => {
+    window.radioQaOnline = false;
     window.dispatchEvent(new Event('offline'));
+    window.radioQaOnline = true;
     window.dispatchEvent(new Event('online'));
   });
   await page.locator('header a[href="/"]').first().click();
