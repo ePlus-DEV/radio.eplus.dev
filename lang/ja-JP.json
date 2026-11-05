@@ -3,6 +3,10 @@
     "content": "お探しのページは見つかりませんでした。"
   },
   "global_radio": {
+    "playback_status_title": "ePlusでの直接再生はまだ利用できません",
+    "playback_status_pending": "これらのラジオ局用の認可済みストリームAPIは未設定です。Apple MusicまたはTuneInで聴くことができます。",
+    "playback_status_short": "ePlus再生は未対応",
+    "playback_status_configured": "APIは設定済みです。実際の再生は接続と配信元の許可状況によります。",
     "listen_on_eplus": "ePlusで聴く",
     "connecting_on_eplus": "接続中…",
     "resolver_unavailable": "ePlusで再生できません。Apple MusicまたはTuneInでお聴きください。",
