@@ -73,6 +73,25 @@ For the language selector:
 
 Regression guard: `tests/language-dropdown.test.mjs`.
 
+## Apple Music / TuneIn external-provider invariants
+
+- Apple/TuneIn provider metadata lives in `public/catalog/providers/`,
+  separate from country-based `public/radio/` audio catalogs and SEO routes.
+- A TuneIn or Apple Music webpage is **not** an HTML5 stream URL.
+- Time-limited `itsliveradio.apple.com` HLS links require access keys and
+  must never be hardcoded, indexed, logged, committed or automatically harvested
+  from provider sessions. A static signed link is not a production integration.
+- The optional `TemporaryHlsPreview` is a **user-initiated local-only test**
+  for a legitimate signed URL, with expiration and exact-station validation;
+  no token persistence, proxy or refreshing. It pauses normal playback and
+  tears down on route changes or resumed main playback.
+- Never claim playback works solely because a URL ends in `.m3u8`; Apple
+  may restrict requests via key validation, CORS or region/access rules.
+  MusicKit is the supported route for an authorized production integration,
+  subject to proper developer credentials and user authentication.
+- Keep provider cards externally linked when direct playback is unavailable.
+  No changes to existing country-station SEO metadata unless explicitly asked.
+
 ## Player / HLS invariants
 
 The current player is intentionally **Native Audio + hls.js**, not Video.js.
