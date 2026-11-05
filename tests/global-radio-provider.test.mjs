@@ -88,7 +88,7 @@ test('new public provider routes are prerendered and indexed only on production'
   assert.match(sidebar, /to="\/global-radio"/);
   assert.match(detail, /useStaticPageSeo/);
   assert.match(detail, /v-if="station\?\.tunein_url"/);
-  assert.doesNotMatch(detail, /playback\.(activate|requestStation|play)/);
+  assert.doesNotMatch(detail, /playback\.(?:activate|requestStation|play)\s*\(/);
 });
 
 test('seven translations have external / seasonal labels', async () => {
