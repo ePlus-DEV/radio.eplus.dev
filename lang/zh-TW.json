@@ -261,6 +261,18 @@
     },
     "offline": "似乎沒有網路連線。請檢查網路後再試一次。"
   },
+  "station_technical": {
+    "title": "直播串流技術資訊",
+    "catalog_badge": "目錄資訊",
+    "format": "串流格式",
+    "codec": "音訊編碼",
+    "bitrate": "位元率",
+    "unknown": "尚無資料",
+    "inferred_url": "根據串流 URL 推測（未驗證）",
+    "catalog_reported": "目錄標註（未實測）",
+    "kbps": "{count} kbps",
+    "disclaimer": "以上僅為目錄參考資料，不代表串流已驗證可用。實際編碼及位元率可能不同。"
+  },
   "player": {
     "title": "電台播放器",
     "choose_station": "選擇電台開始收聽",
