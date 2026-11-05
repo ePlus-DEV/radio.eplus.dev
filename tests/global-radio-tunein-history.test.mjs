@@ -30,9 +30,11 @@ test('only seven verified Apple TuneIn station IDs may request Describe metadata
 test('uses only explicit current_song and current_artist fields', () => {
   assert.deepEqual(parseTuneInStationMetadata({
     head: { status: '200' },
-    body: [{ element: 'station', guide_id: 's345732', name: 'Apple Music 1',
-      current_song: 'A Real Song', current_artist: 'A Real Artist', current_album: 'Album',
-      publish_song: 'true' }],
+    body: [{ element: 'outline', type: 'object', text: 'Apple Music 1', children: [
+      { element: 'station', guide_id: 's345732', name: 'Apple Music 1',
+        current_song: 'A Real Song', current_artist: 'A Real Artist', current_album: 'Album',
+        publish_song: 'true' },
+    ] }],
   }, 'apple-music-1'), { title: 'A Real Song', artist: 'A Real Artist' });
 });
 
