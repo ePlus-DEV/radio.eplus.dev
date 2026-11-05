@@ -4,7 +4,7 @@ import { isZingScheduleUrl } from '~/utils/station-schedule.mjs';
 import { getVietnamSchedule, vietnamReferencePrograms } from '~/utils/vietnam-schedules.mjs';
 import { createStationPolling } from '~/utils/station-polling.mjs';
 import { resolveLiveTrack } from '~/utils/live-track.mjs';
-import { appleTuneInHistoryMarker, stationIdFromTuneInHistoryMarker, fetchPublicTuneInHistory } from '~/utils/global-radio-tunein-history.mjs';
+import { appleTuneInMetadataMarker, stationIdFromTuneInMetadataMarker, fetchPublicTuneInMetadata, addTuneInSessionTrack } from '~/utils/global-radio-tunein-metadata.mjs';
 
 export function useStationRealtime() {
   const playback = usePlaybackStore();
@@ -64,18 +64,18 @@ export function useStationRealtime() {
     playlist: RadioTrack[];
     song?: RadioSong;
     lyrics: string[];
-    isTuneInHistory?: boolean;
+    isTuneInMetadata?: boolean;
     nowPlaying?: { title: string; artist: string } | null;
   }
   const fetchSchedule = async (url: string, signal: AbortSignal): Promise<RealtimeData | undefined> => {
     if (!import.meta.client || !clientReady) return;
     // Apple Music's signed TuneIn HLS URL must never be used for metadata.
     // Read the separate, anonymous playlist endpoint for known station IDs.
-    const tuneInId = stationIdFromTuneInHistoryMarker(url);
+    const tuneInId = stationIdFromTuneInMetadataMarker(url);
     if (tuneInId) {
-      const result = await fetchPublicTuneInHistory({ stationId: tuneInId, signal });
-      return { program: [], playlist: result.playlist, lyrics: [],
-        isTuneInHistory: true, nowPlaying: result.nowPlaying };
+      const nowPlaying = await fetchPublicTuneInMetadata({ stationId: tuneInId, signal });
+      return { program: [], playlist: [], lyrics: [],
+        isTuneInMetadata: true, nowPlaying };
     }
     const value = await $fetch<{ err?: number; success?: boolean; data?: { items?: RadioProgram[] }; result?: RadioTrack[] }>(timestampUrl(url), { signal, timeout: 10_000 });
     if (isZingScheduleUrl(url)) {
@@ -93,19 +93,24 @@ export function useStationRealtime() {
     onData: (value: RealtimeData | undefined) => {
       if (!value) return;
       program.value = value.program;
-      playlist.value = value.playlist;
+      // Build a real, device-local history only from observed current-song
+      // updates. TuneIn's directory playlist is NOT a song history API.
+      playlist.value = value.isTuneInMetadata
+        ? addTuneInSessionTrack(playlist.value, value.nowPlaying)
+        : value.playlist;
       song.value = value.song;
       lyrics.value = value.lyrics;
-      // Provider history is not proof of what's audible NOW. The latest row
-      // may be delayed, so only label a TuneIn song when explicitly marked current.
+      // Only TuneIn's explicit current_song + current_artist fields identify
+      // the reported live song; never label the first history row as current.
       playback.setLiveTrack(playback.station?.url || '',
-        value.isTuneInHistory ? (value.nowPlaying || null)
+        value.isTuneInMetadata ? (value.nowPlaying || null)
           : resolveLiveTrack(value.song, value.playlist));
     },
     onLoading: (value: boolean) => { loading.value = value; },
     onError: () => {
-      if (appleTuneInHistoryMarker(playback.station)) {
-        playlist.value = [];
+      if (appleTuneInMetadataMarker(playback.station)) {
+        // Avoid showing stale metadata as live; retain already observed
+        // session tracks without making up missing song information.
         playback.setLiveTrack(playback.station?.url || '', null);
       }
     },
@@ -123,7 +128,7 @@ export function useStationRealtime() {
     if (!import.meta.client || !clientReady) return;
     // One existing polling lifetime for both station EPG and TuneIn's history:
     // station switches abort old requests, no extra player or background timer.
-    polling.start(appleTuneInHistoryMarker(playback.station) || playback.station?.schedule || '');
+    polling.start(appleTuneInMetadataMarker(playback.station) || playback.station?.schedule || '');
   };
   watch(() => playback.station?.url, activate);
   let referenceTimer: ReturnType<typeof setInterval> | null = null;
