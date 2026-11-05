@@ -17,7 +17,16 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
     || buildAuthorizedResolverRequest(endpoint.value, 'apple-music-1')));
 
   async function play(station: GlobalRadioStation) {
-    if (!import.meta.client || !enabled.value || pendingStationId.value) return;
+    if (!import.meta.client || !enabled.value) return;
+    // Country switching is immediate. The Global lookup is asynchronous:
+    // a newer explicit station choice must win, not be ignored while an
+    // earlier TuneIn request is still pending.
+    if (pendingStationId.value) {
+      if (pendingStationId.value === station.id) return;
+      activeController?.abort();
+      activeController = null;
+      pendingStationId.value = '';
+    }
     error.value = '';
     const stationUrl = '/global-radio/apple-music/' + station.id;
     if (playback.station?.url === stationUrl) {
