@@ -940,3 +940,12 @@ Do not touch PlayerSession or the global audio dock for navigation fixes.
 - The `pull_request_target` workflow is trusted definition only. Building PR code happens in a read-only job with no secrets and no persisted checkout credentials; the deploy job never executes PR files, and verifies live PR status and SHA before publishing.
 - Preview mode `ONAIR_PR_PREVIEW=true` limits prerender to representative pages and forces noindex/no GA4; normal staging and production generation, SEO text, sitemaps and analytics must remain unchanged.
 - Delete only the closed PR directory, enforce combined output below 900 MB, and keep destination PAT access strictly scoped. See `docs/PR_PREVIEWS.md`.
+
+## 2026-11-05 — Preview workflow rules
+
+- Keep `pr-preview-pages.yml` on both `main` and `develop`. `pull_request_target` loads the workflow from default branch `main` while matching PRs aimed at `develop`.
+- A preview runs on PR open/reopen/update, not on merge into `develop`.
+- Publish a preview link only after the Pages endpoint serves the exact head SHA marker and `noindex` HTML. A successful push is not proof of a working website.
+- Update a single bot comment, and remove the PR-specific preview after close. Smoke-test PRs such as #367 should be closed without merging.
+- For small, explicitly authorized workflow or documentation fixes, commit directly when branch policy permits instead of creating unnecessary PRs. Keep product changes and sensitive CI changes subject to review.
+
