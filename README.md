@@ -93,6 +93,18 @@ All four workflows share a repository-wide concurrency queue. The workflows are:
 
 See [deployment setup and cutover](./docs/GITHUB_PAGES.md) and [workflow policy](./docs/GITHUB_ACTIONS.md).
 
+## Pull request previews (GitHub Pages)
+
+Feature and bugfix PRs **opened, reopened, or updated** against `develop` get a temporary preview through the existing GitHub Pages publishing mechanism. **Merging a PR into `develop` does not create a preview for that merge.**
+
+- The workflow definition `.github/workflows/pr-preview-pages.yml` **must exist on the default branch `main`**, even though its `pull_request_target` filter is `branches: [develop]`. Keep the same workflow synchronized on `develop`.
+- The build job checks out PR code **without secrets**, runs tests and builds a representative `noindex` site with production GA4 disabled. Only the trusted publisher uses the existing `PAGES_DEPLOY_TOKEN` and `PAGES_DEV_READY=true`, writing to `ePlus-DEV/onair-pr-previews`.
+- GitHub Actions bot **updates one PR comment only after the public Pages URL serves the expected PR commit SHA and a `noindex` HTML page**. Successful artifact upload, `git push`, or Pages deployment alone is **not proof that the link works**.
+- Closing a PR removes only its own `pr-preview/pr-<number>/` folder. Smoke-test PRs such as [#367](https://github.com/ePlus-DEV/radio.eplus.dev/pull/367) must be **closed without merging** after testing.
+- No new hosting provider, deployment token, readiness variable, or production/staging URL is required. For small, authorized documentation/workflow maintenance, prefer a direct commit on the appropriate branch instead of creating unnecessary PRs; follow branch protection and use a PR for product releases or risky changes.
+
+See [PR Preview runbook](./docs/PR_PREVIEWS.md), [workflow policy](./docs/GITHUB_ACTIONS.md), and [agent rules](./AGENTS.md).
+
 ## Station social images and the GitHub Pages size limit
 
 Normal Pages builds use `npm run generate:site` with `ONAIR_SKIP_STATION_OG=true`, retain in-catalog station artwork, and fall back to the shared brand preview for station Open Graph cards until a complete external image set is configured.
