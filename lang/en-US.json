@@ -2,6 +2,29 @@
   "404": {
     "content": "Sorry, the page you are looking for does not exist."
   },
+  "global_radio": {
+    "eyebrow": "Global network",
+    "title": "Global Radio",
+    "description": "Discover international radio networks beyond country-based catalogs.",
+    "providers": "Radio providers",
+    "provider_count": "providers",
+    "external_badge": "Opens externally",
+    "apple_description": "Explore six Apple Music live radio stations, organized as a global provider rather than a country catalog.",
+    "explore_provider": "Explore stations",
+    "external_note": "Apple Music radio opens on Apple's website. It does not play through the ePlus OnAir player or count toward local listening statistics.",
+    "by_country": "Browse radio by country",
+    "home": "Home",
+    "breadcrumb": "Breadcrumb",
+    "open_provider": "Open Apple Music",
+    "apple_access": "Sign in with your Apple Account to listen. An Apple Music subscription is not required for these six live stations. Availability may vary by region.",
+    "stations": "Live radio stations",
+    "station_count": "stations",
+    "details": "Station details",
+    "listen_on_apple": "Listen on Apple Music",
+    "origin": "Country of origin",
+    "how_listen": "How to listen",
+    "back_to_provider": "All Apple Music Radio stations"
+  },
   "navmenu": {
     "more": "More",
     "information": "Information",
