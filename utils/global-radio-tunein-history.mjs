@@ -53,7 +53,7 @@ function asTrack(node) {
   const playing = clean(node.playing);
   // TuneIn's outline.playing field means "Artist - Song"; it represents a
   // current track, not the station's current show/programme label.
-  if (playing && !title && !artist) {
+  if (playing && (!title || !artist)) {
     const index = playing.indexOf(' - ');
     if (index > 0) {
       artist = clean(playing.slice(0, index));
@@ -61,9 +61,7 @@ function asTrack(node) {
     }
   }
   const itemType = clean(node.item || node.type || node.element).toLowerCase();
-  if (!title && artist && /^(song|track)$/.test(itemType)) {
-    title = clean(node.text);
-  }
+  if (!title && /^(song|track)$/.test(itemType)) title = clean(node.text);
   if (!artist && /^(song|track)$/.test(itemType)) artist = clean(node.subtext);
   // A show title or station slogan is NOT a song. Require both song and artist.
   if (!title || !artist || title.toLowerCase() === artist.toLowerCase()) return null;
@@ -105,6 +103,14 @@ export function parseTuneInHistory(payload) {
       }
     }
     if (Array.isArray(row.children)) pending.push(...row.children.slice(0, MAX_NODES - inspected));
+  }
+  // A provider may return a current song after its history container.
+  // Put a positively identified live track first; never label an ordinary
+  // history row LIVE merely because it appears at index zero.
+  if (nowPlaying) {
+    const index = playlist.findIndex(track => track.track_title === nowPlaying.title
+      && track.track_artist === nowPlaying.artist);
+    if (index > 0) playlist.unshift(playlist.splice(index, 1)[0]);
   }
   return { playlist, nowPlaying };
 }
