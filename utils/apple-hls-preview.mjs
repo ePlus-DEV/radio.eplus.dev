@@ -21,9 +21,17 @@ export function inspectAppleHlsPreviewUrl(value, stationPageUrl, now = Date.now(
   if (url.protocol !== 'https:' || url.hostname !== APPLE_HLS_HOST ||
       url.username || url.password || url.port || url.hash) return fail('invalid');
   const match = url.pathname.match(SIGNED_PLAYLIST_PATH);
-  if (!match) return fail('invalid');
+  const holidayVariant = url.pathname.match(/^\/3p-tune-in\/tune_in\/ppa\/usw\/(64|256)\.m3u8$/);
+  const holidayMaster = url.pathname === '/3p-tune-in/tune_in/ppa/index-cmaf.m3u8';
+  if (!match && !holidayVariant && !holidayMaster) return fail('invalid');
   const expectedStationId = String(stationPageUrl ?? '').match(/\/ra\.(\d+)(?:[?#]|$)/)?.[1];
-  if (!expectedStationId || match[1] !== expectedStationId) return fail('station_mismatch');
+  if (!expectedStationId) return fail('station_mismatch');
+  // The 'ppa' HLS path is observed only for Holiday Hits, Apple radio 6825447412.
+  // The playlist already embeds its own signed child URLs; do not reuse a
+  // master token to construct bitrate-specific or media-segment requests.
+  if (match ? match[1] !== expectedStationId : expectedStationId !== '6825447412') {
+    return fail('station_mismatch');
+  }
   if (url.searchParams.size !== 1 || url.searchParams.getAll('accessKey').length !== 1) return fail('invalid');
   const accessKey = url.searchParams.get('accessKey') || '';
   // Timestamp prefix is empirically observed, not a published Apple contract.
@@ -33,7 +41,13 @@ export function inspectAppleHlsPreviewUrl(value, stationPageUrl, now = Date.now(
   if (!Number.isSafeInteger(expiresAt) || expiresAt <= now + 30_000) {
     return { ...fail('expired'), expiresAt: Number.isSafeInteger(expiresAt) ? expiresAt : null };
   }
-  return { ok: true, reason: 'ready', expiresAt, stationId: match[1], qualityLabel: match[2] };
+  return {
+    ok: true,
+    reason: 'ready',
+    expiresAt,
+    stationId: expectedStationId,
+    qualityLabel: match?.[2] || holidayVariant?.[1] || 'auto',
+  };
 }
 
 export function appleHlsPreviewExpiry(url, now = Date.now()) {
