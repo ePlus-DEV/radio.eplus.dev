@@ -16,7 +16,7 @@
         class="flex h-9 items-center justify-between rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3"
       >
         <span class="truncate text-xs font-semibold text-[var(--radio-text)]">
-          {{ hasStations ? $t("panel.channels") : $t("panel.schedule") }}
+          {{ hasStations ? $t("panel.channels") : $t(hasTuneInHistory ? "panel.playlist" : "panel.schedule") }}
         </span>
         <span class="radio-count-badge inline-flex min-w-6 items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-semibold">
           {{ hasStations ? stations.length : scheduleCount }}
@@ -29,6 +29,7 @@
           class="min-h-9" :aria-label="$t('panel.schedule_jump_to_now')"
           @click="recenterSchedule">{{ $t('panel.schedule_jump_to_now') }}</UButton>
       </div>
+      <p v-if="activeTab === 'schedule' && hasTuneInHistory" class="mt-2 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('panel.tunein_history_note') }}</p>
       <div v-if="activeTab === 'schedule' && scheduleSourceUrl" class="mt-3 space-y-1 text-xs leading-5">
         <p class="text-[var(--radio-text-muted)]">
           {{ $t(scheduleIsReference ? 'panel.schedule_reference_note' : 'panel.schedule_official_note') }}
@@ -78,7 +79,7 @@
     </div>
 
     <div ref="scheduleScrollContainer" class="radio-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5"
-      tabindex="0" :aria-label="activeTab === 'schedule' ? $t('panel.schedule') : $t('panel.channels')"
+      tabindex="0" :aria-label="activeTab === 'schedule' ? $t(hasTuneInHistory ? 'panel.playlist' : 'panel.schedule') : $t('panel.channels')"
       @wheel.passive="markScheduleBrowsed" @touchstart.passive="markScheduleBrowsed"
       @pointerdown="markScheduleBrowsed" @keydown="onScheduleScrollKeydown">
       <div v-if="activeTab === 'stations' && hasStations" class="space-y-1">
@@ -243,13 +244,13 @@
             :key="playlistKey(item, index)"
             class="group relative flex min-w-0 items-center gap-3 overflow-hidden rounded-xl px-2.5 py-2.5 transition"
             :class="
-              index === 0
+              isLivePlaylistTrack(item, index)
                 ? 'bg-[var(--radio-surface-soft)] ring-1 ring-inset ring-[var(--radio-border)]'
                 : 'hover:bg-[var(--radio-hover)]'
             "
           >
             <span
-              v-if="index === 0"
+              v-if="isLivePlaylistTrack(item, index)"
               class="absolute inset-y-2 left-0 w-0.5 rounded-full bg-rose-500"
               aria-hidden="true"
             ></span>
@@ -273,7 +274,7 @@
             </div>
 
             <span
-              v-if="index === 0"
+              v-if="isLivePlaylistTrack(item, index)"
               class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-rose-500"
             >
               <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
@@ -287,6 +288,7 @@
             </span>
           </div>
         </template>
+        <p v-else-if="hasTuneInHistory" class="p-3 text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t('panel.tunein_history_unavailable') }}</p>
         <p v-else-if="scheduleSourceUrl" class="p-3 text-sm leading-6 text-[var(--radio-text-muted)]">
           {{ $t('panel.schedule_provider_only') }}
         </p>
@@ -297,6 +299,8 @@
 
 <script setup lang="ts">
 import { useListeningStore } from '~/stores/listening';
+import { usePlaybackStore } from '~/stores/playback';
+import { appleTuneInStationId } from '~/utils/global-radio-tunein-history.mjs';
 import type { RadioStationOption } from "~/types/radio";
 import { filterQueueStations } from "~/utils/station-search.mjs";
 import { stationCountryKey, queueCountryKey } from "~/utils/queue-station-country.mjs";
@@ -356,6 +360,17 @@ defineEmits<{
 const query = ref("");
 const favoritesOnly = ref(false);
 const listening = useListeningStore();
+const playback = usePlaybackStore();
+const hasTuneInHistory = computed(() => Boolean(appleTuneInStationId({
+  id: props.activeStationId, url: props.activeStationUrl,
+})));
+const isLivePlaylistTrack = (item: PlaylistItem, index: number): boolean => {
+  if (index !== 0) return false;
+  if (!hasTuneInHistory.value) return true;
+  const current = playback.liveTrack;
+  return Boolean(current && current.stationUrl === props.activeStationUrl
+    && current.title === item.track_title && current.artist === item.track_artist);
+};
 onMounted(() => listening.hydrate());
 const hasStations = computed(() => props.stations.length > 0);
 const sharedCountryKey = computed(() => queueCountryKey(props.stations));
@@ -369,13 +384,13 @@ const isActiveStation = (station: RadioStationOption): boolean =>
     ? station.url === props.activeStationUrl
     : station.id === props.activeStationId;
 const hasSchedule = computed(
-  () => props.playlist.length > 0 || props.program.length > 0 || Boolean(props.scheduleSourceUrl),
+  () => props.playlist.length > 0 || props.program.length > 0 || Boolean(props.scheduleSourceUrl) || hasTuneInHistory.value,
 );
 const scheduleCount = computed(
   () => props.program.length || props.playlist.length,
 );
 const tabs = computed(() => [
-  { label: t('panel.schedule'), value: 'schedule', badge: scheduleCount.value },
+  { label: t(hasTuneInHistory.value ? 'panel.playlist' : 'panel.schedule'), value: 'schedule', badge: scheduleCount.value },
   { label: t('panel.channels'), value: 'stations', badge: props.stations.length },
 ]);
 const activeTab = ref<"stations" | "schedule">(
