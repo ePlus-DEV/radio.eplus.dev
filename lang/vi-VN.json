@@ -2,6 +2,29 @@
   "404": {
     "content": "Rất tiếc, trang bạn đang tìm không tồn tại."
   },
+  "global_radio": {
+    "eyebrow": "Mạng radio quốc tế",
+    "title": "Global Radio",
+    "description": "Khám phá các mạng phát thanh quốc tế ngoài danh mục phân loại theo quốc gia.",
+    "providers": "Nhà cung cấp radio",
+    "provider_count": "nhà cung cấp",
+    "external_badge": "Mở bên ngoài",
+    "apple_description": "Khám phá sáu đài radio trực tiếp của Apple Music trong một nhóm toàn cầu, không gán vào một quốc gia giả.",
+    "explore_provider": "Khám phá các đài",
+    "external_note": "Đài Apple Music mở trên trang của Apple, không phát trong ePlus OnAir và không tính vào thống kê nghe cục bộ.",
+    "by_country": "Duyệt radio theo quốc gia",
+    "home": "Trang chủ",
+    "breadcrumb": "Đường dẫn trang",
+    "open_provider": "Mở Apple Music",
+    "apple_access": "Đăng nhập bằng Tài khoản Apple để nghe. Sáu đài trực tiếp này không cần đăng ký Apple Music. Khả năng truy cập tùy thuộc khu vực.",
+    "stations": "Các đài phát trực tiếp",
+    "station_count": "đài",
+    "details": "Chi tiết đài",
+    "listen_on_apple": "Nghe trên Apple Music",
+    "origin": "Quốc gia xuất xứ",
+    "how_listen": "Cách nghe",
+    "back_to_provider": "Tất cả đài Apple Music Radio"
+  },
   "navmenu": {
     "more": "Thêm",
     "information": "Thông tin",
