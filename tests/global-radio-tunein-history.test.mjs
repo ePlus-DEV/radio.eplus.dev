@@ -127,3 +127,11 @@ test('existing player receives song and artist via shared live track and playlis
   assert.match(session, /:playlist="playlist"/);
   assert.doesNotMatch(realtime, /Playing\.ashx|accessKey|\.play\(/);
 });
+
+test('the playlist UI imports the surviving TuneIn metadata module (Nuxt build regression)', async () => {
+  const queue = await readFile(new URL('../components/player/Queue.vue', import.meta.url), 'utf8');
+  const moduleSource = await readFile(new URL('../utils/global-radio-tunein-metadata.mjs', import.meta.url), 'utf8');
+  assert.match(queue, /import \\{ appleTuneInStationId \\} from ['"]~\\/utils\\/global-radio-tunein-metadata\\.mjs['"]/);
+  assert.doesNotMatch(queue, /global-radio-tunein-history\\.mjs/);
+  assert.match(moduleSource, /export function appleTuneInStationId\\(/);
+});
