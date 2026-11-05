@@ -4,6 +4,7 @@ import { isZingScheduleUrl } from '~/utils/station-schedule.mjs';
 import { getVietnamSchedule, vietnamReferencePrograms } from '~/utils/vietnam-schedules.mjs';
 import { createStationPolling } from '~/utils/station-polling.mjs';
 import { resolveLiveTrack } from '~/utils/live-track.mjs';
+import { appleTuneInHistoryMarker, stationIdFromTuneInHistoryMarker, fetchPublicTuneInHistory } from '~/utils/global-radio-tunein-history.mjs';
 
 export function useStationRealtime() {
   const playback = usePlaybackStore();
@@ -58,9 +59,24 @@ export function useStationRealtime() {
     return { song: currentSong, lyrics: lines };
   };
 
-  interface RealtimeData { program: RadioProgram[]; playlist: RadioTrack[]; song?: RadioSong; lyrics: string[] }
+  interface RealtimeData {
+    program: RadioProgram[];
+    playlist: RadioTrack[];
+    song?: RadioSong;
+    lyrics: string[];
+    isTuneInHistory?: boolean;
+    nowPlaying?: { title: string; artist: string } | null;
+  }
   const fetchSchedule = async (url: string, signal: AbortSignal): Promise<RealtimeData | undefined> => {
     if (!import.meta.client || !clientReady) return;
+    // Apple Music's signed TuneIn HLS URL must never be used for metadata.
+    // Read the separate, anonymous playlist endpoint for known station IDs.
+    const tuneInId = stationIdFromTuneInHistoryMarker(url);
+    if (tuneInId) {
+      const result = await fetchPublicTuneInHistory({ stationId: tuneInId, signal });
+      return { program: [], playlist: result.playlist, lyrics: [],
+        isTuneInHistory: true, nowPlaying: result.nowPlaying };
+    }
     const value = await $fetch<{ err?: number; success?: boolean; data?: { items?: RadioProgram[] }; result?: RadioTrack[] }>(timestampUrl(url), { signal, timeout: 10_000 });
     if (isZingScheduleUrl(url)) {
       const items = value.err === 0 ? value.data?.items || [] : [];
@@ -80,9 +96,19 @@ export function useStationRealtime() {
       playlist.value = value.playlist;
       song.value = value.song;
       lyrics.value = value.lyrics;
-      playback.setLiveTrack(playback.station?.url || '', resolveLiveTrack(value.song, value.playlist));
+      // Provider history is not proof of what's audible NOW. The latest row
+      // may be delayed, so only label a TuneIn song when explicitly marked current.
+      playback.setLiveTrack(playback.station?.url || '',
+        value.isTuneInHistory ? (value.nowPlaying || null)
+          : resolveLiveTrack(value.song, value.playlist));
     },
     onLoading: (value: boolean) => { loading.value = value; },
+    onError: () => {
+      if (appleTuneInHistoryMarker(playback.station)) {
+        playlist.value = [];
+        playback.setLiveTrack(playback.station?.url || '', null);
+      }
+    },
   });
 
   const activate = () => {
@@ -95,7 +121,9 @@ export function useStationRealtime() {
     lyrics.value = [t('panel.updating')];
     lyricsOpen.value = false;
     if (!import.meta.client || !clientReady) return;
-    polling.start(playback.station?.schedule || '');
+    // One existing polling lifetime for both station EPG and TuneIn's history:
+    // station switches abort old requests, no extra player or background timer.
+    polling.start(appleTuneInHistoryMarker(playback.station) || playback.station?.schedule || '');
   };
   watch(() => playback.station?.url, activate);
   let referenceTimer: ReturnType<typeof setInterval> | null = null;
