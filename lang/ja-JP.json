@@ -419,6 +419,24 @@
       }
     }
   },
+  "surprise": {
+    "title": "おまかせ再生",
+    "heading": "新しいラジオ局を発見",
+    "description": "実際のカタログからランダムに選びます。ボタンを押した場合にのみ再生します。",
+    "filters": "絞り込み",
+    "action": "ランダム再生",
+    "loading": "放送局カタログを読み込み中…",
+    "unavailable": "放送局を読み込むか再生できませんでした。もう一度お試しください。",
+    "country": "国",
+    "any_country": "すべての国",
+    "genre": "ジャンル",
+    "any_genre": "すべてのジャンル",
+    "language": "言語",
+    "any_language": "すべての言語",
+    "available_count": "一致する放送局: {count}局",
+    "empty": "条件に一致する放送局がありません。",
+    "selected": "選択した放送局"
+  },
   "home": {
     "live_badge": "インターネットラジオ生放送",
     "title": "世界中のラジオをライブで楽しもう",
