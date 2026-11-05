@@ -3,92 +3,102 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PUBLIC_APPLE_TUNEIN_STATIONS } from '../utils/global-radio-public-tunein.mjs';
 import {
-  appleTuneInStationId, appleTuneInHistoryMarker, stationIdFromTuneInHistoryMarker,
-  buildPublicTuneInHistoryRequest, parseTuneInHistory, fetchPublicTuneInHistory,
-} from '../utils/global-radio-tunein-history.mjs';
+  appleTuneInStationId, appleTuneInMetadataMarker, stationIdFromTuneInMetadataMarker,
+  buildPublicTuneInMetadataRequest, parseTuneInStationMetadata, fetchPublicTuneInMetadata,
+  addTuneInSessionTrack,
+} from '../utils/global-radio-tunein-metadata.mjs';
 
-test('only seven exact Apple Music station paths can request anonymous history', () => {
+test('only seven verified Apple TuneIn station IDs may request Describe metadata', () => {
   assert.equal(Object.keys(PUBLIC_APPLE_TUNEIN_STATIONS).length, 7);
   for (const [id, station] of Object.entries(PUBLIC_APPLE_TUNEIN_STATIONS)) {
     const entry = { id, url: '/global-radio/apple-music/' + id };
     assert.equal(appleTuneInStationId(entry), id);
-    assert.equal(stationIdFromTuneInHistoryMarker(appleTuneInHistoryMarker(entry)), id);
-    const url = buildPublicTuneInHistoryRequest(id);
-    assert.ok(url.startsWith('https://cors-eplus-bba6d8ad0ca6.herokuapp.com/https://opml.radiotime.com/Browse.ashx?'));
-    assert.equal(new URL(url).searchParams.get('c'), 'playlist');
+    assert.equal(stationIdFromTuneInMetadataMarker(appleTuneInMetadataMarker(entry)), id);
+    const url = buildPublicTuneInMetadataRequest(id);
+    assert.ok(url.startsWith('https://cors-eplus-bba6d8ad0ca6.herokuapp.com/https://opml.radiotime.com/Describe.ashx?'));
     assert.equal(new URL(url).searchParams.get('id'), station.tunein);
     assert.equal(new URL(url).searchParams.get('render'), 'json');
+    assert.ok(!url.includes('Browse.ashx') && !url.includes('Playing.ashx'));
     for (const forbidden of ['partnerId', 'partnerKey', 'accessKey', 'itemToken', 'paln'])
       assert.equal(new URL(url).searchParams.has(forbidden), false);
   }
-  assert.equal(buildPublicTuneInHistoryRequest('../evil'), null);
-  assert.equal(appleTuneInHistoryMarker({ id: 'apple-music-1', url: '/asia/vietnam/apple-music-1' }), '');
-  assert.equal(stationIdFromTuneInHistoryMarker('tunein-apple-history:../../wrong'), '');
+  assert.equal(buildPublicTuneInMetadataRequest('../evil'), null);
+  assert.equal(appleTuneInMetadataMarker({ id: 'apple-music-1', url: '/asia/vietnam/apple-music-1' }), '');
+  assert.equal(stationIdFromTuneInMetadataMarker('tunein-apple-metadata:../../wrong'), '');
 });
 
-test('parses real-song fields, nested history and explicitly marked current track', () => {
-  const result = parseTuneInHistory({
+test('uses only explicit current_song and current_artist fields', () => {
+  assert.deepEqual(parseTuneInStationMetadata({
     head: { status: '200' },
-    body: [{
-      key: 'history', children: [
-        { element: 'outline', type: 'song', text: 'Earlier Song', subtext: 'Earlier Artist', time: '1793900000' },
-        { element: 'outline', current_track: 'An Apple Music show', text: 'Apple Music 1' },
-        { element: 'outline', playing: 'Live Artist - Live Song', text: 'Apple Music 1' },
-        { element: 'outline', playing: 'Live Artist - Live Song', text: 'Apple Music 1' },
-      ],
-    }],
-  });
-  assert.deepEqual(result.nowPlaying, { title: 'Live Song', artist: 'Live Artist' });
-  assert.equal(result.playlist.length, 2);
-  assert.deepEqual(result.playlist.map(row => row.track_title), ['Live Song', 'Earlier Song']);
-  assert.equal(result.playlist[1].track_played, 1793900000);
+    body: [{ element: 'station', guide_id: 's345732', name: 'Apple Music 1',
+      current_song: 'A Real Song', current_artist: 'A Real Artist', current_album: 'Album',
+      publish_song: 'true' }],
+  }, 'apple-music-1'), { title: 'A Real Song', artist: 'A Real Artist' });
 });
 
-test('history is not proof that a song is playing right now', () => {
-  const result = parseTuneInHistory({ body: [
-    { title: 'Past Song', artist: 'Past Artist', track_played: 1793900000 },
-    { title: 'An announcement', commercial: true, artist: 'Voice' },
-    { text: 'The Dotty Show', current_track: 'The Dotty Show' },
-    { text: 'Station slogan', subtext: 'Not a song' },
-    { title: 'No artist' },
-    { type: 'song', text: 'Another Song', subtext: 'Another Artist' },
-  ] });
-  assert.equal(result.nowPlaying, null);
-  assert.deepEqual(result.playlist.map(item => item.track_title), ['Past Song', 'Another Song']);
-  assert.ok(result.playlist.every(item => item.track_image === ''));
+test('rejects show titles, station labels, incomplete fields, commercials and wrong station', () => {
+  const validStation = 'apple-music-1';
+  for (const row of [
+    { element: 'station', name: 'Apple Music 1', playing: 'DJ - The Dotty Show' },
+    { element: 'station', current_song: 'Song only' },
+    { element: 'station', current_artist: 'Artist only' },
+    { element: 'station', current_song: 'Song', current_artist: 'Song' },
+    { element: 'station', guide_id: 's345724', current_song: 'Other song', current_artist: 'Other artist' },
+    { element: 'station', current_song: 'Song', current_artist: 'Artist', commercial: 'true' },
+    { element: 'station', current_song: 'Song', current_artist: 'Artist', has_song: 'false' },
+    { element: 'station', current_song: 'Song', current_artist: 'Artist', publish_song: false },
+    { element: 'show', current_song: 'Show', current_artist: 'DJ' },
+  ]) {
+    assert.equal(parseTuneInStationMetadata({ body: [row] }, validStation), null);
+  }
+  assert.throws(() => parseTuneInStationMetadata({ head: { status: 403 }, body: [] }, validStation), /unavailable/);
+  assert.throws(() => parseTuneInStationMetadata({ body: [] }, 'invalid'), /invalid_station/);
+  assert.equal(parseTuneInStationMetadata(null, validStation), null);
 });
 
-test('malformed responses, provider faults and oversized history fail closed', () => {
-  assert.throws(() => parseTuneInHistory({ head: { status: 403 }, body: [] }), /unavailable/);
-  assert.deepEqual(parseTuneInHistory(null), { playlist: [], nowPlaying: null });
-  assert.deepEqual(parseTuneInHistory({ body: [{ text: 'Apple Music Hits' }] }), { playlist: [], nowPlaying: null });
-  const many = Array.from({ length: 200 }, (_, i) => ({ title: 'Track ' + i, artist: 'Artist' }));
-  assert.ok(parseTuneInHistory({ body: many }).playlist.length <= 30);
+test('session playlist records only distinct observed songs, without a fake broadcast timestamp', () => {
+  const first = { title: 'Song One', artist: 'Artist One' };
+  const second = { title: 'Song Two', artist: 'Artist Two' };
+  let playlist = addTuneInSessionTrack([], null);
+  assert.deepEqual(playlist, []);
+  playlist = addTuneInSessionTrack(playlist, first);
+  playlist = addTuneInSessionTrack(playlist, first);
+  assert.equal(playlist.length, 1);
+  playlist = addTuneInSessionTrack(playlist, second);
+  assert.deepEqual(playlist.map(song => song.track_title), ['Song Two', 'Song One']);
+  assert.equal(playlist[0].track_artist, 'Artist Two');
+  assert.equal(playlist[0].track_played, 0);
+  assert.deepEqual(addTuneInSessionTrack(playlist, null), playlist);
+  playlist = addTuneInSessionTrack(playlist, first);
+  assert.deepEqual(playlist.map(song => song.track_title), ['Song One', 'Song Two', 'Song One']);
+  for (let i = 0; i < 100; i++) playlist = addTuneInSessionTrack(playlist, { title: String(i), artist: 'Singer' });
+  assert.equal(playlist.length, 30);
 });
 
-test('read-only provider request uses no credentials and supports cancellation', async () => {
+test('read-only Describe request has no credentials and supports cancellation', async () => {
   const stationId = 'apple-music-1';
   const controller = new AbortController();
   let capturedSignal;
-  const result = await fetchPublicTuneInHistory({
+  const result = await fetchPublicTuneInMetadata({
     stationId, signal: controller.signal,
     fetcher: async (url, opts) => {
       assert.equal(opts.method, 'GET');
       assert.equal(opts.cache, 'no-store');
       assert.equal(opts.credentials, 'omit');
-      assert.ok(url.includes('/Browse.ashx?'));
+      assert.ok(url.includes('/Describe.ashx?'));
       capturedSignal = opts.signal;
-      return { ok: true, json: async () => ({ head: { status: 200 }, body: [] }) };
+      return { ok: true, json: async () => ({ head: { status: 200 }, body: [
+        { element: 'station', current_song: 'Hello', current_artist: 'World' },
+      ] }) };
     },
   });
-  assert.deepEqual(result, { playlist: [], nowPlaying: null });
+  assert.deepEqual(result, { title: 'Hello', artist: 'World' });
   assert.equal(capturedSignal.aborted, false);
-  await assert.rejects(fetchPublicTuneInHistory({ stationId: 'invalid', fetcher: async () => {
-    assert.fail('must not request an unknown station');
+  await assert.rejects(fetchPublicTuneInMetadata({ stationId: 'invalid', fetcher: async () => {
+    assert.fail('must not call unknown stations');
   } }), /invalid_station/);
-
   const pending = new AbortController();
-  const promise = fetchPublicTuneInHistory({
+  const promise = fetchPublicTuneInMetadata({
     stationId, signal: pending.signal,
     fetcher: async (_url, opts) => new Promise((_resolve, reject) => {
       opts.signal.addEventListener('abort', () => reject(new Error('aborted')), { once: true });
@@ -98,16 +108,16 @@ test('read-only provider request uses no credentials and supports cancellation',
   await assert.rejects(promise, /aborted/);
 });
 
-test('one station polling flow feeds shared mobile/desktop queue without touching audio', async () => {
+test('existing player receives song and artist via shared live track and playlist', async () => {
   const realtime = await readFile(new URL('../composables/useStationRealtime.ts', import.meta.url), 'utf8');
   const queue = await readFile(new URL('../components/player/Queue.vue', import.meta.url), 'utf8');
   const session = await readFile(new URL('../components/player/Session.vue', import.meta.url), 'utf8');
-  assert.match(realtime, /fetchPublicTuneInHistory/);
-  assert.match(realtime, /polling\.start\(appleTuneInHistoryMarker/);
-  assert.match(realtime, /value\.isTuneInHistory \? \(value\.nowPlaying \|\| null\)/);
+  assert.match(realtime, /fetchPublicTuneInMetadata/);
+  assert.match(realtime, /addTuneInSessionTrack/);
+  assert.match(realtime, /polling\.start\(appleTuneInMetadataMarker/);
+  assert.match(realtime, /value\.isTuneInMetadata \? \(value\.nowPlaying \|\| null\)/);
   assert.match(queue, /hasTuneInHistory/);
   assert.match(queue, /isLivePlaylistTrack\(item, index\)/);
-  assert.match(queue, /panel\.tunein_history_unavailable/);
   assert.match(session, /:playlist="playlist"/);
   assert.doesNotMatch(realtime, /Playing\.ashx|accessKey|\.play\(/);
 });
