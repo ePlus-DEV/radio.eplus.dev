@@ -3,6 +3,10 @@
     "content": "К сожалению, запрошенная страница не найдена."
   },
   "global_radio": {
+    "eplus_play_hint": "Слушайте прямо на ePlus OnAir. Другие способы доступны на странице станции.",
+    "playing_now": "Играет",
+    "other_listening_options": "Другие способы прослушивания",
+    "external_options_hint": "Эти ссылки откроют сайт провайдера в новой вкладке.",
     "listen_on_eplus": "Слушать на ePlus",
     "connecting_on_eplus": "Подключение…",
     "resolver_unavailable": "Воспроизведение на ePlus недоступно. Слушайте через Apple Music или TuneIn.",

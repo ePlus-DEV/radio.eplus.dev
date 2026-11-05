@@ -3,6 +3,10 @@
     "content": "Sorry, the page you are looking for does not exist."
   },
   "global_radio": {
+    "eplus_play_hint": "Listen here on ePlus OnAir. Other listening options are available in station details.",
+    "playing_now": "Playing",
+    "other_listening_options": "Other listening options",
+    "external_options_hint": "These links open the provider's website in a new tab.",
     "listen_on_eplus": "Play on ePlus",
     "connecting_on_eplus": "Connecting…",
     "resolver_unavailable": "In-app playback is unavailable. Listen on Apple Music or TuneIn instead.",

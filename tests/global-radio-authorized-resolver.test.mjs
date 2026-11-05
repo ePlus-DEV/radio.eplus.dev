@@ -84,19 +84,21 @@ test('creates an ephemeral station for the existing single global player', () =>
   assert.equal(entry.schedule, '');
 });
 
-test('provider pages offer in-app playback only behind configured authorized resolver', async () => {
-  for (const path of ['pages/global-radio/apple-music/index.vue', 'pages/global-radio/apple-music/[station].vue']) {
-    const source = await readFile(new URL('../' + path, import.meta.url), 'utf8');
+test('provider pages keep ePlus one-click Play while external destinations remain detail-only', async () => {
+  const list = await readFile(new URL('../pages/global-radio/apple-music/index.vue', import.meta.url), 'utf8');
+  const detail = await readFile(new URL('../pages/global-radio/apple-music/[station].vue', import.meta.url), 'utf8');
+  for (const source of [list, detail]) {
     assert.match(source, /v-if="canListenOnEplus/);
     assert.match(source, /@click="playOnEplus\(station\)"/);
     assert.match(source, /useAuthorizedGlobalRadioPlayback/);
-    assert.match(source, /listen_on_apple/);
-    assert.match(source, /listen_on_tunein/);
     assert.doesNotMatch(source, /GlobalRadioTemporaryHlsPreview|\.m3u8|accessKey|<audio\b/);
   }
+  assert.doesNotMatch(list, /listen_on_apple|listen_on_tunein|:href="station\.listen_url"|:href="station\.tunein_url"/);
+  assert.match(detail, /listen_on_apple/);
+  assert.match(detail, /listen_on_tunein/);
 });
 
-test('only the ePlus-controlled resolver can enable the in-app CTA', async () => {
+test('optional ePlus-controlled resolver remains configurable as playback fallback', async () => {
   const config = await readFile(new URL('../nuxt.config.ts', import.meta.url), 'utf8');
   const env = await readFile(new URL('../.env.example', import.meta.url), 'utf8');
   assert.match(config, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL/);

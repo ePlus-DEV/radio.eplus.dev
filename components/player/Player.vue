@@ -1067,6 +1067,14 @@ const onSourceChange = (event: Event): void => {
 
 const selectStation = (station: RadioStationOption): void => {
   if (station.id === props.activeStationId) {
+    // The Global provider rotates signed HLS tokens. If a previously selected
+    // lease expired, a queue click must request a NEW stream rather than
+    // silently doing nothing because the current audio source is empty.
+    if (!hasPlayableSource.value && station.url?.startsWith('/global-radio/apple-music/')) {
+      mobileQueueOpen.value = false;
+      emit("select-station", station);
+      return;
+    }
     if (!playing.value && hasPlayableSource.value) {
       void onPlay();
     }

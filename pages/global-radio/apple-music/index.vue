@@ -44,9 +44,10 @@
       </div>
     </header>
 
-    <p class="flex items-start gap-2 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-3 text-xs leading-6 text-[var(--radio-text-muted)]">
-      <UIcon name="i-lucide-info" class="mt-1 h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
-      <span>{{ t('global_radio.apple_access') }} {{ t('global_radio.external_note') }}</span>
+    <!-- Playback is now in-app; provider-account information belongs on details. -->
+    <p class="flex items-center gap-2 text-xs leading-5 text-[var(--radio-text-muted)] sm:text-sm">
+      <UIcon name="i-lucide-headphones" class="h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" />
+      <span>{{ t('global_radio.eplus_play_hint') }}</span>
     </p>
 
     <p v-if="resolverError" role="alert" class="rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 text-sm text-amber-800 dark:text-amber-200">
@@ -62,56 +63,51 @@
       </div>
       <div class="grid min-w-0 gap-3 sm:grid-cols-2 2xl:grid-cols-3">
         <article v-for="station in provider?.stations || []" :key="station.id"
-          class="radio-surface group flex min-w-0 flex-col gap-3 rounded-2xl border border-[var(--radio-border)] p-4 transition-colors hover:border-rose-500/45 focus-within:border-rose-500/50 sm:p-5">
-          <div class="flex min-w-0 items-start gap-3">
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500/25 to-pink-900/15 text-rose-500"
+          class="radio-surface group flex min-w-0 flex-col gap-3 rounded-2xl border border-[var(--radio-border)] p-3.5 transition-colors hover:border-rose-500/45 focus-within:border-rose-500/50 sm:gap-4 sm:p-5"
+          :class="isStationActive(station.id) ? 'border-rose-500/55 ring-1 ring-rose-500/10' : ''">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500/25 to-pink-900/15 text-rose-500 sm:h-12 sm:w-12"
               aria-hidden="true">
-              <UIcon name="i-lucide-radio" class="h-6 w-6" />
+              <UIcon name="i-lucide-radio" class="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
             <div class="min-w-0 flex-1">
               <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
-                class="block line-clamp-2 text-sm font-bold hover:text-rose-500 sm:text-base">
+                class="block truncate text-sm font-bold text-[var(--radio-text)] transition-colors hover:text-rose-500 sm:text-base">
                 {{ station.title }}
               </NuxtLink>
-              <p class="mt-1 text-xs text-[var(--radio-text-muted)]">
+              <p class="mt-0.5 truncate text-xs text-[var(--radio-text-muted)]">
                 {{ station.genre }} · {{ station.language.toUpperCase() }}
               </p>
             </div>
+            <span v-if="isStationActive(station.id)"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-1 text-[10px] font-semibold text-rose-600 dark:text-rose-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-rose-500" :class="isStationPlaying(station.id) ? 'animate-pulse' : 'opacity-40'" aria-hidden="true" />
+              {{ t(isStationPlaying(station.id) ? 'global_radio.playing_now' : 'redesign.paused') }}
+            </span>
+            <UIcon v-else-if="station.seasonal" name="i-lucide-snowflake"
+              class="h-4 w-4 shrink-0 text-amber-500" :title="t('global_radio.seasonal')" aria-hidden="true" />
           </div>
-          <span v-if="station.seasonal" class="inline-flex w-fit items-center gap-1 rounded-md border border-amber-400/30 bg-amber-500/10 px-2 py-1 text-[11px] font-semibold text-amber-700 dark:text-amber-300">
-            <UIcon name="i-lucide-snowflake" class="h-3.5 w-3.5" aria-hidden="true" />
-            {{ t('global_radio.seasonal') }}
-          </span>
-          <p class="line-clamp-3 min-h-0 flex-1 text-sm leading-6 text-[var(--radio-text-muted)]">
+
+          <p class="line-clamp-2 min-h-0 flex-1 text-sm leading-5 text-[var(--radio-text-muted)]">
             {{ station.description }}
           </p>
-          <!-- In-app play appears only with an explicitly configured, approved resolver.
-               The default public experience remains the official provider links. -->
-          <div class="mt-auto space-y-2">
+
+          <!-- Exactly one primary listen action. External providers are detail-only. -->
+          <div class="mt-auto flex min-w-0 items-stretch gap-2">
             <button v-if="canListenOnEplus" type="button"
-              class="radio-interactive inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-rose-500 bg-rose-600 px-3 text-xs font-bold text-white transition-colors hover:bg-rose-700 disabled:cursor-wait disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-              :disabled="Boolean(pendingStationId)" @click="playOnEplus(station)">
-              <UIcon :name="pendingStationId === station.id ? 'i-lucide-loader-circle' : 'i-lucide-play'"
-                :class="pendingStationId === station.id ? 'h-4 w-4 animate-spin' : 'h-4 w-4'" aria-hidden="true" />
-              {{ t(pendingStationId === station.id ? 'global_radio.connecting_on_eplus' : 'global_radio.listen_on_eplus') }}
+              class="radio-interactive inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-wait disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+              :disabled="Boolean(pendingStationId)" :aria-pressed="isStationPlaying(station.id)"
+              :aria-label="t(isStationPlaying(station.id) ? 'player.pause' : 'global_radio.listen_on_eplus') + ': ' + station.title"
+              @click="playOnEplus(station)">
+              <UIcon :name="pendingStationId === station.id ? 'i-lucide-loader-circle' : isStationPlaying(station.id) ? 'i-lucide-pause' : 'i-lucide-play'"
+                :class="pendingStationId === station.id ? 'h-4 w-4 shrink-0 animate-spin' : 'h-4 w-4 shrink-0'" aria-hidden="true" />
+              <span class="truncate">{{ t(pendingStationId === station.id ? 'global_radio.connecting_on_eplus' : isStationPlaying(station.id) ? 'player.pause' : 'global_radio.listen_on_eplus') }}</span>
             </button>
-            <a :href="station.listen_url" target="_blank" rel="noopener noreferrer"
-              class="radio-interactive inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-xs font-bold text-white transition-colors hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
-              <UIcon name="i-lucide-external-link" class="h-4 w-4 shrink-0" aria-hidden="true" />
-              {{ t('global_radio.listen_on_apple') }}
-            </a>
-            <div class="flex min-w-0 items-center justify-between gap-2">
-              <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
-                class="radio-interactive inline-flex min-h-10 min-w-0 items-center gap-1 text-xs font-semibold text-rose-700 hover:underline dark:text-rose-300">
-                {{ t('global_radio.details') }}
-                <UIcon name="i-lucide-chevron-right" class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              </NuxtLink>
-              <a v-if="station.tunein_url" :href="station.tunein_url" target="_blank" rel="noopener noreferrer"
-                class="radio-interactive inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-lg border border-[var(--radio-border)] px-3 text-xs font-semibold text-[var(--radio-text)] transition-colors hover:border-rose-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
-                {{ t('global_radio.listen_on_tunein') }}
-                <UIcon name="i-lucide-external-link" class="h-3.5 w-3.5" aria-hidden="true" />
-              </a>
-            </div>
+            <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
+              class="radio-interactive inline-flex min-h-11 shrink-0 items-center justify-center gap-1 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 text-xs font-semibold text-[var(--radio-text)] transition-colors hover:border-rose-500 hover:text-rose-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:px-4">
+              {{ t('global_radio.details') }}
+              <UIcon name="i-lucide-chevron-right" class="h-4 w-4 shrink-0" aria-hidden="true" />
+            </NuxtLink>
           </div>
         </article>
       </div>
@@ -120,14 +116,21 @@
 </template>
 
 <script setup lang="ts">
+import { usePlaybackStore } from '~/stores/playback';
+
 const { t } = useI18n();
 const { data: provider } = await useAppleMusicProvider();
+const playback = usePlaybackStore();
 const {
   enabled: canListenOnEplus,
   play: playOnEplus,
   pendingStationId,
   error: resolverError,
-} = useAuthorizedGlobalRadioPlayback();
+} = useAuthorizedGlobalRadioPlayback(() => provider.value?.stations || []);
+const isStationActive = (id: string) =>
+  playback.station?.url === '/global-radio/apple-music/' + id;
+const isStationPlaying = (id: string) =>
+  isStationActive(id) && (playback.playing || playback.waiting);
 const title = computed(() => 'Apple Music Radio');
 const description = computed(() => t('global_radio.apple_description'));
 useStaticPageSeo({ title, description });

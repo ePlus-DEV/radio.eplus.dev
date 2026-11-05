@@ -1,5 +1,6 @@
 import { usePlaybackStore } from '~/stores/playback';
 import { resolveAuthorizedAppleStream } from '~/utils/global-radio-resolver.mjs';
+import { buildPublicTuneInRequest, resolvePublicTuneInStream } from '~/utils/global-radio-public-tunein.mjs';
 
 // Keeps a licensed HLS stream current while its shared player remains mounted.
 // One refresh timer at app scope, not one timer per route/card. No local storage.
@@ -7,7 +8,7 @@ export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
   const playback = usePlaybackStore();
   const endpoint = String(config.public.globalRadioResolverUrl || '');
-  if (!endpoint) return;
+  if (!endpoint && !buildPublicTuneInRequest('apple-music-1')) return;
 
   let timer: ReturnType<typeof setTimeout> | null = null;
   let currentRequest: AbortController | null = null;
@@ -18,22 +19,35 @@ export default defineNuxtPlugin(() => {
     const controller = new AbortController();
     currentRequest = controller;
     try {
-      const result = await resolveAuthorizedAppleStream({
-        endpoint,
-        station: { id: lease.stationId, listen_url: lease.listenUrl },
-        signal: controller.signal,
-      });
+      let result;
+      try {
+        result = await resolvePublicTuneInStream({
+          station: { id: lease.stationId }, signal: controller.signal,
+        });
+      } catch (publicError) {
+        if (!endpoint || controller.signal.aborted) throw publicError;
+        result = await resolveAuthorizedAppleStream({
+          endpoint,
+          station: { id: lease.stationId, listen_url: lease.listenUrl },
+          signal: controller.signal,
+        });
+      }
       if (version !== generation || controller.signal.aborted || !result.ok) return;
       playback.refreshGlobalRadioStream(lease.stationUrl, result.streamUrl, result.expiresAt);
     } catch {
-      // On expiry/authorization failure stop attempting to reuse the old URL.
-      // The listener can always open the official Apple/TuneIn destination.
+      // Country Radio retries transient network failures. Apply the same
+      // principle here while the current signed Global HLS lease is valid.
+      // A temporary TuneIn lookup failure must not stop playable audio early.
       if (version === generation && !controller.signal.aborted) {
-        if (playback.station?.url === lease.stationUrl) {
-          playback.pauseRequest += 1;
-          // Prevent the shared player from restarting an expired signed URL.
-          playback.station = { ...playback.station, sources: [] };
+        if (playback.station?.url !== lease.stationUrl) return;
+        if (Date.now() < lease.expiresAt - 5_000) {
+          const retryInMs = Math.min(10_000, Math.max(1_000, lease.expiresAt - Date.now() - 5_000));
+          timer = setTimeout(() => { void refresh(lease, version); }, retryInMs);
+          return;
         }
+        playback.pauseRequest += 1;
+        // Never let an expired signed Apple URL be reused by the shared player.
+        playback.station = { ...playback.station, sources: [] };
         playback.globalRadioLease = null;
       }
     } finally {
