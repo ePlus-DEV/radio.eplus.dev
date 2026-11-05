@@ -93,6 +93,10 @@ All four workflows share a repository-wide concurrency queue. The workflows are:
 
 See [deployment setup and cutover](./docs/GITHUB_PAGES.md) and [workflow policy](./docs/GITHUB_ACTIONS.md).
 
+## Pull request previews (GitHub Pages)
+
+Feature PRs targeting `develop` can have a separate static review link, served from the **dedicated** `ePlus-DEV/onair-pr-previews` GitHub Pages project. The preview workflow builds with no credentials, requires noindex/no production GA4, publishes only representative static routes, posts a link on the PR, and cleans up when the PR closes. Production and staging deployments are unchanged. **One-time destination repository/token setup is required before this is active.** See [PR Preview setup](./docs/PR_PREVIEWS.md).
+
 ## Station social images and the GitHub Pages size limit
 
 Normal Pages builds use `npm run generate:site` with `ONAIR_SKIP_STATION_OG=true`, retain in-catalog station artwork, and fall back to the shared brand preview for station Open Graph cards until a complete external image set is configured.
