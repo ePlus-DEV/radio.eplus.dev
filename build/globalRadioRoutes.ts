@@ -11,6 +11,8 @@ interface StationRecord {
   id: string;
   title: string;
   listen_url: string;
+  tunein_url?: string;
+  seasonal?: boolean;
 }
 interface GlobalProviderRecord {
   id: string;
@@ -47,6 +49,13 @@ export function getGlobalRadioRoutes(rootDir: string = process.cwd()) {
       const url = new URL(station.listen_url);
       if (url.protocol !== 'https:' || url.hostname !== 'music.apple.com' || !url.pathname.includes('/station/')) {
         throw new Error('External station link must be an Apple Music station page: ' + station.id);
+      }
+      if (station.tunein_url) {
+        const tuneIn = new URL(station.tunein_url);
+        if (tuneIn.protocol !== 'https:' || tuneIn.hostname !== 'tunein.com' ||
+            !/^\/radio\/Apple-/i.test(tuneIn.pathname)) {
+          throw new Error('Unexpected TuneIn page for ' + station.id);
+        }
       }
       routes.push({ loc: entry.href + '/' + station.id, priority: 0.5, changefreq: 'monthly' as const });
     }
