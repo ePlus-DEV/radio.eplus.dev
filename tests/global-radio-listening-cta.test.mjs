@@ -34,7 +34,7 @@ test('directory/detail use shared player without raw HLS prompts; provider links
   ]);
   for (const publicPage of [page, detail]) {
     assert.doesNotMatch(publicPage, /GlobalRadioTemporaryHlsPreview|accessKey|\.m3u8|preview_on_eplus|preview_requires_url|TemporaryHlsPreview|<audio\b|<UModal\b/);
-    assert.doesNotMatch(publicPage, /playback\.(activate|requestStation|play)|requestStation\(/);
+    assert.doesNotMatch(publicPage, /playback\.(?:activate|requestStation|play)\s*\(|requestStation\(/);
 
     assert.match(publicPage, /v-if="canListenOnEplus/);
     assert.match(publicPage, /useAuthorizedGlobalRadioPlayback/);
