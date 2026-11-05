@@ -42,11 +42,18 @@
             <div class="min-w-0 flex-1">
               <NuxtLink :to="`/global-radio/apple-music/${station.id}`" class="line-clamp-2 text-sm font-bold hover:text-rose-500 sm:text-base">{{ station.title }}</NuxtLink>
               <p class="mt-1 text-xs text-[var(--radio-text-muted)]">{{ station.genre }} · {{ station.language.toUpperCase() }}</p>
+              <span v-if="station.seasonal" class="mt-2 inline-flex items-center gap-1 rounded-md border border-amber-400/30 bg-amber-500/10 px-2 py-1 text-[11px] font-semibold text-amber-700 dark:text-amber-300">
+                <UIcon name="i-lucide-snowflake" class="h-3.5 w-3.5" aria-hidden="true" /> {{ t('global_radio.seasonal') }}
+              </span>
             </div>
           </div>
           <p class="line-clamp-3 text-sm leading-6 text-[var(--radio-text-muted)]">{{ station.description }}</p>
           <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
             <NuxtLink :to="`/global-radio/apple-music/${station.id}`" class="inline-flex min-h-10 items-center text-xs font-semibold text-rose-700 hover:underline dark:text-rose-300">{{ t('global_radio.details') }}</NuxtLink>
+            <a v-if="station.tunein_url" :href="station.tunein_url" target="_blank" rel="noopener noreferrer"
+              class="radio-interactive inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--radio-border)] px-3 text-xs font-semibold text-[var(--radio-text)] hover:border-rose-500">
+              {{ t('global_radio.listen_on_tunein') }} <UIcon name="i-lucide-external-link" class="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
             <a :href="station.listen_url" target="_blank" rel="noopener noreferrer"
               class="radio-interactive inline-flex min-h-10 items-center gap-2 rounded-xl bg-rose-600 px-3 text-xs font-bold text-white hover:bg-rose-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500">
               {{ t('global_radio.listen_on_apple') }} <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />
