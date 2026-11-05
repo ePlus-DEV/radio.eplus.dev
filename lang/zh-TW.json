@@ -543,6 +543,15 @@
     "manual": "請選取並複製此連結："
   },
   "recovery": {
+    "buffering": "正在緩衝直播音訊…",
+    "source_position": "音源 {index}/{total}",
+    "attempt": "嘗試 {attempt}/{limit}",
+    "reason_network": "瀏覽器回報網路問題，但不代表電台已離線。",
+    "reason_decode": "此音源無法解碼，或格式可能不受支援。",
+    "reason_timeout": "連線逾時前未收到音訊，請嘗試其他音源。",
+    "reason_unknown": "瀏覽器回報播放錯誤，原因尚未確認。",
+    "last_played": "本裝置上次播放時間：{time}",
+    "local_observation": "僅為本裝置當次工作階段的記錄，不代表電台整體可用狀態。",
     "offline": "你似乎已離線。請檢查網路後重試。",
     "unsupported": "剛才的音源無法解碼或不受此瀏覽器支援。請嘗試其他音源。",
     "exhausted": "多次重試後仍無法播放。請重試或選擇其他音源；電台可能仍可在其他裝置播放。",
