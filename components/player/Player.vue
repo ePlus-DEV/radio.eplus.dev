@@ -191,7 +191,7 @@ import type { RadioSource, RadioStationOption } from "~/types/radio";
 import {
   MAX_STREAM_ATTEMPTS,
   buildPlaybackSources,
-  nextPlaybackIndex,
+
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
@@ -656,6 +656,7 @@ const tryPlay = async (): Promise<void> => {
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
     waiting.value = false;
     playing.value = false;
+    clearStablePlaybackTimer();
 
     const name =
       error && typeof error === "object" && "name" in error
@@ -795,6 +796,7 @@ const configureHlsSource = async (
   hlsInstance.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
     if (version !== sourceVersion || !data?.fatal || !hlsInstance) return;
     sourceFailureReason.value = playbackFailureReason({ hlsType: data.type });
+    clearStablePlaybackTimer();
     if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
 
     waiting.value = false;
@@ -1170,14 +1172,10 @@ const updateOnlineStatus = (): void => {
 };
 
 const onMediaCanPlay = (): void => {
-  clearReconnectTimer();
-  // canplay only confirms buffered data, not uninterrupted live audio.
-  // Preserve the stall watchdog until the playing event.
-  streamError.value = false;
-
-  if (pendingAutoPlay.value && !userPaused.value && !playing.value) {
-    void tryPlay();
-  }
+  // Metadata/buffer readiness is not proof of actual audio delivery.
+  // Keep both reconnect and stall deadlines until onMediaPlaying confirms it.
+  if (userPaused.value || !pendingAutoPlay.value) return;
+  if (!playing.value) void tryPlay();
 };
 
 const onMediaPlaying = (): void => {
