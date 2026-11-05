@@ -3,8 +3,6 @@
     "content": "お探しのページは見つかりませんでした。"
   },
   "global_radio": {
-    "preview_on_eplus": "ePlusで試聴",
-    "preview_requires_url": "試験的な再生には、正当に利用できる有効期限内のApple HLS URLが必要です。ワンクリックでの常時再生ではありません。",
     "hls_preview_title": "実験的機能：一時的なHLSリンクを再生",
     "hls_preview_help": "正当に利用できるApple発行の短期間有効なHLS URLを、このブラウザーで試すことができます。外部サイトからの再生は拒否される場合があります。アクセスキーの取得・更新は行いません。",
     "hls_preview_input": "署名付きの一時HLS URL",
