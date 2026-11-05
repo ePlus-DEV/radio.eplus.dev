@@ -28,6 +28,17 @@ test('country queue badge is shown only for a homogeneous and valid queue', () =
   assert.equal(stationCountryKey('/asia/viet-nam/vov-gt-hcm?source=featured'), 'world.asia.viet_nam');
 });
 
+test('Global Apple queue labels resolve to provider, never a bogus country translation', () => {
+  const entries = [
+    { url: '/global-radio/apple-music/apple-music-1' },
+    { url: '/global-radio/apple-music/apple-music-hits' },
+  ];
+  assert.equal(stationCountryKey(entries[0].url), 'global_radio.title');
+  assert.equal(queueCountryKey(entries), 'global_radio.title');
+  assert.equal(queueCountryKey([entries[0], featured[0]]), '');
+  assert.equal(stationCountryKey('/global-radio/apple-music/'), '');
+});
+
 test('queue UI renders individual country labels and uses route URL for active station', async () => {
   const [queue, player, homepage, en, vi] = await Promise.all([
     readFile('components/player/Queue.vue', 'utf8'),
