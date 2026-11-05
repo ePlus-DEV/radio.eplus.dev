@@ -3,6 +3,10 @@
     "content": "Désolé, la page demandée est introuvable."
   },
   "global_radio": {
+    "playback_status_title": "Lecture sur ePlus indisponible",
+    "playback_status_pending": "ePlus ne dispose pas encore d'une API autorisée pour ces stations. Écoutez-les sur Apple Music ou TuneIn.",
+    "playback_status_short": "Lecture ePlus indisponible",
+    "playback_status_configured": "L’API est configurée. La lecture dépend encore de la connexion et des autorisations du fournisseur.",
     "listen_on_eplus": "Écouter sur ePlus",
     "connecting_on_eplus": "Connexion…",
     "resolver_unavailable": "Lecture indisponible sur ePlus. Écoutez sur Apple Music ou TuneIn.",
