@@ -96,7 +96,7 @@ See [deployment setup and cutover](./docs/GITHUB_PAGES.md) and [workflow policy]
 
 ## Pull request previews (GitHub Pages)
 
-Feature PRs targeting `develop` can have a separate static review link, served from the **dedicated** `ePlus-DEV/onair-pr-previews` GitHub Pages project. The preview workflow builds with no credentials, requires noindex/no production GA4, publishes only representative static routes, posts a link on the PR, and cleans up when the PR closes. Production and staging deployments are unchanged. **One-time destination repository/token setup is required before this is active.** See [PR Preview setup](./docs/PR_PREVIEWS.md).
+Feature PRs targeting `develop` can have a separate static review link, served from the **dedicated** `ePlus-DEV/onair-pr-previews` GitHub Pages project. The preview workflow builds with no credentials, requires noindex/no production GA4, publishes only representative static routes, posts a link on the PR, and cleans up when the PR closes. Production and staging deployments are unchanged. **The new Pages destination must exist and the existing token must be allowed to write to it; no additional token or enablement variable is needed.** See [PR Preview setup](./docs/PR_PREVIEWS.md).
 
 ## Station social images and the GitHub Pages size limit
 
