@@ -50,9 +50,14 @@ On approved, valid station resolution the backend MUST return:
 
 `expires_at` must be a real Unix timestamp in **seconds**, strictly later
 than now. The example expires value is illustrative, not a working URL.
-The client requires a known Apple Music station ID and checks the corresponding
-`ra.<id>` matches the HLS path, the Apple HLS host is exact, an `accessKey`
-exists, and the earlier of server expiry or embedded key epoch is >= 45s away.
+The client requires a known Apple Music station ID, an exact Apple HLS host
+and an `accessKey`; the earlier of server expiry or the embedded key epoch
+must be at least 45s away. Signed HLS paths are allowlisted as either
+`/3p-tune-in/tune_in/<Apple radio ID>/<region>/<bitrate>.m3u8`, or, only for
+the observed Holiday Hits station, `/3p-tune-in/tune_in/ppa/index-cmaf.m3u8`.
+The latter was confirmed in the user's private HAR, where the path lacks the
+radio number; the licensed backend therefore must verify that it serves the
+correct `station_id` before issuing the response.
 
 For a normal pending/unauthorized/unavailable provider, respond with a
 non-2xx status and a generic JSON message. The app then keeps official links.
