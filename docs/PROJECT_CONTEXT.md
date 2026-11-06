@@ -1018,3 +1018,27 @@ The static cache key includes provider JSON. All seven channels have distinct
 seven locally mirrored original TuneIn PNG covers (with generic brand fallback); list, detail, search,
 player and queue use channel art. Keep stream access keys entirely out of the
 public catalog and preserve production SEO/GA4.
+
+## 2026-11-06 — Global Radio reuses Country Radio station cards
+
+The Apple Music directory uses `PanelStation` from
+`components/panel/Station.vue` rather than a second custom list/card template.
+The shared grid keeps the Country responsive breakpoints (2 columns mobile,
+3 from sm, 4 from lg, 5 from 2xl), lazy local artwork, separate SSR detail
+links with `:prefetch="false"`, and the persistent 44px circular Play/Pause
+button. This remains presentational: Country still owns its instant catalog
+playback; Global maps the selected card back to an allowlisted station and
+uses `useAuthorizedGlobalRadioPlayback` for one short-lived HLS lease.
+
+The shared component's new `eyebrowKey`, `playEnabled`,
+`pendingStationId`, and `disabledReason` props are optional: Country defaults
+are unchanged. Only the selected Global station may show Connecting and be
+temporarily disabled; other station buttons remain available to abort and
+switch requests. Keep the seven verified local TuneIn PNGs, shared player,
+queue, metadata, SEO text/schema and provider access rules. This change
+targets the current `staging` integration branch; do not release directly
+to `main`.
+
+Regression coverage: `tests/global-radio-shared-card.test.mjs`,
+`tests/country-station-panel.test.mjs`, and
+`tests/global-radio-listening-cta.test.mjs`.
