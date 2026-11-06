@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title">
+<title id="title">apple music club — fallback station artwork</title>
+<rect width="400" height="400" rx="48" fill="#eeeeee"/>
+<rect x="10" y="10" width="380" height="380" rx="38" fill="white" fill-opacity=".75" stroke="#242424" stroke-opacity=".13" stroke-width="2"/>
+<path d="M62 88 C110 54 156 106 204 84 S301 48 339 83" fill="none" stroke="#242424" stroke-width="12" stroke-linecap="round" opacity=".14"/>
+<path d="M62 301 C110 279 151 315 201 296 S297 269 338 301" fill="none" stroke="#242424" stroke-width="9" stroke-linecap="round" opacity=".14"/>
+<text x="200" y="215" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="130" font-weight="900" letter-spacing="-3" fill="#242424">club</text>
+<text x="200" y="274" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#46505d">ELECTRONIC</text>
+<text x="200" y="351" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" letter-spacing="5" fill="#697586">RADIO</text>
+</svg>
