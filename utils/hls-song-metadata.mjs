@@ -78,8 +78,9 @@ export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
           owner.every((byte, i) => frame[i] === byte) && frame[owner.length] === 0;
       }
     }
+    // Apple identification and album frames can follow TIT2/TPE1.
+    // Scan the remaining bounded frames before deciding whether it is a song.
     index += 10 + size;
-    if (title && artist) break;
   }
   // Apple also emits DJ/show cards as TIT2/TPE1. Only publish a music
   // track when its ID3 contains an explicit song marker, not just two texts.
