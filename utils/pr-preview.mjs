@@ -20,12 +20,12 @@ export const PR_PREVIEW_ROUTES = Object.freeze([
   '/cookie-policy',
 ]);
 
-export function getPrPreviewBasePath(prNumber, repository = 'onair-pr-previews') {
+export function getPrPreviewBasePath(prNumber, repository = '') {
   const number = String(prNumber);
-  if (!/^[1-9][0-9]*$/.test(number) || !/^[a-z0-9][a-z0-9-]*$/.test(repository)) {
+  if (!/^[1-9][0-9]*$/.test(number) || (repository && !/^[a-z0-9][a-z0-9-]*$/.test(repository))) {
     throw new Error('Invalid PR number or Pages repository name');
   }
-  return `/${repository}/pr-preview/pr-${number}/`;
+  return `${repository ? `/${repository}` : ''}/pr-preview/pr-${number}/`;
 }
 
 export function isPrPreviewBuild(environment = process.env) {
