@@ -8,7 +8,7 @@
         <template v-else-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
         </template>
-        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t(hasPlayedCurrentSource ? 'recovery.buffering' : 'player.connecting') }}</span>
+        <span v-else-if="waiting || resolvingGlobalSelection" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t(waiting && hasPlayedCurrentSource ? 'recovery.buffering' : 'player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
@@ -49,7 +49,7 @@
             </UTooltip>
           </span>
           <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
-            <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
+            <UIcon v-if="waiting || resolvingGlobalSelection" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
           <span v-if="canNavigateStations" class="hidden sm:inline-flex">
@@ -107,7 +107,7 @@
         <p v-if="nowPlayingArtist" dir="auto" class="truncate text-xs text-[var(--radio-text-muted)]">{{ nowPlayingArtist }}</p>
       </div>
       <UButton class="h-12 w-12 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 hover:bg-rose-400" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
-        <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
+        <UIcon v-if="waiting || resolvingGlobalSelection" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
@@ -268,12 +268,15 @@ const favoriteActive = computed(() => listening.library.favorites.some((item: { 
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
 const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
-const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
-const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
+// A Global station can be shown while its first HLS URL is still resolving.
+// This UI-only hint must never mark audio as playing or preload other streams.
+const resolvingGlobalSelection = computed(() => !props.stationUrl && Boolean(playback.pendingGlobalRadio));
+const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
+const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
   if (streamError.value) return "bg-red-500/10 text-red-700 dark:text-red-300";
-  if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
-  if (waiting.value) return "bg-amber-500/10 text-amber-700 dark:text-amber-300";
+  if (!online.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
+  if (waiting.value || resolvingGlobalSelection.value) return "bg-amber-500/10 text-amber-700 dark:text-amber-300";
   if (playing.value) return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300";
   return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
 });
@@ -344,7 +347,7 @@ const systemVolumeOnly = ref(false);
 const mobileQueueOpen = ref(false);
 const playerCompact = ref(false);
 const playerMini = toRef(playback, 'playerMini');
-const playerStatusVisible = computed(() => streamError.value || !online.value || waiting.value || !hasPlayableSource.value || Boolean(sleepRemaining.value));
+const playerStatusVisible = computed(() => streamError.value || !online.value || waiting.value || resolvingGlobalSelection.value || !hasPlayableSource.value || Boolean(sleepRemaining.value));
 const togglePlayerCompact = (): void => {
   playerCompact.value = !playerCompact.value;
   if (import.meta.client) localStorage.setItem('radio:player-compact', playerCompact.value ? '1' : '0');
