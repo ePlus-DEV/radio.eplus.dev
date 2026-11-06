@@ -11,7 +11,7 @@ For short operational rules, see [`../AGENTS.md`](../AGENTS.md).
 - Repository: `ePlus-DEV/radio.eplus.dev`
 - Production: `https://radio.eplus.dev`
 - `ePlus-DEV/get-radio` is legacy PHP crawler/history only and is not the active application.
-- The previous Staging hostname `https://new-radio.eplus.dev` was used historically; the selected Staging hostname is now `https://staging.radio.eplus.dev`. Neither is the canonical *Production* URL, which remains `https://radio.eplus.dev`.
+- The previous Staging hostname `https://new-radio.eplus.dev` was used historically; the approved next Staging hostname is `https://stg.radio.eplus.dev`. Neither is the canonical *Production* URL, which remains `https://radio.eplus.dev`.
 
 ## 2. Application stack
 
@@ -971,7 +971,7 @@ or provider authorization.
 See [ENVIRONMENTS.md](./ENVIRONMENTS.md) for the authoritative branch / GitHub Environment / Pages repository / hostname matrix and staged migration.
 
 - **Development**: a same-repository feature PR targeting `develop`, built without deployment credentials and published by trusted jobs from the GitHub Environment `development` to `ePlus-DEV/onair-pr-previews` at `https://preview.radio.eplus.dev/pr-preview/pr-N/`. It is temporary and only a subset of static routes is prerendered; there is **no** persistent `dev` source branch by default. Preview `404.html` can countdown and redirect to a matching Production route, but this is HTTP 404 and never evidence that a preview deployed successfully.
-- **Staging**: trusted `develop` releases to `ePlus-DEV/onair-staging-pages` at `https://staging.radio.eplus.dev/`. GitHub Environment is `staging` **after** its own secret `PAGES_DEPLOY_TOKEN` and public `NUXT_PUBLIC_SITE_URL` have been configured and the **repository-level** `PAGES_STAGING_READY=true` variable is enabled. Until then, the legacy `development` Environment/`PAGES_DEV_READY` route stays active; setting the new staging flag to `false` explicitly disables Staging.
+- **Staging**: trusted `develop` releases to `ePlus-DEV/onair-staging-pages` at `https://stg.radio.eplus.dev/`. GitHub Environment is `staging` **after** its own secret `PAGES_DEPLOY_TOKEN` and public `NUXT_PUBLIC_SITE_URL` have been configured and the **repository-level** `PAGES_STAGING_READY=true` variable is enabled. Until then, the legacy `development` Environment/`PAGES_DEV_READY` route stays active; setting the new staging flag to `false` explicitly disables Staging.
 - **Production**: trusted `main` releases to `ePlus-DEV/onair-production-pages` at `https://radio.eplus.dev/` with GitHub Environment `production`. Only Production is indexable and may emit canonical/JSON-LD/sitemap and GA4 `G-ETDY41KBBJ`.
 - Both Development and Staging are `noindex`, GA4-free and sitemap-free. Their hostnames also fail closed to `noindex` when the flag is missing. Production has `NUXT_APP_BASE_URL=/`; Staging has `/`; Development Preview has `/pr-preview/pr-N/`.
 - Release direction is `feature PR → Development Preview → merge develop → verify Staging → reviewed develop-to-main release PR → Production`. Never merge or deploy PR content directly to Production, rewrite production SEO text as collateral work, force-push, or copy secret values into docs.
@@ -989,6 +989,6 @@ The root `README.md` is intentionally a short public-facing project landing page
 
 ## Staging hostname migration decision (2026-11-06)
 
-The selected Staging hostname is `https://staging.radio.eplus.dev` instead of `https://new-radio.eplus.dev`. Preserve the three-tier topology: `main` Production stays at `radio.eplus.dev`, `develop` Staging uses `staging.radio.eplus.dev`, and each PR Preview stays under `preview.radio.eplus.dev/pr-preview/pr-N/`. `staging.radio.eplus.dev` and both legacy staging hostnames must remain `noindex` and GA4-free; never modify Production SEO copy, GA4 IDs or route text for this cutover.
+The selected Staging hostname is `https://stg.radio.eplus.dev` instead of `https://new-radio.eplus.dev`. Preserve the three-tier topology: `main` Production stays at `radio.eplus.dev`, `develop` Staging uses `stg.radio.eplus.dev`, and each PR Preview stays under `preview.radio.eplus.dev/pr-preview/pr-N/`. `stg.radio.eplus.dev` and both legacy staging hostnames must remain `noindex` and GA4-free; never modify Production SEO copy, GA4 IDs or route text for this cutover.
 
 The code switch is gated on a coordinated DNS CNAME, GitHub Pages Custom Domain/CNAME, `staging` Environment `NUXT_PUBLIC_SITE_URL` and token, repository-level `PAGES_STAGING_READY` gate, plus external CORS/resolver allowlists. Do not claim the new hostname is live just because CI passes. Full preflight, cutover sequence, HTTPS verification, deep-link checks and rollback are recorded in [ENVIRONMENTS.md](./ENVIRONMENTS.md). Preserve old staging domain support for the `noindex` safeguard and plan HTTP redirects separately. Do not automatically merge a cutover PR without completing the prerequisites.
