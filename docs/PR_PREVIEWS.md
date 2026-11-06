@@ -2,11 +2,11 @@
 
 ## Architecture
 
-Full production and staging deployments are unchanged:
+Three environments are kept isolated; Development is a temporary PR Preview tier, not a permanent `dev` source branch. Production and Staging remain full-site deployments. See [ENVIRONMENTS.md](./ENVIRONMENTS.md).
 
 - `main` -> `ePlus-DEV/onair-production-pages` -> `https://radio.eplus.dev`
 - `develop` -> `ePlus-DEV/onair-staging-pages` -> `https://new-radio.eplus.dev`
-- **feature PR targeting `develop`** -> dedicated `ePlus-DEV/onair-pr-previews` Pages repository -> `https://preview.radio.eplus.dev/pr-preview/pr-<number>/`
+- **Development feature PR targeting `develop`** -> GitHub Environment `development` (trusted publisher only) -> dedicated `ePlus-DEV/onair-pr-previews` Pages repository -> `https://preview.radio.eplus.dev/pr-preview/pr-<number>/`
 
 Do not put previews inside the staging or production output repository. As of 2026-11-05, the staging Pages `main` tree already contains ~962.8 MB of files, close to GitHub Pages' 1 GB published-site limit.
 
@@ -15,7 +15,7 @@ Do not put previews inside the staging or production output repository. As of 20
 1. Create a **PUBLIC** GitHub repository named `ePlus-DEV/onair-pr-previews`. Initialize it with a README and an initial `main` branch. Do not use a name containing `.github.io`; it is a project Pages site. The existing root `CNAME` file must contain exactly `preview.radio.eplus.dev`.
 2. In that repo's **Settings -> Pages**, set **Build and deployment -> Source: Deploy from a branch**, `main` / `/(root)`. Set **Custom domain: `preview.radio.eplus.dev`** in Pages Settings, with a Cloudflare DNS-only CNAME `preview.radio` -> `eplus-dev.github.io`, and enable **Enforce HTTPS** once the certificate is ready. Keep Pages publishing from `main` / `/(root)`.
 3. Ensure the existing **fine-grained `PAGES_DEPLOY_TOKEN`** already grants `Contents: Read and write` to *this new output repo*, in addition to its existing staging/production repositories. This token belongs to the source repository's **development Environment Secret**. Do not put it in an ordinary PR build job, project files or comments.
-4. The workflow reuses **existing** `PAGES_DEV_READY=true` (already used by staging). **No new feature flag or token is required.** Keep `.github/workflows/pr-preview-pages.yml` on **both `main` (GitHub default branch) and `develop`**: the `pull_request_target` workflow is loaded from `main` but only targets PRs against `develop`. No application or production deployment changes are required.
+4. The workflow reuses the existing **Development Preview-only** gate `PAGES_DEV_READY=true`. Staging migrates independently to `PAGES_STAGING_READY=true` (repository variable) after its own `staging` GitHub Environment is provisioned. Preview itself needs no new token or hosting provider. Keep `.github/workflows/pr-preview-pages.yml` on **both `main` (GitHub default branch) and `develop`**: the `pull_request_target` workflow is loaded from `main` but only targets PRs against `develop`. No application or production deployment changes are required.
 
 The source repo's `.github/workflows/pr-preview-pages.yml` creates and updates an individual directory for each qualifying PR, and removes the directory when its PR is closed or merged. Opening/reopening/updating a same-repository feature PR targeting `develop` triggers the preview; **merging into `develop` does not trigger a preview for that merge**. The workflow posts/updates a **single** bot comment only **after** the public Pages URL serves the expected PR commit SHA from `preview-commit.txt` and returns a successful HTML response with `noindex`. Its GitHub Pages link includes only the PR path under the custom domain, without the legacy `/onair-pr-previews/` prefix.
 
@@ -39,9 +39,9 @@ One full static catalog per open PR would exceed GitHub Pages' **1 GB published-
 - Vietnam country page and `/asia/viet-nam/vov-gt-hcm` station deep link.
 - Library, Settings, Statistics and static informational pages.
 
-The normal `main` and `develop` site-generation routes remain **completely unchanged**. The preview still contains Nuxt static assets, public radio JSON catalogs and artwork, but **unprerendered detail routes may not load on direct refresh**. Use staging after merge for whole-catalog and complete SEO testing; do not mistake partial static preview for an E2E production equivalent.
+The full-site `main` Production and `develop` Staging route sets remain **completely unchanged** by Development Preview build limits. The preview still contains Nuxt static assets, public radio JSON catalogs and artwork, but **unprerendered detail routes may not load on direct refresh**. Use staging after merge for whole-catalog and complete SEO testing; do not mistake partial static preview for an E2E production equivalent.
 
-Build gate checks run existing unit tests, `assert-staging-noindex`, `assert-ga4-output`, `check-pages-build` plus `assert-pr-preview-output`. Publication also rejects absent station/home HTML, invalid subpaths, production GA4, symlinks, and an aggregate public output of 900 MB or more.
+Build gate checks run existing unit tests, `assert-staging-noindex`, `assert-ga4-output` (**development** target), `check-pages-build` (**development** target) plus `assert-pr-preview-output`. Publication also rejects absent station/home HTML, invalid subpaths, production GA4, symlinks, and an aggregate public output of 900 MB or more.
 
 ## Manual smoke check after initial setup
 

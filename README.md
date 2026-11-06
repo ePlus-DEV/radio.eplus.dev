@@ -2,7 +2,7 @@
 
 **Listen Beyond Borders.** Browse and listen to live radio stations worldwide.
 
-**Website:** https://radio.eplus.dev · **Staging:** https://new-radio.eplus.dev
+**Production:** https://radio.eplus.dev · **Staging:** https://new-radio.eplus.dev · **Development:** https://preview.radio.eplus.dev
 
 > [!IMPORTANT]
 > This **public repository is the canonical source** for ePlus OnAir: Nuxt application, player, station catalog, tests, and release automation. The older `ePlus-DEV/get-radio` crawler is legacy history, not an active deployment source. Public Pages repositories hold generated artifacts, not application source.
@@ -11,16 +11,18 @@
 
 | Source branch | GitHub Environment | Public output repository | Configured hostname |
 | --- | --- | --- | --- |
-| `develop` | `development` | [onair-staging-pages](https://github.com/ePlus-DEV/onair-staging-pages) | https://new-radio.eplus.dev |
+| Feature PR → `develop` | `development` (trusted publisher) | [onair-pr-previews](https://github.com/ePlus-DEV/onair-pr-previews) | https://preview.radio.eplus.dev/pr-preview/pr-N/ |
+| `develop` | `staging` (after migration) | [onair-staging-pages](https://github.com/ePlus-DEV/onair-staging-pages) | https://new-radio.eplus.dev |
 | `main` | `production` | [onair-production-pages](https://github.com/ePlus-DEV/onair-production-pages) | https://radio.eplus.dev |
 
+- Development is per-PR Preview on a dedicated domain and output repository, not an additional long-lived `dev` branch.
 - `develop` is the integration and staging branch. Open feature/bugfix PRs against it.
 - `main` is the released source. Promote reviewed changes from `develop` through a release PR. Hotfixes start at `main` and must be brought back to `develop`.
 - `master` is a legacy backup with separate history. Never reset, force-push, or deploy it as the current application.
 - The destination repositories use their own `main` branches for the **static website output**; these are not the application source branch.
 - The custom hostnames and DNS must be verified separately. A successful GitHub push alone does not prove the live DNS is served by Pages.
 
-**SEO isolation:** `develop` staging is always `noindex`; `main` production builds are indexable (`index, follow`) with canonical URLs and a sitemap. Production-only GA4 (`G-ETDY41KBBJ`) is enabled on the canonical production hostname. Verify DNS and HTTPS separately from GitHub Pages deployment.
+**SEO isolation:** Development Preview and `develop` Staging are always `noindex`; `main` production builds are indexable (`index, follow`) with canonical URLs and a sitemap. Production-only GA4 (`G-ETDY41KBBJ`) is enabled on the canonical production hostname. Verify DNS and HTTPS separately from GitHub Pages deployment.
 
 ## Features
 
@@ -75,12 +77,12 @@ npm run test:ui          # Optional Playwright browser tests
 
 1. Merge reviewed changes into `develop`; use staging to verify navigation, streams, station metadata, and mobile layout.
 2. Open a `develop` → `main` PR and require passing CI for the release. Do not force-push history.
-3. Trusted pushes to `develop` publish only when `PAGES_DEV_READY=true`; trusted pushes to `main` run production publishing automatically with preflight validation.
+3. Trusted `develop` publishes through the new `staging` Environment when repository variable `PAGES_STAGING_READY=true`. Until it is configured, the legacy `development` Environment and `PAGES_DEV_READY=true` gate remain available. `main` production publishing is unchanged. Preview uses its own `development` Environment.
 4. The Pages job validates its exact destination repository, `NUXT_PUBLIC_SITE_URL`, and cross-repository write token before installing dependencies, then tests, generates and audits the static output.
 5. The deployment updates `main` in the matching public Pages repository, re-creates `CNAME`, and **preserves its root `README.md`** during the destructive generated-site sync.
 6. Confirm the Actions job succeeded and inspect the destination commit, deep-linked pages, images, and the configured custom hostname. Keep DNS/SEO cutover as an independent, reviewed task.
 
-Required setup in the source repository (store all credentials as GitHub **Secrets**, never in code): GitHub Environments `development` / `production`, with `NUXT_PUBLIC_SITE_URL` set respectively to `https://new-radio.eplus.dev` / `https://radio.eplus.dev`; `PAGES_DEPLOY_TOKEN` must have scoped write access to both public Pages repositories. Do not expose this token to untrusted PR workflows.
+Required setup: GitHub Environments `development` (Preview), `staging` (develop releases) and `production` (main releases). `staging` must be configured with `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev` and its own `PAGES_DEPLOY_TOKEN` secret before enabling repository-level `PAGES_STAGING_READY=true`. `production` keeps `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`. The Preview host and PR path are set by its trusted workflow. Never expose tokens to untrusted PR jobs. See [three-tier migration guide](./docs/ENVIRONMENTS.md).
 
 The four existing release/data workflows share a repository-wide concurrency queue. PR Preview uses a separate build/publish queue to keep website releases independent. The workflows are:
 
@@ -102,7 +104,7 @@ Feature and bugfix PRs **opened, reopened, or updated** against `develop` get a 
 - The build job checks out PR code **without secrets**, runs tests and builds a representative `noindex` site with production GA4 disabled. Only the trusted publisher uses the existing `PAGES_DEPLOY_TOKEN` and `PAGES_DEV_READY=true`, writing to `ePlus-DEV/onair-pr-previews`.
 - GitHub Actions bot **updates one PR comment only after the public Pages URL serves the expected PR commit SHA and a `noindex` HTML page**. Successful artifact upload, `git push`, or Pages deployment alone is **not proof that the link works**.
 - Closing a PR removes only its own `pr-preview/pr-<number>/` folder. Smoke-test PRs such as [#367](https://github.com/ePlus-DEV/radio.eplus.dev/pull/367) must be **closed without merging** after testing.
-- No new hosting provider, deployment token, readiness variable, or production/staging URL is required. For small, authorized documentation/workflow maintenance, prefer a direct commit on the appropriate branch instead of creating unnecessary PRs; follow branch protection and use a PR for product releases or risky changes.
+- No new hosting provider or domain is required. A separate `staging` Environment and `PAGES_STAGING_READY` repository variable are required to complete three-tier isolation; until then the old staging Environment remains active. Follow branch protection and use review/CI for release or security-sensitive workflow changes.
 
 See [PR Preview runbook](./docs/PR_PREVIEWS.md), [workflow policy](./docs/GITHUB_ACTIONS.md), and [agent rules](./AGENTS.md).
 
