@@ -19,7 +19,7 @@ test('the only indexable site and GA4 build is production', () => {
 test('production and staging remain isolated by branch, Pages repository and hostname', () => {
   assert.match(deploy, /branches: \[develop, main\]/);
   assert.match(deploy, /github\.ref_name == 'main' && 'ePlus-DEV\/onair-production-pages' \|\| 'ePlus-DEV\/onair-staging-pages'/);
-  assert.match(deploy, /github\.ref_name == 'main' && 'radio\.eplus\.dev' \|\| 'new-radio\.eplus\.dev'/);
+  assert.match(deploy, /github\.ref_name == 'main' && 'radio\.eplus\.dev' \|\| 'staging\.radio\.eplus\.dev'/);
   assert.match(deploy, /github\.ref_name == 'main' && 'production' \|\| 'staging'/);
   assert.match(deploy, /NUXT_PUBLIC_NO_INDEX:.*github\.ref_name == 'develop'/);
 });
