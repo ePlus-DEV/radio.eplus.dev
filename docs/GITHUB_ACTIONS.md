@@ -13,10 +13,11 @@ The three non-preview workflows share concurrency group `onair-repository-work` 
 
 ## Release targets
 
-- Feature PR → **Development** Environment `development` (trusted jobs only) → `ePlus-DEV/onair-pr-previews` → `preview.radio.eplus.dev/pr-preview/pr-N/`, when `PAGES_DEV_READY=true`.
+- Feature PR → **Preview** Environment `preview` (trusted jobs after migration) → `ePlus-DEV/onair-pr-previews` → `preview.radio.eplus.dev/pr-preview/pr-N/`, when repository-level `PAGES_PREVIEW_READY=true` (legacy `PAGES_DEV_READY` fallback only if unset).
 - `develop` → **Staging** Environment `staging` → `ePlus-DEV/onair-staging-pages` → `stg.radio.eplus.dev` when `PAGES_STAGING_READY=true` (repository variable). If absent, use the legacy `development` Environment and `PAGES_DEV_READY` gate until the new Staging Environment has been configured.
 - `main` → Environment `production` → `ePlus-DEV/onair-production-pages` → `radio.eplus.dev`, automatically for trusted matching pushes.
 - Development Preview and `develop` Staging are strictly `noindex`, with no sitemap, canonical/JSON-LD or GA4; `main` Production is indexable with a sitemap, canonical tags and production-only GA4. The Pages output validator must reject a `noindex` production build.
+- Each tier's `NUXT_PUBLIC_SITE_NAME` Environment Variable sets a distinct browser-tab title (Production `ePlus OnAir`, Staging `ePlus OnAir — Staging`, Preview `ePlus OnAir — Preview`).
 - Each tier's `PAGES_DEPLOY_TOKEN` Environment Secret should have scoped write access only to its own output repository; never pass credentials to the untrusted PR build job. Complete [the Environment migration](./ENVIRONMENTS.md) before deleting the legacy Staging values from `development`.
 
 Website publishing uses `npm run generate:site` and intentionally omits per-station OG JPEGs to stay within GitHub Pages' 1 GB limit. Local-only `npm run generate:images` remains available, but **no GitHub Action currently uploads station-image batches**. See [image policy](./SEPARATE_IMAGE_RELEASES.md). The publisher restores `CNAME` and retains each output repo's root `README.md` despite `rsync --delete`.
@@ -33,13 +34,13 @@ See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPA
 
 ## Isolated GitHub Pages PR previews
 
-Preview publishing reuses the existing `PAGES_DEV_READY=true` setting and uses the dedicated `ePlus-DEV/onair-pr-previews` output repository. It uses a read-only build job (no deployment secrets), a trusted publishing job with existing development-scoped `PAGES_DEPLOY_TOKEN`, and per-PR cleanup. Preview routes are intentionally limited because a full catalog for every PR would exceed the Pages site limit. Details: [PR_PREVIEWS.md](./PR_PREVIEWS.md).
+Preview publishes to the dedicated `ePlus-DEV/onair-pr-previews` Pages repository. Trusted jobs select the independent `preview` GitHub Environment when `PAGES_PREVIEW_READY=true`, with a Preview-scoped `PAGES_DEPLOY_TOKEN` for publishing/cleanup. Until that repository-level flag is configured, the existing `development`/`PAGES_DEV_READY` configuration remains the legacy fallback. The read-only PR build job has **no Environment secrets** and receives only validated public configuration, including the Preview title. Preview routes are intentionally limited because a full catalog for every PR would exceed the Pages site limit. Details: [PR_PREVIEWS.md](./PR_PREVIEWS.md).
 
 ## PR Preview workflow: trigger, verification and maintenance
 
 - `pr-preview-pages.yml` uses `pull_request_target`. **The workflow definition must be on the default branch `main`**, even though the trigger targets PRs whose base branch is `develop`. Synchronize workflow-only fixes to `develop` as well.
 - A merge **into** `develop` does not create a PR preview; opening/reopening/updating a same-repository feature PR against `develop` does.
-- The PR build runs without deploy secrets. Trusted Preview config/publisher/cleanup jobs use the dedicated `development` Environment and repository variable `PAGES_DEV_READY=true`. The independent `PAGES_STAGING_READY` flag is only for full Staging releases, not for Preview.
+- The PR build runs without deploy secrets. Trusted Preview config/publisher/cleanup jobs use the dedicated `preview` Environment and repository variable `PAGES_PREVIEW_READY=true` after owner-side setup. The `development` Environment / `PAGES_DEV_READY` fallback applies only when the new flag is unset, and `PAGES_PREVIEW_READY=false` disables Preview. The separate `PAGES_STAGING_READY` gate is only for full Staging releases.
 - The publisher writes `pr-preview/pr-N/preview-commit.txt` with the expected head SHA and verifies that this SHA is publicly served alongside a successful HTTP response containing `noindex` **before** posting/updating a single PR bot comment. A green build, successful cross-repo push or Pages deployment alone must not be reported as a working preview.
 - Closed/merged PRs remove only their own `pr-preview/pr-N/` files. **Close smoke-test PRs without merging** (PR #367 is a historical example). Confirm deletion in the output repository.
 - For small, explicitly authorized workflow/documentation fixes, commit directly to the correct branches if branch protection allows; **do not open redundant PRs**. For production code, release, credential or high-risk changes, retain review and CI gates.
