@@ -63,14 +63,38 @@ function nextPlaylistUrl(playlist, baseUrl) {
   return null;
 }
 
+function safeSegmentCandidateSummary(playlist, baseUrl) {
+  const lines = playlist.split(/\r?\n/).map(x => x.trim()).filter(x => x && !x.startsWith('#'));
+  const raw = lines.at(-1);
+  if (!raw) return { mediaUriPresent: false };
+  try {
+    const url = new URL(raw, baseUrl);
+    const ext = url.pathname.split('.').at(-1)?.toLowerCase();
+    return {
+      mediaUriPresent: true,
+      appleHost: url.hostname === 'itsliveradio.apple.com',
+      underTuneIn: url.pathname.startsWith('/3p-tune-in/'),
+      recognizedExtension: ['ts', 'aac', 'm4s', 'mp4'].includes(ext),
+      hasOnlyAccessKey: [...url.searchParams.keys()].every(key => key === 'accessKey'),
+    };
+  } catch { return { mediaUriPresent: false }; }
+}
+
 function mediaSegmentUrl(playlist, baseUrl) {
   // HLS segment URIs need not end in .ts/.aac; look for the URI immediately
   // after EXTINF instead of guessing the file extension.
   const lines = playlist.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
   const entries = [];
   for (let i = 0; i < lines.length - 1; i++) {
-    if (!lines[i].startsWith('#EXTINF:') || lines[i + 1].startsWith('#')) continue;
-    entries.push(lines[i + 1]);
+    if (!lines[i].startsWith('#EXTINF:')) continue;
+    // EXT-X-PROGRAM-DATE-TIME and other tags may appear between EXTINF and
+    // the media URI. The previous immediate-next-line rule missed segments.
+    for (let j = i + 1; j < Math.min(lines.length, i + 12); j++) {
+      if (lines[j].startsWith('#EXTINF:')) break;
+      if (lines[j].startsWith('#')) continue;
+      entries.push(lines[j]);
+      break;
+    }
   }
   for (const entry of entries.slice(-3).reverse()) {
     const url = new URL(entry, baseUrl).href;
@@ -175,7 +199,8 @@ test('diagnostic only: inspect authorized HLS manifests for timed-song metadata 
   timeout: 180_000,
 }, async () => {
   for (const stationId of stationIds) {
-    const report = { stationId, resolved: false, master: null, media: null, segment: null, segmentFormat: null, error: null };
+    const report = { stationId, resolved: false, master: null, media: null,
+      segment: null, segmentFormat: null, candidateSummary: null, error: null };
     try {
       const station = { id: stationId };
       const resolved = await resolvePublicTuneInStream({ station, corsServer });
@@ -188,12 +213,14 @@ test('diagnostic only: inspect authorized HLS manifests for timed-song metadata 
         const media = await getText(mediaUrl);
         report.media = summarizePlaylist(media);
         const segmentUrl = mediaSegmentUrl(media, mediaUrl);
+        if (!segmentUrl) report.candidateSummary = safeSegmentCandidateSummary(media, mediaUrl);
         if (segmentUrl) {
           report.segmentFormat = new URL(segmentUrl).pathname.split('.').at(-1)?.slice(0, 4);
           report.segment = summarizeSegment(await getSegmentPrefix(segmentUrl));
         }
       } else {
         const segmentUrl = mediaSegmentUrl(master, resolved.streamUrl);
+        if (!segmentUrl) report.candidateSummary = safeSegmentCandidateSummary(master, resolved.streamUrl);
         if (segmentUrl) {
           report.segmentFormat = new URL(segmentUrl).pathname.split('.').at(-1)?.slice(0, 4);
           report.segment = summarizeSegment(await getSegmentPrefix(segmentUrl));
