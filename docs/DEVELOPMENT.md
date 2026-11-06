@@ -58,7 +58,7 @@ For the exact GitHub Environment and Pages repository mapping, see [Environment 
 ## Additional guidance
 
 - [SEO and analytics](./SEO.md): canonical URLs, indexability, structured data and sitemap boundaries.
-- [Publishing station images](./SEPARATE_IMAGE_RELEASES.md): the Pages size limit and separate OG image workflow.
+- [Station OG image policy](./SEPARATE_IMAGE_RELEASES.md): the Pages size limit, local generation and optional verified external images (no automatic uploader).
 - [Station synchronization](./instant-audio-sync.md): source and catalog integrity.
 - [Contributing](../CONTRIBUTING.md), [security policy](../SECURITY.md), [AI / contributor rules](../AGENTS.md) and [project context](./PROJECT_CONTEXT.md).
 
