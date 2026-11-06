@@ -6,20 +6,20 @@ Full production and staging deployments are unchanged:
 
 - `main` -> `ePlus-DEV/onair-production-pages` -> `https://radio.eplus.dev`
 - `develop` -> `ePlus-DEV/onair-staging-pages` -> `https://new-radio.eplus.dev`
-- **feature PR targeting `develop`** -> dedicated `ePlus-DEV/onair-pr-previews` Pages repository -> `https://eplus-dev.github.io/onair-pr-previews/pr-preview/pr-<number>/`
+- **feature PR targeting `develop`** -> dedicated `ePlus-DEV/onair-pr-previews` Pages repository -> `https://preview.radio.eplus.dev/pr-preview/pr-<number>/`
 
 Do not put previews inside the staging or production output repository. As of 2026-11-05, the staging Pages `main` tree already contains ~962.8 MB of files, close to GitHub Pages' 1 GB published-site limit.
 
 ## One-time setup required (repository owner)
 
-1. Create a **PUBLIC** GitHub repository named `ePlus-DEV/onair-pr-previews`. Initialize it with a README and an initial `main` branch. Do not use a name containing `.github.io`; it is a project Pages site. Do not create a `CNAME` file.
-2. In that repo's **Settings -> Pages**, set **Build and deployment -> Source: Deploy from a branch**, `main` / `/(root)`. Use its GitHub default hostname, not the production or staging custom domain.
+1. Create a **PUBLIC** GitHub repository named `ePlus-DEV/onair-pr-previews`. Initialize it with a README and an initial `main` branch. Do not use a name containing `.github.io`; it is a project Pages site. The existing root `CNAME` file must contain exactly `preview.radio.eplus.dev`.
+2. In that repo's **Settings -> Pages**, set **Build and deployment -> Source: Deploy from a branch**, `main` / `/(root)`. Set **Custom domain: `preview.radio.eplus.dev`** in Pages Settings, with a Cloudflare DNS-only CNAME `preview.radio` -> `eplus-dev.github.io`, and enable **Enforce HTTPS** once the certificate is ready. Keep Pages publishing from `main` / `/(root)`.
 3. Ensure the existing **fine-grained `PAGES_DEPLOY_TOKEN`** already grants `Contents: Read and write` to *this new output repo*, in addition to its existing staging/production repositories. This token belongs to the source repository's **development Environment Secret**. Do not put it in an ordinary PR build job, project files or comments.
 4. The workflow reuses **existing** `PAGES_DEV_READY=true` (already used by staging). **No new feature flag or token is required.** Keep `.github/workflows/pr-preview-pages.yml` on **both `main` (GitHub default branch) and `develop`**: the `pull_request_target` workflow is loaded from `main` but only targets PRs against `develop`. No application or production deployment changes are required.
 
-The source repo's `.github/workflows/pr-preview-pages.yml` creates and updates an individual directory for each qualifying PR, and removes the directory when its PR is closed or merged. Opening/reopening/updating a same-repository feature PR targeting `develop` triggers the preview; **merging into `develop` does not trigger a preview for that merge**. The workflow posts/updates a **single** bot comment only **after** the public Pages URL serves the expected PR commit SHA from `preview-commit.txt` and returns a successful HTML response with `noindex`. Its GitHub Pages link includes a project path and a PR path.
+The source repo's `.github/workflows/pr-preview-pages.yml` creates and updates an individual directory for each qualifying PR, and removes the directory when its PR is closed or merged. Opening/reopening/updating a same-repository feature PR targeting `develop` triggers the preview; **merging into `develop` does not trigger a preview for that merge**. The workflow posts/updates a **single** bot comment only **after** the public Pages URL serves the expected PR commit SHA from `preview-commit.txt` and returns a successful HTML response with `noindex`. Its GitHub Pages link includes only the PR path under the custom domain, without the legacy `/onair-pr-previews/` prefix.
 
-A different Pages origin/custom-domain or repo name requires updating **all** matching base URLs and path assertions in the workflow and `utils/pr-preview.mjs`; do not set a custom domain without adjusting those paths.
+The custom domain is configured in the output repo and the source workflow uses `NUXT_APP_BASE_URL=/pr-preview/pr-<number>/`. Keep `utils/pr-preview.mjs`, `scripts/assert-pr-preview-output.mjs` and the publisher's path assertions in sync; changing DNS alone leaves stale Nuxt asset paths.
 
 ## Security model
 
@@ -55,7 +55,7 @@ If the action fails before publish: ensure the new Pages repository has a `main`
 
 ## Expired, missing, or failed preview links
 
-The **output repository** `ePlus-DEV/onair-pr-previews` has a root-level `404.html`, separate from Nuxt's per-preview `404.html`. For missing/expired preview URLs such as `/onair-pr-previews/pr-preview/pr-360/`, GitHub Pages responds with an HTTP **404** and serves this root fallback page, which uses `location.replace('https://radio.eplus.dev/')` (with a timed HTML fallback and a manual link) to return visitors to **production**. This is a *client-side* redirect, not an HTTP 301/302; do not claim otherwise.
+The **output repository** `ePlus-DEV/onair-pr-previews` has a root-level `404.html`, separate from Nuxt's per-preview `404.html`. For missing/expired preview URLs such as `/pr-preview/pr-360/`, GitHub Pages responds with an HTTP **404** and serves this root fallback page, which uses `location.replace('https://radio.eplus.dev/')` (with a timed HTML fallback and a manual link) to return visitors to **production**. This is a *client-side* redirect, not an HTTP 301/302; do not claim otherwise.
 
 - Keep the root `404.html`, `index.html`, `.nojekyll` and `README.md` when publishing or deleting any individual PR's preview.
 - Never write fallback/redirect logic into the production site or alter its SEO copy and 404 behavior as part of PR preview cleanup.
