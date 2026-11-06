@@ -2,6 +2,7 @@ import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEARCH_FEATURED_STATION_IDS, VIETNAM_FEATURED_STATION_IDS } from '../utils/featured-stations.mjs';
+import { stationCatalogIdentity, stationListingPriority } from '../utils/station-catalog-identity.mjs';
 
 const featuredIds = new Set(VIETNAM_FEATURED_STATION_IDS);
 const searchFeaturedIds = new Map(SEARCH_FEATURED_STATION_IDS.map((id, index) => [id, index + 1]));
@@ -18,6 +19,9 @@ export async function buildStationSearchIndex({
   providerRoot = 'public/catalog/providers',
 } = {}) {
   const result = [];
+  // Canonicalize only repeated titles from the same country + official site.
+  // Keep all individual catalog routes (including aliases) intact for SEO.
+  const identityPositions = new Map();
   for (const area of (await readdir(radioRoot, { withFileTypes: true })).filter(x => x.isDirectory()).sort((a, b) => a.name.localeCompare(b.name))) {
     const areaPath = join(radioRoot, area.name);
     for (const countryFile of (await readdir(areaPath, { withFileTypes: true })).filter(x => x.isFile() && x.name.endsWith('.json')).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -26,7 +30,7 @@ export async function buildStationSearchIndex({
       for (const [id, station] of Object.entries(catalog)) {
         if (!station || typeof station.title !== 'string' || !station.title.trim()) continue;
         if (!/^https?:\/\//i.test(String(station.stream || '')) || station.disabled === true || station.active === false) continue;
-        result.push({
+        const item = {
           objectID: `${area.name}/${country}/${id}`,
           station_name: station.title,
           station_country: `world.${area.name.replaceAll('-', '_')}.${country.replaceAll('-', '_')}`,
@@ -38,7 +42,20 @@ export async function buildStationSearchIndex({
           url: `/${area.name}/${country}/${id}`,
           featured: area.name === 'asia' && country === 'viet-nam' && featuredIds.has(id),
           featured_rank: searchFeaturedIds.get(`${area.name}/${country}/${id}`) || 0,
-        });
+        };
+        const identity = stationCatalogIdentity(station);
+        const key = identity ? `${area.name}/${country}/${identity}` : '';
+        const rank = stationListingPriority(id, station, item.featured_rank);
+        const previous = key ? identityPositions.get(key) : null;
+        if (previous) {
+          if (rank > previous.rank) {
+            result[previous.index] = item;
+            identityPositions.set(key, { index: previous.index, rank });
+          }
+          continue;
+        }
+        if (key) identityPositions.set(key, { index: result.length, rank });
+        result.push(item);
       }
     }
   }
