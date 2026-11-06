@@ -46,7 +46,8 @@ jobs:
         env:
           CORS_SERVER: ${{ vars.NUXT_PUBLIC_CORS_SERVER_1 }}
           RESOLVER_URL: ${{ vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL }}
-          PREVIEW_SITE_NAME: ${{ vars.NUXT_PUBLIC_SITE_NAME }}
+          # Ignore the old development Environment's title during migration.
+          PREVIEW_SITE_NAME: ${{ vars.PAGES_PREVIEW_READY == 'true' && vars.NUXT_PUBLIC_SITE_NAME || '' }}
         run: |
           set -euo pipefail
           node <<'NODE'
