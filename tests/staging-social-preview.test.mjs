@@ -7,7 +7,7 @@ import { isStagingDeployment } from "../utils/seo-deployment.mjs";
 const read = (path) => readFile(new URL("../" + path, import.meta.url), "utf8");
 
 test("current and legacy non-production domains remain noindex while production stays indexable", () => {
-  for (const siteUrl of ["https://staging.radio.eplus.dev", "https://new-radio.eplus.dev", "https://radio-new.eplus.dev", "https://preview.radio.eplus.dev/pr-preview/pr-375/"]) {
+  for (const siteUrl of ["https://stg.radio.eplus.dev", "https://new-radio.eplus.dev", "https://radio-new.eplus.dev", "https://preview.radio.eplus.dev/pr-preview/pr-375/"]) {
     assert.equal(isStagingDeployment({ siteUrl }), true, siteUrl);
   }
   assert.equal(isStagingDeployment({ siteUrl: "https://radio.eplus.dev" }), false);
