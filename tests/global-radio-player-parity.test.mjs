@@ -97,7 +97,7 @@ test('saved Global station restores an idle player from fresh HLS, never old acc
   assert.equal(playback.station.sources.length, 1);
   const restore = await read('composables/useRestoreLastStation.ts');
   assert.match(restore, /PUBLIC_APPLE_TUNEIN_STATIONS/);
-  assert.match(restore, /resolvePublicTuneInStream\(\{ station \}\)/);
+  assert.match(restore, /resolvePublicTuneInStream\(\{ station, corsServer: String\(config\.public\.corsServer \|\| ''\) \}\)/);
   assert.match(restore, /siteAssetUrl\('\/catalog\/providers\/apple-music\.json'\)/);
   assert.match(restore, /\{ autoplay: false \}/);
   assert.match(restore, /playback\.station \|\| playback\.playing/);

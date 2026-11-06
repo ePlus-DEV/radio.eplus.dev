@@ -1,9 +1,7 @@
 // Direct public TuneIn resolver for ePlus OnAir's seven known Apple Radio
-// listings. Uses the owner's existing Heroku CORS server, not a new endpoint.
+// listings. The CORS server comes from Nuxt runtimeConfig (NUXT_PUBLIC_CORS_SERVER_1).
 // The public Tune.ashx response contains a fresh signed Apple HLS URL.
 // Do not persist/log the URL, accessKey or provider response anywhere.
-export const TUNEIN_CORS_PROXY = 'https://cors-eplus-bba6d8ad0ca6.herokuapp.com';
-
 export const PUBLIC_APPLE_TUNEIN_STATIONS = Object.freeze({
   'apple-music-1': { tunein: 's345732', apple: '978194965' },
   'apple-music-hits': { tunein: 's345724', apple: '1498155548' },
@@ -17,13 +15,15 @@ export const PUBLIC_APPLE_TUNEIN_STATIONS = Object.freeze({
 const MIN_LIFETIME_MS = 45_000;
 const APPLE_HOST = 'itsliveradio.apple.com';
 
-export function buildPublicTuneInRequest(stationId, proxyOrigin = TUNEIN_CORS_PROXY) {
+export function buildPublicTuneInRequest(stationId, corsServer) {
   const station = PUBLIC_APPLE_TUNEIN_STATIONS[stationId];
-  if (!station) return null;
+  if (!station || typeof corsServer !== 'string' || !corsServer.trim()) return null;
   try {
-    const proxy = new URL(proxyOrigin);
-    if (proxy.protocol !== 'https:' || proxy.hostname !== 'cors-eplus-bba6d8ad0ca6.herokuapp.com' ||
-      proxy.username || proxy.password || proxy.port || proxy.search || proxy.hash ||
+    const proxy = new URL(corsServer);
+    // Configured by the site owner, never supplied by listeners or station data.
+    // No implicit Heroku fallback: an absent/invalid env value disables this path.
+    if (proxy.protocol !== 'https:' || !proxy.hostname ||
+      proxy.username || proxy.password || proxy.search || proxy.hash ||
       proxy.pathname !== '/') return null;
     const upstream = new URL('https://opml.radiotime.com/Tune.ashx');
     upstream.searchParams.set('id', station.tunein);
@@ -65,8 +65,8 @@ export function inspectPublicAppleStream(streamValue, stationId, now = Date.now(
   return { ok: true, streamUrl: url.href, expiresAt };
 }
 
-export async function resolvePublicTuneInStream({ station, signal, fetcher = fetch }) {
-  const requestUrl = buildPublicTuneInRequest(station?.id);
+export async function resolvePublicTuneInStream({ station, corsServer, signal, fetcher = fetch }) {
+  const requestUrl = buildPublicTuneInRequest(station?.id, corsServer);
   if (!requestUrl) throw new Error('invalid_station');
   const response = await fetcher(requestUrl, {
     method: 'GET', cache: 'no-store', credentials: 'omit',
