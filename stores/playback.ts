@@ -8,6 +8,8 @@ export const usePlaybackStore = defineStore('playback', {
     // UI-only selection while the first Global Radio stream is resolving.
     // Never persist this metadata or put a signed HLS URL here.
     pendingGlobalRadio: null as RadioStationOption | null,
+    globalRadioPendingId: '',
+    globalRadioError: '',
     playRequest: 0,
     requestedStationUrl: '',
     pauseRequest: 0,
@@ -31,6 +33,8 @@ export const usePlaybackStore = defineStore('playback', {
       stations: RadioStationOption[] = [], options: { autoplay?: boolean } = {}) {
       // Country and Global share the same player/queue; only source resolution differs.
       this.pendingGlobalRadio = null;
+      this.globalRadioPendingId = '';
+      this.globalRadioError = '';
       this.liveTrack = null;
       this.station = station;
       this.stations = stations.length ? stations
@@ -82,6 +86,8 @@ export const usePlaybackStore = defineStore('playback', {
     activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean } = {}) {
       if (options.onlyIfIdle && this.station) return;
       this.pendingGlobalRadio = null;
+      this.globalRadioPendingId = '';
+      this.globalRadioError = '';
       // Revisiting the same station or changing language must not reload audio.
       if (this.station?.url !== station.url) {
         this.liveTrack = null;
