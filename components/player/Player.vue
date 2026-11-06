@@ -897,6 +897,9 @@ const configureHlsSource = async (
 };
 
 const stopPlaybackFailure = (): void => {
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   stopListeningDuration();
   clearReconnectTimer();
   clearFallbackProbeTimer();
