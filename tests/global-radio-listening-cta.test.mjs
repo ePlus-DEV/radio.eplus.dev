@@ -103,7 +103,7 @@ test('Apple Music preview prerenders in-app player QA routes and keeps custom no
   assert.match(trusted, /RESOLVER_URL: \$\{\{ vars\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL \}\}/);
   assert.doesNotMatch(trusted, /actions\/checkout|npm ci|secrets\./,
     'the trusted job cannot checkout or execute untrusted code or expose secrets');
-  assert.match(build, /needs: preview_config/);
+  assert.match(build, /needs: \[preview_config, comment_status\]/);
   assert.match(build, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ needs\.preview_config\.outputs\.cors_server \}\}/);
   assert.match(build, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: \$\{\{ needs\.preview_config\.outputs\.resolver_url \}\}/);
   assert.doesNotMatch(build, /\n\s*environment:|secrets\.PAGES_DEPLOY_TOKEN/,
