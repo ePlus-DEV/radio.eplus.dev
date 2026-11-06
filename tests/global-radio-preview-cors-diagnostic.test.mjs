@@ -10,7 +10,7 @@ const cors = process.env.NUXT_PUBLIC_CORS_SERVER_1 || '';
 const stations = ['apple-music-1', 'apple-music-holiday-hits'];
 
 test('diagnostic only: browser-Origin proxy and live stream resolution for preview', {
-  skip: !preview, timeout: 30000,
+  skip: !preview, timeout: 60000,
 }, async () => {
   for (const stationId of stations) {
     const url = buildPublicTuneInRequest(stationId, cors);
@@ -43,8 +43,36 @@ test('diagnostic only: browser-Origin proxy and live stream resolution for previ
               const options = Array.isArray(payload?.body) ? payload.body : [];
               report.providerOk = payload?.head?.status == null || Number(payload.head.status) === 200;
               report.candidates = Math.min(options.length, 50);
-              report.validStream = options.some(x =>
-                Boolean(inspectPublicAppleStream(x?.url, stationId)));
+              const stream = options.map(x =>
+                inspectPublicAppleStream(x?.url, stationId)).find(Boolean);
+              report.validStream = Boolean(stream);
+              if (stream) {
+                try {
+                  // Never log a signed HLS URL or playlist contents.
+                  const manifest = await fetch(stream.streamUrl, {
+                    method: 'GET', redirect: 'follow', cache: 'no-store',
+                    credentials: 'omit', headers: { Origin: origin, Accept: 'application/vnd.apple.mpegurl' },
+                    signal: AbortSignal.timeout(8500),
+                  });
+                  const hlsAllow = manifest.headers.get('access-control-allow-origin') || '';
+                  report.hlsStatus = manifest.status;
+                  report.hlsCorsAllowed = hlsAllow === '*' || hlsAllow === origin;
+                  report.hlsOnAppleHost = new URL(manifest.url).hostname === 'itsliveradio.apple.com';
+                  if (manifest.ok) {
+                    const limit = Number(manifest.headers.get('content-length') || '0');
+                    if (limit && limit > 196608) {
+                      report.hlsManifest = 'oversized';
+                      await manifest.body?.cancel().catch(() => {});
+                    } else {
+                      const body = await manifest.text();
+                      report.hlsManifest = body.length <= 196608 && body.startsWith('#EXTM3U');
+                    }
+                  }
+                } catch (e) {
+                  report.hlsError = ['TimeoutError', 'AbortError'].includes(e?.name)
+                    ? 'timeout' : 'network_or_redirect_error';
+                }
+              }
             } catch { report.result = 'invalid_json'; }
           }
         }
