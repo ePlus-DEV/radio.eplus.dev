@@ -286,3 +286,7 @@ Do not treat keyword stuffing or adding arbitrary meta tags as an SEO fix.
 ## Personal library
 
 `/library` is prerendered for static navigation, with `noindex, follow` on production and the staging noindex policy on staging. Its device-local lists are client-only. It is not part of the sitemap URL list.
+
+## Independent environment browser titles (2026-11-06)
+
+`NUXT_PUBLIC_SITE_NAME` is a public site-name/title-suffix variable configured **per GitHub Environment**. Its defaults are `ePlus OnAir` (Production), `ePlus OnAir — Staging` (Staging), and `ePlus OnAir — Preview` (PR Preview). The trusted Preview config forwards only validated public title values to the credential-free build. Do not change Production route SEO bodies, canonical tags, analytics or indexing to label an environment.

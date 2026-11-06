@@ -6,7 +6,7 @@ This is the authoritative environment and release map. It applies to the source 
 | --- | --- | --- | --- | --- | --- |
 | **Production** | Trusted `main` push or manual dispatch on `main` | `production` | `ePlus-DEV/onair-production-pages` | `https://radio.eplus.dev/` | Indexable; canonical, JSON-LD, sitemap, production GA4 |
 | **Staging** | Trusted `develop` push or manual dispatch on `develop` | `staging` after migration | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev/` | `noindex`; no sitemap, canonical/JSON-LD or production GA4 |
-| **Development (PR Preview)** | Same-repo feature/bugfix PR opened, reopened or updated with base `develop` | `development` (trusted config, publisher and cleanup only) | `ePlus-DEV/onair-pr-previews` | `https://preview.radio.eplus.dev/pr-preview/pr-<number>/` | `noindex`; no sitemap, canonical/JSON-LD or production GA4 |
+| **Development (PR Preview)** | Same-repo feature/bugfix PR opened, reopened or updated with base `develop` | `preview` (after safe migration; trusted config, publisher and cleanup only) | `ePlus-DEV/onair-pr-previews` | `https://preview.radio.eplus.dev/pr-preview/pr-<number>/` | `noindex`; no sitemap, canonical/JSON-LD or production GA4 |
 
 **No long-lived `dev` source branch or root-host deployment is implied.** The development tier is intentionally one isolated, temporary build **per PR** on the preview host. `https://preview.radio.eplus.dev/` is the preview landing page, not a fourth build. A permanent `dev` branch would require a separate reviewed hosting, capacity and promotion design.
 
@@ -24,14 +24,14 @@ Historically, the staging deployment used the GitHub Environment named `developm
 
 - `production`: `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`; `PAGES_DEPLOY_TOKEN` scoped to `onair-production-pages`. Restrict deployment to `main` and use reviewers for high-risk releases.
 - `staging`: `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev`; a `PAGES_DEPLOY_TOKEN` scoped to `onair-staging-pages`. Copy approved public environment variables, such as `NUXT_PUBLIC_CORS_SERVER_1`, `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` and `STATION_OG_BASE_URL`, if used. Restrict deployment to `develop`.
-- `development`: the PR Preview publishing and cleanup token with write access to `onair-pr-previews`. Public URL is **derived per PR** by the trusted workflow. Preview builds do not receive Environment secrets. Keep existing development public CORS/resolver configuration only if approved for Preview.
+- `preview`: separate Preview-only `PAGES_DEPLOY_TOKEN` with Contents write permission only to `onair-pr-previews`, and approved public `NUXT_PUBLIC_SITE_NAME`, CORS and resolver variables. The public Preview URL is derived per PR; the untrusted build receives **no Environment secrets**. Set `PAGES_PREVIEW_READY=true` only after provisioning.
 
 **Migration is deliberately two-phase:**
 
 1. In the source repository's Settings → Environments, create/configure `staging` with its **own** `PAGES_DEPLOY_TOKEN` Environment Secret and the correct `NUXT_PUBLIC_SITE_URL` Environment Variable. Confirm output repository write access and approved optional public vars. Do not copy secret values into docs or PR comments.
 2. Once ready, set the source repository-level GitHub Actions Variable **`PAGES_STAGING_READY=true`**. The `develop` deployment now selects `staging` instead of `development`, and its independent staging gate is enabled. Verify staging preflight and live deployment before retiring legacy staging variables from `development`.
 
-Until that repository-level variable exists, `develop` continues using the **legacy `development` Environment** and `PAGES_DEV_READY=true` gate, avoiding an unconfigured Environment breaking Staging. Setting `PAGES_STAGING_READY=false` explicitly disables staging; it does **not** silently revert to the legacy Environment. The preview workflow continues to use `PAGES_DEV_READY` for its own opt-in gate, independently after migration. `main` production is never gated by either readiness variable.
+Until that repository-level variable exists, `develop` continues using the **legacy `development` Environment** and `PAGES_DEV_READY=true` gate, avoiding an unconfigured Environment breaking Staging. Setting `PAGES_STAGING_READY=false` explicitly disables staging; it does **not** silently revert to the legacy Environment. Preview migrates independently: `PAGES_PREVIEW_READY=true` selects the trusted `preview` Environment. If this variable is absent, the legacy `development` Environment and `PAGES_DEV_READY` remain active. Explicit `PAGES_PREVIEW_READY=false` disables Preview without fallback. `main` production is never gated by either readiness variable.
 
 The connected GitHub file tools do not provision GitHub Environment secrets/variables. The repository owner must carry out the two settings changes above before the three-Environments state is fully activated.
 
@@ -41,6 +41,8 @@ The connected GitHub file tools do not provision GitHub Environment secrets/vari
 | --- | --- | --- | --- |
 | Base path | `/` | `/` | `/pr-preview/pr-N/` |
 | Build `NUXT_PUBLIC_SITE_URL` | Production root URL | Staging root URL | Preview URL including PR path |
+| Default browser-tab/site name | `ePlus OnAir` | `ePlus OnAir — Staging` | `ePlus OnAir — Preview` |
+| Override | `production`'s `NUXT_PUBLIC_SITE_NAME` | `staging`'s `NUXT_PUBLIC_SITE_NAME` | `preview`'s validated `NUXT_PUBLIC_SITE_NAME` |
 | `NUXT_PUBLIC_NO_INDEX` | `false` | `true` | `true` |
 | Sitemap, canonical, JSON-LD | Yes | No | No |
 | GA4 `G-ETDY41KBBJ` | Yes | No | No |
@@ -54,3 +56,15 @@ The connected GitHub file tools do not provision GitHub Environment secrets/vari
 - Check HTTPS/DNS for all domains independently. No automatic DNS or GitHub Environment secret management is performed by code changes.
 
 Also see [PR Preview runbook](./PR_PREVIEWS.md), [Pages deployment guide](./GITHUB_PAGES.md), [workflow policy](./GITHUB_ACTIONS.md) and [SEO policy](./SEO.md).
+
+## Separate Preview GitHub Environment and title configuration (2026-11-06)
+
+The intended three independent GitHub Environments are `production`, `staging` and `preview`. The old `development` Environment is a **transitional fallback** while migration is unfinished, not a fourth destination. A Preview is created **per PR**, without a permanent `dev` branch.
+
+1. Create GitHub Environment **`preview`** in the source repository, with a **separate** `PAGES_DEPLOY_TOKEN` Environment Secret scoped to `ePlus-DEV/onair-pr-previews`. Set approved public Environment variables including `NUXT_PUBLIC_SITE_NAME=ePlus OnAir — Preview`, CORS and resolver only when needed. Its per-PR URL comes from the workflow; never hardcode a shared origin in the Preview Environment.
+2. Keep `staging` and `production` separately configured. The browser-tab title suffix/site name comes from each Environment's `NUXT_PUBLIC_SITE_NAME`, defaulting to `ePlus OnAir — Staging` and `ePlus OnAir`. The helper distinguishes recognized hostnames when values are absent. The title change **does not rewrite Production SEO route title text, description, canonical, structured data or GA4**.
+3. Because `.github/workflows/pr-preview-pages.yml` uses `pull_request_target`, merge its trusted definition into default **`main`** and synchronize to `develop`. After the new Preview secret is provisioned, set **repository-level** `PAGES_PREVIEW_READY=true`. Trusted Preview config/publish/cleanup jobs then use `preview`, but the untrusted PR build remains without Environment secrets and receives only validated public variables.
+4. When `PAGES_PREVIEW_READY` is absent, the workflow continues using the old `development` Environment with `PAGES_DEV_READY=true` to avoid interrupting active previews. Explicit `PAGES_PREVIEW_READY=false` disables Preview without fallback. Do not remove `development` secrets before both Preview and Staging have been migrated away from their respective legacy fallbacks.
+5. Validate per-PR Preview title, indexability, actual published commit marker, assets and cleanup-on-close. Verify that Production remains indexed and uses GA4, while Staging/Preview are `noindex` and GA4-free.
+
+Secrets and GitHub Environment settings are owner-managed: the repository workflow cannot create/migrate them automatically. The existing CLI output validator argument `development` is the *build policy* name, not the GitHub Environment name `preview`.
