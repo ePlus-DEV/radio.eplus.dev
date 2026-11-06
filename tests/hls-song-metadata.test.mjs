@@ -168,6 +168,13 @@ test('HAR regression: Apple CMAF ID3 music vs presenter in sequence 53/54', () =
   assert.deepEqual(parseHlsId3Tag(song, apple),
     { title: 'Underneath the Tree', artist: 'Kelly Clarkson' });
   assert.equal(parseHlsId3Tag(presenter, apple), null);
+  // Apple may place its song marker after the two text frames.
+  const trailingMarker = makeTag([
+    title('Underneath the Tree', 4), artist('Kelly Clarkson', 4),
+    applePriv('com.apple.radio.adamid'),
+  ], 4);
+  assert.deepEqual(parseHlsId3Tag(trailingMarker, apple),
+    { title: 'Underneath the Tree', artist: 'Kelly Clarkson' });
   assert.deepEqual(parseHlsId3Tag(nextSong, apple),
     { title: 'Make It to Christmas', artist: 'Alessia Cara' });
   // Ordinary ID3 handling remains backward compatible for non-Apple radio.
