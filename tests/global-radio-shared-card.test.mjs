@@ -12,7 +12,7 @@ test('Global Radio uses the Country Station panel, not a duplicate list implemen
     read('pages/[area]/[country]/index.vue'),
   ]);
   assert.match(global, /<PanelStation[\s\S]*:stations="stationCards"[\s\S]*@select-station="playSelectedStation"/);
-  assert.match(country, /<PanelStation[\s\S]*:stations="stations"[\s\S]*@select-station="playSelected"/);
+  assert.match(country, /<PanelStation[\s\S]*@select-station="playSelected"[\s\S]*:stations="stations"/);
   assert.doesNotMatch(global, /v-for="station in provider\?\.stations|<article\b|<audio\b/,
     'Global must not reimplement cards or create another player');
   assert.match(shared, /grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5/);
