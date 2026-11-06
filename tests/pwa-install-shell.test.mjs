@@ -10,14 +10,19 @@ function workerHarness(source) {
   const handlers = {};
   const saved = [];
   const deleted = [];
-  const cacheKeys = ['onair-offline-shell-v0', 'onair-offline-shell-v1', 'some-other-app'];
+  const cacheKeys = [
+    'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v0',
+    'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v1',
+    'onair-offline-shell-%2Fpr-preview%2Fpr-3%2F-v0',
+    'some-other-app',
+  ];
   let online = true;
   const offlineResponse = { status: 200, offline: true };
   const cache = {
     add: async request => { saved.push(request.url || request); },
   };
   const caches = {
-    open: async name => { assert.equal(name, 'onair-offline-shell-v1'); return cache; },
+    open: async name => { assert.equal(name, 'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v1'); return cache; },
     keys: async () => cacheKeys,
     delete: async name => { deleted.push(name); return true; },
     match: async url => url === 'https://radio.example/pr-preview/pr-2/offline.html'
@@ -74,7 +79,7 @@ test('service worker caches only the noindex offline explanation, not stations o
   assert.deepEqual(worker.saved, ['https://radio.example/pr-preview/pr-2/offline.html']);
   assert.doesNotMatch(source, /self\.skipWaiting\(|self\.clients\.claim\(|cache\.put\(/);
   await worker.run('activate');
-  assert.deepEqual(worker.deleted, ['onair-offline-shell-v0']);
+  assert.deepEqual(worker.deleted, ['onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v0']);
 
   for (const request of [
     { mode: 'no-cors', method: 'GET', destination: 'audio', url: 'https://stream.example/live.mp3' },
