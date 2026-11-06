@@ -20,8 +20,10 @@ function isApproved(url) {
     const masterOrVariant = parsed.pathname.startsWith('/3p-tune-in/tune_in/');
     // Verified in the user's HAR: CMAF audio fragments use a different
     // Apple-owned path from the TuneIn manifests. Do not reject them.
-    const cmafFragment = /^\\/3p-tune-in\\/bb\\/as_live_aod\\/\\d+\\/[a-z0-9-]+\\/cmaf\\/\\d+_\\d+\\/fileSequence\\d+\\.(?:m4s|mp4)$/i
-      .test(parsed.pathname);
+    const cmafFragment = new RegExp(
+      '^/3p-tune-in/bb/as_live_aod/[0-9]+/[a-z0-9-]+/cmaf/[0-9]+_[0-9]+/fileSequence[0-9]+[.](?:m4s|mp4)$',
+      'i',
+    ).test(parsed.pathname);
     return parsed.protocol === 'https:'
       && parsed.hostname === 'itsliveradio.apple.com'
       && (masterOrVariant || cmafFragment)
