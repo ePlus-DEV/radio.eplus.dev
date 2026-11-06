@@ -609,23 +609,24 @@ with `ONAIR_SKIP_STATION_OG=true`. Existing station logos, favicons and the
 shared brand PNG remain available; only generated station OG JPEGs are omitted.
 The generator deletes stale local `public/og/stations` output in this mode.
 
-`npm run generate:images` generates only station JPEGs. The manual **Publish
-station images separately** workflow reuses unchanged images from the public
-Pages repository's independent `station-images` branch, uploads changes in
-100 MiB batches and commits a verified complete manifest last. It never pushes
-to the website's `main` branch. Website builds use the shared PNG until
-`STATION_OG_BASE_URL` is set to the immutable completed-upload URL reported by
-that workflow. The external manifest audit rejects incomplete image uploads.
-Later image uploads cannot mutate assets referenced by an existing deployment.
+`npm run generate:images` still generates station JPEGs **locally**. The
+legacy manual uploader `publish-station-images.yml` was retired on 2026-11-06:
+the Actions run history showed no usage, and neither Pages repository had a
+`station-images` branch. Keep `scripts/publish-image-batches.mjs` and its tests
+as offline reference tooling, but do not claim station-image upload automation
+is active. Normal Pages builds use the shared PNG; the external manifest audit
+must reject incomplete image sets.
 
-Run images from the intended source ref, and rerun the image workflow before
-switching the website URL after station additions or artwork changes. Do not
-point metadata at a mutable or partially uploaded image branch. Keep the
-1 GB website audit enabled and preserve existing noindex/canonical settings.
+Only activate `STATION_OG_BASE_URL` if the image set and a complete verified
+manifest are **already** published to a stable immutable HTTPS location.
+Otherwise keep that variable unset and the 1 GB website audit enabled.
+Reintroducing an uploader requires a demonstrated use case, explicit review
+and regression coverage; never replace production metadata/canonical policy
+as part of a workflow cleanup.
 
 ## One repository workflow at a time (2026-10-13)
 
-CI, Pages website deployment, manual station-image uploads and radio sync all
+CI, Pages website deployment and manual InstantAudio sync all
 use workflow-level concurrency group `onair-repository-work`, with
 `queue: max` and `cancel-in-progress: false`. Groups based on PR number,
 branch, target or workflow name do not enforce a repository-wide limit.
@@ -637,7 +638,7 @@ PR's required CI or a pending production deployment. When a queued CI run
 starts, its preflight skips closed PRs and superseded head commits before
 Node setup, installation and tests. Website deployment similarly skips an old
 branch commit before generating or publishing files. The next current run
-performs the normal checks. An active upload/deploy finishes before the next
+performs the normal checks. An active website deploy or data-sync job finishes before the next
 workflow starts. Previously dispatched runs retain their old concurrency
 configuration until completion.
 
