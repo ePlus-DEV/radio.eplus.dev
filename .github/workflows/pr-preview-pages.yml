@@ -239,7 +239,7 @@ jobs:
       needs.build.result == 'success' &&
       needs.build.outputs.active == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     permissions:
       contents: read
       pull-requests: write
@@ -336,7 +336,10 @@ jobs:
           marker="${base}preview-commit.txt"
           echo "Waiting for GitHub Pages to publish PR #$PR_NUMBER commit $EXPECTED_HEAD"
           live=false
-          for attempt in $(seq 1 25); do
+          # The output Pages repository may still be publishing a large static
+          # snapshot after the source artifact has uploaded. Do not mark the
+          # Preview unavailable simply because Pages deploy takes >3 minutes.
+          for attempt in $(seq 1 90); do
             published_sha="$(curl --location --fail --silent --show-error --max-time 10 "$marker" 2>/dev/null || true)"
             if [ "$published_sha" = "$EXPECTED_HEAD" ]; then
               if curl --location --fail --silent --show-error --max-time 15 "$base" -o "$RUNNER_TEMP/preview-live.html" &&
@@ -345,7 +348,7 @@ jobs:
                 break
               fi
             fi
-            if [ "$attempt" -lt 25 ]; then sleep 8; fi
+            if [ "$attempt" -lt 90 ]; then sleep 10; fi
           done
           if [ "$live" != true ]; then
             echo "::error::GitHub Pages preview is not live at $base for commit $EXPECTED_HEAD. Check Settings -> Pages of $PREVIEW_TARGET_REPOSITORY and its 'pages build and deployment' job."
