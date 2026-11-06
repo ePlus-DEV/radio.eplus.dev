@@ -67,13 +67,26 @@ show the station name instead of guessing.
   and current_artist, with has_song=false.
 - CI #42131026067: Apple Music 1, Hits, Chill HLS master/media playlists had
   no EXT-X-DATERANGE song/artist metadata. PROGRAM-DATE-TIME is only time.
-- The safe HLS probe could not resolve any actual media segment under its
-  strict allowed-host/path rule (segment:null). **In-band ID3 remains
-  unverified**, not proven missing.
-- Unit tests prove parser correctness using synthetic ID3 and verify the
-  player-store wiring, but **do not prove a live Apple stream supplied tags**.
-  Do not merge/release as a fully functioning now-playing feature without
-  browser/live station verification.
+- The user's 2026-11-06 HAR confirmed actual CMAF `emsg` (version 1,
+  `https://aomedia.org/emsg/ID3`) in Apple Music Holiday Hits segments
+  `fileSequence53.m4s`–`fileSequence57.m4s`, with ID3v2.4 `TIT2` and
+  `TPE1`. Verified *song* pairs include “Underneath the Tree” / Kelly
+  Clarkson and “Make It to Christmas” / Alessia Cara.
+- The *same* stream includes an “Eddie Francis” / “Holiday Hits” presenter
+  card with `TIT2`/`TPE1` but no `TALB` or Apple adamid PRIV marker.
+  For Apple streams, the client now requires an album or Apple song marker to
+  avoid representing a host as the current song. Ordinary stations retain
+  their existing ID3 parsing behavior.
+- The former probe's host/path guard rejected Apple's legitimate
+  `/3p-tune-in/bb/as_live_aod/.../cmaf/.../fileSequenceN.m4s` segments.
+  The branch-scoped probe now accepts that constrained path and summarizes
+  tags **without logging track values, URL tokens, or audio**.
+- Unit tests reconstruct only the non-sensitive ID3 frames and expected
+  playback PTS from the HAR; the complete HAR and audio segments are never
+  added to the repository. hls.js exposes CMAF emsg tags via
+  `FRAG_PARSING_METADATA`, while Safari native HLS uses timed TextTrack cues.
+  **Browser-level confirmation remains necessary** before release; captured
+  metadata proves existence, not correct live player rendering on all devices.
 
 ## Provider / accuracy limits
 
