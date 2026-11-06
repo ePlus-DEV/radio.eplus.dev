@@ -933,3 +933,14 @@ Do not touch PlayerSession or the global audio dock for navigation fixes.
   `tests/station-modal-theme.test.mjs`, in addition to existing design/SEO
   and mobile navigation tests.
 
+## Three-tier GitHub Pages environment contract (2026-11-06)
+
+See [ENVIRONMENTS.md](./ENVIRONMENTS.md) for the authoritative branch / GitHub Environment / Pages repository / hostname matrix and staged migration.
+
+- **Development**: a same-repository feature PR targeting `develop`, built without deployment credentials and published by trusted jobs from the GitHub Environment `development` to `ePlus-DEV/onair-pr-previews` at `https://preview.radio.eplus.dev/pr-preview/pr-N/`. It is temporary and only a subset of static routes is prerendered; there is **no** persistent `dev` source branch by default. Preview `404.html` can countdown and redirect to a matching Production route, but this is HTTP 404 and never evidence that a preview deployed successfully.
+- **Staging**: trusted `develop` releases to `ePlus-DEV/onair-staging-pages` at `https://new-radio.eplus.dev/`. GitHub Environment is `staging` **after** its own secret `PAGES_DEPLOY_TOKEN` and public `NUXT_PUBLIC_SITE_URL` have been configured and the **repository-level** `PAGES_STAGING_READY=true` variable is enabled. Until then, the legacy `development` Environment/`PAGES_DEV_READY` route stays active; setting the new staging flag to `false` explicitly disables Staging.
+- **Production**: trusted `main` releases to `ePlus-DEV/onair-production-pages` at `https://radio.eplus.dev/` with GitHub Environment `production`. Only Production is indexable and may emit canonical/JSON-LD/sitemap and GA4 `G-ETDY41KBBJ`.
+- Both Development and Staging are `noindex`, GA4-free and sitemap-free. Their hostnames also fail closed to `noindex` when the flag is missing. Production has `NUXT_APP_BASE_URL=/`; Staging has `/`; Development Preview has `/pr-preview/pr-N/`.
+- Release direction is `feature PR → Development Preview → merge develop → verify Staging → reviewed develop-to-main release PR → Production`. Never merge or deploy PR content directly to Production, rewrite production SEO text as collateral work, force-push, or copy secret values into docs.
+- The default branch `main` controls the `pull_request_target` Preview workflow; synchronize it with `develop`. Keep PR build jobs read-only and isolated from Environment secrets; verify live HTML `noindex` and expected PR SHA before the bot posts a working preview URL.
+- Changes to any deployment tier must update `AGENTS.md`, `docs/ENVIRONMENTS.md`, `docs/GITHUB_ACTIONS.md` and tests, and preserve all three distinct Pages repositories and `CNAME` records.
