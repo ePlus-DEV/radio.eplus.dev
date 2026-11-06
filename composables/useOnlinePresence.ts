@@ -1,5 +1,5 @@
 import { useOnlineDurationStore } from '~/stores/onlineDuration';
-import { createOnlineDurationTracker, ONLINE_IDLE_MS } from '~/utils/online-duration.mjs';
+import { createOnlineDurationTracker, ONLINE_IDLE_MS, ONLINE_TRACKING_ENABLED_KEY } from '~/utils/online-duration.mjs';
 import {
   ONLINE_PRESENCE_CHECKPOINT_MS,
   onlinePresenceTickInterval,
@@ -85,6 +85,11 @@ export function useOnlinePresence() {
       if (eligible()) activity();
       sync();
     };
+    // Re-enable foreground tracking when another tab changes the setting.
+    // Ignore routine cross-tab duration writes to avoid unnecessary work.
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === ONLINE_TRACKING_ENABLED_KEY || event.key === null) sync();
+    };
     const onPageHide = () => {
       tracker.stop();
       online.setLivePreview(0);
@@ -100,6 +105,7 @@ export function useOnlinePresence() {
     }
     window.addEventListener('radio:online-duration-reset', reset);
     window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('storage', onStorage);
 
     // Route/hash changes can open the stats panel without remounting the shell.
     const stopRouteWatch = watch(() => [route.path, route.hash], sync, { flush: 'post' });
@@ -118,6 +124,7 @@ export function useOnlinePresence() {
       }
       window.removeEventListener('radio:online-duration-reset', reset);
       window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('storage', onStorage);
     };
   });
   onBeforeUnmount(() => cleanup?.());
