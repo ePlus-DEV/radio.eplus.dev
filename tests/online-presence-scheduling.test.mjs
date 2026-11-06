@@ -37,5 +37,8 @@ test('global timer reacts to focus, visibility, navigation and user activity', a
   assert.match(source, /tracker\.activity\(\);\s*\/\/[^\n]*\n\s*schedule\(\)/);
   assert.match(source, /tracker\.flush\(\)/);
   assert.match(source, /stopRouteWatch\(\)/);
+  assert.match(source, /event\.key === ONLINE_TRACKING_ENABLED_KEY/);
+  assert.match(source, /window\.addEventListener\('storage', onStorage\)/);
+  assert.match(source, /window\.removeEventListener\('storage', onStorage\)/);
   assert.doesNotMatch(source, /window\.setInterval\(tick, 1000\)/);
 });
