@@ -66,6 +66,7 @@
       eyebrow-key="global_radio.eyebrow"
       :play-enabled="canListenOnEplus"
       :pending-station-id="pendingStationId"
+      :pending-playable-station-id="pendingPassiveStationId"
       :disabled-reason="t('global_radio.resolver_unavailable')"
       @select-station="playSelectedStation"
     />
@@ -86,6 +87,7 @@ const {
   play: playOnEplus,
   prepare: prepareOnEplus,
   pendingStationId,
+  pendingPassiveStationId,
   error: resolverError,
 } = useAuthorizedGlobalRadioPlayback(() => provider.value?.stations || []);
 const stationCards = computed<RadioStationOption[]>(() => (provider.value?.stations || []).map(station => ({
