@@ -1,46 +1,31 @@
-# Release the website before station images
+# Station Open Graph images and GitHub Pages size limit
 
-The website and generated station Open Graph images have independent builds.
-Station logos already checked into `public/img` remain part of the website;
-there is no blank artwork or repeated logo generation during a release.
+The standard website build is intentionally independent of large per-station Open Graph JPEGs. GitHub Pages limits the published site to **1 GB**, and pushing smaller Git commits does not increase that limit.
 
-## Publish the website immediately
+## Current publishing behavior
 
-The Pages workflow and PR CI run `npm run generate:site`. It generates search,
-brand assets and all HTML but omits station OG JPEGs, including stale JPEGs
-left in a warm checkout. Until a complete external image set is configured,
-station pages use the existing `/brand/social-preview.png`. SEO indexing and
-canonical URLs remain controlled by the existing environment settings.
+- **Production** and **Staging** publish with `npm run generate:site` and `ONAIR_SKIP_STATION_OG=true`. This generates HTML, search assets, favicons and shared brand artwork, but excludes generated `/og/stations/*.jpg` files.
+- Existing logos and images under `public/img/` remain in the website.
+- Until a **verified complete** external station-image set is configured, station pages use `/brand/social-preview.png` for social sharing. This is the supported default.
+- The old manually dispatched **Publish station images separately** GitHub Action was retired on 2026-11-06 after an audit found no recorded runs and no `station-images` branch in either Pages output repository. No active release depends on it.
 
-For local generation: `npm run generate:site`.
-Post-build audits must use `ONAIR_SKIP_STATION_OG=true`, as the workflows do.
-The original `npm run generate` still supports a full local image build.
+## Local image generation (still available)
 
-## Upload station images separately
+```bash
+npm ci
+npm run generate:images
+```
 
-1. Select the intended source branch (`main` for released source, or `develop`
-   for staging) and run **Publish station images separately** in Actions.
-2. Choose the production or development destination. It uses the same
-   Environment-scoped `PAGES_DEPLOY_TOKEN` as website publishing.
-3. Existing JPEGs and their manifest are restored before `npm run generate:images`.
-   Unchanged images are reused. Changes push to `station-images` in batches of
-   at most 100 MiB. This branch is separate from the Pages website source `main`.
-4. Wait for **Report complete image set**. It reports a public immutable base URL
-   containing the final commit SHA; the completion manifest is committed last.
-5. Set `STATION_OG_BASE_URL` in the source repository or the matching Environment
-   to that exact URL, then rerun the website deployment. Repository scope also
-   supplies this value to PR CI. New station catalogs must have matching image
-   uploads before using their new URL.
+This generates station OG artwork locally; **it does not publish anything**. The legacy `scripts/publish-image-batches.mjs` and its regression tests remain available as offline tooling/reference, but there is no automatic or manual GitHub Actions uploader. Do not imply that launching the normal Pages workflow will upload those JPEGs.
 
-Website metadata references external JPEGs only when the base URL is supplied.
-All-station audits validate the complete external manifest against every route.
-Clearing `STATION_OG_BASE_URL` immediately restores shared-card builds.
+## Optional external image set
 
-If an image upload fails, rerun it. Already uploaded identical images do not
-need another push. No partial upload is activated automatically. Subsequent
-uploads cannot break the previously deployed immutable image URLs.
+The app still supports `STATION_OG_BASE_URL` / `NUXT_PUBLIC_STATION_OG_BASE_URL` for a **separately hosted, immutable, complete** station JPEG collection. Before enabling it:
 
-The external GitHub raw URLs serve static public share-card images. A CDN can
-replace the base URL later if it serves the same paths and complete manifest.
-Do not put the JPEGs back into the Pages website output: pushing smaller chunks
-does not increase GitHub Pages' 1 GB published-site limit.
+1. Ensure **every** station image and the complete image manifest are available at the proposed immutable HTTPS base URL.
+2. Verify image URLs and manifest integrity using the existing station-image/SEO validators; avoid mutable branch URLs, private endpoints or partial uploads.
+3. Configure the public variable only for the intended environment and rerun that environment's **normal website deployment**. Never use Preview's PR namespace as a permanent image host.
+
+If these prerequisites are not met, leave the variable unset so the shared brand social image remains in use. Reintroducing an automated image publisher requires a new reviewed implementation, clear demand, an ownership/hosting decision and regression coverage; it should not be resurrected just because old scripts exist.
+
+For the current build and release setup, see [GitHub Actions](./GITHUB_ACTIONS.md), [GitHub Pages](./GITHUB_PAGES.md), [Environments](./ENVIRONMENTS.md) and [SEO](./SEO.md).
