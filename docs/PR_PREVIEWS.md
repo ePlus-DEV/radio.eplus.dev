@@ -5,7 +5,7 @@
 Three environments are kept isolated; Development is a temporary PR Preview tier, not a permanent `dev` source branch. Production and Staging remain full-site deployments. See [ENVIRONMENTS.md](./ENVIRONMENTS.md).
 
 - `main` -> `ePlus-DEV/onair-production-pages` -> `https://radio.eplus.dev`
-- `develop` -> `ePlus-DEV/onair-staging-pages` -> `https://new-radio.eplus.dev`
+- `develop` -> `ePlus-DEV/onair-staging-pages` -> `https://staging.radio.eplus.dev`
 - **Development feature PR targeting `develop`** -> GitHub Environment `development` (trusted publisher only) -> dedicated `ePlus-DEV/onair-pr-previews` Pages repository -> `https://preview.radio.eplus.dev/pr-preview/pr-<number>/`
 
 Do not put previews inside the staging or production output repository. As of 2026-11-05, the staging Pages `main` tree already contains ~962.8 MB of files, close to GitHub Pages' 1 GB published-site limit.
