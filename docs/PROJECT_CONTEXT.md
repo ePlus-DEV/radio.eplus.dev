@@ -1087,9 +1087,10 @@ brand, not two independently titled search results.
   but only when that local result is unambiguous. Do not deduplicate two
   countries, independent broadcasters with different homepages or Global Radio
   pages by matching names alone.
-- InstantAudio/Radio Browser sync merges any newly discovered alternative
-  bitrate/protocol into the existing station's `streams` list when identity
-  matches, rather than creating another `-instant-audio` catalog ID.
+- InstantAudio/Radio Browser sync skips newly discovered duplicate
+  station identities rather than creating more `-instant-audio` catalog IDs
+  or replacing the original primary stream and metadata. Existing alternative
+  streams and historic alias routes are retained in the country catalog.
   Existing aliases remain intact until an explicitly authorized SEO-safe
   data migration is planned.
 - Tests: `tests/station-search-duplicates.test.mjs` exercises the real UK
