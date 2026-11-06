@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { stripMarkupToText } from "../utils/markup-text.mjs";
-import { stationCatalogIdentity, stationListingPriority } from "../utils/station-catalog-identity.mjs";
+import { stationCatalogIdentity } from "../utils/station-catalog-identity.mjs";
 
 const ROOT = process.cwd();
 const INSTANT_HOME = "https://instant.audio/";
@@ -1468,15 +1468,10 @@ export function mergeStations(existing, discovered) {
   // Radio Browser sometimes provides another protocol/bitrate for the same
   // broadcaster. Prefer the existing curated listing rather than creating a
   // new `-instant-audio` route just because its stream URL differs.
-  const listingOwner = new Map();
+  const listingOwner = new Set();
   for (const [slug, station] of Object.entries(merged)) {
     const identity = stationCatalogIdentity(station);
-    if (identity) {
-      const previous = listingOwner.get(identity);
-      if (!previous || stationListingPriority(slug, station) > previous.rank) {
-        listingOwner.set(identity, { slug, rank: stationListingPriority(slug, station) });
-      }
-    }
+    if (identity) listingOwner.add(identity);
     for (const candidate of normalizeStationStreams(station)) {
       streamOwner.set(normalizeStreamIdentity(candidate.url), slug);
     }
@@ -1492,13 +1487,16 @@ export function mergeStations(existing, discovered) {
   for (const [baseSlug, stationValue] of Object.entries(discovered)) {
     const discoveredStreams = normalizeStationStreams(stationValue);
     if (!discoveredStreams.length) continue;
+    const identity = stationCatalogIdentity(stationValue);
+    // Duplicate station discovered later: discard it rather than replacing
+    // the original's URL, stream or metadata. Existing route wins even when
+    // the newly discovered stream uses HTTPS or another codec.
+    if (identity && listingOwner.has(identity)) continue;
 
     const matchedByStream = discoveredStreams
       .map((candidate) => streamOwner.get(normalizeStreamIdentity(candidate.url)))
       .find(Boolean);
-    const identity = stationCatalogIdentity(stationValue);
-    const matchedByIdentity = identity ? listingOwner.get(identity)?.slug : null;
-    const targetSlug = matchedByIdentity || (merged[baseSlug] ? baseSlug : matchedByStream);
+    const targetSlug = merged[baseSlug] ? baseSlug : matchedByStream;
 
     if (targetSlug) {
       const current = merged[targetSlug];
@@ -1543,7 +1541,7 @@ export function mergeStations(existing, discovered) {
     if (existingHasFavorite || added > 0) delete station.favorite;
 
     merged[slug] = station;
-    if (identity) listingOwner.set(identity, { slug, rank: stationListingPriority(slug, station) });
+    if (identity) listingOwner.add(identity);
     for (const candidate of discoveredStreams) {
       streamOwner.set(normalizeStreamIdentity(candidate.url), slug);
     }
