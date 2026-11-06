@@ -56,7 +56,7 @@ test('shared Country card defaults remain active; Global loading and unavailable
   assert.match(global, /:disabled-reason="t\('global_radio\.resolver_unavailable'\)"/);
   assert.match(composable, /activeController\?\.abort\(\)/);
   assert.match(composable, /pendingStationId\.value = station\.id/);
-  assert.match(composable, /resolvePublicTuneInStream\\(\\{[\\s\\S]*station, corsServer: corsServer\\.value, signal: controller\\.signal,/.replaceAll('\\','\\') );
+  assert.match(composable, /resolvePublicTuneInStream\(\{\s*station, corsServer: corsServer\.value, signal: controller\.signal,/);
   assert.doesNotMatch(global, /Promise\.all\(/, 'the Global directory never resolves every stream');
 });
 
