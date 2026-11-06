@@ -39,7 +39,7 @@ test('directory/detail use shared player without raw HLS prompts; provider links
   }
   assert.match(page, /:play-enabled="canListenOnEplus"/);
   assert.match(page, /:pending-station-id="pendingStationId"/);
-  assert.match(detail, /:disabled="!canListenOnEplus \\|\\| Boolean\\(pendingStationId\\)"/);
+  assert.match(detail, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
   assert.match(detail, /rel="noopener noreferrer"/);
   assert.match(detail, /:href="station\.listen_url"/);
   assert.match(detail, /:href="station\.tunein_url"/);
