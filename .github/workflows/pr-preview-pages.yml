@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 env:
-  # Same Pages publisher as development: only the output repository differs.
+  # Development PR previews always publish to their own Pages repository.
   PREVIEW_TARGET_REPOSITORY: ePlus-DEV/onair-pr-previews
   PREVIEW_SITE_ORIGIN: https://preview.radio.eplus.dev
   PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -155,9 +155,9 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/assert-staging-noindex.mjs
-          node scripts/assert-ga4-output.mjs .output/public staging
+          node scripts/assert-ga4-output.mjs .output/public development
           node scripts/assert-pr-preview-output.mjs .output/public "$PR_NUMBER"
-          node scripts/check-pages-build.mjs .output/public staging
+          node scripts/check-pages-build.mjs .output/public development
 
       - name: Store preview files (no credentials)
         if: steps.current.outputs.active == 'true'
