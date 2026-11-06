@@ -73,6 +73,9 @@ function safeSegmentCandidateSummary(playlist, baseUrl) {
     return {
       mediaUriPresent: true,
       appleHost: url.hostname === 'itsliveradio.apple.com',
+      // Hostnames are public infrastructure identifiers, not signed URLs.
+      // Never print paths, query values, access keys or media bytes.
+      cdnHost: /^[a-z0-9.-]{1,120}$/i.test(url.hostname) ? url.hostname : 'invalid',
       underTuneIn: url.pathname.startsWith('/3p-tune-in/'),
       recognizedExtension: ['ts', 'aac', 'm4s', 'mp4'].includes(ext),
       hasOnlyAccessKey: [...url.searchParams.keys()].every(key => key === 'accessKey'),
