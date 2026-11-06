@@ -1043,26 +1043,29 @@ Regression coverage: `tests/global-radio-shared-card.test.mjs`,
 `tests/country-station-panel.test.mjs`, and
 `tests/global-radio-listening-cta.test.mjs`.
 
-## 2026-11-06 — Global Radio idle player selection on directory entry
+## 2026-11-06 — Global Radio explicit Play survives navigation
 
-Country Radio initializes a default player station without autoplay when
-there is no current station and no saved last-station preference. The Global
-Apple Music directory must offer the same listener affordance. On the client
-only, it prepares **the first catalog station** when idle, resolving at most
-that one provider stream (not every channel) and passing `autoplay: false`.
-The dock immediately shows the selected station name and authentic local
-artwork via a UI-only `playback.pendingGlobalRadio` value, with **Connecting**
-status and no fake playable source. The real `<audio>` remains owned by the
-single global `PlayerSession` component.
+The Country and Global station cards share the same presentation and button
+size, but not the source lifecycle. Entering the Apple Music directory does
+**not** auto-prepare a provider stream, choose a default channel or trigger a
+seven-station lookup. In-app radio only starts after an explicit Play selection.
 
-An explicit tap on the first station during silent preparation upgrades that
-in-flight request to autoplay; its button must remain actionable until the
-tap is registered. A different station selection aborts the previous resolver.
-On failure or route teardown, the transient pending state is cleared. Existing
-playback and saved last-station restoration take priority and must not be
-replaced by directory navigation. Do not log, cache, persist, prerender, or
-expose signed HLS URLs in metadata or the player queue. The initial default
-is **selection only**, never automatic audible playback.
+Global Radio's asynchronous signed HLS resolution must outlive the directory
+page that initiated it. The in-flight AbortController is browser-scoped rather
+than tied to page unmount, and pending station identity/error live in the Pinia
+playback store so the detail page can see the same Connecting state. Only an
+explicit newer station request aborts the previous request. The queue's public
+metadata is captured before navigating; stream URLs and access keys never
+enter queue JSON, localStorage or static HTML.
 
-Regression tests: `tests/global-radio-idle-selection.test.mjs` and
-`tests/global-radio-shared-card.test.mjs`.
+While the selected stream resolves and the player was previously idle, a
+temporary metadata-only `pendingGlobalRadio` supplies the station title and
+artwork to the dock, with Connecting status and no fake playable source.
+A late last-station restore cannot override this explicit selection. Once an
+authorized playable source is validated, `activateGlobalRadio` starts the
+existing `PlayerSession` and clears the pending state. Do not change Country
+Radio's idle-restore behavior to imitate this provider-specific flow.
+
+Regression tests: `tests/global-radio-idle-selection.test.mjs`,
+`tests/global-radio-shared-card.test.mjs`, and
+`tests/global-radio-player-parity.test.mjs`.
