@@ -1,6 +1,7 @@
 /**
- * Staging indexability depends only on hosting configuration. The exact
- * staging origin provides a safe fallback if the noindex flag is missing.
+ * Non-production indexability is controlled by build configuration.
+ * Recognized staging and development preview hosts also fail closed to
+ * noindex if a build accidentally omits NUXT_PUBLIC_NO_INDEX.
  * Production remains indexable when promoted from develop to main.
  */
 export function isStagingDeployment({ siteUrl = "", noIndex = "" } = {}) {
@@ -8,7 +9,7 @@ export function isStagingDeployment({ siteUrl = "", noIndex = "" } = {}) {
   let stageHost = false;
   try {
     const host = new URL(String(siteUrl)).hostname.toLowerCase();
-    stageHost = host === "radio-new.eplus.dev" || host === "new-radio.eplus.dev";
+    stageHost = host === "radio-new.eplus.dev" || host === "new-radio.eplus.dev" || host === "preview.radio.eplus.dev";
   } catch { /* Explicit noindex flag remains sufficient without a valid origin. */ }
   return enabled || stageHost;
 }
