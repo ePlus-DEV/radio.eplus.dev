@@ -21,7 +21,7 @@ export const usePlaybackStore = defineStore('playback', {
     },
     // Global dock/mini state so the app shell does not reserve hidden dock space.
     playerMini: false,
-    liveTrack: null as { stationUrl: string; title: string; artist: string; source: 'hls' | 'provider' } | null,
+    liveTrack: null as { stationUrl: string; title: string; artist: string; artwork?: string; source: 'hls' | 'provider' } | null,
   }),
   actions: {
     activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number,
@@ -61,10 +61,10 @@ export const usePlaybackStore = defineStore('playback', {
       if (this.liveTrack?.stationUrl === stationUrl && this.liveTrack.source === 'hls') return;
       this.liveTrack = track ? { stationUrl, title: track.title, artist: track.artist, source: 'provider' } : null;
     },
-    setHlsLiveTrack(stationUrl: string, track: { title: string; artist: string }): boolean {
+    setHlsLiveTrack(stationUrl: string, track: { title: string; artist: string; artwork?: string }): boolean {
       if (!stationUrl.startsWith('/global-radio/apple-music/')
         || this.station?.url !== stationUrl || !track.title?.trim() || !track.artist?.trim()) return false;
-      this.liveTrack = { stationUrl, title: track.title, artist: track.artist, source: 'hls' };
+      this.liveTrack = { stationUrl, title: track.title, artist: track.artist, ...(track.artwork ? { artwork: track.artwork } : {}), source: 'hls' };
       return true;
     },
     clearHlsLiveTrack(stationUrl: string) {
