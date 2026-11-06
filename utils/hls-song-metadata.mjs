@@ -64,17 +64,11 @@ function appleArtworkFrame(payload) {
   } catch { return null; }
 }
 
-export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
-  if (!(data instanceof Uint8Array) || data.length < 20
-    || data.length > MAX_TAG_BYTES || data[0] !== 0x49
-    || data[1] !== 0x44 || data[2] !== 0x33) return null;
-  const version = data[3];
-  if (version !== 3 && version !== 4) return null;
-  if (data[5] & 0x40) return null; // Don't interpret unparsed extended headers.
-  const tagSize = synchsafe(data, 6);
-  if (tagSize < 10 || tagSize + 10 > data.length) return null;
-  const end = 10 + tagSize;
-  let index = 10;
+// hls.js / @svta/cml-id3 delivers consecutive packed-AAC ID3 tags as one
+// metadata sample. Decode each tag independently: Apple's first tag often
+// contains only transportStreamTimestamp and the next contains the song.
+function parseSingleHlsId3Tag(data, offset, end, version, appleMusic) {
+  let index = offset + 10;
   let title = '';
   let artist = '';
   let album = '';
@@ -119,6 +113,37 @@ export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
   if (appleMusic && !album && !appleTrackId) return null;
   return title && artist && title.toLocaleLowerCase() !== artist.toLocaleLowerCase()
     ? { title, artist, ...(appleMusic && artwork ? { artwork } : {}) } : null;
+}
+
+
+export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
+  if (!(data instanceof Uint8Array) || data.length < 20
+    || data.length > MAX_TAG_BYTES) return null;
+  let offset = 0;
+  let latest = null;
+  // Stay inside the contiguous ID3 block. Never scan arbitrary audio bytes,
+  // combine title/artist from different tags, or treat DJ cards as songs.
+  for (let count = 0; count < MAX_SCHEDULED && offset + 10 <= data.length; count++) {
+    if (data[offset] !== 0x49 || data[offset + 1] !== 0x44
+      || data[offset + 2] !== 0x33) break;
+    const version = data[offset + 3];
+    if (version !== 3 && version !== 4) return null;
+    const flags = data[offset + 5];
+    if (flags & 0x40) return null; // Do not interpret extended ID3 headers.
+    const tagSize = synchsafe(data, offset + 6);
+    if (tagSize < 10 || offset + 10 + tagSize > data.length) return null;
+    const end = offset + 10 + tagSize;
+    const song = parseSingleHlsId3Tag(data, offset, end, version, appleMusic);
+    if (song) latest = song;
+    offset = end;
+    if (version === 4 && (flags & 0x10)) {
+      // ID3v2.4 footer is 10 bytes with the reversed "3DI" signature.
+      if (offset + 10 > data.length || data[offset] !== 0x33
+        || data[offset + 1] !== 0x44 || data[offset + 2] !== 0x49) return null;
+      offset += 10;
+    }
+  }
+  return latest;
 }
 
 export function extractHlsId3Tracks(samples, options = {}) {
