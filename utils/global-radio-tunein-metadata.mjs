@@ -1,7 +1,7 @@
 // Anonymous, read-only TuneIn station metadata for Apple's seven allowlisted
 // radio channels. HLS access keys are NEVER used to request song information.
 // TuneIn may not publish current_song/current_artist for every station.
-import { PUBLIC_APPLE_TUNEIN_STATIONS, TUNEIN_CORS_PROXY } from './global-radio-public-tunein.mjs';
+import { PUBLIC_APPLE_TUNEIN_STATIONS } from './global-radio-public-tunein.mjs';
 
 const PREFIX = 'tunein-apple-metadata:';
 const MAX_RECENT_TRACKS = 30;
@@ -25,15 +25,22 @@ export function stationIdFromTuneInMetadataMarker(marker) {
   return Object.hasOwn(PUBLIC_APPLE_TUNEIN_STATIONS, id) ? id : '';
 }
 
-export function buildPublicTuneInMetadataRequest(stationId) {
+export function buildPublicTuneInMetadataRequest(stationId, corsServer) {
   const station = PUBLIC_APPLE_TUNEIN_STATIONS[stationId];
-  if (!station) return null;
-  // Describe is the read endpoint with explicit current_song/current_artist
-  // attributes. Playing.ashx is TuneIn AIR's broadcaster WRITE endpoint.
-  const upstream = new URL('https://opml.radiotime.com/Describe.ashx');
-  upstream.searchParams.set('id', station.tunein);
-  upstream.searchParams.set('render', 'json');
-  return TUNEIN_CORS_PROXY + '/' + upstream.href;
+  if (!station || typeof corsServer !== 'string' || !corsServer.trim()) return null;
+  try {
+    // Match the public playback resolver's env-only HTTPS origin policy.
+    // An unconfigured proxy must not silently revert to the old Heroku host.
+    const proxy = new URL(corsServer);
+    if (proxy.protocol !== 'https:' || !proxy.hostname ||
+      proxy.username || proxy.password || proxy.port || proxy.search || proxy.hash ||
+      proxy.pathname !== '/') return null;
+    // Describe is TuneIn's read endpoint; Playing.ashx is the AIR write endpoint.
+    const upstream = new URL('https://opml.radiotime.com/Describe.ashx');
+    upstream.searchParams.set('id', station.tunein);
+    upstream.searchParams.set('render', 'json');
+    return proxy.origin + '/' + upstream.href;
+  } catch { return null; }
 }
 
 export function parseTuneInStationMetadata(payload, stationId) {
@@ -83,8 +90,8 @@ export function addTuneInSessionTrack(previous, nowPlaying) {
   }, ...existing].slice(0, MAX_RECENT_TRACKS);
 }
 
-export async function fetchPublicTuneInMetadata({ stationId, signal, fetcher = fetch }) {
-  const requestUrl = buildPublicTuneInMetadataRequest(stationId);
+export async function fetchPublicTuneInMetadata({ stationId, corsServer, signal, fetcher = fetch }) {
+  const requestUrl = buildPublicTuneInMetadataRequest(stationId, corsServer);
   if (!requestUrl) throw new Error('invalid_station');
   const controller = new AbortController();
   const onAbort = () => controller.abort();
