@@ -126,7 +126,7 @@ test('wire actual hls.js metadata to existing player and queue, not another stre
   const store = await readFile(new URL('../stores/playback.ts', import.meta.url), 'utf8');
   assert.match(player, /Hls\.Events\.FRAG_PARSING_METADATA/);
   assert.match(player, /attachNativeHlsSongMetadata\(media, version\)/);
-  assert.match(player, /extractNativeHlsId3Track\(track\.activeCues\)/);
+  assert.match(player, /extractNativeHlsId3Track\(track\.activeCues, \{ appleMusic: true \}\)/);
   assert.match(player, /detachNativeHlsMetadata\?\.\(\)/);
   assert.match(player, /hlsSongBuffer\.add\(data\?\.samples\)/);
   assert.match(player, /media\.addEventListener\("timeupdate", flushHlsSongMetadata\)/);
@@ -137,4 +137,63 @@ test('wire actual hls.js metadata to existing player and queue, not another stre
   assert.match(realtime, /track\.source !== 'hls'/);
   assert.match(realtime, /addTuneInSessionTrack\(playlist\.value, track\)/);
   assert.doesNotMatch(player, /fetch\([^)]*accessKey/);
+});
+
+const applePriv = (owner, version = 4) => {
+  // Reconstruct only the ID3 frame type and owner identifier seen in the
+  // user's HAR. Never commit stream bytes, encoded provider data or accessKey.
+  const payload = [...new TextEncoder().encode(owner), 0, 1];
+  return [...ascii('PRIV'), ...(version === 4 ? safeSize(payload.length) : bigSize(payload.length)),
+    0, 0, ...payload];
+};
+
+test('HAR regression: Apple CMAF ID3 music vs presenter in sequence 53/54', () => {
+  const apple = { appleMusic: true };
+  const song = makeTag([
+    applePriv('com.apple.radio.ping.jingle'),
+    applePriv('com.apple.radio.adamid'),
+    frame('TALB', 'Wrapped In Red (Deluxe Version)', 4),
+    artist('Kelly Clarkson', 4), title('Underneath the Tree', 4),
+  ], 4);
+  const presenter = makeTag([
+    applePriv('com.apple.radio.ping.jingle'),
+    artist('Holiday Hits', 4), title('Eddie Francis', 4),
+  ], 4);
+  const nextSong = makeTag([
+    applePriv('com.apple.radio.ping.jingle'),
+    applePriv('com.apple.radio.adamid'),
+    frame('TALB', 'Make It to Christmas - Single', 4),
+    artist('Alessia Cara', 4), title('Make It to Christmas', 4),
+  ], 4);
+  assert.deepEqual(parseHlsId3Tag(song, apple),
+    { title: 'Underneath the Tree', artist: 'Kelly Clarkson' });
+  assert.equal(parseHlsId3Tag(presenter, apple), null);
+  assert.deepEqual(parseHlsId3Tag(nextSong, apple),
+    { title: 'Make It to Christmas', artist: 'Alessia Cara' });
+  // Ordinary ID3 handling remains backward compatible for non-Apple radio.
+  assert.deepEqual(parseHlsId3Tag(presenter),
+    { title: 'Eddie Francis', artist: 'Holiday Hits' });
+  const buffer = createTimedHlsTrackBuffer(apple);
+  assert.equal(buffer.add([{ data: song, pts: 832 }, { data: presenter, pts: 837 },
+    { data: nextSong, pts: 854 }, { data: nextSong, pts: 864 }]), 3);
+  assert.equal(buffer.consume(831), null);
+  assert.deepEqual(buffer.consume(832),
+    { title: 'Underneath the Tree', artist: 'Kelly Clarkson' });
+  assert.equal(buffer.consume(837), null);
+  assert.deepEqual(buffer.consume(854),
+    { title: 'Make It to Christmas', artist: 'Alessia Cara' });
+  assert.equal(buffer.consume(865), null);
+});
+
+test('Apple native Safari cues require a song marker, not only a DJ/show pair', () => {
+  const cue = (key, value) => ({ value: { key,
+    data: new Uint8Array([3, ...new TextEncoder().encode(value)]) } });
+  const presenter = [cue('TIT2', 'Eddie Francis'), cue('TPE1', 'Holiday Hits')];
+  assert.equal(extractNativeHlsId3Track(presenter, { appleMusic: true }), null);
+  const song = [
+    cue('TIT2', 'Make It to Christmas'), cue('TPE1', 'Alessia Cara'),
+    cue('TALB', 'Make It to Christmas - Single'),
+  ];
+  assert.deepEqual(extractNativeHlsId3Track(song, { appleMusic: true }),
+    { title: 'Make It to Christmas', artist: 'Alessia Cara' });
 });
