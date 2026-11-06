@@ -92,9 +92,20 @@ test('Apple Music preview prerenders in-app player QA routes and keeps custom no
   }
   assert.match(config, /routes: isPrPreview \? \[\.\.\.PR_PREVIEW_ROUTES/);
   assert.match(workflow, /NUXT_PUBLIC_NO_INDEX: 'true'/);
-  // Public repository Actions variables are exposed to the isolated build.
-  // Never grant the untrusted PR build an Environment or deploy token.
-  assert.match(workflow, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ vars\.NUXT_PUBLIC_CORS_SERVER_1 \}\}/);
-  assert.match(workflow, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: \$\{\{ vars\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL \}\}/);
-  assert.doesNotMatch(workflow.split('  publish:')[0], /environment:\s*\n\s*name: development/);
+  // Public vars live in the development Environment, not repository scope.
+  // Only the trusted pre-build job may access that Environment; never checkout
+  // or run untrusted PR code in a job that also holds deploy credentials.
+  const trusted = workflow.split('  preview_config:')[1]?.split('\n  build:')[0];
+  const build = workflow.split('  build:')[1]?.split('\n  publish:')[0];
+  assert.ok(trusted && build, 'trusted config and isolated build jobs exist');
+  assert.match(trusted, /environment:\s*\n\s*name: development/);
+  assert.match(trusted, /CORS_SERVER: \$\{\{ vars\.NUXT_PUBLIC_CORS_SERVER_1 \}\}/);
+  assert.match(trusted, /RESOLVER_URL: \$\{\{ vars\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL \}\}/);
+  assert.doesNotMatch(trusted, /actions\/checkout|npm ci|secrets\./,
+    'the trusted job cannot checkout or execute untrusted code or expose secrets');
+  assert.match(build, /needs: preview_config/);
+  assert.match(build, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ needs\.preview_config\.outputs\.cors_server \}\}/);
+  assert.match(build, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: \$\{\{ needs\.preview_config\.outputs\.resolver_url \}\}/);
+  assert.doesNotMatch(build, /environment:\s*\n\s*name: development|secrets\.PAGES_DEPLOY_TOKEN/,
+    'untrusted build must never receive development secrets or Environment access');
 });
