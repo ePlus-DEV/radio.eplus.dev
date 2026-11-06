@@ -84,7 +84,7 @@ export const usePlaybackStore = defineStore('playback', {
       else this.requestedStationUrl = url;
     },
     activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean } = {}) {
-      if (options.onlyIfIdle && this.station) return;
+      if (options.onlyIfIdle && (this.station || this.globalRadioPendingId)) return;
       this.pendingGlobalRadio = null;
       this.globalRadioPendingId = '';
       this.globalRadioError = '';
