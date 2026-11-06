@@ -1,6 +1,6 @@
 # ePlus OnAir — GitHub Actions
 
-Five workflows are currently in use. Check the checked-in YAML for the authoritative behavior.
+Four workflows are currently active. Check the checked-in YAML for the authoritative behavior.
 
 | File | Trigger | Responsibility |
 | --- | --- | --- |
@@ -8,9 +8,8 @@ Five workflows are currently in use. Check the checked-in YAML for the authorita
 | `pr-preview-pages.yml` | PRs targeting `develop`, including close | Isolated, credential-free preview build followed by token-scoped publication to a dedicated Pages repo and closed-PR cleanup |
 | `deploy-github-pages.yml` | Trusted `main` / `develop` push or manual dispatch | Build and publish a static website to the environment's public Pages repo |
 | `instant-audio-sync.yml` | Manual dispatch | Research/sync radio data and propose changes for review |
-| `publish-station-images.yml` | Manual dispatch | Publish individual station OG JPEGs and manifest on the destination's separate `station-images` branch |
 
-The four non-preview workflows share concurrency group `onair-repository-work` with queued runs retained and `cancel-in-progress: false`. The website workflow checks branch SHA freshness and skips an obsolete queued build. CI checks for closed or stale PR heads before expensive work.
+The three non-preview workflows share concurrency group `onair-repository-work` with queued runs retained and `cancel-in-progress: false`. The website workflow checks branch SHA freshness and skips an obsolete queued build. CI checks for closed or stale PR heads before expensive work.
 
 ## Release targets
 
@@ -20,7 +19,7 @@ The four non-preview workflows share concurrency group `onair-repository-work` w
 - Development Preview and `develop` Staging are strictly `noindex`, with no sitemap, canonical/JSON-LD or GA4; `main` Production is indexable with a sitemap, canonical tags and production-only GA4. The Pages output validator must reject a `noindex` production build.
 - Each tier's `PAGES_DEPLOY_TOKEN` Environment Secret should have scoped write access only to its own output repository; never pass credentials to the untrusted PR build job. Complete [the Environment migration](./ENVIRONMENTS.md) before deleting the legacy Staging values from `development`.
 
-Website generation is `npm run generate:site`; image generation is `npm run generate:images`. Splitting them keeps website output within GitHub Pages' 1 GB published-site limit. The publisher restores `CNAME` and retains each output repo's root `README.md` despite `rsync --delete`.
+Website publishing uses `npm run generate:site` and intentionally omits per-station OG JPEGs to stay within GitHub Pages' 1 GB limit. Local-only `npm run generate:images` remains available, but **no GitHub Action currently uploads station-image batches**. See [image policy](./SEPARATE_IMAGE_RELEASES.md). The publisher restores `CNAME` and retains each output repo's root `README.md` despite `rsync --delete`.
 
 ## CI testing
 
@@ -28,7 +27,7 @@ Regular PR changes run unit tests; app/data/SEO changes also trigger full Nuxt p
 
 ## Retired workflows
 
-Old one-off VOH import, changelog and incompatible Dependabot auto-merge workflows have been removed. PR #256 (one-off VOH testing reshuffle) was closed without merging and should not be treated as active release guidance.
+Old one-off VOH import, changelog and incompatible Dependabot auto-merge workflows have been removed. The never-used manual `publish-station-images.yml` was retired on 2026-11-06; no `station-images` branches existed in the two Pages destinations, and normal publishing already uses the shared social image. The local generation script and external-image support remain available. PR #256 (one-off VOH testing reshuffle) was closed without merging and should not be treated as active release guidance.
 
 See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md) for setup, diagnostics and image strategy.
 
