@@ -70,7 +70,7 @@ jobs:
           const cors = validatePublicUrl(process.env.CORS_SERVER || '', 'cors');
           const resolver = validatePublicUrl(process.env.RESOLVER_URL || '', 'resolver');
           const siteName = String(process.env.PREVIEW_SITE_NAME || '').trim();
-          if (siteName.length > 80 || /[\\r\\n<>]/.test(siteName)) {
+          if (siteName.length > 80 || /[\r\n<>]/.test(siteName)) {
             throw new Error('Invalid Preview site title variable');
           }
           appendFileSync(process.env.GITHUB_OUTPUT,
