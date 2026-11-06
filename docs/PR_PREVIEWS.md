@@ -55,7 +55,7 @@ If the action fails before publish: ensure the new Pages repository has a `main`
 
 ## Expired, missing, or failed preview links
 
-The **output repository** `ePlus-DEV/onair-pr-previews` has a root-level `404.html`, separate from Nuxt's per-preview `404.html`. For missing/expired preview URLs such as `/pr-preview/pr-360/`, GitHub Pages responds with an HTTP **404** and serves this root fallback page, which uses `location.replace('https://radio.eplus.dev/')` (with a timed HTML fallback and a manual link) to return visitors to **production**. This is a *client-side* redirect, not an HTTP 301/302; do not claim otherwise.
+The **output repository** `ePlus-DEV/onair-pr-previews` has a root-level `404.html`, separate from Nuxt's per-preview `404.html`. Missing/unprerendered and expired preview URLs use a **5-second visible countdown**, with a manual "Open live page now" link, before a client-side redirect to the **matching production route**. For example, `/pr-preview/pr-375/global-radio/apple-music/` redirects to `https://radio.eplus.dev/global-radio/apple-music/` and preserves the query string and fragment. Unknown/non-PR routes fall back to `https://radio.eplus.dev/`. GitHub Pages still serves HTTP **404** (not 301/302); do not report the countdown as server-side redirect or a successful preview build.
 
 - Keep the root `CNAME`, `404.html`, `index.html`, `.nojekyll` and `README.md` when publishing or deleting any individual PR's preview.
 - Never write fallback/redirect logic into the production site or alter its SEO copy and 404 behavior as part of PR preview cleanup.
