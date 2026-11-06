@@ -73,7 +73,9 @@ export function useStationRealtime() {
     // player independently observes timed ID3 from the playing HLS stream.
     const tuneInId = stationIdFromTuneInMetadataMarker(url);
     if (tuneInId) {
-      const nowPlaying = await fetchPublicTuneInMetadata({ stationId: tuneInId, signal });
+      const nowPlaying = await fetchPublicTuneInMetadata({
+        stationId: tuneInId, corsServer: String(config.public.corsServer || ''), signal,
+      });
       return { program: [], playlist: [], lyrics: [],
         isTuneInMetadata: true, nowPlaying };
     }
