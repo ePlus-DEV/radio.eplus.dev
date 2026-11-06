@@ -1069,3 +1069,30 @@ Radio's idle-restore behavior to imitate this provider-specific flow.
 Regression tests: `tests/global-radio-idle-selection.test.mjs`,
 `tests/global-radio-shared-card.test.mjs`, and
 `tests/global-radio-player-parity.test.mjs`.
+
+## 2026-11-06 — Search deduplicates same-station catalog aliases
+
+The United Kingdom catalog currently contains both `heart-uk` and
+`heart-uk-instant-audio` with the exact title **Heart UK** and the same
+official homepage (HTTPS versus trailing-slash variant), plus the analogous
+`heart-80s` alias. They are different stream endpoints for the same radio
+brand, not two independently titled search results.
+
+- Generated `/search/stations.json` includes a **single preferred canonical
+  listing** when country, normalized title and official homepage all match.
+  Keep the existing country JSON, backup stream endpoints, detail URLs and
+  published SEO metadata untouched; never silently delete existing routes.
+- During the legacy Algolia migration, client search maps stale duplicate
+  country hits to the canonical **local** result for the same country/name,
+  but only when that local result is unambiguous. Do not deduplicate two
+  countries, independent broadcasters with different homepages or Global Radio
+  pages by matching names alone.
+- InstantAudio/Radio Browser sync merges any newly discovered alternative
+  bitrate/protocol into the existing station's `streams` list when identity
+  matches, rather than creating another `-instant-audio` catalog ID.
+  Existing aliases remain intact until an explicitly authorized SEO-safe
+  data migration is planned.
+- Tests: `tests/station-search-duplicates.test.mjs` exercises the real UK
+  catalog, local index, Algolia aliases and future radio sync behavior.
+  Index regeneration runs in existing `predev`/`prebuild`/`pregenerate`;
+  no new job and no Algolia credential is required for the client fix.
