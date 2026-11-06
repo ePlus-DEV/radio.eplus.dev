@@ -29,3 +29,22 @@ export function buildRadioMediaMetadata(
     artwork: image ? [{ src: image }] : [],
   };
 }
+
+const LIVE_ACTIONS = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'];
+
+// Hardware actions are optional across browsers. Registration and cleanup must
+// continue even if one action is unsupported by the current implementation.
+export function registerRadioMediaActions(session, { play, pause, next, previous }) {
+  // Some iOS versions expose skip controls instead of track controls.
+  const handlers = { play, pause, nexttrack: next, previoustrack: previous, seekforward: next, seekbackward: previous };
+  for (const action of LIVE_ACTIONS) {
+    try { session.setActionHandler(action, handlers[action]); } catch { /* unsupported */ }
+  }
+  try { session.setActionHandler('seekto', null); } catch { /* unsupported */ }
+  return () => {
+    for (const action of LIVE_ACTIONS) {
+      try { session.setActionHandler(action, null); } catch { /* unsupported */ }
+    }
+    session.metadata = null;
+  };
+}

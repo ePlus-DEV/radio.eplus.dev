@@ -4,7 +4,7 @@ import { readFile, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import {
-  pickRandomStation, randomStationCandidates, randomStationFacets,
+  isSurpriseRequestCurrent, pickRandomStation, randomStationCandidates, randomStationFacets,
 } from '../utils/surprise-radio.mjs';
 import { buildStationSearchIndex } from '../scripts/build-station-search-index.mjs';
 
@@ -14,6 +14,16 @@ const sample = [
   { url: '/asia/viet-nam/b', station_name: 'B', station_country: 'world.asia.viet_nam', station_category: 'Music', station_language: 'vi' },
   { url: '/europe/france/c', station_name: 'C', station_country: 'world.europe.france', station_category: 'Music', station_language: 'fr' },
 ];
+
+test('pending selection is invalidated by filter, navigation and playback changes', () => {
+  const original = { path: '/', station: { url: '/a/b/c' }, playRequest: 1, pauseRequest: 0,
+    requestedUrl: '', country: 'vn', genre: 'news', language: 'vi' };
+  assert.equal(isSurpriseRequestCurrent(original, { ...original }), true);
+  for (const change of [{ path: '/library' }, { station: null }, { playRequest: 2 }, { pauseRequest: 1 },
+    { requestedUrl: '/a/b/d' }, { country: 'fr' }, { genre: 'music' }, { language: 'fr' }]) {
+    assert.equal(isSurpriseRequestCurrent(original, { ...original, ...change }), false);
+  }
+});
 
 test('uniform range selection with deterministic boundaries, no repeats for multiple candidates', () => {
   assert.equal(pickRandomStation(sample, {}, () => 0).url, '/asia/viet-nam/a');
@@ -79,8 +89,7 @@ test('homepage only mounts random discovery on client and preserves original SEO
   assert.match(panel, /const surprise = async \(\) =>/);
   assert.match(panel, /playback\.activate\(createPlaybackStation/);
   assert.match(panel, /\{ autoplay: true \}/);
-  assert.match(panel, /request !== generation \|\| route\.fullPath !== snapshot\.path/);
-  assert.match(panel, /playback\.playRequest !== snapshot\.playRequest/);
+  assert.match(panel, /isSurpriseRequestCurrent\(snapshot, requestState\(\)\)/);
   assert.match(panel, /randomStationCandidates/);
   assert.match(panel, /type="|<select/);
   assert.doesNotMatch(panel, /onMounted\(/, 'catalog must not load or play merely on mount');
