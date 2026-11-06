@@ -1042,3 +1042,27 @@ to `main`.
 Regression coverage: `tests/global-radio-shared-card.test.mjs`,
 `tests/country-station-panel.test.mjs`, and
 `tests/global-radio-listening-cta.test.mjs`.
+
+## 2026-11-06 — Global Radio idle player selection on directory entry
+
+Country Radio initializes a default player station without autoplay when
+there is no current station and no saved last-station preference. The Global
+Apple Music directory must offer the same listener affordance. On the client
+only, it prepares **the first catalog station** when idle, resolving at most
+that one provider stream (not every channel) and passing `autoplay: false`.
+The dock immediately shows the selected station name and authentic local
+artwork via a UI-only `playback.pendingGlobalRadio` value, with **Connecting**
+status and no fake playable source. The real `<audio>` remains owned by the
+single global `PlayerSession` component.
+
+An explicit tap on the first station during silent preparation upgrades that
+in-flight request to autoplay; its button must remain actionable until the
+tap is registered. A different station selection aborts the previous resolver.
+On failure or route teardown, the transient pending state is cleared. Existing
+playback and saved last-station restoration take priority and must not be
+replaced by directory navigation. Do not log, cache, persist, prerender, or
+expose signed HLS URLs in metadata or the player queue. The initial default
+is **selection only**, never automatic audible playback.
+
+Regression tests: `tests/global-radio-idle-selection.test.mjs` and
+`tests/global-radio-shared-card.test.mjs`.
