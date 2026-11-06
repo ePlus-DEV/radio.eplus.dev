@@ -16,5 +16,26 @@
   "theme_color": "#101119",
   "background_color": "#101119",
   "display": "standalone",
-  "description": "Listen Beyond Borders. Live radio from around the world."
+  "description": "Listen Beyond Borders. Live radio from around the world.",
+  "id": "../",
+  "start_url": "../",
+  "scope": "../",
+  "lang": "en",
+  "orientation": "any",
+  "categories": [
+    "music",
+    "entertainment"
+  ],
+  "shortcuts": [
+    {
+      "name": "My Library",
+      "short_name": "Library",
+      "url": "../library"
+    },
+    {
+      "name": "Discover Radio",
+      "short_name": "Discover",
+      "url": "../"
+    }
+  ]
 }
