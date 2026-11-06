@@ -44,6 +44,7 @@
                 loading="lazy"
                 decoding="async"
                 :src="siteAssetUrl(station.image)"
+                @error="handleArtworkError"
                 :alt="station.title"
                 class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
               />
@@ -133,5 +134,13 @@ const isPlaying = (station: RadioStationOption): boolean =>
 
 
 const siteAssetUrl = useSiteAssetUrl();
+// Preserve Global Radio's existing local-artwork fallback and provide the same
+// safeguard to Country without changing its normal image rendering.
+const handleArtworkError = (event: Event): void => {
+  const image = event.target as HTMLImageElement | null;
+  if (!image) return;
+  image.onerror = null;
+  image.src = siteAssetUrl('/brand/onair-mark.svg');
+};
 </script>
 
