@@ -95,10 +95,11 @@ Regression guard: `tests/language-dropdown.test.mjs`.
   subject to proper developer credentials and user authentication.
 - Keep provider cards externally linked when direct playback is unavailable.
   No changes to existing country-station SEO metadata unless explicitly asked.
-- An in-app Play CTA may appear **only** when
-  `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` is configured to an ePlus-owned,
-  provider-approved API implementing `docs/global-radio-resolver.md`.
-  The default public build must remain external-only.
+- The Apple Music public TuneIn lookup must use `config.public.corsServer`
+  from `NUXT_PUBLIC_CORS_SERVER_1`. Never hardcode a proxy domain or silently
+  fall back to an old Heroku URL when the env is missing/invalid.
+  The optional approved `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` is a separate
+  fallback; neither CORS nor an HLS link alone proves playback rights.
 - The client validates exact Apple HLS host, station association and signed
   URL expiry. Signed links are ephemeral and must not enter catalog JSON,
   localStorage, logs or analytics. The app renews only via the approved API.
