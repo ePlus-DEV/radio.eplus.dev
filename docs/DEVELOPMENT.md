@@ -48,10 +48,10 @@ The script definitions and runtime version in [package.json](../package.json) ar
 
 ## Working on changes
 
-1. Create a feature/fix branch and target `develop` with a PR.
+1. Create a feature/fix branch and target `staging` with a PR.
 2. Run `npm test`. For changed UI, run the optional browser checks; for changed SEO, routing or static output, run `npm run generate:site` and the related validators.
-3. Check the PR's isolated Development Preview (representative routes only). Merging into `develop` publishes the complete Staging build after its deployment gate passes.
-4. Release to Production with a reviewed `develop` → `main` PR. Never treat a green PR Preview build, or its fallback 404 redirect, as proof that a deep link was rendered successfully.
+3. Check the PR's isolated Development Preview (representative routes only). Merging into `staging` publishes the complete Staging build after its deployment gate passes.
+4. Release to Production with a reviewed `staging` → `main` PR. Never treat a green PR Preview build, or its fallback 404 redirect, as proof that a deep link was rendered successfully.
 
 For the exact GitHub Environment and Pages repository mapping, see [Environment contract](./ENVIRONMENTS.md), [GitHub Actions](./GITHUB_ACTIONS.md), [Pages publishing](./GITHUB_PAGES.md) and [PR previews](./PR_PREVIEWS.md).
 
