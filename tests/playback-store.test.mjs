@@ -68,3 +68,24 @@ test('live track metadata is scoped to the active station and cleared on change'
   playback.setLiveTrack('/asia/viet-nam/second', null);
   assert.equal(playback.liveTrack, null);
 });
+
+test('an explicit Global Radio lookup survives passive Country/Home initialization', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  playback.globalRadioPendingId = 'apple-music-1';
+  playback.pendingGlobalRadio = {
+    id: 'apple-music-1', title: 'Apple Music 1',
+    image: '/img/global-radio/apple-music-1.png',
+    url: '/global-radio/apple-music/apple-music-1',
+  };
+
+  playback.activate(station('passive-country'), [], { onlyIfIdle: true });
+  assert.equal(playback.station, null, 'passive catalog navigation cannot replace an in-flight user Play');
+  assert.equal(playback.globalRadioPendingId, 'apple-music-1');
+
+  playback.activate(station('explicit-country'), [], { autoplay: true });
+  assert.equal(playback.station?.id, 'explicit-country', 'an actual newer user selection must win');
+  assert.equal(playback.globalRadioPendingId, '');
+  assert.equal(playback.pendingGlobalRadio, null);
+  assert.equal(playback.playRequest, 1);
+});
