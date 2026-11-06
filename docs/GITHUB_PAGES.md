@@ -4,8 +4,8 @@ ePlus OnAir application code lives in the **private** repository `ePlus-DEV/radi
 
 | Source branch | Environment | Output repository | Custom hostname |
 | --- | --- | --- | --- |
-| Feature PR → `develop` | `preview` (trusted jobs after migration) | `ePlus-DEV/onair-pr-previews` | `https://preview.radio.eplus.dev/pr-preview/pr-N/` |
-| `develop` | `staging` (after migration) | `ePlus-DEV/onair-staging-pages` | `https://stg.radio.eplus.dev` |
+| Feature PR → `staging` | `preview` (trusted jobs after migration) | `ePlus-DEV/onair-pr-previews` | `https://preview.radio.eplus.dev/pr-preview/pr-N/` |
+| `staging` | `staging` (after migration) | `ePlus-DEV/onair-staging-pages` | `https://stg.radio.eplus.dev` |
 | `main` | `production` | `ePlus-DEV/onair-production-pages` | `https://radio.eplus.dev` |
 
 Production and Staging use root `NUXT_APP_BASE_URL=/`. Development Preview uses `NUXT_APP_BASE_URL=/pr-preview/pr-N/`. Never generate legacy `/onair-*-pages/` GitHub project paths. Keep the public repos as generated output only, rather than editing static HTML by hand.
@@ -25,8 +25,8 @@ All three output repositories should use Settings → Pages → Deploy from bran
 ## Trusted release steps
 
 1. Develop changes on feature branches and verify isolated `/pr-preview/pr-N/` Development Previews after CI.
-2. Merge into `develop`, then verify full Staging at `stg.radio.eplus.dev` (using the dedicated `staging` Environment after migration).
-3. Promote reviewed `develop` into `main` via a separate release PR, without force pushing.
+2. Merge into `staging`, then verify full Staging at `stg.radio.eplus.dev` (using the dedicated `staging` Environment after migration).
+3. Promote reviewed `staging` into `main` via a separate release PR, without force pushing.
 4. The Pages workflow checks exact repository/domain, source SHA freshness, Environment URL and token write permissions before the expensive build.
 5. The job runs tests, generates `npm run generate:site`, audits station metadata and the Pages size limit, then syncs the resulting static site to the matching public repository.
 6. Confirm the Actions run and destination commit. Test the homepage, deep links, artwork, radio JSON, player, mobile layout and TLS.
@@ -39,13 +39,13 @@ The publish step uses `rsync --delete` for generated files but protects the root
 
 ## SEO and station preview images
 
-**The build policies differ by tier:** Development Preview and `develop` Staging are always `noindex`, have no canonical/JSON-LD/sitemap, and never run production GA4. `main` is **indexable** (`index, follow`) and publishes canonical tags, structured data, a production sitemap and GA4 (`G-ETDY41KBBJ`). The Pages deploy gate uses the matching `production` / `staging` audit, so a production `noindex` artifact fails before publishing. Verify production DNS/TLS separately; pushing code does not itself change DNS.
+**The build policies differ by tier:** Development Preview and `staging` Staging are always `noindex`, have no canonical/JSON-LD/sitemap, and never run production GA4. `main` is **indexable** (`index, follow`) and publishes canonical tags, structured data, a production sitemap and GA4 (`G-ETDY41KBBJ`). The Pages deploy gate uses the matching `production` / `staging` audit, so a production `noindex` artifact fails before publishing. Verify production DNS/TLS separately; pushing code does not itself change DNS.
 
 Website builds exclude per-station Open Graph JPEG files to remain below the Pages site size limit and use the shared brand social image by default. The unused manual station-image publishing workflow has been retired. Local image generation is still available with `npm run generate:images`; **do not** set `STATION_OG_BASE_URL` unless a complete immutable external image set and valid manifest have been independently published and verified. See [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md).
 
 ## Troubleshooting
 
-- **Job skipped on `develop`:** check repository-level `PAGES_STAGING_READY`; if absent, staging still uses the legacy `PAGES_DEV_READY` gate and `development` Environment. Verify the new `staging` Environment before enabling the new variable.
+- **Job skipped on `staging`:** check repository-level `PAGES_STAGING_READY`; if absent, staging still uses the legacy `PAGES_DEV_READY` gate and `development` Environment. Verify the new `staging` Environment before enabling the new variable.
 - **Job stopped at preflight:** check `NUXT_PUBLIC_SITE_URL`, `PAGES_DEPLOY_TOKEN`, branch protection and output repository permissions.
 - **Generated output exceeds 1 GB:** ensure `generate:site` and `ONAIR_SKIP_STATION_OG=true`; do not bundle station JPEGs into Pages.
 - **Pages URL differs from configured hostname:** verify public repository `CNAME`, Pages settings, TLS and DNS; don't assume a successful Git push verifies live routing.

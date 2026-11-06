@@ -6,9 +6,9 @@ and [coding guide](./AGENTS.md) before proposing changes.
 
 ## Before opening a PR
 
-1. For normal fixes/features, branch from `develop` and open a PR against
-   `develop`; `main` is production. For production hotfixes, coordinate
-   with maintainers so they are also applied to `develop`.
+1. For normal fixes/features, branch from `staging` and open a PR against
+   `staging`; `main` is production. For production hotfixes, coordinate
+   with maintainers so they are also applied to `staging`.
 2. Run `npm ci` using the Node version in `.node-version`, then `npm test`.
    Run `npm run test:ui` where browser behavior is changed; Playwright
    is optional in the default CI. For substantial rendering/SEO changes,
