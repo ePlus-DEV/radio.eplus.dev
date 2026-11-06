@@ -15,12 +15,14 @@ test("Nuxt security patch keeps DevTools and removes vulnerable simple-git 3.x",
   const lock = JSON.parse(lockText);
   const installed = lock.packages;
 
-  assert.equal(pkg.dependencies.nuxt, "4.6.3");
-  assert.equal(installed["node_modules/nuxt"]?.version, "4.6.3");
+  assert.equal(pkg.dependencies.nuxt, "4.6.4");
+  assert.equal(installed["node_modules/nuxt"]?.version, "4.6.4");
   assert.equal(installed["node_modules/@nuxt/devtools"]?.version, "3.4.4");
-  assert.equal(installed["node_modules/@nuxt/nitro-server"]?.version, "4.6.3");
+  assert.equal(installed["node_modules/@nuxt/nitro-server"]?.version, "4.6.4");
+  assert.equal(installed["node_modules/@nuxt/vite-builder"]?.version, "4.6.4");
+  assert.equal(installed["node_modules/nitropack"]?.version, "2.13.6");
   assert.equal(installed["node_modules/undici"]?.version, "8.12.3");
-  assert.equal(installed["node_modules/node-forge"]?.version, "1.4.2");
+  assert.equal(installed["node_modules/node-forge"]?.version, "1.4.3");
   assert.equal(installed["node_modules/simple-git"], undefined,
     "Do not reintroduce vulnerable simple-git 3.x through Nuxt DevTools");
   assert.equal(pkg.overrides?.["simple-git"], undefined,
