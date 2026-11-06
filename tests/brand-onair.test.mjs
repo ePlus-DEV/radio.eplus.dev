@@ -39,7 +39,8 @@ test('header, footer, hero and policy pages show the new identity', async () => 
   assert.match(home, /ePlus OnAir ·/);
   assert.match(about, /ePlus OnAir/);
   assert.match(contact, /ePlus%20OnAir%20support/);
-  assert.match(config, /SITE_NAME \|\| "ePlus OnAir"/);
+  assert.match(config, /resolveDeploymentSiteName\(/);
+  assert.match(config, /configuredName: process\.env\.NUXT_PUBLIC_SITE_NAME/);
   assert.match(config, /Listen Beyond Borders/);
   for(const [file,text] of [['header',header],['footer',footer],['about',about]]) {
     assert.doesNotMatch(text,/Radio ePlus/i,file);
