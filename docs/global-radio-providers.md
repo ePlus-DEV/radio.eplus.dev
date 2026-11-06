@@ -13,8 +13,10 @@ separate from the geographic catalog.
   `/global-radio/apple-music/<station-id>`
 - Route generation: `build/globalRadioRoutes.ts` (used by Nuxt prerender and
   production sitemap).
-- UI: these are **external destinations**, not internal stations. Do not
-  populate `stream`, `streams`, queue, listening history, or fake play buttons.
+- UI: provider stations stay separate from geographic radio data, but are
+  included as internal **discovery links** in Header/mobile search. Do not
+  put stream URLs, signed HLS tokens or ephemeral access keys in the search
+  index. Actual in-app playback still requires an approved/configured resolver.
 
 ## Public source snapshot — verified 2026-11-05
 
@@ -35,6 +37,10 @@ The six core channels come from TuneIn's `Apple Music Radio Stations`
 collection. Apple Music Holiday Hits appears as an additional **seasonal**
 listing in TuneIn's public music category. It must not be confused with
 `Apple Music Hits` or assumed available year-round.
+
+Channel artwork uses public TuneIn CDN cover URLs and separate ePlus-made SVG
+fallback artwork for each of the seven stations under `public/img/global-radio/`.
+Fallback illustrations do not purport to be official Apple logos.
 
 This is a **manual, conservative import of publicly visible station metadata**
 (names, basic genres, public page URLs); it does **not** scrape music, copy
@@ -63,13 +69,13 @@ signed `accessKey` query tokens that expire and may be restricted by CORS,
 service terms, account authorization, or location.
 
 The **public** Global Radio pages are designed for nontechnical listeners:
-- Seven responsive cards show real station metadata, a **single prominent
-  Apple Music listening link** and a secondary TuneIn link.
-- A person can listen with one click at a legitimate provider destination.
-  These external links are identified as external; they do not claim to
-  activate the ePlus OnAir player.
-- **No URL/token input, HLS preview modal, signed key, or fake direct-play
-  action appears** on the public provider list or station detail pages.
+- Seven responsive cards show real station metadata and channel artwork. An
+  in-app Play/Pause action uses a configured resolver only when available;
+  external listening links remain accessible on each detail page.
+- Search results link to the matching provider station detail page and do not
+  auto-play; external provider destinations are distinct from in-app controls.
+- **No URL/token input, HLS preview modal, or signed key** is exposed on
+  public provider pages. A discoverable result is not a playback guarantee.
 - The Apple/TuneIn provider pages and metadata remain separate from normal
   ePlus country-based playable radio stations, history, favorites, player
   statistics and station SEO. No copyrighted audio is rehosted.
@@ -103,4 +109,18 @@ separately from internally playable stations.
 - Browser QA: 320/375/390/430px and desktop light/dark, keyboard focus,
   external link rel/target, link availability, and no activation of audio
   playback via the provider directory.
-- New features target `develop` and require a separate release PR to `main`.
+- New features target `staging` and require a separate release PR to `main`.
+
+## Shared Header/mobile search (2026-11-06)
+
+`scripts/build-station-search-index.mjs` combines public country station metadata
+with all seven Global Radio provider station **detail routes** from the separate
+`public/catalog/providers` directory. It does not add Global Radio to geographic
+`world.json`, and does not expose stream, TuneIn lookup or signed HLS URLs.
+Search results show their cover art (with station-specific SVG fallback) and
+navigate to `/global-radio/apple-music/<station-id>` without autoplay.
+
+Algolia may still index only geographic stations. Search in the Header/mobile
+UI therefore merges the matching local Global Radio results with remote Algolia
+results, deduplicated by URL. The local index stays lazy-loaded on search focus,
+while GitHub Actions search-cache input hashes now include provider JSON files.

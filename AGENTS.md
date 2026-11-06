@@ -288,3 +288,16 @@ When a bug or refactor reveals a project-wide rule that a future contributor/AI 
 ## Current source branch (2026-11-06)
 
 `staging` replaces the long-lived `develop` integration branch for new PRs, Staging releases and Production promotion PRs. Update GitHub Environment deployment restrictions and protect `staging` before retiring the protected old ref. The default-branch `main` `pull_request_target` workflow must accept `staging` and match the trusted workflow on `staging`. Preserve existing Production SEO copy, canonical URLs, GA4, indexability and user-visible UI. PR code is always built without deploy secrets.
+
+## Global Radio discoverability and artwork invariant (2026-11-06)
+
+All seven Global Radio provider station detail pages must be discoverable from
+Header/mobile search, despite provider metadata living outside geographic
+`public/radio/**`. The generated static search index combines validated provider
+metadata with country entries without exposing streams, signed HLS links,
+accessKeys or provider credentials. Keep the CI cache key dependent on provider
+JSON and merge local Global matches with Algolia hits without duplicates.
+All seven stations have distinct artwork and repo-local SVG fallback. The shared
+player and queue should use each provider station's artwork, not the generic
+brand placeholder. Never change production SEO copy, GA4, or canonical URLs as
+a side effect of search/discovery work.
