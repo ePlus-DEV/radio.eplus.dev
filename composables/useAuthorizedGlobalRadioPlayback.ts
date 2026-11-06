@@ -11,9 +11,9 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
   const error = ref('');
   let activeController: AbortController | null = null;
   const endpoint = computed(() => String(config.public.globalRadioResolverUrl || ''));
-  // The owner's existing CORS service already resolves signed Apple HLS using
-  // TuneIn's public endpoint. No new backend or GitHub env var is required.
-  const enabled = computed(() => Boolean(buildPublicTuneInRequest('apple-music-1')
+  // Both routes are explicitly configured at build time; never use a hardcoded CORS origin.
+  const corsServer = computed(() => String(config.public.corsServer || ''));
+  const enabled = computed(() => Boolean(buildPublicTuneInRequest('apple-music-1', corsServer.value)
     || buildAuthorizedResolverRequest(endpoint.value, 'apple-music-1')));
 
   async function play(station: GlobalRadioStation) {
@@ -48,11 +48,10 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
     activeController = controller;
     pendingStationId.value = station.id;
     try {
-      // Prefer the publicly available TuneIn stream through ePlus's existing
-      // Heroku CORS server. An approved resolver (if configured) is fallback.
+      // Prefer configured ePlus CORS. An approved resolver (if configured) is fallback.
       let result;
       try {
-        result = await resolvePublicTuneInStream({ station, signal: controller.signal });
+        result = await resolvePublicTuneInStream({ station, corsServer: corsServer.value, signal: controller.signal });
       } catch (publicError) {
         if (!endpoint.value || controller.signal.aborted) throw publicError;
         result = await resolveAuthorizedAppleStream({

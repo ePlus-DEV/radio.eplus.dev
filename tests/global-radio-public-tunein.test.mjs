@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
-  PUBLIC_APPLE_TUNEIN_STATIONS, TUNEIN_CORS_PROXY,
+  PUBLIC_APPLE_TUNEIN_STATIONS,
   buildPublicTuneInRequest, inspectPublicAppleStream, resolvePublicTuneInStream,
 } from '../utils/global-radio-public-tunein.mjs';
 
+const CORS_SERVER = 'https://configured-cors.example/';
 const now = Date.UTC(2026, 10, 5, 12);
 const expiry = Math.floor(now / 1000) + 600;
 const key = expiry + '_' + 'a'.repeat(32) + '_QUJDREVGRw==';
@@ -20,9 +21,9 @@ test('every catalogued Apple Music station maps to its own TuneIn station ID', a
     assert.ok(entry, station.id);
     assert.ok(station.tunein_url.includes('-' + entry.tunein + '/'));
     assert.ok(station.listen_url.endsWith('/ra.' + entry.apple));
-    const request = buildPublicTuneInRequest(station.id);
+    const request = buildPublicTuneInRequest(station.id, CORS_SERVER);
     const proxy = new URL(request);
-    assert.equal(proxy.origin, TUNEIN_CORS_PROXY);
+    assert.equal(proxy.origin, 'https://configured-cors.example');
     assert.ok(proxy.pathname.startsWith('/https://opml.radiotime.com/Tune.ashx'));
     assert.equal(proxy.searchParams.get('id'), entry.tunein);
     assert.equal(proxy.searchParams.get('render'), 'json');
@@ -31,8 +32,15 @@ test('every catalogued Apple Music station maps to its own TuneIn station ID', a
     assert.equal(proxy.searchParams.has('itemToken'), false);
     assert.equal(proxy.searchParams.has('paln'), false);
   }
-  assert.equal(buildPublicTuneInRequest('../evil'), null);
-  assert.equal(buildPublicTuneInRequest('apple-music-1', 'https://attacker.invalid/'), null);
+  assert.equal(buildPublicTuneInRequest('../evil', CORS_SERVER), null);
+  assert.equal(buildPublicTuneInRequest('apple-music-1'), null);
+  assert.equal(buildPublicTuneInRequest('apple-music-1', ''), null);
+  assert.equal(buildPublicTuneInRequest('apple-music-1', 'http://insecure.example/'), null);
+  assert.equal(buildPublicTuneInRequest('apple-music-1', 'https://user:pass@proxy.example/'), null);
+  assert.equal(buildPublicTuneInRequest('apple-music-1', 'https://proxy.example/?redirect=1'), null);
+  assert.equal(buildPublicTuneInRequest('apple-music-1', 'https://proxy.example/other-path'), null);
+  const alternate = buildPublicTuneInRequest('apple-music-1', 'https://another-proxy.example/');
+  assert.equal(new URL(alternate).origin, 'https://another-proxy.example');
 });
 
 test('fresh signed MPEG-TS masters for all 7 Apple stations pass station-bound validation', () => {
@@ -71,10 +79,11 @@ test('one-click resolver fetches public TuneIn JSON via own CORS server and retu
   try {
     const result = await resolvePublicTuneInStream({
       station: { id: 'apple-music-holiday-hits' },
+      corsServer: CORS_SERVER,
       signal: new AbortController().signal,
       fetcher: async (request, options) => {
         called++;
-        assert.match(request, /^https:\/\/cors-eplus-bba6d8ad0ca6\.herokuapp\.com\/https:\/\/opml\.radiotime\.com\/Tune\.ashx\?/);
+        assert.match(request, /^https:\/\/configured-cors\.example\/https:\/\/opml\.radiotime\.com\/Tune\.ashx\?/);
         assert.equal(options.method, 'GET');
         assert.equal(options.cache, 'no-store');
         assert.equal(options.credentials, 'omit');
@@ -100,11 +109,13 @@ test('failure cases never fall back to an arbitrary URL or expired Apple token',
   for (const payload of badResponses) {
     await assert.rejects(resolvePublicTuneInStream({
       station: { id: 'apple-music-holiday-hits' },
+      corsServer: CORS_SERVER,
       fetcher: async () => ({ ok: true, json: async () => payload }),
     }), /unavailable/);
   }
   await assert.rejects(resolvePublicTuneInStream({
     station: { id: 'not-a-real-station' },
+    corsServer: CORS_SERVER,
     fetcher: async () => { throw Error('must not call'); },
   }), /invalid_station/);
 });
@@ -117,4 +128,28 @@ test('the provider Play action and its renewal use the public resolver, not a re
   assert.match(play, /activateGlobalRadio/);
   assert.match(renew, /resolvePublicTuneInStream/);
   assert.match(renew, /refreshGlobalRadioStream/);
+});
+
+
+test('missing CORS env fails closed and never sends a network request', async () => {
+  await assert.rejects(resolvePublicTuneInStream({
+    station: { id: 'apple-music-1' },
+    fetcher: async () => { throw Error('must not fetch without env'); },
+  }), /invalid_station/);
+});
+
+test('Nuxt runtimeConfig and GitHub Pages deployment forward the same CORS env', async () => {
+  const config = await readFile(new URL('../nuxt.config.ts', import.meta.url), 'utf8');
+  const deploy = await readFile(new URL('../.github/workflows/deploy-github-pages.yml', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../utils/global-radio-public-tunein.mjs', import.meta.url), 'utf8');
+  const play = await readFile(new URL('../composables/useAuthorizedGlobalRadioPlayback.ts', import.meta.url), 'utf8');
+  const renew = await readFile(new URL('../plugins/global-radio-renew.client.ts', import.meta.url), 'utf8');
+  const restore = await readFile(new URL('../composables/useRestoreLastStation.ts', import.meta.url), 'utf8');
+  assert.match(config, /corsServer: process\.env\.NUXT_PUBLIC_CORS_SERVER_1/);
+  assert.match(deploy, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ vars\.NUXT_PUBLIC_CORS_SERVER_1 \}\}/);
+  assert.doesNotMatch(source, /cors-eplus-bba6d8ad0ca6/);
+  for (const usage of [play, renew, restore]) {
+    assert.match(usage, /config\.public\.corsServer/);
+    assert.match(usage, /corsServer/);
+  }
 });

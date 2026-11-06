@@ -2,7 +2,7 @@
 
 Issue: [#358](https://github.com/ePlus-DEV/radio.eplus.dev/issues/358).
 
-## Direct public TuneIn playback — existing Heroku CORS server
+## Public TuneIn playback — configured CORS proxy
 
 The 2026-11-05 GitHub Actions technical probe confirmed, for **all seven** catalog
 stations, that a public `opml.radiotime.com/Tune.ashx` request with only
@@ -14,7 +14,7 @@ HTTP 200 and allows the staging Origin; the Apple Holiday Hits master
 This technical observation is not a browser audio test or a statement about
 redistribution permissions.
 
-The browser uses one fixed ePlus proxy and a strict 7-station ID allowlist.
+The browser uses the HTTPS proxy from `NUXT_PUBLIC_CORS_SERVER_1` (`config.public.corsServer`) and a strict 7-station ID allowlist. If the env is missing or invalid, there is no hardcoded fallback to Heroku and this direct lookup is disabled.
 A Play click calls only the official public TuneIn lookup for that station;
 a returned URL must be HTTPS, on the exact Apple live-radio host, with a
 station-matched observed HLS path and a fresh signed `accessKey`. It is then
@@ -22,8 +22,7 @@ passed to the existing shared HLS player. The existing app-level renewal
 timer repeats the lookup before expiration, without user-supplied URLs,
 PAL impersonation, HAR replay, persistent tokens or a second audio element.
 
-This mode requires **no new Heroku backend code or extra GitHub
-environment variable**. The existing optional
+This mode requires **no new Heroku backend code**. To use it with static GitHub Pages, configure `NUXT_PUBLIC_CORS_SERVER_1` under the `development`/`production` GitHub Environment Variables. The deploy workflow must forward that value at build time. The existing optional
 `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` remains a fallback for other approved
 resolvers. The Heroku proxy availability, browser/Apple CORS, region and
 provider behavior can change; a failed lookup shows the normal error and
@@ -37,8 +36,7 @@ https://github.com/hoangsvit/heroku-cors/actions/runs/42026930807.
 
 ## What is implemented
 
-- Default: an anonymous, public TuneIn lookup for one of seven fixed station
-  IDs, relayed through the owner's **existing** Heroku CORS server.
+- With the CORS env configured: an anonymous, public TuneIn lookup for one of seven fixed station IDs, relayed through the configured HTTPS CORS origin.
 - The returned Apple HLS URL is validated against the selected station,
   expected MPEG-TS/CMAF path, signed key and token expiry; it is played in the
   existing global PlayerSession (hls.js/native HLS).
@@ -120,7 +118,7 @@ through, has **no effect** on the published site.
 3. The `deploy-github-pages.yml` workflow explicitly passes
    `vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` into Nuxt at build time.
    Deploy `develop` again (via a trusted push or manual workflow dispatch).
-4. The direct public Play button is independent of this environment variable;
+4. The public TuneIn Play path uses `NUXT_PUBLIC_CORS_SERVER_1`, independent of this optional resolver environment variable;
    the configured backend is only tried if the public lookup fails. Check the
    generated HTML for correct configuration without exposing signed URLs.
 5. Validate playback on real devices. Keep the variable unset until the
@@ -171,3 +169,10 @@ CORS headers on that request allow TuneIn's origin, not ePlus. A generic CORS
 proxy does not decode or create a signed Apple `accessKey`, and does not confer
 legal rights. MusicKit is a separate official path that requires legitimate
 Apple Developer credentials and further compatibility tests.
+
+## CORS proxy environment configuration (2026-11-06)
+
+- The browser gets the CORS proxy base from `config.public.corsServer`, backed by `NUXT_PUBLIC_CORS_SERVER_1` in local `.env`. No proxy hostname is embedded in the Apple TuneIn source code.
+- For GitHub Pages configure `NUXT_PUBLIC_CORS_SERVER_1` in GitHub → Settings → Environments → **development** (staging), and **production** (production) if approved for release; the deploy workflow passes the variable into the Nuxt static build. Redeploy after changes.
+- Provide a full HTTPS origin, optional trailing slash, no path/query/fragment/credentials. Without a valid configuration, public TuneIn lookup is disabled, with no implicit Heroku fallback. Optional approved `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` remains separate.
+- Existing GitHub Actions probes used a particular Heroku proxy; they are historical technical evidence and not a guarantee that the newly configured domain, in-browser audio, or provider rights are verified.

@@ -8,7 +8,8 @@ export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
   const playback = usePlaybackStore();
   const endpoint = String(config.public.globalRadioResolverUrl || '');
-  if (!endpoint && !buildPublicTuneInRequest('apple-music-1')) return;
+  const corsServer = String(config.public.corsServer || '');
+  if (!endpoint && !buildPublicTuneInRequest('apple-music-1', corsServer)) return;
 
   let timer: ReturnType<typeof setTimeout> | null = null;
   let currentRequest: AbortController | null = null;
@@ -22,7 +23,7 @@ export default defineNuxtPlugin(() => {
       let result;
       try {
         result = await resolvePublicTuneInStream({
-          station: { id: lease.stationId }, signal: controller.signal,
+          station: { id: lease.stationId }, corsServer, signal: controller.signal,
         });
       } catch (publicError) {
         if (!endpoint || controller.signal.aborted) throw publicError;

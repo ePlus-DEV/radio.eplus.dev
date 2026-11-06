@@ -949,3 +949,18 @@ Do not touch PlayerSession or the global audio dock for navigation fixes.
 - Update a single bot comment, and remove the PR-specific preview after close. Smoke-test PRs such as #367 should be closed without merging.
 - For small, explicitly authorized workflow or documentation fixes, commit directly when branch policy permits instead of creating unnecessary PRs. Keep product changes and sensitive CI changes subject to review.
 
+
+## 2026-11-06 — Apple Music TuneIn CORS origin comes from environment
+
+The Apple Music public TuneIn resolver must reuse Nuxt's `config.public.corsServer`
+from `NUXT_PUBLIC_CORS_SERVER_1` instead of a hardcoded proxy hostname. Playback,
+HLS renewal, and idle last-station restore share this value. Invalid or missing
+config disables the public TuneIn route (no implicit Heroku fallback); an
+independently configured provider-approved resolver can be used as a fallback.
+
+GitHub Pages is static, so `deploy-github-pages.yml` must pass
+`vars.NUXT_PUBLIC_CORS_SERVER_1` from the chosen development/production GitHub
+Environment at build time. Regression coverage lives in
+`tests/global-radio-public-tunein.test.mjs`. Preserve SEO content; never log
+signed stream tokens or mistake lookup success for validated browser audio
+or provider authorization.

@@ -39,7 +39,7 @@ export function useRestoreLastStation() {
         );
         const station = provider.stations?.find(entry => entry.id === stationId);
         if (!station) return;
-        const stream = await resolvePublicTuneInStream({ station });
+        const stream = await resolvePublicTuneInStream({ station, corsServer: String(config.public.corsServer || '') });
         if (disposed || route.fullPath !== path || playback.playRequest !== request
           || playback.requestedStationUrl || playback.station || playback.playing) return;
         playback.activateGlobalRadio(

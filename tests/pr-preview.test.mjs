@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { getPrPreviewBasePath, isPrPreviewBuild, PR_PREVIEW_ROUTES } from '../utils/pr-preview.mjs';
 
-test('preview path is specific to one PR in the dedicated Pages repository', () => {
-  assert.equal(getPrPreviewBasePath(358), '/onair-pr-previews/pr-preview/pr-358/');
-  assert.equal(getPrPreviewBasePath('1'), '/onair-pr-previews/pr-preview/pr-1/');
+test('preview path is specific to one PR under the custom Pages domain', () => {
+  assert.equal(getPrPreviewBasePath(358), '/pr-preview/pr-358/');
+  assert.equal(getPrPreviewBasePath('1'), '/pr-preview/pr-1/');
+  assert.equal(getPrPreviewBasePath(358, 'onair-pr-previews'), '/onair-pr-previews/pr-preview/pr-358/');
 });
 
 test('reject ambiguous / malicious preview paths', () => {
