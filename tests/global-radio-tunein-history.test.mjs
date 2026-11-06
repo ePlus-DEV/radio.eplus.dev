@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PUBLIC_APPLE_TUNEIN_STATIONS } from '../utils/global-radio-public-tunein.mjs';
+
+const CORS_SERVER = 'https://configured-proxy.example/';
 import {
   appleTuneInStationId, appleTuneInMetadataMarker, stationIdFromTuneInMetadataMarker,
   buildPublicTuneInMetadataRequest, parseTuneInStationMetadata, fetchPublicTuneInMetadata,
@@ -14,15 +16,20 @@ test('only seven verified Apple TuneIn station IDs may request Describe metadata
     const entry = { id, url: '/global-radio/apple-music/' + id };
     assert.equal(appleTuneInStationId(entry), id);
     assert.equal(stationIdFromTuneInMetadataMarker(appleTuneInMetadataMarker(entry)), id);
-    const url = buildPublicTuneInMetadataRequest(id);
-    assert.ok(url.startsWith('https://cors-eplus-bba6d8ad0ca6.herokuapp.com/https://opml.radiotime.com/Describe.ashx?'));
+    const url = buildPublicTuneInMetadataRequest(id, CORS_SERVER);
+    assert.ok(url.startsWith('https://configured-proxy.example/https://opml.radiotime.com/Describe.ashx?'));
     assert.equal(new URL(url).searchParams.get('id'), station.tunein);
     assert.equal(new URL(url).searchParams.get('render'), 'json');
     assert.ok(!url.includes('Browse.ashx') && !url.includes('Playing.ashx'));
     for (const forbidden of ['partnerId', 'partnerKey', 'accessKey', 'itemToken', 'paln'])
       assert.equal(new URL(url).searchParams.has(forbidden), false);
   }
-  assert.equal(buildPublicTuneInMetadataRequest('../evil'), null);
+  assert.equal(buildPublicTuneInMetadataRequest('../evil', CORS_SERVER), null);
+  assert.equal(buildPublicTuneInMetadataRequest('apple-music-1'), null);
+  assert.equal(buildPublicTuneInMetadataRequest('apple-music-1', ''), null);
+  assert.equal(buildPublicTuneInMetadataRequest('apple-music-1', 'http://insecure.example/'), null);
+  assert.equal(buildPublicTuneInMetadataRequest('apple-music-1', 'https://proxy.example/path'), null);
+  assert.equal(buildPublicTuneInMetadataRequest('apple-music-1', 'https://user:pass@proxy.example/'), null);
   assert.equal(appleTuneInMetadataMarker({ id: 'apple-music-1', url: '/asia/vietnam/apple-music-1' }), '');
   assert.equal(stationIdFromTuneInMetadataMarker('tunein-apple-metadata:../../wrong'), '');
 });
@@ -82,7 +89,7 @@ test('read-only Describe request has no credentials and supports cancellation', 
   const controller = new AbortController();
   let capturedSignal;
   const result = await fetchPublicTuneInMetadata({
-    stationId, signal: controller.signal,
+    stationId, corsServer: CORS_SERVER, signal: controller.signal,
     fetcher: async (url, opts) => {
       assert.equal(opts.method, 'GET');
       assert.equal(opts.cache, 'no-store');
@@ -96,12 +103,12 @@ test('read-only Describe request has no credentials and supports cancellation', 
   });
   assert.deepEqual(result, { title: 'Hello', artist: 'World' });
   assert.equal(capturedSignal.aborted, false);
-  await assert.rejects(fetchPublicTuneInMetadata({ stationId: 'invalid', fetcher: async () => {
+  await assert.rejects(fetchPublicTuneInMetadata({ stationId: 'invalid', corsServer: CORS_SERVER, fetcher: async () => {
     assert.fail('must not call unknown stations');
   } }), /invalid_station/);
   const pending = new AbortController();
   const promise = fetchPublicTuneInMetadata({
-    stationId, signal: pending.signal,
+    stationId, corsServer: CORS_SERVER, signal: pending.signal,
     fetcher: async (_url, opts) => new Promise((_resolve, reject) => {
       opts.signal.addEventListener('abort', () => reject(new Error('aborted')), { once: true });
     }),
@@ -134,4 +141,13 @@ test('the playlist UI imports the surviving TuneIn metadata module (Nuxt build r
   assert.ok(queue.includes("from '~/utils/global-radio-tunein-metadata.mjs'"));
   assert.ok(!queue.includes("global-radio-tunein-history.mjs"));
   assert.ok(moduleSource.includes("export function appleTuneInStationId("));
+});
+
+
+test('global TuneIn Describe uses configured Nuxt CORS value, never removed static proxy export', async () => {
+  const moduleSource = await readFile(new URL('../utils/global-radio-tunein-metadata.mjs', import.meta.url), 'utf8');
+  const realtime = await readFile(new URL('../composables/useStationRealtime.ts', import.meta.url), 'utf8');
+  assert.doesNotMatch(moduleSource, /TUNEIN_CORS_PROXY|cors-eplus-bba6d8ad0ca6/);
+  assert.match(moduleSource, /buildPublicTuneInMetadataRequest\(stationId, corsServer\)/);
+  assert.match(realtime, /corsServer: String\(config\.public\.corsServer \|\| ''\)/);
 });
