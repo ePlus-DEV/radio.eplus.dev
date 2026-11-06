@@ -22,7 +22,7 @@ passed to the existing shared HLS player. The existing app-level renewal
 timer repeats the lookup before expiration, without user-supplied URLs,
 PAL impersonation, HAR replay, persistent tokens or a second audio element.
 
-This mode requires **no new Heroku backend code**. To use it with static GitHub Pages, configure `NUXT_PUBLIC_CORS_SERVER_1` under the `staging`/`production` GitHub Environment Variables (legacy `development` Staging configuration only until the migration flag is enabled). The deploy workflow must forward that value at build time. The existing optional
+This mode requires **no new Heroku backend code**. To use it with static GitHub Pages, configure `NUXT_PUBLIC_CORS_SERVER_1` under the `development`/`production` GitHub Environment Variables. The deploy workflow must forward that value at build time. The existing optional
 `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` remains a fallback for other approved
 resolvers. The Heroku proxy availability, browser/Apple CORS, region and
 provider behavior can change; a failed lookup shows the normal error and
@@ -39,7 +39,12 @@ https://github.com/hoangsvit/heroku-cors/actions/runs/42026930807.
 - With the CORS env configured: an anonymous, public TuneIn lookup for one of seven fixed station IDs, relayed through the configured HTTPS CORS origin.
 - The returned Apple HLS URL is validated against the selected station,
   expected MPEG-TS/CMAF path, signed key and token expiry; it is played in the
-  existing global PlayerSession (hls.js/native HLS).
+  existing global PlayerSession (hls.js/native HLS). The non-seasonal six
+  station IDs also accept the station-bound numeric CMAF master
+  `/3p-tune-in/tune_in/<Apple radio ID>/index-cmaf.m3u8`, as observed in the
+  Apple Music 1 browser capture on 2026-11-06. When TuneIn supplies multiple
+  valid sources, prefer CMAF for in-band `emsg`/ID3 song metadata and retain
+  MPEG-TS as fallback. This does not independently prove track display.
 - Client-side renewal repeats the public lookup before token expiry, without
   storing tokens or touching the country radio catalog.
 - Apple Music and TuneIn official links remain as fallbacks. No SEO changes.
@@ -83,9 +88,14 @@ On approved, valid station resolution the backend MUST return:
 than now. The example expires value is illustrative, not a working URL.
 The client requires a known Apple Music station ID, an exact Apple HLS host
 and an `accessKey`; the earlier of server expiry or the embedded key epoch
-must be at least 45s away. Signed HLS paths are allowlisted as either
-`/3p-tune-in/tune_in/<Apple radio ID>/<region>/<bitrate>.m3u8`, or, only for
-Apple Music Holiday Hits (Apple ID `6825447412`), the following paths:
+must be at least 45s away. Signed HLS paths are allowlisted for the selected
+Apple radio ID as:
+- `/3p-tune-in/tune_in/<Apple radio ID>/index-cmaf.m3u8` — CMAF master, including Apple Music 1.
+- `/3p-tune-in/tune_in/<Apple radio ID>-ts/index-ts.m3u8` — MPEG-TS master.
+- `/3p-tune-in/tune_in/<Apple radio ID>/<region>/<bitrate>.m3u8` — media playlist.
+
+Only for Apple Music Holiday Hits (Apple ID `6825447412`), the following
+additional opaque-alias paths are supported:
 - `/3p-tune-in/tune_in/ppa/index-cmaf.m3u8` — master playlist. Prefer this
   provider-issued URL as the playback entrypoint where permitted: it contains
   signed child URLs for 64/256 kbps and a backup host.
@@ -112,7 +122,7 @@ through, has **no effect** on the published site.
 1. Implement and independently test the approved ePlus-owned endpoint. The
    existing Heroku root URL alone is not a verified resolver route.
 2. In **GitHub → ePlus-DEV/radio.eplus.dev → Settings → Environments →
-   staging → Variables**, set
+   development → Variables**, set
    `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` to the full HTTPS API route.
    Use production environment separately only when approved for production.
 3. The `deploy-github-pages.yml` workflow explicitly passes
@@ -131,7 +141,7 @@ through, has **no effect** on the published site.
    permission to reuse the API, impersonate TuneIn, harvest credentials or
    redistribute HLS. This code does none of those actions.
 2. **CORS:** Allow only intended origins (`https://radio.eplus.dev`,
-   `https://stg.radio.eplus.dev`, optionally `https://new-radio.eplus.dev` during migration, and localhost explicitly for local testing).
+   `https://new-radio.eplus.dev`, localhost explicitly for development).
    Do not expose a public arbitrary-URL proxy; require provider and station IDs
    from an allowlist. Reject forged host, private networks, redirects and SSRF.
 3. **Privacy:** Never log, cache in CDN, analytics, error monitoring, or persist
@@ -173,6 +183,6 @@ Apple Developer credentials and further compatibility tests.
 ## CORS proxy environment configuration (2026-11-06)
 
 - The browser gets the CORS proxy base from `config.public.corsServer`, backed by `NUXT_PUBLIC_CORS_SERVER_1` in local `.env`. No proxy hostname is embedded in the Apple TuneIn source code.
-- For GitHub Pages configure `NUXT_PUBLIC_CORS_SERVER_1` in GitHub → Settings → Environments → **staging** (Staging), and **production** (Production) if approved for release; the deploy workflow passes the variable into the Nuxt static build. Redeploy after changes. When switching from `new-radio.eplus.dev` to `stg.radio.eplus.dev`, update the **external CORS proxy and resolver Origin allowlists** before enabling the new host; site code cannot change remote service policy.
+- For GitHub Pages configure `NUXT_PUBLIC_CORS_SERVER_1` in GitHub → Settings → Environments → **development** (staging), and **production** (production) if approved for release; the deploy workflow passes the variable into the Nuxt static build. Redeploy after changes.
 - Provide a full HTTPS origin, optional trailing slash, no path/query/fragment/credentials. Without a valid configuration, public TuneIn lookup is disabled, with no implicit Heroku fallback. Optional approved `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` remains separate.
 - Existing GitHub Actions probes used a particular Heroku proxy; they are historical technical evidence and not a guarantee that the newly configured domain, in-browser audio, or provider rights are verified.

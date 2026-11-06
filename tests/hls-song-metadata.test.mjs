@@ -213,6 +213,24 @@ const appleArtwork = (size, imageUrl, v = 4) => {
 const verifiedArtwork390 = 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/sanitized-fixture/390x390bb.jpg';
 const verifiedArtwork640 = 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/sanitized-fixture/1400x1400bb.jpg';
 
+test('Apple Music 1 CMAF emsg carries a verified ID3 song and artwork, not merely show text', () => {
+  // Metadata-only synthetic fixture based on the 2026-11-06 Apple Music 1 HAR.
+  // Neither signed stream URLs nor audio/complete HAR payloads are committed.
+  const song = makeTag([
+    applePriv('com.apple.radio.adamid'),
+    frame('TALB', 'The Black Album', 4),
+    title('99 Problems', 4), artist('JAŸ-Z', 4),
+    appleArtwork(640, verifiedArtwork640),
+  ], 4);
+  const parsed = parseHlsId3Tag(song, { appleMusic: true });
+  assert.deepEqual(parsed, { title: '99 Problems', artist: 'JAŸ-Z', artwork: verifiedArtwork640 });
+  const buffer = createTimedHlsTrackBuffer({ appleMusic: true });
+  assert.equal(buffer.add([{ data: song, pts: 90 }]), 1);
+  assert.equal(buffer.consume(89), null);
+  assert.deepEqual(buffer.consume(90), parsed);
+  assert.equal(buffer.consume(92), null);
+});
+
 test('Apple Holiday Hits HLS WXXX artwork follows the SONG, not DJ interstitial', () => {
   const song = makeTag([
     appleArtwork(390, verifiedArtwork390),

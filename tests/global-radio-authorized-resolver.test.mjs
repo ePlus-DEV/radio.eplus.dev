@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { buildAuthorizedResolverRequest, validateAuthorizedAppleStream, resolveAuthorizedAppleStream } from '../utils/global-radio-resolver.mjs';
 import { createAuthorizedApplePlaybackStation } from '../utils/global-radio-station.mjs';
+import { PUBLIC_APPLE_TUNEIN_STATIONS } from '../utils/global-radio-public-tunein.mjs';
 
 const station = { id: 'apple-music-1', title: 'Apple Music 1',
   listen_url: 'https://music.apple.com/us/station/apple-music-1/ra.978194965' };
@@ -39,6 +40,25 @@ test('Holiday Hits CMAF path observed in TuneIn HAR is accepted only for that st
   assert.equal(validateAuthorizedAppleStream(payload, holiday.id, holiday.listen_url, now).ok, true);
   assert.equal(validateAuthorizedAppleStream({ ...payload, station_id: station.id },
     station.id, station.listen_url, now).ok, false);
+});
+
+test('optional resolver accepts strict numbered CMAF masters for the six core stations', () => {
+  for (const [id, entry] of Object.entries(PUBLIC_APPLE_TUNEIN_STATIONS)) {
+    if (id === 'apple-music-holiday-hits') continue;
+    const listenUrl = 'https://music.apple.com/us/station/channel/ra.' + entry.apple;
+    const cmaf = 'https://itsliveradio.apple.com/3p-tune-in/tune_in/'
+      + entry.apple + '/index-cmaf.m3u8?accessKey=' + expires + '_opaque_signature';
+    const payload = { ...valid, station_id: id, stream_url: cmaf };
+    assert.equal(validateAuthorizedAppleStream(payload, id, listenUrl, now).ok, true, id);
+    assert.equal(validateAuthorizedAppleStream({
+      ...payload, stream_url: cmaf.replace(entry.apple + '/index-cmaf', '999999/index-cmaf'),
+    }, id, listenUrl, now).ok, false, id);
+    assert.equal(validateAuthorizedAppleStream({
+      ...payload, stream_url: cmaf.replace('index-cmaf.m3u8', 'index-cmaf.mp4'),
+    }, id, listenUrl, now).ok, false, id);
+    const ts = cmaf.replace(entry.apple + '/index-cmaf', entry.apple + '-ts/index-ts');
+    assert.equal(validateAuthorizedAppleStream({ ...payload, stream_url: ts }, id, listenUrl, now).ok, true, id);
+  }
 });
 
 test('rejects unauthorized, mismatched, expired, malformed or non-Apple stream responses', () => {
