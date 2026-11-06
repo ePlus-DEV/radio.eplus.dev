@@ -11,7 +11,7 @@ three isolated public output repositories with **custom hostnames** (see [ENVIRO
 
 - Development PR → `ePlus-DEV/onair-pr-previews` → `https://preview.radio.eplus.dev/pr-preview/pr-N/`:
   **noindex**, no sitemap/canonical/JSON-LD, no GA4; PR-specific `NUXT_APP_BASE_URL=/pr-preview/pr-N/`.
-- `develop` → `ePlus-DEV/onair-staging-pages` → `https://stg.radio.eplus.dev`:
+- `staging` → `ePlus-DEV/onair-staging-pages` → `https://stg.radio.eplus.dev`:
   **noindex**, no sitemap/canonical/JSON-LD, no GA4; root `NUXT_APP_BASE_URL=/`.
 - `main` → `ePlus-DEV/onair-production-pages` → `https://radio.eplus.dev`:
   **indexable**, canonical/JSON-LD, production sitemap and GA4 `G-ETDY41KBBJ`; root `NUXT_APP_BASE_URL=/`.
@@ -23,7 +23,7 @@ See [GitHub Pages guide](./GITHUB_PAGES.md).
 
 ## Non-production noindex policy (Staging and Development Preview)
 
-`develop` is staged at `https://stg.radio.eplus.dev` and must **not** be indexed.
+`staging` is staged at `https://stg.radio.eplus.dev` and must **not** be indexed.
 Build-time configuration for **staging only**:
 ```env
 NUXT_PUBLIC_SITE_URL=https://stg.radio.eplus.dev
@@ -48,7 +48,7 @@ Non-production output (Staging and Development Preview):
 Production `main` has SEO enabled, explicit canonical URLs, structured data,
 `index, follow`, sitemap, and `robots.txt` referencing the production sitemap.
 These conditions are **environment-based**, not unconditional source deletions,
-so merges from develop into main cannot silently disable production SEO.
+so merges from staging into main cannot silently disable production SEO.
 
 ## Canonical site
 

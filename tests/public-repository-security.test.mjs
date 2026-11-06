@@ -32,6 +32,6 @@ test('public security and contribution policy are documented', async () => {
   const [policy, guide] = await Promise.all([read('SECURITY.md'), read('CONTRIBUTING.md')]);
   assert.match(policy, /revoke or rotate/i);
   assert.match(policy, /NUXT_PUBLIC_\*/);
-  assert.match(guide, /develop/);
+  assert.match(guide, /staging/);
   assert.match(guide, /npm test/);
 });

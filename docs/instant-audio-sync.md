@@ -48,3 +48,5 @@ The crawler keeps the sync lightweight:
 4. use the repository country snapshot when the InstantAudio directory cannot be refreshed.
 
 There is no Playwright/Crawlee browser fallback. Pull-request validation is handled by `.github/workflows/build.yml` (CI): the `bot/instant-audio-sync` branch receives lightweight syntax and unit checks instead of the full 4,000+ page prerender. Other PRs receive the normal CI build. Neither path calls live upstream radio providers during PR validation. The radio sync workflow is manual-only (`workflow_dispatch`).
+
+The radio-catalog synchronization workflow now checks out `staging` and opens its bot PR against `staging`, not `main`. Merge verified catalog changes into Staging and promote them to Production through the reviewed `staging` → `main` release PR.
