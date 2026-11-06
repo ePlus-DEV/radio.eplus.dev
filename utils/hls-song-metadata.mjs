@@ -41,7 +41,7 @@ function frameText(payload) {
   } catch { return ''; }
 }
 
-export function parseHlsId3Tag(data) {
+export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
   if (!(data instanceof Uint8Array) || data.length < 20
     || data.length > MAX_TAG_BYTES || data[0] !== 0x49
     || data[1] !== 0x44 || data[2] !== 0x33) return null;
@@ -54,6 +54,8 @@ export function parseHlsId3Tag(data) {
   let index = 10;
   let title = '';
   let artist = '';
+  let album = '';
+  let appleTrackId = false;
   while (index + 10 <= end) {
     const id = String.fromCharCode(...data.subarray(index, index + 4));
     if (!/^[A-Z0-9]{4}$/.test(id)) break;
@@ -63,22 +65,35 @@ export function parseHlsId3Tag(data) {
     if (size <= 0 || index + 10 + size > end) break;
     // Do not decode compressed, encrypted or grouped frames as plain text.
     if (!data[index + 8] && !data[index + 9] && size <= MAX_TEXT_BYTES) {
-      if (id === 'TIT2') title = frameText(data.subarray(index + 10, index + 10 + size));
-      if (id === 'TPE1') artist = frameText(data.subarray(index + 10, index + 10 + size));
+      const frame = data.subarray(index + 10, index + 10 + size);
+      if (id === 'TIT2') title = frameText(frame);
+      if (id === 'TPE1') artist = frameText(frame);
+      if (id === 'TALB') album = frameText(frame);
+      // Real Apple song segments carry an album and/or an adamid PRIV frame.
+      // Its presenter/program ID3 also has TIT2+TPE1, but neither marker.
+      // Inspect only the bounded PRIV owner identifier, never its private data.
+      if (id === 'PRIV') {
+        const owner = new TextEncoder().encode('com.apple.radio.adamid');
+        appleTrackId ||= frame.length > owner.length &&
+          owner.every((byte, i) => frame[i] === byte) && frame[owner.length] === 0;
+      }
     }
     index += 10 + size;
     if (title && artist) break;
   }
+  // Apple also emits DJ/show cards as TIT2/TPE1. Only publish a music
+  // track when its ID3 contains an explicit song marker, not just two texts.
+  if (appleMusic && !album && !appleTrackId) return null;
   return title && artist && title.toLocaleLowerCase() !== artist.toLocaleLowerCase()
     ? { title, artist } : null;
 }
 
-export function extractHlsId3Tracks(samples) {
+export function extractHlsId3Tracks(samples, options = {}) {
   if (!Array.isArray(samples)) return [];
   const tracks = [];
   for (const sample of samples.slice(0, MAX_SCHEDULED)) {
     // Only accept an actual ID3 byte array, never string or untrusted JSON.
-    const parsed = parseHlsId3Tag(sample?.data);
+    const parsed = parseHlsId3Tag(sample?.data, options);
     if (!parsed) continue;
     tracks.push({ ...parsed,
       pts: typeof sample.pts === 'number' && Number.isFinite(sample.pts)
@@ -87,12 +102,12 @@ export function extractHlsId3Tracks(samples) {
   return tracks;
 }
 
-export function createTimedHlsTrackBuffer() {
+export function createTimedHlsTrackBuffer(options = {}) {
   let pending = [];
   let lastTrack = null;
   return {
     add(samples) {
-      const tracks = extractHlsId3Tracks(samples);
+      const tracks = extractHlsId3Tracks(samples, options);
       pending.push(...tracks);
       if (pending.length > MAX_SCHEDULED) pending = pending.slice(-MAX_SCHEDULED);
       return tracks.length;
@@ -122,15 +137,22 @@ export function createTimedHlsTrackBuffer() {
 
 // WebKit/native HLS exposes timed ID3 frames as metadata TextTrack cues.
 // Only pair explicit TIT2 + TPE1 frames from concurrently active cues.
-export function extractNativeHlsId3Track(cues) {
+export function extractNativeHlsId3Track(cues, { appleMusic = false } = {}) {
   if (!cues || typeof cues.length !== 'number') return null;
   let title = '';
   let artist = '';
+  let album = '';
+  let appleTrackId = false;
   for (let i = 0; i < Math.min(cues.length, MAX_SCHEDULED); i++) {
     const cue = cues[i];
     const value = cue?.value;
     if (!value || typeof value !== 'object'
-      || (value.key !== 'TIT2' && value.key !== 'TPE1')) continue;
+      || !['TIT2', 'TPE1', 'TALB', 'PRIV'].includes(value.key)) continue;
+    if (value.key === 'PRIV') {
+      // WebKit can expose the ID3 PRIV owner separately as "owner".
+      if (value.owner === 'com.apple.radio.adamid') appleTrackId = true;
+      continue;
+    }
     let text = '';
     if (typeof value.data === 'string') {
       const trimmed = value.data.trim();
@@ -142,8 +164,10 @@ export function extractNativeHlsId3Track(cues) {
       if (bytes) text = frameText(bytes);
     }
     if (value.key === 'TIT2') title = text;
-    else artist = text;
+    else if (value.key === 'TPE1') artist = text;
+    else album = text;
   }
+  if (appleMusic && !album && !appleTrackId) return null;
   return title && artist && title.toLocaleLowerCase() !== artist.toLocaleLowerCase()
     ? { title, artist } : null;
 }
