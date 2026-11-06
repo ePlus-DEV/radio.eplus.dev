@@ -1,7 +1,38 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { buildRadioMediaMetadata } from "../utils/radio-media-session.mjs";
+import { buildRadioMediaMetadata, registerRadioMediaActions } from "../utils/radio-media-session.mjs";
+
+test('hardware actions navigate stations and unsupported actions do not prevent cleanup', () => {
+  const actions = new Map();
+  const calls = [];
+  const session = { metadata: {}, setActionHandler(action, handler) {
+    if (action === 'seekforward') throw new Error('unsupported');
+    actions.set(action, handler);
+  } };
+  const cleanup = registerRadioMediaActions(session, {
+    play: () => calls.push('play'), pause: () => calls.push('pause'),
+    next: () => calls.push('next'), previous: () => calls.push('previous'),
+  });
+  for (const action of ['play', 'pause', 'nexttrack', 'previoustrack', 'seekbackward']) actions.get(action)();
+  assert.deepEqual(calls, ['play', 'pause', 'next', 'previous', 'previous']);
+  assert.equal(actions.get('seekto'), null);
+  cleanup();
+  assert.equal(session.metadata, null);
+  for (const action of ['play', 'pause', 'nexttrack', 'previoustrack', 'seekbackward']) assert.equal(actions.get(action), null);
+});
+
+test('forward and backward seek controls switch live stations without seeking', () => {
+  const actions = new Map();
+  const calls = [];
+  registerRadioMediaActions({ setActionHandler: (action, handler) => actions.set(action, handler) }, {
+    play() {}, pause() {}, next: () => calls.push('next'), previous: () => calls.push('previous'),
+  });
+  actions.get('seekforward')();
+  actions.get('seekbackward')();
+  assert.deepEqual(calls, ['next', 'previous']);
+  assert.equal(actions.get('seekto'), null);
+});
 import {
   VIETNAM_FEATURED_STATION_IDS,
   HOMEPAGE_FEATURED_STATION_PATHS,
@@ -135,8 +166,8 @@ test("Missing or unusable featured streams are excluded rather than played", () 
 
 test("Player registers iOS track commands as station navigation", async () => {
   const source = await readFile("components/player/Player.vue", "utf8");
-  assert.match(source, /nexttrack:\s*\(\) => navigateStation\(1\)/);
-  assert.match(source, /previoustrack:\s*\(\) => navigateStation\(-1\)/);
+  assert.match(source, /next:\s*\(\) => navigateStation\(1\)/);
+  assert.match(source, /previous:\s*\(\) => navigateStation\(-1\)/);
   assert.match(source, /new MediaMetadata\(details\)/);
   assert.match(source, /watch\([\s\S]*?nowPlayingTitle, nowPlayingArtist, nowPlayingArtwork/);
 });
