@@ -17,8 +17,8 @@ This is an **online-first app shell**, not an offline radio player.
 - There is **no audio cache**: MP3/AAC, .m3u8 playlists, HLS segments, provider
   requests, API, JS, CSS, search index JSON and all real station HTML stay
   network-only. A stream always requires a current online connection.
-- Versioned worker caches remove only stale keys with the `onair-offline-shell-v`
-  prefix. No `skipWaiting`, `clients.claim`, forced reload or background
+- Versioned worker caches remove only stale keys with a scope-specific `onair-offline-shell-[scope]-v`
+  prefix, so one PR preview cannot delete another preview's offline cache. No `skipWaiting`, `clients.claim`, forced reload or background
   stream polling during update: the existing global player stays in control.
 - Do not change the site's SEO, canonical URLs, sitemap, noindex staging policy,
   local favorites, history or player behavior while adding installability.
