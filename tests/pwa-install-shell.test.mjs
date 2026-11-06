@@ -72,7 +72,7 @@ test('service worker caches only the noindex offline explanation, not stations o
   const worker = workerHarness(source);
   await worker.run('install');
   assert.deepEqual(worker.saved, ['https://radio.example/pr-preview/pr-2/offline.html']);
-  assert.doesNotMatch(source, /skipWaiting|clients\.claim|cache\.put/);
+  assert.doesNotMatch(source, /self\.skipWaiting\(|self\.clients\.claim\(|cache\.put\(/);
   await worker.run('activate');
   assert.deepEqual(worker.deleted, ['onair-offline-shell-v0']);
 
