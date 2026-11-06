@@ -10,6 +10,11 @@ export const PR_PREVIEW_ROUTES = Object.freeze([
   '/asia',
   '/asia/viet-nam',
   '/asia/viet-nam/vov-gt-hcm',
+  // Include the two Apple pages needed to QA PR #375's in-app Play/ID3.
+  // Only representative Global Radio pages: never prerender the entire catalog.
+  '/global-radio',
+  '/global-radio/apple-music',
+  '/global-radio/apple-music/apple-music-holiday-hits',
   '/library',
   '/settings',
   '/statistics',
