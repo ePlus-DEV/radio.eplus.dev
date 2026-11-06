@@ -103,7 +103,7 @@ test('ambiguous same-name radios must not be silently merged by Algolia URL', ()
   assert.deepEqual(mergeGlobalSearchHits(local, remote).map(x => x.url), remote.map(x => x.url));
 });
 
-test('future sync enriches curated Heart station with other stream instead of adding a new alias', () => {
+test('future sync preserves the first Heart station without adding duplicate aliases', () => {
   const existing = {
     'heart-uk': {
       title: 'Heart UK', url: 'https://www.heart.co.uk',
@@ -130,13 +130,14 @@ test('future sync enriches curated Heart station with other stream instead of ad
   };
   const merged = mergeStations(existing, discovered);
   assert.equal(merged.added, 1);
-  assert.equal(merged.enriched, 2);
+  assert.equal(merged.enriched, 0);
   assert.equal(Object.hasOwn(merged.stations, 'heart-uk-instant-audio'), false);
   assert.equal(Object.hasOwn(merged.stations, 'heart-80s-962e9a46'), false);
   assert.deepEqual(merged.stations['heart-uk'].streams.map(x => x.url), [
     'https://media-ssl.musicradio.com/HeartUK',
-    'http://media-ice.musicradio.com/HeartUKMP3',
   ]);
+  assert.equal(merged.stations['heart-uk'].stream, 'https://media-ssl.musicradio.com/HeartUK');
+  assert.equal(merged.stations['heart-80s'].stream, 'https://media-ssl.musicradio.com/Heart80sMP3');
   assert.equal(merged.stations['heart-uk'].favorite, true);
   assert.equal(Object.hasOwn(merged.stations, 'independent'), true);
 });
