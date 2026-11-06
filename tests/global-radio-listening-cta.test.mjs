@@ -36,7 +36,10 @@ test('directory/detail use shared player without raw HLS prompts; provider links
     assert.doesNotMatch(publicPage, /GlobalRadioTemporaryHlsPreview|accessKey|\.m3u8|preview_on_eplus|preview_requires_url|TemporaryHlsPreview|<audio\b|<UModal\b/);
     assert.doesNotMatch(publicPage, /playback\.(?:activate|requestStation|play)\s*\(|requestStation\(/);
 
-    assert.match(publicPage, /v-if="canListenOnEplus/);
+    assert.doesNotMatch(publicPage, /v-if="canListenOnEplus/, 'missing proxy must not hide the Play control');
+    assert.match(publicPage, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
+    assert.match(publicPage, /v-if="!canListenOnEplus"/, 'explain why the Play button is disabled');
+    assert.match(publicPage, /global_radio\.resolver_unavailable/);
     assert.match(publicPage, /useAuthorizedGlobalRadioPlayback/);
   }
   assert.match(detail, /rel="noopener noreferrer"/);
@@ -75,4 +78,23 @@ test('all seven languages retain live destination and seasonal labels without ob
     assert.equal('preview_on_eplus' in lang.global_radio, false);
     assert.equal('preview_requires_url' in lang.global_radio, false);
   }
+});
+
+test('Apple Music preview prerenders in-app player QA routes and keeps custom noindex', async () => {
+  const routes = await read('utils/pr-preview.mjs');
+  const config = await read('nuxt.config.ts');
+  const workflow = await read('.github/workflows/pr-preview-pages.yml');
+  for (const path of [
+    '/global-radio', '/global-radio/apple-music',
+    '/global-radio/apple-music/apple-music-holiday-hits',
+  ]) {
+    assert.ok(routes.includes("'" + path + "'"), 'missing preview route ' + path);
+  }
+  assert.match(config, /routes: isPrPreview \? \[\.\.\.PR_PREVIEW_ROUTES/);
+  assert.match(workflow, /NUXT_PUBLIC_NO_INDEX: 'true'/);
+  // Public repository Actions variables are exposed to the isolated build.
+  // Never grant the untrusted PR build an Environment or deploy token.
+  assert.match(workflow, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ vars\.NUXT_PUBLIC_CORS_SERVER_1 \}\}/);
+  assert.match(workflow, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: \$\{\{ vars\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL \}\}/);
+  assert.doesNotMatch(workflow.split('  publish:')[0], /environment:\s*\n\s*name: development/);
 });
