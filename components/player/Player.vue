@@ -183,6 +183,7 @@
 import { useListeningStore } from "~/stores/listening";
 import { useListeningDurationStore } from "~/stores/listeningDuration";
 import { createListeningDurationTracker } from "~/utils/listening-duration.mjs";
+import { createListeningDurationClock, shouldResumeListeningAfterRestore } from "~/utils/listening-duration-clock.mjs";
 import { usePlaybackStore } from "~/stores/playback";
 import { useListenerPreferencesStore } from "~/stores/listenerPreferences";
 import { shouldReconnectToLive, safeLiveSyncPosition } from "~/utils/listener-preferences.mjs";
@@ -260,6 +261,7 @@ const emit = defineEmits<{
 
 const $store = useMainStore();
 const playback = usePlaybackStore();
+const currentRoute = useRoute();
 const preferences = useListenerPreferencesStore();
 const listening = useListeningStore();
 listening.hydrate();
@@ -311,9 +313,20 @@ const listeningDurationTracker = createListeningDurationTracker({
     });
   },
 });
-let durationInterval: ReturnType<typeof setInterval> | null = null;
-let durationTickCount = 0;
+const durationClock = createListeningDurationClock({
+  flush: () => listeningDurationTracker.flush(),
+  preview: () => listeningDuration.setLivePreview(
+    listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs,
+  ),
+});
+const syncDurationClock = (): void => {
+  durationClock.sync({
+    playing: Boolean(listeningDuration.enabled && listeningDurationTracker.activeUrl),
+    statsVisible: currentRoute.path === '/library' && currentRoute.hash === '#stats',
+  });
+};
 const stopListeningDuration = () => {
+  durationClock.stop();
   listeningDurationTracker.stop();
   listeningDuration.setLivePreview('', 0);
 };
@@ -1282,6 +1295,7 @@ const onMediaPlaying = (): void => {
   if (listeningDuration.enabled) {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
+    syncDurationClock();
   }
   clearReconnectTimer();
   clearFallbackProbeTimer();
@@ -1464,6 +1478,7 @@ watch(() => props.country, () => {
 // A privacy opt-out or explicit data deletion must discard buffered time without
 // writing storage or emitting a final GA4 listening-duration report.
 const resetListeningTracking = (): void => {
+  durationClock.stop();
   listeningDurationTracker.discard();
   listeningDuration.setLivePreview('', 0);
   if (listeningDuration.enabled && playing.value && !waiting.value && !userPaused.value
@@ -1471,20 +1486,30 @@ const resetListeningTracking = (): void => {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
   }
+  syncDurationClock();
 };
 watch(() => listeningDuration.enabled, resetListeningTracking, { flush: 'sync' });
+watch(() => [currentRoute.path, currentRoute.hash], syncDurationClock);
+
+// A bfcache restore does not necessarily emit another media `playing` event.
+// Resume accounting only for media that is still playing; never call play().
+const restoreListeningAfterPageShow = (event: PageTransitionEvent): void => {
+  const media = mediaElement.value;
+  if (!shouldResumeListeningAfterRestore({ persisted: event.persisted, media,
+    trackingEnabled: listeningDuration.enabled, playing: playing.value, waiting: waiting.value,
+    userPaused: userPaused.value, streamError: streamError.value,
+    hasSource: Boolean(activeResolvedSrc), station: playback.station })) return;
+  listeningDurationTracker.start(playback.station);
+  syncDurationClock();
+};
 
 onMounted(() => {
   preferences.hydrate();
   listeningDuration.hydrate();
-  // Update the statistics dashboard every second while only persisting
-  // checkpoints every five seconds to avoid excessive localStorage writes.
-  durationInterval = setInterval(() => {
-    durationTickCount += 1;
-    if (durationTickCount % 5 === 0) listeningDurationTracker.flush();
-    listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs);
-  }, 1_000);
+  // The listening-duration clock starts only after real media playback.
+  // It continues checkpointing actual background audio without a page-visibility gate.
   window.addEventListener('pagehide', stopListeningDuration);
+  window.addEventListener('pageshow', restoreListeningAfterPageShow);
   window.addEventListener('radio:listening-duration-reset', resetListeningTracking);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
@@ -1539,8 +1564,8 @@ onMounted(() => {
 
 onUnmounted(() => {
   stopListeningDuration();
-  if (durationInterval) clearInterval(durationInterval);
   window.removeEventListener('pagehide', stopListeningDuration);
+  window.removeEventListener('pageshow', restoreListeningAfterPageShow);
   window.removeEventListener('radio:listening-duration-reset', resetListeningTracking);
   sleepTimer.cancel();
   document.removeEventListener("visibilitychange", checkSleepDeadline);
