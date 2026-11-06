@@ -18,6 +18,59 @@ env:
   PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
+
+  # A PR update invalidates any previous Preview link immediately.
+  # This trusted metadata-only job never checks out PR code or loads deploy secrets.
+  comment_status:
+    name: "Hide Preview URL while building or after PR closure"
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref != 'staging' &&
+      !startsWith(github.event.pull_request.head.ref, 'bot/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: onair-pr-preview-comment-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+      EVENT_ACTION: ${{ github.event.action }}
+    steps:
+      - name: Replace stale preview link with build/closed status
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r state base head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
+          if [ "$base" != staging ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::Not an eligible same-repository PR; skip comment."
+            exit 0
+          fi
+          if [ "$EVENT_ACTION" = closed ]; then
+            if [ "$state" != closed ]; then
+              echo "::notice::PR reopened; ignore stale closed event."
+              exit 0
+            fi
+            status="🗃️ **Preview expired.** This PR is closed; the Preview link is hidden."
+          else
+            if [ "$state" != open ] || [ "$head" != "$EXPECTED_HEAD" ]; then
+              echo "::notice::PR head changed; do not overwrite a newer Preview status."
+              exit 0
+            fi
+            status="⏳ **Building preview…** The link will appear only after this commit is live and verified."
+          fi
+
+          body="$(printf '<!-- onair-pr-preview -->\n<!-- onair-preview-head:%s -->\n<!-- onair-preview-run:%s -->\n### ePlus OnAir — PR Preview\n\n%s\n\n[View build status](https://github.com/%s/actions/runs/%s)\n\nPreview is noindex; the full catalog is available on Staging after merge.\n' "$EXPECTED_HEAD" "$GITHUB_RUN_ID" "$status" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+          marker_id="$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments?per_page=100" --jq '.[] | select((.body // "") | contains("<!-- onair-pr-preview -->")) | .id' | head -n 1)"
+          if [ -n "$marker_id" ]; then
+            jq -n --arg body "$body" '{body:$body}' | gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --input - >/dev/null
+          elif [ "$EVENT_ACTION" != closed ]; then
+            jq -n --arg body "$body" '{body:$body}' | gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --input - >/dev/null
+          fi
+
   # This trusted job uses the Preview Environment, but NEVER checks out or
   # executes PR code. It forwards ONLY explicitly named public vars via outputs.
   # The next job remains isolated from all Preview Environment secrets.
@@ -84,9 +137,10 @@ jobs:
 
   build:
     name: "Build isolated preview (no secrets)"
-    needs: preview_config
+    needs: [preview_config, comment_status]
     if: >-
       needs.preview_config.result == 'success' &&
+      needs.comment_status.result == 'success' &&
       (vars.PAGES_PREVIEW_READY == 'true' || (vars.PAGES_PREVIEW_READY == '' && vars.PAGES_DEV_READY == 'true')) &&
       github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
@@ -301,19 +355,76 @@ jobs:
           echo "### Live Preview Verified" >> "$GITHUB_STEP_SUMMARY"
           echo "$base" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Create or update one PR preview comment
+      - name: Show Preview link only after live verification of the current PR/run
         if: steps.current.outputs.active == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          url="$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/"
-          body="$(printf '<!-- onair-pr-preview -->\n### ePlus OnAir — PR Preview\n\n[Open preview](%s) · [Check workflow](https://github.com/%s/actions/runs/%s)\n\nStatic preview: representative routes only; full catalog remains on staging after merge. Noindex and production GA4 disabled.\n' "$url" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
-          marker_id="$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments?per_page=100" --jq '.[] | select((.body // "") | contains("<!-- onair-pr-preview -->")) | .id' | head -n 1)"
-          if [ -n "$marker_id" ]; then
-            jq -n --arg body "$body" '{body:$body}' | gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --input - >/dev/null
-          else
-            jq -n --arg body "$body" '{body:$body}' | gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --input - >/dev/null
+          # A new PR head or a newer run must never restore an old link.
+          read -r state base head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
+          if [ "$state" != open ] || [ "$base" != staging ] || [ "$head" != "$EXPECTED_HEAD" ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::PR changed while Pages was publishing; keep Preview link hidden."
+            exit 0
           fi
+          marker_id="$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments?per_page=100" --jq '.[] | select((.body // "") | contains("<!-- onair-pr-preview -->")) | .id' | head -n 1)"
+          if [ -z "$marker_id" ]; then
+            echo "::error::Missing Preview status comment. Refuse to post an unverified link."
+            exit 1
+          fi
+          current_body="$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --jq .body)"
+          if [[ "$current_body" != *"<!-- onair-preview-run:$GITHUB_RUN_ID -->"* ]] ||
+             [[ "$current_body" != *"<!-- onair-preview-head:$EXPECTED_HEAD -->"* ]]; then
+            echo "::notice::A newer workflow owns the Preview comment; do not restore a stale link."
+            exit 0
+          fi
+          url="$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/"
+          body="$(printf '<!-- onair-pr-preview -->\n<!-- onair-preview-head:%s -->\n<!-- onair-preview-run:%s -->\n### ePlus OnAir — PR Preview\n\n✅ **Preview ready** for commit `%s`.\n\n[Open preview](%s) · [View build status](https://github.com/%s/actions/runs/%s)\n\nStatic preview: representative routes only; full catalog remains on Staging after merge. Noindex and production GA4 disabled.\n' "$EXPECTED_HEAD" "$GITHUB_RUN_ID" "$EXPECTED_HEAD" "$url" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+          jq -n --arg body "$body" '{body:$body}' | gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --input - >/dev/null
+
+
+  # Runs after all jobs, even if tests, publish or live URL verification failed.
+  # A failed build must not leave the comment at "Building…" indefinitely.
+  finalize_comment:
+    name: "Remove Preview link if build or live verification fails"
+    needs: [comment_status, preview_config, build, publish]
+    if: >-
+      always() &&
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      needs.comment_status.result == 'success' &&
+      needs.publish.result != 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Mark Preview as unavailable without displaying a URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r state base head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
+          if [ "$state" != open ] || [ "$base" != staging ] || [ "$head" != "$EXPECTED_HEAD" ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::Outdated failure result; leave current PR comment unchanged."
+            exit 0
+          fi
+          marker_id="$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments?per_page=100" --jq '.[] | select((.body // "") | contains("<!-- onair-pr-preview -->")) | .id' | head -n 1)"
+          if [ -z "$marker_id" ]; then
+            echo "::notice::No Preview comment to update."
+            exit 0
+          fi
+          current_body="$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --jq .body)"
+          if [[ "$current_body" != *"<!-- onair-preview-run:$GITHUB_RUN_ID -->"* ]] ||
+             [[ "$current_body" != *"<!-- onair-preview-head:$EXPECTED_HEAD -->"* ]]; then
+            echo "::notice::Newer Preview run already owns the comment."
+            exit 0
+          fi
+          body="$(printf '<!-- onair-pr-preview -->\n<!-- onair-preview-head:%s -->\n<!-- onair-preview-run:%s -->\n### ePlus OnAir — PR Preview\n\n❌ **Preview unavailable.** Build, publication or live URL verification did not finish successfully; the Preview link is hidden.\n\n[View build status](https://github.com/%s/actions/runs/%s)\n' "$EXPECTED_HEAD" "$GITHUB_RUN_ID" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+          jq -n --arg body "$body" '{body:$body}' | gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --input - >/dev/null
+
 
   cleanup:
     name: "Remove closed PR Preview"
