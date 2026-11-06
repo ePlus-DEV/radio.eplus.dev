@@ -227,7 +227,7 @@ Regression guards:
 **Read `docs/ENVIRONMENTS.md` before editing releases, GitHub Actions, build URLs, SEO or environment variables.**
 
 - **Production** = trusted `main` → GitHub Environment `production` → `ePlus-DEV/onair-production-pages` → `https://radio.eplus.dev/`. This is the **only** indexable host with production canonical/JSON-LD/sitemap and GA4.
-- **Staging** = trusted `develop` → GitHub Environment `staging` (after safe migration) → `ePlus-DEV/onair-staging-pages` → `https://staging.radio.eplus.dev/`. Always `noindex`, never production GA4.
+- **Staging** = trusted `develop` → GitHub Environment `staging` (after safe migration) → `ePlus-DEV/onair-staging-pages` → `https://stg.radio.eplus.dev/`. Always `noindex`, never production GA4.
 - **Development** = feature PR **targeting `develop`** → isolated preview build, trusted `development` Environment publisher → `ePlus-DEV/onair-pr-previews` → `https://preview.radio.eplus.dev/pr-preview/pr-N/`. Always `noindex`, never production GA4. **There is no implicit persistent `dev` branch.** The preview domain root is a landing page, not a full app deployment.
 - Promotion must be `feature → PR preview → merge develop → verify staging → reviewed release PR to main → production`; never route a PR build directly to Staging or Production, automatically merge for deployment, or push unreviewed product code to `main`.
 - Each tier uses its own Pages output repo and base path. Do not reuse a staging or production CNAME, canonical URL or deploy target for Preview.
