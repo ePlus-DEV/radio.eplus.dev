@@ -20,7 +20,7 @@ test('custom-domain full-site deployments preserve separate Production and Stagi
     'Staging legacy fallback must work only while the new flag is absent');
   assert.ok(workflow.includes('NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
   assert.ok(workflow.includes('SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
-  assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev'"));
+  assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'staging.radio.eplus.dev'"));
   assert.ok(workflow.includes('NUXT_APP_BASE_URL: /'));
   assert.ok(workflow.includes('https://$TARGET_DOMAIN'));
   assert.doesNotMatch(workflow, /\beplus-dev\.github\.io\b/i,
