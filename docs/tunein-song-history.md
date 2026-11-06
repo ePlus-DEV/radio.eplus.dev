@@ -79,10 +79,18 @@ show the station name instead of guessing.
   from a verified *music* tag, not a DJ/show tag, and only renders directly
   from Apple CDN in Player/Media Session/this session's Queue history. No
   image downloads, republishing, API-key search or image persistence.
-- This evidence only establishes the Holiday Hits stream captured in the
-  user's HAR. It does **not** establish per-song artwork availability for
-  every Apple Music Radio channel; the 7-station HLS diagnostic is separately
-  collecting evidence without logging URLs or tokens.
+- The PR Preview live probe
+  [#42159193336](https://github.com/ePlus-DEV/radio.eplus.dev/actions/runs/42159193336)
+  independently confirmed **7/7** Apple Music channels had a recent packed-AAC
+  audio fragment with a validated ID3 song/artist pair and Apple CDN WXXX
+  artwork URL. Apple Music 1, Hits, Country, Club and Música Uno used
+  `liveradio.music.apple.com`; Chill and Holiday Hits used
+  `itsliveradio.apple.com`. The earlier probe rejected the former
+  hostname before it could inspect actual audio segments.
+- Sampled ID3 existence does not prove all tracks always carry metadata or
+  that every browser immediately renders the title/artwork; Chrome and Safari
+  playback QA remain necessary. Audio fragments, full signed URLs and artwork
+  files are not stored or logged.
 - The *same* stream includes an “Eddie Francis” / “Holiday Hits” presenter
   card with `TIT2`/`TPE1` but no `TALB` or Apple adamid PRIV marker.
   For Apple streams, the client now requires an album or Apple song marker to
@@ -111,8 +119,8 @@ The public Describe endpoint is documented to expose `current_song` and
 TuneIn states that now-playing metadata without broadcaster AIR integration
 may arrive several minutes late. Do not claim exact audio synchronization,
 song duration, album cover for other stations or 24-hour history, and do
-not fabricate missing song titles, artists or images. Holiday Hits is the only
-station with confirmed in-band artwork in the supplied HAR.
+not fabricate missing song titles, artists or images. The HAR directly confirms Holiday Hits, and the 7-station live probe
+confirms in-band Apple artwork links in sampled fragments across all channels.
 
 Useful references:
 - https://tunein-api.corehacked.com/endpoints-and-streaming/endpoints/describe-endpoint/response-fields-and-meaning
