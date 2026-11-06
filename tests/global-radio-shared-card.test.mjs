@@ -45,20 +45,18 @@ test('shared Country card defaults remain active; Global loading and unavailable
   ]);
   assert.match(shared, /eyebrowKey: "panel\.play_from_radio"/);
   assert.match(shared, /pendingStationId: ""/);
-  assert.match(shared, /pendingPlayableStationId: ""/);
   assert.match(shared, /playEnabled: true/);
   assert.match(shared, /disabledReason: ""/);
   assert.match(shared, /station\.id === props\.pendingStationId/);
   assert.match(shared, /:aria-busy="isPending\(station\)"/);
-  assert.match(shared, /:disabled="!playEnabled \|\| \(isPending\(station\) && !canPlayWhilePending\(station\)\)"/);
+  assert.match(shared, /:disabled="!playEnabled \|\| isPending\(station\)"/);
   assert.match(shared, /isPending\(station\) \? 'i-lucide-loader-circle'/);
   assert.match(global, /:pending-station-id="pendingStationId"/);
-  assert.match(global, /:pending-playable-station-id="pendingPassiveStationId"/);
   assert.match(global, /:play-enabled="canListenOnEplus"/);
   assert.match(global, /:disabled-reason="t\('global_radio\.resolver_unavailable'\)"/);
   assert.match(composable, /activeController\?\.abort\(\)/);
   assert.match(composable, /pendingStationId\.value = station\.id/);
-  assert.match(composable, /resolvePublicTuneInStream\(\{ station, corsServer: corsServer\.value, signal: controller\.signal \}\)/);
+  assert.match(composable, /resolvePublicTuneInStream\\(\\{[\\s\\S]*station, corsServer: corsServer\\.value, signal: controller\\.signal,/.replaceAll('\\','\\') );
   assert.doesNotMatch(global, /Promise\.all\(/, 'the Global directory never resolves every stream');
 });
 
