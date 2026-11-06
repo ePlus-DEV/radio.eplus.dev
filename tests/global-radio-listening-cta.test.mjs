@@ -37,11 +37,12 @@ test('directory/detail use shared player without raw HLS prompts; provider links
     assert.doesNotMatch(publicPage, /playback\.(?:activate|requestStation|play)\s*\(|requestStation\(/);
 
     assert.doesNotMatch(publicPage, /v-if="canListenOnEplus/, 'missing proxy must not hide the Play control');
-    assert.match(publicPage, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
     assert.match(publicPage, /v-if="!canListenOnEplus"/, 'explain why the Play button is disabled');
     assert.match(publicPage, /global_radio\.resolver_unavailable/);
     assert.match(publicPage, /useAuthorizedGlobalRadioPlayback/);
   }
+  assert.match(page, /:disabled="!canListenOnEplus \|\| pendingStationId === station\.id"/);
+  assert.match(detail, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
   assert.match(detail, /rel="noopener noreferrer"/);
   assert.match(detail, /:href="station\.listen_url"/);
   assert.match(detail, /:href="station\.tunein_url"/);
