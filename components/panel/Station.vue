@@ -5,7 +5,7 @@
     >
       <div class="min-w-0">
         <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
-          {{ $t("panel.play_from_radio") }}
+          {{ $t(eyebrowKey) }}
         </p>
         <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-[var(--radio-text)] sm:text-xl">
           {{ countryName }}
@@ -49,7 +49,15 @@
               />
 
               <span
-                v-if="station.id === activeStationId"
+                v-if="isPending(station)"
+                class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
+                role="status"
+              >
+                <UIcon name="i-lucide-loader-circle" class="h-3 w-3 animate-spin" aria-hidden="true" />
+                {{ $t('player.connecting') }}
+              </span>
+              <span
+                v-else-if="station.id === activeStationId"
                 class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
               >
                 <span v-if="playback.playing" class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
@@ -66,12 +74,16 @@
         </UTooltip>
         <button
           type="button"
-          class="absolute bottom-3 right-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
-          :aria-label="$t(isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
+          class="absolute bottom-3 right-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+          :aria-label="$t(isPending(station) ? 'player.connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
           :aria-pressed="isPlaying(station)"
+          :aria-busy="isPending(station)"
+          :disabled="!playEnabled || isPending(station)"
+          :title="!playEnabled ? disabledReason : undefined"
           @click="emit('select-station', station)"
         >
-          <UIcon :name="isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'" class="h-4 w-4" :class="isPlaying(station) ? '' : 'translate-x-px'" />
+          <UIcon :name="isPending(station) ? 'i-lucide-loader-circle' : isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'"
+            class="h-4 w-4" :class="isPending(station) ? 'animate-spin' : isPlaying(station) ? '' : 'translate-x-px'" />
         </button>
       </article>
     </div>
@@ -96,13 +108,26 @@ const props = withDefaults(
     stations?: RadioStationOption[];
     activeStationId?: string;
     countryName?: string;
+    /** Optional provider-specific heading; Country keeps its existing translation by default. */
+    eyebrowKey?: string;
+    /** Only the selected Global Radio card is busy while its stream resolves. */
+    pendingStationId?: string;
+    playEnabled?: boolean;
+    disabledReason?: string;
   }>(),
   {
     stations: () => [],
     activeStationId: "",
     countryName: "",
+    eyebrowKey: "panel.play_from_radio",
+    pendingStationId: "",
+    playEnabled: true,
+    disabledReason: "",
   },
 );
+const isPending = (station: RadioStationOption): boolean =>
+  station.id === props.pendingStationId;
+
 const isPlaying = (station: RadioStationOption): boolean =>
   station.id === props.activeStationId && (playback.playing || playback.waiting);
 
