@@ -7,12 +7,17 @@ import { checkPagesBuild } from '../scripts/check-pages-build.mjs';
 
 const read = file => readFile(file, 'utf8');
 
-test('custom-domain Pages deployments keep scoped environments and only two output repositories', async () => {
+test('custom-domain full-site deployments preserve separate Production and Staging destinations', async () => {
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
   assert.ok(workflow.includes('branches: [develop, main]'));
   assert.ok(workflow.includes('ePlus-DEV/onair-staging-pages'));
   assert.ok(workflow.includes('ePlus-DEV/onair-production-pages'));
-  assert.ok(workflow.includes("name: ${{ github.ref_name == 'main' && 'production' || 'development' }}"));
+  assert.ok(workflow.includes("name: ${{ github.ref_name == 'main' && 'production' || (vars.PAGES_STAGING_READY == 'true' && 'staging' || 'development') }}"),
+    'Staging uses its own Environment after the explicit opt-in migration');
+  assert.ok(workflow.includes("vars.PAGES_STAGING_READY == 'true' ||"),
+    'Staging must have an independent readiness gate');
+  assert.ok(workflow.includes("vars.PAGES_STAGING_READY == '' && vars.PAGES_DEV_READY == 'true'"),
+    'Staging legacy fallback must work only while the new flag is absent');
   assert.ok(workflow.includes('NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
   assert.ok(workflow.includes('SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
   assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev'"));
@@ -67,10 +72,12 @@ test('Pages bundle audit checks noindex, sitemap, source maps and limits', async
     await writeFile(join(root, 'index.html'), '<html><head><meta name="robots" content="noindex, nofollow"></head></html>');
     await writeFile(join(root, 'robots.txt'), 'User-agent: *\\nAllow: /\\n');
     assert.equal((await checkPagesBuild(root, 'staging')).count, 3);
+    assert.equal((await checkPagesBuild(root, 'development')).count, 3);
     await assert.rejects(checkPagesBuild(root, 'production'), /robots metadata/);
 
     await writeFile(join(root, '_nuxt', 'app.js.map'), '{}');
     await assert.rejects(checkPagesBuild(root, 'staging'), /source maps/);
+    await assert.rejects(checkPagesBuild(root, 'development'), /source maps/);
     await rm(join(root, '_nuxt', 'app.js.map'));
     await writeFile(join(root, 'index.html'), '<html><head><meta name="robots" content="index, follow"></head></html>');
     await writeFile(join(root, 'robots.txt'), 'User-agent: *\\nAllow: /\\nSitemap: https://radio.eplus.dev/sitemap.xml\\n');
