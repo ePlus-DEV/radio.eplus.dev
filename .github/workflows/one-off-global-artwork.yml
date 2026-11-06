@@ -1,0 +1,31 @@
+name: "One-off: mirror seven original TuneIn artwork images"
+on:
+  push:
+    branches: [fix/global-radio-header-search-artwork-20261106]
+    paths: [".github/workflows/one-off-global-artwork.yml"]
+permissions:
+  contents: write
+jobs:
+  mirror-artwork:
+    if: github.repository == 'ePlus-DEV/radio.eplus.dev' && github.ref == 'refs/heads/fix/global-radio-header-search-artwork-20261106'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+      - name: Download and validate all seven images from TuneIn
+        run: node scripts/download-global-radio-artwork.mjs
+      - name: Commit original binary artwork, and retire this one-time workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/one-off-global-artwork.yml
+          git add public/img/global-radio/ public/catalog/providers/apple-music.json .github/workflows/one-off-global-artwork.yml
+          git commit -m "assets(global-radio): store seven original TuneIn station images locally"
+          git push origin HEAD:fix/global-radio-header-search-artwork-20261106
