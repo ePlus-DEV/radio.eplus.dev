@@ -1001,6 +1001,8 @@ Browser titles use `NUXT_PUBLIC_SITE_NAME` as an Environment-scoped **public** v
 
 ## 2026-11-06 — PR Preview comment visibility lifecycle
 
+Public verification must run in a separate no-checkout job after releasing the shared publisher lock. Do not expose even a tentative Preview link while Pages is publishing: it can return 404 or an older build. Only a successful HTTP response with the current head marker and `noindex` permits a link; on timeout leave it hidden and report the failure.
+
 PR Preview comments may not contain **Open preview** links while a new PR build is pending, failed, cancelled, stale or closed. The trusted metadata-only `comment_status` job updates the existing `<!-- onair-pr-preview -->` bot comment to **Building preview…**, with only a GitHub Actions workflow link, on PR open/reopen/synchronize. It marks the comment **Preview expired** on PR close, independently of Pages cleanup. After `npm test`, prerender, publish and exact live HTML/noindex/current-SHA verification, the trusted publisher restores **Open preview** only if the current PR head and hidden workflow-run marker still match. A finalizer replaces building status with **Preview unavailable** without the link on failure. Keep one comment per PR and preserve the `pull_request_target` security model (no untrusted checkout under secrets). This workflow must be updated on default `main` and synchronized to `staging`; the GitHub Pages 404 countdown is not proof of a valid preview.
 
 ## Branch migration to `staging` (2026-11-06)

@@ -248,6 +248,8 @@ jobs:
       cancel-in-progress: false
     environment:
       name: ${{ vars.PAGES_PREVIEW_READY == 'true' && 'preview' || 'development' }}
+    outputs:
+      active: ${{ steps.current.outputs.active }}
     env:
       GH_TOKEN: ${{ github.token }}
       PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
@@ -349,73 +351,71 @@ jobs:
           echo "### Preview for PR #$PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
           echo "$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Check public Preview once without waiting for Pages
-        id: live_check
-        if: steps.current.outputs.active == 'true'
+  # Release the shared publisher lock before waiting for GitHub Pages.
+  verify_live:
+    name: "Verify public PR Preview"
+    needs: publish
+    if: needs.publish.result == 'success' && needs.publish.outputs.active == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+    concurrency:
+      group: onair-pr-preview-verify-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Verify current public SHA and noindex before posting link
         shell: bash
         run: |
           set -euo pipefail
           base="$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/"
           marker="${base}preview-commit.txt"
-          # GitHub Pages may take minutes to publish; do not block Actions for CDN polling.
-          published_sha="$(curl --location --fail --silent --max-time 4 "$marker" 2>/dev/null || true)"
-          if [ "$published_sha" = "$EXPECTED_HEAD" ] &&
-             curl --location --fail --silent --max-time 6 "$base" -o "$RUNNER_TEMP/preview-live.html" &&
-             grep -q 'noindex' "$RUNNER_TEMP/preview-live.html"; then
-            echo "live=true" >> "$GITHUB_OUTPUT"
-            echo "Public Preview serves the expected SHA and noindex"
-          else
-            echo "live=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Preview uploaded. GitHub Pages still publishing; not waiting."
+          live=false
+          for attempt in $(seq 1 90); do
+            published_sha="$(curl --location --fail --silent --max-time 4 "$marker" 2>/dev/null || true)"
+            if [ "$published_sha" = "$EXPECTED_HEAD" ] &&
+               curl --location --fail --silent --max-time 6 "$base" -o "$RUNNER_TEMP/preview-live.html" &&
+               grep -q 'noindex' "$RUNNER_TEMP/preview-live.html"; then
+              live=true
+              break
+            fi
+            if [ "$attempt" -lt 90 ]; then sleep 10; fi
+          done
+          if [ "$live" != true ]; then
+            echo "::error::GitHub Pages did not serve the current Preview within the verification window."
+            exit 1
           fi
-
-      - name: Report verified or publishing Preview for current PR/run
-        if: steps.current.outputs.active == 'true'
-        shell: bash
-        env:
-          LIVE_VERIFIED: ${{ steps.live_check.outputs.live }}
-        run: |
-          set -euo pipefail
-          # A new PR head or a newer run must never restore an old link.
-          read -r state base head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
-          if [ "$state" != open ] || [ "$base" != staging ] || [ "$head" != "$EXPECTED_HEAD" ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
-            echo "::notice::PR changed while Pages was publishing; keep Preview link hidden."
+          read -r state base_ref head repo < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.state, .base.ref, .head.sha, .head.repo.full_name] | @tsv')
+          if [ "$state" != open ] || [ "$base_ref" != staging ] || [ "$head" != "$EXPECTED_HEAD" ] || [ "$repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::notice::PR changed; do not post a stale Preview."
             exit 0
           fi
           marker_id="$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments?per_page=100" --jq '.[] | select((.body // "") | contains("<!-- onair-pr-preview -->")) | .id' | head -n 1)"
-          if [ -z "$marker_id" ]; then
-            echo "::error::Missing Preview status comment. Refuse to post an unverified link."
-            exit 1
-          fi
+          test -n "$marker_id" || { echo "::error::Missing Preview status comment."; exit 1; }
           current_body="$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --jq .body)"
           if [[ "$current_body" != *"<!-- onair-preview-run:$GITHUB_RUN_ID -->"* ]] ||
              [[ "$current_body" != *"<!-- onair-preview-head:$EXPECTED_HEAD -->"* ]]; then
-            echo "::notice::A newer workflow owns the Preview comment; do not restore a stale link."
+            echo "::notice::A newer workflow owns the Preview comment."
             exit 0
           fi
-          url="$PREVIEW_SITE_ORIGIN/pr-preview/pr-$PR_NUMBER/"
-          if [ "$LIVE_VERIFIED" = true ]; then
-            state_note="✅ **Preview ready** for commit $EXPECTED_HEAD (public SHA and noindex verified)."
-            link_label="Open preview"
-          else
-            state_note="⏳ **Preview publishing** for commit $EXPECTED_HEAD. GitHub Pages has not yet confirmed this version. The link can show an older build or 404 until Pages updates; do not review it as current yet."
-            link_label="Try preview (publishing)"
-          fi
-          body="$(printf '<!-- onair-pr-preview -->\n<!-- onair-preview-head:%s -->\n<!-- onair-preview-run:%s -->\n### ePlus OnAir — PR Preview\n\n%s\n\n[%s](%s) · [View build status](https://github.com/%s/actions/runs/%s)\n\nStatic preview: representative routes only; full catalog remains on Staging after merge. Noindex and production GA4 disabled.\n' "$EXPECTED_HEAD" "$GITHUB_RUN_ID" "$state_note" "$link_label" "$url" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
+          body="$(printf '<!-- onair-pr-preview -->\n<!-- onair-preview-head:%s -->\n<!-- onair-preview-run:%s -->\n### ePlus OnAir — PR Preview\n\n✅ **Preview ready** for commit %s (public SHA and noindex verified).\n\n[Open preview](%s) · [View build status](https://github.com/%s/actions/runs/%s)\n\nStatic preview: representative routes only; full catalog remains on Staging after merge. Noindex and production GA4 disabled.\n' "$EXPECTED_HEAD" "$GITHUB_RUN_ID" "$EXPECTED_HEAD" "$base" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")"
           jq -n --arg body "$body" '{body:$body}' | gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$marker_id" --input - >/dev/null
-
 
   # Runs after all jobs, even if tests, publish or live URL verification failed.
   # A failed build must not leave the comment at "Building…" indefinitely.
   finalize_comment:
     name: "Remove Preview link if build or live verification fails"
-    needs: [comment_status, preview_config, build, publish]
+    needs: [comment_status, preview_config, build, publish, verify_live]
     if: >-
       always() &&
       github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       needs.comment_status.result == 'success' &&
-      needs.publish.result != 'success'
+      (needs.publish.result != 'success' || needs.verify_live.result == 'failure' || needs.verify_live.result == 'cancelled')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
