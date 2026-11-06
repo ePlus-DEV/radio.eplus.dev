@@ -3,7 +3,7 @@ name: "Deploy ePlus OnAir to GitHub Pages"
 # Deploy only merged, trusted source. Never give publishing credentials to PRs.
 on:
   push:
-    branches: [develop, main]
+    branches: [staging, main]
     # Only changes to the delivered website justify regenerating thousands of
     # station pages. Workflows, docs, tests and one-off crawlers do not.
     paths:
@@ -56,7 +56,7 @@ jobs:
     # Staging uses its own opt-in readiness flag after environment migration.
     # Until the staging Environment is provisioned, legacy development settings remain active.
     if: >-
-      (github.ref_name == 'develop' &&
+      (github.ref_name == 'staging' &&
         (vars.PAGES_STAGING_READY == 'true' ||
           (vars.PAGES_STAGING_READY == '' && vars.PAGES_DEV_READY == 'true'))) ||
       (github.ref_name == 'main')
@@ -80,9 +80,9 @@ jobs:
       NUXT_APP_BASE_URL: /
       # Indexing is tier-specific: staging never indexed, production indexed.
       # Never force noindex globally; that breaks production SEO and GA4.
-      NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}
+      NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'staging' && 'true' || 'false' }}
       TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
-      TARGET_DOMAIN: ${{ github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev' }}
+      TARGET_DOMAIN: ${{ github.ref_name == 'main' && 'radio.eplus.dev' || 'stg.radio.eplus.dev' }}
       ONAIR_SKIP_STATION_OG: 'true'
       NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
       TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
@@ -113,7 +113,7 @@ jobs:
         run: |
           set -euo pipefail
           case "$TARGET_REPOSITORY:$TARGET_DOMAIN" in
-            ePlus-DEV/onair-staging-pages:new-radio.eplus.dev|ePlus-DEV/onair-production-pages:radio.eplus.dev) ;;
+            ePlus-DEV/onair-staging-pages:stg.radio.eplus.dev|ePlus-DEV/onair-production-pages:radio.eplus.dev) ;;
             *) echo "::error::Unexpected Pages target repository or domain"; exit 1 ;;
           esac
           if [ "$NUXT_PUBLIC_SITE_URL" != "https://$TARGET_DOMAIN" ] || [ "$NUXT_APP_BASE_URL" != "/" ]; then

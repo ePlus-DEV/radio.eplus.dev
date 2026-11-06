@@ -9,7 +9,7 @@ const read = file => readFile(file, 'utf8');
 
 test('custom-domain full-site deployments preserve separate Production and Staging destinations', async () => {
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
-  assert.ok(workflow.includes('branches: [develop, main]'));
+  assert.ok(workflow.includes('branches: [staging, main]'));
   assert.ok(workflow.includes('ePlus-DEV/onair-staging-pages'));
   assert.ok(workflow.includes('ePlus-DEV/onair-production-pages'));
   assert.ok(workflow.includes("name: ${{ github.ref_name == 'main' && 'production' || (vars.PAGES_STAGING_READY == 'true' && 'staging' || 'development') }}"),
@@ -20,12 +20,12 @@ test('custom-domain full-site deployments preserve separate Production and Stagi
     'Staging legacy fallback must work only while the new flag is absent');
   assert.ok(workflow.includes('NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
   assert.ok(workflow.includes('SEO_EXPECTED_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}'));
-  assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev'"));
+  assert.ok(workflow.includes("github.ref_name == 'main' && 'radio.eplus.dev' || 'stg.radio.eplus.dev'"));
   assert.ok(workflow.includes('NUXT_APP_BASE_URL: /'));
   assert.ok(workflow.includes('https://$TARGET_DOMAIN'));
   assert.doesNotMatch(workflow, /\beplus-dev\.github\.io\b/i,
     'legacy GitHub Pages host must never be present in deployment workflow');
-  assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}"),
+  assert.ok(workflow.includes("NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'staging' && 'true' || 'false' }}"),
     'staging must be noindex, while production must stay indexable');
   assert.ok(workflow.includes("TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}"),
     'Pages output validation must reject noindex production bundles');
