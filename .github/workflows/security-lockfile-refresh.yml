@@ -1,0 +1,53 @@
+name: "Security lockfile refresh (temporary)"
+on:
+  push:
+    branches:
+      - "security/nuxt-4-6-4-20261106"
+    paths:
+      - "package.json"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-lock:
+    if: github.repository == 'ePlus-DEV/radio.eplus.dev'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: npm
+      - name: Verify Nuxt security patch is requested
+        run: node -e "if (JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).dependencies.nuxt !== '4.6.4') process.exit(1)"
+      - name: Re-resolve exact dependency tree
+        run: npm install --package-lock-only --ignore-scripts --no-fund --no-audit
+      - name: Apply available nonbreaking npm audit fixes
+        shell: bash
+        run: |
+          set +e
+          npm audit fix --package-lock-only --ignore-scripts --no-fund
+          code=$?
+          set -e
+          echo "::notice::npm audit fix exit status: $code (nonzero may mean unresolved advisories; follow-up audit is required)"
+      - name: Validate that npm ci accepts regenerated lock
+        run: npm ci --ignore-scripts --no-fund --no-audit
+      - name: Commit regenerated lock only
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- package-lock.json; then
+            echo "::notice::Lockfile is already synchronized"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- package-lock.json
+          git commit -m "fix(deps): regenerate lockfile for Nuxt security release"
+          git push origin HEAD:"security/nuxt-4-6-4-20261106"
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
