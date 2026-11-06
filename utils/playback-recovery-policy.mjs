@@ -6,6 +6,13 @@ export const STREAM_STALL_TIMEOUT_MS = 10_000;
 // Short bursts of audio must not reset the six-attempt retry budget.
 export const STABLE_PLAYBACK_WINDOW_MS = 30_000;
 
+// A playing event can be queued before a system interruption pauses media.
+// Do not report playback or start listening accounting for a paused element.
+export function isCurrentMediaPlaying({ media, userPaused, hasPlayableSource, activeSource, station } = {}) {
+  return Boolean(media && !media.paused && !media.ended && !userPaused
+    && hasPlayableSource && activeSource && station);
+}
+
 export function playbackWatchdogAction({
   waiting = false,
   playing = false,

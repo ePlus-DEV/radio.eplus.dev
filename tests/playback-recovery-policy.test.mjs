@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { MAX_STREAM_ATTEMPTS, buildPlaybackSources } from '../utils/radio-source-plan.mjs';
 import {
-  playbackWatchdogAction, nextRecoverySourceIndex,
+  isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex,
   STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS,
 } from '../utils/playback-recovery-policy.mjs';
 
@@ -11,6 +11,17 @@ const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 const stalled = overrides => ({
   waiting: true, playing: false, userPaused: false, online: true,
   autoReconnect: true, attemptCount: 1, sourceCount: 1, ...overrides,
+});
+
+test('queued playing events cannot revive interrupted or explicitly paused media', () => {
+  const active = { media: { paused: false, ended: false }, userPaused: false,
+    hasPlayableSource: true, activeSource: 'source', station: { url: '/a/b/c' } };
+  assert.equal(isCurrentMediaPlaying(active), true);
+  for (const change of [{ media: null }, { media: { paused: true } },
+    { media: { paused: false, ended: true } }, { userPaused: true },
+    { hasPlayableSource: false }, { activeSource: '' }, { station: null }]) {
+    assert.equal(isCurrentMediaPlaying({ ...active, ...change }), false);
+  }
 });
 
 test('single source and last source always have bounded fallback until six attempts', () => {

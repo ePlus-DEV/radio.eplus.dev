@@ -198,7 +198,7 @@ import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata, registerRadioMediaActions } from "~/utils/radio-media-session.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
-import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
+import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
@@ -1274,7 +1274,8 @@ const flushHlsSongMetadata = (): void => {
 const onMediaPlaying = (): void => {
   // A queued "playing" event can arrive after the user has paused or after
   // a failed/stopped source. Never let it resurrect playback or pollute history.
-  if (userPaused.value || !hasPlayableSource.value || !activeResolvedSrc || !playback.station) return;
+  if (!isCurrentMediaPlaying({ media: mediaElement.value, userPaused: userPaused.value,
+    hasPlayableSource: hasPlayableSource.value, activeSource: activeResolvedSrc, station: playback.station })) return;
   listening.remember(playback.station, 'play', true);
   if (listeningDuration.enabled) {
     listeningDurationTracker.start(playback.station);
