@@ -62,7 +62,7 @@ test('seven Global Radio stations appear in the shared header index without expo
     assert.equal(new Set(global.map(x => x.url)).size, 7);
     assert.ok(global.every(x => x.station_country === 'global_radio.title'));
     assert.ok(global.every(x => x.station_image.startsWith('https://cdn-profiles.tunein.com/')));
-    assert.ok(global.every(x => x.station_image_fallback.startsWith('/img/global-radio/')));
+    assert.ok(global.every(x => !Object.hasOwn(x, 'station_image_fallback')));
     assert.equal(searchLocalStations(result, 'global radio', 20).filter(x => x.url.startsWith('/global-radio/')).length, 7);
     assert.equal(searchLocalStations(result, 'apple music', 20).filter(x => x.url.startsWith('/global-radio/')).length, 7);
     assert.equal(searchLocalStations(result, 'musica uno').some(x => x.url.endsWith('/apple-musica-uno')), true);

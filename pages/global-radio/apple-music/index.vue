@@ -70,10 +70,10 @@
           class="radio-surface group flex min-w-0 flex-col gap-3 rounded-2xl border border-[var(--radio-border)] p-3.5 transition-colors hover:border-rose-500/45 focus-within:border-rose-500/50 sm:gap-4 sm:p-5"
           :class="isStationActive(station.id) ? 'border-rose-500/55 ring-1 ring-rose-500/10' : ''">
           <div class="flex min-w-0 items-center gap-3">
-            <img :src="siteAssetUrl(station.image || '/img/global-radio/' + station.id + '.svg')"
+            <img :src="siteAssetUrl(station.image || '/brand/onair-mark.svg')"
               :alt="station.title" width="48" height="48" loading="lazy" decoding="async"
               class="h-11 w-11 shrink-0 rounded-xl bg-white object-contain ring-1 ring-[var(--radio-border)] sm:h-12 sm:w-12"
-              @error="onArtworkError($event, station.id)" />
+              @error="onArtworkError($event)" />
             <div class="min-w-0 flex-1">
               <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
                 class="block truncate text-sm font-bold text-[var(--radio-text)] transition-colors hover:text-rose-500 sm:text-base">
@@ -124,12 +124,11 @@
 import { usePlaybackStore } from '~/stores/playback';
 
 const siteAssetUrl = useSiteAssetUrl();
-function onArtworkError(event: Event, stationId: string) {
+function onArtworkError(event: Event) {
   const image = event.target as HTMLImageElement | null;
-  if (!image || image.dataset.fallbackArtwork === 'brand') return;
-  const useBrand = image.dataset.fallbackArtwork === 'station';
-  image.dataset.fallbackArtwork = useBrand ? 'brand' : 'station';
-  image.src = siteAssetUrl(useBrand ? '/brand/onair-mark.svg' : '/img/global-radio/' + stationId + '.svg');
+  if (!image) return;
+  image.onerror = null;
+  image.src = siteAssetUrl('/brand/onair-mark.svg');
 }
 
 const { t } = useI18n();

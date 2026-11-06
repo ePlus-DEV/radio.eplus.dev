@@ -78,7 +78,6 @@ export async function buildStationSearchIndex({
         station_category: String(station.genre || ''),
         station_language: String(station.language || ''),
         station_image: imageIsTrusted ? image : '/brand/onair-mark.svg',
-        station_image_fallback: '/img/global-radio/' + station.id + '.svg',
         url: provider.href + '/' + station.id,
         featured: false,
         featured_rank: 0,

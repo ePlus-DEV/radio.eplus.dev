@@ -11,10 +11,10 @@
     </nav>
     <article class="radio-hero rounded-2xl p-5 sm:p-8">
       <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
-        <img v-if="station" :src="siteAssetUrl(station.image || '/img/global-radio/' + station.id + '.svg')"
+        <img v-if="station" :src="siteAssetUrl(station.image || '/brand/onair-mark.svg')"
           :alt="station.title" width="64" height="64" decoding="async"
           class="h-16 w-16 shrink-0 rounded-2xl bg-white object-contain ring-1 ring-[var(--radio-border)]"
-          @error="onArtworkError($event, station.id)" />
+          @error="onArtworkError($event)" />
         <div class="min-w-0 flex-1">
           <p class="text-xs font-bold uppercase tracking-[0.15em] text-rose-600 dark:text-rose-300">Apple Music Radio</p>
           <h1 class="mt-2 text-2xl font-bold sm:text-3xl">{{ station?.title }}</h1>
@@ -82,12 +82,11 @@
 import { usePlaybackStore } from '~/stores/playback';
 
 const siteAssetUrl = useSiteAssetUrl();
-function onArtworkError(event: Event, stationId: string) {
+function onArtworkError(event: Event) {
   const image = event.target as HTMLImageElement | null;
-  if (!image || image.dataset.fallbackArtwork === 'brand') return;
-  const useBrand = image.dataset.fallbackArtwork === 'station';
-  image.dataset.fallbackArtwork = useBrand ? 'brand' : 'station';
-  image.src = siteAssetUrl(useBrand ? '/brand/onair-mark.svg' : '/img/global-radio/' + stationId + '.svg');
+  if (!image) return;
+  image.onerror = null;
+  image.src = siteAssetUrl('/brand/onair-mark.svg');
 }
 
 const playback = usePlaybackStore();

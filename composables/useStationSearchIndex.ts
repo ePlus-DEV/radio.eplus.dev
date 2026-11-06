@@ -8,7 +8,6 @@ export interface StationSearchItem {
   station_language?: string;
   country_label?: string;
   station_image: string;
-  station_image_fallback?: string;
   url: string;
   featured?: boolean;
 }

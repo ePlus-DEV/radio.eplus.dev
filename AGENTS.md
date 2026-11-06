@@ -297,7 +297,8 @@ Header/mobile search, despite provider metadata living outside geographic
 metadata with country entries without exposing streams, signed HLS links,
 accessKeys or provider credentials. Keep the CI cache key dependent on provider
 JSON and merge local Global matches with Algolia hits without duplicates.
-All seven stations have distinct artwork and repo-local SVG fallback. The shared
-player and queue should use each provider station's artwork, not the generic
-brand placeholder. Never change production SEO copy, GA4, or canonical URLs as
+All seven stations must use the original cover URLs shown on their TuneIn
+station pages; do not fabricate or generate substitute station-logo SVGs.
+The existing generic brand mark may appear only if an external image fails.
+The shared player and queue must use the provider artwork. Never change production SEO copy, GA4, or canonical URLs as
 a side effect of search/discovery work.
