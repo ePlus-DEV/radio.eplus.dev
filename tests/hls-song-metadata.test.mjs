@@ -204,3 +204,103 @@ test('Apple native Safari cues require a song marker, not only a DJ/show pair', 
   assert.deepEqual(extractNativeHlsId3Track(song, { appleMusic: true }),
     { title: 'Make It to Christmas', artist: 'Alessia Cara' });
 });
+
+const appleArtwork = (size, imageUrl, v = 4) => {
+  const description = size === 640 ? 'artworkURL_640x' : 'artworkURL_390x';
+  const bytes = [0, ...ascii(description), 0, ...new TextEncoder().encode(imageUrl)];
+  return [...ascii('WXXX'), ...(v === 4 ? safeSize(bytes.length) : bigSize(bytes.length)), 0, 0, ...bytes];
+};
+const verifiedArtwork390 = 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/sanitized-fixture/390x390bb.jpg';
+const verifiedArtwork640 = 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/sanitized-fixture/1400x1400bb.jpg';
+
+test('Apple Holiday Hits HLS WXXX artwork follows the SONG, not DJ interstitial', () => {
+  const song = makeTag([
+    appleArtwork(390, verifiedArtwork390),
+    applePriv('com.apple.radio.adamid'),
+    frame('TALB', 'Wrapped in Red', 4),
+    artist('Kelly Clarkson', 4),
+    appleArtwork(640, verifiedArtwork640),
+    title('Underneath the Tree', 4),
+  ], 4);
+  assert.deepEqual(parseHlsId3Tag(song, { appleMusic: true }), {
+    title: 'Underneath the Tree', artist: 'Kelly Clarkson', artwork: verifiedArtwork640,
+  });
+  const dj = makeTag([
+    appleArtwork(640, verifiedArtwork640),
+    artist('Holiday Hits', 4), title('Eddie Francis', 4),
+  ], 4);
+  assert.equal(parseHlsId3Tag(dj, { appleMusic: true }), null);
+});
+
+test('WXXX only accepts Apple artwork CDN assets, not arbitrary links', () => {
+  for (const candidate of [
+    'https://evil.example.com/image/thumb/Music124/v4/xxx/390x390bb.jpg',
+    'http://is1-ssl.mzstatic.com/image/thumb/Music124/v4/xxx/390x390bb.jpg',
+    'https://is1-ssl.mzstatic.com.evil.example/image/thumb/Music124/v4/xxx/390x390bb.jpg',
+    'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/xxx/390x390bb.jpg?token=secret',
+    'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/xxx/390x390bb.jpg#tracking',
+  ]) {
+    const tag = makeTag([
+      appleArtwork(640, candidate),
+      applePriv('com.apple.radio.adamid'),
+      title('Valid track', 4), artist('Real artist', 4),
+    ], 4);
+    assert.deepEqual(parseHlsId3Tag(tag, { appleMusic: true }),
+      { title: 'Valid track', artist: 'Real artist' });
+  }
+});
+
+test('Album artwork upgrades an existing ID3 song without creating another history row', async () => {
+  const { addTuneInSessionTrack } = await import('../utils/global-radio-tunein-metadata.mjs');
+  const plain = makeTag([applePriv('com.apple.radio.adamid'), title('Track', 4), artist('Singer', 4)], 4);
+  const withArt = makeTag([
+    applePriv('com.apple.radio.adamid'), title('Track', 4), artist('Singer', 4),
+    appleArtwork(640, verifiedArtwork640),
+  ], 4);
+  const buffer = createTimedHlsTrackBuffer({ appleMusic: true });
+  buffer.add([{ data: plain, pts: 20 }]);
+  const first = buffer.consume(20);
+  assert.deepEqual(first, { title: 'Track', artist: 'Singer' });
+  let history = addTuneInSessionTrack([], first);
+  assert.equal(history.length, 1);
+  assert.equal(history[0].track_image, '');
+  buffer.add([{ data: withArt, pts: 24 }]);
+  const update = buffer.consume(24);
+  assert.equal(update.artwork, verifiedArtwork640);
+  history = addTuneInSessionTrack(history, update);
+  assert.equal(history.length, 1);
+  assert.equal(history[0].track_image, verifiedArtwork640);
+  assert.equal(buffer.consume(26), null);
+});
+
+test('Safari timed WXXX native cue is accepted with album marker and matching song', () => {
+  const cue = (key, data) => ({ value: { key, data } });
+  const txt = value => new Uint8Array([3, ...new TextEncoder().encode(value)]);
+  const wxxx = new Uint8Array([0, ...ascii('artworkURL_640x'), 0, ...new TextEncoder().encode(verifiedArtwork640)]);
+  const found = extractNativeHlsId3Track([
+    cue('TIT2', txt('Underneath the Tree')),
+    cue('TPE1', txt('Kelly Clarkson')),
+    cue('TALB', txt('Wrapped in Red')),
+    cue('WXXX', wxxx),
+  ], { appleMusic: true });
+  assert.deepEqual(found, { title: 'Underneath the Tree', artist: 'Kelly Clarkson',
+    artwork: verifiedArtwork640 });
+});
+
+test('Apple artwork is scoped to the current live track, never a stale history row', async () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  const url = '/global-radio/apple-music/apple-music-1';
+  playback.activateGlobalRadio({ id: 'apple-music-1', url, title: 'Apple Music 1', image: '',
+    sources: [] }, 'https://music.apple.com/', Date.now() + 120_000, [], { autoplay: false });
+  playback.setHlsLiveTrack(url, { title: 'Track', artist: 'Artist', artwork: verifiedArtwork640 });
+  assert.equal(playback.liveTrack.artwork, verifiedArtwork640);
+  playback.setLiveTrack(url, null);
+  assert.equal(playback.liveTrack.artwork, verifiedArtwork640);
+  playback.activateGlobalRadio({ id: 'apple-music-hits', url: '/global-radio/apple-music/apple-music-hits',
+    title: 'Apple Music Hits', image: '', sources: [] },
+  'https://music.apple.com/', Date.now() + 120_000, [], { autoplay: false });
+  assert.equal(playback.liveTrack, null);
+  const player = await readFile(new URL('../components/player/Player.vue', import.meta.url), 'utf8');
+  assert.match(player, /live\?\.stationUrl === props\.stationUrl && live\.artwork/);
+});
