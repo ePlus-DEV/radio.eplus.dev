@@ -986,3 +986,9 @@ The root `README.md` is intentionally a short public-facing project landing page
 - `docs/ENVIRONMENTS.md` is the source of truth for branch / GitHub Environment / Pages repository / domain mapping, migration, deploy secrets and guardrails.
 - `docs/GITHUB_ACTIONS.md`, `docs/GITHUB_PAGES.md`, `docs/PR_PREVIEWS.md`, `docs/SEO.md` and `docs/SEPARATE_IMAGE_RELEASES.md` own their respective detailed runbooks.
 - Changes must update the specific document and keep README links working, rather than expanding README with duplicated tables, secrets guidance or YAML. Keep README and `AGENTS.md` synchronized between `main` and `develop`; do not alter production metadata, analytics, UI or deploy behavior for documentation restructuring.
+
+## Preview Environment and browser-tab titles (2026-11-06)
+
+The target GitHub Environments are `production`, `staging`, `preview`, each with its own public `NUXT_PUBLIC_SITE_NAME` and scoped deployment credentials. Preview's trusted config/publisher/cleanup jobs select `preview` after `PAGES_PREVIEW_READY=true` is provisioned by the repository owner. The old `development` Environment and `PAGES_DEV_READY` remain a **legacy fallback only** while this variable is absent; explicit false disables Preview. Staging migration uses its independent `PAGES_STAGING_READY` gate and may separately retain legacy `development` until ready.
+
+The PR build is read-only and must never receive any GitHub Environment secret. Trusted Preview config validates and forwards only public title, CORS and resolver variables. Exact-host defaults are `ePlus OnAir` (Production), `ePlus OnAir — Staging` (Staging), and `ePlus OnAir — Preview` (Preview). Keep Production SEO text/GA4, `noindex` boundaries and root custom-domain CNAMEs unchanged for this migration. `pull_request_target` is loaded from default branch `main`; synchronize changes with `develop`.

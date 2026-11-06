@@ -4,7 +4,7 @@ ePlus OnAir application code lives in the **private** repository `ePlus-DEV/radi
 
 | Source branch | Environment | Output repository | Custom hostname |
 | --- | --- | --- | --- |
-| Feature PR → `develop` | `development` (trusted Preview jobs) | `ePlus-DEV/onair-pr-previews` | `https://preview.radio.eplus.dev/pr-preview/pr-N/` |
+| Feature PR → `develop` | `preview` (after migration, trusted jobs) | `ePlus-DEV/onair-pr-previews` | `https://preview.radio.eplus.dev/pr-preview/pr-N/` |
 | `develop` | `staging` (after migration) | `ePlus-DEV/onair-staging-pages` | `https://new-radio.eplus.dev` |
 | `main` | `production` | `ePlus-DEV/onair-production-pages` | `https://radio.eplus.dev` |
 
@@ -14,11 +14,11 @@ Production and Staging use root `NUXT_APP_BASE_URL=/`. Development Preview uses 
 
 Configure the *source repository* GitHub Environments:
 
-- `development` → trusted PR Preview config/publish/cleanup, `PAGES_DEV_READY=true` at repository level; its public site URL is derived dynamically per PR.
+- `preview` → trusted PR Preview config/publish/cleanup with a separate `PAGES_DEPLOY_TOKEN` scoped to `onair-pr-previews`; set `PAGES_PREVIEW_READY=true` at repository level only after provisioning. Configure an optional `NUXT_PUBLIC_SITE_NAME=ePlus OnAir — Preview`; its public URL is derived dynamically per PR.
 - `staging` → `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev`, its own `PAGES_DEPLOY_TOKEN` Environment Secret, and repository-level `PAGES_STAGING_READY=true` **only after** secrets and variables are set.
-- `production` → `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` with the existing production Environment secret.
+- `production` → `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`, optional `NUXT_PUBLIC_SITE_NAME=ePlus OnAir`, and the existing production Environment secret. Staging may independently set `NUXT_PUBLIC_SITE_NAME=ePlus OnAir — Staging`.
 
-The scoped `PAGES_DEPLOY_TOKEN` Environment Secret needs Contents read/write permission **only for the exact Pages output repo used by that tier**. Development Preview build jobs have **no** deployment secret. Before `staging` has been provisioned and `PAGES_STAGING_READY=true` set at the repository level, the staging job temporarily retains its legacy `development` Environment/`PAGES_DEV_READY=true` behavior. A deliberate `PAGES_STAGING_READY=false` disables Staging instead of falling back. Production is not gated by either variable. Complete [the migration checklist](./ENVIRONMENTS.md) before retiring legacy config.
+The scoped `PAGES_DEPLOY_TOKEN` Environment Secret needs Contents read/write permission **only for the exact Pages output repo used by that tier**. Development Preview build jobs have **no** deployment secret. Before `staging` has been provisioned and `PAGES_STAGING_READY=true` set at the repository level, the staging job temporarily retains its legacy `development` Environment/`PAGES_DEV_READY=true` behavior. A deliberate `PAGES_STAGING_READY=false` disables Staging instead of falling back. While `PAGES_PREVIEW_READY` is absent, Preview uses legacy `PAGES_DEV_READY` and `development`; explicit false disables it. Production is unaffected by these flags. Complete [the migration checklist](./ENVIRONMENTS.md) before retiring legacy config.
 
 All three output repositories should use Settings → Pages → Deploy from branch `main` at `/(root)` with their corresponding custom domain and HTTPS. Preserve root `CNAME` records. DNS configuration and production traffic cutover are separate operational steps; they are not changed by this workflow.
 

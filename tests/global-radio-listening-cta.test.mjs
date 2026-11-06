@@ -92,13 +92,13 @@ test('Apple Music preview prerenders in-app player QA routes and keeps custom no
   }
   assert.match(config, /routes: isPrPreview \? \[\.\.\.PR_PREVIEW_ROUTES/);
   assert.match(workflow, /NUXT_PUBLIC_NO_INDEX: 'true'/);
-  // Public vars live in the development Environment, not repository scope.
+  // Public vars live in the dedicated Preview Environment (legacy development fallback).
   // Only the trusted pre-build job may access that Environment; never checkout
   // or run untrusted PR code in a job that also holds deploy credentials.
   const trusted = workflow.split('  preview_config:')[1]?.split('\n  build:')[0];
   const build = workflow.split('  build:')[1]?.split('\n  publish:')[0];
   assert.ok(trusted && build, 'trusted config and isolated build jobs exist');
-  assert.match(trusted, /environment:\s*\n\s*name: development/);
+  assert.match(trusted, /environment:\s*\n\s*name: \$\{\{ vars\.PAGES_PREVIEW_READY == 'true' && 'preview' \|\| 'development' \}\}/);
   assert.match(trusted, /CORS_SERVER: \$\{\{ vars\.NUXT_PUBLIC_CORS_SERVER_1 \}\}/);
   assert.match(trusted, /RESOLVER_URL: \$\{\{ vars\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL \}\}/);
   assert.doesNotMatch(trusted, /actions\/checkout|npm ci|secrets\./,
@@ -106,6 +106,6 @@ test('Apple Music preview prerenders in-app player QA routes and keeps custom no
   assert.match(build, /needs: preview_config/);
   assert.match(build, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ needs\.preview_config\.outputs\.cors_server \}\}/);
   assert.match(build, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: \$\{\{ needs\.preview_config\.outputs\.resolver_url \}\}/);
-  assert.doesNotMatch(build, /environment:\s*\n\s*name: development|secrets\.PAGES_DEPLOY_TOKEN/,
-    'untrusted build must never receive development secrets or Environment access');
+  assert.doesNotMatch(build, /\n\s*environment:|secrets\.PAGES_DEPLOY_TOKEN/,
+    'untrusted build must never receive Preview secrets or Environment access');
 });
