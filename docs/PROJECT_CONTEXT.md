@@ -540,7 +540,7 @@ Prefer documenting the **reason** for a rule, not only the final code, so later 
 
 ## 18. Nuxt development tooling compatibility
 
-Nuxt 4.6.3 and DevTools 3.4.4 no longer require the vulnerable `simple-git`
+Nuxt 4.6.4 (security release) and DevTools 3.4.4 no longer require the vulnerable `simple-git`
 3.x dependency. The old `simple-git: 3.36.0` override was removed after a
 Critical security advisory. Keep `devtools: { enabled: true }` and verify that
 the resolved lockfile contains no `simple-git` dependency. Do not restore the
