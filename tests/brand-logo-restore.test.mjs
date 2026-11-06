@@ -28,7 +28,8 @@ test('ePlus OnAir uses the recognized ON AIR logo without reverting its name or 
   assert.match(header, /\$t\('brand\.slogan'\)/);
   assert.match(footer, /ePlus OnAir/);
   assert.match(footer, /\$t\('footer\.tagline'\)/);
-  assert.match(config, /NUXT_PUBLIC_SITE_NAME \|\| "ePlus OnAir"/);
+  assert.match(config, /resolveDeploymentSiteName\(/);
+  assert.match(config, /configuredName: process\.env\.NUXT_PUBLIC_SITE_NAME/);
   assert.doesNotMatch(config, /rel: "icon", type: "image\/svg\+xml", href: "\/brand\/onair-mark\.svg"/);
   assert.match(config, /\/brand\/favicon-32x32\.png/);
   assert.match(config, /\/favicon\.ico\?v=onair-20261012/);

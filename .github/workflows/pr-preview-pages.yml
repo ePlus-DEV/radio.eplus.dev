@@ -18,13 +18,13 @@ env:
   PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
-  # This trusted job uses the development Environment, but NEVER checks out or
+  # This trusted job uses the Preview Environment, but NEVER checks out or
   # executes PR code. It forwards ONLY explicitly named public vars via outputs.
-  # The next job remains isolated from all development Environment secrets.
+  # The next job remains isolated from all Preview Environment secrets.
   preview_config:
     name: "Read preview public config (trusted, no checkout)"
     if: >-
-      vars.PAGES_DEV_READY == 'true' &&
+      (vars.PAGES_PREVIEW_READY == 'true' || (vars.PAGES_PREVIEW_READY == '' && vars.PAGES_DEV_READY == 'true')) &&
       github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.ref != 'develop' &&
@@ -34,10 +34,11 @@ jobs:
     permissions:
       contents: read
     environment:
-      name: development
+      name: ${{ vars.PAGES_PREVIEW_READY == 'true' && 'preview' || 'development' }}
     outputs:
       cors_server: ${{ steps.public.outputs.cors_server }}
       resolver_url: ${{ steps.public.outputs.resolver_url }}
+      site_name: ${{ steps.public.outputs.site_name }}
     steps:
       - name: Export ONLY validated public variables to isolated preview
         id: public
@@ -45,6 +46,7 @@ jobs:
         env:
           CORS_SERVER: ${{ vars.NUXT_PUBLIC_CORS_SERVER_1 }}
           RESOLVER_URL: ${{ vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL }}
+          PREVIEW_SITE_NAME: ${{ vars.NUXT_PUBLIC_SITE_NAME }}
         run: |
           set -euo pipefail
           node <<'NODE'
@@ -67,11 +69,16 @@ jobs:
 
           const cors = validatePublicUrl(process.env.CORS_SERVER || '', 'cors');
           const resolver = validatePublicUrl(process.env.RESOLVER_URL || '', 'resolver');
+          const siteName = String(process.env.PREVIEW_SITE_NAME || '').trim();
+          if (siteName.length > 80 || /[\\r\\n<>]/.test(siteName)) {
+            throw new Error('Invalid Preview site title variable');
+          }
           appendFileSync(process.env.GITHUB_OUTPUT,
-            'cors_server=' + cors + '\nresolver_url=' + resolver + '\n');
+            'cors_server=' + cors + '\nresolver_url=' + resolver +
+            '\nsite_name=' + (siteName || 'ePlus OnAir — Preview') + '\n');
           console.log(cors || resolver
-            ? 'Validated development public radio config forwarded to preview.'
-            : '::notice::No development public radio config configured; Play will remain disabled.');
+            ? 'Validated preview public radio config forwarded to preview.'
+            : '::notice::No preview public radio config configured; Play will remain disabled.');
           NODE
 
   build:
@@ -79,7 +86,7 @@ jobs:
     needs: preview_config
     if: >-
       needs.preview_config.result == 'success' &&
-      vars.PAGES_DEV_READY == 'true' &&
+      (vars.PAGES_PREVIEW_READY == 'true' || (vars.PAGES_PREVIEW_READY == '' && vars.PAGES_DEV_READY == 'true')) &&
       github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.ref != 'develop' &&
@@ -105,6 +112,7 @@ jobs:
       NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: ${{ needs.preview_config.outputs.resolver_url }}
       NUXT_PUBLIC_STATION_OG_BASE_URL: ''
       NUXT_PUBLIC_SITE_URL: https://preview.radio.eplus.dev/pr-preview/pr-${{ github.event.pull_request.number }}
+      NUXT_PUBLIC_SITE_NAME: ${{ needs.preview_config.outputs.site_name }}
       NUXT_APP_BASE_URL: /pr-preview/pr-${{ github.event.pull_request.number }}/
     steps:
       - name: Skip stale or retargeted PR runs
@@ -184,7 +192,7 @@ jobs:
       group: onair-pr-preview-publish
       cancel-in-progress: false
     environment:
-      name: development
+      name: ${{ vars.PAGES_PREVIEW_READY == 'true' && 'preview' || 'development' }}
     env:
       GH_TOKEN: ${{ github.token }}
       PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
@@ -215,7 +223,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -n "$PAGES_DEPLOY_TOKEN" || { echo "::error::Missing development secret PAGES_DEPLOY_TOKEN."; exit 1; }
+          test -n "$PAGES_DEPLOY_TOKEN" || { echo "::error::Missing Preview Environment secret PAGES_DEPLOY_TOKEN."; exit 1; }
           test -f "$RUNNER_TEMP/pr-output/index.html" || { echo "::error::Missing preview home page."; exit 1; }
           test -f "$RUNNER_TEMP/pr-output/asia/viet-nam/vov-gt-hcm/index.html" || { echo "::error::Missing preview station detail."; exit 1; }
           if find "$RUNNER_TEMP/pr-output" -type l -print -quit | grep -q .; then
@@ -309,7 +317,7 @@ jobs:
   cleanup:
     name: "Remove closed PR Preview"
     if: >-
-      vars.PAGES_DEV_READY == 'true' &&
+      (vars.PAGES_PREVIEW_READY == 'true' || (vars.PAGES_PREVIEW_READY == '' && vars.PAGES_DEV_READY == 'true')) &&
       github.event.action == 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -320,7 +328,7 @@ jobs:
       group: onair-pr-preview-publish
       cancel-in-progress: false
     environment:
-      name: development
+      name: ${{ vars.PAGES_PREVIEW_READY == 'true' && 'preview' || 'development' }}
     env:
       GH_TOKEN: ${{ github.token }}
       PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
@@ -329,7 +337,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -n "$PAGES_DEPLOY_TOKEN" || { echo "::error::Missing development secret PAGES_DEPLOY_TOKEN."; exit 1; }
+          test -n "$PAGES_DEPLOY_TOKEN" || { echo "::error::Missing Preview Environment secret PAGES_DEPLOY_TOKEN."; exit 1; }
           # An obsolete close event must not delete a reopened preview.
           state="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.state')"
           if [ "$state" != closed ]; then
