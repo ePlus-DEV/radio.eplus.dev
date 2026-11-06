@@ -61,3 +61,14 @@ test('status/finalizer jobs never receive PR code or Preview deployment secrets'
   assert.match(build, /persist-credentials: false/);
   assert.doesNotMatch(build, /secrets\.PAGES_DEPLOY_TOKEN/);
 });
+
+test('live verification outlasts slow Pages deployment without exposing unverified links', () => {
+  // Pages deployment in the dedicated output repository can take longer than
+  // the source PR build, especially when several previews share the site.
+  assert.match(publish, /timeout-minutes: 30/);
+  assert.match(publish, /for attempt in \\$\\(seq 1 90\\); do/);
+  assert.match(publish, /if \\[ "\\$attempt" -lt 90 \\]; then sleep 10; fi/);
+  assert.match(publish, /published_sha.*EXPECTED_HEAD/);
+  assert.match(publish, /grep -q 'noindex'/);
+  assert.doesNotMatch(status, /\\[Open preview\\]/);
+});
