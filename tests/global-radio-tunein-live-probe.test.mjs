@@ -8,7 +8,9 @@ import {
 } from '../utils/global-radio-tunein-metadata.mjs';
 
 const PROBE_BRANCH = 'feat/tunein-apple-radio-song-history-20261105';
-const enabled = process.env.GITHUB_ACTIONS === 'true' && process.env.GITHUB_HEAD_REF === PROBE_BRANCH;
+const corsServer = process.env.NUXT_PUBLIC_CORS_SERVER_1 || '';
+const enabled = process.env.GITHUB_ACTIONS === 'true' && process.env.GITHUB_HEAD_REF === PROBE_BRANCH
+  && Boolean(corsServer);
 
 function summarize(payload, stationId) {
   const nodes = Array.isArray(payload?.body) ? [...payload.body.slice(0, 24)] : [];
@@ -53,7 +55,7 @@ test('diagnostic only: live TuneIn Describe metadata availability for seven Appl
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 6_000);
     try {
-      const response = await fetch(buildPublicTuneInMetadataRequest(stationId), {
+      const response = await fetch(buildPublicTuneInMetadataRequest(stationId, corsServer), {
         method: 'GET', cache: 'no-store', credentials: 'omit',
         headers: { Accept: 'application/json' },
         signal: controller.signal,
