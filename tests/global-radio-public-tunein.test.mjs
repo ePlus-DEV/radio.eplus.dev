@@ -54,6 +54,48 @@ test('fresh signed MPEG-TS masters for all 7 Apple stations pass station-bound v
   }
 });
 
+test('CMAF masters are accepted for all seven stations with strict station association', () => {
+  for (const [id, entry] of Object.entries(PUBLIC_APPLE_TUNEIN_STATIONS)) {
+    const path = id === 'apple-music-holiday-hits'
+      ? 'ppa/index-cmaf.m3u8' : entry.apple + '/index-cmaf.m3u8';
+    const url = signed(path);
+    assert.deepEqual(inspectPublicAppleStream(url, id, now), {
+      ok: true, streamUrl: url, expiresAt: expiry * 1000,
+    }, id);
+    if (id !== 'apple-music-holiday-hits') {
+      assert.equal(inspectPublicAppleStream(url, 'apple-music-holiday-hits', now), null);
+      assert.equal(inspectPublicAppleStream(signed(entry.apple + '/index-cmaf.mp4'), id, now), null);
+    }
+  }
+  assert.equal(inspectPublicAppleStream(signed('ppa/index-cmaf.m3u8'), 'apple-music-1', now), null);
+});
+
+test('prefers the verified CMAF master over MPEG-TS, but falls back to TS when absent', async () => {
+  const cmaf = signed('978194965/index-cmaf.m3u8');
+  const ts = signed('978194965-ts/index-ts.m3u8');
+  const originalDate = Date.now;
+  Date.now = () => now;
+  try {
+    for (const [available, expected] of [
+      [[ts, cmaf], cmaf],
+      [[ts], ts],
+    ]) {
+      const resolved = await resolvePublicTuneInStream({
+        station: { id: 'apple-music-1' },
+        corsServer: CORS_SERVER,
+        fetcher: async () => ({
+          ok: true,
+          json: async () => ({ head: { status: 200 }, body: available.map(url => ({ url })) }),
+        }),
+      });
+      assert.equal(resolved.streamUrl, expected);
+      assert.equal(resolved.expiresAt, expiry * 1000);
+    }
+  } finally {
+    Date.now = originalDate;
+  }
+});
+
 test('reject host swapping, stale tokens, wrong station, duplicate query and unsafe path', () => {
   const src = signed('978194965-ts/index-ts.m3u8');
   const bad = [
@@ -69,6 +111,14 @@ test('reject host swapping, stale tokens, wrong station, duplicate query and uns
   for (const url of bad) assert.equal(inspectPublicAppleStream(url, 'apple-music-1', now), null);
   assert.equal(inspectPublicAppleStream(src, 'apple-music-1', expiry * 1000), null);
   assert.equal(inspectPublicAppleStream(signed('ppa-ts/index-ts.m3u8'), 'apple-music-1', now), null);
+  const cmaf = signed('978194965/index-cmaf.m3u8');
+  for (const other of [
+    cmaf.replace('978194965/index-cmaf', '1498155548/index-cmaf'),
+    cmaf.replace('index-cmaf.m3u8', 'index-cmaf.m4s'),
+    cmaf + '&accessKey=duplicate',
+    cmaf.replace('itsliveradio.apple.com', 'liveradio.music.apple.com'),
+    cmaf.replace('accessKey=', 'key='),
+  ]) assert.equal(inspectPublicAppleStream(other, 'apple-music-1', now), null);
 });
 
 test('one-click resolver fetches public TuneIn JSON via own CORS server and returns ephemeral HLS', async () => {
