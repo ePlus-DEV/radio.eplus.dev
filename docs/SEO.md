@@ -11,7 +11,7 @@ three isolated public output repositories with **custom hostnames** (see [ENVIRO
 
 - Development PR → `ePlus-DEV/onair-pr-previews` → `https://preview.radio.eplus.dev/pr-preview/pr-N/`:
   **noindex**, no sitemap/canonical/JSON-LD, no GA4; PR-specific `NUXT_APP_BASE_URL=/pr-preview/pr-N/`.
-- `develop` → `ePlus-DEV/onair-staging-pages` → `https://new-radio.eplus.dev`:
+- `staging` → `ePlus-DEV/onair-staging-pages` → `https://stg.radio.eplus.dev`:
   **noindex**, no sitemap/canonical/JSON-LD, no GA4; root `NUXT_APP_BASE_URL=/`.
 - `main` → `ePlus-DEV/onair-production-pages` → `https://radio.eplus.dev`:
   **indexable**, canonical/JSON-LD, production sitemap and GA4 `G-ETDY41KBBJ`; root `NUXT_APP_BASE_URL=/`.
@@ -23,14 +23,14 @@ See [GitHub Pages guide](./GITHUB_PAGES.md).
 
 ## Non-production noindex policy (Staging and Development Preview)
 
-`develop` is staged at `https://new-radio.eplus.dev` and must **not** be indexed.
+`staging` is staged at `https://stg.radio.eplus.dev` and must **not** be indexed.
 Build-time configuration for **staging only**:
 ```env
-NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev
+NUXT_PUBLIC_SITE_URL=https://stg.radio.eplus.dev
 NUXT_PUBLIC_NO_INDEX=true
 ```
 There is no dependency on a custom deploy environment or checkout branch.
-Both `new-radio.eplus.dev` (current Staging), `preview.radio.eplus.dev` (Development Preview) and the legacy `radio-new.eplus.dev` hostname fail closed to noindex if supplied as `NUXT_PUBLIC_SITE_URL`, even if the explicit noindex flag is inadvertently missing. Preview still requires its per-PR base URL and `NUXT_PUBLIC_NO_INDEX=true`.
+Both `stg.radio.eplus.dev` (target Staging), `preview.radio.eplus.dev` (Development Preview), and the legacy `new-radio.eplus.dev` / `radio-new.eplus.dev` hostnames fail closed to noindex if supplied as `NUXT_PUBLIC_SITE_URL`, even if the explicit noindex flag is inadvertently missing. Preview still requires its per-PR base URL and `NUXT_PUBLIC_NO_INDEX=true`.
 On production, keep `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev` and do
 not enable `NUXT_PUBLIC_NO_INDEX`.
 
@@ -48,7 +48,7 @@ Non-production output (Staging and Development Preview):
 Production `main` has SEO enabled, explicit canonical URLs, structured data,
 `index, follow`, sitemap, and `robots.txt` referencing the production sitemap.
 These conditions are **environment-based**, not unconditional source deletions,
-so merges from develop into main cannot silently disable production SEO.
+so merges from staging into main cannot silently disable production SEO.
 
 ## Canonical site
 
@@ -287,6 +287,6 @@ Do not treat keyword stuffing or adding arbitrary meta tags as an SEO fix.
 
 `/library` is prerendered for static navigation, with `noindex, follow` on production and the staging noindex policy on staging. Its device-local lists are client-only. It is not part of the sitemap URL list.
 
-## Independent environment browser titles (2026-11-06)
+## Environment-specific site title (2026-11-06)
 
-`NUXT_PUBLIC_SITE_NAME` is a public site-name/title-suffix variable configured **per GitHub Environment**. Its defaults are `ePlus OnAir` (Production), `ePlus OnAir — Staging` (Staging), and `ePlus OnAir — Preview` (PR Preview). The trusted Preview config forwards only validated public title values to the credential-free build. Do not change Production route SEO bodies, canonical tags, analytics or indexing to label an environment.
+The browser-tab title suffix/site name uses `NUXT_PUBLIC_SITE_NAME` **from each GitHub Environment**. Defaults are `ePlus OnAir` for Production, `ePlus OnAir — Staging` for `stg.radio.eplus.dev`, and `ePlus OnAir — Preview` for the PR Preview host. The Preview build receives only the validated public title from its trusted `preview` Environment config job. Route-specific SEO descriptions, title bodies, canonical tags and GA4 remain governed by their existing code and Production settings; do not rewrite them to label environments.
