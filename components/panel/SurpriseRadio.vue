@@ -47,6 +47,11 @@
       <p v-if="index.length" class="mt-2 text-xs text-[var(--radio-text-muted)]">{{ $t('surprise.available_count', { count: availableCount }) }}</p>
     </div>
 
+    <dl v-if="country || genre || language" class="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-[var(--radio-text-muted)]" aria-live="polite">
+      <div v-if="country" class="flex min-w-0 gap-1"><dt>{{ $t('surprise.country') }}:</dt><dd class="font-semibold text-[var(--radio-text)]">{{ $t(country) }}</dd></div>
+      <div v-if="genre" class="flex min-w-0 gap-1"><dt>{{ $t('surprise.genre') }}:</dt><dd class="font-semibold text-[var(--radio-text)]" dir="auto">{{ genre }}</dd></div>
+      <div v-if="language" class="flex min-w-0 gap-1"><dt>{{ $t('surprise.language') }}:</dt><dd class="font-semibold text-[var(--radio-text)]" dir="auto">{{ language }}</dd></div>
+    </dl>
     <p v-if="status === 'empty'" role="status" class="mt-3 text-xs text-[var(--radio-text-muted)]">{{ $t('surprise.empty') }}</p>
     <p v-else-if="status === 'error'" role="alert" class="mt-3 text-xs text-rose-600 dark:text-rose-300">{{ $t('surprise.unavailable') }}</p>
     <div v-if="lastSelected" class="mt-3 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-xs">
