@@ -2,6 +2,14 @@
 // This is not a live-health check: the browser verifies playback after selection.
 const CANONICAL_STATION_PATH = /^\/[a-z0-9-]+\/[a-z0-9-]+\/[a-z0-9-]+$/;
 
+// A selection must not activate after the listener changes filters or playback.
+export function isSurpriseRequestCurrent(snapshot, current) {
+  return snapshot.path === current.path && snapshot.station === current.station
+    && snapshot.playRequest === current.playRequest && snapshot.pauseRequest === current.pauseRequest
+    && snapshot.requestedUrl === current.requestedUrl && snapshot.country === current.country
+    && snapshot.genre === current.genre && snapshot.language === current.language;
+}
+
 export function randomStationCandidates(stations, filters = {}) {
   if (!Array.isArray(stations)) return [];
   const seen = new Set();

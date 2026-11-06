@@ -65,7 +65,7 @@
 import { usePlaybackStore } from '~/stores/playback';
 import { createPlaybackStation } from '~/utils/playback-station.mjs';
 import { parseLibraryStationPath } from '~/utils/library-card-playback.mjs';
-import { pickRandomStation, randomStationCandidates, randomStationFacets } from '~/utils/surprise-radio.mjs';
+import { isSurpriseRequestCurrent, pickRandomStation, randomStationCandidates, randomStationFacets } from '~/utils/surprise-radio.mjs';
 import type { RadioCatalogEntry, RadioStationOption } from '~/types/radio';
 
 const playback = usePlaybackStore();
@@ -98,24 +98,28 @@ const toggleFilters = () => {
   if (filtersOpen.value) void load();
 };
 
-const surprise = async () => {
-  if (busy.value) return;
-  const request = ++generation;
-  const snapshot = {
+const requestState = () => ({
     path: route.fullPath,
     station: playback.station,
     playRequest: playback.playRequest,
     pauseRequest: playback.pauseRequest,
     requestedUrl: playback.requestedStationUrl,
-  };
+    ...filters.value,
+});
+
+const surprise = async () => {
+  if (busy.value) return;
+  const request = ++generation;
+  const snapshot = requestState();
+  const isCurrent = () => request === generation && isSurpriseRequestCurrent(snapshot, requestState());
   busy.value = true;
   status.value = '';
   try {
     await load();
-    if (request !== generation || route.fullPath !== snapshot.path) return;
+    if (!isCurrent()) return;
     if (indexError.value || !index.value.length) { status.value = 'error'; return; }
     const next = pickRandomStation(index.value, {
-      ...filters.value,
+      country: snapshot.country, genre: snapshot.genre, language: snapshot.language,
       previousUrl: lastRandomUrl.value || playback.station?.url || '',
     });
     if (!next) { status.value = 'empty'; return; }
@@ -127,9 +131,7 @@ const surprise = async () => {
     const catalog = await $fetch<Record<string, RadioCatalogEntry>>(
       siteAssetUrl(`/radio/${path.area}/${path.country}.json`), { timeout: 10_000 },
     );
-    if (request !== generation || route.fullPath !== snapshot.path
-      || playback.station !== snapshot.station || playback.playRequest !== snapshot.playRequest
-      || playback.pauseRequest !== snapshot.pauseRequest || playback.requestedStationUrl !== snapshot.requestedUrl) return;
+    if (!isCurrent()) return;
     const meta = catalog?.[path.id];
     if (!meta || !/^https?:\/\//i.test(String(meta.stream || ''))) { status.value = 'error'; lastRandomUrl.value = next.url; return; }
     const queue: RadioStationOption[] = Object.entries(catalog).flatMap(([id, station]) => {
@@ -148,7 +150,7 @@ const surprise = async () => {
     lastRandomUrl.value = next.url;
     lastSelected.value = { url: next.url, title: meta.title };
   } catch {
-    if (request === generation) status.value = 'error';
+    if (isCurrent()) status.value = 'error';
   } finally {
     if (request === generation) busy.value = false;
   }
