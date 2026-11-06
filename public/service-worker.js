@@ -2,7 +2,8 @@
  * Live audio, manifests, station catalogs, HTML, search JSON and scripts
  * always use their normal network path. In particular, DO NOT cache HLS.
  */
-const OFFLINE_CACHE_PREFIX = 'onair-offline-shell-v';
+const OFFLINE_SCOPE_KEY = encodeURIComponent(new URL(self.registration.scope).pathname);
+const OFFLINE_CACHE_PREFIX = 'onair-offline-shell-' + OFFLINE_SCOPE_KEY + '-v';
 const OFFLINE_CACHE_NAME = OFFLINE_CACHE_PREFIX + '1';
 const OFFLINE_URL = new URL('offline.html', self.registration.scope).href;
 
