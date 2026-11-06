@@ -58,15 +58,39 @@ export function filterQueueStations(stations, query, favoriteUrls, favoritesOnly
  * visible even after an Algolia response arrives, without changing its ranking
  * of existing country stations or duplicating results by URL.
  */
+// Algolia can still contain outdated alternative catalog URLs until its index
+// is refreshed. Map those to the canonical LOCAL result, but only when the
+// local catalog has exactly one station with that name in the same country.
+// Never combine two countries, Global providers, or ambiguous same-name radios.
+function geographicHitKey(hit) {
+  if (!hit || typeof hit.url !== 'string') return '';
+  const parts = hit.url.split('/');
+  if (parts.length !== 4 || parts[0] || !parts[1] || !parts[2] || !parts[3]
+    || parts[1] === 'global-radio') return '';
+  const title = normalizeStationQuery(hit.station_name).replace(/\\s+/g, ' ');
+  return title ? parts[1] + '/' + parts[2] + '/' + title : '';
+}
+
 export function mergeGlobalSearchHits(localHits, remoteHits, limit = 20) {
-  const global = (Array.isArray(localHits) ? localHits : [])
+  const local = Array.isArray(localHits) ? localHits : [];
+  const global = local
     .filter(item => typeof item?.url === 'string' && item.url.startsWith('/global-radio/'));
   const remote = Array.isArray(remoteHits) ? remoteHits : [];
+
+  const canonical = new Map();
+  for (const item of local) {
+    const key = geographicHitKey(item);
+    if (!key) continue;
+    // null means the local index intentionally contains distinct same-name
+    // broadcasters; never collapse those based on title alone.
+    canonical.set(key, canonical.has(key) ? null : item);
+  }
   const seen = new Set();
-  return [...global, ...remote].filter(item => {
-    if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') ||
-      item.url.startsWith('//') || seen.has(item.url)) return false;
-    seen.add(item.url);
-    return true;
-  }).slice(0, Math.max(0, limit));
+  return [...global, ...remote.map(item => canonical.get(geographicHitKey(item)) || item)]
+    .filter(item => {
+      if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') ||
+        item.url.startsWith('//') || seen.has(item.url)) return false;
+      seen.add(item.url);
+      return true;
+    }).slice(0, Math.max(0, limit));
 }
