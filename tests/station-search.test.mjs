@@ -124,3 +124,72 @@ test('inline header search keeps loading/error text inside the popover', async (
   assert.ok(inputPosition >= 0 && resultsPosition > inputPosition);
   assert.ok(inlineStatusPosition > resultsPosition, 'inline loading must appear only within the hidden results panel');
 });
+
+test('United Kingdom catalog removes newer duplicate station routes but keeps original identities', async () => {
+  const catalog = JSON.parse(await readFile('public/radio/europe/united-kingdom.json', 'utf8'));
+  const world = JSON.parse(await readFile('public/radio/world.json', 'utf8'));
+  const pairs = [
+    ['heart-uk', 'heart-uk-instant-audio'],
+    ['heart-80s', 'heart-80s-962e9a46'],
+    ['classic-fm', 'classic-fm-instant-audio'],
+    ['bbc-1', 'bbc-radio-1'],
+    ['smooth', 'smooth-radio'],
+    ['radio-x', 'radio-x-instant-audio'],
+    ['caroline', 'radio-caroline'],
+    ['classic-fm-uk', 'classic-fm-uk-1ee17d63'],
+    ['bbc-world-service-a347209e', 'bbc-world-service-14b6c684'],
+    ['bbc-world-service-a347209e', 'bbc-world-service-3e1ea4e1'],
+  ];
+  for (const [original, later] of pairs) {
+    assert.ok(catalog[original], 'original station must survive: ' + original);
+    assert.equal(catalog[later], undefined, 'later duplicate must be absent: ' + later);
+  }
+  assert.equal(catalog['heart-uk'].stream, 'https://media-ssl.musicradio.com/HeartUK');
+  assert.ok(catalog['heart-70s'], 'distinct Heart channels must remain');
+  assert.ok(catalog['heart-dance'], 'distinct Heart channels must remain');
+  assert.equal(Object.keys(catalog).length, 138);
+  assert.equal(world.europe['united-kingdom'].station, 138);
+  const generated = await readFile('data/world.ts', 'utf8');
+  assert.match(generated, /"united-kingdom":\s**\\{[^}]*"station": 138/);
+});
+
+test('static search index always keeps first station even if later duplicate offers HTTPS', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'radio-search-original-'));
+  try {
+    const radioDir = join(root, 'radio', 'europe');
+    const target = join(root, 'search.json');
+    await mkdir(radioDir, { recursive: true });
+    await writeFile(join(radioDir, 'united-kingdom.json'), JSON.stringify({
+      'heart-uk': { title: 'Heart UK', url: 'http://www.heart.co.uk/', stream: 'http://original.example/heart' },
+      'heart-uk-instant-audio': { title: 'Heart UK', url: 'https://heart.co.uk', stream: 'https://later.example/heart' },
+      'heart-80s': { title: 'Heart 80s', url: 'https://heart.co.uk/80s', stream: 'https://original.example/heart80s' },
+      'another-heart': { title: 'Heart UK', url: 'https://other.example/', stream: 'https://other.example/live' },
+    }));
+    const hits = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), providerRoot: join(root, 'none'), outputFile: target });
+    const heart = hits.filter(item => item.station_name === 'Heart UK');
+    assert.deepEqual(heart.map(item => item.url), [
+      '/europe/united-kingdom/heart-uk',
+      '/europe/united-kingdom/another-heart',
+    ]);
+    assert.equal(hits.some(item => item.station_name === 'Heart 80s'), true);
+    assert.equal(hits.length, 3);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('outdated Algolia aliases map to retained original while preserving distinct country stations', () => {
+  const canonical = [
+    { url: '/europe/united-kingdom/heart-uk', station_name: 'Heart UK' },
+    { url: '/europe/united-kingdom/heart-80s', station_name: 'Heart 80s' },
+  ];
+  const remote = [
+    { url: '/europe/united-kingdom/heart-uk-instant-audio', station_name: 'Heart UK' },
+    { url: '/europe/united-kingdom/heart-uk', station_name: 'Heart UK' },
+    { url: '/europe/united-kingdom/heart-80s-962e9a46', station_name: 'Heart 80s' },
+    { url: '/africa/south-africa/heart', station_name: 'Heart UK' },
+  ];
+  assert.deepEqual(mergeGlobalSearchHits(canonical, remote).map(hit => hit.url), [
+    '/europe/united-kingdom/heart-uk',
+    '/europe/united-kingdom/heart-80s',
+    '/africa/south-africa/heart',
+  ]);
+});
