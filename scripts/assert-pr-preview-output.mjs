@@ -10,6 +10,8 @@ const cases = [
   ['home', 'index.html'],
   ['country', 'asia/viet-nam/index.html'],
   ['station deep link', 'asia/viet-nam/vov-gt-hcm/index.html'],
+  ['Apple Music directory', 'global-radio/apple-music/index.html'],
+  ['Apple Holiday Hits QA', 'global-radio/apple-music/apple-music-holiday-hits/index.html'],
   ['library', 'library/index.html'],
 ];
 for (const [label, file] of cases) {

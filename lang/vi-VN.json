@@ -210,6 +210,8 @@
     "schedule_vietnam_timezone": "Giờ Việt Nam (UTC+7)",
     "schedule_provider_only": "Lịch cụ thể thay đổi theo ngày; vui lòng xem tại website chính thức của đài.",
     "playlist": "Danh sách phát",
+    "tunein_history_note": "Chỉ lưu những tên bài hát và ca sĩ ghi nhận được trong phiên nghe hiện tại. TuneIn có thể cập nhật chậm.",
+    "tunein_history_unavailable": "TuneIn chưa cung cấp tên bài hát và ca sĩ đang phát của đài này.",
     "next": "Kế tiếp",
     "lyric": "Lời bài hát",
     "no_lyric": "Chưa có lời bài hát",

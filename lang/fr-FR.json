@@ -210,6 +210,8 @@
     "schedule_vietnam_timezone": "Heure du Vietnam (UTC+7)",
     "schedule_provider_only": "La programmation varie selon le jour. Consultez le site officiel de la station.",
     "playlist": "Liste de lecture",
+    "tunein_history_note": "Les titres et artistes sont relevés pendant cette session d'écoute. TuneIn peut avoir du retard.",
+    "tunein_history_unavailable": "TuneIn ne fournit pas actuellement le titre et l'artiste de cette station.",
     "next": "Suivant",
     "lyric": "Paroles",
     "no_lyric": "Paroles indisponibles",

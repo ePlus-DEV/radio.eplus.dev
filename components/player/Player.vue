@@ -200,6 +200,7 @@ import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.m
 import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
+import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -358,6 +359,8 @@ const setPlayerMini = (value: boolean): void => {
 };
 
 let hlsInstance: any = null;
+let detachNativeHlsMetadata: (() => void) | null = null;
+const hlsSongBuffer = createTimedHlsTrackBuffer({ appleMusic: true });
 let HlsCtor: any = null;
 let hlsImportPromise: Promise<any> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
@@ -493,18 +496,34 @@ const sidebarCount = computed(
   () => stationCount.value || scheduleCount.value,
 );
 
-const liveTrack = computed(() => resolveLiveTrack(props.song, props.playlist));
+const liveTrack = computed(() => {
+  // TuneIn's playlist here is a session history, not a reliable live feed.
+  // Never report a previously observed song as currently playing merely
+  // because it appears first in the queue.
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    const reported = playback.liveTrack;
+    return reported?.stationUrl === props.stationUrl
+      ? { title: reported.title, artist: reported.artist } : null;
+  }
+  return resolveLiveTrack(props.song, props.playlist);
+});
 const nowPlayingTitle = computed(() => liveTrack.value?.title || props.streamName || "Live radio");
 const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
 const nowPlayingArtist = computed(() => liveTrack.value?.artist || "");
 
-const nowPlayingArtwork = computed(
-  () =>
-    props.song?.currentMedia?.thumbnail ||
+const nowPlayingArtwork = computed(() => {
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    // The first history row can be stale. Only show album art bound to the
+    // currently playing HLS ID3 track; otherwise show the station identity.
+    const live = playback.liveTrack;
+    return live?.stationUrl === props.stationUrl && live.artwork
+      ? live.artwork : props.thumb;
+  }
+  return props.song?.currentMedia?.thumbnail ||
     props.song?.thumbnail ||
     props.playlist?.[0]?.track_image ||
-    props.thumb,
-);
+    props.thumb;
+});
 
 const inferMime = (url: string, fallback = "audio/mpeg"): string => {
   const value = url.toLowerCase();
@@ -590,6 +609,9 @@ const ensureHls = async (): Promise<any> => {
 };
 
 const destroyHls = (): void => {
+  hlsSongBuffer.clear();
+  detachNativeHlsMetadata?.();
+  detachNativeHlsMetadata = null;
   if (!hlsInstance) return;
   hlsInstance.destroy();
   hlsInstance = null;
@@ -730,6 +752,36 @@ const configureNativeSource = (
   }
 };
 
+// Safari/iOS uses native HLS rather than hls.js on devices without MSE.
+const attachNativeHlsSongMetadata = (media: HTMLAudioElement, version: number): void => {
+  const stationUrl = props.stationUrl;
+  if (!stationUrl?.startsWith('/global-radio/apple-music/')) return;
+  const tracks = media.textTracks;
+  if (!tracks) return;
+  const listeners = new Map<TextTrack, EventListener>();
+  const register = (track: TextTrack | null | undefined) => {
+    if (!track || track.kind !== 'metadata' || listeners.has(track)) return;
+    track.mode = 'hidden';
+    const onCueChange: EventListener = () => {
+      if (version !== sourceVersion || userPaused.value || media.paused
+        || playback.station?.url !== stationUrl) return;
+      const current = extractNativeHlsId3Track(track.activeCues, { appleMusic: true });
+      if (current) playback.setHlsLiveTrack(stationUrl, current);
+    };
+    track.addEventListener('cuechange', onCueChange);
+    listeners.set(track, onCueChange);
+    onCueChange(new Event('cuechange'));
+  };
+  const onAddTrack: EventListener = event => register((event as Event & { track?: TextTrack }).track);
+  tracks.addEventListener('addtrack', onAddTrack);
+  for (let i = 0; i < tracks.length; i++) register(tracks[i]);
+  detachNativeHlsMetadata = () => {
+    tracks.removeEventListener('addtrack', onAddTrack);
+    for (const [track, listener] of listeners) track.removeEventListener('cuechange', listener);
+    listeners.clear();
+  };
+};
+
 const configureHlsSource = async (
   source: RadioSource,
   autoplay: boolean,
@@ -759,6 +811,7 @@ const configureHlsSource = async (
     }
 
     media.src = source.src;
+    attachNativeHlsSongMetadata(media, version);
     media.load();
 
     if (autoplay && !userPaused.value) {
@@ -776,6 +829,18 @@ const configureHlsSource = async (
   }
 
   hlsInstance = new Hls();
+  // Feature-detect real timed ID3 inside HLS already decoded by hls.js.
+  // This is not audio fingerprinting; no metadata => no guessed song.
+  // Never inspect or log Apple accessKey / tokenized stream URLs.
+  const metadataStationUrl = props.stationUrl;
+  if (metadataStationUrl?.startsWith('/global-radio/apple-music/')) {
+    hlsInstance.on(Hls.Events.FRAG_PARSING_METADATA, (_event: unknown, data: { samples?: unknown[] }) => {
+      if (version !== sourceVersion || userPaused.value
+        || playback.station?.url !== metadataStationUrl) return;
+      hlsSongBuffer.add(data?.samples);
+      flushHlsSongMetadata();
+    });
+  }
   hlsInstance.on(Hls.Events.MEDIA_ATTACHED, () => {
     if (version !== sourceVersion || !hlsInstance) return;
     hlsInstance.loadSource(source.src);
@@ -838,6 +903,9 @@ const configureHlsSource = async (
 };
 
 const stopPlaybackFailure = (): void => {
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   stopListeningDuration();
   clearReconnectTimer();
   clearFallbackProbeTimer();
@@ -877,6 +945,10 @@ const applySource = async (
   }
 
   const version = ++sourceVersion;
+  hlsSongBuffer.clear();
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   liveResumePending = false;
   pausedAtMs = 0;
   activeSourceIndex.value = index;
@@ -1007,6 +1079,10 @@ const onPlay = async (): Promise<void> => {
 };
 
 const onPause = (): void => {
+  hlsSongBuffer.clear();
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   stopListeningDuration();
   sleepTimer.cancel();
   listening.remember(playback.station, 'pause');
@@ -1186,6 +1262,15 @@ const onMediaCanPlay = (): void => {
   if (!playing.value) void tryPlay();
 };
 
+const flushHlsSongMetadata = (): void => {
+  const stationUrl = props.stationUrl;
+  const media = mediaElement.value;
+  if (!stationUrl?.startsWith('/global-radio/apple-music/') || !media
+    || userPaused.value || media.paused) return;
+  const track = hlsSongBuffer.consume(media.currentTime);
+  if (track) playback.setHlsLiveTrack(stationUrl, track);
+};
+
 const onMediaPlaying = (): void => {
   // A queued "playing" event can arrive after the user has paused or after
   // a failed/stopped source. Never let it resurrect playback or pollute history.
@@ -1205,6 +1290,7 @@ const onMediaPlaying = (): void => {
   if (!hasPlayedCurrentSource.value) lastSourcePlaybackAt.value = Date.now();
   hasPlayedCurrentSource.value = true;
   sourceFailureReason.value = '';
+  flushHlsSongMetadata();
 };
 
 const onMediaWaiting = (): void => {
@@ -1278,6 +1364,9 @@ const bindMediaEvents = (): void => {
   media.addEventListener("ended", onMediaEnded);
   media.addEventListener("error", onMediaError);
   media.addEventListener("volumechange", onVolumeChange);
+  // Consume ID3 at audible playback time, not when a future HLS fragment
+  // has only been downloaded/buffered.
+  media.addEventListener("timeupdate", flushHlsSongMetadata);
 };
 
 const unbindMediaEvents = (): void => {
@@ -1292,6 +1381,7 @@ const unbindMediaEvents = (): void => {
   media.removeEventListener("ended", onMediaEnded);
   media.removeEventListener("error", onMediaError);
   media.removeEventListener("volumechange", onVolumeChange);
+  media.removeEventListener("timeupdate", flushHlsSongMetadata);
 };
 
 watch(() => preferences.autoReconnect, (enabled) => {
@@ -1332,6 +1422,10 @@ watch(
     const autoplay = !userPaused.value || request !== previousRequest;
     stopListeningDuration();
     sourceVersion += 1;
+    hlsSongBuffer.clear();
+    if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+      playback.clearHlsLiveTrack(props.stationUrl);
+    }
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
     attemptCount.value = 0;

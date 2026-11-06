@@ -21,7 +21,7 @@ export const usePlaybackStore = defineStore('playback', {
     },
     // Global dock/mini state so the app shell does not reserve hidden dock space.
     playerMini: false,
-    liveTrack: null as { stationUrl: string; title: string; artist: string } | null,
+    liveTrack: null as { stationUrl: string; title: string; artist: string; artwork?: string; source: 'hls' | 'provider' } | null,
   }),
   actions: {
     activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number,
@@ -56,7 +56,20 @@ export const usePlaybackStore = defineStore('playback', {
     },
     setLiveTrack(stationUrl: string, track: { title: string; artist: string } | null) {
       if (!stationUrl || this.station?.url !== stationUrl) return;
-      this.liveTrack = track ? { stationUrl, title: track.title, artist: track.artist } : null;
+      // HLS timed ID3 is observed in the actual stream; an empty/delayed
+      // TuneIn directory poll must not erase it or label a stale song as live.
+      if (this.liveTrack?.stationUrl === stationUrl && this.liveTrack.source === 'hls') return;
+      this.liveTrack = track ? { stationUrl, title: track.title, artist: track.artist, source: 'provider' } : null;
+    },
+    setHlsLiveTrack(stationUrl: string, track: { title: string; artist: string; artwork?: string }): boolean {
+      if (!stationUrl.startsWith('/global-radio/apple-music/')
+        || this.station?.url !== stationUrl || !track.title?.trim() || !track.artist?.trim()) return false;
+      this.liveTrack = { stationUrl, title: track.title, artist: track.artist, ...(track.artwork ? { artwork: track.artwork } : {}), source: 'hls' };
+      return true;
+    },
+    clearHlsLiveTrack(stationUrl: string) {
+      if (this.station?.url === stationUrl && this.liveTrack?.stationUrl === stationUrl
+        && this.liveTrack.source === 'hls') this.liveTrack = null;
     },
     requestStation(url: string) {
       if (this.station?.url === url) this.playRequest += 1;
