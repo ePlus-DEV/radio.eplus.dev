@@ -2,8 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
-  createListeningDurationClock, LISTENING_CHECKPOINT_MS, LISTENING_STATS_PREVIEW_MS,
+  createListeningDurationClock, shouldResumeListeningAfterRestore, LISTENING_CHECKPOINT_MS, LISTENING_STATS_PREVIEW_MS,
 } from '../utils/listening-duration-clock.mjs';
+
+test('bfcache restoration resumes accounting only for confirmed ongoing playback', () => {
+  const active = { persisted: true, media: { paused: false, ended: false, readyState: 3 }, trackingEnabled: true,
+    playing: true, waiting: false, userPaused: false, streamError: false, hasSource: true, station: { url: '/a/b/c' } };
+  assert.equal(shouldResumeListeningAfterRestore(active), true);
+  for (const change of [{ persisted: false }, { trackingEnabled: false }, { playing: false }, { waiting: true },
+    { userPaused: true }, { streamError: true }, { hasSource: false }, { station: null },
+    { media: null }, { media: { paused: true, readyState: 4 } },
+    { media: { paused: false, ended: true, readyState: 4 } }, { media: { paused: false, readyState: 2 } }]) {
+    assert.equal(shouldResumeListeningAfterRestore({ ...active, ...change }), false);
+  }
+});
 
 function harness() {
   const timers = new Map();

@@ -183,7 +183,7 @@
 import { useListeningStore } from "~/stores/listening";
 import { useListeningDurationStore } from "~/stores/listeningDuration";
 import { createListeningDurationTracker } from "~/utils/listening-duration.mjs";
-import { createListeningDurationClock } from "~/utils/listening-duration-clock.mjs";
+import { createListeningDurationClock, shouldResumeListeningAfterRestore } from "~/utils/listening-duration-clock.mjs";
 import { usePlaybackStore } from "~/stores/playback";
 import { useListenerPreferencesStore } from "~/stores/listenerPreferences";
 import { shouldReconnectToLive, safeLiveSyncPosition } from "~/utils/listener-preferences.mjs";
@@ -1491,12 +1491,25 @@ const resetListeningTracking = (): void => {
 watch(() => listeningDuration.enabled, resetListeningTracking, { flush: 'sync' });
 watch(() => [currentRoute.path, currentRoute.hash], syncDurationClock);
 
+// A bfcache restore does not necessarily emit another media `playing` event.
+// Resume accounting only for media that is still playing; never call play().
+const restoreListeningAfterPageShow = (event: PageTransitionEvent): void => {
+  const media = mediaElement.value;
+  if (!shouldResumeListeningAfterRestore({ persisted: event.persisted, media,
+    trackingEnabled: listeningDuration.enabled, playing: playing.value, waiting: waiting.value,
+    userPaused: userPaused.value, streamError: streamError.value,
+    hasSource: Boolean(activeResolvedSrc), station: playback.station })) return;
+  listeningDurationTracker.start(playback.station);
+  syncDurationClock();
+};
+
 onMounted(() => {
   preferences.hydrate();
   listeningDuration.hydrate();
   // The listening-duration clock starts only after real media playback.
   // It continues checkpointing actual background audio without a page-visibility gate.
   window.addEventListener('pagehide', stopListeningDuration);
+  window.addEventListener('pageshow', restoreListeningAfterPageShow);
   window.addEventListener('radio:listening-duration-reset', resetListeningTracking);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
@@ -1552,6 +1565,7 @@ onMounted(() => {
 onUnmounted(() => {
   stopListeningDuration();
   window.removeEventListener('pagehide', stopListeningDuration);
+  window.removeEventListener('pageshow', restoreListeningAfterPageShow);
   window.removeEventListener('radio:listening-duration-reset', resetListeningTracking);
   sleepTimer.cancel();
   document.removeEventListener("visibilitychange", checkSleepDeadline);

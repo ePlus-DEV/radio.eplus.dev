@@ -9,6 +9,11 @@
 export const LISTENING_CHECKPOINT_MS = 5_000;
 export const LISTENING_STATS_PREVIEW_MS = 1_000;
 
+export function shouldResumeListeningAfterRestore({ persisted, media, trackingEnabled, playing, waiting, userPaused, streamError, hasSource, station } = {}) {
+  return Boolean(persisted && media && !media.paused && !media.ended && media.readyState >= 3
+    && trackingEnabled && playing && !waiting && !userPaused && !streamError && hasSource && station);
+}
+
 export function createListeningDurationClock({
   flush,
   preview,
