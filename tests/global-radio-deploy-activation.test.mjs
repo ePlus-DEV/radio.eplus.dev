@@ -13,10 +13,12 @@ test('staging and production Pages builds receive the approved global-radio reso
   assert.match(config, /globalRadioResolverUrl:\s*process\.env\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL\s*\|\|\s*''/);
 });
 
-test('a missing resolver is reported but does not break ordinary radio deployment', async () => {
+test('missing CORS and optional resolver are reported without blocking ordinary radio deployment', async () => {
   const workflow = await read('.github/workflows/deploy-github-pages.yml');
   assert.match(workflow, /Explain Global Radio activation status/);
-  assert.match(workflow, /Apple Music in-app playback is disabled/);
+  assert.match(workflow, /NUXT_PUBLIC_CORS_SERVER_1 is unset/);
+  assert.match(workflow, /No Global Radio resolver configured/);
+  assert.match(workflow, /NUXT_PUBLIC_CORS_SERVER_1 must be an HTTPS proxy origin/);
   assert.match(workflow, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL must be a full HTTPS endpoint/);
   assert.doesNotMatch(workflow, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL:\s*https:\/\//);
 });
