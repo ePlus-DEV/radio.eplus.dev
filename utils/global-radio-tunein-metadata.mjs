@@ -79,12 +79,15 @@ export function addTuneInSessionTrack(previous, nowPlaying) {
   if (!nowPlaying?.title || !nowPlaying?.artist) return existing.slice(0, MAX_RECENT_TRACKS);
   const latest = existing[0];
   if (latest?.track_title === nowPlaying.title && latest?.track_artist === nowPlaying.artist) {
-    return existing.slice(0, MAX_RECENT_TRACKS);
+    // An ID3 fragment can add the real album artwork after a title/artist pair.
+    return nowPlaying.artwork && latest.track_image !== nowPlaying.artwork
+      ? [{ ...latest, track_image: nowPlaying.artwork }, ...existing.slice(1, MAX_RECENT_TRACKS)]
+      : existing.slice(0, MAX_RECENT_TRACKS);
   }
   return [{
     track_title: nowPlaying.title,
     track_artist: nowPlaying.artist,
-    track_image: '',
+    track_image: nowPlaying.artwork || '',
     // Time of actual song start is unknown; do NOT fake the timestamp.
     track_played: 0,
   }, ...existing].slice(0, MAX_RECENT_TRACKS);
