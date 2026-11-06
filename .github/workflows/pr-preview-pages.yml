@@ -18,9 +18,67 @@ env:
   PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
+  # This trusted job uses the development Environment, but NEVER checks out or
+  # executes PR code. It forwards ONLY explicitly named public vars via outputs.
+  # The next job remains isolated from all development Environment secrets.
+  preview_config:
+    name: "Read preview public config (trusted, no checkout)"
+    if: >-
+      vars.PAGES_DEV_READY == 'true' &&
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref != 'develop' &&
+      !startsWith(github.event.pull_request.head.ref, 'bot/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    environment:
+      name: development
+    outputs:
+      cors_server: ${{ steps.public.outputs.cors_server }}
+      resolver_url: ${{ steps.public.outputs.resolver_url }}
+    steps:
+      - name: Export ONLY validated public variables to isolated preview
+        id: public
+        shell: bash
+        env:
+          CORS_SERVER: ${{ vars.NUXT_PUBLIC_CORS_SERVER_1 }}
+          RESOLVER_URL: ${{ vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const { appendFileSync } = require('node:fs');
+
+          function validatePublicUrl(value, kind) {
+            if (!value) return '';
+            if (value !== value.trim() || /[\r\n]/.test(value)) {
+              throw new Error('Invalid ' + kind + ' public URL');
+            }
+            let url;
+            try { url = new URL(value); } catch { throw new Error('Invalid ' + kind + ' public URL'); }
+            if (url.protocol !== 'https:' || !url.hostname || url.username ||
+              url.password || url.port || url.hash || url.search ||
+              (kind === 'cors' && url.pathname !== '/')) {
+              throw new Error('Invalid ' + kind + ' public URL');
+            }
+            return kind === 'cors' ? url.origin + '/' : url.href;
+          }
+
+          const cors = validatePublicUrl(process.env.CORS_SERVER || '', 'cors');
+          const resolver = validatePublicUrl(process.env.RESOLVER_URL || '', 'resolver');
+          appendFileSync(process.env.GITHUB_OUTPUT,
+            'cors_server=' + cors + '\nresolver_url=' + resolver + '\n');
+          console.log(cors || resolver
+            ? 'Validated development public radio config forwarded to preview.'
+            : '::notice::No development public radio config configured; Play will remain disabled.');
+          NODE
+
   build:
     name: "Build isolated preview (no secrets)"
+    needs: preview_config
     if: >-
+      needs.preview_config.result == 'success' &&
       vars.PAGES_DEV_READY == 'true' &&
       github.event.action != 'closed' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
@@ -41,11 +99,10 @@ jobs:
       ONAIR_PR_PREVIEW: 'true'
       ONAIR_SKIP_STATION_OG: 'true'
       NUXT_PUBLIC_NO_INDEX: 'true'
-      # Public repository-level Actions variables only: untrusted PR builds
-      # must never receive development Environment secrets or deploy tokens.
-      # NUXT_PUBLIC_* is intentionally exposed in the browser's Nuxt config.
-      NUXT_PUBLIC_CORS_SERVER_1: ${{ vars.NUXT_PUBLIC_CORS_SERVER_1 }}
-      NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: ${{ vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL }}
+      # These are public, validated outputs from the trusted config job.
+      # NO Environment or secret is granted to this untrusted PR build.
+      NUXT_PUBLIC_CORS_SERVER_1: ${{ needs.preview_config.outputs.cors_server }}
+      NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: ${{ needs.preview_config.outputs.resolver_url }}
       NUXT_PUBLIC_STATION_OG_BASE_URL: ''
       NUXT_PUBLIC_SITE_URL: https://preview.radio.eplus.dev/pr-preview/pr-${{ github.event.pull_request.number }}
       NUXT_APP_BASE_URL: /pr-preview/pr-${{ github.event.pull_request.number }}/
