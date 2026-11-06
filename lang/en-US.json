@@ -267,6 +267,18 @@
     },
     "offline": "You seem to be offline. Check your internet connection and try again."
   },
+  "station_technical": {
+    "title": "Stream details",
+    "catalog_badge": "Catalog info",
+    "format": "Stream format",
+    "codec": "Audio codec",
+    "bitrate": "Bitrate",
+    "unknown": "Not available",
+    "inferred_url": "Suggested by the stream URL (not verified)",
+    "catalog_reported": "Reported in catalog (not measured)",
+    "kbps": "{count} kbps",
+    "disclaimer": "These are catalog hints, not a live check or a guarantee that the stream works. The actual codec and bitrate may differ."
+  },
   "player": {
     "title": "Radio player",
     "choose_station": "Choose a station to start listening",

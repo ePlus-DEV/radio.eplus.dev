@@ -64,6 +64,8 @@
       </div>
     </section>
 
+    <PanelStationTechnicalInfo v-if="stationTechnical.hasDetails" :details="stationTechnical" />
+
     <section v-if="officialSchedule" class="radio-surface space-y-4 px-4 py-5 sm:px-6" :aria-label="$t('panel.schedule')">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -106,6 +108,7 @@
 
 <script setup lang="ts">
 import { stationSocialImage } from "~/utils/station-og-deployment.mjs";
+import { stationTechnicalDetails } from "~/utils/station-technical-details.mjs";
 import type { RadioCatalogEntry as StationCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
@@ -203,6 +206,7 @@ const stationCatalog = computed<Record<string, StationCatalogEntry>>(() =>
 const stationMeta = computed(
   () => stationCatalog.value[stationSlug.value],
 );
+const stationTechnical = computed(() => stationTechnicalDetails(stationMeta.value));
 
 if (!stationMeta.value) {
   throw createError({
