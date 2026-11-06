@@ -42,9 +42,7 @@ test("all seven locales include the system-volume guidance", async () => {
 test("iOS volume guidance coexists with Media Session station controls", async () => {
   const player = await readFile("components/player/Player.vue", "utf8");
   assert.match(player, /systemVolumeOnly\.value = usesSystemVolumeControls\(navigator\)/);
-  assert.match(player, /nexttrack:\s*\(\) => navigateStation\(1\)/);
-  assert.match(player, /previoustrack:\s*\(\) => navigateStation\(-1\)/);
-  assert.match(player, /seekforward:\s*\(\) => navigateStation\(1\)/);
-  assert.match(player, /seekbackward:\s*\(\) => navigateStation\(-1\)/);
+  assert.match(player, /next:\s*\(\) => navigateStation\(1\)/);
+  assert.match(player, /previous:\s*\(\) => navigateStation\(-1\)/);
   assert.match(player, /new MediaMetadata\(details\)/);
 });

@@ -196,7 +196,7 @@ import {
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
-import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
+import { buildRadioMediaMetadata, registerRadioMediaActions } from "~/utils/radio-media-session.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
@@ -1190,7 +1190,7 @@ const navigateStation = (offset: -1 | 1): void => {
 // Media Session integrates live radio with iOS lock-screen / Control Center
 // metadata and headset controls. Track controls switch STATIONS, never songs:
 // an individual song cannot be skipped in a linear live broadcast.
-const mediaSessionActions = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'] as const;
+let cleanupMediaActions: (() => void) | null = null;
 const updateMediaSession = (): void => {
   if (!import.meta.client || !('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
   const details = buildRadioMediaMetadata({
@@ -1206,33 +1206,17 @@ const updateMediaSession = (): void => {
 
 const registerMediaSession = (): void => {
   if (!('mediaSession' in navigator)) return;
-  const handlers = {
+  cleanupMediaActions = registerRadioMediaActions(navigator.mediaSession, {
     play: () => { void onPlay(); },
     pause: () => onPause(),
-    nexttrack: () => navigateStation(1),
-    previoustrack: () => navigateStation(-1),
-    // iOS may expose ±10s controls for live audio instead of track buttons.
-    // They cannot seek the station stream, so use them to switch stations too.
-    seekforward: () => navigateStation(1),
-    seekbackward: () => navigateStation(-1),
-  } as const;
-  for (const action of mediaSessionActions) {
-    try {
-      navigator.mediaSession.setActionHandler(action, handlers[action]);
-    } catch {
-      // WebKit versions may support metadata but not every hardware action.
-    }
-  }
-  // Linear live streams do not have a meaningful timeline to seek to.
-  try { navigator.mediaSession.setActionHandler('seekto', null); } catch { /* unsupported */ }
+    next: () => navigateStation(1),
+    previous: () => navigateStation(-1),
+  });
 };
 
 const clearMediaSession = (): void => {
-  if (!('mediaSession' in navigator)) return;
-  for (const action of mediaSessionActions) {
-    try { navigator.mediaSession.setActionHandler(action, null); } catch { /* unsupported */ }
-  }
-  navigator.mediaSession.metadata = null;
+  cleanupMediaActions?.();
+  cleanupMediaActions = null;
 };
 
 const toggleMute = (): void => {
