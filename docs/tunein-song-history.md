@@ -72,6 +72,17 @@ show the station name instead of guessing.
   `fileSequence53.m4s`–`fileSequence57.m4s`, with ID3v2.4 `TIT2` and
   `TPE1`. Verified *song* pairs include “Underneath the Tree” / Kelly
   Clarkson and “Make It to Christmas” / Alessia Cara.
+- The same captured CMAF ID3 includes `WXXX` frames labeled
+  `artworkURL_390x` and `artworkURL_640x`, pointing to HTTPS Apple CDN
+  `is1-ssl.mzstatic.com/image/thumb/...`. These are **real artwork URLs**,
+  not embedded `APIC` images. The parser selects the larger valid image only
+  from a verified *music* tag, not a DJ/show tag, and only renders directly
+  from Apple CDN in Player/Media Session/this session's Queue history. No
+  image downloads, republishing, API-key search or image persistence.
+- This evidence only establishes the Holiday Hits stream captured in the
+  user's HAR. It does **not** establish per-song artwork availability for
+  every Apple Music Radio channel; the 7-station HLS diagnostic is separately
+  collecting evidence without logging URLs or tokens.
 - The *same* stream includes an “Eddie Francis” / “Holiday Hits” presenter
   card with `TIT2`/`TPE1` but no `TALB` or Apple adamid PRIV marker.
   For Apple streams, the client now requires an album or Apple song marker to
@@ -99,8 +110,9 @@ The public Describe endpoint is documented to expose `current_song` and
 `current_artist` **when available**; not every station provides them.
 TuneIn states that now-playing metadata without broadcaster AIR integration
 may arrive several minutes late. Do not claim exact audio synchronization,
-song duration, album cover or 24-hour history, and do not fabricate missing
-song titles or artists.
+song duration, album cover for other stations or 24-hour history, and do
+not fabricate missing song titles, artists or images. Holiday Hits is the only
+station with confirmed in-band artwork in the supplied HAR.
 
 Useful references:
 - https://tunein-api.corehacked.com/endpoints-and-streaming/endpoints/describe-endpoint/response-fields-and-meaning
