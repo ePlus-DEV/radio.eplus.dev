@@ -69,6 +69,12 @@ jobs:
       name: ${{ github.ref_name == 'main' && 'production' || (vars.PAGES_STAGING_READY == 'true' && 'staging' || 'development') }}
     env:
       NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+      # Browser-side TuneIn lookup uses the same configured CORS proxy as country radio.
+      # Static GitHub Pages builds must receive the public env during generation.
+      NUXT_PUBLIC_CORS_SERVER_1: ${{ vars.NUXT_PUBLIC_CORS_SERVER_1 }}
+      # Approved ePlus-backed stream resolver, if enabled in each environment.
+      # Nuxt static output captures NUXT_PUBLIC_* only at build time.
+      NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: ${{ vars.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL }}
       NUXT_APP_BASE_URL: /
       # Indexing is tier-specific: staging never indexed, production indexed.
       # Never force noindex globally; that breaks production SEO and GA4.
@@ -160,6 +166,27 @@ jobs:
         with:
           node-version: "24.15.0"
           cache: npm
+
+      - name: Explain Global Radio activation status
+        if: steps.current.outputs.run == 'true'
+        shell: bash
+        run: |
+          if [ -n "${NUXT_PUBLIC_CORS_SERVER_1:-}" ]; then
+            case "$NUXT_PUBLIC_CORS_SERVER_1" in
+              https://*) echo "::notice::CORS proxy configured for ${TARGET_DOMAIN}; verify TuneIn JSON and real HLS playback." ;;
+              *) echo "::error::NUXT_PUBLIC_CORS_SERVER_1 must be an HTTPS proxy origin"; exit 1 ;;
+            esac
+          else
+            echo "::notice::NUXT_PUBLIC_CORS_SERVER_1 is unset for ${TARGET_DOMAIN}; public TuneIn lookup is disabled (no hardcoded fallback)."
+          fi
+          if [ -n "${NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL:-}" ]; then
+            case "$NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL" in
+              https://*) echo "::notice::Optional approved Apple Music resolver configured for ${TARGET_DOMAIN}." ;;
+              *) echo "::error::NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL must be a full HTTPS endpoint"; exit 1 ;;
+            esac
+          elif [ -z "${NUXT_PUBLIC_CORS_SERVER_1:-}" ]; then
+            echo "::notice::No Global Radio resolver configured; Apple Music playback is unavailable, external provider links remain available."
+          fi
 
       - name: Install dependencies
         if: steps.current.outputs.run == 'true'

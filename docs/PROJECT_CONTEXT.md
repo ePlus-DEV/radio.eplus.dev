@@ -933,6 +933,38 @@ Do not touch PlayerSession or the global audio dock for navigation fixes.
   `tests/station-modal-theme.test.mjs`, in addition to existing design/SEO
   and mobile navigation tests.
 
+## 2026-11-05 — GitHub Pages PR previews
+
+- Never deploy PR preview files into staging (`onair-staging-pages`) or production (`onair-production-pages`): the staging main tree was ~962.8 MB when checked.
+- Dedicated public output repo `ePlus-DEV/onair-pr-previews` uses the existing `PAGES_DEV_READY` variable and `PAGES_DEPLOY_TOKEN` to host `/pr-preview/pr-N/` after one-time owner setup; use the exact per-PR subpath in Nuxt build/asset origins.
+- The `pull_request_target` workflow is trusted definition only. Building PR code happens in a read-only job with no secrets and no persisted checkout credentials; the deploy job never executes PR files, and verifies live PR status and SHA before publishing.
+- Preview mode `ONAIR_PR_PREVIEW=true` limits prerender to representative pages and forces noindex/no GA4; normal staging and production generation, SEO text, sitemaps and analytics must remain unchanged.
+- Delete only the closed PR directory, enforce combined output below 900 MB, and keep destination PAT access strictly scoped. See `docs/PR_PREVIEWS.md`.
+
+## 2026-11-05 — Preview workflow rules
+
+- Keep `pr-preview-pages.yml` on both `main` and `develop`. `pull_request_target` loads the workflow from default branch `main` while matching PRs aimed at `develop`.
+- A preview runs on PR open/reopen/update, not on merge into `develop`.
+- Publish a preview link only after the Pages endpoint serves the exact head SHA marker and `noindex` HTML. A successful push is not proof of a working website.
+- Update a single bot comment, and remove the PR-specific preview after close. Smoke-test PRs such as #367 should be closed without merging.
+- For small, explicitly authorized workflow or documentation fixes, commit directly when branch policy permits instead of creating unnecessary PRs. Keep product changes and sensitive CI changes subject to review.
+
+
+## 2026-11-06 — Apple Music TuneIn CORS origin comes from environment
+
+The Apple Music public TuneIn resolver must reuse Nuxt's `config.public.corsServer`
+from `NUXT_PUBLIC_CORS_SERVER_1` instead of a hardcoded proxy hostname. Playback,
+HLS renewal, and idle last-station restore share this value. Invalid or missing
+config disables the public TuneIn route (no implicit Heroku fallback); an
+independently configured provider-approved resolver can be used as a fallback.
+
+GitHub Pages is static, so `deploy-github-pages.yml` must pass
+`vars.NUXT_PUBLIC_CORS_SERVER_1` from the chosen development/production GitHub
+Environment at build time. Regression coverage lives in
+`tests/global-radio-public-tunein.test.mjs`. Preserve SEO content; never log
+signed stream tokens or mistake lookup success for validated browser audio
+or provider authorization.
+
 ## Three-tier GitHub Pages environment contract (2026-11-06)
 
 See [ENVIRONMENTS.md](./ENVIRONMENTS.md) for the authoritative branch / GitHub Environment / Pages repository / hostname matrix and staged migration.

@@ -48,3 +48,134 @@ Personal data currently stays in localStorage on the device. Cross-device sync, 
 - `/library` provides favorites JSON export/import. Import loads the shared static search index only when opened, previews current catalog metadata and missing/duplicate/overflow counts, and merges only after confirmation. Existing favorites, history and playback intent are preserved.
 - Playback failures expose retry, alternate sources and a GitHub issue draft without exporting stream URLs or listening history. The draft requires the listener to review and submit it.
 - Real-device Safari/iOS review and playback module extraction remain follow-up work.
+
+## Playback health session diagnostics — partial delivery for #341
+
+The recovery UI now distinguishes **connecting** (before first playback on
+a source) from **buffering** (after the source was heard once). These are
+transient states, not evidence of a permanently offline broadcaster.
+
+Each recovery panel may show only *in-memory*, local-session evidence:
+active source position and display label, bounded retry count, a categorized
+browser error (network/decode/timeout/unknown), and the local time at which
+that particular source last actually emitted a `playing` event. The
+observed timestamp resets on every source/station switch; it is **not** a
+globally verified station uptime check. Error messages must never claim to
+distinguish CORS from a dead stream reliably.
+
+The playback engine stays Native Audio + hls.js, with the existing
+`MAX_STREAM_ATTEMPTS`, preserved source order, and no generic HLS proxy.
+Stream URLs with credentials or tokens must not be written to the error
+console or user reports. No new persistent storage, account tracking or
+background health probes.
+
+Automated regressions live in `tests/playback-diagnostics.test.mjs`.
+The remaining #341 acceptance criteria include physical Safari/Chrome MP3,
+AAC and HLS playback recovery verification; do not mark #341 completed until
+those checks are recorded, alongside #340's iOS device matrix.
+
+## Surprise Me — #344 (first functional delivery)
+
+Homepage offers a **user-initiated** random-radio control. The index is fetched
+only after clicking Random or opening optional filters, reusing the existing
+cached lazy search loader. Public catalog metadata supplies country/category/
+language facets when actually present; blank or unknown language/genre is
+never guessed. The filter result count comes only from real catalog records.
+
+Random selection is uniform within eligible canonical records and skips the
+previously chosen random station whenever a second candidate exists.
+After selection the app fetches the *current* country station catalog to
+resolve the actual stream. Only an explicit click activates the existing
+single `playback` store. It preserves station navigation, never autoplaying
+on initial page load, and cancels pending selection if a route/playback action
+happens during fetch. Missing, disabled or invalid stations fail gracefully.
+The random control cannot guarantee that a remote stream is live; the usual
+player fallback and recovery path remains responsible for playback errors.
+
+Keep stream URLs out of the generated search index. Locale text and
+facets are available in all seven UI languages. Tests:
+`tests/surprise-radio.test.mjs`, `tests/station-search.test.mjs`.
+
+Follow-up: improve real catalog metadata quality and global-search
+performance without adding another redundant browsing panel to Home.
+
+## 2026-11-05 — Advanced Discovery panel removed (UX de-duplication)
+
+The separate homepage `PanelStationDiscovery` and its 6-item paginated
+country/genre/language browser were removed at the user's request because
+they duplicated existing global search and the country/region browser on Home.
+See #342 and its implementation PR #360 for historical context.
+
+Keep existing **global search, country/region catalog links, Surprise Me
+(optional random discovery), and For You**. The published search index and its
+catalog-provided optional genre/language metadata remain useful for Surprise Me
+and For You and must not be deleted as part of this revert.
+
+Do not recreate a second broad homepage station browser without a new,
+explicitly reviewed UX design. No SEO, canonical URL or playback behavior
+changes are required for this removal.
+
+## On-device For You — #343 (first functional delivery)
+
+Homepage renders an opt-in **For You** panel near the listener library.
+The full station search index is fetched only when the listener explicitly
+opens recommendations; it reuses the shared lazy loader and does not eagerly
+grow the Nuxt payload. It does not autoplay or change the global audio engine.
+
+- Compute deterministic suggestions *in the browser* using the existing local
+  Favorites and, if listening-time tracking is enabled, locally saved Recently
+  Played entries. Both can be absent. Favorites/history are never uploaded,
+  copied into a URL, appended to analytics, or persisted to a new storage key.
+- Match actual catalog metadata: shared genre, language and country; emit a
+  truthful short reason on each station card. Never invent a genre, language,
+  stream-health value, playback count or popularity score.
+- Exclude the current station, favorites, recently played and duplicate URLs
+  from suggestions. Limit to four visible cards, and allow a session-only
+  "hide" action that is not persisted. Missing/unknown metadata cannot
+  manufacture matches.
+- When no positive affinity exists (e.g. a new visitor), offer only genuinely
+  marked Featured stations with an honest editorial label; otherwise show a
+  compact empty state. Never label fallback as personalized.
+- Native detail links are explicit navigation and cannot begin audio playback.
+  Preserve Home SEO title/meta/schema, current station routes, seven locales,
+  and local data delete/privacy settings. When listening-time tracking is off,
+  do not use recent history to calculate affinity; still exclude already heard
+  stations to avoid loops.
+
+Regression tests: `tests/personal-radio.test.mjs`. Manual QA includes
+0/1/many favorites and recent stations, off tracking state, mobile
+320–430px, reduced motion, and light/dark contrast.
+
+## Stream Health: bounded stall recovery — #341 (follow-up)
+
+The single global Player now runs a **source-version-bound stall watchdog**
+from the beginning of each active MP3/AAC/HLS connection, including playlist
+resolution and HLS manifest parsing. Every source, even a **single source** or
+the last candidate, has a bounded silence timeout. The watchdog cannot be
+reset indefinitely by repeated `waiting` events, and `canplay` / metadata
+alone no longer cancel pending recovery deadlines. A confirmed `playing`
+event cancels the watchdog.
+
+- An unsuccessful attempt advances through the existing ordered candidate
+  list and wraps to the same source for single-source stations. A maximum
+  of six attempts applies to one recovery episode; exhausting the budget
+  stops and exposes a **manual Retry** control. Disabling Auto Reconnect
+  still times out to a manual Retry state rather than loading forever.
+- Very short successful playback must not replenish the retry budget. The
+  count resets only after 30 seconds of uninterrupted playback with decoded
+  audio, and is invalidated on waiting, pause, error, source change and
+  unmount. Manual Retry remains an explicit way to start a new episode.
+- A failed asynchronous HLS loader/setup goes through the normal bounded
+  fallback path; do not surface or log tokenized stream URLs. Keep hls.js
+  when supported, native HLS fallback, the original MP3/AAC playlist logic,
+  source ordering and the no-generic-HLS-proxy rule.
+- No station hopping, autoplay on reload, new audio element, new persistent
+  session data, or SEO changes. Network `offline` still preempts retries;
+  reconnecting online resumes only if the listener has not paused.
+
+Automated policy and integration guards live in
+`tests/playback-recovery-policy.test.mjs`. This closes the deterministic
+timeout and budget gaps, **not** the whole P0 issue: #340's iPhone/Safari
+device matrix and real MP3/AAC/HLS end-to-end recovery evidence remain
+required before closing #341 or claiming full device support.
+

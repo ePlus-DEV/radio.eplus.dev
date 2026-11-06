@@ -13,7 +13,25 @@
       <div class="mb-4 flex items-center justify-between"><h2 class="text-lg font-semibold">{{ $t('home.featured') }}</h2><span class="text-xs text-[var(--radio-text-muted)]">{{ $t('home.start_listening') }}</span></div>
       <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-url="playback.station?.url" />
     </section>
-    <ClientOnly><PanelResumeCard /><PanelListeningLibrary compact /></ClientOnly>
+    <ClientOnly><PanelSurpriseRadio /></ClientOnly>
+    <ClientOnly><PanelResumeCard /><PanelForYou /><PanelListeningLibrary compact /></ClientOnly>
+    <!-- External-provider directory lives beside geographic discovery, not inside a fake country. -->
+    <section class="radio-surface flex flex-col gap-4 rounded-2xl p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
+      :aria-label="$t('global_radio.title')">
+      <div class="flex min-w-0 items-start gap-3">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500" aria-hidden="true">
+          <UIcon name="i-lucide-globe-2" class="h-5 w-5" />
+        </span>
+        <div>
+          <h2 class="text-base font-bold">{{ $t('global_radio.title') }}</h2>
+          <p class="mt-1 max-w-xl text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('global_radio.apple_description') }}</p>
+        </div>
+      </div>
+      <NuxtLink to="/global-radio" :prefetch="false" class="radio-interactive inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--radio-border)] px-4 text-xs font-semibold text-rose-700 hover:border-rose-500 dark:text-rose-300">
+        {{ $t('global_radio.explore_provider') }}
+        <UIcon name="i-lucide-arrow-right" class="h-4 w-4" aria-hidden="true" />
+      </NuxtLink>
+    </section>
     <section id="explore-radio" class="scroll-mt-24">
       <h2 class="mb-4 text-lg font-semibold">{{ $t('home.browse_country') }}</h2>
       <PanelRadio compact />

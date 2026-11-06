@@ -84,12 +84,12 @@ npm run test:ui          # Optional Playwright browser tests
 
 Required setup: GitHub Environments `development` (Preview), `staging` (develop releases) and `production` (main releases). `staging` must be configured with `NUXT_PUBLIC_SITE_URL=https://new-radio.eplus.dev` and its own `PAGES_DEPLOY_TOKEN` secret before enabling repository-level `PAGES_STAGING_READY=true`. `production` keeps `NUXT_PUBLIC_SITE_URL=https://radio.eplus.dev`. The Preview host and PR path are set by its trusted workflow. Never expose tokens to untrusted PR jobs. See [three-tier migration guide](./docs/ENVIRONMENTS.md).
 
-All four workflows share a repository-wide concurrency queue. The workflows are:
+The four existing release/data workflows share a repository-wide concurrency queue. PR Preview uses a separate build/publish queue to keep website releases independent. The workflows are:
 
 | Workflow | Purpose |
 | --- | --- |
 | `build.yml` | PR unit/regression tests and conditional prerender/SEO validation |
-| `pr-preview-pages.yml` | Trusted per-PR Development Preview publishing and cleanup |
+| `pr-preview-pages.yml` | Independent lightweight PR review builds, Pages publishing and cleanup (opt-in) |
 | `deploy-github-pages.yml` | Trusted static site publication to staging/production Pages repositories |
 | `instant-audio-sync.yml` | Manual radio catalog sync and contribution PR creation |
 | `publish-station-images.yml` | Manual publication of station social JPEGs separately from website output |
