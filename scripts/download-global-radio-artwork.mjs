@@ -44,7 +44,7 @@ function candidates(station) {
       return u.protocol === 'https:' && u.hostname === 'cdn-profiles.tunein.com' &&
         !u.username && !u.password && !u.port && !u.hash &&
         u.pathname.startsWith('/' + sid + '/images/') &&
-        /^\/s\d+\/images\/(logod|logog)\.(png|jpg)$/.test(u.pathname.slice(1));
+        /^s\d+\/images\/(logod|logog)\.(png|jpg)$/.test(u.pathname.slice(1));
     } catch { return false; }
   });
 }

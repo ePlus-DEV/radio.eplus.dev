@@ -1,4 +1,5 @@
 name: "One-off: mirror seven original TuneIn artwork images"
+# Retry the strict TuneIn path validation after fixing its leading-slash check.
 on:
   push:
     branches: [fix/global-radio-header-search-artwork-20261106]
