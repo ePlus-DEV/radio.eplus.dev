@@ -100,7 +100,7 @@ test('Player wires one duration clock to actual media lifecycle and local settin
   assert.match(player, /listeningDurationTracker\.start\(playback\.station\);[\s\S]{0,150}syncDurationClock\(\)/);
   assert.match(player, /watch\(\(\) => \[currentRoute\.path, currentRoute\.hash\], syncDurationClock\)/);
   assert.match(player, /const stopListeningDuration = \(\) => \{\s*durationClock\.stop\(\);\s*listeningDurationTracker\.stop\(\)/);
-  assert.match(player, /const resetListeningTracking = \(\) => \{\s*durationClock\.stop\(\);\s*listeningDurationTracker\.discard\(\)/);
+  assert.match(player, /const resetListeningTracking = \(\)(?:: void)? => \{\s*durationClock\.stop\(\);\s*listeningDurationTracker\.discard\(\)/);
   assert.doesNotMatch(player, /durationInterval = setInterval\(/);
   assert.doesNotMatch(player, /durationTickCount/);
 });
