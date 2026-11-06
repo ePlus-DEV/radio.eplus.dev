@@ -74,14 +74,17 @@
 
 <script setup lang="ts">
 import { usePlaybackStore } from '~/stores/playback';
+import { useListeningStore } from '~/stores/listening';
 import type { RadioStationOption } from '~/types/radio';
 
 const { t } = useI18n();
 const { data: provider } = await useAppleMusicProvider();
 const playback = usePlaybackStore();
+const listening = useListeningStore();
 const {
   enabled: canListenOnEplus,
   play: playOnEplus,
+  prepare: prepareOnEplus,
   pendingStationId,
   error: resolverError,
 } = useAuthorizedGlobalRadioPlayback(() => provider.value?.stations || []);
@@ -99,6 +102,15 @@ const playSelectedStation = (selected: RadioStationOption): void => {
   const station = provider.value?.stations.find(item => item.id === selected.id);
   if (station) void playOnEplus(station);
 };
+// Match Country's idle selection without autoplay. Only the first station
+// resolves in the background; other stations are fetched solely on selection.
+onMounted(() => {
+  listening.hydrate();
+  if (listening.library.lastStation || playback.station || playback.requestedStationUrl) return;
+  const firstStation = provider.value?.stations[0];
+  if (firstStation) void prepareOnEplus(firstStation);
+});
+
 const title = computed(() => 'Apple Music Radio');
 const description = computed(() => t('global_radio.apple_description'));
 useStaticPageSeo({ title, description });
