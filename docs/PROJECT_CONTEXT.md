@@ -1069,3 +1069,34 @@ Radio's idle-restore behavior to imitate this provider-specific flow.
 Regression tests: `tests/global-radio-idle-selection.test.mjs`,
 `tests/global-radio-shared-card.test.mjs`, and
 `tests/global-radio-player-parity.test.mjs`.
+
+## 2026-11-06 — Remove later duplicate station data (original-first)
+
+The United Kingdom catalog previously had 148 records, including later Radio
+Browser/InstantAudio entries for existing stations such as `heart-uk` and
+`heart-80s`. These were not independent broadcasters: they shared a normalized
+station title and official homepage with earlier catalog entries but had
+different stream URLs.
+
+- The original country records are retained **in their existing JSON order**
+  with the same IDs, URLs, metadata and primary streams. Ten later records
+  were removed from `public/radio/europe/united-kingdom.json`; the UK catalog
+  now contains **138** stations. The number is also synchronized in
+  `public/radio/world.json` and generated `data/world.ts`.
+- The static search index independently applies first-existing-entry-wins to
+  each country + normalized title + official homepage. It does not prefer a
+  later HTTPS or featured entry. Distinct broadcasters with different official
+  sites and separately named stations such as Heart Dance/70s remain available.
+- A stale Algolia index may still include removed routes temporarily. The
+  client reconciles those hits against unambiguous canonical local results;
+  rebuilding Algolia itself requires its separate index-owner workflow.
+- The Radio Browser/InstantAudio sync skips later duplicate identities rather
+  than recreating an alias or changing the original station's primary stream.
+- Existing production links to removed duplicate routes should be reviewed for
+  redirect/retirement policy before releasing. The user's direction is to
+  remove the later duplicate records; no original station URLs or SEO text
+  are changed by this fix.
+- Regression coverage:
+  `tests/station-search.test.mjs`,
+  `tests/station-search-duplicates.test.mjs`, and
+  `tests/radio-sync.test.mjs`.

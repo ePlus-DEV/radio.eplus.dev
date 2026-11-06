@@ -11,6 +11,13 @@ if (result.error) throw result.error;
 if (result.status !== 0) {
   process.exitCode = result.status ?? 1;
 } else {
+  // Preview-only compaction keeps the representative pages, JSON/search and
+  // essential artwork, without copying all ~4,000 worldwide images per PR.
+  // Never prune assets in full Staging or Production builds.
+  if (process.env.ONAIR_PR_PREVIEW === 'true') {
+    const { compactPrPreviewAssets } = await import('./compact-pr-preview-assets.mjs');
+    await compactPrPreviewAssets('.output/public');
+  }
   // Production-only sitemap exists after prerender. Compact it before the
   // same strict 1 GB GitHub Pages output audit runs in CI and deploy.
   // Staging/PR preview builds have no sitemap and are left untouched.

@@ -6,6 +6,7 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { stripMarkupToText } from "../utils/markup-text.mjs";
+import { stationCatalogIdentity } from "../utils/station-catalog-identity.mjs";
 
 const ROOT = process.cwd();
 const INSTANT_HOME = "https://instant.audio/";
@@ -1464,7 +1465,13 @@ export function mergeStations(existing, discovered) {
   );
 
   const streamOwner = new Map();
+  // Radio Browser sometimes provides another protocol/bitrate for the same
+  // broadcaster. Prefer the existing curated listing rather than creating a
+  // new `-instant-audio` route just because its stream URL differs.
+  const listingOwner = new Map();
   for (const [slug, station] of Object.entries(merged)) {
+    const identity = stationCatalogIdentity(station);
+    if (identity && !listingOwner.has(identity)) listingOwner.set(identity, slug);
     for (const candidate of normalizeStationStreams(station)) {
       streamOwner.set(normalizeStreamIdentity(candidate.url), slug);
     }
@@ -1480,6 +1487,11 @@ export function mergeStations(existing, discovered) {
   for (const [baseSlug, stationValue] of Object.entries(discovered)) {
     const discoveredStreams = normalizeStationStreams(stationValue);
     if (!discoveredStreams.length) continue;
+    const identity = stationCatalogIdentity(stationValue);
+    // Reject only a later alias of the same official station. A refresh of
+    // the ORIGINAL slug still enriches ordered fallback streams using the
+    // existing merge logic without changing its primary stream URL.
+    if (identity && listingOwner.has(identity) && listingOwner.get(identity) !== baseSlug) continue;
 
     const matchedByStream = discoveredStreams
       .map((candidate) => streamOwner.get(normalizeStreamIdentity(candidate.url)))
@@ -1529,6 +1541,7 @@ export function mergeStations(existing, discovered) {
     if (existingHasFavorite || added > 0) delete station.favorite;
 
     merged[slug] = station;
+    if (identity) listingOwner.set(identity, slug);
     for (const candidate of discoveredStreams) {
       streamOwner.set(normalizeStreamIdentity(candidate.url), slug);
     }
