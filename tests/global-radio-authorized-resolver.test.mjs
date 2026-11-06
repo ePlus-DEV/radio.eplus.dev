@@ -109,12 +109,13 @@ test('provider pages keep ePlus one-click Play while external destinations remai
   const detail = await readFile(new URL('../pages/global-radio/apple-music/[station].vue', import.meta.url), 'utf8');
   for (const source of [list, detail]) {
     assert.doesNotMatch(source, /v-if="canListenOnEplus/, 'Play must remain visible when ENV is absent');
-    assert.match(source, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
     assert.match(source, /v-if="!canListenOnEplus"/, 'tell the user why playback is unavailable');
     assert.match(source, /@click="playOnEplus\(station\)"/);
     assert.match(source, /useAuthorizedGlobalRadioPlayback/);
     assert.doesNotMatch(source, /GlobalRadioTemporaryHlsPreview|\.m3u8|accessKey|<audio\b/);
   }
+  assert.match(list, /:disabled="!canListenOnEplus \|\| pendingStationId === station\.id"/);
+  assert.match(detail, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
   assert.doesNotMatch(list, /listen_on_apple|listen_on_tunein|:href="station\.listen_url"|:href="station\.tunein_url"/);
   assert.match(detail, /listen_on_apple/);
   assert.match(detail, /listen_on_tunein/);

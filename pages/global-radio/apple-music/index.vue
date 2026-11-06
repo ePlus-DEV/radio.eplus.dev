@@ -75,7 +75,7 @@
               <UIcon name="i-lucide-radio" class="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
             <div class="min-w-0 flex-1">
-              <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
+              <NuxtLink :prefetch="false" :to="`/global-radio/apple-music/${station.id}`"
                 class="block truncate text-sm font-bold text-[var(--radio-text)] transition-colors hover:text-rose-500 sm:text-base">
                 {{ station.title }}
               </NuxtLink>
@@ -100,7 +100,7 @@
           <div class="mt-auto flex min-w-0 items-stretch gap-2">
             <button type="button"
               class="radio-interactive inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-              :disabled="!canListenOnEplus || Boolean(pendingStationId)"
+              :disabled="!canListenOnEplus || pendingStationId === station.id" :aria-busy="pendingStationId === station.id"
               :title="!canListenOnEplus ? t('global_radio.resolver_unavailable') : undefined" :aria-pressed="isStationPlaying(station.id)"
               :aria-label="t(isStationPlaying(station.id) ? 'player.pause' : 'global_radio.listen_on_eplus') + ': ' + station.title"
               @click="playOnEplus(station)">
@@ -108,7 +108,7 @@
                 :class="pendingStationId === station.id ? 'h-4 w-4 shrink-0 animate-spin' : 'h-4 w-4 shrink-0'" aria-hidden="true" />
               <span class="truncate">{{ t(pendingStationId === station.id ? 'global_radio.connecting_on_eplus' : isStationPlaying(station.id) ? 'player.pause' : 'global_radio.listen_on_eplus') }}</span>
             </button>
-            <NuxtLink :to="`/global-radio/apple-music/${station.id}`"
+            <NuxtLink :prefetch="false" :to="`/global-radio/apple-music/${station.id}`"
               class="radio-interactive inline-flex min-h-11 shrink-0 items-center justify-center gap-1 rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 text-xs font-semibold text-[var(--radio-text)] transition-colors hover:border-rose-500 hover:text-rose-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:px-4">
               {{ t('global_radio.details') }}
               <UIcon name="i-lucide-chevron-right" class="h-4 w-4 shrink-0" aria-hidden="true" />

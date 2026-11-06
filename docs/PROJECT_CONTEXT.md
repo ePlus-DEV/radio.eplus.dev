@@ -1002,3 +1002,20 @@ Browser titles use `NUXT_PUBLIC_SITE_NAME` as an Environment-scoped **public** v
 ## 2026-11-06 — PR Preview comment visibility lifecycle
 
 PR Preview comments may not contain **Open preview** links while a new PR build is pending, failed, cancelled, stale or closed. The trusted metadata-only `comment_status` job updates the existing `<!-- onair-pr-preview -->` bot comment to **Building preview…**, with only a GitHub Actions workflow link, on PR open/reopen/synchronize. It marks the comment **Preview expired** on PR close, independently of Pages cleanup. After `npm test`, prerender, publish and exact live HTML/noindex/current-SHA verification, the trusted publisher restores **Open preview** only if the current PR head and hidden workflow-run marker still match. A finalizer replaces building status with **Preview unavailable** without the link on failure. Keep one comment per PR and preserve the `pull_request_target` security model (no untrusted checkout under secrets). This workflow must be updated on default `main` and synchronized to `develop`; the GitHub Pages 404 countdown is not proof of a valid preview.
+
+## 2026-11-06 — Global Radio play must not block or prefetch all stations
+
+The Apple Music provider directory renders all seven metadata cards and passes the
+complete station list into the shared player's navigation queue. This is **not**
+permission to fetch all seven stream URLs or make every card look as though it is
+connecting: only the clicked station triggers the TuneIn/resolver lookup and HLS
+playback. While it connects, only its Play control is disabled and marked busy;
+other station buttons must remain available so a later user selection can abort
+the previous pending lookup. Keep the single `PlayerSession` and one `<audio>`
+host, and never store a signed HLS URL in the queue.
+
+The two per-station detail `NuxtLink` elements on the Global directory should
+retain their SSR hrefs for navigation/SEO but use `:prefetch="false"` to avoid
+eagerly downloading every detail route on viewport entry. Guard the behavior in
+`tests/global-radio-isolated-play-action.test.mjs`; do not change route SEO
+metadata, canonical links, schema or production analytics for this UI fix.
