@@ -5,6 +5,22 @@ import { readFile } from 'node:fs/promises';
 const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 const source = () => read('public/catalog/providers/apple-music.json').then(JSON.parse);
 
+
+const isCanonicalTuneInDirectory = value => {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:'
+      && url.hostname === 'tunein.com'
+      && url.pathname === '/radio/music/'
+      && !url.username
+      && !url.password
+      && !url.search
+      && !url.hash;
+  } catch {
+    return false;
+  }
+};
+
 test('Apple Music provider stays separate from country-based audio catalog', async () => {
   const [index, provider, routes, searchIndex] = await Promise.all([
     read('public/catalog/providers/index.json').then(JSON.parse),
@@ -31,7 +47,7 @@ test('seven verified TuneIn Apple Music pages with unique IDs and no audio strea
   assert.equal(provider.schema_version, 1);
   assert.equal(provider.stations.length, 7);
   assert.equal(new Set(provider.stations.map(x => x.id)).size, 7);
-  assert.ok(provider.discovery_sources.includes('https://tunein.com/radio/music/'));
+  assert.ok(provider.discovery_sources.some(isCanonicalTuneInDirectory), 'must link to the canonical HTTPS TuneIn music directory');
   assert.match(provider.metadata_checked_on, /^\d{4}-\d{2}-\d{2}$/);
   const expected = new Map([
     ['apple-music-1', 's345732'],
@@ -56,6 +72,22 @@ test('seven verified TuneIn Apple Music pages with unique IDs and no audio strea
       assert.equal(Object.hasOwn(station, forbidden), false, 'not an internal playback station: ' + forbidden);
     }
   }
+});
+
+
+test('TuneIn discovery source rejects host spoofing and unsafe URL variants', () => {
+  const invalid = [
+    'https://tunein.com.evil.example/radio/music/',
+    'https://evil.example/path/https://tunein.com/radio/music/',
+    'https://tunein.com@evil.example/radio/music/',
+    'http://tunein.com/radio/music/',
+    'https://tunein.com/radio/music/?redirect=evil',
+    'not-a-url',
+  ];
+  for (const url of invalid) {
+    assert.equal(isCanonicalTuneInDirectory(url), false, url);
+  }
+  assert.equal(isCanonicalTuneInDirectory('https://tunein.com/radio/music/'), true);
 });
 
 test('seasonal Holiday Hits is a distinct verified TuneIn listing, not a duplicate of Apple Music Hits', async () => {
