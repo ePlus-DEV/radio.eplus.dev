@@ -131,7 +131,7 @@ through, has **no effect** on the published site.
    permission to reuse the API, impersonate TuneIn, harvest credentials or
    redistribute HLS. This code does none of those actions.
 2. **CORS:** Allow only intended origins (`https://radio.eplus.dev`,
-   `https://staging.radio.eplus.dev`, optionally `https://new-radio.eplus.dev` during migration, and localhost explicitly for local testing).
+   `https://stg.radio.eplus.dev`, optionally `https://new-radio.eplus.dev` during migration, and localhost explicitly for local testing).
    Do not expose a public arbitrary-URL proxy; require provider and station IDs
    from an allowlist. Reject forged host, private networks, redirects and SSRF.
 3. **Privacy:** Never log, cache in CDN, analytics, error monitoring, or persist
@@ -173,6 +173,6 @@ Apple Developer credentials and further compatibility tests.
 ## CORS proxy environment configuration (2026-11-06)
 
 - The browser gets the CORS proxy base from `config.public.corsServer`, backed by `NUXT_PUBLIC_CORS_SERVER_1` in local `.env`. No proxy hostname is embedded in the Apple TuneIn source code.
-- For GitHub Pages configure `NUXT_PUBLIC_CORS_SERVER_1` in GitHub → Settings → Environments → **staging** (Staging), and **production** (Production) if approved for release; the deploy workflow passes the variable into the Nuxt static build. Redeploy after changes. When switching from `new-radio.eplus.dev` to `staging.radio.eplus.dev`, update the **external CORS proxy and resolver Origin allowlists** before enabling the new host; site code cannot change remote service policy.
+- For GitHub Pages configure `NUXT_PUBLIC_CORS_SERVER_1` in GitHub → Settings → Environments → **staging** (Staging), and **production** (Production) if approved for release; the deploy workflow passes the variable into the Nuxt static build. Redeploy after changes. When switching from `new-radio.eplus.dev` to `stg.radio.eplus.dev`, update the **external CORS proxy and resolver Origin allowlists** before enabling the new host; site code cannot change remote service policy.
 - Provide a full HTTPS origin, optional trailing slash, no path/query/fragment/credentials. Without a valid configuration, public TuneIn lookup is disabled, with no implicit Heroku fallback. Optional approved `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` remains separate.
 - Existing GitHub Actions probes used a particular Heroku proxy; they are historical technical evidence and not a guarantee that the newly configured domain, in-browser audio, or provider rights are verified.
