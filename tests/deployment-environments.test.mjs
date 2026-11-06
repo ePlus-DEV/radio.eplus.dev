@@ -8,7 +8,7 @@ const deploy = readFileSync(new URL('../.github/workflows/deploy-github-pages.ym
 const preview = readFileSync(new URL('../.github/workflows/pr-preview-pages.yml', import.meta.url), 'utf8');
 
 test('the only indexable site and GA4 build is production', () => {
-  for (const origin of ['https://new-radio.eplus.dev', 'https://preview.radio.eplus.dev/pr-preview/pr-375']) {
+  for (const origin of ['https://staging.radio.eplus.dev', 'https://preview.radio.eplus.dev/pr-preview/pr-375']) {
     assert.equal(isStagingDeployment({ siteUrl: origin }), true, origin);
     assert.equal(isGa4ProductionBuild({ nodeEnv: 'production', siteUrl: origin }), false, origin);
   }
