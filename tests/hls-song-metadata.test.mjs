@@ -231,6 +231,51 @@ test('Apple Music 1 CMAF emsg carries a verified ID3 song and artwork, not merel
   assert.equal(buffer.consume(92), null);
 });
 
+test('HAR regression: Apple Music 1 AAC contains adjacent transport and song ID3 tags', () => {
+  // The 2026-11-06 preview HAR has two adjacent ID3v2.4 headers per .aac
+  // segment. hls.js emits both as ONE metadata sample; previously our parser
+  // stopped after the first transportStreamTimestamp-only tag.
+  const timestamp = makeTag([applePriv('com.apple.streaming.transportStreamTimestamp')], 4);
+  const song = makeTag([
+    applePriv('com.apple.radio.ping.jingle'),
+    appleArtwork(640, verifiedArtwork640),
+    applePriv('com.apple.radio.adamid'),
+    frame('TALB', 'Westside Whimsy', 4),
+    artist('Jhené Aiko', 4),
+    title('So Good (feat. Kendrick Lamar)', 4),
+  ], 4);
+  const packed = new Uint8Array([...timestamp, ...song]);
+  const expected = {
+    title: 'So Good (feat. Kendrick Lamar)',
+    artist: 'Jhené Aiko',
+    artwork: verifiedArtwork640,
+  };
+  assert.equal(parseHlsId3Tag(timestamp, { appleMusic: true }), null);
+  assert.deepEqual(parseHlsId3Tag(song, { appleMusic: true }), expected);
+  assert.deepEqual(parseHlsId3Tag(packed, { appleMusic: true }), expected);
+  assert.deepEqual(extractHlsId3Tracks([{ data: packed, pts: 312.75 }], { appleMusic: true }),
+    [{ ...expected, pts: 312.75 }]);
+  const buffer = createTimedHlsTrackBuffer({ appleMusic: true });
+  assert.equal(buffer.add([{ data: packed, pts: 312.75 }]), 1);
+  assert.equal(buffer.consume(310), null);
+  assert.deepEqual(buffer.consume(312.75), expected);
+  assert.equal(buffer.consume(314), null);
+
+  const presenter = makeTag([
+    title('Radio host / show', 4),
+    artist('Apple Music 1', 4),
+  ], 4);
+  assert.equal(parseHlsId3Tag(new Uint8Array([...timestamp, ...presenter]),
+    { appleMusic: true }), null);
+  // No cross-tag mixing: TIT2 in one tag and TPE1 in the next is not a song.
+  assert.equal(parseHlsId3Tag(new Uint8Array([
+    ...makeTag([title('Title only', 4)], 4),
+    ...makeTag([artist('Artist only', 4), applePriv('com.apple.radio.adamid')], 4),
+  ]), { appleMusic: true }), null);
+  assert.equal(parseHlsId3Tag(new Uint8Array([...timestamp, ...song.subarray(0, 12)]),
+    { appleMusic: true }), null);
+});
+
 test('Apple Holiday Hits HLS WXXX artwork follows the SONG, not DJ interstitial', () => {
   const song = makeTag([
     appleArtwork(390, verifiedArtwork390),
