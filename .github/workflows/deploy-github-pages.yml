@@ -53,19 +53,24 @@ jobs:
     name: "Publish ${{ github.ref_name }} to Pages"
     # Production is released from trusted main pushes; the first step verifies
     # the exact public repository, credentials, domain and write permission.
-    # Staging remains explicitly opt-in via PAGES_DEV_READY.
+    # Staging uses its own opt-in readiness flag after environment migration.
+    # Until the staging Environment is provisioned, legacy development settings remain active.
     if: >-
-      (github.ref_name == 'develop' && vars.PAGES_DEV_READY == 'true') ||
+      (github.ref_name == 'develop' &&
+        (vars.PAGES_STAGING_READY == 'true' ||
+          (vars.PAGES_STAGING_READY == '' && vars.PAGES_DEV_READY == 'true'))) ||
       (github.ref_name == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    # Same variable name is scoped independently in the two GitHub Environments.
+    # Production is immutable; staging moves to its own Environment only after
+    # the repo-level PAGES_STAGING_READY flag is true and secrets are provisioned.
+    # The legacy development fallback prevents disrupting the current staging site.
     environment:
-      name: ${{ github.ref_name == 'main' && 'production' || 'development' }}
+      name: ${{ github.ref_name == 'main' && 'production' || (vars.PAGES_STAGING_READY == 'true' && 'staging' || 'development') }}
     env:
       NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
       NUXT_APP_BASE_URL: /
-      # Indexing is branch-specific: development never indexed, main indexed.
+      # Indexing is tier-specific: staging never indexed, production indexed.
       # Never force noindex globally; that breaks production SEO and GA4.
       NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}
       TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
