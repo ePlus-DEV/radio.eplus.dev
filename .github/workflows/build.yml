@@ -194,8 +194,9 @@ jobs:
         # CI uses the same two public variables as the real staging host.
         # A checkout/branch name must not change the generated SEO policy.
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://stg.radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
+          NUXT_PUBLIC_SITE_NAME: ${{ github.base_ref == 'develop' && 'ePlus OnAir — Staging' || 'ePlus OnAir' }}
           NUXT_APP_BASE_URL: /
           ONAIR_SKIP_STATION_OG: 'true'
           NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
@@ -214,14 +215,14 @@ jobs:
       - name: "Validate generated sitemap and staging indexability"
         if: steps.scope.outputs.prerender == 'true'
         env:
-          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
+          NUXT_PUBLIC_SITE_URL: ${{ github.base_ref == 'develop' && 'https://stg.radio.eplus.dev' || 'https://radio.eplus.dev' }}
           NUXT_PUBLIC_NO_INDEX: ${{ github.base_ref == 'develop' && 'true' || 'false' }}
         run: node scripts/assert-sitemap-xml.mjs
 
       - name: "Assert route-specific prerendered Open Graph metadata"
         if: steps.scope.outputs.prerender == 'true'
         env:
-          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://stg.radio.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-route-social-meta.mjs
 
       # DEV uses the shared brand preview: it must not generate or audit
@@ -229,7 +230,7 @@ jobs:
       - name: "Audit all stations Open Graph HTML and JPEG images"
         if: steps.scope.outputs.prerender == 'true' && github.base_ref != 'develop'
         env:
-          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://new-radio.eplus.dev' || 'https://radio.eplus.dev' }}
+          SEO_EXPECTED_SITE_URL: ${{ github.base_ref == 'develop' && 'https://stg.radio.eplus.dev' || 'https://radio.eplus.dev' }}
         run: node scripts/assert-all-station-social-meta.mjs
 
       - name: "Verify ePlus OnAir logo, social image and favicons"

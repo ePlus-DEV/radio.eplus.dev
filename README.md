@@ -2,7 +2,7 @@
 
 **Listen Beyond Borders.** Discover and listen to live radio stations from around the world.
 
-**[Listen live](https://radio.eplus.dev/)** · [Staging](https://new-radio.eplus.dev/) · [Development previews](https://preview.radio.eplus.dev/)
+**[Listen live](https://radio.eplus.dev/)** · [Staging](https://stg.radio.eplus.dev/) · [Development previews](https://preview.radio.eplus.dev/)
 
 ePlus OnAir is built with **Nuxt 4, Vue 3 and Nuxt UI**. This repository contains the application source, station catalogs, tests and release workflows; the published websites are hosted in separate GitHub Pages repositories.
 
@@ -29,10 +29,12 @@ Open [http://localhost:3000](http://localhost:3000). See the [development guide]
 | Environment | Source | Website |
 | --- | --- | --- |
 | **Production** | `main` | [radio.eplus.dev](https://radio.eplus.dev/) |
-| **Staging** | `develop` | [new-radio.eplus.dev](https://new-radio.eplus.dev/) |
-| **Development** | PR targeting `develop` | [preview.radio.eplus.dev](https://preview.radio.eplus.dev/) |
+| **Staging** | `develop` | [stg.radio.eplus.dev](https://stg.radio.eplus.dev/) |
+| **Preview** | PR targeting `develop` | [preview.radio.eplus.dev](https://preview.radio.eplus.dev/) |
 
-Development previews are published at `/pr-preview/pr-<number>/`; there is no separate long-lived `dev` branch. Only Production is indexable and uses production GA4. Staging and Development remain `noindex`.
+Development previews are published at `/pr-preview/pr-<number>/`; there is no separate long-lived `dev` branch. Only Production is indexable and uses production GA4. Staging and Preview remain `noindex`.
+
+Browser-tab titles are distinct by default: **ePlus OnAir** (Production), **ePlus OnAir — Staging**, and **ePlus OnAir — Preview**. Each GitHub Environment can override its own title with `NUXT_PUBLIC_SITE_NAME`.
 
 ## Documentation
 

@@ -3,6 +3,7 @@ import { defineNuxtConfig } from "nuxt/config";
 import { prefixPublicAsset } from "./utils/public-site-path.mjs";
 import { isPrPreviewBuild, PR_PREVIEW_ROUTES } from "./utils/pr-preview.mjs";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
+import { resolveDeploymentSiteName } from "./utils/deployment-site-name.mjs";
 import { GA4_MEASUREMENT_ID, isGa4ProductionBuild, getGa4HeadScripts } from "./utils/ga4-config.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
 import { getGlobalRadioRoutes } from "./build/globalRadioRoutes";
@@ -41,7 +42,11 @@ const ga4Enabled = isGa4ProductionBuild({
   siteUrl,
 });
 const stationOg = stationOgDeployment({ siteUrl, noIndex: noIndex ? "true" : "false" });
-const siteName = process.env.NUXT_PUBLIC_SITE_NAME || "ePlus OnAir";
+const siteName = resolveDeploymentSiteName({
+  siteUrl,
+  configuredName: process.env.NUXT_PUBLIC_SITE_NAME,
+  isPrPreview,
+});
 const defaultDescription =
   process.env.DESCRIPTION ||
   "ePlus OnAir — Listen Beyond Borders. Discover and listen to live radio stations from around the world.";

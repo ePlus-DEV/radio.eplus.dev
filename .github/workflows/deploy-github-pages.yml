@@ -69,6 +69,8 @@ jobs:
       name: ${{ github.ref_name == 'main' && 'production' || (vars.PAGES_STAGING_READY == 'true' && 'staging' || 'development') }}
     env:
       NUXT_PUBLIC_SITE_URL: ${{ vars.NUXT_PUBLIC_SITE_URL }}
+      # GitHub Environment variable: distinct browser-tab title for each tier.
+      NUXT_PUBLIC_SITE_NAME: ${{ vars.NUXT_PUBLIC_SITE_NAME }}
       # Browser-side TuneIn lookup uses the same configured CORS proxy as country radio.
       # Static GitHub Pages builds must receive the public env during generation.
       NUXT_PUBLIC_CORS_SERVER_1: ${{ vars.NUXT_PUBLIC_CORS_SERVER_1 }}
@@ -80,7 +82,7 @@ jobs:
       # Never force noindex globally; that breaks production SEO and GA4.
       NUXT_PUBLIC_NO_INDEX: ${{ github.ref_name == 'develop' && 'true' || 'false' }}
       TARGET_REPOSITORY: ${{ github.ref_name == 'main' && 'ePlus-DEV/onair-production-pages' || 'ePlus-DEV/onair-staging-pages' }}
-      TARGET_DOMAIN: ${{ github.ref_name == 'main' && 'radio.eplus.dev' || 'new-radio.eplus.dev' }}
+      TARGET_DOMAIN: ${{ github.ref_name == 'main' && 'radio.eplus.dev' || 'stg.radio.eplus.dev' }}
       ONAIR_SKIP_STATION_OG: 'true'
       NUXT_PUBLIC_STATION_OG_BASE_URL: ${{ vars.STATION_OG_BASE_URL }}
       TARGET_KIND: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
@@ -111,7 +113,7 @@ jobs:
         run: |
           set -euo pipefail
           case "$TARGET_REPOSITORY:$TARGET_DOMAIN" in
-            ePlus-DEV/onair-staging-pages:new-radio.eplus.dev|ePlus-DEV/onair-production-pages:radio.eplus.dev) ;;
+            ePlus-DEV/onair-staging-pages:stg.radio.eplus.dev|ePlus-DEV/onair-production-pages:radio.eplus.dev) ;;
             *) echo "::error::Unexpected Pages target repository or domain"; exit 1 ;;
           esac
           if [ "$NUXT_PUBLIC_SITE_URL" != "https://$TARGET_DOMAIN" ] || [ "$NUXT_APP_BASE_URL" != "/" ]; then
