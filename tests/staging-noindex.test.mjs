@@ -6,8 +6,8 @@ import { isStagingDeployment } from "../utils/seo-deployment.mjs";
 const read = path => readFile(path, "utf8");
 
 test("staging is noindex with the two NUXT_PUBLIC environment variables", () => {
-  assert.equal(isStagingDeployment({ siteUrl: "https://staging.radio.eplus.dev" }), true);
-  assert.equal(isStagingDeployment({ siteUrl: "https://staging.radio.eplus.dev", noIndex: "false" }), true);
+  assert.equal(isStagingDeployment({ siteUrl: "https://stg.radio.eplus.dev" }), true);
+  assert.equal(isStagingDeployment({ siteUrl: "https://stg.radio.eplus.dev", noIndex: "false" }), true);
   assert.equal(isStagingDeployment({ siteUrl: "https://new-radio.eplus.dev" }), true);
   assert.equal(isStagingDeployment({ siteUrl: "https://radio-new.eplus.dev", noIndex: "true" }), true);
   assert.equal(isStagingDeployment({ siteUrl: "https://radio-new.eplus.dev" }), true);
@@ -20,7 +20,7 @@ test("production retains indexing without staging environment variables", () => 
   assert.equal(isStagingDeployment({ siteUrl: "https://radio.eplus.dev" }), false);
   assert.equal(isStagingDeployment({ siteUrl: "https://radio.eplus.dev", noIndex: "false" }), false);
   assert.equal(isStagingDeployment({ siteUrl: "https://maliciousradio-new.eplus.dev" }), false);
-  assert.equal(isStagingDeployment({ siteUrl: "https://staging.radio.eplus.dev.evil.example" }), false);
+  assert.equal(isStagingDeployment({ siteUrl: "https://stg.radio.eplus.dev.evil.example" }), false);
   assert.equal(isStagingDeployment({ siteUrl: "" }), false);
 });
 
