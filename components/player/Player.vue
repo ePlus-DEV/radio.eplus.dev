@@ -360,7 +360,7 @@ const setPlayerMini = (value: boolean): void => {
 
 let hlsInstance: any = null;
 let detachNativeHlsMetadata: (() => void) | null = null;
-const hlsSongBuffer = createTimedHlsTrackBuffer();
+const hlsSongBuffer = createTimedHlsTrackBuffer({ appleMusic: true });
 let HlsCtor: any = null;
 let hlsImportPromise: Promise<any> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
@@ -759,7 +759,7 @@ const attachNativeHlsSongMetadata = (media: HTMLAudioElement, version: number): 
     const onCueChange: EventListener = () => {
       if (version !== sourceVersion || userPaused.value || media.paused
         || playback.station?.url !== stationUrl) return;
-      const current = extractNativeHlsId3Track(track.activeCues);
+      const current = extractNativeHlsId3Track(track.activeCues, { appleMusic: true });
       if (current) playback.setHlsLiveTrack(stationUrl, current);
     };
     track.addEventListener('cuechange', onCueChange);
