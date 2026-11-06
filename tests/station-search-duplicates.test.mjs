@@ -103,6 +103,23 @@ test('ambiguous same-name radios must not be silently merged by Algolia URL', ()
   assert.deepEqual(mergeGlobalSearchHits(local, remote).map(x => x.url), remote.map(x => x.url));
 });
 
+test('sync refreshes fallback streams on the original station ID without cloning it', () => {
+  const existing = {
+    original: { title: 'Original', url: 'https://original.example/', stream: 'https://cdn.example/primary.mp3' },
+  };
+  const refreshed = {
+    original: { title: 'Original', url: 'http://www.original.example', stream: 'https://cdn.example/fallback.aac' },
+    'original-instant-audio': { title: 'Original', url: 'https://original.example/', stream: 'http://cdn.example/alternate' },
+  };
+  const result = mergeStations(existing, refreshed);
+  assert.equal(result.added, 0);
+  assert.equal(result.enriched, 1);
+  assert.deepEqual(Object.keys(result.stations), ['original']);
+  assert.equal(result.stations.original.stream, 'https://cdn.example/primary.mp3');
+  assert.deepEqual(result.stations.original.streams.map(x => x.url),
+    ['https://cdn.example/primary.mp3', 'https://cdn.example/fallback.aac']);
+});
+
 test('future sync preserves the first Heart station without adding duplicate aliases', () => {
   const existing = {
     'heart-uk': {
