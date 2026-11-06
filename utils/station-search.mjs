@@ -52,3 +52,21 @@ export function filterQueueStations(stations, query, favoriteUrls, favoritesOnly
   const favorites = new Set(favoriteUrls);
   return stations.filter(station => (!favoritesOnly || favorites.has(station.url)) && (!term || normalizeStationQuery(station.title).includes(term)));
 }
+
+/**
+ * Algolia does not index Global Radio provider pages. Keep their static results
+ * visible even after an Algolia response arrives, without changing its ranking
+ * of existing country stations or duplicating results by URL.
+ */
+export function mergeGlobalSearchHits(localHits, remoteHits, limit = 20) {
+  const global = (Array.isArray(localHits) ? localHits : [])
+    .filter(item => typeof item?.url === 'string' && item.url.startsWith('/global-radio/'));
+  const remote = Array.isArray(remoteHits) ? remoteHits : [];
+  const seen = new Set();
+  return [...global, ...remote].filter(item => {
+    if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') ||
+      item.url.startsWith('//') || seen.has(item.url)) return false;
+    seen.add(item.url);
+    return true;
+  }).slice(0, Math.max(0, limit));
+}

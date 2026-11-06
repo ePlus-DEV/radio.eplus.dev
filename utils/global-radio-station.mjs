@@ -5,7 +5,7 @@ export function createAuthorizedApplePlaybackStation(station, source, placeholde
     id: station.id,
     title: station.title,
     url,
-    image: placeholder,
+    image: station.image || placeholder,
     area: 'global-radio',
     country: 'apple-music',
     countryKey: 'global_radio.title',
@@ -31,7 +31,7 @@ export function createAppleRadioQueue(stations, placeholder = '/brand/onair-mark
     return [{
       id: station.id,
       title: String(station.title || station.id),
-      image: placeholder,
+      image: station.image || placeholder,
       url: '/global-radio/apple-music/' + station.id,
     }];
   });
