@@ -26,12 +26,6 @@ export function stationCatalogIdentity(station) {
   return name && home ? name + '\u0000' + home : '';
 }
 
-// Prefer stable curated routes and secure streams over generated aliases.
-// Keeps links, favorites and existing SEO pages unchanged.
-export function stationListingPriority(slug, station, featuredRank = 0) {
-  return (featuredRank ? 100_000 - featuredRank : 0)
-    + (station?.favorite === true ? 10_000 : 0)
-    + (!/(?:-instant-audio)(?:-\d+)?$/.test(String(slug)) ? 1000 : 0)
-    + (/^https:\/\//i.test(String(station?.stream || '')) ? 100 : 0)
-    + (!String(station?.source || '').startsWith('radio-browser:') ? 10 : 0);
-}
+// Canonical ordering is the literal insertion order of the existing country
+// catalog. Do not score variants: a later discovery must never displace an
+// older station because of HTTPS, featured flags or a different codec.
