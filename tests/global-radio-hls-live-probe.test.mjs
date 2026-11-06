@@ -5,8 +5,10 @@
 import test from 'node:test';
 import { resolvePublicTuneInStream } from '../utils/global-radio-public-tunein.mjs';
 
+const corsServer = process.env.NUXT_PUBLIC_CORS_SERVER_1 || '';
 const enabled = process.env.GITHUB_ACTIONS === 'true'
-  && process.env.GITHUB_HEAD_REF === 'feat/tunein-apple-radio-song-history-20261105';
+  && process.env.GITHUB_HEAD_REF === 'feat/tunein-apple-radio-song-history-20261105'
+  && Boolean(corsServer);
 const stationIds = ['apple-music-1', 'apple-music-hits', 'apple-music-chill'];
 const MAX_PLAYLIST = 180_000;
 const MAX_SEGMENT = 196_608;
@@ -129,7 +131,7 @@ test('diagnostic only: inspect authorized HLS manifests for timed-song metadata 
     const report = { stationId, resolved: false, master: null, media: null, segment: null, error: null };
     try {
       const station = { id: stationId };
-      const resolved = await resolvePublicTuneInStream({ station });
+      const resolved = await resolvePublicTuneInStream({ station, corsServer });
       report.resolved = Boolean(resolved.ok);
       if (!isApproved(resolved.streamUrl)) throw Error('unapproved_origin');
       const master = await getText(resolved.streamUrl);
