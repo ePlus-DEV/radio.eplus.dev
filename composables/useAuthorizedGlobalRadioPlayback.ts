@@ -9,6 +9,8 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
   const siteAssetUrl = useSiteAssetUrl();
   const playback = usePlaybackStore();
   const pendingStationId = ref('');
+  // The initial silent preparation may be upgraded to Play by a single tap.
+  const pendingPassiveStationId = ref('');
   const error = ref('');
   let activeController: AbortController | null = null;
   let pendingAutoPlay = false;
@@ -27,12 +29,16 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
       if (pendingStationId.value === station.id) {
         // The first channel is prepared silently. A user's subsequent Play
         // tap must upgrade that in-flight lookup to actual playback.
-        if (autoplay) pendingAutoPlay = true;
+        if (autoplay) {
+          pendingAutoPlay = true;
+          pendingPassiveStationId.value = '';
+        }
         return;
       }
       activeController?.abort();
       activeController = null;
       pendingStationId.value = '';
+      pendingPassiveStationId.value = '';
       pendingAutoPlay = false;
     }
     error.value = '';
@@ -56,6 +62,7 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
     activeController = controller;
     pendingAutoPlay = autoplay;
     pendingStationId.value = station.id;
+    pendingPassiveStationId.value = autoplay ? '' : station.id;
     if (!playback.station) {
       // The dock can display the selected station immediately, before the
       // signed HLS URL arrives. No fake playable audio source is created.
@@ -95,6 +102,7 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
         activeController = null;
         pendingAutoPlay = false;
         pendingStationId.value = '';
+        pendingPassiveStationId.value = '';
       }
     }
   }
@@ -111,9 +119,10 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
     activeController?.abort();
     activeController = null;
     pendingAutoPlay = false;
+    pendingPassiveStationId.value = '';
     if (playback.pendingGlobalRadio?.id === pendingStationId.value) {
       playback.pendingGlobalRadio = null;
     }
   });
-  return { enabled, play, prepare, pendingStationId, error };
+  return { enabled, play, prepare, pendingStationId, pendingPassiveStationId, error };
 }
