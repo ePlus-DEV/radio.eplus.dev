@@ -61,3 +61,25 @@ test('status/finalizer jobs never receive PR code or Preview deployment secrets'
   assert.match(build, /persist-credentials: false/);
   assert.doesNotMatch(build, /secrets\.PAGES_DEPLOY_TOKEN/);
 });
+
+test('live verification outlasts slow Pages deployment without exposing unverified links', () => {
+  // Pages deployment can take longer than the source PR build.
+  assert.match(publish, /timeout-minutes: 30/);
+  assert.ok(publish.includes('for attempt in $(seq 1 90); do'));
+  assert.ok(publish.includes('if [ "$attempt" -lt 90 ]; then sleep 10; fi'));
+  assert.match(publish, /published_sha.*EXPECTED_HEAD/);
+  assert.match(publish, /grep -q 'noindex'/);
+  assert.ok(!status.includes('[Open preview]'), 'do not expose links before verification');
+});
+
+test('publisher prunes only verified closed PR preview folders before uploading', () => {
+  assert.match(publish, /for old_preview in/);
+  assert.ok(publish.includes('old_number="${old_label#pr-}"'));
+  assert.ok(publish.includes('[[ "$old_number" =~ ^[1-9][0-9]*$ ]]'));
+  assert.ok(publish.includes('[ "$old_number" = "$PR_NUMBER" ] && continue'));
+  assert.ok(publish.includes('gh api "repos/$GITHUB_REPOSITORY/pulls/$old_number" --jq .state'));
+  assert.ok(publish.includes('[ "$old_state" = closed ]'));
+  assert.ok(publish.includes('rm -rf -- "$old_preview"'));
+  assert.ok(publish.includes('Cannot verify PR #$old_number; retain its Preview'));
+  assert.doesNotMatch(publish, /git push --force/);
+});

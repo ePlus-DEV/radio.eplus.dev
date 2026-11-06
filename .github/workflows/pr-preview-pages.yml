@@ -239,7 +239,7 @@ jobs:
       needs.build.result == 'success' &&
       needs.build.outputs.active == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     permissions:
       contents: read
       pull-requests: write
@@ -303,6 +303,28 @@ jobs:
           test ! -L "$target/pr-preview" || { echo "::error::Unsafe preview directory."; exit 1; }
           mkdir -p "$target/pr-preview/pr-$PR_NUMBER"
           rsync -a --delete "$RUNNER_TEMP/pr-output/" "$target/pr-preview/pr-$PR_NUMBER/"
+
+          # Pages deployment syncs the full output repository. A missed
+          # pull_request_target close event must not leave thousands of old
+          # files in the next deployment (e.g. merged PR #377). Prune only
+          # same-repository PR directories whose API state is confirmed closed.
+          # Unknown/API-failure states are retained; never delete an open PR.
+          for old_preview in "$target"/pr-preview/pr-*; do
+            [ -d "$old_preview" ] && [ ! -L "$old_preview" ] || continue
+            old_label="${old_preview##*/}"
+            old_number="${old_label#pr-}"
+            [[ "$old_number" =~ ^[1-9][0-9]*$ ]] || continue
+            [ "$old_number" = "$PR_NUMBER" ] && continue
+            old_state="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$old_number" --jq .state 2>/dev/null)" || {
+              echo "::warning::Cannot verify PR #$old_number; retain its Preview."
+              continue
+            }
+            if [ "$old_state" = closed ]; then
+              echo "Prune expired Preview for closed PR #$old_number"
+              rm -rf -- "$old_preview"
+            fi
+          done
+
           touch "$target/.nojekyll"
           # The live URL must prove it serves THIS PR head, not an old artifact.
           printf "%s\n" "$EXPECTED_HEAD" > "$target/pr-preview/pr-$PR_NUMBER/preview-commit.txt"
@@ -336,7 +358,10 @@ jobs:
           marker="${base}preview-commit.txt"
           echo "Waiting for GitHub Pages to publish PR #$PR_NUMBER commit $EXPECTED_HEAD"
           live=false
-          for attempt in $(seq 1 25); do
+          # The output Pages repository may still be publishing a large static
+          # snapshot after the source artifact has uploaded. Do not mark the
+          # Preview unavailable simply because Pages deploy takes >3 minutes.
+          for attempt in $(seq 1 90); do
             published_sha="$(curl --location --fail --silent --show-error --max-time 10 "$marker" 2>/dev/null || true)"
             if [ "$published_sha" = "$EXPECTED_HEAD" ]; then
               if curl --location --fail --silent --show-error --max-time 15 "$base" -o "$RUNNER_TEMP/preview-live.html" &&
@@ -345,7 +370,7 @@ jobs:
                 break
               fi
             fi
-            if [ "$attempt" -lt 25 ]; then sleep 8; fi
+            if [ "$attempt" -lt 90 ]; then sleep 10; fi
           done
           if [ "$live" != true ]; then
             echo "::error::GitHub Pages preview is not live at $base for commit $EXPECTED_HEAD. Check Settings -> Pages of $PREVIEW_TARGET_REPOSITORY and its 'pages build and deployment' job."
