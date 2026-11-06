@@ -10,12 +10,14 @@ import {
 } from '../utils/station-catalog-identity.mjs';
 import { mergeStations } from '../scripts/sync-instant-audio.mjs';
 
-test('UK catalog Heart UK and Heart 80s appear once in generated search, without deleting route data', async () => {
+test('UK source catalog and search retain the original station and delete later duplicate records', async () => {
   const catalog = JSON.parse(await readFile(new URL('../public/radio/europe/united-kingdom.json', import.meta.url)));
-  assert.equal(catalog['heart-uk'].title, catalog['heart-uk-instant-audio'].title);
-  assert.equal(catalog['heart-80s'].title, catalog['heart-80s-962e9a46'].title);
-  assert.equal(stationCatalogIdentity(catalog['heart-uk']), stationCatalogIdentity(catalog['heart-uk-instant-audio']));
-  assert.equal(stationCatalogIdentity(catalog['heart-80s']), stationCatalogIdentity(catalog['heart-80s-962e9a46']));
+  assert.equal(Object.keys(catalog).length, 138);
+  assert.equal(catalog['heart-uk'].title, 'Heart UK');
+  assert.equal(catalog['heart-80s'].title, 'Heart 80s');
+  assert.equal(catalog['heart-uk-instant-audio'], undefined);
+  assert.equal(catalog['heart-80s-962e9a46'], undefined);
+  assert.equal(catalog['heart-uk'].stream, 'https://media-ssl.musicradio.com/HeartUK');
   const dir = await mkdtemp(join(tmpdir(), 'onair-dedup-'));
   try {
     const countryDir = join(dir, 'radio', 'europe');
