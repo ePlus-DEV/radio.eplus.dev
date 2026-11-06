@@ -976,3 +976,12 @@ See [ENVIRONMENTS.md](./ENVIRONMENTS.md) for the authoritative branch / GitHub E
 - Release direction is `feature PR → Development Preview → merge develop → verify Staging → reviewed develop-to-main release PR → Production`. Never merge or deploy PR content directly to Production, rewrite production SEO text as collateral work, force-push, or copy secret values into docs.
 - The default branch `main` controls the `pull_request_target` Preview workflow; synchronize it with `develop`. Keep PR build jobs read-only and isolated from Environment secrets; verify live HTML `noindex` and expected PR SHA before the bot posts a working preview URL.
 - Changes to any deployment tier must update `AGENTS.md`, `docs/ENVIRONMENTS.md`, `docs/GITHUB_ACTIONS.md` and tests, and preserve all three distinct Pages repositories and `CNAME` records.
+
+## README documentation layout (2026-11-06)
+
+The root `README.md` is intentionally a short public-facing project landing page, not the operational runbook. Keep product summary, quick-start, three-tier environment links, developer documentation index and license status visible without repeating deployment internals.
+
+- `docs/DEVELOPMENT.md` owns local setup, scripts and source directory reference.
+- `docs/ENVIRONMENTS.md` is the source of truth for branch / GitHub Environment / Pages repository / domain mapping, migration, deploy secrets and guardrails.
+- `docs/GITHUB_ACTIONS.md`, `docs/GITHUB_PAGES.md`, `docs/PR_PREVIEWS.md`, `docs/SEO.md` and `docs/SEPARATE_IMAGE_RELEASES.md` own their respective detailed runbooks.
+- Changes must update the specific document and keep README links working, rather than expanding README with duplicated tables, secrets guidance or YAML. Keep README and `AGENTS.md` synchronized between `main` and `develop`; do not alter production metadata, analytics, UI or deploy behavior for documentation restructuring.
