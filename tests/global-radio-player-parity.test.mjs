@@ -71,11 +71,15 @@ test('Global station cards have the same Play/Pause behavior as Country and may 
   assert.match(composable, /source\.image = siteAssetUrl\(source\.image\)/);
   assert.match(composable, /item\.image = siteAssetUrl\(item\.image\)/);
   for (const page of [directory, detail]) {
-    assert.match(page, /:aria-pressed=/);
-    assert.match(page, /i-lucide-pause/);
     assert.match(page, /useAuthorizedGlobalRadioPlayback\(\(\) => provider\.value\?\.stations \|\| \[\]\)/);
   }
-  assert.match(directory, /redesign\.paused/);
+  const shared = await read('components/panel/Station.vue');
+  assert.match(directory, /<PanelStation/);
+  assert.match(directory, /@select-station="playSelectedStation"/);
+  assert.match(shared, /:aria-pressed="isPlaying\(station\)"/);
+  assert.match(shared, /i-lucide-pause/);
+  assert.match(shared, /redesign\.paused/);
+  assert.match(detail, /:aria-pressed="isPlayingHere"/);
 });
 
 test('transient TuneIn renewal failure preserves an unexpired playing station', async () => {

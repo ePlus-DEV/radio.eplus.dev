@@ -18,11 +18,12 @@ export function useRestoreLastStation() {
   let disposed = false;
   onMounted(async () => {
     preferences.hydrate();
-    if (!preferences.restoreStation) return;
+    if (!preferences.restoreStation || playback.pendingGlobalRadio) return;
     const saved = listening.library.lastStation;
     // Explicit station deep links take precedence over the saved station.
     if (!saved || route.path.split('/').filter(Boolean).length >= 3 || playback.playRequest
-      || playback.requestedStationUrl || playback.playing || playback.station) return;
+      || playback.requestedStationUrl || playback.playing || playback.station
+      || playback.globalRadioPendingId) return;
     const path = route.fullPath;
     const request = playback.playRequest;
 
@@ -40,8 +41,12 @@ export function useRestoreLastStation() {
         const station = provider.stations?.find(entry => entry.id === stationId);
         if (!station) return;
         const stream = await resolvePublicTuneInStream({ station, corsServer: String(config.public.corsServer || '') });
+        // An explicit Global selection may still be resolving while playRequest
+        // is unchanged. A late idle restore must never replace it.
+        if (playback.pendingGlobalRadio) return;
         if (disposed || route.fullPath !== path || playback.playRequest !== request
-          || playback.requestedStationUrl || playback.station || playback.playing) return;
+          || playback.requestedStationUrl || playback.station || playback.playing
+          || playback.globalRadioPendingId) return;
         const restored = createAuthorizedApplePlaybackStation(station, stream.streamUrl);
         restored.image = siteAssetUrl(restored.image);
         const queue = createAppleRadioQueue(provider.stations);
@@ -68,7 +73,8 @@ export function useRestoreLastStation() {
     if (playback.station?.url !== saved.url) return;
     try {
       const catalog = await $fetch<Record<string, RadioCatalogEntry>>(siteAssetUrl(`/radio/${area}/${country}.json`), { timeout: 10_000 });
-      if (disposed || route.fullPath !== path || playback.playRequest !== request || playback.requestedStationUrl || playback.station?.url !== saved.url || playback.playing) return;
+      if (playback.pendingGlobalRadio) return;
+      if (disposed || route.fullPath !== path || playback.playRequest !== request || playback.requestedStationUrl || playback.station?.url !== saved.url || playback.playing || playback.globalRadioPendingId) return;
       const meta = catalog[id];
       if (!meta || !meta.stream) return;
       const options = Object.entries(catalog).map(([key, entry]) => ({ id: key, title: entry.title, image: entry.features || '/brand/onair-mark.svg', url: `/${area}/${country}/${key}` }));
