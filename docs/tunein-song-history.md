@@ -12,7 +12,9 @@ or artist for presentation in the ePlus player.
 
 1. For seven known Apple Music Radio station IDs only, call the anonymous
    **Describe.ashx** read endpoint with `id=s...` and `render=json`,
-   through the same fixed owner-operated CORS relay as playback.
+   through the same configured HTTPS CORS proxy as playback. The origin comes
+   from `NUXT_PUBLIC_CORS_SERVER_1` via Nuxt `config.public.corsServer`;
+   no Heroku address is hardcoded, and missing config disables the lookup.
 2. Parse the nested `body -> outline -> station` response, looking for
    **current_song** and **current_artist**. Both must be non-empty, associated
    with the selected station, and not explicitly marked unavailable or
