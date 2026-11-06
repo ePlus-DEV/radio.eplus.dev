@@ -4,6 +4,7 @@ import { isZingScheduleUrl } from '~/utils/station-schedule.mjs';
 import { getVietnamSchedule, vietnamReferencePrograms } from '~/utils/vietnam-schedules.mjs';
 import { createStationPolling } from '~/utils/station-polling.mjs';
 import { resolveLiveTrack } from '~/utils/live-track.mjs';
+import { appleTuneInMetadataMarker, stationIdFromTuneInMetadataMarker, fetchPublicTuneInMetadata, addTuneInSessionTrack } from '~/utils/global-radio-tunein-metadata.mjs';
 
 export function useStationRealtime() {
   const playback = usePlaybackStore();
@@ -58,9 +59,26 @@ export function useStationRealtime() {
     return { song: currentSong, lyrics: lines };
   };
 
-  interface RealtimeData { program: RadioProgram[]; playlist: RadioTrack[]; song?: RadioSong; lyrics: string[] }
+  interface RealtimeData {
+    program: RadioProgram[];
+    playlist: RadioTrack[];
+    song?: RadioSong;
+    lyrics: string[];
+    isTuneInMetadata?: boolean;
+    nowPlaying?: { title: string; artist: string } | null;
+  }
   const fetchSchedule = async (url: string, signal: AbortSignal): Promise<RealtimeData | undefined> => {
     if (!import.meta.client || !clientReady) return;
+    // Poll public station metadata separately from HLS decoding. The audio
+    // player independently observes timed ID3 from the playing HLS stream.
+    const tuneInId = stationIdFromTuneInMetadataMarker(url);
+    if (tuneInId) {
+      const nowPlaying = await fetchPublicTuneInMetadata({
+        stationId: tuneInId, corsServer: String(config.public.corsServer || ''), signal,
+      });
+      return { program: [], playlist: [], lyrics: [],
+        isTuneInMetadata: true, nowPlaying };
+    }
     const value = await $fetch<{ err?: number; success?: boolean; data?: { items?: RadioProgram[] }; result?: RadioTrack[] }>(timestampUrl(url), { signal, timeout: 10_000 });
     if (isZingScheduleUrl(url)) {
       const items = value.err === 0 ? value.data?.items || [] : [];
@@ -77,12 +95,27 @@ export function useStationRealtime() {
     onData: (value: RealtimeData | undefined) => {
       if (!value) return;
       program.value = value.program;
-      playlist.value = value.playlist;
+      // Build a real, device-local history only from observed current-song
+      // updates. TuneIn's directory playlist is NOT a song history API.
+      playlist.value = value.isTuneInMetadata
+        ? addTuneInSessionTrack(playlist.value, value.nowPlaying)
+        : value.playlist;
       song.value = value.song;
       lyrics.value = value.lyrics;
-      playback.setLiveTrack(playback.station?.url || '', resolveLiveTrack(value.song, value.playlist));
+      // Only TuneIn's explicit current_song + current_artist fields identify
+      // the reported live song; never label the first history row as current.
+      playback.setLiveTrack(playback.station?.url || '',
+        value.isTuneInMetadata ? (value.nowPlaying || null)
+          : resolveLiveTrack(value.song, value.playlist));
     },
     onLoading: (value: boolean) => { loading.value = value; },
+    onError: () => {
+      if (appleTuneInMetadataMarker(playback.station)) {
+        // Avoid showing stale metadata as live; retain already observed
+        // session tracks without making up missing song information.
+        playback.setLiveTrack(playback.station?.url || '', null);
+      }
+    },
   });
 
   const activate = () => {
@@ -95,9 +128,18 @@ export function useStationRealtime() {
     lyrics.value = [t('panel.updating')];
     lyricsOpen.value = false;
     if (!import.meta.client || !clientReady) return;
-    polling.start(playback.station?.schedule || '');
+    // One existing polling lifetime for both station EPG and TuneIn's history:
+    // station switches abort old requests, no extra player or background timer.
+    polling.start(appleTuneInMetadataMarker(playback.station) || playback.station?.schedule || '');
   };
   watch(() => playback.station?.url, activate);
+  // A track observed inside the actual HLS audio should also appear in the
+  // session-only Queue history. TuneIn Describe may never publish songs.
+  watch(() => playback.liveTrack, (track) => {
+    if (!track || track.source !== 'hls' || track.stationUrl !== playback.station?.url
+      || !appleTuneInMetadataMarker(playback.station)) return;
+    playlist.value = addTuneInSessionTrack(playlist.value, track);
+  });
   let referenceTimer: ReturnType<typeof setInterval> | null = null;
   onMounted(() => {
     clientReady = true;

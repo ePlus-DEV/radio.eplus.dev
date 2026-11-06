@@ -5,6 +5,8 @@
 export function stationCountryKey(url) {
   if (typeof url !== 'string') return '';
   const path = url.split(/[?#]/, 1)[0];
+  // Global Radio uses a provider namespace, not a geographic country.
+  if (/^\/global-radio\/apple-music\/[a-z0-9-]+$/.test(path)) return 'global_radio.title';
   const match = /^\/([a-z0-9-]+)\/([a-z0-9-]+)\/([^/]+)$/.exec(path);
   if (!match) return '';
   const [, area, country] = match;

@@ -4,6 +4,8 @@ export interface StationSearchItem {
   objectID: string;
   station_name: string;
   station_country: string;
+  station_category?: string;
+  station_language?: string;
   country_label?: string;
   station_image: string;
   url: string;

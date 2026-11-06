@@ -42,7 +42,9 @@ test('detail navigation never requests playback unless an explicit player action
   assert.match(detail, /const playStation = \(\): void => \{[\s\S]*?activateStation\(true\)/);
 
   // Queue/Next/Previous remain explicit playback intents despite opening the route.
-  assert.match(session, /playback\.requestStation\(target\.url\);\s*void navigateTo\(target\.url\)/);
+  assert.match(session, /playback\.requestStation\(target\.url\)/);
+  assert.match(session, /void navigateTo\(target\.url\)/);
+  assert.match(session, /target\.url\.startsWith\('\/global-radio\/apple-music\/'\)/);
   for (const panel of [stationPanel, featuredPanel]) {
     assert.match(panel, /:to="station\.url"/);
     const link = panel.match(/<NuxtLink[\s\S]*?<\/NuxtLink>/)?.[0];

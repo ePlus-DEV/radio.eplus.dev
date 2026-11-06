@@ -24,12 +24,15 @@ export async function buildStationSearchIndex({
       const catalog = JSON.parse(await readFile(join(areaPath, countryFile.name), 'utf8'));
       for (const [id, station] of Object.entries(catalog)) {
         if (!station || typeof station.title !== 'string' || !station.title.trim()) continue;
-        if (!/^https?:\/\//i.test(String(station.stream || ''))) continue;
+        if (!/^https?:\/\//i.test(String(station.stream || '')) || station.disabled === true || station.active === false) continue;
         result.push({
           objectID: `${area.name}/${country}/${id}`,
           station_name: station.title,
           station_country: `world.${area.name.replaceAll('-', '_')}.${country.replaceAll('-', '_')}`,
           country_label: humanLabel(country),
+          // Optional public facets; do not guess a genre or language from a name.
+          station_category: typeof station.category === 'string' ? station.category.trim() : '',
+          station_language: typeof station.language === 'string' ? station.language.trim() : '',
           station_image: station.features || '/brand/onair-mark.svg',
           url: `/${area.name}/${country}/${id}`,
           featured: area.name === 'asia' && country === 'viet-nam' && featuredIds.has(id),

@@ -73,6 +73,40 @@ For the language selector:
 
 Regression guard: `tests/language-dropdown.test.mjs`.
 
+## Apple Music / TuneIn external-provider invariants
+
+- Apple/TuneIn provider metadata lives in `public/catalog/providers/`,
+  separate from country-based `public/radio/` audio catalogs and SEO routes.
+- A TuneIn or Apple Music webpage is **not** an HTML5 stream URL.
+- Time-limited `itsliveradio.apple.com` HLS links require access keys and
+  must never be hardcoded, indexed, logged, committed or automatically harvested
+  from provider sessions. A static signed link is not a production integration.
+- **Do not expose signed HLS URL or accessKey entry to the public
+  listener interface.** Users must never need developer knowledge to listen.
+  The prototype `TemporaryHlsPreview` is retained as unmounted developer
+  research code, not a supported feature or CTA.
+- All public Global Radio provider cards must link directly to an authorized,
+  functional Apple Music/TuneIn listening destination; **never claim that
+  ePlus OnAir plays Apple Music in-app** until an authorized integration is
+  implemented and verified.
+- Never claim playback works solely because a URL ends in `.m3u8`; Apple
+  may restrict requests via key validation, CORS or region/access rules.
+  MusicKit is the supported route for an authorized production integration,
+  subject to proper developer credentials and user authentication.
+- Keep provider cards externally linked when direct playback is unavailable.
+  No changes to existing country-station SEO metadata unless explicitly asked.
+- The Apple Music public TuneIn lookup must use `config.public.corsServer`
+  from `NUXT_PUBLIC_CORS_SERVER_1`. Never hardcode a proxy domain or silently
+  fall back to an old Heroku URL when the env is missing/invalid.
+  The optional approved `NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL` is a separate
+  fallback; neither CORS nor an HLS link alone proves playback rights.
+- The client validates exact Apple HLS host, station association and signed
+  URL expiry. Signed links are ephemeral and must not enter catalog JSON,
+  localStorage, logs or analytics. The app renews only via the approved API.
+- An existing generic Heroku CORS proxy is **not** a licensed stream resolver
+  or accessKey signer. Never construct `Tune.ashx` calls using harvested
+  TuneIn session IDs, or spoof TuneIn Origin/Referer from ePlus.
+
 ## Player / HLS invariants
 
 The current player is intentionally **Native Audio + hls.js**, not Video.js.

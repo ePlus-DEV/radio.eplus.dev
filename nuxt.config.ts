@@ -1,9 +1,11 @@
 import { stationOgDeployment } from "./utils/station-og-deployment.mjs";
 import { defineNuxtConfig } from "nuxt/config";
 import { prefixPublicAsset } from "./utils/public-site-path.mjs";
+import { isPrPreviewBuild, PR_PREVIEW_ROUTES } from "./utils/pr-preview.mjs";
 import { isStagingDeployment } from "./utils/seo-deployment.mjs";
 import { GA4_MEASUREMENT_ID, isGa4ProductionBuild, getGa4HeadScripts } from "./utils/ga4-config.mjs";
 import { getRadioSeoRoutes, getSitemapEntry } from "./build/radioRoutes";
+import { getGlobalRadioRoutes } from "./build/globalRadioRoutes";
 import { getRadioCatalogStats } from "./build/radioStats";
 import {
   brandIcons,
@@ -19,6 +21,7 @@ const algoliaApiKey =
   process.env.ALGOLIA_API_KEY ||
   "";
 const hasAlgoliaConfig = Boolean(algoliaApplicationId && algoliaApiKey);
+const isPrPreview = isPrPreviewBuild();
 const baseURL = process.env.NUXT_APP_BASE_URL || "/";
 const staticAsset = (path: string) => prefixPublicAsset(path, baseURL);
 const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || "https://radio.eplus.dev").replace(
@@ -45,6 +48,7 @@ const defaultDescription =
 const radioSeoRoutes = getRadioSeoRoutes();
 const radioCatalogStats = getRadioCatalogStats();
 const staticSeoRoutes = [
+  ...getGlobalRadioRoutes(),
   { loc: "/about", priority: 0.5, changefreq: "monthly" as const },
   { loc: "/statistics", priority: 0.6, changefreq: "daily" as const },
   { loc: "/contact", priority: 0.4, changefreq: "monthly" as const },
@@ -83,6 +87,8 @@ export default defineNuxtConfig({
       cloudinaryBaseUrl: process.env.NUXT_PUBLIC_CLOUDINARY_BASE_URL,
       pinChannelFavorites: process.env.NUXT_PUBLIC_PIN_CHANNEL_FAVORITES,
       corsServer: process.env.NUXT_PUBLIC_CORS_SERVER_1,
+      // Optional approved ePlus API endpoint, never a TuneIn session proxy.
+      globalRadioResolverUrl: process.env.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL || '',
       placeholder: "https://s3.eplus.dev/i/radio-on-air.png",
       placeholderStation: "https://s3.eplus.dev/i/station-on-air.png",
       apiZingLiveStreamProgramDetail:
@@ -277,8 +283,10 @@ export default defineNuxtConfig({
       ],
     },
     prerender: {
-      crawlLinks: true,
-      routes: [
+      // Only preview builds limit routes: one full catalog per PR would exceed
+      // the GitHub Pages 1 GB site limit. Production/staging remain unchanged.
+      crawlLinks: !isPrPreview,
+      routes: isPrPreview ? [...PR_PREVIEW_ROUTES, '/robots.txt'] : [
         ...radioSeoRoutes.map((route) => route.loc),
         ...staticSeoRoutes.map((route) => route.loc),
         "/library",

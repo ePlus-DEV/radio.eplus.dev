@@ -44,7 +44,16 @@ const selectStation = (target: RadioStationOption) => {
   if (!target.url) return;
   // Queue and Next/Previous are explicit playback actions. Request the target
   // before navigating; a regular station-detail link never requests playback.
-  playback.requestStation(target.url);
+  // If a signed Global HLS URL expired and the shared player cleared it,
+  // route the explicit queue click through the Global resolver rather than
+  // requesting playback from an empty/stale source.
+  if (target.url === playback.station?.url
+    && target.url.startsWith('/global-radio/apple-music/')
+    && !playback.station.sources.length) {
+    playback.requestedStationUrl = target.url;
+  } else {
+    playback.requestStation(target.url);
+  }
   void navigateTo(target.url);
 };
 </script>

@@ -1,14 +1,14 @@
 <template>
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
-      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl"
+      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :diagnostics="recoveryDiagnostics"
         class="absolute inset-x-3 bottom-[calc(100%+0.5rem)] max-h-[40dvh] overflow-y-auto shadow-lg sm:left-auto sm:right-6 sm:w-96" @retry="retryCurrentSource" />
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <span v-if="!online">{{ $t('text.offline') }}</span>
         <template v-else-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
         </template>
-        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t('player.connecting') }}</span>
+        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t(hasPlayedCurrentSource ? 'recovery.buffering' : 'player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
@@ -111,7 +111,7 @@
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
-    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
+    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :diagnostics="recoveryDiagnostics" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
     <div class="mt-3 flex items-center justify-between gap-1">
       <div class="flex items-center gap-1">
         <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="cursor-pointer rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
@@ -174,7 +174,7 @@
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
     <template #content>
-      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
     </template>
   </UModal>
 </template>
@@ -191,14 +191,16 @@ import type { RadioSource, RadioStationOption } from "~/types/radio";
 import {
   MAX_STREAM_ATTEMPTS,
   buildPlaybackSources,
-  nextPlaybackIndex,
+
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
-import { playbackHealth } from "~/utils/playback-health.mjs";
+import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
+import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
+import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
 
 interface CurrentMedia {
   title: string;
@@ -264,10 +266,10 @@ listening.hydrate();
 const PLAYER_QUEUE_OPEN_KEY = 'radio:player-queue-open';
 const favoriteActive = computed(() => listening.library.favorites.some((item: { url: string }) => item.url === props.stationUrl));
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
-const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'redesign.paused'));
-const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? 'player.connecting' : playing.value ? 'player.on_air' : 'player.ready'));
+const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
+const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
   if (streamError.value) return "bg-red-500/10 text-red-700 dark:text-red-300";
   if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
@@ -318,7 +320,17 @@ const waiting = ref(false);
 const playing = ref(false);
 const streamError = ref(false);
 const unsupportedSource = ref(false);
-const health = computed(() => playbackHealth({ online: online.value, error: streamError.value, unsupported: unsupportedSource.value, waiting: waiting.value }));
+const hasPlayedCurrentSource = ref(false);
+// In-memory observations only; no stream URLs, diagnosis or user history is persisted.
+const lastSourcePlaybackAt = ref<number | null>(null);
+const sourceFailureReason = ref<'network' | 'decode' | 'timeout' | 'unknown' | ''>('');
+const health = computed(() => playbackHealth({
+  online: online.value,
+  error: streamError.value,
+  unsupported: unsupportedSource.value,
+  waiting: waiting.value,
+  hasPlayed: hasPlayedCurrentSource.value,
+}));
 const reportUrl = computed(() => stationReportUrl(props.stationUrl, props.streamName, health.value));
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
@@ -347,10 +359,13 @@ const setPlayerMini = (value: boolean): void => {
 };
 
 let hlsInstance: any = null;
+let detachNativeHlsMetadata: (() => void) | null = null;
+const hlsSongBuffer = createTimedHlsTrackBuffer({ appleMusic: true });
 let HlsCtor: any = null;
 let hlsImportPromise: Promise<any> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
+let stablePlaybackTimer: ReturnType<typeof setTimeout> | null = null;
 let sourceVersion = 0;
 let playVersion = 0;
 let activeResolvedSrc = "";
@@ -358,7 +373,6 @@ let liveResumePending = false;
 let pausedAtMs = 0;
 
 const RECONNECT_BASE_DELAY = 1200;
-const FALLBACK_PROBE_TIMEOUT = 10_000;
 
 let hlsNetworkRecoveryCount = 0;
 let hlsMediaRecoveryCount = 0;
@@ -420,6 +434,20 @@ const sourceHost = (source: RadioSource): string => {
   }
 };
 
+const recoveryDiagnostics = computed(() => ({
+  sourceIndex: sourceList.value.length ? activeSourceIndex.value + 1 : 0,
+  sourceCount: sourceList.value.length,
+  sourceLabel: sourceList.value[activeSourceIndex.value]
+    ? sourceName(sourceList.value[activeSourceIndex.value], activeSourceIndex.value)
+    : '',
+  retryAttempt: Math.min(attemptCount.value, MAX_STREAM_ATTEMPTS),
+  maxAttempts: MAX_STREAM_ATTEMPTS,
+  failureReason: sourceFailureReason.value,
+  lastPlayedAt: lastSourcePlaybackAt.value
+    ? new Intl.DateTimeFormat(locale.value, { hour: '2-digit', minute: '2-digit' }).format(lastSourcePlaybackAt.value)
+    : '',
+}));
+
 const sourceMenuItems = computed(() => sourceList.value.map((source, index) => ({
   label: `${index + 1}. ${sourceName(source, index)} · ${sourceFormat(source)}`,
   description: source.proxied ? t('player.proxy') : sourceHost(source),
@@ -468,18 +496,34 @@ const sidebarCount = computed(
   () => stationCount.value || scheduleCount.value,
 );
 
-const liveTrack = computed(() => resolveLiveTrack(props.song, props.playlist));
+const liveTrack = computed(() => {
+  // TuneIn's playlist here is a session history, not a reliable live feed.
+  // Never report a previously observed song as currently playing merely
+  // because it appears first in the queue.
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    const reported = playback.liveTrack;
+    return reported?.stationUrl === props.stationUrl
+      ? { title: reported.title, artist: reported.artist } : null;
+  }
+  return resolveLiveTrack(props.song, props.playlist);
+});
 const nowPlayingTitle = computed(() => liveTrack.value?.title || props.streamName || "Live radio");
 const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
 const nowPlayingArtist = computed(() => liveTrack.value?.artist || "");
 
-const nowPlayingArtwork = computed(
-  () =>
-    props.song?.currentMedia?.thumbnail ||
+const nowPlayingArtwork = computed(() => {
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    // The first history row can be stale. Only show album art bound to the
+    // currently playing HLS ID3 track; otherwise show the station identity.
+    const live = playback.liveTrack;
+    return live?.stationUrl === props.stationUrl && live.artwork
+      ? live.artwork : props.thumb;
+  }
+  return props.song?.currentMedia?.thumbnail ||
     props.song?.thumbnail ||
     props.playlist?.[0]?.track_image ||
-    props.thumb,
-);
+    props.thumb;
+});
 
 const inferMime = (url: string, fallback = "audio/mpeg"): string => {
   const value = url.toLowerCase();
@@ -565,6 +609,9 @@ const ensureHls = async (): Promise<any> => {
 };
 
 const destroyHls = (): void => {
+  hlsSongBuffer.clear();
+  detachNativeHlsMetadata?.();
+  detachNativeHlsMetadata = null;
   if (!hlsInstance) return;
   hlsInstance.destroy();
   hlsInstance = null;
@@ -584,6 +631,25 @@ const clearFallbackProbeTimer = (): void => {
   fallbackProbeTimer = null;
 };
 
+const clearStablePlaybackTimer = (): void => {
+  if (!stablePlaybackTimer) return;
+  clearTimeout(stablePlaybackTimer);
+  stablePlaybackTimer = null;
+};
+
+const startStablePlaybackTimer = (): void => {
+  if (stablePlaybackTimer) return;
+  const version = sourceVersion;
+  stablePlaybackTimer = setTimeout(() => {
+    stablePlaybackTimer = null;
+    const media = mediaElement.value;
+    if (version !== sourceVersion || userPaused.value || !playing.value || waiting.value ||
+      !media || media.paused || media.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+    // Only uninterrupted, decoded playback replenishes the retry budget.
+    attemptCount.value = 0;
+  }, STABLE_PLAYBACK_WINDOW_MS);
+};
+
 const tryPlay = async (): Promise<void> => {
   const media = mediaElement.value;
   if (!media || userPaused.value) return;
@@ -595,23 +661,24 @@ const tryPlay = async (): Promise<void> => {
   try {
     await media.play();
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
-    pendingAutoPlay.value = false;
-    waiting.value = false;
-    playing.value = true;
+    // Resolving play() or receiving canplay does not always mean decoded
+    // audio is being delivered. Keep the watchdog armed until real playback.
+    const hasDecodedAudio = !media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA;
+    pendingAutoPlay.value = !hasDecodedAudio;
+    waiting.value = !hasDecodedAudio;
+    playing.value = hasDecodedAudio;
     streamError.value = false;
-    // Some stream integrations resolve play() before dispatching "playing".
-    // Keep listening statistics aligned with the real media state, not just
-    // the visual Player status; never count if the element is still paused
-    // or has no decoded/buffered audio data.
-    if (!media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
-      && listeningDurationTracker.activeUrl !== playback.station?.url) {
+    if (hasDecodedAudio && listeningDurationTracker.activeUrl !== playback.station?.url) {
       onMediaPlaying();
+    } else if (!hasDecodedAudio) {
+      startFallbackProbe();
     }
 
   } catch (error) {
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
     waiting.value = false;
     playing.value = false;
+    clearStablePlaybackTimer();
 
     const name =
       error && typeof error === "object" && "name" in error
@@ -638,28 +705,34 @@ const tryPlay = async (): Promise<void> => {
     }
 
     unsupportedSource.value = name === "NotSupportedError";
+    sourceFailureReason.value = playbackFailureReason({ exceptionName: name });
     scheduleReconnect();
   }
 };
 
 const startFallbackProbe = (): void => {
-  clearFallbackProbeTimer();
-  if (!preferences.autoReconnect) return;
+  // Repeated waiting/canplay events must not extend a silent attempt forever.
+  if (fallbackProbeTimer || userPaused.value || !online.value || !sourceList.value.length) return;
 
-  if (
-    activeSourceIndex.value + 1 >= sourceList.value.length ||
-    userPaused.value
-  ) {
-    return;
-  }
-
+  const version = sourceVersion;
   fallbackProbeTimer = setTimeout(() => {
     fallbackProbeTimer = null;
-
-    if (!playing.value && pendingAutoPlay.value && !userPaused.value) {
-      advanceFallbackSource();
-    }
-  }, FALLBACK_PROBE_TIMEOUT);
+    // The timer belongs to a particular source/station, never a later one.
+    if (version !== sourceVersion) return;
+    const action = playbackWatchdogAction({
+      waiting: waiting.value,
+      playing: playing.value,
+      userPaused: userPaused.value,
+      online: online.value,
+      autoReconnect: preferences.autoReconnect,
+      attemptCount: attemptCount.value,
+      sourceCount: sourceList.value.length,
+    });
+    if (action === 'ignore') return;
+    sourceFailureReason.value = playbackFailureReason({ timeout: true });
+    if (action === 'stop') stopPlaybackFailure();
+    else advanceFallbackSource();
+  }, STREAM_STALL_TIMEOUT_MS);
 };
 
 const configureNativeSource = (
@@ -677,6 +750,36 @@ const configureNativeSource = (
     startFallbackProbe();
     void tryPlay();
   }
+};
+
+// Safari/iOS uses native HLS rather than hls.js on devices without MSE.
+const attachNativeHlsSongMetadata = (media: HTMLAudioElement, version: number): void => {
+  const stationUrl = props.stationUrl;
+  if (!stationUrl?.startsWith('/global-radio/apple-music/')) return;
+  const tracks = media.textTracks;
+  if (!tracks) return;
+  const listeners = new Map<TextTrack, EventListener>();
+  const register = (track: TextTrack | null | undefined) => {
+    if (!track || track.kind !== 'metadata' || listeners.has(track)) return;
+    track.mode = 'hidden';
+    const onCueChange: EventListener = () => {
+      if (version !== sourceVersion || userPaused.value || media.paused
+        || playback.station?.url !== stationUrl) return;
+      const current = extractNativeHlsId3Track(track.activeCues, { appleMusic: true });
+      if (current) playback.setHlsLiveTrack(stationUrl, current);
+    };
+    track.addEventListener('cuechange', onCueChange);
+    listeners.set(track, onCueChange);
+    onCueChange(new Event('cuechange'));
+  };
+  const onAddTrack: EventListener = event => register((event as Event & { track?: TextTrack }).track);
+  tracks.addEventListener('addtrack', onAddTrack);
+  for (let i = 0; i < tracks.length; i++) register(tracks[i]);
+  detachNativeHlsMetadata = () => {
+    tracks.removeEventListener('addtrack', onAddTrack);
+    for (const [track, listener] of listeners) track.removeEventListener('cuechange', listener);
+    listeners.clear();
+  };
 };
 
 const configureHlsSource = async (
@@ -708,6 +811,7 @@ const configureHlsSource = async (
     }
 
     media.src = source.src;
+    attachNativeHlsSongMetadata(media, version);
     media.load();
 
     if (autoplay && !userPaused.value) {
@@ -725,6 +829,18 @@ const configureHlsSource = async (
   }
 
   hlsInstance = new Hls();
+  // Feature-detect real timed ID3 inside HLS already decoded by hls.js.
+  // This is not audio fingerprinting; no metadata => no guessed song.
+  // Never inspect or log Apple accessKey / tokenized stream URLs.
+  const metadataStationUrl = props.stationUrl;
+  if (metadataStationUrl?.startsWith('/global-radio/apple-music/')) {
+    hlsInstance.on(Hls.Events.FRAG_PARSING_METADATA, (_event: unknown, data: { samples?: unknown[] }) => {
+      if (version !== sourceVersion || userPaused.value
+        || playback.station?.url !== metadataStationUrl) return;
+      hlsSongBuffer.add(data?.samples);
+      flushHlsSongMetadata();
+    });
+  }
   hlsInstance.on(Hls.Events.MEDIA_ATTACHED, () => {
     if (version !== sourceVersion || !hlsInstance) return;
     hlsInstance.loadSource(source.src);
@@ -744,6 +860,8 @@ const configureHlsSource = async (
 
   hlsInstance.on(Hls.Events.ERROR, (_event: unknown, data: any) => {
     if (version !== sourceVersion || !data?.fatal || !hlsInstance) return;
+    sourceFailureReason.value = playbackFailureReason({ hlsType: data.type });
+    clearStablePlaybackTimer();
     if (!preferences.autoReconnect) { stopPlaybackFailure(); return; }
 
     waiting.value = false;
@@ -772,10 +890,11 @@ const configureHlsSource = async (
     }
 
     unsupportedSource.value = data.type === Hls.ErrorTypes.MEDIA_ERROR;
+    // Never log full stream URLs: some providers use tokenized query strings.
     console.warn("Fatal HLS playback error", {
       type: data.type,
       details: data.details,
-      source: source.src,
+      sourceIndex: activeSourceIndex.value + 1,
     });
     scheduleReconnect();
   });
@@ -784,9 +903,13 @@ const configureHlsSource = async (
 };
 
 const stopPlaybackFailure = (): void => {
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   stopListeningDuration();
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
   destroyHls();
 
   const media = mediaElement.value;
@@ -796,6 +919,7 @@ const stopPlaybackFailure = (): void => {
   playing.value = false;
   pendingAutoPlay.value = false;
   streamError.value = true;
+  if (!sourceFailureReason.value) sourceFailureReason.value = 'unknown';
   userPaused.value = true;
 };
 
@@ -821,9 +945,16 @@ const applySource = async (
   }
 
   const version = ++sourceVersion;
+  hlsSongBuffer.clear();
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   liveResumePending = false;
   pausedAtMs = 0;
   activeSourceIndex.value = index;
+  hasPlayedCurrentSource.value = false;
+  lastSourcePlaybackAt.value = null;
+  sourceFailureReason.value = '';
   unsupportedSource.value = false;
   streamError.value = false;
   playing.value = false;
@@ -832,16 +963,30 @@ const applySource = async (
 
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
+  // Start before playlist fetch / HLS manifest parsing so every candidate
+  // (including a single or last source) has an upper bound on silence.
+  if (pendingAutoPlay.value) startFallbackProbe();
 
-  const source = await resolvePlaylistSource(rawSource);
-  if (version !== sourceVersion || !mediaElement.value) return;
+  try {
+    const source = await resolvePlaylistSource(rawSource);
+    if (version !== sourceVersion || !mediaElement.value) return;
 
-  activeResolvedSrc = source.src;
+    activeResolvedSrc = source.src;
 
-  if (isHlsSource(source)) {
-    await configureHlsSource(source, autoplay, version);
-  } else {
-    configureNativeSource(source, autoplay);
+    if (isHlsSource(source)) {
+      await configureHlsSource(source, autoplay, version);
+    } else {
+      configureNativeSource(source, autoplay);
+    }
+  } catch (error) {
+    // Includes an unavailable hls.js chunk or a failed manifest setup.
+    // Do not leak the station's tokenized stream URL in console/error text.
+    if (version !== sourceVersion || userPaused.value) return;
+    const name = error && typeof error === 'object' && 'name' in error
+      ? String((error as { name?: string }).name || '') : '';
+    sourceFailureReason.value = playbackFailureReason({ exceptionName: name });
+    scheduleReconnect();
   }
 };
 
@@ -854,7 +999,7 @@ const advanceFallbackSource = (): boolean => {
     return false;
   }
 
-  const nextIndex = nextPlaybackIndex(
+  const nextIndex = nextRecoverySourceIndex(
     activeSourceIndex.value,
     sourceList.value.length,
   );
@@ -934,6 +1079,10 @@ const onPlay = async (): Promise<void> => {
 };
 
 const onPause = (): void => {
+  hlsSongBuffer.clear();
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    playback.clearHlsLiveTrack(props.stationUrl);
+  }
   stopListeningDuration();
   sleepTimer.cancel();
   listening.remember(playback.station, 'pause');
@@ -944,6 +1093,7 @@ const onPause = (): void => {
   pendingAutoPlay.value = false;
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
 
   media?.pause();
   liveResumePending = Boolean(activeResolvedSrc);
@@ -993,6 +1143,14 @@ const onSourceChange = (event: Event): void => {
 
 const selectStation = (station: RadioStationOption): void => {
   if (station.id === props.activeStationId) {
+    // The Global provider rotates signed HLS tokens. If a previously selected
+    // lease expired, a queue click must request a NEW stream rather than
+    // silently doing nothing because the current audio source is empty.
+    if (!hasPlayableSource.value && station.url?.startsWith('/global-radio/apple-music/')) {
+      mobileQueueOpen.value = false;
+      emit("select-station", station);
+      return;
+    }
     if (!playing.value && hasPlayableSource.value) {
       void onPlay();
     }
@@ -1087,6 +1245,7 @@ const updateOnlineStatus = (): void => {
   if (!online.value) {
     clearReconnectTimer();
     clearFallbackProbeTimer();
+    clearStablePlaybackTimer();
     waiting.value = false;
     return;
   }
@@ -1097,13 +1256,19 @@ const updateOnlineStatus = (): void => {
 };
 
 const onMediaCanPlay = (): void => {
-  clearReconnectTimer();
-  clearFallbackProbeTimer();
-  streamError.value = false;
+  // Metadata/buffer readiness is not proof of actual audio delivery.
+  // Keep both reconnect and stall deadlines until onMediaPlaying confirms it.
+  if (userPaused.value || !pendingAutoPlay.value) return;
+  if (!playing.value) void tryPlay();
+};
 
-  if (pendingAutoPlay.value && !userPaused.value && !playing.value) {
-    void tryPlay();
-  }
+const flushHlsSongMetadata = (): void => {
+  const stationUrl = props.stationUrl;
+  const media = mediaElement.value;
+  if (!stationUrl?.startsWith('/global-radio/apple-music/') || !media
+    || userPaused.value || media.paused) return;
+  const track = hlsSongBuffer.consume(media.currentTime);
+  if (track) playback.setHlsLiveTrack(stationUrl, track);
 };
 
 const onMediaPlaying = (): void => {
@@ -1117,18 +1282,24 @@ const onMediaPlaying = (): void => {
   }
   clearReconnectTimer();
   clearFallbackProbeTimer();
-  attemptCount.value = 0;
+  startStablePlaybackTimer();
   pendingAutoPlay.value = false;
   waiting.value = false;
   playing.value = true;
   streamError.value = false;
+  if (!hasPlayedCurrentSource.value) lastSourcePlaybackAt.value = Date.now();
+  hasPlayedCurrentSource.value = true;
+  sourceFailureReason.value = '';
+  flushHlsSongMetadata();
 };
 
 const onMediaWaiting = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   playing.value = false;
   if (!userPaused.value) {
     waiting.value = true;
+    pendingAutoPlay.value = true;
     startFallbackProbe();
   }
 };
@@ -1140,17 +1311,20 @@ const onMediaStalled = (): void => {
 
 const onMediaPause = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   playing.value = false;
 };
 
 const onMediaEnded = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   playing.value = false;
   if (!userPaused.value) scheduleReconnect();
 };
 
 const onMediaError = (): void => {
   stopListeningDuration();
+  clearStablePlaybackTimer();
   if (!activeResolvedSrc || userPaused.value) return;
 
   // hls.js reports richer network/media failures through Hls.Events.ERROR.
@@ -1160,7 +1334,9 @@ const onMediaError = (): void => {
 
   waiting.value = false;
   playing.value = false;
-  unsupportedSource.value = [3, 4].includes(mediaElement.value?.error?.code ?? 0);
+  const mediaCode = mediaElement.value?.error?.code ?? 0;
+  unsupportedSource.value = [3, 4].includes(mediaCode);
+  sourceFailureReason.value = playbackFailureReason({ mediaCode });
   scheduleReconnect();
 };
 
@@ -1188,6 +1364,9 @@ const bindMediaEvents = (): void => {
   media.addEventListener("ended", onMediaEnded);
   media.addEventListener("error", onMediaError);
   media.addEventListener("volumechange", onVolumeChange);
+  // Consume ID3 at audible playback time, not when a future HLS fragment
+  // has only been downloaded/buffered.
+  media.addEventListener("timeupdate", flushHlsSongMetadata);
 };
 
 const unbindMediaEvents = (): void => {
@@ -1202,10 +1381,16 @@ const unbindMediaEvents = (): void => {
   media.removeEventListener("ended", onMediaEnded);
   media.removeEventListener("error", onMediaError);
   media.removeEventListener("volumechange", onVolumeChange);
+  media.removeEventListener("timeupdate", flushHlsSongMetadata);
 };
 
 watch(() => preferences.autoReconnect, (enabled) => {
-  if (!enabled) { clearReconnectTimer(); clearFallbackProbeTimer(); }
+  if (!enabled) {
+    clearReconnectTimer();
+    // Disabling auto-reconnect must not leave an endless spinner.
+    // A stalled source times out to a manual Retry state instead.
+    if (waiting.value && !userPaused.value && online.value) startFallbackProbe();
+  }
 });
 
 watch([playing, waiting], ([isPlaying, isWaiting]) => {
@@ -1237,9 +1422,16 @@ watch(
     const autoplay = !userPaused.value || request !== previousRequest;
     stopListeningDuration();
     sourceVersion += 1;
+    hlsSongBuffer.clear();
+    if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+      playback.clearHlsLiveTrack(props.stationUrl);
+    }
     activeSourceIndex.value = 0;
     activeResolvedSrc = "";
     attemptCount.value = 0;
+    hasPlayedCurrentSource.value = false;
+    lastSourcePlaybackAt.value = null;
+    sourceFailureReason.value = '';
     unsupportedSource.value = false;
     streamError.value = false;
     playing.value = false;
@@ -1247,6 +1439,7 @@ watch(
     pendingAutoPlay.value = false;
     clearReconnectTimer();
     clearFallbackProbeTimer();
+    clearStablePlaybackTimer();
     destroyHls();
     const media = mediaElement.value;
     if (media) {
@@ -1353,6 +1546,7 @@ onUnmounted(() => {
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
+  clearStablePlaybackTimer();
   unbindMediaEvents();
   destroyHls();
 

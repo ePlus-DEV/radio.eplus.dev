@@ -2,6 +2,9 @@ import { useListeningStore } from '~/stores/listening';
 import { usePlaybackStore } from '~/stores/playback';
 import { useListenerPreferencesStore } from '~/stores/listenerPreferences';
 import { createPlaybackStation } from '~/utils/playback-station.mjs';
+import { createAppleRadioQueue, createAuthorizedApplePlaybackStation } from '~/utils/global-radio-station.mjs';
+import { PUBLIC_APPLE_TUNEIN_STATIONS, resolvePublicTuneInStream } from '~/utils/global-radio-public-tunein.mjs';
+import type { GlobalRadioProvider } from '~/types/global-radio';
 import type { RadioCatalogEntry } from '~/types/radio';
 
 export function useRestoreLastStation() {
@@ -18,9 +21,36 @@ export function useRestoreLastStation() {
     if (!preferences.restoreStation) return;
     const saved = listening.library.lastStation;
     // Explicit station deep links take precedence over the saved station.
-    if (!saved || route.path.split('/').filter(Boolean).length >= 3 || playback.playRequest || playback.requestedStationUrl || playback.playing) return;
+    if (!saved || route.path.split('/').filter(Boolean).length >= 3 || playback.playRequest
+      || playback.requestedStationUrl || playback.playing || playback.station) return;
     const path = route.fullPath;
     const request = playback.playRequest;
+
+    // Global and Country use the same idle-restore behavior. The difference
+    // is that Global must obtain a NEW signed HLS URL: never persist or reuse
+    // the expiring accessKey from a previous browser session.
+    if (saved.url.startsWith('/global-radio/')) {
+      const stationId = saved.url.slice('/global-radio/apple-music/'.length);
+      if (!saved.url.startsWith('/global-radio/apple-music/')
+        || !Object.hasOwn(PUBLIC_APPLE_TUNEIN_STATIONS, stationId)) return;
+      try {
+        const provider = await $fetch<GlobalRadioProvider>(
+          siteAssetUrl('/catalog/providers/apple-music.json'), { timeout: 10_000 },
+        );
+        const station = provider.stations?.find(entry => entry.id === stationId);
+        if (!station) return;
+        const stream = await resolvePublicTuneInStream({ station, corsServer: String(config.public.corsServer || '') });
+        if (disposed || route.fullPath !== path || playback.playRequest !== request
+          || playback.requestedStationUrl || playback.station || playback.playing) return;
+        playback.activateGlobalRadio(
+          createAuthorizedApplePlaybackStation(station, stream.streamUrl),
+          station.listen_url, stream.expiresAt,
+          createAppleRadioQueue(provider.stations),
+          { autoplay: false },
+        );
+      } catch { /* No stale keys; an offline restore must not interrupt browsing. */ }
+      return;
+    }
     const [, area, country, id] = saved.url.split('/');
     playback.activate({
       id,
