@@ -20,12 +20,14 @@ test('Global and Country share a full station queue, not a one-station player', 
   assert.equal(queue.length, 7);
   assert.deepEqual(queue.map(item => item.id), provider.stations.map(item => item.id));
   assert.equal(new Set(queue.map(item => item.url)).size, 7);
+  assert.deepEqual(queue.map(item => item.image), provider.stations.map(item => item.image));
   assert.equal(queue.every(item => item.url.startsWith('/global-radio/apple-music/')), true);
   assert.doesNotMatch(JSON.stringify(queue), /m3u8|accessKey/);
   const first = provider.stations[0];
   const station = createAuthorizedApplePlaybackStation(first, appleStream);
   playback.activateGlobalRadio(station, first.listen_url, Date.now() + 120_000, queue);
   assert.equal(playback.station.url, queue[0].url);
+  assert.equal(station.image, first.image);
   assert.equal(playback.stations.length, 7);
   assert.equal(playback.playRequest, 1);
   assert.equal(playback.globalRadioLease.stationUrl, queue[0].url);

@@ -39,7 +39,9 @@ test('Apple Music provider stays separate from country-based audio catalog', asy
   assert.match(routes, /getGlobalRadioRoutes/);
   assert.match(routes, /station\.tunein_url/);
   assert.match(searchIndex, /public\/radio/);
-  assert.doesNotMatch(searchIndex, /catalog\/providers/, 'external-only cards must not appear in HTMLAudio search');
+  assert.match(searchIndex, /providerRoot = 'public\/catalog\/providers'/);
+  assert.match(searchIndex, /station_country: 'global_radio.title'/);
+  assert.match(searchIndex, /station_image_fallback:/);
 });
 
 test('seven verified TuneIn Apple Music pages with unique IDs and no audio stream', async () => {
@@ -61,6 +63,7 @@ test('seven verified TuneIn Apple Music pages with unique IDs and no audio strea
   for (const station of provider.stations) {
     assert.match(station.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     assert.ok(station.title && station.genre && station.language && station.description);
+    assert.match(station.image, /^https:\/\/cdn-profiles\.tunein\.com\/(?:s|p)\d+\/images\/[a-zA-Z0-9._-]+\.(?:png|jpg)\?t=\d+$/);
     const tunein = new URL(station.tunein_url);
     assert.equal(tunein.protocol, 'https:');
     assert.equal(tunein.hostname, 'tunein.com');
