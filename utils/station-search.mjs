@@ -67,7 +67,7 @@ function geographicHitKey(hit) {
   const parts = hit.url.split('/');
   if (parts.length !== 4 || parts[0] || !parts[1] || !parts[2] || !parts[3]
     || parts[1] === 'global-radio') return '';
-  const title = normalizeStationQuery(hit.station_name).replace(/\\s+/g, ' ');
+  const title = normalizeStationQuery(hit.station_name).replace(/\s+/g, ' ');
   return title ? parts[1] + '/' + parts[2] + '/' + title : '';
 }
 
