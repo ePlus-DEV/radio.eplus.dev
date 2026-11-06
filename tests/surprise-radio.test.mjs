@@ -36,6 +36,9 @@ test('invalid paths, duplicate station records and empty titles are discarded wi
   const source = [...sample, sample[0], { ...sample[0], url: 'javascript:alert(1)' }, { ...sample[0], station_name: '' }];
   assert.equal(randomStationCandidates(source).length, 3);
   assert.equal(source.length, 6);
+  const globalPage = { url: '/global-radio/apple-music/apple-music-1', station_name: 'Apple Music 1', station_country: 'global_radio.title' };
+  assert.equal(randomStationCandidates([...source, globalPage]).length, 3,
+    'Global Radio search results must not be treated as directly playable country stations');
 });
 
 test('build index emits only real, optional display facets and excludes disabled/unsafe primary sources', async () => {
@@ -50,7 +53,7 @@ test('build index emits only real, optional display facets and excludes disabled
       disabled: { title: 'Inactive', stream: 'https://audio.example/d', disabled: true },
       invalid: { title: 'No audio', stream: 'javascript:alert(1)' },
     }));
-    const built = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), outputFile: output });
+    const built = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), providerRoot: join(root, 'providers'), outputFile: output });
     assert.equal(built.length, 2);
     const jazz = built.find(item => item.url === '/asia/viet-nam/jazz');
     assert.equal(jazz.station_category, 'Jazz');
