@@ -3,30 +3,30 @@
 // URLs, signed access keys, playlist contents, audio bytes, or metadata values.
 // No saved recordings, no playlist rebroadcast, no credentials.
 import test from 'node:test';
-import { resolvePublicTuneInStream } from '../utils/global-radio-public-tunein.mjs';
+import { PUBLIC_APPLE_TUNEIN_STATIONS, resolvePublicTuneInStream } from '../utils/global-radio-public-tunein.mjs';
 import { parseHlsId3Tag } from '../utils/hls-song-metadata.mjs';
 
 const corsServer = process.env.NUXT_PUBLIC_CORS_SERVER_1 || '';
 const enabled = process.env.GITHUB_ACTIONS === 'true'
   && process.env.GITHUB_HEAD_REF === 'feat/tunein-apple-radio-song-history-20261105'
   && Boolean(corsServer);
-const stationIds = ['apple-music-1', 'apple-music-hits', 'apple-music-chill'];
+const stationIds = Object.keys(PUBLIC_APPLE_TUNEIN_STATIONS);
 const MAX_PLAYLIST = 180_000;
-const MAX_SEGMENT = 196_608;
+const MAX_SEGMENT = 262_144;
 
 function isApproved(url) {
   try {
     const parsed = new URL(url);
-    const masterOrVariant = parsed.pathname.startsWith('/3p-tune-in/tune_in/');
-    // Verified in the user's HAR: CMAF audio fragments use a different
-    // Apple-owned path from the TuneIn manifests. Do not reject them.
-    const cmafFragment = new RegExp(
-      '^/3p-tune-in/bb/as_live_aod/[0-9]+/[a-z0-9-]+/cmaf/[0-9]+_[0-9]+/fileSequence[0-9]+[.](?:m4s|mp4)$',
-      'i',
-    ).test(parsed.pathname);
+    // The trusted, station-bound Apple manifest may contain TS/CMAF fragments
+    // below /bb/as_live_aod/; do not discard these just because the master
+    // is under /tune_in/. No user-supplied URLs are accepted by this probe.
+    const playlist = parsed.pathname.startsWith('/3p-tune-in/tune_in/') &&
+      parsed.pathname.endsWith('.m3u8');
+    const fragment = parsed.pathname.startsWith('/3p-tune-in/') &&
+      /\.(?:ts|aac|m4s|mp4)$/i.test(parsed.pathname);
     return parsed.protocol === 'https:'
       && parsed.hostname === 'itsliveradio.apple.com'
-      && (masterOrVariant || cmafFragment)
+      && (playlist || fragment)
       && !parsed.username && !parsed.password && !parsed.port
       && [...parsed.searchParams].every(([key]) => key === 'accessKey');
   } catch { return false; }
@@ -151,15 +151,31 @@ function summarizeSegment(bytes) {
     }
     cursor += size;
   }
-  return { prefixBytes: bytes.byteLength, emsgTags, songTags, otherTags };
+  // MPEG-TS PES may fragment ID3 over transport packets; a missing signature
+  // in this bounded byte scan does NOT establish the absence of timed metadata.
+  let id3Headers = 0;
+  let recognizedSongs = 0;
+  let artworkSongs = 0;
+  for (let i = 0; i + 20 < bytes.length; i++) {
+    if (bytes[i] !== 0x49 || bytes[i + 1] !== 0x44 || bytes[i + 2] !== 0x33 ||
+      (bytes[i + 3] !== 3 && bytes[i + 3] !== 4)) continue;
+    id3Headers++;
+    const size = ((bytes[i + 6] & 127) << 21) | ((bytes[i + 7] & 127) << 14)
+      | ((bytes[i + 8] & 127) << 7) | (bytes[i + 9] & 127);
+    if (size < 10 || size > 65_526 || i + 10 + size > bytes.length) continue;
+    const track = parseHlsId3Tag(bytes.subarray(i, i + 10 + size), { appleMusic: true });
+    if (track) { recognizedSongs++; if (track.artwork) artworkSongs++; }
+  }
+  return { prefixBytes: bytes.byteLength, emsgTags, songTags, otherTags,
+    id3Headers, recognizedSongs, artworkSongs };
 }
 
 test('diagnostic only: inspect authorized HLS manifests for timed-song metadata (no audio logged)', {
   skip: !enabled,
-  timeout: 90_000,
+  timeout: 180_000,
 }, async () => {
   for (const stationId of stationIds) {
-    const report = { stationId, resolved: false, master: null, media: null, segment: null, error: null };
+    const report = { stationId, resolved: false, master: null, media: null, segment: null, segmentFormat: null, error: null };
     try {
       const station = { id: stationId };
       const resolved = await resolvePublicTuneInStream({ station, corsServer });
@@ -172,10 +188,16 @@ test('diagnostic only: inspect authorized HLS manifests for timed-song metadata 
         const media = await getText(mediaUrl);
         report.media = summarizePlaylist(media);
         const segmentUrl = mediaSegmentUrl(media, mediaUrl);
-        if (segmentUrl) report.segment = summarizeSegment(await getSegmentPrefix(segmentUrl));
+        if (segmentUrl) {
+          report.segmentFormat = new URL(segmentUrl).pathname.split('.').at(-1)?.slice(0, 4);
+          report.segment = summarizeSegment(await getSegmentPrefix(segmentUrl));
+        }
       } else {
         const segmentUrl = mediaSegmentUrl(master, resolved.streamUrl);
-        if (segmentUrl) report.segment = summarizeSegment(await getSegmentPrefix(segmentUrl));
+        if (segmentUrl) {
+          report.segmentFormat = new URL(segmentUrl).pathname.split('.').at(-1)?.slice(0, 4);
+          report.segment = summarizeSegment(await getSegmentPrefix(segmentUrl));
+        }
       }
     } catch (error) {
       // Error names/status only: no provider URLs or error messages.
