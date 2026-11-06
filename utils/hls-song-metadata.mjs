@@ -41,6 +41,29 @@ function frameText(payload) {
   } catch { return ''; }
 }
 
+// Apple embeds song cover links in ID3 WXXX artworkURL_390x/640x frames.
+// Reject arbitrary URLs; only render public assets on Apple's image CDN.
+function appleArtworkFrame(payload) {
+  if (!(payload instanceof Uint8Array) || payload.length < 20 ||
+    payload.length > MAX_TEXT_BYTES || (payload[0] !== 0 && payload[0] !== 3)) return null;
+  const separator = payload.indexOf(0, 1);
+  if (separator < 2 || separator > 48) return null;
+  try {
+    const decoder = new TextDecoder(payload[0] === 3 ? 'utf-8' : 'windows-1252', { fatal: true });
+    const label = decoder.decode(payload.subarray(1, separator));
+    const priority = label === 'artworkURL_640x' ? 2 : label === 'artworkURL_390x' ? 1 : 0;
+    if (!priority) return null;
+    const raw = new TextDecoder('utf-8', { fatal: true }).decode(payload.subarray(separator + 1));
+    if (raw.length > 2048 || !raw || /[\u0000-\u001f\u007f]/.test(raw)) return null;
+    const url = new URL(raw);
+    if (url.protocol !== 'https:' || !/^is[0-9]+-ssl\.mzstatic\.com$/i.test(url.hostname) ||
+      url.username || url.password || url.port || url.hash || url.search ||
+      !url.pathname.startsWith('/image/thumb/') ||
+      !/\/[0-9]{2,4}x[0-9]{2,4}(?:bb|cc)\.jpe?g$/i.test(url.pathname)) return null;
+    return { artwork: url.href, priority };
+  } catch { return null; }
+}
+
 export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
   if (!(data instanceof Uint8Array) || data.length < 20
     || data.length > MAX_TAG_BYTES || data[0] !== 0x49
@@ -56,6 +79,8 @@ export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
   let artist = '';
   let album = '';
   let appleTrackId = false;
+  let artwork = '';
+  let artworkPriority = 0;
   while (index + 10 <= end) {
     const id = String.fromCharCode(...data.subarray(index, index + 4));
     if (!/^[A-Z0-9]{4}$/.test(id)) break;
@@ -69,6 +94,13 @@ export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
       if (id === 'TIT2') title = frameText(frame);
       if (id === 'TPE1') artist = frameText(frame);
       if (id === 'TALB') album = frameText(frame);
+      if (appleMusic && id === 'WXXX') {
+        const candidate = appleArtworkFrame(frame);
+        if (candidate && candidate.priority > artworkPriority) {
+          artwork = candidate.artwork;
+          artworkPriority = candidate.priority;
+        }
+      }
       // Real Apple song segments carry an album and/or an adamid PRIV frame.
       // Its presenter/program ID3 also has TIT2+TPE1, but neither marker.
       // Inspect only the bounded PRIV owner identifier, never its private data.
@@ -86,7 +118,7 @@ export function parseHlsId3Tag(data, { appleMusic = false } = {}) {
   // track when its ID3 contains an explicit song marker, not just two texts.
   if (appleMusic && !album && !appleTrackId) return null;
   return title && artist && title.toLocaleLowerCase() !== artist.toLocaleLowerCase()
-    ? { title, artist } : null;
+    ? { title, artist, ...(appleMusic && artwork ? { artwork } : {}) } : null;
 }
 
 export function extractHlsId3Tracks(samples, options = {}) {
@@ -124,9 +156,11 @@ export function createTimedHlsTrackBuffer(options = {}) {
       }
       pending = waiting;
       if (!ready) return null;
-      if (lastTrack?.title === ready.title && lastTrack?.artist === ready.artist) return null;
+      // A following fragment can add artwork to an initially text-only song.
+      if (lastTrack?.title === ready.title && lastTrack?.artist === ready.artist &&
+        (!ready.artwork || lastTrack.artwork === ready.artwork)) return null;
       lastTrack = ready;
-      return { title: ready.title, artist: ready.artist };
+      return { title: ready.title, artist: ready.artist, ...(ready.artwork ? { artwork: ready.artwork } : {}) };
     },
     clear() {
       pending = [];
@@ -144,11 +178,23 @@ export function extractNativeHlsId3Track(cues, { appleMusic = false } = {}) {
   let artist = '';
   let album = '';
   let appleTrackId = false;
+  let artwork = '';
+  let artworkPriority = 0;
   for (let i = 0; i < Math.min(cues.length, MAX_SCHEDULED); i++) {
     const cue = cues[i];
     const value = cue?.value;
     if (!value || typeof value !== 'object'
-      || !['TIT2', 'TPE1', 'TALB', 'PRIV'].includes(value.key)) continue;
+      || !['TIT2', 'TPE1', 'TALB', 'PRIV', 'WXXX'].includes(value.key)) continue;
+    if (value.key === 'WXXX' && appleMusic) {
+      const bytes = value.data instanceof Uint8Array ? value.data
+        : value.data instanceof ArrayBuffer ? new Uint8Array(value.data) : null;
+      const candidate = appleArtworkFrame(bytes);
+      if (candidate && candidate.priority > artworkPriority) {
+        artwork = candidate.artwork;
+        artworkPriority = candidate.priority;
+      }
+      continue;
+    }
     if (value.key === 'PRIV') {
       // WebKit can expose the ID3 PRIV owner separately as "owner".
       if (value.owner === 'com.apple.radio.adamid') appleTrackId = true;
