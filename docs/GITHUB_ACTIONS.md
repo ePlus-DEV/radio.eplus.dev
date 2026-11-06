@@ -14,7 +14,7 @@ The three non-preview workflows share concurrency group `onair-repository-work` 
 ## Release targets
 
 - Feature PR → **Development** Environment `development` (trusted jobs only) → `ePlus-DEV/onair-pr-previews` → `preview.radio.eplus.dev/pr-preview/pr-N/`, when `PAGES_DEV_READY=true`.
-- `develop` → **Staging** Environment `staging` → `ePlus-DEV/onair-staging-pages` → `staging.radio.eplus.dev` when `PAGES_STAGING_READY=true` (repository variable). If absent, use the legacy `development` Environment and `PAGES_DEV_READY` gate until the new Staging Environment has been configured.
+- `develop` → **Staging** Environment `staging` → `ePlus-DEV/onair-staging-pages` → `stg.radio.eplus.dev` when `PAGES_STAGING_READY=true` (repository variable). If absent, use the legacy `development` Environment and `PAGES_DEV_READY` gate until the new Staging Environment has been configured.
 - `main` → Environment `production` → `ePlus-DEV/onair-production-pages` → `radio.eplus.dev`, automatically for trusted matching pushes.
 - Development Preview and `develop` Staging are strictly `noindex`, with no sitemap, canonical/JSON-LD or GA4; `main` Production is indexable with a sitemap, canonical tags and production-only GA4. The Pages output validator must reject a `noindex` production build.
 - Each tier's `PAGES_DEPLOY_TOKEN` Environment Secret should have scoped write access only to its own output repository; never pass credentials to the untrusted PR build job. Complete [the Environment migration](./ENVIRONMENTS.md) before deleting the legacy Staging values from `development`.
