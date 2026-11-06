@@ -10,7 +10,7 @@ const cors = process.env.NUXT_PUBLIC_CORS_SERVER_1 || '';
 const stations = ['apple-music-1', 'apple-music-holiday-hits'];
 
 test('diagnostic only: browser-Origin proxy and live stream resolution for preview', {
-  skip: !preview, timeout: 60000,
+  skip: !preview, timeout: 80000,
 }, async () => {
   for (const stationId of stations) {
     const url = buildPublicTuneInRequest(stationId, cors);
@@ -66,6 +66,32 @@ test('diagnostic only: browser-Origin proxy and live stream resolution for previ
                     } else {
                       const body = await manifest.text();
                       report.hlsManifest = body.length <= 196608 && body.startsWith('#EXTM3U');
+                      // Check one child media playlist (no audio fragments or tokens logged).
+                      const lines = body.split(/\\r?\\n/).map(x => x.trim()).filter(Boolean);
+                      const masterRow = lines.findIndex(x => x.startsWith('#EXT-X-STREAM-INF:'));
+                      if (report.hlsManifest && masterRow >= 0 && lines[masterRow + 1] &&
+                        !lines[masterRow + 1].startsWith('#')) {
+                        const child = new URL(lines[masterRow + 1], manifest.url);
+                        if (child.protocol === 'https:' && child.hostname === 'itsliveradio.apple.com') {
+                          try {
+                            const media = await fetch(child.href, {
+                              method: 'GET', redirect: 'follow', cache: 'no-store',
+                              credentials: 'omit', headers: { Origin: origin, Accept: 'application/vnd.apple.mpegurl' },
+                              signal: AbortSignal.timeout(8500),
+                            });
+                            const mediaAllow = media.headers.get('access-control-allow-origin') || '';
+                            report.mediaStatus = media.status;
+                            report.mediaCorsAllowed = mediaAllow === '*' || mediaAllow === origin;
+                            if (media.ok) {
+                              const mediaText = await media.text();
+                              report.mediaManifest = mediaText.length <= 196608 && mediaText.startsWith('#EXTM3U');
+                            }
+                          } catch (e) {
+                            report.mediaError = ['TimeoutError', 'AbortError'].includes(e?.name)
+                              ? 'timeout' : 'network_or_redirect_error';
+                          }
+                        }
+                      }
                     }
                   }
                 } catch (e) {
