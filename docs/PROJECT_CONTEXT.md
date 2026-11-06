@@ -1015,6 +1015,6 @@ be found. The build now indexes public provider **detail links** as a separate
 result type, while preserving the separation from actual geographic audio
 streams. Local Global matches are merged into Algolia responses when needed.
 The static cache key includes provider JSON. All seven channels have distinct
-TuneIn CDN cover URLs (with the existing generic brand fallback); list, detail, search,
+seven locally mirrored original TuneIn PNG covers (with generic brand fallback); list, detail, search,
 player and queue use channel art. Keep stream access keys entirely out of the
 public catalog and preserve production SEO/GA4.

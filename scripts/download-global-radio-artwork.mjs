@@ -1,5 +1,4 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { join, dirname } from 'node:path';
 
 // Maintainer-only artwork sync: download exact original TuneIn station images.
 // Never run during npm generate/build. No secrets, streaming URLs, or scraping.

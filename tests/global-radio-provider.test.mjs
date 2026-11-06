@@ -63,7 +63,10 @@ test('seven verified TuneIn Apple Music pages with unique IDs and no audio strea
   for (const station of provider.stations) {
     assert.match(station.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     assert.ok(station.title && station.genre && station.language && station.description);
-    assert.match(station.image, /^https:\/\/cdn-profiles\.tunein\.com\/s\d+\/images\/[a-zA-Z0-9._-]+\.(?:png|jpg)\?t=\d+$/);
+    assert.equal(station.image, '/img/global-radio/' + station.id + '.png');
+    const bytes = await readFile(new URL('../public' + station.image, import.meta.url));
+    assert.ok(bytes.length > 1000, 'missing original artwork file: ' + station.id);
+    assert.ok(bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'expected authentic PNG for ' + station.id);
     const tunein = new URL(station.tunein_url);
     assert.equal(tunein.protocol, 'https:');
     assert.equal(tunein.hostname, 'tunein.com');
@@ -138,7 +141,7 @@ test('seven translations have external / seasonal labels', async () => {
   }
 });
 
-test('all seven covers link directly to their TuneIn station artwork, never generated SVGs', async () => {
+test('all seven downloaded covers match their TuneIn source station IDs', async () => {
   const stations = (await source()).stations;
   const tuneinIds = new Map([
     ['apple-music-1', 's345732'], ['apple-music-hits', 's345724'],
@@ -149,7 +152,10 @@ test('all seven covers link directly to their TuneIn station artwork, never gene
   for (const station of stations) {
     const id = tuneinIds.get(station.id);
     assert.ok(id, station.id);
-    assert.match(station.image, new RegExp('^https://cdn-profiles\\.tunein\\.com/' + id + '/images/'));
+    assert.equal(station.image, '/img/global-radio/' + station.id + '.png');
+    assert.match(station.artwork_source_url, new RegExp('^https://cdn-profiles\\.tunein\\.com/' + id + '/images/'));
+    const bytes = await readFile(new URL('../public' + station.image, import.meta.url));
+    assert.ok(bytes.length > 1000, station.id + ' original PNG is missing');
   }
   const [list, detail, result] = await Promise.all([
     read('pages/global-radio/apple-music/index.vue'),

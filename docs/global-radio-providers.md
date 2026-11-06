@@ -38,10 +38,14 @@ collection. Apple Music Holiday Hits appears as an additional **seasonal**
 listing in TuneIn's public music category. It must not be confused with
 `Apple Music Hits` or assumed available year-round.
 
-Channel artwork uses the actual cover URLs exposed by the corresponding
-TuneIn station pages (`cdn-profiles.tunein.com`). No new or reproduced
-station-logo SVGs are generated or checked in. Only the existing generic
-ePlus OnAir brand mark is shown when a remote image fails to load.
+Seven original station images were downloaded from the corresponding TuneIn
+station artwork endpoints (`cdn-profiles.tunein.com`) and stored as PNG binaries
+under `public/img/global-radio/`. The local `image` fields are used everywhere
+(search, station list/detail, shared player); `artwork_source_url` records the
+original provider asset URL solely for audit/sync. No generated substitute station
+logos are checked in. Only the existing ePlus OnAir brand mark is used if a local
+image file cannot be loaded. Maintainers can re-sync all seven by running
+`node scripts/download-global-radio-artwork.mjs` (not part of production builds).
 
 This is a **manual, conservative import of publicly visible station metadata**
 (names, basic genres, public page URLs); it does **not** scrape music, copy
@@ -118,7 +122,7 @@ separately from internally playable stations.
 with all seven Global Radio provider station **detail routes** from the separate
 `public/catalog/providers` directory. It does not add Global Radio to geographic
 `world.json`, and does not expose stream, TuneIn lookup or signed HLS URLs.
-Search results show the original TuneIn artwork (generic brand fallback) and
+Search results show locally hosted TuneIn artwork (generic brand fallback) and
 navigate to `/global-radio/apple-music/<station-id>` without autoplay.
 
 Algolia may still index only geographic stations. Search in the Header/mobile

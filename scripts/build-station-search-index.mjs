@@ -69,7 +69,8 @@ export async function buildStationSearchIndex({
       }
       seen.add(station.id);
       const image = String(station.image || '');
-      const imageIsTrusted = /^https:\/\/cdn-profiles\.tunein\.com\/(?:s|p)\d+\/images\/[a-zA-Z0-9._-]+\.(?:png|jpg)(?:\?t=\d+)?$/.test(image);
+      const imageIsTrusted = image === '/img/global-radio/' + station.id + '.png' ||
+        image === '/img/global-radio/' + station.id + '.jpg';
       result.push({
         objectID: 'global-radio/' + provider.id + '/' + station.id,
         station_name: station.title,
