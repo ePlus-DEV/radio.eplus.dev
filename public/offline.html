@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#101119">
+  <title>Offline | ePlus OnAir</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { min-height: 100svh; margin: 0; display: grid; place-items: center; padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom)); background: radial-gradient(ellipse at 50% 5%, #381724 0%, #101119 54%); color: #f9fafb; }
+    main { max-width: 430px; width: 100%; text-align: center; padding: 32px 24px; border: 1px solid #39333c; border-radius: 24px; background: #1b1b23; box-shadow: 0 20px 70px #0004; }
+    .brand { margin: 0 0 28px; color: #fb7185; font-weight: 800; letter-spacing: -.02em; font-size: 20px; }
+    .icon { display: grid; place-items: center; width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 20px; background: #fb71851a; color: #fda4af; }
+    h1 { font-size: clamp(23px, 5.5vw, 29px); margin: 0 0 12px; letter-spacing: -.035em; }
+    p { color: #c7c7d0; line-height: 1.65; margin: 0 0 26px; }
+    button { appearance: none; border: 0; border-radius: 13px; background: #e11d48; color: white; font: inherit; font-weight: 650; padding: 13px 25px; min-height: 48px; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #fda4af; outline-offset: 4px; }
+    button:hover { background: #be123c; }
+    .note { display: block; margin-top: 18px; color: #aaaab6; font-size: 12px; }
+    @media (prefers-reduced-motion: no-preference) { button { transition: background .15s ease; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">ePlus OnAir</div>
+    <div class="icon" aria-hidden="true">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a5 5 0 0 0 0 6M8 6a9 9 0 0 0 0 12M12 3a13 13 0 0 0 0 18"/><path d="M16 9v6m3-8v10"/></svg>
+    </div>
+    <h1 id="offline-title">You're offline</h1>
+    <p id="offline-description">Live radio needs an internet connection. Reconnect to keep listening.</p>
+    <button type="button" id="retry">Try again</button>
+    <small class="note" id="offline-note">Live stations cannot play offline.</small>
+  </main>
+  <script>
+    (() => {
+      const messages = {
+        en: ["You're offline", "Live radio needs an internet connection. Reconnect to keep listening.", "Try again", "Live stations cannot play offline."],
+        vi: ["Bạn đang ngoại tuyến", "Radio trực tiếp cần kết nối Internet. Hãy kết nối lại để tiếp tục nghe.", "Thử lại", "Không thể nghe đài trực tiếp khi ngoại tuyến."],
+        ja: ["オフラインです", "ライブ配信のラジオにはインターネット接続が必要です。再接続してください。", "再試行", "オフラインではライブ放送を再生できません。"],
+        "zh-CN": ["当前处于离线状态", "收听直播电台需要网络连接。请重新连接后继续收听。", "重试", "离线时无法播放直播电台。"],
+        "zh-TW": ["目前處於離線狀態", "收聽直播電台需要網路連線。請重新連線後繼續收聽。", "重試", "離線時無法播放直播電台。"],
+        fr: ["Vous êtes hors ligne", "Une connexion Internet est nécessaire pour écouter la radio en direct. Reconnectez-vous pour continuer.", "Réessayer", "Les radios en direct ne fonctionnent pas hors ligne."],
+        ru: ["Вы не в сети", "Для прямого эфира радио требуется интернет. Подключитесь к сети, чтобы продолжить.", "Повторить", "Прямой эфир недоступен без интернета."],
+      };
+      const browserLanguage = (navigator.language || 'en').toLowerCase();
+      const language = browserLanguage.startsWith('zh-tw') || browserLanguage.startsWith('zh-hk') || browserLanguage.startsWith('zh-mo')
+        ? 'zh-TW' : browserLanguage.startsWith('zh') ? 'zh-CN'
+        : browserLanguage.startsWith('vi') ? 'vi' : browserLanguage.startsWith('ja') ? 'ja'
+        : browserLanguage.startsWith('fr') ? 'fr' : browserLanguage.startsWith('ru') ? 'ru' : 'en';
+      document.documentElement.lang = language;
+      const [title, description, retry, note] = messages[language];
+      document.getElementById('offline-title').textContent = title;
+      document.getElementById('offline-description').textContent = description;
+      document.getElementById('retry').textContent = retry;
+      document.getElementById('offline-note').textContent = note;
+      document.getElementById('retry').addEventListener('click', () => window.location.reload());
+    })();
+  </script>
+</body>
+</html>
