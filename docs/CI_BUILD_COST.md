@@ -1,6 +1,6 @@
 # ePlus OnAir CI build-cost policy
 
-The public source repository uses **`develop` for staging** and **`main` for production**.
+The public source repository uses **`staging` for staging** and **`main` for production**.
 This document is about PR validation only, not publishing or DNS.
 
 ## Two CI paths
@@ -40,4 +40,4 @@ replace the build/SEO/size checks for real app changes.
 
 This PR does not optimize the **publish** workflow, which still generates and
 pushes after opt-in; publishing optimization needs a separate guarded update
-after the current custom-domain PR is merged to `develop`.
+after the current custom-domain PR is merged to `staging`.

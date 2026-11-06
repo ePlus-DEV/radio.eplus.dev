@@ -15,7 +15,7 @@ This is a community-maintained site. A specific response or fix SLA is not guara
 
 ## Secrets and public deployment
 
-- `main` and `develop` are **public source** branches. Public forks,
+- `main` and `staging` are **public source** branches. Public forks,
   PR diffs and commit history can permanently expose any committed value.
 - Never store live credentials in `.env.example`, `NUXT_PUBLIC_*`,
   source code, tests, screenshots, CI logs, discussions or PR comments.
