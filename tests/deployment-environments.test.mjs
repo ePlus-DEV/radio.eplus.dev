@@ -8,7 +8,7 @@ const deploy = readFileSync(new URL('../.github/workflows/deploy-github-pages.ym
 const preview = readFileSync(new URL('../.github/workflows/pr-preview-pages.yml', import.meta.url), 'utf8');
 
 test('the only indexable site and GA4 build is production', () => {
-  for (const origin of ['https://staging.radio.eplus.dev', 'https://preview.radio.eplus.dev/pr-preview/pr-375']) {
+  for (const origin of ['https://stg.radio.eplus.dev', 'https://preview.radio.eplus.dev/pr-preview/pr-375']) {
     assert.equal(isStagingDeployment({ siteUrl: origin }), true, origin);
     assert.equal(isGa4ProductionBuild({ nodeEnv: 'production', siteUrl: origin }), false, origin);
   }
@@ -19,7 +19,7 @@ test('the only indexable site and GA4 build is production', () => {
 test('production and staging remain isolated by branch, Pages repository and hostname', () => {
   assert.match(deploy, /branches: \[develop, main\]/);
   assert.match(deploy, /github\.ref_name == 'main' && 'ePlus-DEV\/onair-production-pages' \|\| 'ePlus-DEV\/onair-staging-pages'/);
-  assert.match(deploy, /github\.ref_name == 'main' && 'radio\.eplus\.dev' \|\| 'staging\.radio\.eplus\.dev'/);
+  assert.match(deploy, /github\.ref_name == 'main' && 'radio\.eplus\.dev' \|\| 'stg\.radio\.eplus\.dev'/);
   assert.match(deploy, /github\.ref_name == 'main' && 'production' \|\| 'staging'/);
   assert.match(deploy, /NUXT_PUBLIC_NO_INDEX:.*github\.ref_name == 'develop'/);
 });
