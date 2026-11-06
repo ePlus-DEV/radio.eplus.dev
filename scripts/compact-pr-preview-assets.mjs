@@ -4,7 +4,7 @@ import { join, relative, resolve } from 'node:path';
 // PR previews intentionally prerender only representative routes. Retaining
 // every worldwide station PNG creates thousands of files per open PR and can
 // stall GitHub Pages while it is "syncing_files". Do not apply to staging/main.
-const normalized = value => String(value || '').replaceAll('\\', '/').replace(/^\\/+/, '');
+const normalized = value => String(value || '').replaceAll('\\', '/').replace(/^\/+/, '');
 
 async function listFiles(directory) {
   const files = [];
@@ -36,8 +36,8 @@ export async function compactPrPreviewAssets(output = '.output/public') {
     if (typeof value !== 'string') return;
     let asset = value.trim().split(/[?#]/)[0];
     // Nuxt prerenders absolute URLs with the per-PR base path.
-    asset = asset.replace(/^\\/pr-preview\\/pr-[1-9][0-9]*\\//, '/');
-    if (!/^\\/img\\/[a-z0-9/_\\-.]+$/i.test(asset)) return;
+    asset = asset.replace(/^\/pr-preview\/pr-[1-9][0-9]*\//, '/');
+    if (!/^\/img\/[a-z0-9/_\-.]+$/i.test(asset)) return;
     if (asset.includes('..')) return;
     keep.add(normalized(asset));
   };
@@ -46,7 +46,7 @@ export async function compactPrPreviewAssets(output = '.output/public') {
   const outputFiles = await listFiles(root);
   for (const pathname of outputFiles.filter(file => file.endsWith('.html'))) {
     const html = await readFile(pathname, 'utf8');
-    for (const match of html.matchAll(/\\/(?:pr-preview\\/pr-[1-9][0-9]*\\/)?img\\/[a-z0-9/_\\-.]+/gi)) {
+    for (const match of html.matchAll(/\/(?:pr-preview\/pr-[1-9][0-9]*\/)?img\/[a-z0-9/_\-.]+/gi)) {
       add(match[0]);
     }
   }
