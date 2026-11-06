@@ -20,7 +20,7 @@ export async function buildStationSearchIndex({
 } = {}) {
   const result = [];
   // Canonicalize only repeated titles from the same country + official site.
-  // Keep all individual catalog routes (including aliases) intact for SEO.
+  // The original station ID always wins; never resurrect removed aliases.
   const seenIdentities = new Set();
   for (const area of (await readdir(radioRoot, { withFileTypes: true })).filter(x => x.isDirectory()).sort((a, b) => a.name.localeCompare(b.name))) {
     const areaPath = join(radioRoot, area.name);
