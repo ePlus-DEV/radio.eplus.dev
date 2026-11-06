@@ -67,7 +67,7 @@ test('diagnostic only: browser-Origin proxy and live stream resolution for previ
                       const body = await manifest.text();
                       report.hlsManifest = body.length <= 196608 && body.startsWith('#EXTM3U');
                       // Check one child media playlist (no audio fragments or tokens logged).
-                      const lines = body.split(/\\r?\\n/).map(x => x.trim()).filter(Boolean);
+                      const lines = body.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
                       const masterRow = lines.findIndex(x => x.startsWith('#EXT-X-STREAM-INF:'));
                       if (report.hlsManifest && masterRow >= 0 && lines[masterRow + 1] &&
                         !lines[masterRow + 1].startsWith('#')) {
