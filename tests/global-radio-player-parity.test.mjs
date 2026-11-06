@@ -68,6 +68,8 @@ test('Global station cards have the same Play/Pause behavior as Country and may 
   assert.match(composable, /globalRadioLease\.expiresAt > Date\.now\(\) \+ 45_000/);
   assert.match(composable, /activeController\?\.abort\(\)/);
   assert.match(composable, /createAppleRadioQueue\(getStations\(\)\)/);
+  assert.match(composable, /source\.image = siteAssetUrl\(source\.image\)/);
+  assert.match(composable, /item\.image = siteAssetUrl\(item\.image\)/);
   for (const page of [directory, detail]) {
     assert.match(page, /:aria-pressed=/);
     assert.match(page, /i-lucide-pause/);

@@ -6,6 +6,7 @@ import type { GlobalRadioStation } from '~/types/global-radio';
 
 export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioStation[] = () => []) {
   const config = useRuntimeConfig();
+  const siteAssetUrl = useSiteAssetUrl();
   const playback = usePlaybackStore();
   const pendingStationId = ref('');
   const error = ref('');
@@ -60,9 +61,13 @@ export function useAuthorizedGlobalRadioPlayback(getStations: () => GlobalRadioS
       }
       if (controller.signal.aborted || !result.ok) return;
       const source = createAuthorizedApplePlaybackStation(station, result.streamUrl);
+      // The Preview site lives under /pr-preview/pr-N/; prefix local artwork
+      // in the shared player/queue too, not just in the provider page cards.
+      source.image = siteAssetUrl(source.image);
+      const queue = createAppleRadioQueue(getStations());
+      for (const item of queue) item.image = siteAssetUrl(item.image);
       // Use the existing global PlayerSession; never mount a second audio element.
-      playback.activateGlobalRadio(source, station.listen_url, result.expiresAt,
-        createAppleRadioQueue(getStations()));
+      playback.activateGlobalRadio(source, station.listen_url, result.expiresAt, queue);
     } catch {
       if (!controller.signal.aborted) error.value = 'unavailable';
     } finally {
