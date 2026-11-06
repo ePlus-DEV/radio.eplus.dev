@@ -511,13 +511,19 @@ const nowPlayingTitle = computed(() => liveTrack.value?.title || props.streamNam
 const nowPlayingTitleMarquee = computed(() => nowPlayingTitle.value.length > 24);
 const nowPlayingArtist = computed(() => liveTrack.value?.artist || "");
 
-const nowPlayingArtwork = computed(
-  () =>
-    props.song?.currentMedia?.thumbnail ||
+const nowPlayingArtwork = computed(() => {
+  if (props.stationUrl?.startsWith('/global-radio/apple-music/')) {
+    // The first history row can be stale. Only show album art bound to the
+    // currently playing HLS ID3 track; otherwise show the station identity.
+    const live = playback.liveTrack;
+    return live?.stationUrl === props.stationUrl && live.artwork
+      ? live.artwork : props.thumb;
+  }
+  return props.song?.currentMedia?.thumbnail ||
     props.song?.thumbnail ||
     props.playlist?.[0]?.track_image ||
-    props.thumb,
-);
+    props.thumb;
+});
 
 const inferMime = (url: string, fallback = "audio/mpeg"): string => {
   const value = url.toLowerCase();
