@@ -210,6 +210,8 @@
     "schedule_vietnam_timezone": "越南时间 (UTC+7)",
     "schedule_provider_only": "每日节目可能不同，请查看广播台官方网站。",
     "playlist": "播放列表",
+    "tunein_history_note": "仅显示本次收听期间获取到的歌曲名称和歌手。TuneIn 更新可能延迟。",
+    "tunein_history_unavailable": "TuneIn 暂未提供此电台当前歌曲名称和歌手。",
     "next": "下一个",
     "lyric": "歌词",
     "no_lyric": "暂无歌词",

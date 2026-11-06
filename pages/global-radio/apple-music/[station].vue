@@ -24,15 +24,19 @@
             <span v-if="station?.seasonal" class="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1.5 font-semibold text-amber-700 dark:text-amber-300">{{ t('global_radio.seasonal') }}</span>
           </div>
           <p v-if="station?.seasonal" class="mt-4 text-xs leading-5 text-[var(--radio-text-muted)]">{{ t('global_radio.seasonal_note') }}</p>
+          <p v-if="!canListenOnEplus" role="status" class="mt-4 text-xs text-amber-700 dark:text-amber-300">
+            {{ t('global_radio.resolver_unavailable') }}
+          </p>
           <p v-if="resolverError" role="alert" class="mt-4 text-xs text-amber-700 dark:text-amber-300">
             {{ t('global_radio.resolver_unavailable') }}
           </p>
           <div class="mt-6">
-            <button v-if="canListenOnEplus && station" type="button"
-              :disabled="Boolean(pendingStationId)" :aria-pressed="isPlayingHere"
+            <button v-if="station" type="button"
+              :disabled="!canListenOnEplus || Boolean(pendingStationId)"
+              :title="!canListenOnEplus ? t('global_radio.resolver_unavailable') : undefined" :aria-pressed="isPlayingHere"
               :aria-label="t(isPlayingHere ? 'player.pause' : 'global_radio.listen_on_eplus') + ': ' + station.title"
               @click="playOnEplus(station)"
-              class="radio-interactive inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-6 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-wait disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:w-auto sm:min-w-56">
+              class="radio-interactive inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-6 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:w-auto sm:min-w-56">
               <UIcon :name="pendingStationId ? 'i-lucide-loader-circle' : isPlayingHere ? 'i-lucide-pause' : 'i-lucide-play'"
                 :class="pendingStationId ? 'h-5 w-5 animate-spin' : 'h-5 w-5'" aria-hidden="true" />
               {{ t(pendingStationId ? 'global_radio.connecting_on_eplus' : isPlayingHere ? 'player.pause' : 'global_radio.listen_on_eplus') }}

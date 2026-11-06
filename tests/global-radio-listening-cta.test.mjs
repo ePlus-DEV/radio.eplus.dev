@@ -36,7 +36,10 @@ test('directory/detail use shared player without raw HLS prompts; provider links
     assert.doesNotMatch(publicPage, /GlobalRadioTemporaryHlsPreview|accessKey|\.m3u8|preview_on_eplus|preview_requires_url|TemporaryHlsPreview|<audio\b|<UModal\b/);
     assert.doesNotMatch(publicPage, /playback\.(?:activate|requestStation|play)\s*\(|requestStation\(/);
 
-    assert.match(publicPage, /v-if="canListenOnEplus/);
+    assert.doesNotMatch(publicPage, /v-if="canListenOnEplus/, 'missing proxy must not hide the Play control');
+    assert.match(publicPage, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
+    assert.match(publicPage, /v-if="!canListenOnEplus"/, 'explain why the Play button is disabled');
+    assert.match(publicPage, /global_radio\.resolver_unavailable/);
     assert.match(publicPage, /useAuthorizedGlobalRadioPlayback/);
   }
   assert.match(detail, /rel="noopener noreferrer"/);
@@ -75,4 +78,34 @@ test('all seven languages retain live destination and seasonal labels without ob
     assert.equal('preview_on_eplus' in lang.global_radio, false);
     assert.equal('preview_requires_url' in lang.global_radio, false);
   }
+});
+
+test('Apple Music preview prerenders in-app player QA routes and keeps custom noindex', async () => {
+  const routes = await read('utils/pr-preview.mjs');
+  const config = await read('nuxt.config.ts');
+  const workflow = await read('.github/workflows/pr-preview-pages.yml');
+  for (const path of [
+    '/global-radio', '/global-radio/apple-music',
+    '/global-radio/apple-music/apple-music-holiday-hits',
+  ]) {
+    assert.ok(routes.includes("'" + path + "'"), 'missing preview route ' + path);
+  }
+  assert.match(config, /routes: isPrPreview \? \[\.\.\.PR_PREVIEW_ROUTES/);
+  assert.match(workflow, /NUXT_PUBLIC_NO_INDEX: 'true'/);
+  // Public vars live in the development Environment, not repository scope.
+  // Only the trusted pre-build job may access that Environment; never checkout
+  // or run untrusted PR code in a job that also holds deploy credentials.
+  const trusted = workflow.split('  preview_config:')[1]?.split('\n  build:')[0];
+  const build = workflow.split('  build:')[1]?.split('\n  publish:')[0];
+  assert.ok(trusted && build, 'trusted config and isolated build jobs exist');
+  assert.match(trusted, /environment:\s*\n\s*name: development/);
+  assert.match(trusted, /CORS_SERVER: \$\{\{ vars\.NUXT_PUBLIC_CORS_SERVER_1 \}\}/);
+  assert.match(trusted, /RESOLVER_URL: \$\{\{ vars\.NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL \}\}/);
+  assert.doesNotMatch(trusted, /actions\/checkout|npm ci|secrets\./,
+    'the trusted job cannot checkout or execute untrusted code or expose secrets');
+  assert.match(build, /needs: preview_config/);
+  assert.match(build, /NUXT_PUBLIC_CORS_SERVER_1: \$\{\{ needs\.preview_config\.outputs\.cors_server \}\}/);
+  assert.match(build, /NUXT_PUBLIC_GLOBAL_RADIO_RESOLVER_URL: \$\{\{ needs\.preview_config\.outputs\.resolver_url \}\}/);
+  assert.doesNotMatch(build, /environment:\s*\n\s*name: development|secrets\.PAGES_DEPLOY_TOKEN/,
+    'untrusted build must never receive development secrets or Environment access');
 });

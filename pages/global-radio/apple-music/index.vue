@@ -50,6 +50,10 @@
       <span>{{ t('global_radio.eplus_play_hint') }}</span>
     </p>
 
+    <p v-if="!canListenOnEplus" role="status" class="rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 text-sm text-amber-800 dark:text-amber-200">
+      {{ t('global_radio.resolver_unavailable') }}
+    </p>
+
     <p v-if="resolverError" role="alert" class="rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 text-sm text-amber-800 dark:text-amber-200">
       {{ t('global_radio.resolver_unavailable') }}
     </p>
@@ -94,9 +98,10 @@
 
           <!-- Exactly one primary listen action. External providers are detail-only. -->
           <div class="mt-auto flex min-w-0 items-stretch gap-2">
-            <button v-if="canListenOnEplus" type="button"
-              class="radio-interactive inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-wait disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
-              :disabled="Boolean(pendingStationId)" :aria-pressed="isStationPlaying(station.id)"
+            <button type="button"
+              class="radio-interactive inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500"
+              :disabled="!canListenOnEplus || Boolean(pendingStationId)"
+              :title="!canListenOnEplus ? t('global_radio.resolver_unavailable') : undefined" :aria-pressed="isStationPlaying(station.id)"
               :aria-label="t(isStationPlaying(station.id) ? 'player.pause' : 'global_radio.listen_on_eplus') + ': ' + station.title"
               @click="playOnEplus(station)">
               <UIcon :name="pendingStationId === station.id ? 'i-lucide-loader-circle' : isStationPlaying(station.id) ? 'i-lucide-pause' : 'i-lucide-play'"
