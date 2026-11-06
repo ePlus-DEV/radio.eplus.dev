@@ -4,6 +4,7 @@
 // No saved recordings, no playlist rebroadcast, no credentials.
 import test from 'node:test';
 import { resolvePublicTuneInStream } from '../utils/global-radio-public-tunein.mjs';
+import { parseHlsId3Tag } from '../utils/hls-song-metadata.mjs';
 
 const corsServer = process.env.NUXT_PUBLIC_CORS_SERVER_1 || '';
 const enabled = process.env.GITHUB_ACTIONS === 'true'
@@ -16,10 +17,16 @@ const MAX_SEGMENT = 196_608;
 function isApproved(url) {
   try {
     const parsed = new URL(url);
+    const masterOrVariant = parsed.pathname.startsWith('/3p-tune-in/tune_in/');
+    // Verified in the user's HAR: CMAF audio fragments use a different
+    // Apple-owned path from the TuneIn manifests. Do not reject them.
+    const cmafFragment = /^\\/3p-tune-in\\/bb\\/as_live_aod\\/\\d+\\/[a-z0-9-]+\\/cmaf\\/\\d+_\\d+\\/fileSequence\\d+\\.(?:m4s|mp4)$/i
+      .test(parsed.pathname);
     return parsed.protocol === 'https:'
       && parsed.hostname === 'itsliveradio.apple.com'
-      && parsed.pathname.startsWith('/3p-tune-in/tune_in/')
-      && !parsed.username && !parsed.password;
+      && (masterOrVariant || cmafFragment)
+      && !parsed.username && !parsed.password && !parsed.port
+      && [...parsed.searchParams].every(([key]) => key === 'accessKey');
   } catch { return false; }
 }
 
@@ -111,16 +118,38 @@ function summarizePlaylist(text) {
 }
 
 function summarizeSegment(bytes) {
-  const text = new TextDecoder('latin1').decode(bytes);
-  // Presence-only heuristics; no track claims without actual ID3 parsing.
-  return {
-    prefixBytes: bytes.byteLength,
-    id3SyncPresent: text.includes('ID3'),
-    id3TitleFramePresent: text.includes('TIT2'),
-    id3ArtistFramePresent: text.includes('TPE1'),
-    id3PrivateFramePresent: text.includes('PRIV'),
-    transportStreamSyncByte: bytes[0] === 0x47,
-  };
+  // Inspect only the bounded top-level CMAF emsg boxes, never audio frames.
+  // We do not print metadata strings, private frames, signed URLs or audio.
+  let cursor = 0;
+  let emsgTags = 0;
+  let songTags = 0;
+  let otherTags = 0;
+  while (cursor + 8 <= bytes.byteLength) {
+    const size = new DataView(bytes.buffer, bytes.byteOffset + cursor, 4).getUint32(0);
+    if (size < 8 || cursor + size > bytes.byteLength) break;
+    const kind = String.fromCharCode(...bytes.subarray(cursor + 4, cursor + 8));
+    if (kind === 'emsg' && bytes[cursor + 8] === 1) {
+      const scheme = new TextEncoder().encode('https://aomedia.org/emsg/ID3');
+      const offset = cursor + 32;
+      const schemeEnd = offset + scheme.byteLength;
+      if (schemeEnd + 2 < cursor + size &&
+        scheme.every((value, i) => bytes[offset + i] === value) &&
+        bytes[schemeEnd] === 0) {
+        let valueEnd = schemeEnd + 1;
+        while (valueEnd < cursor + size && bytes[valueEnd] !== 0) valueEnd++;
+        const id3Start = valueEnd + 1;
+        if (id3Start + 10 <= cursor + size && bytes[id3Start] === 0x49
+          && bytes[id3Start + 1] === 0x44 && bytes[id3Start + 2] === 0x33) {
+          emsgTags++;
+          const tag = bytes.subarray(id3Start, cursor + size);
+          if (parseHlsId3Tag(tag, { appleMusic: true })) songTags++;
+          else otherTags++;
+        }
+      }
+    }
+    cursor += size;
+  }
+  return { prefixBytes: bytes.byteLength, emsgTags, songTags, otherTags };
 }
 
 test('diagnostic only: inspect authorized HLS manifests for timed-song metadata (no audio logged)', {
