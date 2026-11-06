@@ -1,6 +1,7 @@
 name: "Deploy ePlus OnAir to GitHub Pages"
 
 # Deploy only merged, trusted source. Never give publishing credentials to PRs.
+# The integration source is staging; deprecated develop never triggers Pages publishing.
 on:
   push:
     branches: [staging, main]
