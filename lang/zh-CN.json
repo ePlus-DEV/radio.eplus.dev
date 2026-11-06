@@ -267,6 +267,18 @@
     },
     "offline": "似乎没有网络连接。请检查网络后重试。"
   },
+  "station_technical": {
+    "title": "直播流技术信息",
+    "catalog_badge": "目录信息",
+    "format": "流格式",
+    "codec": "音频编码",
+    "bitrate": "比特率",
+    "unknown": "暂无数据",
+    "inferred_url": "根据流 URL 推测（未验证）",
+    "catalog_reported": "目录中标注（未实测）",
+    "kbps": "{count} kbps",
+    "disclaimer": "以上仅为目录参考信息，不代表直播流已验证可用。实际编码和比特率可能不同。"
+  },
   "player": {
     "title": "电台播放器",
     "choose_station": "选择电台开始收听",

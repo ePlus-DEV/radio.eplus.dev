@@ -267,6 +267,18 @@
     },
     "offline": "Vous semblez hors ligne. Vérifiez votre connexion Internet et réessayez."
   },
+  "station_technical": {
+    "title": "Détails techniques du flux",
+    "catalog_badge": "Infos du catalogue",
+    "format": "Format du flux",
+    "codec": "Codec audio",
+    "bitrate": "Débit",
+    "unknown": "Non renseigné",
+    "inferred_url": "Déduit de l’URL (non vérifié)",
+    "catalog_reported": "Déclaré dans le catalogue (non mesuré)",
+    "kbps": "{count} kb/s",
+    "disclaimer": "Ces données sont indicatives : elles ne garantissent pas que le flux fonctionne. Codec et débit réels peuvent varier."
+  },
   "player": {
     "title": "Lecteur radio",
     "choose_station": "Choisissez une station pour commencer",
