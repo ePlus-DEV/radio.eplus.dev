@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { fileURLToPath } from 'node:url';
 import { buildStationSearchIndex } from '../scripts/build-station-search-index.mjs';
-import { searchLocalStations, normalizeStationQuery } from '../utils/station-search.mjs';
+import { searchLocalStations, normalizeStationQuery, mergeGlobalSearchHits } from '../utils/station-search.mjs';
 
 test('local station search ignores accents, matches words, and ranks names', () => {
   const stations = [
@@ -33,7 +34,7 @@ test('build-time fallback index includes only playable radio catalog entries', a
       invalid: { title: 'Broken station', stream: '' },
       empty: { stream: 'https://example.com/broken' },
     }));
-    const built = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), outputFile: target });
+    const built = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), providerRoot: join(root, 'providers'), outputFile: target });
     assert.equal(built.length, 1);
     assert.equal(built[0].station_country, 'world.asia.viet_nam');
     assert.equal(built[0].station_image, '/img/rap.png');
@@ -43,6 +44,43 @@ test('build-time fallback index includes only playable radio catalog entries', a
     assert.equal(JSON.parse(await readFile(target, 'utf8')).length, 1);
     assert.doesNotMatch(await readFile(target, 'utf8'), /https:\/\/example\.com\/live/, 'search index must not expose stream URLs');
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('seven Global Radio stations appear in the shared header index without exposing streams', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'global-search-'));
+  try {
+    const radioDir = join(root, 'radio', 'asia');
+    await mkdir(radioDir, { recursive: true });
+    await writeFile(join(radioDir, 'viet-nam.json'), JSON.stringify({
+      local: { title: 'Example Local', stream: 'https://example.org/live.mp3' },
+    }));
+    const providerRoot = fileURLToPath(new URL('../public/catalog/providers/', import.meta.url));
+    const file = join(root, 'search.json');
+    const result = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), providerRoot, outputFile: file });
+    const global = result.filter(x => x.url.startsWith('/global-radio/'));
+    assert.equal(global.length, 7);
+    assert.equal(new Set(global.map(x => x.url)).size, 7);
+    assert.ok(global.every(x => x.station_country === 'global_radio.title'));
+    assert.ok(global.every(x => x.station_image.startsWith('/img/global-radio/')));
+    assert.ok(global.every(x => !Object.hasOwn(x, 'station_image_fallback')));
+    assert.equal(searchLocalStations(result, 'global radio', 20).filter(x => x.url.startsWith('/global-radio/')).length, 7);
+    assert.equal(searchLocalStations(result, 'apple music', 20).filter(x => x.url.startsWith('/global-radio/')).length, 7);
+    assert.equal(searchLocalStations(result, 'musica uno').some(x => x.url.endsWith('/apple-musica-uno')), true);
+    assert.equal(searchLocalStations(result, 'holiday hits').some(x => x.url.endsWith('/apple-music-holiday-hits')), true);
+    assert.equal(result.some(x => x.url === '/asia/viet-nam/local'), true);
+    assert.doesNotMatch(await readFile(file, 'utf8'), /accessKey|m3u8|listen_url|tunein_url|streams|live.mp3/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('Algolia results retain Global Radio matches and deduplicate by URL', () => {
+  const global = [{ url: '/global-radio/apple-music/apple-music-1', station_name: 'Apple Music 1' }];
+  const remote = [
+    { url: '/asia/viet-nam/vov', station_name: 'VOV' },
+    { url: global[0].url, station_name: 'Duplicate' },
+    { url: '//invalid.example', station_name: 'Unsafe' },
+  ];
+  assert.deepEqual(mergeGlobalSearchHits(global, remote).map(item => item.station_name), ['Apple Music 1', 'VOV']);
+  assert.deepEqual(mergeGlobalSearchHits(global, remote, 1).map(item => item.url), [global[0].url]);
 });
 
 test('UI has featured carousel, compact country cards, and fallback search', async () => {

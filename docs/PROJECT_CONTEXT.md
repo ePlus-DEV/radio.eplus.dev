@@ -1006,3 +1006,15 @@ PR Preview comments may not contain **Open preview** links while a new PR build 
 ## Branch migration to `staging` (2026-11-06)
 
 The integration branch is `staging` (replacing `develop`) for feature PRs, Preview events, Staging publishing and verified release PRs into `main`. Public Staging uses `https://stg.radio.eplus.dev/`; Production and its SEO/GA4/indexability remain unchanged at `https://radio.eplus.dev/`; per-PR Preview stays on `https://preview.radio.eplus.dev/pr-preview/pr-N/`. The trusted `pull_request_target` workflow on default `main` must accept `staging` before open PRs are retargeted. Set GitHub Environment deployment branch restrictions and protected-branch rules separately, and do not grant untrusted PR builds deployment secrets.
+
+## Global Radio searchable catalog and images (2026-11-06)
+
+Previously the Header/mobile search index contained only geographic radio
+catalogs, so seven Apple Music Global Radio provider station pages could not
+be found. The build now indexes public provider **detail links** as a separate
+result type, while preserving the separation from actual geographic audio
+streams. Local Global matches are merged into Algolia responses when needed.
+The static cache key includes provider JSON. All seven channels have distinct
+seven locally mirrored original TuneIn PNG covers (with generic brand fallback); list, detail, search,
+player and queue use channel art. Keep stream access keys entirely out of the
+public catalog and preserve production SEO/GA4.

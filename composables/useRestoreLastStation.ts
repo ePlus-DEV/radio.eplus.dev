@@ -42,10 +42,12 @@ export function useRestoreLastStation() {
         const stream = await resolvePublicTuneInStream({ station, corsServer: String(config.public.corsServer || '') });
         if (disposed || route.fullPath !== path || playback.playRequest !== request
           || playback.requestedStationUrl || playback.station || playback.playing) return;
+        const restored = createAuthorizedApplePlaybackStation(station, stream.streamUrl);
+        restored.image = siteAssetUrl(restored.image);
+        const queue = createAppleRadioQueue(provider.stations);
+        for (const item of queue) item.image = siteAssetUrl(item.image);
         playback.activateGlobalRadio(
-          createAuthorizedApplePlaybackStation(station, stream.streamUrl),
-          station.listen_url, stream.expiresAt,
-          createAppleRadioQueue(provider.stations),
+          restored, station.listen_url, stream.expiresAt, queue,
           { autoplay: false },
         );
       } catch { /* No stale keys; an offline restore must not interrupt browsing. */ }

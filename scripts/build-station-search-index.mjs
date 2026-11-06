@@ -15,6 +15,7 @@ const humanLabel = value => value.replaceAll('-', ' ').replaceAll('_', ' ');
 export async function buildStationSearchIndex({
   radioRoot = 'public/radio',
   outputFile = 'public/search/stations.json',
+  providerRoot = 'public/catalog/providers',
 } = {}) {
   const result = [];
   for (const area of (await readdir(radioRoot, { withFileTypes: true })).filter(x => x.isDirectory()).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -41,6 +42,50 @@ export async function buildStationSearchIndex({
       }
     }
   }
+  // Global providers are discoverable radio *pages*, not geographic HTMLAudio streams.
+  // Index display metadata only: never include a TuneIn endpoint, token, or stream URL.
+  let providerIndex;
+  try {
+    providerIndex = JSON.parse(await readFile(join(providerRoot, 'index.json'), 'utf8'));
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+    providerIndex = { providers: [] };
+  }
+  for (const provider of providerIndex.providers || []) {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(String(provider?.id || '')) ||
+      provider.catalog !== '/catalog/providers/' + provider.id + '.json' ||
+      provider.href !== '/global-radio/' + provider.id) {
+      throw new Error('Invalid Global Radio search provider manifest');
+    }
+    const catalog = JSON.parse(await readFile(join(providerRoot, provider.id + '.json'), 'utf8'));
+    if (!Array.isArray(catalog.stations) || catalog.id !== provider.id) {
+      throw new Error('Invalid Global Radio search station catalog: ' + provider.id);
+    }
+    const seen = new Set();
+    for (const station of catalog.stations) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(String(station?.id || '')) ||
+        !String(station?.title || '').trim() || seen.has(station.id)) {
+        throw new Error('Invalid or duplicate Global Radio search station: ' + provider.id);
+      }
+      seen.add(station.id);
+      const image = String(station.image || '');
+      const imageIsTrusted = image === '/img/global-radio/' + station.id + '.png' ||
+        image === '/img/global-radio/' + station.id + '.jpg';
+      result.push({
+        objectID: 'global-radio/' + provider.id + '/' + station.id,
+        station_name: station.title,
+        station_country: 'global_radio.title',
+        country_label: provider.name,
+        station_category: String(station.genre || ''),
+        station_language: String(station.language || ''),
+        station_image: imageIsTrusted ? image : '/brand/onair-mark.svg',
+        url: provider.href + '/' + station.id,
+        featured: false,
+        featured_rank: 0,
+      });
+    }
+  }
+
   result.sort((a, b) => {
     if (a.featured_rank || b.featured_rank) return (a.featured_rank || 9999) - (b.featured_rank || 9999);
     return Number(b.featured) - Number(a.featured) || a.station_name.localeCompare(b.station_name);

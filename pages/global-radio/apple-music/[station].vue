@@ -11,9 +11,10 @@
     </nav>
     <article class="radio-hero rounded-2xl p-5 sm:p-8">
       <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
-        <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-500" aria-hidden="true">
-          <UIcon name="i-lucide-radio-tower" class="h-8 w-8" />
-        </span>
+        <img v-if="station" :src="siteAssetUrl(station.image || '/brand/onair-mark.svg')"
+          :alt="station.title" width="64" height="64" decoding="async"
+          class="h-16 w-16 shrink-0 rounded-2xl bg-white object-contain ring-1 ring-[var(--radio-border)]"
+          @error="onArtworkError($event)" />
         <div class="min-w-0 flex-1">
           <p class="text-xs font-bold uppercase tracking-[0.15em] text-rose-600 dark:text-rose-300">Apple Music Radio</p>
           <h1 class="mt-2 text-2xl font-bold sm:text-3xl">{{ station?.title }}</h1>
@@ -79,6 +80,14 @@
 
 <script setup lang="ts">
 import { usePlaybackStore } from '~/stores/playback';
+
+const siteAssetUrl = useSiteAssetUrl();
+function onArtworkError(event: Event) {
+  const image = event.target as HTMLImageElement | null;
+  if (!image) return;
+  image.onerror = null;
+  image.src = siteAssetUrl('/brand/onair-mark.svg');
+}
 
 const playback = usePlaybackStore();
 const route = useRoute();

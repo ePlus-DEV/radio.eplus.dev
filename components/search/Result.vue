@@ -11,6 +11,7 @@
           loading="lazy" decoding="async" width="44" height="44"
           class="radio-themed-artwork h-11 w-11 shrink-0 rounded-xl object-contain p-1 ring-1 ring-[var(--radio-border)]"
           :src="siteAssetUrl(item.station_image || '/brand/onair-mark.svg')"
+          @error="onArtworkError($event)"
           :alt="item.station_name"
         />
         <span dir="auto" class="min-w-0 flex-1 truncate text-sm font-medium text-[var(--radio-text)]">
@@ -40,4 +41,11 @@ defineProps({
   },
 });
 const siteAssetUrl = useSiteAssetUrl();
+function onArtworkError(event: Event) {
+  const image = event.target as HTMLImageElement | null;
+  if (!image) return;
+  // Keep real TuneIn artwork as the primary image; fallback only on error.
+  image.onerror = null;
+  image.src = siteAssetUrl('/brand/onair-mark.svg');
+}
 </script>

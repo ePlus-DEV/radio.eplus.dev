@@ -8,6 +8,8 @@ export function randomStationCandidates(stations, filters = {}) {
   return stations.filter(station => {
     if (!station || typeof station.url !== 'string'
       || !CANONICAL_STATION_PATH.test(station.url)
+      // Global provider pages are discoverable, but not country-based direct streams.
+      || station.url.startsWith('/global-radio/')
       || typeof station.station_name !== 'string' || !station.station_name.trim()
       || seen.has(station.url)) return false;
     if (filters.country && station.station_country !== filters.country) return false;

@@ -27,7 +27,7 @@ test('generated search catalog and social preview are restored only for full CI 
   const yaml = await workflow();
   assert.match(yaml, /uses: actions\/cache@v6/);
   assert.match(yaml, /path: public\/search\/stations\.json/);
-  assert.match(yaml, /hashFiles\('public\/radio\/\*\*\/\*\.json', 'utils\/featured-stations\.mjs', 'scripts\/build-station-search-index\.mjs'\)/);
+  assert.match(yaml, /hashFiles\('public\/radio\/\*\*\/\*\.json', 'public\/catalog\/providers\/\*\*\/\*\.json', 'utils\/featured-stations\.mjs', 'scripts\/build-station-search-index\.mjs'\)/);
   assert.match(yaml, /path: public\/brand\/social-preview\.png/);
   assert.match(yaml, /hashFiles\('public\/brand\/social-preview\.svg', 'scripts\/generate-social-preview\.mjs', 'package-lock\.json'\)/);
   assert.match(yaml, /ONAIR_SEARCH_INDEX_CACHE_HIT:/);
