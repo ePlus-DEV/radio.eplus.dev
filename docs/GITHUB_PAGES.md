@@ -41,7 +41,7 @@ The publish step uses `rsync --delete` for generated files but protects the root
 
 **The build policies differ by tier:** Development Preview and `develop` Staging are always `noindex`, have no canonical/JSON-LD/sitemap, and never run production GA4. `main` is **indexable** (`index, follow`) and publishes canonical tags, structured data, a production sitemap and GA4 (`G-ETDY41KBBJ`). The Pages deploy gate uses the matching `production` / `staging` audit, so a production `noindex` artifact fails before publishing. Verify production DNS/TLS separately; pushing code does not itself change DNS.
 
-Website builds exclude per-station Open Graph JPEG files to remain below the Pages site size limit. Use **Publish station images separately** to upload reusable JPEGs incrementally to the public repository's `station-images` branch (up to 100 MiB per push). Only set `STATION_OG_BASE_URL` after the complete manifest is available; otherwise keep the shared brand social image. See [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md).
+Website builds exclude per-station Open Graph JPEG files to remain below the Pages site size limit and use the shared brand social image by default. The unused manual station-image publishing workflow has been retired. Local image generation is still available with `npm run generate:images`; **do not** set `STATION_OG_BASE_URL` unless a complete immutable external image set and valid manifest have been independently published and verified. See [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md).
 
 ## Troubleshooting
 
