@@ -237,6 +237,13 @@ Regression guards:
 - SEO copy and GA4 configuration are not collateral edits: **never rewrite production SEO titles, descriptions, canonical, schema, or marketing text without explicit approval**. Preview's root 404 may show a countdown and route-preserving fallback, but it is still HTTP 404 and must never make a failed PR Preview check pass.
 - Any future changes to one tier require regression coverage for the other two, updates to `docs/ENVIRONMENTS.md` and `docs/PROJECT_CONTEXT.md`, and synchronized trusted `pull_request_target` workflow definitions on `main` and `develop`.
 
+## README and documentation maintenance
+
+- Keep the root `README.md` a **concise GitHub landing page**: product identity, key capabilities, short local quick start, the three environment links, documentation navigation, and the current license status. Do not expand it into a CI/deployment/SEO runbook or paste workflow YAML, full environment variable matrices, security incident procedures, and long file inventories.
+- The detailed local setup, `npm` commands and source layout belong in `docs/DEVELOPMENT.md`. The authoritative release/secret migration map belongs in `docs/ENVIRONMENTS.md`, with `docs/GITHUB_PAGES.md` and `docs/GITHUB_ACTIONS.md` for publishing and CI, `docs/PR_PREVIEWS.md` for previews, `docs/SEO.md` for SEO/analytics, and `docs/SEPARATE_IMAGE_RELEASES.md` for OG image publishing.
+- When adding or changing a workflow, feature or environment, edit its *owner document* and keep the README link accurate instead of duplicating paragraphs. Keep `main` and `develop` README/navigation in sync. Never silently alter product SEO copy, environment domains, or analytics behavior for documentation cleanup.
+- Validate that README links point to tracked files and that the short quick-start commands match `package.json`. Do not claim a license exists before a `LICENSE` file is actually added.
+
 ## Workflow maintenance and PR Preview rules
 
 - **Do not create PRs just to edit a small README, rules file or GitHub Actions workflow** when a direct commit is explicitly authorized and branch protection permits it. Commit to the appropriate branch and verify the result. Use PR review for application features, changes affecting security/credentials, high-risk CI changes, or any protected branch that requires it.
