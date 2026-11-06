@@ -73,7 +73,7 @@ function readScriptElements(html) {
  * is required because a production build may be mirrored to a preview URL.
  */
 export async function assertGa4Output(root, target) {
-  assert.ok(['production', 'staging'].includes(target), 'Expected production or staging');
+  assert.ok(['production', 'staging', 'development'].includes(target), 'Expected production, staging or development');
   const pages = ['index.html', 'asia/viet-nam/vov-gt-hcm/index.html'];
   for (const page of pages) {
     const html = await readFile(join(root, page), 'utf8');
@@ -101,9 +101,9 @@ export async function assertGa4Output(root, target) {
       assert.ok(code.includes('document.head.appendChild(tag)'),
         page + ': gtag.js script never loaded');
     } else {
-      assert.equal(gaBootstraps.length, 0, page + ': staging must not embed Google tag');
+      assert.equal(gaBootstraps.length, 0, page + ': non-production must not embed Google tag');
       assert.ok(!head.includes('googletagmanager.com/gtag/js'),
-        page + ': staging must not load Google tag');
+        page + ': non-production must not load Google tag');
     }
   }
   console.log('PASS: ' + target + ' prerendered pages have the correct single GA4 tag policy.');

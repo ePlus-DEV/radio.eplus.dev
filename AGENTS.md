@@ -222,11 +222,26 @@ Regression guards:
 - `tests/seo-structured-data.test.mjs`
 - `tests/static-site-pages.test.mjs`
 
+## Three-tier release/environment contract (2026-11-06)
+
+**Read `docs/ENVIRONMENTS.md` before editing releases, GitHub Actions, build URLs, SEO or environment variables.**
+
+- **Production** = trusted `main` → GitHub Environment `production` → `ePlus-DEV/onair-production-pages` → `https://radio.eplus.dev/`. This is the **only** indexable host with production canonical/JSON-LD/sitemap and GA4.
+- **Staging** = trusted `develop` → GitHub Environment `staging` (after safe migration) → `ePlus-DEV/onair-staging-pages` → `https://new-radio.eplus.dev/`. Always `noindex`, never production GA4.
+- **Development** = feature PR **targeting `develop`** → isolated preview build, trusted `development` Environment publisher → `ePlus-DEV/onair-pr-previews` → `https://preview.radio.eplus.dev/pr-preview/pr-N/`. Always `noindex`, never production GA4. **There is no implicit persistent `dev` branch.** The preview domain root is a landing page, not a full app deployment.
+- Promotion must be `feature → PR preview → merge develop → verify staging → reviewed release PR to main → production`; never route a PR build directly to Staging or Production, automatically merge for deployment, or push unreviewed product code to `main`.
+- Each tier uses its own Pages output repo and base path. Do not reuse a staging or production CNAME, canonical URL or deploy target for Preview.
+- Staging migration: create and populate GitHub Environment `staging` **before** setting the **repository-level** `PAGES_STAGING_READY=true`. Until configured, the staging workflow retains the legacy `development` Environment/`PAGES_DEV_READY` fallback to avoid breaking live Staging. After migration, `PAGES_DEV_READY` gates **only** Development PR previews. `PAGES_STAGING_READY=false` disables Staging and must not silently select old secrets.
+- Never invent or commit Environment secrets or their values. A build with missing environment configuration must fail closed at preflight, not publish to a fallback domain. Enforce `main` Production and `develop` Staging branch protection where supported.
+- The preview build job must remain untrusted, read-only, and **without Environment secrets**; only trusted config/publish/cleanup jobs may access the `development` Environment. Publish a PR comment only when its live URL returns valid HTML with `noindex` and the exact PR commit SHA.
+- SEO copy and GA4 configuration are not collateral edits: **never rewrite production SEO titles, descriptions, canonical, schema, or marketing text without explicit approval**. Preview's root 404 may show a countdown and route-preserving fallback, but it is still HTTP 404 and must never make a failed PR Preview check pass.
+- Any future changes to one tier require regression coverage for the other two, updates to `docs/ENVIRONMENTS.md` and `docs/PROJECT_CONTEXT.md`, and synchronized trusted `pull_request_target` workflow definitions on `main` and `develop`.
+
 ## Workflow maintenance and PR Preview rules
 
 - **Do not create PRs just to edit a small README, rules file or GitHub Actions workflow** when a direct commit is explicitly authorized and branch protection permits it. Commit to the appropriate branch and verify the result. Use PR review for application features, changes affecting security/credentials, high-risk CI changes, or any protected branch that requires it.
 - The PR Preview workflow uses `pull_request_target`: GitHub loads its definition from the **default branch `main`**, while `branches: [develop]` filters the PR's base. Maintain the same preview workflow on both `main` and `develop`; updating `develop` alone does **not** activate new default-branch workflow logic.
-- Preview builds run with read-only permissions and **no deployment secrets**. Only the trusted publishing/cleanup jobs receive the existing development Environment `PAGES_DEPLOY_TOKEN`. Do not introduce another token, provider or readiness variable when the existing GitHub Pages setup suffices.
+- Preview builds run with read-only permissions and **no deployment secrets**. Only trusted Preview config/publishing/cleanup jobs receive the `development` Environment's public variables or `PAGES_DEPLOY_TOKEN`; build jobs receive only validated public configuration. The independent Staging migration flag is `PAGES_STAGING_READY`, not the Preview gate `PAGES_DEV_READY`.
 - Do **not** comment that a preview is live simply because artifact upload, `git push` or Pages deployment passed. Confirm that the public URL serves the **expected PR head SHA** (`preview-commit.txt`) and a real `noindex` HTML page before posting/updating the single bot comment. A 404 is a failure, not a valid preview.
 - PR preview runs on same-repository PRs opened/reopened/updated against `develop`; merging into `develop` does not trigger one. On PR close/merge, delete **only** that PR's preview directory. Test-only smoke PRs (e.g., #367) must be **closed without merging** after successful verification.
 - Keep production/staging workflow, domain, GA4, canonical URLs, route copy, and SEO text untouched unless explicitly asked. Consult `docs/PR_PREVIEWS.md` and `docs/GITHUB_ACTIONS.md` before editing preview automation.

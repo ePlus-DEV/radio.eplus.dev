@@ -20,6 +20,7 @@ test('GA4 can run only on the canonical production website', () => {
     { ...production, nodeEnv: 'test' },
     { ...production, siteUrl: 'http://localhost:3000' },
     { ...production, siteUrl: 'https://new-radio.eplus.dev' },
+    { ...production, siteUrl: 'https://preview.radio.eplus.dev/pr-preview/pr-375/' },
     { ...production, siteUrl: 'https://radio-new.eplus.dev' },
     { ...production, siteUrl: 'https://eplus-dev.github.io/onair-production-pages/' },
     { ...production, siteUrl: 'https://arcade.eplus.dev' },
@@ -73,7 +74,7 @@ test('HTML GA4 loader runs before Nuxt hydration on canonical hostname only', ()
   const commands = Array.from(live.window.dataLayer, (args) => Array.from(args)[0]);
   assert.deepEqual(commands, ['js', 'config']);
   assert.equal(live.window.dataLayer[1][1], 'G-ETDY41KBBJ');
-  for (const host of ['new-radio.eplus.dev', 'example.github.io', 'localhost']) {
+  for (const host of ['new-radio.eplus.dev', 'preview.radio.eplus.dev', 'example.github.io', 'localhost']) {
     const preview = simulate(host);
     assert.deepEqual(preview.scripts, [], host);
     assert.equal(preview.window.gtag, undefined, host);
@@ -91,7 +92,8 @@ test('generated HTML audit rejects missing, duplicate and preview GA4 tags', asy
     await writeFile(home, production);
     await writeFile(station, production);
     await assertGa4Output(root, 'production');
-    await assert.rejects(assertGa4Output(root, 'staging'), /staging must not embed Google tag/);
+    await assert.rejects(assertGa4Output(root, 'staging'), /non-production must not embed Google tag/);
+    await assert.rejects(assertGa4Output(root, 'development'), /non-production must not embed Google tag/);
 
     // HTML end tags can include whitespace and malformed attributes; CodeQL
     // previously flagged a regex that missed these valid parser boundaries.
@@ -122,6 +124,7 @@ test('generated HTML audit rejects missing, duplicate and preview GA4 tags', asy
     await writeFile(home, staging);
     await writeFile(station, staging);
     await assertGa4Output(root, 'staging');
+    await assertGa4Output(root, 'development');
     await assert.rejects(assertGa4Output(root, 'production'), /missing or duplicate/);
   } finally {
     await rm(root, { recursive: true, force: true });

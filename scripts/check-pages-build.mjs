@@ -6,11 +6,11 @@ import { pathToFileURL } from 'node:url';
 const MAX_PAGES_BYTES = 1_000_000_000;
 
 export async function checkPagesBuild(root, target) {
-  assert.ok(['production', 'staging'].includes(target), 'Expected production or staging');
+  assert.ok(['production', 'staging', 'development'].includes(target), 'Expected production, staging or development');
   const home = await readFile(join(root, 'index.html'), 'utf8');
   const robots = await readFile(join(root, 'robots.txt'), 'utf8');
   const hasNoindex = /<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["'][^"']*noindex)[^>]*>/i.test(home);
-  assert.equal(hasNoindex, target === 'staging', 'Generated robots metadata does not match target');
+  assert.equal(hasNoindex, target !== 'production', 'Generated robots metadata does not match target');
   assert.equal(/Sitemap:/i.test(robots), target === 'production', 'Generated robots.txt has wrong sitemap setting');
 
   let bytes = 0;
