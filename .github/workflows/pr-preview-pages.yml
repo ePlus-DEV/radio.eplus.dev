@@ -303,6 +303,28 @@ jobs:
           test ! -L "$target/pr-preview" || { echo "::error::Unsafe preview directory."; exit 1; }
           mkdir -p "$target/pr-preview/pr-$PR_NUMBER"
           rsync -a --delete "$RUNNER_TEMP/pr-output/" "$target/pr-preview/pr-$PR_NUMBER/"
+
+          # Pages deployment syncs the full output repository. A missed
+          # pull_request_target close event must not leave thousands of old
+          # files in the next deployment (e.g. merged PR #377). Prune only
+          # same-repository PR directories whose API state is confirmed closed.
+          # Unknown/API-failure states are retained; never delete an open PR.
+          for old_preview in "$target"/pr-preview/pr-*; do
+            [ -d "$old_preview" ] && [ ! -L "$old_preview" ] || continue
+            old_label="${old_preview##*/}"
+            old_number="${old_label#pr-}"
+            [[ "$old_number" =~ ^[1-9][0-9]*$ ]] || continue
+            [ "$old_number" = "$PR_NUMBER" ] && continue
+            old_state="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$old_number" --jq .state 2>/dev/null)" || {
+              echo "::warning::Cannot verify PR #$old_number; retain its Preview."
+              continue
+            }
+            if [ "$old_state" = closed ]; then
+              echo "Prune expired Preview for closed PR #$old_number"
+              rm -rf -- "$old_preview"
+            fi
+          done
+
           touch "$target/.nojekyll"
           # The live URL must prove it serves THIS PR head, not an old artifact.
           printf "%s\n" "$EXPECTED_HEAD" > "$target/pr-preview/pr-$PR_NUMBER/preview-commit.txt"
