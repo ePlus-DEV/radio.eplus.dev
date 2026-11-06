@@ -38,7 +38,10 @@ test('development preview is isolated from staging and cannot load production an
   assert.match(preview, /NUXT_APP_BASE_URL: \/pr-preview\/pr-/);
   assert.match(preview, /node scripts\/assert-ga4-output\.mjs \.output\/public development/);
   assert.match(preview, /node scripts\/check-pages-build\.mjs \.output\/public development/);
-  assert.match(preview, /name: development/);
+  assert.match(preview, /vars\.PAGES_PREVIEW_READY == 'true' && 'preview' \|\| 'development'/);
+  assert.match(preview, /vars\.PAGES_PREVIEW_READY == '' && vars\.PAGES_DEV_READY == 'true'/);
+  assert.match(preview, /site_name: \$\{\{ steps\.public\.outputs\.site_name \}\}/);
+  assert.match(preview, /NUXT_PUBLIC_SITE_NAME: \$\{\{ needs\.preview_config\.outputs\.site_name \}\}/);
   assert.match(preview, /EXPECTED_HEAD/);
   assert.match(preview, /preview-commit\.txt/);
 });
@@ -50,5 +53,5 @@ test('untrusted PR builds cannot receive publishing credentials', () => {
   const buildSection = preview.split('  build:')[1]?.split('  publish:')[0];
   assert.ok(buildSection, 'expected an independent build job');
   assert.doesNotMatch(buildSection, /secrets\.PAGES_DEPLOY_TOKEN/);
-  assert.doesNotMatch(buildSection, /environment:\s*\n\s*name: development/);
+  assert.doesNotMatch(buildSection, /\n\s*environment:/, 'PR code must not receive any GitHub Environment');
 });
