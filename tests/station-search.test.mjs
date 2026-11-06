@@ -150,7 +150,7 @@ test('United Kingdom catalog removes newer duplicate station routes but keeps or
   assert.equal(Object.keys(catalog).length, 138);
   assert.equal(world.europe['united-kingdom'].station, 138);
   const generated = await readFile('data/world.ts', 'utf8');
-  assert.match(generated, /"united-kingdom":\s**\\{[^}]*"station": 138/);
+  assert.match(generated, /"united-kingdom":\s*\{[^}]*"station": 138/);
 });
 
 test('static search index always keeps first station even if later duplicate offers HTTPS', async () => {
