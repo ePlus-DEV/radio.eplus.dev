@@ -76,10 +76,10 @@
         <button
           type="button"
           class="absolute bottom-3 right-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
-          :aria-label="$t(isPending(station) ? 'player.connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
+          :aria-label="$t(isPending(station) && !canPlayWhilePending(station) ? 'player.connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
           :aria-pressed="isPlaying(station)"
           :aria-busy="isPending(station)"
-          :disabled="!playEnabled || isPending(station)"
+          :disabled="!playEnabled || (isPending(station) && !canPlayWhilePending(station))"
           :title="!playEnabled ? disabledReason : undefined"
           @click="emit('select-station', station)"
         >
@@ -113,6 +113,8 @@ const props = withDefaults(
     eyebrowKey?: string;
     /** Only the selected Global Radio card is busy while its stream resolves. */
     pendingStationId?: string;
+    /** Silent preparation stays clickable to upgrade it to explicit playback. */
+    pendingPlayableStationId?: string;
     playEnabled?: boolean;
     disabledReason?: string;
   }>(),
@@ -122,12 +124,15 @@ const props = withDefaults(
     countryName: "",
     eyebrowKey: "panel.play_from_radio",
     pendingStationId: "",
+    pendingPlayableStationId: "",
     playEnabled: true,
     disabledReason: "",
   },
 );
 const isPending = (station: RadioStationOption): boolean =>
   station.id === props.pendingStationId;
+const canPlayWhilePending = (station: RadioStationOption): boolean =>
+  station.id === props.pendingPlayableStationId;
 
 const isPlaying = (station: RadioStationOption): boolean =>
   station.id === props.activeStationId && (playback.playing || playback.waiting);
