@@ -25,20 +25,24 @@ test('every eligible PR event hides previous Preview URL before rebuilding', () 
   assert.match(build, /needs\.comment_status\.result == 'success'/);
 });
 
-test('successful publish comments only after live SHA, noindex and head verification', () => {
+test('publisher advertises ready only after SHA and noindex; otherwise publishing', () => {
   assert.ok(publish, 'publish job must exist');
-  const live = publish.indexOf('Verify live GitHub Pages preview before commenting');
-  const ready = publish.indexOf('Show Preview link only after live verification of the current PR/run');
-  assert.ok(live >= 0 && ready > live, 'ready link must be gated behind public URL verification');
+  const check = publish.indexOf('Check public Preview once without waiting for Pages');
+  const comment = publish.indexOf('Report verified or publishing Preview for current PR/run');
+  assert.ok(check >= 0 && comment > check);
   assert.match(publish, /published_sha.*EXPECTED_HEAD/);
   assert.match(publish, /grep -q 'noindex'/);
+  assert.match(publish, /echo "live=true"/);
+  assert.match(publish, /echo "live=false"/);
+  assert.match(publish, /LIVE_VERIFIED:.*steps\.live_check\.outputs\.live/);
+  assert.match(publish, /\$LIVE_VERIFIED/);
+  assert.match(publish, /Preview ready/);
+  assert.match(publish, /Preview publishing/);
+  assert.match(publish, /older build or 404/);
   assert.match(publish, /read -r state base head repo/);
-  assert.match(publish, /head" != "\$EXPECTED_HEAD"/);
   assert.match(publish, /onair-preview-run:\$GITHUB_RUN_ID/);
-  assert.match(publish, /\[Open preview\]\(%s\)/);
   assert.match(publish, /gh api -X PATCH/);
-  assert.doesNotMatch(publish, /gh api -X POST "repos\/\$GITHUB_REPOSITORY\/issues\/\$PR_NUMBER\/comments"/,
-    'publish must only restore a link in the status comment of this run');
+  assert.doesNotMatch(publish, /gh api -X POST "repos\/\$GITHUB_REPOSITORY\/issues\/\$PR_NUMBER\/comments"/);
 });
 
 test('failure and PR closure leave no Preview hyperlink in the bot comment', () => {
@@ -62,14 +66,14 @@ test('status/finalizer jobs never receive PR code or Preview deployment secrets'
   assert.doesNotMatch(build, /secrets\.PAGES_DEPLOY_TOKEN/);
 });
 
-test('live verification outlasts slow Pages deployment without exposing unverified links', () => {
-  // Pages deployment can take longer than the source PR build.
+test('a slow GitHub Pages/CDN deployment never holds the publisher open', () => {
   assert.match(publish, /timeout-minutes: 30/);
-  assert.ok(publish.includes('for attempt in $(seq 1 90); do'));
-  assert.ok(publish.includes('if [ "$attempt" -lt 90 ]; then sleep 10; fi'));
-  assert.match(publish, /published_sha.*EXPECTED_HEAD/);
-  assert.match(publish, /grep -q 'noindex'/);
-  assert.ok(!status.includes('[Open preview]'), 'do not expose links before verification');
+  assert.doesNotMatch(publish, /for attempt in \$\(seq|sleep 10|sleep 8/);
+  assert.match(publish, /--max-time 4/);
+  assert.match(publish, /--max-time 6/);
+  assert.match(publish, /Preview publishing/);
+  assert.match(publish, /Public Preview serves the expected SHA and noindex/);
+  assert.ok(!status.includes('[Open preview]'), 'do not expose old links before build');
 });
 
 test('publisher prunes only verified closed PR preview folders before uploading', () => {
