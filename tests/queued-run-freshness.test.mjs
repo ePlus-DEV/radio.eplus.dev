@@ -20,15 +20,15 @@ test('queued PR preflight skips closed/superseded runs and validates the current
     await chmod(shim, 0o755);
     const script = await preflight('build.yml', '"Confirm live PR base before expensive CI"');
     for (const [fixture, expected, status] of [
-      ['develop\thead-current\topen', 'run=true', 0],
-      ['develop\thead-newer\topen', 'run=false', 0],
-      ['develop\thead-current\tclosed', 'run=false', 0],
+      ['staging\thead-current\topen', 'run=true', 0],
+      ['staging\thead-newer\topen', 'run=false', 0],
+      ['staging\thead-current\tclosed', 'run=false', 0],
       ['main\thead-current\topen', 'run=true', 1],
     ]) {
       const output = join(root, 'outputs'); await writeFile(output, '');
       const result = spawnSync('bash', ['-c', script], { encoding: 'utf8', env: {
         ...process.env, PATH: root + ':' + process.env.PATH,
-        GH_FIXTURE: fixture, EVENT_BASE_REF: 'develop', EVENT_HEAD_SHA: 'head-current',
+        GH_FIXTURE: fixture, EVENT_BASE_REF: 'staging', EVENT_HEAD_SHA: 'head-current',
         PR_NUMBER: '1', GITHUB_REPOSITORY: 'example/repo', GITHUB_OUTPUT: output,
       } });
       assert.equal(result.status, status, result.stderr);
