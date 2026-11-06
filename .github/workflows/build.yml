@@ -49,7 +49,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # The data-sync bot opens large catalog PRs directly against main.
+  # The data-sync bot opens catalog PRs against staging, not main.
   # Preserve its fast validation without rerunning all ~4k Nuxt pages.
   data-sync:
     name: "Validate radio sync bot PR"
