@@ -2,7 +2,7 @@ import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEARCH_FEATURED_STATION_IDS, VIETNAM_FEATURED_STATION_IDS } from '../utils/featured-stations.mjs';
-import { stationCatalogIdentity, stationListingPriority } from '../utils/station-catalog-identity.mjs';
+import { stationCatalogIdentity } from '../utils/station-catalog-identity.mjs';
 
 const featuredIds = new Set(VIETNAM_FEATURED_STATION_IDS);
 const searchFeaturedIds = new Map(SEARCH_FEATURED_STATION_IDS.map((id, index) => [id, index + 1]));
@@ -21,7 +21,7 @@ export async function buildStationSearchIndex({
   const result = [];
   // Canonicalize only repeated titles from the same country + official site.
   // Keep all individual catalog routes (including aliases) intact for SEO.
-  const identityPositions = new Map();
+  const seenIdentities = new Set();
   for (const area of (await readdir(radioRoot, { withFileTypes: true })).filter(x => x.isDirectory()).sort((a, b) => a.name.localeCompare(b.name))) {
     const areaPath = join(radioRoot, area.name);
     for (const countryFile of (await readdir(areaPath, { withFileTypes: true })).filter(x => x.isFile() && x.name.endsWith('.json')).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -45,16 +45,10 @@ export async function buildStationSearchIndex({
         };
         const identity = stationCatalogIdentity(station);
         const key = identity ? `${area.name}/${country}/${identity}` : '';
-        const rank = stationListingPriority(id, station, item.featured_rank);
-        const previous = key ? identityPositions.get(key) : null;
-        if (previous) {
-          if (rank > previous.rank) {
-            result[previous.index] = item;
-            identityPositions.set(key, { index: previous.index, rank });
-          }
-          continue;
-        }
-        if (key) identityPositions.set(key, { index: result.length, rank });
+        // First existing listing wins. Never replace it with a later HTTPS,
+        // featured or Radio Browser variant; preserving its route is paramount.
+        if (key && seenIdentities.has(key)) continue;
+        if (key) seenIdentities.add(key);
         result.push(item);
       }
     }
