@@ -22,11 +22,16 @@ function isApproved(url) {
     // is under /tune_in/. No user-supplied URLs are accepted by this probe.
     const playlist = parsed.pathname.startsWith('/3p-tune-in/tune_in/') &&
       parsed.pathname.endsWith('.m3u8');
-    const fragment = parsed.pathname.startsWith('/3p-tune-in/') &&
-      /\.(?:ts|aac|m4s|mp4)$/i.test(parsed.pathname);
+    const audioSuffix = /\.(?:ts|aac|m4s|mp4)$/i.test(parsed.pathname);
+    const appleTuneInFragment = parsed.hostname === 'itsliveradio.apple.com' &&
+      parsed.pathname.startsWith('/3p-tune-in/') && audioSuffix;
+    // Confirmed from all five remaining Apple masters on 2026-11-06.
+    // Probe exact second Apple-controlled audio hostname, not arbitrary URLs.
+    const appleMusicFragment = parsed.hostname === 'liveradio.music.apple.com' &&
+      audioSuffix;
     return parsed.protocol === 'https:'
-      && parsed.hostname === 'itsliveradio.apple.com'
-      && (playlist || fragment)
+      && ((parsed.hostname === 'itsliveradio.apple.com' && playlist)
+        || appleTuneInFragment || appleMusicFragment)
       && !parsed.username && !parsed.password && !parsed.port
       && [...parsed.searchParams].every(([key]) => key === 'accessKey');
   } catch { return false; }
