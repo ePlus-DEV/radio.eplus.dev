@@ -19,6 +19,7 @@ test('GA4 can run only on the canonical production website', () => {
     { ...production, nodeEnv: 'development' },
     { ...production, nodeEnv: 'test' },
     { ...production, siteUrl: 'http://localhost:3000' },
+    { ...production, siteUrl: 'https://staging.radio.eplus.dev' },
     { ...production, siteUrl: 'https://new-radio.eplus.dev' },
     { ...production, siteUrl: 'https://preview.radio.eplus.dev/pr-preview/pr-375/' },
     { ...production, siteUrl: 'https://radio-new.eplus.dev' },
@@ -74,7 +75,7 @@ test('HTML GA4 loader runs before Nuxt hydration on canonical hostname only', ()
   const commands = Array.from(live.window.dataLayer, (args) => Array.from(args)[0]);
   assert.deepEqual(commands, ['js', 'config']);
   assert.equal(live.window.dataLayer[1][1], 'G-ETDY41KBBJ');
-  for (const host of ['new-radio.eplus.dev', 'preview.radio.eplus.dev', 'example.github.io', 'localhost']) {
+  for (const host of ['staging.radio.eplus.dev', 'new-radio.eplus.dev', 'preview.radio.eplus.dev', 'example.github.io', 'localhost']) {
     const preview = simulate(host);
     assert.deepEqual(preview.scripts, [], host);
     assert.equal(preview.window.gtag, undefined, host);
