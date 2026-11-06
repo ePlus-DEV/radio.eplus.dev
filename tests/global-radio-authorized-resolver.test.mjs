@@ -117,8 +117,8 @@ test('provider pages keep ePlus one-click Play while external destinations remai
   assert.match(list, /:play-enabled="canListenOnEplus"/);
   assert.match(list, /:pending-station-id="pendingStationId"/);
   assert.match(list, /@select-station="playSelectedStation"/);
-  assert.match(detail, /:disabled="!canListenOnEplus \\|\\| Boolean\\(pendingStationId\\)"/);
-  assert.match(detail, /@click="playOnEplus\\(station\\)"/);
+  assert.match(detail, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
+  assert.match(detail, /@click="playOnEplus\(station\)"/);
   assert.doesNotMatch(list, /listen_on_apple|listen_on_tunein|:href="station\.listen_url"|:href="station\.tunein_url"/);
   assert.match(detail, /listen_on_apple/);
   assert.match(detail, /listen_on_tunein/);
