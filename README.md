@@ -29,12 +29,14 @@ Open [http://localhost:3000](http://localhost:3000). See the [development guide]
 | Environment | Source | Website |
 | --- | --- | --- |
 | **Production** | `main` | [radio.eplus.dev](https://radio.eplus.dev/) |
-| **Staging** | `develop` | [stg.radio.eplus.dev](https://stg.radio.eplus.dev/) |
-| **Preview** | PR targeting `develop` | [preview.radio.eplus.dev](https://preview.radio.eplus.dev/) |
+| **Staging** | `staging` | [stg.radio.eplus.dev](https://stg.radio.eplus.dev/) |
+| **Preview** | PR targeting `staging` | [preview.radio.eplus.dev](https://preview.radio.eplus.dev/) |
 
-Development previews are published at `/pr-preview/pr-<number>/`; there is no separate long-lived `dev` branch. Only Production is indexable and uses production GA4. Staging and Preview remain `noindex`.
+Development previews are published at `/pr-preview/pr-<number>/`; there is no separate long-lived `dev` or `develop` branch. Only Production is indexable and uses production GA4. Staging and Preview remain `noindex`.
 
 Browser-tab titles are distinct by default: **ePlus OnAir** (Production), **ePlus OnAir — Staging**, and **ePlus OnAir — Preview**. Each GitHub Environment can override its own title with `NUXT_PUBLIC_SITE_NAME`.
+
+The publishing source is `staging`; production releases are reviewed PRs from `staging` to `main`. Preview builds remain isolated per feature PR.
 
 ## Documentation
 
