@@ -216,5 +216,5 @@ export function extractNativeHlsId3Track(cues, { appleMusic = false } = {}) {
   }
   if (appleMusic && !album && !appleTrackId) return null;
   return title && artist && title.toLocaleLowerCase() !== artist.toLocaleLowerCase()
-    ? { title, artist } : null;
+    ? { title, artist, ...(appleMusic && artwork ? { artwork } : {}) } : null;
 }
