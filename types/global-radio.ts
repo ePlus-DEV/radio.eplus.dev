@@ -6,6 +6,8 @@ export interface GlobalRadioStation {
   language: string;
   listen_url: string;
   tunein_url?: string;
+  /** Public provider cover artwork; never a playback stream or signed media URL. */
+  image?: string;
   seasonal?: boolean;
 }
 

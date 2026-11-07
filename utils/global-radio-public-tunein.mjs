@@ -45,9 +45,10 @@ export function inspectPublicAppleStream(streamValue, stationId, now = Date.now(
 
   const base = '/3p-tune-in/tune_in/';
   const path = url.pathname;
-  // Direct public Tune.ashx currently returns Apple MPEG-TS masters.
-  // The Apple ID in non-seasonal paths binds the stream to the chosen station.
+  // TuneIn may return either MPEG-TS or CMAF masters. The numeric Apple ID
+  // binds the CMAF stream to the selected station (unlike Holiday's 'ppa').
   const normalTs = path === base + station.apple + '-ts/index-ts.m3u8';
+  const normalCmaf = path === base + station.apple + '/index-cmaf.m3u8';
   const holidayTs = stationId === 'apple-music-holiday-hits'
     && path === base + 'ppa-ts/index-ts.m3u8';
   const normalHls = new RegExp('^' + base + station.apple +
@@ -55,7 +56,7 @@ export function inspectPublicAppleStream(streamValue, stationId, now = Date.now(
   const holidayCmaf = stationId === 'apple-music-holiday-hits' &&
     (path === base + 'ppa/index-cmaf.m3u8' ||
       /^\/3p-tune-in\/tune_in\/ppa\/usw\/(?:64|256)\.m3u8$/.test(path));
-  if (!normalTs && !holidayTs && !normalHls && !holidayCmaf) return null;
+  if (!normalTs && !normalCmaf && !holidayTs && !normalHls && !holidayCmaf) return null;
 
   const key = url.searchParams.get('accessKey') || '';
   const match = key.match(/^(\d{10})_[A-Za-z0-9+/=_-]+$/);
@@ -78,9 +79,15 @@ export async function resolvePublicTuneInStream({ station, corsServer, signal, f
     throw new Error('unavailable');
   }
   const candidates = Array.isArray(payload?.body) ? payload.body : [];
+  let fallback = null;
   for (const item of candidates) {
     const checked = inspectPublicAppleStream(item?.url, station.id);
-    if (checked) return checked;
+    if (!checked) continue;
+    // Prefer a provider-issued CMAF master when offered: its in-band emsg/ID3
+    // can supply accurate current-song metadata. Retain MPEG-TS as fallback.
+    if (new URL(checked.streamUrl).pathname.endsWith('/index-cmaf.m3u8')) return checked;
+    fallback ||= checked;
   }
+  if (fallback) return fallback;
   throw new Error('unavailable');
 }

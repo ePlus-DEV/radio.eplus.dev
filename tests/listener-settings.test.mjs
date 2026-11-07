@@ -55,7 +55,7 @@ test('player and session use the same Settings store; source identity survives L
   assert.match(player, /await applySource\(activeSourceIndex\.value, true\)/);
   assert.match(player, /liveResumePending = Boolean\(activeResolvedSrc\)/);
   assert.match(player, /if \(!preferences\.autoReconnect\)/);
-  assert.match(restore, /if \(!preferences\.restoreStation\) return/);
+  assert.match(restore, /if \(!preferences\.restoreStation \|\| playback\.pendingGlobalRadio\) return/);
   assert.match(player, /const autoPlayEnabled = Boolean\(props\.playRequest\)/);
   assert.match(store, /localStorage\.setItem\(LISTENER_PREFERENCES_KEY/);
   assert.match(store, /addEventListener\('storage'/);

@@ -133,7 +133,7 @@
 </template>
 
 <script lang="ts" setup>
-import { searchLocalStations } from "~/utils/station-search.mjs";
+import { searchLocalStations, mergeGlobalSearchHits } from "~/utils/station-search.mjs";
 
 const props = withDefaults(defineProps<{
   inline?: boolean;
@@ -162,9 +162,12 @@ const algoliaFailed = ref(false);
 const resultsOpen = ref(false);
 const inline = computed(() => props.inline);
 const usingLocal = computed(() => !algoliaConfigured.value || algoliaFailed.value || remoteQuery.value !== input.value || !input.value.trim());
-const displayHits = computed(() =>
-  usingLocal.value ? searchLocalStations(localIndex.value, input.value) : remoteHits.value
-);
+const localHits = computed(() => searchLocalStations(localIndex.value, input.value));
+// Algolia currently indexes geographic stations only. Always merge Global Radio
+// matches from our static catalog into remote search without duplicating URLs.
+const displayHits = computed(() => usingLocal.value
+  ? localHits.value
+  : mergeGlobalSearchHits(localHits.value, remoteHits.value));
 const suggestionQueries = [
   "VOV Giao Thông",
   "Heart UK",

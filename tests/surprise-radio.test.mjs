@@ -4,7 +4,7 @@ import { readFile, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import {
-  pickRandomStation, randomStationCandidates, randomStationFacets,
+  isSurpriseRequestCurrent, pickRandomStation, randomStationCandidates, randomStationFacets,
 } from '../utils/surprise-radio.mjs';
 import { buildStationSearchIndex } from '../scripts/build-station-search-index.mjs';
 
@@ -14,6 +14,16 @@ const sample = [
   { url: '/asia/viet-nam/b', station_name: 'B', station_country: 'world.asia.viet_nam', station_category: 'Music', station_language: 'vi' },
   { url: '/europe/france/c', station_name: 'C', station_country: 'world.europe.france', station_category: 'Music', station_language: 'fr' },
 ];
+
+test('pending selection is invalidated by filter, navigation and playback changes', () => {
+  const original = { path: '/', station: { url: '/a/b/c' }, playRequest: 1, pauseRequest: 0,
+    requestedUrl: '', country: 'vn', genre: 'news', language: 'vi' };
+  assert.equal(isSurpriseRequestCurrent(original, { ...original }), true);
+  for (const change of [{ path: '/library' }, { station: null }, { playRequest: 2 }, { pauseRequest: 1 },
+    { requestedUrl: '/a/b/d' }, { country: 'fr' }, { genre: 'music' }, { language: 'fr' }]) {
+    assert.equal(isSurpriseRequestCurrent(original, { ...original, ...change }), false);
+  }
+});
 
 test('uniform range selection with deterministic boundaries, no repeats for multiple candidates', () => {
   assert.equal(pickRandomStation(sample, {}, () => 0).url, '/asia/viet-nam/a');
@@ -36,6 +46,9 @@ test('invalid paths, duplicate station records and empty titles are discarded wi
   const source = [...sample, sample[0], { ...sample[0], url: 'javascript:alert(1)' }, { ...sample[0], station_name: '' }];
   assert.equal(randomStationCandidates(source).length, 3);
   assert.equal(source.length, 6);
+  const globalPage = { url: '/global-radio/apple-music/apple-music-1', station_name: 'Apple Music 1', station_country: 'global_radio.title' };
+  assert.equal(randomStationCandidates([...source, globalPage]).length, 3,
+    'Global Radio search results must not be treated as directly playable country stations');
 });
 
 test('build index emits only real, optional display facets and excludes disabled/unsafe primary sources', async () => {
@@ -50,7 +63,7 @@ test('build index emits only real, optional display facets and excludes disabled
       disabled: { title: 'Inactive', stream: 'https://audio.example/d', disabled: true },
       invalid: { title: 'No audio', stream: 'javascript:alert(1)' },
     }));
-    const built = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), outputFile: output });
+    const built = await buildStationSearchIndex({ radioRoot: join(root, 'radio'), providerRoot: join(root, 'providers'), outputFile: output });
     assert.equal(built.length, 2);
     const jazz = built.find(item => item.url === '/asia/viet-nam/jazz');
     assert.equal(jazz.station_category, 'Jazz');
@@ -76,8 +89,7 @@ test('homepage only mounts random discovery on client and preserves original SEO
   assert.match(panel, /const surprise = async \(\) =>/);
   assert.match(panel, /playback\.activate\(createPlaybackStation/);
   assert.match(panel, /\{ autoplay: true \}/);
-  assert.match(panel, /request !== generation \|\| route\.fullPath !== snapshot\.path/);
-  assert.match(panel, /playback\.playRequest !== snapshot\.playRequest/);
+  assert.match(panel, /isSurpriseRequestCurrent\(snapshot, requestState\(\)\)/);
   assert.match(panel, /randomStationCandidates/);
   assert.match(panel, /type="|<select/);
   assert.doesNotMatch(panel, /onMounted\(/, 'catalog must not load or play merely on mount');

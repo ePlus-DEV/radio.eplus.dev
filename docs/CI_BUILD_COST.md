@@ -25,7 +25,7 @@ Full CI restores these separately with `actions/cache@v4`:
 
 | Generated file | Exact cache inputs |
 | --- | --- |
-| `public/search/stations.json` | `public/radio/**/*.json`, `utils/featured-stations.mjs`, `scripts/build-station-search-index.mjs` |
+| `public/search/stations.json` | `public/radio/**/*.json`, `public/catalog/providers/**/*.json`, `utils/featured-stations.mjs`, `scripts/build-station-search-index.mjs` |
 | `public/brand/social-preview.png` | `public/brand/social-preview.svg`, `scripts/generate-social-preview.mjs`, `package-lock.json` |
 
 When and only when the exact key hits, the respective pregeneration script

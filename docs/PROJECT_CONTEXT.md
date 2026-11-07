@@ -645,6 +645,7 @@ configuration until completion.
 ## Playback reliability follow-up (2026-10-18)
 
 - `waiting` clears actual-playing state; only the media `playing` event restores it. Network `stalled` must not clear playing when readyState still has future buffered data.
+- A queued `playing` event must not mark the player active or start listening-time accounting if the current media element is already paused or ended. Interruptions do not authorize automatic playback resumption.
 - Volume/mute preferences use `radio:audio-preferences:v1`, restored before volume listeners, with guarded storage and range validation. iOS system volume is never assigned programmatically. Preferences never authorize autoplay.
 - Metadata polling skips offline and hidden idle sessions, but continues for visible schedules and background playback. Successful lyrics are cached by media ID (20 entries); failed requests remain retryable.
 
@@ -1001,10 +1002,115 @@ Browser titles use `NUXT_PUBLIC_SITE_NAME` as an Environment-scoped **public** v
 
 ## 2026-11-06 — PR Preview comment visibility lifecycle
 
-Public verification must run in a separate no-checkout job after releasing the shared publisher lock. Do not expose even a tentative Preview link while Pages is publishing: it can return 404 or an older build. Only a successful HTTP response with the current head marker and `noindex` permits a link; on timeout leave it hidden and report the failure.
-
 PR Preview comments may not contain **Open preview** links while a new PR build is pending, failed, cancelled, stale or closed. The trusted metadata-only `comment_status` job updates the existing `<!-- onair-pr-preview -->` bot comment to **Building preview…**, with only a GitHub Actions workflow link, on PR open/reopen/synchronize. It marks the comment **Preview expired** on PR close, independently of Pages cleanup. After `npm test`, prerender, publish and exact live HTML/noindex/current-SHA verification, the trusted publisher restores **Open preview** only if the current PR head and hidden workflow-run marker still match. A finalizer replaces building status with **Preview unavailable** without the link on failure. Keep one comment per PR and preserve the `pull_request_target` security model (no untrusted checkout under secrets). This workflow must be updated on default `main` and synchronized to `staging`; the GitHub Pages 404 countdown is not proof of a valid preview.
 
 ## Branch migration to `staging` (2026-11-06)
 
 The integration branch is `staging` (replacing `develop`) for feature PRs, Preview events, Staging publishing and verified release PRs into `main`. Public Staging uses `https://stg.radio.eplus.dev/`; Production and its SEO/GA4/indexability remain unchanged at `https://radio.eplus.dev/`; per-PR Preview stays on `https://preview.radio.eplus.dev/pr-preview/pr-N/`. The trusted `pull_request_target` workflow on default `main` must accept `staging` before open PRs are retargeted. Set GitHub Environment deployment branch restrictions and protected-branch rules separately, and do not grant untrusted PR builds deployment secrets.
+
+## Global Radio searchable catalog and images (2026-11-06)
+
+Previously the Header/mobile search index contained only geographic radio
+catalogs, so seven Apple Music Global Radio provider station pages could not
+be found. The build now indexes public provider **detail links** as a separate
+result type, while preserving the separation from actual geographic audio
+streams. Local Global matches are merged into Algolia responses when needed.
+The static cache key includes provider JSON. All seven channels have distinct
+seven locally mirrored original TuneIn PNG covers (with generic brand fallback); list, detail, search,
+player and queue use channel art. Keep stream access keys entirely out of the
+public catalog and preserve production SEO/GA4.
+
+## 2026-11-06 — Global Radio reuses Country Radio station cards
+
+The Apple Music directory uses `PanelStation` from
+`components/panel/Station.vue` rather than a second custom list/card template.
+The shared grid keeps the Country responsive breakpoints (2 columns mobile,
+3 from sm, 4 from lg, 5 from 2xl), lazy local artwork, separate SSR detail
+links with `:prefetch="false"`, and the persistent 44px circular Play/Pause
+button. This remains presentational: Country still owns its instant catalog
+playback; Global maps the selected card back to an allowlisted station and
+uses `useAuthorizedGlobalRadioPlayback` for one short-lived HLS lease.
+
+The shared component's new `eyebrowKey`, `playEnabled`,
+`pendingStationId`, and `disabledReason` props are optional: Country defaults
+are unchanged. Only the selected Global station may show Connecting and be
+temporarily disabled; other station buttons remain available to abort and
+switch requests. Keep the seven verified local TuneIn PNGs, shared player,
+queue, metadata, SEO text/schema and provider access rules. This change
+targets the current `staging` integration branch; do not release directly
+to `main`.
+
+Regression coverage: `tests/global-radio-shared-card.test.mjs`,
+`tests/country-station-panel.test.mjs`, and
+`tests/global-radio-listening-cta.test.mjs`.
+
+## 2026-11-06 — Global Radio explicit Play survives navigation
+
+The Country and Global station cards share the same presentation and button
+size, but not the source lifecycle. Entering the Apple Music directory does
+**not** auto-prepare a provider stream, choose a default channel or trigger a
+seven-station lookup. In-app radio only starts after an explicit Play selection.
+
+Global Radio's asynchronous signed HLS resolution must outlive the directory
+page that initiated it. The in-flight AbortController is browser-scoped rather
+than tied to page unmount, and pending station identity/error live in the Pinia
+playback store so the detail page can see the same Connecting state. Only an
+explicit newer station request aborts the previous request. The queue's public
+metadata is captured before navigating; stream URLs and access keys never
+enter queue JSON, localStorage or static HTML.
+
+While the selected stream resolves and the player was previously idle, a
+temporary metadata-only `pendingGlobalRadio` supplies the station title and
+artwork to the dock, with Connecting status and no fake playable source.
+A late last-station restore cannot override this explicit selection. Once an
+authorized playable source is validated, `activateGlobalRadio` starts the
+existing `PlayerSession` and clears the pending state. Do not change Country
+Radio's idle-restore behavior to imitate this provider-specific flow.
+
+Regression tests: `tests/global-radio-idle-selection.test.mjs`,
+`tests/global-radio-shared-card.test.mjs`, and
+`tests/global-radio-player-parity.test.mjs`.
+
+## 2026-11-06 — Remove later duplicate station data (original-first)
+
+The United Kingdom catalog previously had 148 records, including later Radio
+Browser/InstantAudio entries for existing stations such as `heart-uk` and
+`heart-80s`. These were not independent broadcasters: they shared a normalized
+station title and official homepage with earlier catalog entries but had
+different stream URLs.
+
+- The original country records are retained **in their existing JSON order**
+  with the same IDs, URLs, metadata and primary streams. Ten later records
+  were removed from `public/radio/europe/united-kingdom.json`; the UK catalog
+  now contains **138** stations. The number is also synchronized in
+  `public/radio/world.json` and generated `data/world.ts`.
+- The static search index independently applies first-existing-entry-wins to
+  each country + normalized title + official homepage. It does not prefer a
+  later HTTPS or featured entry. Distinct broadcasters with different official
+  sites and separately named stations such as Heart Dance/70s remain available.
+- A stale Algolia index may still include removed routes temporarily. The
+  client reconciles those hits against unambiguous canonical local results;
+  rebuilding Algolia itself requires its separate index-owner workflow.
+- The Radio Browser/InstantAudio sync skips later duplicate identities rather
+  than recreating an alias or changing the original station's primary stream.
+- Existing production links to removed duplicate routes should be reviewed for
+  redirect/retirement policy before releasing. The user's direction is to
+  remove the later duplicate records; no original station URLs or SEO text
+  are changed by this fix.
+- Regression coverage:
+  `tests/station-search.test.mjs`,
+  `tests/station-search-duplicates.test.mjs`, and
+  `tests/radio-sync.test.mjs`.
+
+### Personal station collections
+
+Personal collections are versioned in local browser storage and export station paths without stream URLs. They use the existing shared player; explicit playback from a collection preserves its ordered queue across station navigation without starting audio on reload. Corrupted collection data must be recoverable before any reset.
+
+### Media Session lifecycle
+
+The global player owns one Media Session controller. It registers headset and lock-screen actions on mount, synchronizes metadata and playback state, and removes handlers on unmount. Track and seek controls navigate stations; they never seek a live broadcast. The controller does not start audio or own the HLS source lifecycle.
+
+
+## 2026-11-07 — PR Preview verification, preserved during Production promotion
+
+The trusted `pull_request_target` publisher must release the shared Pages publish lock before waiting for public delivery. A separate no-checkout, secret-free `verify_live` job must confirm the exact PR head marker and `noindex` HTML. No tentative Preview link may be shown while GitHub Pages is still publishing: it can serve a 404 or stale build. A timeout leaves the Preview hyperlink hidden and reports failure. Keep run ownership, PR state, base branch and current head SHA checks. This protects Preview independently of Production and Staging releases.

@@ -39,7 +39,9 @@ test('Apple Music provider stays separate from country-based audio catalog', asy
   assert.match(routes, /getGlobalRadioRoutes/);
   assert.match(routes, /station\.tunein_url/);
   assert.match(searchIndex, /public\/radio/);
-  assert.doesNotMatch(searchIndex, /catalog\/providers/, 'external-only cards must not appear in HTMLAudio search');
+  assert.match(searchIndex, /providerRoot = 'public\/catalog\/providers'/);
+  assert.match(searchIndex, /station_country: 'global_radio.title'/);
+  assert.doesNotMatch(searchIndex, /station_image_fallback:/);
 });
 
 test('seven verified TuneIn Apple Music pages with unique IDs and no audio stream', async () => {
@@ -61,6 +63,10 @@ test('seven verified TuneIn Apple Music pages with unique IDs and no audio strea
   for (const station of provider.stations) {
     assert.match(station.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     assert.ok(station.title && station.genre && station.language && station.description);
+    assert.equal(station.image, '/img/global-radio/' + station.id + '.png');
+    const bytes = await readFile(new URL('../public' + station.image, import.meta.url));
+    assert.ok(bytes.length > 1000, 'missing original artwork file: ' + station.id);
+    assert.ok(bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'expected authentic PNG for ' + station.id);
     const tunein = new URL(station.tunein_url);
     assert.equal(tunein.protocol, 'https:');
     assert.equal(tunein.hostname, 'tunein.com');
@@ -132,5 +138,32 @@ test('seven translations have external / seasonal labels', async () => {
     ]) {
       assert.ok(typeof dict.global_radio?.[key] === 'string' && dict.global_radio[key].trim(), locale + ': missing ' + key);
     }
+  }
+});
+
+test('all seven downloaded covers match their TuneIn source station IDs', async () => {
+  const stations = (await source()).stations;
+  const tuneinIds = new Map([
+    ['apple-music-1', 's345732'], ['apple-music-hits', 's345724'],
+    ['apple-music-country', 's345725'], ['apple-music-club', 's345726'],
+    ['apple-musica-uno', 's345727'], ['apple-music-chill', 's345733'],
+    ['apple-music-holiday-hits', 's363737'],
+  ]);
+  for (const station of stations) {
+    const id = tuneinIds.get(station.id);
+    assert.ok(id, station.id);
+    assert.equal(station.image, '/img/global-radio/' + station.id + '.png');
+    assert.match(station.artwork_source_url, new RegExp('^https://cdn-profiles\\.tunein\\.com/' + id + '/images/'));
+    const bytes = await readFile(new URL('../public' + station.image, import.meta.url));
+    assert.ok(bytes.length > 1000, station.id + ' original PNG is missing');
+  }
+  const [list, detail, result] = await Promise.all([
+    read('pages/global-radio/apple-music/index.vue'),
+    read('pages/global-radio/apple-music/[station].vue'),
+    read('components/search/Result.vue'),
+  ]);
+  for (const page of [list, detail, result]) {
+    assert.match(page, /brand\/onair-mark\.svg/);
+    assert.doesNotMatch(page, /\/img\/global-radio\//);
   }
 });

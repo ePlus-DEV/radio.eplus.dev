@@ -2,12 +2,22 @@
 // This is not a live-health check: the browser verifies playback after selection.
 const CANONICAL_STATION_PATH = /^\/[a-z0-9-]+\/[a-z0-9-]+\/[a-z0-9-]+$/;
 
+// A selection must not activate after the listener changes filters or playback.
+export function isSurpriseRequestCurrent(snapshot, current) {
+  return snapshot.path === current.path && snapshot.station === current.station
+    && snapshot.playRequest === current.playRequest && snapshot.pauseRequest === current.pauseRequest
+    && snapshot.requestedUrl === current.requestedUrl && snapshot.country === current.country
+    && snapshot.genre === current.genre && snapshot.language === current.language;
+}
+
 export function randomStationCandidates(stations, filters = {}) {
   if (!Array.isArray(stations)) return [];
   const seen = new Set();
   return stations.filter(station => {
     if (!station || typeof station.url !== 'string'
       || !CANONICAL_STATION_PATH.test(station.url)
+      // Global provider pages are discoverable, but not country-based direct streams.
+      || station.url.startsWith('/global-radio/')
       || typeof station.station_name !== 'string' || !station.station_name.trim()
       || seen.has(station.url)) return false;
     if (filters.country && station.station_country !== filters.country) return false;

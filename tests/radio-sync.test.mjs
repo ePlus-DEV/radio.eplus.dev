@@ -357,3 +357,38 @@ test("classifyStationArtwork flags legacy external artwork for normalization", (
     },
   );
 });
+
+test("mergeStations rejects later same-name official-site duplicates without changing the first stream", () => {
+  const old = {
+    'heart-uk': {
+      title: 'Heart UK', url: 'https://www.heart.co.uk',
+      stream: 'https://media-ssl.musicradio.com/HeartUK',
+      type: 'audio/mpeg', favorite: true,
+    },
+  };
+  const later = {
+    'heart-uk-instant-audio': {
+      title: 'Heart UK', url: 'http://heart.co.uk/',
+      stream: 'http://media-ice.musicradio.com/HeartUKMP3',
+      type: 'audio/mpeg', source: 'radio-browser:283402',
+    },
+  };
+  const merged = mergeStations(old, later);
+  assert.equal(merged.added, 0);
+  assert.equal(merged.enriched, 0, 'the later station must not even add an alternative stream');
+  assert.deepEqual(Object.keys(merged.stations), ['heart-uk']);
+  assert.equal(merged.stations['heart-uk'].stream, old['heart-uk'].stream);
+  assert.deepEqual(merged.stations['heart-uk'].streams.map(item => item.url), [old['heart-uk'].stream]);
+});
+
+test("mergeStations preserves two unrelated radios with identical titles but different websites", () => {
+  const old = {
+    alpha: { title: 'Radio Star', url: 'https://alpha.example', stream: 'https://alpha.example/live' },
+  };
+  const later = {
+    beta: { title: 'Radio Star', url: 'https://beta.example', stream: 'https://beta.example/live' },
+  };
+  const merged = mergeStations(old, later);
+  assert.equal(merged.added, 1);
+  assert.deepEqual(Object.keys(merged.stations), ['alpha','beta']);
+});

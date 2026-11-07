@@ -20,12 +20,14 @@ test('Global and Country share a full station queue, not a one-station player', 
   assert.equal(queue.length, 7);
   assert.deepEqual(queue.map(item => item.id), provider.stations.map(item => item.id));
   assert.equal(new Set(queue.map(item => item.url)).size, 7);
+  assert.deepEqual(queue.map(item => item.image), provider.stations.map(item => item.image));
   assert.equal(queue.every(item => item.url.startsWith('/global-radio/apple-music/')), true);
   assert.doesNotMatch(JSON.stringify(queue), /m3u8|accessKey/);
   const first = provider.stations[0];
   const station = createAuthorizedApplePlaybackStation(first, appleStream);
   playback.activateGlobalRadio(station, first.listen_url, Date.now() + 120_000, queue);
   assert.equal(playback.station.url, queue[0].url);
+  assert.equal(station.image, first.image);
   assert.equal(playback.stations.length, 7);
   assert.equal(playback.playRequest, 1);
   assert.equal(playback.globalRadioLease.stationUrl, queue[0].url);
@@ -66,12 +68,18 @@ test('Global station cards have the same Play/Pause behavior as Country and may 
   assert.match(composable, /globalRadioLease\.expiresAt > Date\.now\(\) \+ 45_000/);
   assert.match(composable, /activeController\?\.abort\(\)/);
   assert.match(composable, /createAppleRadioQueue\(getStations\(\)\)/);
+  assert.match(composable, /source\.image = siteAssetUrl\(source\.image\)/);
+  assert.match(composable, /item\.image = siteAssetUrl\(item\.image\)/);
   for (const page of [directory, detail]) {
-    assert.match(page, /:aria-pressed=/);
-    assert.match(page, /i-lucide-pause/);
     assert.match(page, /useAuthorizedGlobalRadioPlayback\(\(\) => provider\.value\?\.stations \|\| \[\]\)/);
   }
-  assert.match(directory, /redesign\.paused/);
+  const shared = await read('components/panel/Station.vue');
+  assert.match(directory, /<PanelStation/);
+  assert.match(directory, /@select-station="playSelectedStation"/);
+  assert.match(shared, /:aria-pressed="isPlaying\(station\)"/);
+  assert.match(shared, /i-lucide-pause/);
+  assert.match(shared, /redesign\.paused/);
+  assert.match(detail, /:aria-pressed="isPlayingHere"/);
 });
 
 test('transient TuneIn renewal failure preserves an unexpired playing station', async () => {

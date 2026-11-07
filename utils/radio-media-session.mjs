@@ -29,3 +29,44 @@ export function buildRadioMediaMetadata(
     artwork: image ? [{ src: image }] : [],
   };
 }
+
+const LIVE_ACTIONS = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'];
+
+// Hardware actions are optional across browsers. Registration and cleanup must
+// continue even if one action is unsupported by the current implementation.
+export function registerRadioMediaActions(session, { play, pause, next, previous }) {
+  // Some iOS versions expose skip controls instead of track controls.
+  const handlers = { play, pause, nexttrack: next, previoustrack: previous, seekforward: next, seekbackward: previous };
+  for (const action of LIVE_ACTIONS) {
+    try { session.setActionHandler(action, handlers[action]); } catch { /* unsupported */ }
+  }
+  try { session.setActionHandler('seekto', null); } catch { /* unsupported */ }
+  return () => {
+    for (const action of LIVE_ACTIONS) {
+      try { session.setActionHandler(action, null); } catch { /* unsupported */ }
+    }
+    session.metadata = null;
+  };
+}
+
+/** Own the browser Media Session independently from the audio source lifecycle. */
+export function createRadioMediaSession({ getEnvironment, getDetails, actions }) {
+  let cleanup = null;
+  return {
+    mount() {
+      const { session } = getEnvironment();
+      if (session && !cleanup) cleanup = registerRadioMediaActions(session, actions);
+    },
+    update() {
+      const { session, Metadata, origin } = getEnvironment();
+      if (!session || !Metadata) return;
+      const { playing, ...details } = getDetails();
+      session.metadata = new Metadata(buildRadioMediaMetadata(details, origin));
+      session.playbackState = playing ? 'playing' : 'paused';
+    },
+    dispose() {
+      cleanup?.();
+      cleanup = null;
+    },
+  };
+}
