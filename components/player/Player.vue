@@ -677,18 +677,16 @@ const tryPlay = async (): Promise<void> => {
   try {
     await media.play();
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
-    // Resolving play() or receiving canplay does not always mean decoded
-    // audio is being delivered. Keep the watchdog armed until real playback.
-    const hasDecodedAudio = !media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA;
-    pendingAutoPlay.value = !hasDecodedAudio;
-    waiting.value = !hasDecodedAudio;
-    playing.value = hasDecodedAudio;
+    // play() resolving and HAVE_CURRENT_DATA mean that playback was allowed
+    // and a sample may be buffered, NOT that continuous live audio is audible.
+    // Only the browser's 'playing' event confirms the live state and starts
+    // listening-duration accounting. It may have arrived before this promise.
+    if (playing.value && !media.paused && !media.ended) return;
+    pendingAutoPlay.value = true;
+    waiting.value = true;
+    playing.value = false;
     streamError.value = false;
-    if (hasDecodedAudio && listeningDurationTracker.activeUrl !== playback.station?.url) {
-      onMediaPlaying();
-    } else if (!hasDecodedAudio) {
-      startFallbackProbe();
-    }
+    startFallbackProbe();
 
   } catch (error) {
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
