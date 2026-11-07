@@ -1,0 +1,26 @@
+name: "💡 Feature request"
+description: Suggest a useful, privacy-conscious improvement to ePlus OnAir.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or goal
+      description: What are you trying to do that is currently difficult?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested behavior
+      description: Describe your idea without prescribing an implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered (optional)
+  - type: textarea
+    id: context
+    attributes:
+      label: Screenshots or additional context (optional)
