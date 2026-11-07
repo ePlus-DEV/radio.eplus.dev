@@ -5,6 +5,7 @@ export const usePlaybackStore = defineStore('playback', {
   state: () => ({
     station: null as PlaybackStation | null,
     stations: [] as RadioStationOption[],
+    collectionQueue: false,
     // UI-only selection while the first Global Radio stream is resolving.
     // Never persist this metadata or put a signed HLS URL here.
     pendingGlobalRadio: null as RadioStationOption | null,
@@ -36,6 +37,7 @@ export const usePlaybackStore = defineStore('playback', {
       this.globalRadioPendingId = '';
       this.globalRadioError = '';
       this.liveTrack = null;
+      this.collectionQueue = false;
       this.station = station;
       this.stations = stations.length ? stations
         : [{ id: station.id, title: station.title, image: station.image, url: station.url }];
@@ -83,7 +85,7 @@ export const usePlaybackStore = defineStore('playback', {
       if (this.station?.url === url) this.playRequest += 1;
       else this.requestedStationUrl = url;
     },
-    activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean } = {}) {
+    activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean; collectionQueue?: boolean } = {}) {
       if (options.onlyIfIdle && (this.station || this.globalRadioPendingId)) return;
       this.pendingGlobalRadio = null;
       this.globalRadioPendingId = '';
@@ -94,7 +96,12 @@ export const usePlaybackStore = defineStore('playback', {
         this.globalRadioLease = null;
       }
       if (this.station?.url !== station.url || (!this.station?.sources.length && station.sources.length)) this.station = station;
-      this.stations = stations;
+      // Only a Next/Previous request for an entry in the current collection
+      // keeps that queue when the station page resolves its catalog metadata.
+      const retainCollection = this.collectionQueue && this.requestedStationUrl === station.url
+        && this.stations.some(item => item.url === station.url);
+      if (!retainCollection) this.stations = stations;
+      this.collectionQueue = retainCollection || Boolean(options.collectionQueue);
       if (options.autoplay || this.requestedStationUrl === station.url) this.playRequest += 1;
       this.requestedStationUrl = '';
     },
