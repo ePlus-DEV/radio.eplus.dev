@@ -34,6 +34,27 @@ test('uniform range selection with deterministic boundaries, no repeats for mult
   assert.equal(pickRandomStation([], {}, () => 0), null);
 });
 
+test('failed catalog selections are avoided when alternatives remain, but a single match can be retried', () => {
+  assert.equal(
+    pickRandomStation(sample, { failedUrls: ['/asia/viet-nam/a'] }, () => 0).url,
+    '/asia/viet-nam/b',
+  );
+  assert.equal(
+    pickRandomStation(sample, { failedUrls: ['/asia/viet-nam/a', '/asia/viet-nam/b'] }, () => 0).url,
+    '/europe/france/c',
+  );
+  assert.equal(
+    pickRandomStation(sample.slice(0, 1), { failedUrls: ['/asia/viet-nam/a'] }, () => 0).url,
+    '/asia/viet-nam/a',
+    'Do not permanently blacklist the only available station',
+  );
+  assert.equal(
+    pickRandomStation(sample, { failedUrls: sample.map(item => item.url), previousUrl: '/asia/viet-nam/a' }, () => 0).url,
+    '/asia/viet-nam/b',
+    'Allow a new attempt if all matching catalog candidates failed',
+  );
+});
+
 test('optional country, genre and language filters use only actual metadata', () => {
   assert.deepEqual(randomStationCandidates(sample, { country: 'world.asia.viet_nam' }).map(s => s.station_name), ['A', 'B']);
   assert.deepEqual(randomStationCandidates(sample, { genre: 'Music', language: 'fr' }).map(s => s.station_name), ['C']);
@@ -91,6 +112,9 @@ test('homepage only mounts random discovery on client and preserves original SEO
   assert.match(panel, /\{ autoplay: true \}/);
   assert.match(panel, /isSurpriseRequestCurrent\(snapshot, requestState\(\)\)/);
   assert.match(panel, /randomStationCandidates/);
+  assert.match(panel, /failedStationUrls = new Set<string>\(\)/);
+  assert.match(panel, /failedUrls: \[\.\.\.failedStationUrls\]/);
+  assert.match(panel, /if \(attemptedUrl\) failedStationUrls\.add\(attemptedUrl\)/);
   assert.match(panel, /type="|<select/);
   assert.doesNotMatch(panel, /onMounted\(/, 'catalog must not load or play merely on mount');
   assert.match(store, /if \(options\.autoplay \|\| this\.requestedStationUrl === station\.url\) this\.playRequest \+= 1/);

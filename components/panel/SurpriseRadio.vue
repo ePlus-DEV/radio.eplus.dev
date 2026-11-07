@@ -80,6 +80,8 @@ const country = ref('');
 const genre = ref('');
 const language = ref('');
 const lastRandomUrl = ref('');
+// Device-local, session-only hints; never persisted or reported as live outages.
+const failedStationUrls = new Set<string>();
 const lastSelected = ref<{ url: string; title: string } | null>(null);
 const status = ref<'empty' | 'error' | ''>('');
 let generation = 0;
@@ -111,6 +113,7 @@ const surprise = async () => {
   if (busy.value) return;
   const request = ++generation;
   const snapshot = requestState();
+  let attemptedUrl = '';
   const isCurrent = () => request === generation && isSurpriseRequestCurrent(snapshot, requestState());
   busy.value = true;
   status.value = '';
@@ -121,10 +124,12 @@ const surprise = async () => {
     const next = pickRandomStation(index.value, {
       country: snapshot.country, genre: snapshot.genre, language: snapshot.language,
       previousUrl: lastRandomUrl.value || playback.station?.url || '',
+      failedUrls: [...failedStationUrls],
     });
     if (!next) { status.value = 'empty'; return; }
     const path = parseLibraryStationPath(next.url);
-    if (!path) { status.value = 'error'; return; }
+    if (!path) { status.value = 'error'; failedStationUrls.add(next.url); return; }
+    attemptedUrl = next.url;
 
     // A second static country request is intentional; the search index
     // contains no stream URLs or credentials. Only the station catalog does.
@@ -133,7 +138,11 @@ const surprise = async () => {
     );
     if (!isCurrent()) return;
     const meta = catalog?.[path.id];
-    if (!meta || !/^https?:\/\//i.test(String(meta.stream || ''))) { status.value = 'error'; lastRandomUrl.value = next.url; return; }
+    if (!meta || !/^https?:\/\//i.test(String(meta.stream || ''))) {
+      status.value = 'error';
+      failedStationUrls.add(next.url);
+      return;
+    }
     const queue: RadioStationOption[] = Object.entries(catalog).flatMap(([id, station]) => {
       if (!/^[a-z0-9-]+$/.test(id) || !/^https?:\/\//i.test(String(station?.stream || ''))) return [];
       return [{
@@ -147,10 +156,14 @@ const surprise = async () => {
       corsServer: String(config.public.corsServer || ''),
       placeholder: String(config.public.placeholderStation || ''),
     }), queue, { autoplay: true });
+    failedStationUrls.delete(next.url);
     lastRandomUrl.value = next.url;
     lastSelected.value = { url: next.url, title: meta.title };
   } catch {
-    if (isCurrent()) status.value = 'error';
+    if (isCurrent()) {
+      status.value = 'error';
+      if (attemptedUrl) failedStationUrls.add(attemptedUrl);
+    }
   } finally {
     if (request === generation) busy.value = false;
   }

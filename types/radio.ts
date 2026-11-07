@@ -16,6 +16,8 @@ export interface RadioStationOption {
 export interface RadioCatalogEntry {
   title: string;
   description?: string;
+  /** Public station homepage as reported by the geographic catalog. */
+  url?: string;
   type?: string;
   /** Optional catalog-reported values; not live-verified stream measurements. */
   codec?: string;
