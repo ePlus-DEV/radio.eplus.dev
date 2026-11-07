@@ -6,6 +6,6 @@ It compares those commits. JSON station catalogs under `public/radio/` are copie
 
 ## Required repository secret
 
-Add `ONAIR_APP_SYNC_TOKEN` as an Actions secret in this web repository. Use a dedicated GitHub App installation token or fine-grained token scoped to `ePlus-DEV/onair-apps` with Contents and Pull requests read/write permissions. Follow the organization's token policy. Never commit credentials. The default workflow token cannot write to the separate app repository.
+Add `ONAIR_APP_SYNC_TOKEN` as an Actions secret in this web repository. Use a dedicated fine-grained personal access token scoped to `ePlus-DEV/onair-apps` with Contents and Pull requests read/write permissions. Follow the organization's token policy and rotate it before expiry. A GitHub App alternative requires generating short-lived installation tokens in the workflow; storing an installation token as a secret is not a durable setup. Never commit credentials. The default workflow token cannot write to the separate app repository.
 
 The first production run should be reviewed carefully: historical app and web differences are recorded as conflicts, not overwritten. If the token is missing, the workflow fails with a configuration error. A manual dispatch can retry an explicit commit range once configured; avoid skipping missed production commits. Check the app PR and validate relevant fixes manually. Build and publish app releases separately.
