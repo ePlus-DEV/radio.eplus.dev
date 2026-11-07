@@ -5,7 +5,8 @@ import { readFileSync } from 'node:fs';
 const workflow = readFileSync(new URL('../.github/workflows/pr-preview-pages.yml', import.meta.url), 'utf8');
 const status = workflow.split('  comment_status:')[1]?.split('  preview_config:')[0];
 const build = workflow.split('  build:')[1]?.split('  publish:')[0];
-const publish = workflow.split('  publish:')[1]?.split('  finalize_comment:')[0];
+const publish = workflow.split('  publish:')[1]?.split('  verify_live:')[0];
+const verify = workflow.split('  verify_live:')[1]?.split('  finalize_comment:')[0];
 const failure = workflow.split('  finalize_comment:')[1]?.split('  cleanup:')[0];
 
 test('every eligible PR event hides previous Preview URL before rebuilding', () => {
@@ -25,25 +26,24 @@ test('every eligible PR event hides previous Preview URL before rebuilding', () 
   assert.match(build, /needs\.comment_status\.result == 'success'/);
 });
 
-test('successful publish comments only after live SHA, noindex and head verification', () => {
-  assert.ok(publish, 'publish job must exist');
-  const live = publish.indexOf('Verify live GitHub Pages preview before commenting');
-  const ready = publish.indexOf('Show Preview link only after live verification of the current PR/run');
-  assert.ok(live >= 0 && ready > live, 'ready link must be gated behind public URL verification');
-  assert.match(publish, /published_sha.*EXPECTED_HEAD/);
-  assert.match(publish, /grep -q 'noindex'/);
-  assert.match(publish, /read -r state base head repo/);
-  assert.match(publish, /head" != "\$EXPECTED_HEAD"/);
-  assert.match(publish, /onair-preview-run:\$GITHUB_RUN_ID/);
-  assert.match(publish, /\[Open preview\]\(%s\)/);
-  assert.match(publish, /gh api -X PATCH/);
-  assert.doesNotMatch(publish, /gh api -X POST "repos\/\$GITHUB_REPOSITORY\/issues\/\$PR_NUMBER\/comments"/,
-    'publish must only restore a link in the status comment of this run');
+test('a separate verifier exposes the link only after public SHA and noindex match', () => {
+  assert.ok(verify, 'public verification job must exist');
+  assert.match(verify, /needs: publish/);
+  assert.match(verify, /published_sha.*EXPECTED_HEAD/);
+  assert.match(verify, /grep -q 'noindex'/);
+  assert.match(verify, /if \[ \"\$live\" != true \]/);
+  assert.match(verify, /read -r state base_ref head repo/);
+  assert.match(verify, /onair-preview-run:\$GITHUB_RUN_ID/);
+  assert.match(verify, /onair-preview-head:\$EXPECTED_HEAD/);
+  assert.match(verify, /Preview ready/);
+  assert.match(verify, /\[Open preview\]/);
+  assert.doesNotMatch(publish, /\[Open preview\]|Try preview \(publishing\)/);
 });
 
 test('failure and PR closure leave no Preview hyperlink in the bot comment', () => {
   assert.ok(failure, 'failure finalizer must exist');
   assert.match(failure, /always\(\)/);
+  assert.match(failure, /needs\.verify_live\.result == 'failure'/);
   assert.match(failure, /needs\.publish\.result != 'success'/);
   assert.match(failure, /Preview unavailable/);
   assert.match(failure, /onair-preview-run:\$GITHUB_RUN_ID/);
@@ -53,11 +53,32 @@ test('failure and PR closure leave no Preview hyperlink in the bot comment', () 
 });
 
 test('status/finalizer jobs never receive PR code or Preview deployment secrets', () => {
-  for (const [name, section] of [['comment_status', status], ['finalize_comment', failure]]) {
+  for (const [name, section] of [['comment_status', status], ['verify_live', verify], ['finalize_comment', failure]]) {
     assert.ok(section, name);
     assert.doesNotMatch(section, /actions\/checkout|npm ci|secrets\.PAGES_DEPLOY_TOKEN|environment:\s*\n\s*name:/,
       name + ' must be metadata-only and credential-free');
   }
   assert.match(build, /persist-credentials: false/);
   assert.doesNotMatch(build, /secrets\.PAGES_DEPLOY_TOKEN/);
+});
+
+test('public verification waits separately without holding the publisher lock', () => {
+  assert.match(publish, /timeout-minutes: 30/);
+  assert.doesNotMatch(publish, /for attempt in \$\(seq|sleep 10/);
+  assert.match(verify, /for attempt in \$\(seq 1 90\)/);
+  assert.match(verify, /sleep 10/);
+  assert.doesNotMatch(verify, /onair-pr-preview-publish/);
+  assert.match(verify, /onair-pr-preview-verify-/);
+});
+
+test('publisher prunes only verified closed PR preview folders before uploading', () => {
+  assert.match(publish, /for old_preview in/);
+  assert.ok(publish.includes('old_number="${old_label#pr-}"'));
+  assert.ok(publish.includes('[[ "$old_number" =~ ^[1-9][0-9]*$ ]]'));
+  assert.ok(publish.includes('[ "$old_number" = "$PR_NUMBER" ] && continue'));
+  assert.ok(publish.includes('gh api "repos/$GITHUB_REPOSITORY/pulls/$old_number" --jq .state'));
+  assert.ok(publish.includes('[ "$old_state" = closed ]'));
+  assert.ok(publish.includes('rm -rf -- "$old_preview"'));
+  assert.ok(publish.includes('Cannot verify PR #$old_number; retain its Preview'));
+  assert.doesNotMatch(publish, /git push --force/);
 });

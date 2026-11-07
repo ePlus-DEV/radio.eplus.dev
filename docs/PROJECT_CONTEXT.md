@@ -1109,3 +1109,8 @@ Personal collections are versioned in local browser storage and export station p
 ### Media Session lifecycle
 
 The global player owns one Media Session controller. It registers headset and lock-screen actions on mount, synchronizes metadata and playback state, and removes handlers on unmount. Track and seek controls navigate stations; they never seek a live broadcast. The controller does not start audio or own the HLS source lifecycle.
+
+
+## 2026-11-07 — PR Preview verification, preserved during Production promotion
+
+The trusted `pull_request_target` publisher must release the shared Pages publish lock before waiting for public delivery. A separate no-checkout, secret-free `verify_live` job must confirm the exact PR head marker and `noindex` HTML. No tentative Preview link may be shown while GitHub Pages is still publishing: it can serve a 404 or stale build. A timeout leaves the Preview hyperlink hidden and reports failure. Keep run ownership, PR state, base branch and current head SHA checks. This protects Preview independently of Production and Staging releases.
