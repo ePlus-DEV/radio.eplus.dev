@@ -47,8 +47,12 @@ test('contact page links to the correct forms without publishing visitor data', 
   assert.match(page, /issues\/new\?template=03-station-update\.yml/);
   assert.match(page, /rel="noopener noreferrer"/);
   assert.match(page, /mailto:support@eplus\.dev/);
+  assert.match(page, /mailto:report@eplus\.dev/);
   const recovery = await read('components/player/Recovery.vue');
-  assert.match(recovery, /reportUrl && online && \(health === 'exhausted' \|\| health === 'unsupported'\)/);
+  assert.match(recovery, /const showReport = computed/);
+  assert.match(recovery, /:href="reportEmailUrl"/);
+  assert.match(recovery, /:href="reportUrl"/);
+  assert.match(recovery, /<details v-if="diagnostics\?\.sourceCount"/);
   assert.doesNotMatch(recovery, /<form[^>]*action=/);
 });
 
@@ -56,6 +60,10 @@ test('every supported language has report and contact CTA labels', async () => {
   for (const lang of ['en-US', 'vi-VN', 'ja-JP', 'zh-CN', 'zh-TW', 'fr-FR', 'ru-RU']) {
     const locale = JSON.parse(await read('lang/' + lang + '.json'));
     assert.ok(locale.recovery.report_hint);
+    for (const key of ['report_email', 'report_github', 'change_source', 'details', 'email_subject', 'email_body']) {
+      assert.ok(locale.recovery[key], `${lang} missing ${key}`);
+    }
+    assert.ok(locale.site_pages.contact.support.report_action);
     assert.ok(locale.site_pages.contact.sections.bug.action);
     assert.ok(locale.site_pages.contact.sections.station.action);
   }
