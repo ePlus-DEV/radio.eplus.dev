@@ -47,15 +47,36 @@ test('offline wins over stale errors; buffering is not a terminal failure', () =
   assert.equal(playbackHealth({ online: true }), '');
 });
 
-test('sharing uses a canonical station page and report drafts contain only selected public fields', () => {
+test('sharing and playback reports use the public station page, not stream data', () => {
   assert.equal(stationShareUrl(a.url), `https://radio.eplus.dev${a.url}`);
   assert.equal(stationShareUrl('//evil.test/a/b'), '');
   assert.equal(stationShareUrl('/a/b/c?autoplay=1'), '');
   const report = new URL(stationReportUrl(a.url, 'Test & station', 'exhausted'));
   assert.equal(report.origin, 'https://github.com');
-  assert.equal(report.searchParams.get('title'), 'Station playback problem: Test & station');
-  assert.match(report.searchParams.get('body'), /https:\/\/radio.eplus.dev\/asia\/viet-nam\/a/);
-  assert.doesNotMatch(report.searchParams.get('body'), /stream=|cookie|history=/);
+  assert.equal(report.pathname, '/ePlus-DEV/radio.eplus.dev/issues/new');
+  assert.equal(report.searchParams.get('template'), '01-playback.yml');
+  assert.equal(report.searchParams.get('title'), '[Playback] Test & station');
+  assert.equal(report.searchParams.get('station_url'), 'https://radio.eplus.dev/asia/viet-nam/a');
+  assert.match(report.searchParams.get('observed_state'), /on this device: exhausted/);
+  assert.equal(report.searchParams.has('body'), false, 'form fields are prefilled by id, not an unstructured body');
+  assert.equal(report.searchParams.has('labels'), false, 'do not rely on labels that a visitor cannot apply');
+  assert.doesNotMatch(decodeURIComponent(report.search), /stream=|cookie|history=|accessKey|token=/i);
+
+  // Global Radio detail pages are also public station routes.
+  const global = new URL(stationReportUrl('/global-radio/apple-music/apple-music-1', 'Apple station', 'unsupported'));
+  assert.equal(global.searchParams.get('station_url'), 'https://radio.eplus.dev/global-radio/apple-music/apple-music-1');
+  assert.match(global.searchParams.get('observed_state'), /unsupported/);
+});
+
+test('report links fail closed for unsafe paths and do not publish untrusted diagnostics', () => {
+  for (const path of ['//evil.test/a/b', '/asia/viet-nam/test?stream=secret', '/asia/../test', '/asia/viet-nam/test#fragment', 'https://evil.test/a/b/c', '/a/b']) {
+    assert.equal(stationReportUrl(path, 'Some station', 'exhausted'), '');
+  }
+  const title = 'Hello' + String.fromCharCode(10) + 'https://stream.test/secret?token=abc';
+  const report = new URL(stationReportUrl(a.url, title, 'https://secret.test/?accessKey=foo'));
+  assert.equal(report.searchParams.get('title'), '[Playback] Hello');
+  assert.match(report.searchParams.get('observed_state'), /unknown/);
+  assert.doesNotMatch(decodeURIComponent(report.search), /stream\\.test|secret\\.test|accessKey|token=abc/);
 });
 
 test('native share, cancellation, copy fallback and denied clipboard all produce honest feedback', async () => {

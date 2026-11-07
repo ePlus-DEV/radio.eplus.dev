@@ -1111,12 +1111,16 @@ Personal collections are versioned in local browser storage and export station p
 The global player owns one Media Session controller. It registers headset and lock-screen actions on mount, synchronizes metadata and playback state, and removes handlers on unmount. Track and seek controls navigate stations; they never seek a live broadcast. The controller does not start audio or own the HLS source lifecycle.
 
 
-## 2026-11-07 — Permanent release flow correction and incomplete Pages deploy
+## 2026-11-07 — Structured GitHub issue intake and safe radio reporting
+
+The Player recovery report link previously used plain `/issues/new?title=&body=`, which could bypass a structured issue intake. GitHub Issue Forms are now defined for playback, website bugs, station changes and feature requests. The player opens `?template=01-playback.yml` and prefills the `station_url` and `observed_state` IDs only with the public canonical page and whitelisted local status. Report controls are only visible for terminal online failures; routine buffering is not a global station outage. Contact links to website-bug and station-update forms. All seven languages explain that the issue is submitted manually on GitHub, without stream credentials or listening history. See [docs/ISSUES.md](./ISSUES.md). Never add automatic issue posting or private context.
+
 
 The only durable release branches are `staging` and `main`. Never manufacture a `release/*` branch when promoting: first reconcile any new `main` changes back into `staging`, then open a **direct `staging` → `main` PR**, validate and merge. A separate release branch during PR #412 created needless complexity despite preserving content. CI enforces direct release sources.
 
 Production source promotion #412 reached `main`, but the destination Pages workflow [run #42336128519](https://github.com/ePlus-DEV/onair-production-pages/actions/runs/42336128519) hit `syncing_files` timeout on a ~999MB deployment. Treat a successful source build/repo push as **incomplete** until the destination Pages build/deployment and public website succeed. Do not mistake failure to serve the new output for missing git commits. Issue #413 tracks output-size optimization without removing indexed routes or changing SEO. See [ENVIRONMENTS.md](./ENVIRONMENTS.md).
 
+## 2026-11-07 — Permanent release flow correction and incomplete Pages deploy
 ## 2026-11-07 — PR Preview verification, preserved during Production promotion
 
 The trusted `pull_request_target` publisher must release the shared Pages publish lock before waiting for public delivery. A separate no-checkout, secret-free `verify_live` job must confirm the exact PR head marker and `noindex` HTML. No tentative Preview link may be shown while GitHub Pages is still publishing: it can serve a 404 or stale build. A timeout leaves the Preview hyperlink hidden and reports failure. Keep run ownership, PR state, base branch and current head SHA checks. This protects Preview independently of Production and Staging releases.

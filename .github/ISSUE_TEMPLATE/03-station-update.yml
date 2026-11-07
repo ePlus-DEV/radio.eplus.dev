@@ -1,0 +1,53 @@
+name: "📻 Station addition or correction"
+description: Propose a new station or correct station metadata and public links.
+title: "[Station] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Only provide public, authorized station details. Do **not** submit expiring signed streams, access keys, private playlists, or scraped session links.
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Request type
+      options:
+        - Add a station
+        - Correct station metadata
+        - Update a public listening link
+        - Remove a duplicate listing
+        - Report a removed station
+    validations:
+      required: true
+  - type: input
+    id: station_name
+    attributes:
+      label: Station name
+      placeholder: Official station name
+    validations:
+      required: true
+  - type: input
+    id: country
+    attributes:
+      label: Country / region
+      placeholder: Viet Nam
+    validations:
+      required: true
+  - type: input
+    id: station_page
+    attributes:
+      label: Existing ePlus OnAir page (if applicable)
+      placeholder: https://radio.eplus.dev/asia/viet-nam/...
+  - type: input
+    id: official_website
+    attributes:
+      label: Station's official website or publicly documented source
+      placeholder: https://example.org/
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed change and supporting evidence
+      placeholder: What needs to change, and where is the official information?
+    validations:
+      required: true

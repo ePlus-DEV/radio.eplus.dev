@@ -1,0 +1,73 @@
+name: "🐛 Website bug"
+description: Report a layout, navigation, search, translation, PWA, or general website problem.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues first. Include only information you are comfortable publishing publicly. Do not attach secrets, cookies, signed stream URLs, or personal data.
+  - type: dropdown
+    id: affected_area
+    attributes:
+      label: Affected area
+      options:
+        - Player / playback UI
+        - Search and filters
+        - Home and radio directory
+        - Station detail or schedule
+        - Library / favorites / statistics
+        - Settings, language, or theme
+        - Mobile / PWA / offline
+        - Accessibility
+        - SEO / metadata / links
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: page_url
+    attributes:
+      label: Public page URL
+      placeholder: https://radio.eplus.dev/
+    validations:
+      required: true
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual behavior
+      placeholder: Describe what is broken and what you saw.
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      placeholder: Describe what should happen instead.
+    validations:
+      required: true
+  - type: input
+    id: device_browser
+    attributes:
+      label: Device / OS / browser
+      placeholder: iPhone / iOS / Safari, or desktop / Windows / Chrome
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots or additional context (optional)
+      description: Remove private details before attaching anything.
+  - type: checkboxes
+    id: safety_check
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have removed any personal data, credentials, cookies, signed URLs, or tokens from this public report.
+          required: true

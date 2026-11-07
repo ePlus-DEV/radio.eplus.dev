@@ -18,6 +18,16 @@
         <p class="mt-3 text-sm leading-7 text-[var(--radio-text-muted)]">
           {{ t("site_pages.contact.sections." + section + ".body") }}
         </p>
+        <a
+          v-if="section === 'bug' || section === 'station'"
+          :href="issueLinks[section]"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="radio-interactive mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--radio-border)] px-4 text-sm font-semibold text-rose-700 transition-colors hover:bg-[var(--radio-hover)] dark:text-rose-300"
+        >
+          {{ t("site_pages.contact.sections." + section + ".action") }}
+          <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />
+        </a>
       </article>
     </section>
 
@@ -47,6 +57,12 @@ const { t } = useI18n();
 const title = computed(() => t("site_pages.contact.title"));
 const description = computed(() => t("site_pages.contact.description"));
 const sections = ["bug", "station", "copyright"] as const;
+// Link to the correct public issue form. No visitor data is sent on click;
+// GitHub only receives information the reporter enters and submits manually.
+const issueLinks = {
+  bug: "https://github.com/ePlus-DEV/radio.eplus.dev/issues/new?template=02-website-bug.yml",
+  station: "https://github.com/ePlus-DEV/radio.eplus.dev/issues/new?template=03-station-update.yml",
+} as const;
 
 useStaticPageSeo({
   title,
