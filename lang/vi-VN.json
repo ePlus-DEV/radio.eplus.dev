@@ -470,7 +470,8 @@
       "support": {
         "title": "Bạn cần hỗ trợ?",
         "body": "Gửi tên đài hoặc đường dẫn trang cùng vài dòng mô tả vấn đề hay câu hỏi của bạn.",
-        "action": "Gửi email hỗ trợ"
+        "action": "Gửi email hỗ trợ",
+        "report_action": "Báo lỗi qua email"
       }
     },
     "statistics": {
@@ -689,12 +690,18 @@
     "reason_unknown": "Trình duyệt báo lỗi phát, chưa xác định chính xác nguyên nhân.",
     "last_played": "Lần phát gần nhất trên thiết bị lúc {time}",
     "local_observation": "Chỉ là ghi nhận trong phiên trên thiết bị, không xác nhận tình trạng toàn bộ đài.",
-    "offline": "Có vẻ bạn đang mất mạng. Kiểm tra kết nối trước khi thử lại.",
-    "unsupported": "Nguồn vừa thử không giải mã được hoặc chưa được trình duyệt hỗ trợ. Hãy thử nguồn khác.",
-    "exhausted": "Chưa thể phát sau các lần thử lại. Hãy thử lại hoặc chọn nguồn khác; đài vẫn có thể hoạt động trên thiết bị khác.",
+    "offline": "Có vẻ thiết bị đang mất kết nối mạng. Hãy kiểm tra mạng rồi thử lại.",
+    "unsupported": "Chưa phát được đài này trên thiết bị của bạn. Hãy thử lại hoặc chọn cách phát khác.",
+    "exhausted": "Chưa nghe được đài này. Bạn có thể thử lại hoặc chọn cách phát khác.",
     "connecting": "Đang kết nối hoặc tải âm thanh…",
-    "report": "Báo lỗi phát",
-    "report_hint": "Mở biểu mẫu GitHub để bạn kiểm tra rồi gửi (cần đăng nhập GitHub). Chỉ điền sẵn trang đài công khai và trạng thái phát trên thiết bị; không kèm URL stream, token hay lịch sử nghe."
+    "report": "Báo lỗi",
+    "report_hint": "Bạn có thể gửi email hoặc dùng GitHub nếu có tài khoản.",
+    "change_source": "Cách phát khác",
+    "report_email": "Báo qua email",
+    "report_github": "Báo qua GitHub",
+    "details": "Xem thêm thông tin",
+    "email_subject": "ePlus OnAir - Báo lỗi không nghe được radio",
+    "email_body": "Tôi không nghe được đài này. Nhờ bạn kiểm tra giúp.\n\nThông tin đài:"
   },
   "transfer": {
     "title": "Chuyển danh sách yêu thích",

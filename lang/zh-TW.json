@@ -470,7 +470,8 @@
       "support": {
         "title": "需要協助嗎？",
         "body": "請提供電台名稱或頁面連結，並簡單說明您遇到的問題或疑問。",
-        "action": "Email support"
+        "action": "Email support",
+        "report_action": "透過電子郵件回報問題"
       }
     },
     "statistics": {
@@ -689,12 +690,18 @@
     "reason_unknown": "瀏覽器回報播放錯誤，原因尚未確認。",
     "last_played": "本裝置上次播放時間：{time}",
     "local_observation": "僅為本裝置當次工作階段的記錄，不代表電台整體可用狀態。",
-    "offline": "你似乎已離線。請檢查網路後重試。",
-    "unsupported": "剛才的音源無法解碼或不受此瀏覽器支援。請嘗試其他音源。",
-    "exhausted": "多次重試後仍無法播放。請重試或選擇其他音源；電台可能仍可在其他裝置播放。",
+    "offline": "您的裝置似乎未連上網路。請檢查網路後再試一次。",
+    "unsupported": "您的裝置目前無法播放此電台。請重試或選擇其他播放方式。",
+    "exhausted": "目前無法收聽此電台。請重試或選擇其他播放方式。",
     "connecting": "正在連線或緩衝…",
-    "report": "回報播放問題",
-    "report_hint": "開啟 GitHub 表單供您檢查並送出（須登入）。僅預填公開電台頁面與本裝置的播放狀態，不包含串流連結、權杖或收聽紀錄。"
+    "report": "回報問題",
+    "report_hint": "可寄送電子郵件，或登入 GitHub 後回報。",
+    "change_source": "其他播放方式",
+    "report_email": "透過電子郵件回報",
+    "report_github": "在 GitHub 回報",
+    "details": "查看更多資訊",
+    "email_subject": "ePlus OnAir - 電台無法播放",
+    "email_body": "我無法收聽這個電台，請協助檢查。\n\n電台資訊："
   },
   "transfer": {
     "title": "移轉收藏",
