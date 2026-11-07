@@ -450,11 +450,13 @@
       "sections": {
         "bug": {
           "title": "Une station ou une page ne fonctionne pas",
-          "body": "Indiquez la station ou la page concernée, ce qui s’est passé et si vous utilisez un téléphone ou un ordinateur. Une capture d’écran peut aider."
+          "body": "Indiquez la station ou la page concernée, ce qui s’est passé et si vous utilisez un téléphone ou un ordinateur. Une capture d’écran peut aider.",
+          "action": "Signaler un problème du site"
         },
         "station": {
           "title": "Mise à jour d'une station",
-          "body": "Pour ajouter une station ou corriger ses informations, envoyez son nom, son pays, son site officiel et, si vous l’avez, son lien d’écoute."
+          "body": "Pour ajouter une station ou corriger ses informations, envoyez son nom, son pays, son site officiel et, si vous l’avez, son lien d’écoute.",
+          "action": "Demander la mise à jour d'une station"
         },
         "copyright": {
           "title": "Droits d'auteur ou retrait",
@@ -688,7 +690,7 @@
     "exhausted": "La lecture a échoué après plusieurs tentatives. Réessayez ou changez de source ; la station peut fonctionner sur un autre appareil.",
     "connecting": "Connexion ou mise en mémoire tampon…",
     "report": "Signaler un problème de lecture",
-    "report_hint": "Ouvre un brouillon GitHub à vérifier et envoyer. Aucune URL de flux ni aucun historique d’écoute ne sont inclus."
+    "report_hint": "Ouvre un formulaire GitHub à vérifier et envoyer (connexion requise). Seuls la page publique de la station et l'état local de lecture sont préremplis, sans URL du flux, jeton ni historique d'écoute."
   },
   "transfer": {
     "title": "Transférer vos favoris",
