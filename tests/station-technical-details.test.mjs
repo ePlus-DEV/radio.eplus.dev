@@ -48,14 +48,14 @@ test('station detail disclosure is optional, translated and does not touch SEO/p
     read('pages/[area]/[country]/[station].vue'),
     read('components/panel/StationTechnicalInfo.vue'),
   ]);
-  assert.match(page, /PanelStationTechnicalInfo v-if="stationTechnical\.hasDetails"/);
+  assert.match(page, /PanelStationTechnicalInfo v-if="stationTechnical\.hasDetails \|\| stationFacts\.hasFacts"/);
   assert.match(page, /const stationTechnical = computed\(\(\) => stationTechnicalDetails\(stationMeta\.value\)\)/);
   assert.match(page, /buildRadioStationSchema/);
   assert.match(page, /useHead\(\(\) => \(\{/);
   assert.match(page, /const playStation = \(\): void =>/);
   assert.match(component, /<details\b/);
   assert.match(component, /station_technical\.disclaimer/);
-  assert.doesNotMatch(component, /:href|stream\.src|stream\.url|fetch\(/i, 'must not expose raw stream URL or fetch it from UI');
+  assert.doesNotMatch(component, /stream\.src|stream\.url|fetch\(/i, 'must not expose raw stream URL or fetch it from UI');
 });
 
 test('seven locale dictionaries contain provenance and unknown descriptions', async () => {

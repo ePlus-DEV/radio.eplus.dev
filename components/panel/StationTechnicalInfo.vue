@@ -12,7 +12,7 @@
     </summary>
 
     <div class="mt-3 border-t border-[var(--radio-border)] pt-3">
-      <dl class="grid gap-3 sm:grid-cols-3">
+      <dl v-if="details.hasDetails" class="grid gap-3 sm:grid-cols-3">
         <div class="min-w-0 rounded-xl bg-[var(--radio-surface-soft)] p-3">
           <dt class="text-xs text-[var(--radio-text-muted)]">{{ $t('station_technical.format') }}</dt>
           <dd class="mt-1 text-sm font-semibold">{{ details.format || $t('station_technical.unknown') }}</dd>
@@ -33,6 +33,26 @@
           <p v-if="details.bitrateKbps !== null" class="mt-1 text-[11px] leading-5 text-[var(--radio-text-muted)]">{{ $t('station_technical.catalog_reported') }}</p>
         </div>
       </dl>
+      <dl v-if="facts.hasFacts" class="mt-3 grid gap-3 sm:grid-cols-3">
+        <div v-if="facts.category" class="min-w-0 rounded-xl bg-[var(--radio-surface-soft)] p-3">
+          <dt class="text-xs text-[var(--radio-text-muted)]">{{ $t('station_technical.category') }}</dt>
+          <dd dir="auto" class="mt-1 break-words text-sm font-semibold">{{ facts.category }}</dd>
+          <p class="mt-1 text-[11px] leading-5 text-[var(--radio-text-muted)]">{{ $t('station_technical.catalog_reported') }}</p>
+        </div>
+        <div v-if="facts.language" class="min-w-0 rounded-xl bg-[var(--radio-surface-soft)] p-3">
+          <dt class="text-xs text-[var(--radio-text-muted)]">{{ $t('station_technical.language') }}</dt>
+          <dd dir="auto" class="mt-1 break-words text-sm font-semibold">{{ facts.language }}</dd>
+          <p class="mt-1 text-[11px] leading-5 text-[var(--radio-text-muted)]">{{ $t('station_technical.catalog_reported') }}</p>
+        </div>
+        <div v-if="facts.homepage" class="min-w-0 rounded-xl bg-[var(--radio-surface-soft)] p-3">
+          <dt class="text-xs text-[var(--radio-text-muted)]">{{ $t('station_technical.homepage') }}</dt>
+          <dd class="mt-1 min-w-0 text-sm font-semibold">
+            <a :href="facts.homepage" target="_blank" rel="noopener noreferrer nofollow"
+              class="break-all text-rose-700 underline-offset-4 hover:underline focus-visible:underline dark:text-rose-300">{{ facts.homepageHost }}</a>
+          </dd>
+          <p class="mt-1 text-[11px] leading-5 text-[var(--radio-text-muted)]">{{ $t('station_technical.homepage_catalog') }}</p>
+        </div>
+      </dl>
       <p class="mt-3 text-xs leading-5 text-[var(--radio-text-muted)]">{{ $t('station_technical.disclaimer') }}</p>
     </div>
   </details>
@@ -46,6 +66,13 @@ defineProps<{
     codec: string;
     bitrateKbps: number | null;
     hasDetails: boolean;
+  };
+  facts: {
+    category: string;
+    language: string;
+    homepage: string;
+    homepageHost: string;
+    hasFacts: boolean;
   };
 }>();
 </script>

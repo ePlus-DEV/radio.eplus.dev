@@ -277,7 +277,11 @@
     "inferred_url": "根據串流 URL 推測（未驗證）",
     "catalog_reported": "目錄標註（未實測）",
     "kbps": "{count} kbps",
-    "disclaimer": "以上僅為目錄參考資料，不代表串流已驗證可用。實際編碼及位元率可能不同。"
+    "disclaimer": "以上僅為目錄參考資料，不代表串流已驗證可用。實際編碼及位元率可能不同。",
+    "category": "分類",
+    "language": "語言",
+    "homepage": "網站",
+    "homepage_catalog": "目錄所列連結（未經獨立核實）"
   },
   "collections": {
     "title": "收藏集",

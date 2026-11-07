@@ -277,7 +277,11 @@
     "inferred_url": "根据流 URL 推测（未验证）",
     "catalog_reported": "目录中标注（未实测）",
     "kbps": "{count} kbps",
-    "disclaimer": "以上仅为目录参考信息，不代表直播流已验证可用。实际编码和比特率可能不同。"
+    "disclaimer": "以上仅为目录参考信息，不代表直播流已验证可用。实际编码和比特率可能不同。",
+    "category": "分类",
+    "language": "语言",
+    "homepage": "网站",
+    "homepage_catalog": "目录所列链接（未经独立核实）"
   },
   "collections": {
     "title": "收藏集",
