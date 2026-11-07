@@ -26,6 +26,22 @@ test('compact dashboard uses four KPI cards, full-width trend and separate top-s
   assert.equal((component.match(/<svg /g) || []).length, 1, 'one combined chart');
 });
 
+test('chart pointer geometry is invalidated on scroll, resize and viewport zoom with listener cleanup', async () => {
+  const chart = await read('components/panel/ListeningStats.vue');
+  const library = await read('pages/library.vue');
+  assert.match(library, /<PanelListeningStats v-if="active === 'stats'" \/>/,
+    'geometry listeners should only exist when the statistics tab is active');
+  assert.match(chart, /if \(!chartBounds\) cacheChartBounds\(event\)/,
+    'pointermove should not synchronously measure the SVG every time');
+  assert.match(chart, /const invalidateChartBounds = \(\): void => \{ chartBounds = null; \}/);
+  assert.match(chart, /window\.addEventListener\('scroll', invalidateChartBounds, \{ capture: true, passive: true \}\)/);
+  assert.match(chart, /window\.removeEventListener\('scroll', invalidateChartBounds, true\)/);
+  for (const kind of ['resize', 'scroll']) {
+    assert.ok(chart.includes(`window.visualViewport?.addEventListener('${kind}', invalidateChartBounds`));
+    assert.ok(chart.includes(`window.visualViewport?.removeEventListener('${kind}', invalidateChartBounds`));
+  }
+});
+
 test('chart keeps filtering, dual scales, hover, touch and accessible day inspection', async () => {
   const component = await read('components/panel/ListeningStats.vue');
   assert.match(component, /v-for="option in chartFilters"/);
