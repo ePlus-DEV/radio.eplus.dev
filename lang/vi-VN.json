@@ -450,11 +450,13 @@
       "sections": {
         "bug": {
           "title": "Đài hoặc trang không hoạt động",
-          "body": "Cho chúng tôi biết tên đài hoặc trang gặp lỗi, điều gì đã xảy ra và bạn đang dùng điện thoại hay máy tính. Bạn có thể gửi thêm ảnh chụp màn hình."
+          "body": "Cho chúng tôi biết tên đài hoặc trang gặp lỗi, điều gì đã xảy ra và bạn đang dùng điện thoại hay máy tính. Bạn có thể gửi thêm ảnh chụp màn hình.",
+          "action": "Báo lỗi website"
         },
         "station": {
           "title": "Cập nhật đài",
-          "body": "Để thêm đài hoặc sửa thông tin, hãy gửi tên đài, quốc gia, website chính thức và đường dẫn nghe nếu có."
+          "body": "Để thêm đài hoặc sửa thông tin, hãy gửi tên đài, quốc gia, website chính thức và đường dẫn nghe nếu có.",
+          "action": "Yêu cầu cập nhật đài"
         },
         "copyright": {
           "title": "Bản quyền hoặc yêu cầu gỡ",
@@ -688,7 +690,7 @@
     "exhausted": "Chưa thể phát sau các lần thử lại. Hãy thử lại hoặc chọn nguồn khác; đài vẫn có thể hoạt động trên thiết bị khác.",
     "connecting": "Đang kết nối hoặc tải âm thanh…",
     "report": "Báo lỗi phát",
-    "report_hint": "Mở bản nháp GitHub để bạn kiểm tra rồi gửi. Không kèm URL luồng phát hay lịch sử nghe."
+    "report_hint": "Mở biểu mẫu GitHub để bạn kiểm tra rồi gửi (cần đăng nhập GitHub). Chỉ điền sẵn trang đài công khai và trạng thái phát trên thiết bị; không kèm URL stream, token hay lịch sử nghe."
   },
   "transfer": {
     "title": "Chuyển danh sách yêu thích",
