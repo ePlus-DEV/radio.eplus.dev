@@ -450,11 +450,13 @@
       "sections": {
         "bug": {
           "title": "A station or page is not working",
-          "body": "Tell us which station or page has a problem, what happened, and whether you are using a phone or computer. A screenshot can help."
+          "body": "Tell us which station or page has a problem, what happened, and whether you are using a phone or computer. A screenshot can help.",
+          "action": "Report a website bug"
         },
         "station": {
           "title": "Station update",
-          "body": "To add a station or correct its details, send us its name, country, official website, and listening link if you have one."
+          "body": "To add a station or correct its details, send us its name, country, official website, and listening link if you have one.",
+          "action": "Request a station update"
         },
         "copyright": {
           "title": "Copyright or removal",
@@ -688,7 +690,7 @@
     "exhausted": "Playback could not start after retrying. Try again or choose another source; the station may still work elsewhere.",
     "connecting": "Connecting or buffering…",
     "report": "Report playback problem",
-    "report_hint": "Opens a GitHub draft for you to review and submit. No stream URL or listening history is included."
+    "report_hint": "Opens a GitHub issue form for you to review and submit (GitHub sign-in required). Only the public station page and local playback state are prefilled; no stream URL, tokens or listening history."
   },
   "transfer": {
     "title": "Move your favorites",
