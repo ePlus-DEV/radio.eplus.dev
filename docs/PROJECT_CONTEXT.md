@@ -645,6 +645,7 @@ configuration until completion.
 ## Playback reliability follow-up (2026-10-18)
 
 - `waiting` clears actual-playing state; only the media `playing` event restores it. Network `stalled` must not clear playing when readyState still has future buffered data.
+- A queued `playing` event must not mark the player active or start listening-time accounting if the current media element is already paused or ended. Interruptions do not authorize automatic playback resumption.
 - Volume/mute preferences use `radio:audio-preferences:v1`, restored before volume listeners, with guarded storage and range validation. iOS system volume is never assigned programmatically. Preferences never authorize autoplay.
 - Metadata polling skips offline and hidden idle sessions, but continues for visible schedules and background playback. Successful lyrics are cached by media ID (20 entries); failed requests remain retryable.
 
