@@ -42,8 +42,10 @@ for raw in paths:
     elif exists:
         target.unlink()
     changed.append(name)
+other_raw = git("diff", "--name-only", "-z", "--no-renames", before, after, "--", "components", "composables", "stores", "utils", "pages", "lang", "assets").stdout.split(b"\0")
+other = [p.decode("utf-8") for p in other_raw if p]
 summary = app / "docs" / "sync-reports" / (after + ".md")
-if conflicts:
+if conflicts or other:
     summary.parent.mkdir(parents=True, exist_ok=True)
-    summary.write_text("# Catalog sync requires review\n\nSource commit: " + after + "\n\nThese files differ from the previous web version in the app and were not changed:\n\n" + "".join("- `" + p.replace("`", "") + "`\n" for p in conflicts), encoding="utf-8")
+    summary.write_text("# Catalog sync requires review\n\nSource commit: " + after + "\n\nThese files differ from the previous web version in the app and were not changed:\n\n" + "".join("- `" + p.replace("`", "") + "`\n" for p in conflicts) + "\nOther shared UI or logic changes require manual comparison:\n\n" + "".join("- `" + p.replace("`", "") + "`\n" for p in other), encoding="utf-8")
 print("Catalogs updated:", len(changed), "requiring manual review:", len(conflicts))
