@@ -1100,3 +1100,7 @@ different stream URLs.
   `tests/station-search.test.mjs`,
   `tests/station-search-duplicates.test.mjs`, and
   `tests/radio-sync.test.mjs`.
+
+### Personal station collections
+
+Personal collections are versioned in local browser storage and export station paths without stream URLs. They use the existing shared player; explicit playback from a collection preserves its ordered queue across station navigation without starting audio on reload. Corrupted collection data must be recoverable before any reset.

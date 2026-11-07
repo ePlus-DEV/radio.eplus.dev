@@ -53,6 +53,20 @@ test('a library selection waits for its target instead of playing the old statio
   assert.equal(playback.playRequest, 2, 'selecting the current station can resume it');
 });
 
+test('collection queue survives next-station resolution and resets on a new selection', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  const first = station('first'); const second = station('second'); const third = station('third');
+  playback.activate(first, [first, second], { autoplay: true, collectionQueue: true });
+  playback.requestStation(second.url);
+  playback.activate(second, [second, third], { autoplay: true });
+  assert.deepEqual(playback.stations.map(item => item.url), [first.url, second.url]);
+  assert.equal(playback.collectionQueue, true);
+  playback.activate(third, [third], { autoplay: true });
+  assert.deepEqual(playback.stations.map(item => item.url), [third.url]);
+  assert.equal(playback.collectionQueue, false);
+});
+
 test('live track metadata is scoped to the active station and cleared on change', () => {
   setActivePinia(createPinia());
   const playback = usePlaybackStore();

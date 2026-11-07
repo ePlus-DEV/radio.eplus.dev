@@ -1,8 +1,8 @@
 <template>
   <div v-if="groups.length" class="space-y-7">
-    <section v-for="group in groups" :key="group.key" :aria-label="$t(`library.${group.key}`)">
-      <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <h2 class="flex items-center gap-2 text-lg font-semibold"><UIcon :name="group.icon" class="h-5 w-5 text-rose-600 dark:text-rose-400" />{{ $t(`library.${group.key}`) }}<span class="text-xs font-normal text-[var(--radio-text-muted)]">{{ group.items.length }}</span></h2>
+    <section v-for="group in groups" :key="group.key" :aria-label="group.key === 'collection' ? collectionTitle : $t(`library.${group.key}`)">
+      <div v-if="group.key !== 'collection'" class="mb-4 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="flex items-center gap-2 text-lg font-semibold"><UIcon :name="group.icon" class="h-5 w-5 text-rose-600 dark:text-rose-400" />{{ group.key === 'collection' ? collectionTitle : $t(`library.${group.key}`) }}<span class="text-xs font-normal text-[var(--radio-text-muted)]">{{ group.items.length }}</span></h2>
         <NuxtLink v-if="compact && group.items.length" :to="`/library#${group.key}`" class="radio-interactive rounded-lg p-2 text-xs font-semibold text-rose-700 dark:text-rose-300">{{ $t('redesign.see_all') }}</NuxtLink>
         <UButton v-if="!compact && group.key === 'recent' && group.items.length" color="neutral" variant="ghost" class="min-h-11" @click="clearRecentOpen = true">{{ $t('library.clear_recent') }}</UButton>
       </div>
@@ -53,7 +53,7 @@
           </div>
         </article>
       </div>
-      <p v-else class="rounded-2xl border border-dashed border-[var(--radio-border)] p-4 text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t(`library.${group.key}_empty`) }}</p>
+      <p v-else class="rounded-2xl border border-dashed border-[var(--radio-border)] p-4 text-sm leading-6 text-[var(--radio-text-muted)]">{{ $t(group.key === 'collection' ? 'collections.empty_stations' : `library.${group.key}_empty`) }}</p>
       <p v-if="failedStationUrl && group.items.some(station => station.url === failedStationUrl)" role="alert" class="mt-2 text-xs text-rose-500">{{ $t('alert.stream_error') }}</p>
     </section>
     <UModal
@@ -85,7 +85,7 @@ import type { RadioCatalogEntry } from '~/types/radio';
 
 type LibraryStation = { url: string; title: string; image: string; countryKey?: string };
 
-const props = defineProps<{ compact?: boolean; group?: string }>();
+const props = defineProps<{ compact?: boolean; group?: string; collectionItems?: LibraryStation[]; collectionTitle?: string }>();
 const listening = useListeningStore();
 const playback = usePlaybackStore();
 const config = useRuntimeConfig();
@@ -103,7 +103,7 @@ const failedStationUrl = ref<string | null>(null);
 const catalogs = new Map<string, Promise<Record<string, RadioCatalogEntry>>>();
 let selectionGeneration = 0;
 
-const groups = computed(() => [
+const groups = computed(() => props.collectionItems ? [{ key: 'collection', icon: 'i-lucide-list-music', items: props.collectionItems }] : [
   { key: 'favorites', icon: 'i-lucide-heart', items: listening.library.favorites },
   { key: 'recent', icon: 'i-lucide-history', items: listening.library.recent },
 ].filter((group) =>
@@ -140,7 +140,8 @@ const togglePlayback = async (station: LibraryStation, items: LibraryStation[]) 
     return;
   }
   if (isActive(station.url) && playback.station?.sources.length) {
-    playback.requestStation(station.url);
+    if (props.collectionItems) playback.activate(playback.station, buildLibraryPlaybackQueue(items), { autoplay: true, collectionQueue: true });
+    else playback.requestStation(station.url);
     return;
   }
 
@@ -172,7 +173,7 @@ const togglePlayback = async (station: LibraryStation, items: LibraryStation[]) 
       meta,
       corsServer: String(config.public.corsServer || ''),
       placeholder: String(config.public.placeholderStation),
-    }), buildLibraryPlaybackQueue(items), { autoplay: true });
+    }), buildLibraryPlaybackQueue(items), { autoplay: true, collectionQueue: Boolean(props.collectionItems) });
   } catch {
     if (generation === selectionGeneration) failedStationUrl.value = station.url;
   } finally {
@@ -187,6 +188,19 @@ const openStationDetails = (event: MouseEvent) => {
   ++selectionGeneration;
   pendingStationUrl.value = null;
 };
+
+const playCollection = () => {
+  const items = props.collectionItems;
+  if (!items?.length) return;
+  const first = items[0];
+  if (isPlaying(first.url) && playback.station) {
+    // Adopt the collection queue without interrupting audio already playing.
+    playback.activate(playback.station, buildLibraryPlaybackQueue(items), { collectionQueue: true });
+    return;
+  }
+  void togglePlayback(first, items);
+};
+defineExpose({ playCollection });
 
 onBeforeUnmount(() => { ++selectionGeneration; });
 const siteAssetUrl = useSiteAssetUrl();
