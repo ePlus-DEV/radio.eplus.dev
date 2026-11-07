@@ -47,6 +47,7 @@ The publishing source is `staging`; production releases are reviewed PRs from `s
 | [PR previews](./docs/PR_PREVIEWS.md) | Preview URLs, build scope and troubleshooting |
 | [GitHub Actions](./docs/GITHUB_ACTIONS.md) · [GitHub Pages](./docs/GITHUB_PAGES.md) | CI and deployment runbooks |
 | [SEO](./docs/SEO.md) · [Station images](./docs/SEPARATE_IMAGE_RELEASES.md) | Indexing, analytics and image publishing |
+| [Report an issue](./docs/ISSUES.md) | GitHub issue forms, playback reports and privacy safeguards |
 
 For contributions, see [CONTRIBUTING.md](./CONTRIBUTING.md), [SECURITY.md](./SECURITY.md) and [AGENTS.md](./AGENTS.md). Detailed architectural decisions live in [PROJECT_CONTEXT.md](./docs/PROJECT_CONTEXT.md).
 
