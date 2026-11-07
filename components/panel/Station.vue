@@ -25,28 +25,28 @@
       <article
         v-for="station in stations"
         :key="station.id"
-        class="radio-station-card group relative min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10"
+        class="radio-station-card group radio-card-compact-station"
         :class="
           station.id === activeStationId
-            ? 'border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40'
-            : 'border-[var(--radio-border)] hover:border-rose-200 dark:hover:border-rose-400/30'
+            ? 'radio-card-compact-station-active'
+            : 'radio-card-compact-station-idle'
         "
       >
         <UTooltip :text="station.title">
           <NuxtLink
             :prefetch="false"
             :to="station.url"
-            class="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+            class="radio-card-compact-station-link"
             :aria-label="station.title"
           >
-            <div class="radio-themed-artwork relative flex aspect-[5/4] items-center justify-center overflow-hidden p-3 sm:aspect-square sm:p-4">
+            <div class="radio-themed-artwork radio-card-compact-station-art">
               <img
                 loading="lazy"
                 decoding="async"
                 :src="siteAssetUrl(station.image)"
                 @error="handleArtworkError"
                 :alt="station.title"
-                class="h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
+                class="radio-card-compact-station-img"
               />
 
               <span
@@ -66,8 +66,8 @@
               </span>
             </div>
 
-            <div class="flex min-h-[4.5rem] min-w-0 items-center border-t border-[var(--radio-border)] px-3 py-2.5 pr-16 sm:py-3.5">
-              <span dir="auto" class="block min-w-0 flex-1 text-sm font-semibold leading-5 text-[var(--radio-text)]">
+            <div class="radio-card-compact-station-name">
+              <span dir="auto" class="radio-card-compact-station-label">
                 <CountryMarquee :text="station.title" />
               </span>
             </div>
@@ -75,7 +75,7 @@
         </UTooltip>
         <button
           type="button"
-          class="absolute bottom-3 right-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+          class="radio-card-compact-station-play"
           :aria-label="$t(isPending(station) ? 'player.connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
           :aria-pressed="isPlaying(station)"
           :aria-busy="isPending(station)"

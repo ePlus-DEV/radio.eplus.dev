@@ -50,3 +50,15 @@ test('prerender, output audits and browser checks are gated together', async () 
   assert.match(yaml, /github\.base_ref == 'staging' && steps\.scope\.outputs\.prerender == 'true'/);
   assert.equal((yaml.match(/vars\.ENABLE_BROWSER_TESTS == 'true' && steps\.scope\.outputs\.prerender == 'true'/g) || []).length, 2);
 });
+
+test('production promotion is a direct staging to main PR, never an intermediate release branch', async () => {
+  const yaml = await workflow();
+  const agents = await readFile(new URL('../AGENTS.md', import.meta.url), 'utf8');
+  const environments = await readFile(new URL('../docs/ENVIRONMENTS.md', import.meta.url), 'utf8');
+  assert.match(yaml, /\[\.base\.ref, \.head\.sha, \.state, \.head\.ref\]/);
+  assert.match(yaml, /\[ "\$live_base" = main \] && \[ "\$live_source" != staging \]/);
+  assert.match(yaml, /Production PR must be direct staging -> main/);
+  assert.match(agents, /head is the actual `staging` branch and whose base is the actual `main`/);
+  assert.match(environments, /head=staging, base=main/);
+  assert.match(environments, /pages build and deployment/);
+});

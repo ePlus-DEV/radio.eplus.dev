@@ -10,6 +10,18 @@ This is the authoritative environment and release map. It applies to the source 
 
 **No long-lived `dev` source branch or root-host deployment is implied.** The development tier is intentionally one isolated, temporary build **per PR** on the preview host. `https://preview.radio.eplus.dev/` is the preview landing page, not a fourth build. A permanent `dev` branch would require a separate reviewed hosting, capacity and promotion design.
 
+## Non-negotiable two-branch promotion (2026-11-07)
+
+**Only `staging` and `main` are persistent release source branches.** The release PR is ALWAYS `head=staging, base=main`. Do not create `release/*` or a synthetic merge branch to resolve conflicts or deploy; short-lived feature branches are allowed only as incoming work into `staging`.
+
+1. Compare both directions of `staging` and `main` before release. If `main` has unincorporated commits, sync `main` → `staging` with a direct PR (if required by protection). Resolve and validate conflicts **on `staging`**, not on a third release branch.
+2. Verify Staging's **source** deploy succeeded, its separate `onair-staging-pages` **Pages deployment** succeeded, and the public Staging homepage/deep links respond correctly with `noindex` and without production GA4.
+3. Open **one** reviewed `staging` → `main` PR; require the exact head SHA, CI/tests, Production SEO/GA4/canonical/sitemap separation and no unexpected deletions. Merge the PR into `main` after checks.
+4. The merge is **not** release completion. Verify source publish on `main`, target repo `onair-production-pages` commit carrying that source SHA, target repo's own `pages build and deployment` concluding `success`, and live `https://radio.eplus.dev/` plus representative deep links. If Pages is queued or fails (including `syncing_files` timeouts), the release is **not live/complete**.
+5. Pages output must have safe size headroom, not merely pass a 1 GB byte limit. Track HTML/file-count/total bytes; optimize duplicated HTML without deleting indexed radio routes, station catalogs/artwork, SEO text/schema/sitemap/canonical, or production GA4. Target <= 800 MB if feasible and investigate oversized publishes before merging.
+
+Incident reference: [#413](https://github.com/ePlus-DEV/radio.eplus.dev/issues/413) — Pages deployment timed out syncing a nearly 1 GB output despite successful source CI/publish. Do not call that a successful website release.
+
 ## Promotion and isolation
 
 1. Develop on a feature branch and open a PR against `staging`. Only a trusted publisher can write `pr-preview/pr-<number>/`; the untrusted PR build has read-only permissions and no deployment secret.

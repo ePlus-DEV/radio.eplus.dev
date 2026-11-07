@@ -17,7 +17,9 @@ test('Global Radio uses the Country Station panel, not a duplicate list implemen
     'Global must not reimplement cards or create another player');
   assert.match(shared, /grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5/);
   assert.match(shared, /<CountryMarquee :text="station\.title" \/>/);
-  assert.match(shared, /h-11 w-11/);
+  assert.match(shared, /radio-card-compact-station-play/);
+  const css = await read('assets/css/main.css');
+  assert.match(css, /\.radio-card-compact-station-play\s*\{\s*@apply[^;]*h-11 w-11/);
   assert.match(shared, /@click="emit\('select-station', station\)"/);
   assert.match(shared, /<NuxtLink[\s\S]*:prefetch="false"[\s\S]*:to="station\.url"/);
 });

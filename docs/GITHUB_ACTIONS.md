@@ -32,6 +32,12 @@ Old one-off VOH import, changelog and incompatible Dependabot auto-merge workflo
 
 See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPARATE_IMAGE_RELEASES.md) for setup, diagnostics and image strategy.
 
+## Mandatory direct release flow and completion checks (2026-11-07)
+
+- **Do not create release branches.** All Production promotion PRs have `staging` as the source and `main` as target. To avoid conflicts, synchronize current `main` into `staging` directly if needed before opening the release PR. CI must reject any non-`staging` PR targeting `main`; feature/fix PRs target `staging`.
+- A successful PR merge or `Deploy ePlus OnAir to GitHub Pages` *source* job means the output was generated/pushed; it does **not** establish that `radio.eplus.dev` serves it. Verify destination `onair-production-pages` commit source SHA, its **own** `pages build and deployment` workflow status = `completed/success`, and actual public homepage and representative route responses.
+- If destination deploy remains `syncing_files`, fails or times out, mark the release incomplete and fix the root cause. Issue [#413](https://github.com/ePlus-DEV/radio.eplus.dev/issues/413) documents the ~999MB/12,938-file output which timed out at 10 minutes. Preserve indexed station pages, SEO metadata and radio catalog while optimizing output. Do not rerun indefinitely or report success based only on the source workflow.
+
 ## Isolated GitHub Pages PR previews
 
 Preview publishes to the dedicated `ePlus-DEV/onair-pr-previews` Pages repository. Trusted jobs select the independent `preview` GitHub Environment when `PAGES_PREVIEW_READY=true`, with a Preview-scoped `PAGES_DEPLOY_TOKEN` for publishing/cleanup. Until that repository-level flag is configured, the existing `development`/`PAGES_DEV_READY` configuration remains the legacy fallback. The read-only PR build job has **no Environment secrets** and receives only validated public configuration, including the Preview title. Preview routes are intentionally limited because a full catalog for every PR would exceed the Pages site limit. Details: [PR_PREVIEWS.md](./PR_PREVIEWS.md).

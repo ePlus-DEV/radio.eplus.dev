@@ -1,8 +1,8 @@
 <template>
-  <span ref="viewport" class="country-marquee-viewport block min-w-0 w-full overflow-hidden whitespace-nowrap" :title="text">
+  <span ref="viewport" class="country-marquee-viewport" :title="text">
     <span
       ref="content"
-      class="country-marquee-content inline-block whitespace-nowrap"
+      class="country-marquee-content"
       :class="{ 'country-marquee-content--overflow': overflowPixels > 1 }"
       :style="overflowPixels > 1 ? {
         '--country-marquee-shift': `-${overflowPixels + 2}px`,

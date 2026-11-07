@@ -515,3 +515,34 @@ html.dark .radio-stats-shell .radio-player-dock {
   background: linear-gradient(100deg, #171a33, #1a203e);
   border-color: rgb(149 164 206 / .25);
 }
+
+/*
+ * HTML size budget: the same Country and Station card utility lists were
+ * repeated thousands of times in generated Pages HTML (~1 GB across routes).
+ * Compile them ONCE into shared CSS, with identical Tailwind utilities.
+ * Keep the existing radio-station-card/group hooks and server-side links.
+ * This is styling deduplication only: no client-only cards or SEO removal.
+ */
+@layer components {
+  .radio-card-compact-station { @apply relative min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-900/10; }
+  .radio-card-compact-station-active { @apply border-rose-300 ring-2 ring-rose-500/15 dark:border-rose-400/40; }
+  .radio-card-compact-station-idle { @apply border-[var(--radio-border)] hover:border-rose-200 dark:hover:border-rose-400/30; }
+  .radio-card-compact-station-link { @apply block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500; }
+  .radio-card-compact-station-art { @apply relative flex aspect-[5/4] items-center justify-center overflow-hidden p-3 sm:aspect-square sm:p-4; }
+  .radio-card-compact-station-img { @apply h-auto max-h-[75%] w-auto max-w-[75%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]; }
+  .radio-card-compact-station-name { @apply flex min-h-[4.5rem] min-w-0 items-center border-t border-[var(--radio-border)] px-3 py-2.5 pr-16 sm:py-3.5; }
+  .radio-card-compact-station-label { @apply block min-w-0 flex-1 text-sm font-semibold leading-5 text-[var(--radio-text)]; }
+  .radio-card-compact-station-play { @apply absolute bottom-3 right-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 transition hover:bg-rose-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500; }
+
+  .radio-card-compact-country { @apply min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-rose-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500; }
+  .radio-card-compact-country-art { @apply relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square; }
+  .radio-card-compact-country-img { @apply max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]; }
+  .radio-card-compact-country-count { @apply absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur; }
+  .radio-card-compact-country-name { @apply flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3; }
+  .radio-card-compact-country-label { @apply min-w-0 flex-1 text-sm font-semibold leading-5 text-[var(--radio-text)]; }
+  .radio-card-compact-country-badge { @apply shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-medium; }
+  .radio-card-compact-country-arrow { @apply h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100; }
+
+  .country-marquee-viewport { @apply block min-w-0 w-full overflow-hidden whitespace-nowrap; }
+  .country-marquee-content { @apply inline-block whitespace-nowrap; }
+}

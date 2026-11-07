@@ -56,7 +56,9 @@ test("station cards marquee long titles and show Play/Pause without hover", asyn
   // The action is visible on touch screens, separated from the station detail link.
   const button = stationPanel.match(/<button\s+type="button"[\s\S]*?<\/button>/)?.[0];
   assert.ok(button, "station cards need an instant-play button");
-  assert.match(button, /h-11 w-11/);
+  assert.match(button, /radio-card-compact-station-play/);
+  const css = await readFile(join(process.cwd(), 'assets/css/main.css'), 'utf8');
+  assert.match(css, /\.radio-card-compact-station-play\s*\{\s*@apply[^;]*h-11 w-11/);
   assert.match(button, /:aria-pressed="isPlaying\(station\)"/);
   assert.match(button, /:aria-label="\$t\(isPending\(station\) \? 'player\.connecting' : isPlaying\(station\) \? 'player\.pause' : 'player\.play'\)/);
   assert.match(button, /@click="emit\('select-station', station\)"/);

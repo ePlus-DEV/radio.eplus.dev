@@ -53,34 +53,34 @@
           <NuxtLink
             :prefetch="false"
             :to="country.url"
-            class="radio-station-card group min-w-0 overflow-hidden rounded-2xl border transition duration-200 hover:-translate-y-1 hover:border-rose-400/40 hover:shadow-xl hover:shadow-slate-900/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+            class="radio-station-card group radio-card-compact-country"
             :aria-label="$t(country.name)"
           >
-            <div class="radio-themed-artwork relative flex aspect-[7/4] items-center justify-center overflow-hidden p-3 sm:aspect-[5/4] sm:p-4 lg:aspect-square">
+            <div class="radio-themed-artwork radio-card-compact-country-art">
               <img
                 loading="lazy"
                 decoding="async"
                 :src="siteAssetUrl(country.flag)"
                 :alt="$t(country.name)"
-                class="max-h-[72%] max-w-[82%] object-contain drop-shadow-sm transition duration-300 group-hover:scale-[1.08]"
+                class="radio-card-compact-country-img"
               />
               <span
                 v-if="country.station_count !== null"
-                class="absolute right-2 top-2 rounded-full bg-[var(--radio-inverse-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--radio-inverse-text)] opacity-90 backdrop-blur"
+                class="radio-card-compact-country-count"
               >
                 {{ country.station_count }}
               </span>
             </div>
 
-            <div class="flex min-w-0 items-center gap-2 border-t border-[var(--radio-border)] px-3 py-2.5 sm:py-3">
-              <span class="min-w-0 flex-1 text-sm font-semibold leading-5 text-[var(--radio-text)]">
+            <div class="radio-card-compact-country-name">
+              <span class="radio-card-compact-country-label">
                 <CountryMarquee :text="$t(country.name)" />
               </span>
-              <span v-if="compact && country.station_count !== null" class="radio-count-badge shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-medium">{{ country.station_count }}</span>
+              <span v-if="compact && country.station_count !== null" class="radio-count-badge radio-card-compact-country-badge">{{ country.station_count }}</span>
               <fa
                 v-if="!compact"
                 :icon="['fas', 'arrow-right']"
-                class="h-3 w-3 shrink-0 -translate-x-1 text-[var(--radio-text-muted)] opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 "
+                class="radio-card-compact-country-arrow "
               />
             </div>
           </NuxtLink>
