@@ -1105,3 +1105,7 @@ different stream URLs.
 ### Personal station collections
 
 Personal collections are versioned in local browser storage and export station paths without stream URLs. They use the existing shared player; explicit playback from a collection preserves its ordered queue across station navigation without starting audio on reload. Corrupted collection data must be recoverable before any reset.
+
+### Media Session lifecycle
+
+The global player owns one Media Session controller. It registers headset and lock-screen actions on mount, synchronizes metadata and playback state, and removes handlers on unmount. Track and seek controls navigate stations; they never seek a live broadcast. The controller does not start audio or own the HLS source lifecycle.

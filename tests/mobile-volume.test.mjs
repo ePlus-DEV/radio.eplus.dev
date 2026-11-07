@@ -44,5 +44,5 @@ test("iOS volume guidance coexists with Media Session station controls", async (
   assert.match(player, /systemVolumeOnly\.value = usesSystemVolumeControls\(navigator\)/);
   assert.match(player, /next:\s*\(\) => navigateStation\(1\)/);
   assert.match(player, /previous:\s*\(\) => navigateStation\(-1\)/);
-  assert.match(player, /new MediaMetadata\(details\)/);
+  assert.match(player, /radioMediaSession\.update/);
 });

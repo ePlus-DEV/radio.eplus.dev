@@ -196,7 +196,7 @@ import {
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
-import { buildRadioMediaMetadata, registerRadioMediaActions } from "~/utils/radio-media-session.mjs";
+import { createRadioMediaSession } from "~/utils/radio-media-session.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
@@ -1190,34 +1190,23 @@ const navigateStation = (offset: -1 | 1): void => {
 // Media Session integrates live radio with iOS lock-screen / Control Center
 // metadata and headset controls. Track controls switch STATIONS, never songs:
 // an individual song cannot be skipped in a linear live broadcast.
-let cleanupMediaActions: (() => void) | null = null;
-const updateMediaSession = (): void => {
-  if (!import.meta.client || !('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
-  const details = buildRadioMediaMetadata({
-    title: nowPlayingTitle.value,
-    artist: nowPlayingArtist.value,
-    station: props.streamName,
-    artwork: nowPlayingArtwork.value,
-    fallbackArtwork: props.thumb,
-  }, window.location.origin);
-  navigator.mediaSession.metadata = new MediaMetadata(details);
-  navigator.mediaSession.playbackState = playing.value ? 'playing' : 'paused';
-};
-
-const registerMediaSession = (): void => {
-  if (!('mediaSession' in navigator)) return;
-  cleanupMediaActions = registerRadioMediaActions(navigator.mediaSession, {
+const radioMediaSession = createRadioMediaSession({
+  getEnvironment: () => import.meta.client ? {
+    session: 'mediaSession' in navigator ? navigator.mediaSession : null,
+    Metadata: typeof MediaMetadata === 'undefined' ? null : MediaMetadata,
+    origin: window.location.origin,
+  } : {},
+  getDetails: () => ({
+    title: nowPlayingTitle.value, artist: nowPlayingArtist.value, station: props.streamName,
+    artwork: nowPlayingArtwork.value, fallbackArtwork: props.thumb, playing: playing.value,
+  }),
+  actions: {
     play: () => { void onPlay(); },
     pause: () => onPause(),
     next: () => navigateStation(1),
     previous: () => navigateStation(-1),
-  });
-};
-
-const clearMediaSession = (): void => {
-  cleanupMediaActions?.();
-  cleanupMediaActions = null;
-};
+  },
+});
 
 const toggleMute = (): void => {
   const media = mediaElement.value;
@@ -1404,7 +1393,7 @@ watch([playing, waiting], ([isPlaying, isWaiting]) => {
 // keep lock-screen metadata synchronized without restarting playback.
 watch(
   [nowPlayingTitle, nowPlayingArtist, nowPlayingArtwork, () => props.streamName, playing],
-  updateMediaSession,
+  radioMediaSession.update,
   { flush: 'post' },
 );
 
@@ -1524,8 +1513,8 @@ onMounted(() => {
     } catch { /* Ignore malformed or unavailable preferences. */ }
   }
   bindMediaEvents();
-  registerMediaSession();
-  updateMediaSession();
+  radioMediaSession.mount();
+  radioMediaSession.update();
 
   const media = mediaElement.value;
   if (media) {
@@ -1555,7 +1544,7 @@ onUnmounted(() => {
   sleepTimer.cancel();
   document.removeEventListener("visibilitychange", checkSleepDeadline);
   window.removeEventListener("pageshow", checkSleepDeadline);
-  clearMediaSession();
+  radioMediaSession.dispose();
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
