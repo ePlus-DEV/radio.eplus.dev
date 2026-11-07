@@ -1,6 +1,7 @@
 name: "Deploy ePlus OnAir to GitHub Pages"
 
 # Deploy only merged, trusted source. Never give publishing credentials to PRs.
+# A successful skipped stale job must not be treated as a public release.
 # Verify the exact branch HEAD again just before uploading generated Pages,
 # because newer changes can land while a long full-site prerender is running.
 # The integration source is staging; deprecated develop never triggers Pages publishing.
