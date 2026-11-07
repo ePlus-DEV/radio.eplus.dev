@@ -197,6 +197,7 @@ import {
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { createRadioMediaSession } from "~/utils/radio-media-session.mjs";
+import { createRetryableHlsLoader } from "~/utils/retryable-hls-loader.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
@@ -377,8 +378,7 @@ const setPlayerMini = (value: boolean): void => {
 let hlsInstance: any = null;
 let detachNativeHlsMetadata: (() => void) | null = null;
 const hlsSongBuffer = createTimedHlsTrackBuffer({ appleMusic: true });
-let HlsCtor: any = null;
-let hlsImportPromise: Promise<any> | null = null;
+
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let stablePlaybackTimer: ReturnType<typeof setTimeout> | null = null;
@@ -613,16 +613,9 @@ const resolvePlaylistSource = async (
   }
 };
 
-const ensureHls = async (): Promise<any> => {
-  if (HlsCtor) return HlsCtor;
-
-  hlsImportPromise ||= import("hls.js").then((module) => {
-    HlsCtor = module.default;
-    return HlsCtor;
-  });
-
-  return await hlsImportPromise;
-};
+// hls.js stays lazy. Clear only rejected imports; the source watchdog
+// remains responsible for the bounded playback retry budget.
+const ensureHls = createRetryableHlsLoader(() => import("hls.js"));
 
 const destroyHls = (): void => {
   hlsSongBuffer.clear();
