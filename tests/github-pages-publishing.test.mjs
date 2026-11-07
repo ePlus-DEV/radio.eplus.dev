@@ -47,6 +47,10 @@ test('custom-domain full-site deployments preserve separate Production and Stagi
   assert.ok(workflow.includes('ls-remote --exit-code'));
   assert.ok(workflow.includes('repo.permissions?.push !== true'));
   assert.ok(workflow.includes('rsync -a --delete'));
+  assert.match(workflow, /live_sha="\$\(gh api "repos\/\$GITHUB_REPOSITORY\/commits\/\$GITHUB_REF_NAME"/);
+  assert.match(workflow, /Skip obsolete Pages upload/);
+  assert.ok(workflow.indexOf('Skip obsolete Pages upload') < workflow.indexOf('rsync -a --delete'),
+    'avoid replacing published content with an obsolete build after long prerender');
   assert.ok(workflow.includes("--exclude='/README.md'"),
     'public Pages repository README must survive incremental publishing');
   assert.ok(workflow.includes('.output/public'));
