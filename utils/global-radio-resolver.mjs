@@ -35,6 +35,10 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
   // media playlists use the opaque 'ppa' alias instead of a numeric station ID.
   // Do not generalize this alias to other Apple Music stations.
   const parts = stream?.pathname.split('/') || [];
+  const matchesNumberedCmafMaster = Boolean(stationNumber)
+    && stream?.pathname === `/3p-tune-in/tune_in/${stationNumber}/index-cmaf.m3u8`;
+  const matchesNumberedTsMaster = Boolean(stationNumber)
+    && stream?.pathname === `/3p-tune-in/tune_in/${stationNumber}-ts/index-ts.m3u8`;
   const matchesNumberedPath = Boolean(stationNumber)
     && parts.length === 6
     && parts[1] === '3p-tune-in'
@@ -49,7 +53,7 @@ export function validateAuthorizedAppleStream(payload, stationId, appleListenUrl
       || stream?.pathname === '/3p-tune-in/tune_in/ppa-ts/index-ts.m3u8'
       || /^\/3p-tune-in\/tune_in\/ppa\/usw\/(?:64|256)\.m3u8$/.test(stream?.pathname || ''));
   if (!stationNumber || !stream || stream.hostname !== APPLE_HLS_HOST
-    || !(matchesNumberedPath || matchesHolidayPath)
+    || !(matchesNumberedCmafMaster || matchesNumberedTsMaster || matchesNumberedPath || matchesHolidayPath)
     || !stream.searchParams.get('accessKey')) {
     return { ok: false, reason: 'invalid_source' };
   }

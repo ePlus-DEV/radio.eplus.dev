@@ -4,26 +4,22 @@ import { readFile } from 'node:fs/promises';
 
 const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 
-test('Apple directory uses compact responsive cards with ePlus Play as the only primary action', async () => {
+test('Apple directory reuses the exact Country card grid, Play control and separate detail links', async () => {
   const page = await read('pages/global-radio/apple-music/index.vue');
+  const shared = await read('components/panel/Station.vue');
   assert.match(page, /<header class="radio-hero relative isolate overflow-hidden/);
   assert.match(page, /radial-gradient\(/);
-  assert.match(page, /grid min-w-0 gap-3 sm:grid-cols-2 2xl:grid-cols-3/);
-  assert.match(page, /v-for="station in provider\?\.stations \|\| \[\]"/);
-  assert.match(page, /:key="station\.id"/);
-  assert.match(page, /station\.seasonal/);
-  assert.match(page, /@click="playOnEplus\(station\)"/);
-  assert.match(page, /global_radio\.listen_on_eplus/);
-  assert.match(page, /t\('global_radio\.details'\)/);
+  assert.match(page, /<PanelStation[\s\S]*:stations="stationCards"[\s\S]*@select-station="playSelectedStation"/);
+  assert.match(shared, /grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5/);
+  assert.match(shared, /:prefetch="false"/);
+  assert.match(shared, /<CountryMarquee :text="station\.title" \/>/);
+  assert.match(shared, /h-11 w-11/);
+  assert.match(shared, /@click="emit\('select-station', station\)"/);
+  assert.match(shared, /isPending\(station\) \? 'i-lucide-loader-circle'/);
   assert.match(page, /t\('global_radio\.eplus_play_hint'\)/);
-  assert.match(page, /global_radio\.playing_now/);
-  assert.match(page, /min-h-11/, 'touch targets must be at least 44px high');
-  assert.match(page, /line-clamp-2/, 'descriptions remain compact on narrow viewports');
-  assert.match(page, /focus-visible:outline-2/, 'buttons and links must be keyboard accessible');
   assert.doesNotMatch(page, /:href="station\.(?:listen_url|tunein_url)"/,
-    'Apple Music and TuneIn links must only be shown on station detail');
-  assert.doesNotMatch(page, /t\('global_radio\.external_note'\)/,
-    'do not render the old notice saying ePlus cannot play these stations');
+    'Apple Music and TuneIn external links only appear on station detail');
+  assert.doesNotMatch(page, /t\('global_radio\.external_note'\)/);
 });
 
 test('directory/detail use shared player without raw HLS prompts; provider links are detail-only', async () => {
@@ -37,11 +33,13 @@ test('directory/detail use shared player without raw HLS prompts; provider links
     assert.doesNotMatch(publicPage, /playback\.(?:activate|requestStation|play)\s*\(|requestStation\(/);
 
     assert.doesNotMatch(publicPage, /v-if="canListenOnEplus/, 'missing proxy must not hide the Play control');
-    assert.match(publicPage, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
     assert.match(publicPage, /v-if="!canListenOnEplus"/, 'explain why the Play button is disabled');
     assert.match(publicPage, /global_radio\.resolver_unavailable/);
     assert.match(publicPage, /useAuthorizedGlobalRadioPlayback/);
   }
+  assert.match(page, /:play-enabled="canListenOnEplus"/);
+  assert.match(page, /:pending-station-id="pendingStationId"/);
+  assert.match(detail, /:disabled="!canListenOnEplus \|\| Boolean\(pendingStationId\)"/);
   assert.match(detail, /rel="noopener noreferrer"/);
   assert.match(detail, /:href="station\.listen_url"/);
   assert.match(detail, /:href="station\.tunein_url"/);

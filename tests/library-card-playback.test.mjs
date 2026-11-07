@@ -44,7 +44,7 @@ test('favorite and recent cards can play without leaving the page while retainin
   assert.match(source, /@click="listening\.toggleFavorite\(station\)"/);
   assert.match(source, /if \(isPlaying\(station\.url\)\)[\s\S]*?playback\.pauseRequest \+= 1/);
   assert.match(source, /if \(isActive\(station\.url\) && playback\.station\?\.sources\.length\)[\s\S]*?playback\.requestStation\(station\.url\)/);
-  assert.match(source, /playback\.activate\(createPlaybackStation\([\s\S]*?\{ autoplay: true \}/);
+  assert.match(source, /playback\.activate\(createPlaybackStation\([\s\S]*?\{ autoplay: true, collectionQueue:/);
   assert.match(source, /generation !== selectionGeneration/);
   assert.match(source, /onBeforeUnmount\(\(\) => \{ \+\+selectionGeneration;/);
 });

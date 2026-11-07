@@ -5,6 +5,12 @@ export const usePlaybackStore = defineStore('playback', {
   state: () => ({
     station: null as PlaybackStation | null,
     stations: [] as RadioStationOption[],
+    collectionQueue: false,
+    // UI-only selection while the first Global Radio stream is resolving.
+    // Never persist this metadata or put a signed HLS URL here.
+    pendingGlobalRadio: null as RadioStationOption | null,
+    globalRadioPendingId: '',
+    globalRadioError: '',
     playRequest: 0,
     requestedStationUrl: '',
     pauseRequest: 0,
@@ -27,7 +33,11 @@ export const usePlaybackStore = defineStore('playback', {
     activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number,
       stations: RadioStationOption[] = [], options: { autoplay?: boolean } = {}) {
       // Country and Global share the same player/queue; only source resolution differs.
+      this.pendingGlobalRadio = null;
+      this.globalRadioPendingId = '';
+      this.globalRadioError = '';
       this.liveTrack = null;
+      this.collectionQueue = false;
       this.station = station;
       this.stations = stations.length ? stations
         : [{ id: station.id, title: station.title, image: station.image, url: station.url }];
@@ -75,15 +85,23 @@ export const usePlaybackStore = defineStore('playback', {
       if (this.station?.url === url) this.playRequest += 1;
       else this.requestedStationUrl = url;
     },
-    activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean } = {}) {
-      if (options.onlyIfIdle && this.station) return;
+    activate(station: PlaybackStation, stations: RadioStationOption[], options: { autoplay?: boolean; onlyIfIdle?: boolean; collectionQueue?: boolean } = {}) {
+      if (options.onlyIfIdle && (this.station || this.globalRadioPendingId)) return;
+      this.pendingGlobalRadio = null;
+      this.globalRadioPendingId = '';
+      this.globalRadioError = '';
       // Revisiting the same station or changing language must not reload audio.
       if (this.station?.url !== station.url) {
         this.liveTrack = null;
         this.globalRadioLease = null;
       }
       if (this.station?.url !== station.url || (!this.station?.sources.length && station.sources.length)) this.station = station;
-      this.stations = stations;
+      // Only a Next/Previous request for an entry in the current collection
+      // keeps that queue when the station page resolves its catalog metadata.
+      const retainCollection = this.collectionQueue && this.requestedStationUrl === station.url
+        && this.stations.some(item => item.url === station.url);
+      if (!retainCollection) this.stations = stations;
+      this.collectionQueue = retainCollection || Boolean(options.collectionQueue);
       if (options.autoplay || this.requestedStationUrl === station.url) this.playRequest += 1;
       this.requestedStationUrl = '';
     },

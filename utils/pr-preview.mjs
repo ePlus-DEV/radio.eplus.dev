@@ -3,7 +3,9 @@
  * normal builds still prerender the complete radio catalog.
  *
  * GitHub Pages cannot host the full catalog once per PR (site limit: 1 GB).
- * All public catalog JSON and artwork are still copied by Nuxt.
+ * The build retains full public search/catalog JSON; after prerender a preview-only
+ * compaction removes artwork not needed by representative routes, flags or
+ * featured/search QA. Staging and Production never use that compaction.
  */
 export const PR_PREVIEW_ROUTES = Object.freeze([
   '/',

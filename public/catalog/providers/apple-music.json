@@ -17,7 +17,9 @@
       "genre": "Contemporary",
       "language": "en",
       "listen_url": "https://music.apple.com/us/station/apple-music-1/ra.978194965",
-      "tunein_url": "https://tunein.com/radio/Apple-Music-1-s345732/"
+      "tunein_url": "https://tunein.com/radio/Apple-Music-1-s345732/",
+      "image": "/img/global-radio/apple-music-1.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s345732/images/logod.png?t=638905397110000000"
     },
     {
       "id": "apple-music-hits",
@@ -26,7 +28,9 @@
       "genre": "Hits",
       "language": "en",
       "listen_url": "https://music.apple.com/us/station/apple-music-hits/ra.1498155548",
-      "tunein_url": "https://tunein.com/radio/Apple-Music-Hits-s345724/"
+      "tunein_url": "https://tunein.com/radio/Apple-Music-Hits-s345724/",
+      "image": "/img/global-radio/apple-music-hits.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s345724/images/logod.png?t=639025421970000000"
     },
     {
       "id": "apple-music-country",
@@ -35,7 +39,9 @@
       "genre": "Country",
       "language": "en",
       "listen_url": "https://music.apple.com/us/station/apple-music-country/ra.1498157166",
-      "tunein_url": "https://tunein.com/radio/Apple-Music-Country-s345725/"
+      "tunein_url": "https://tunein.com/radio/Apple-Music-Country-s345725/",
+      "image": "/img/global-radio/apple-music-country.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s345725/images/logod.png?t=638905397850000000"
     },
     {
       "id": "apple-music-club",
@@ -44,7 +50,9 @@
       "genre": "Electronic",
       "language": "en",
       "listen_url": "https://music.apple.com/us/station/apple-music-club/ra.1740613859",
-      "tunein_url": "https://tunein.com/radio/Apple-Music-Club-s345726/"
+      "tunein_url": "https://tunein.com/radio/Apple-Music-Club-s345726/",
+      "image": "/img/global-radio/apple-music-club.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s345726/images/logod.png?t=638905397610000000"
     },
     {
       "id": "apple-musica-uno",
@@ -53,7 +61,9 @@
       "genre": "Latin",
       "language": "es",
       "listen_url": "https://music.apple.com/us/station/apple-m%C3%BAsica-uno/ra.1740613864",
-      "tunein_url": "https://tunein.com/radio/Apple-M%C3%BAsica-Uno-s345727/"
+      "tunein_url": "https://tunein.com/radio/Apple-M%C3%BAsica-Uno-s345727/",
+      "image": "/img/global-radio/apple-musica-uno.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s345727/images/logod.png?t=638905398310000000"
     },
     {
       "id": "apple-music-chill",
@@ -62,7 +72,9 @@
       "genre": "Chill",
       "language": "en",
       "listen_url": "https://music.apple.com/us/station/apple-music-chill/ra.1740614260",
-      "tunein_url": "https://tunein.com/radio/Apple-Music-Chill-s345733/"
+      "tunein_url": "https://tunein.com/radio/Apple-Music-Chill-s345733/",
+      "image": "/img/global-radio/apple-music-chill.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s345733/images/logod.png?t=638905397360000000"
     },
     {
       "id": "apple-music-holiday-hits",
@@ -72,7 +84,9 @@
       "language": "en",
       "seasonal": true,
       "listen_url": "https://music.apple.com/us/station/holiday-hits/ra.6825447412",
-      "tunein_url": "https://tunein.com/radio/Apple-Music-Holiday-Hits-s363737/"
+      "tunein_url": "https://tunein.com/radio/Apple-Music-Holiday-Hits-s363737/",
+      "image": "/img/global-radio/apple-music-holiday-hits.png",
+      "artwork_source_url": "https://cdn-profiles.tunein.com/s363737/images/logog.png?t=2"
     }
   ],
   "discovery_sources": [

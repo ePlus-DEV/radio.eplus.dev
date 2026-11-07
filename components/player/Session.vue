@@ -1,9 +1,9 @@
 <template>
   <Player
     :country="station?.countryKey || ''"
-    :country-name="station ? $t(station.countryKey) : ''"
-    :thumb="station?.image || ''"
-    :stream-name="station?.title || $t('player.choose_station')"
+    :country-name="station ? $t(station.countryKey) : playback.pendingGlobalRadio ? $t('global_radio.title') : ''"
+    :thumb="station?.image || playback.pendingGlobalRadio?.image || ''"
+    :stream-name="station?.title || playback.pendingGlobalRadio?.title || $t('player.choose_station')"
     :stream-url="station?.sources[0] || emptySource"
     :stream-urls="station?.sources || emptySources"
     :station-url="station?.url"

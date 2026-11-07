@@ -350,7 +350,7 @@ const world = {
       "flag": "/img/europe/flags/united-kingdom.png",
       "data": "/assets/radio/europe/united-kingdom.json",
       "timezone": "Europe/London",
-      "station": 148
+      "station": 138
     },
     "ukraine": {
       "name": "world.europe.ukraine",

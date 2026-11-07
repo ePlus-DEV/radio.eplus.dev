@@ -39,7 +39,12 @@ https://github.com/hoangsvit/heroku-cors/actions/runs/42026930807.
 - With the CORS env configured: an anonymous, public TuneIn lookup for one of seven fixed station IDs, relayed through the configured HTTPS CORS origin.
 - The returned Apple HLS URL is validated against the selected station,
   expected MPEG-TS/CMAF path, signed key and token expiry; it is played in the
-  existing global PlayerSession (hls.js/native HLS).
+  existing global PlayerSession (hls.js/native HLS). The non-seasonal six
+  station IDs also accept the station-bound numeric CMAF master
+  `/3p-tune-in/tune_in/<Apple radio ID>/index-cmaf.m3u8`, as observed in the
+  Apple Music 1 browser capture on 2026-11-06. When TuneIn supplies multiple
+  valid sources, prefer CMAF for in-band `emsg`/ID3 song metadata and retain
+  MPEG-TS as fallback. This does not independently prove track display.
 - Client-side renewal repeats the public lookup before token expiry, without
   storing tokens or touching the country radio catalog.
 - Apple Music and TuneIn official links remain as fallbacks. No SEO changes.
@@ -83,9 +88,14 @@ On approved, valid station resolution the backend MUST return:
 than now. The example expires value is illustrative, not a working URL.
 The client requires a known Apple Music station ID, an exact Apple HLS host
 and an `accessKey`; the earlier of server expiry or the embedded key epoch
-must be at least 45s away. Signed HLS paths are allowlisted as either
-`/3p-tune-in/tune_in/<Apple radio ID>/<region>/<bitrate>.m3u8`, or, only for
-Apple Music Holiday Hits (Apple ID `6825447412`), the following paths:
+must be at least 45s away. Signed HLS paths are allowlisted for the selected
+Apple radio ID as:
+- `/3p-tune-in/tune_in/<Apple radio ID>/index-cmaf.m3u8` — CMAF master, including Apple Music 1.
+- `/3p-tune-in/tune_in/<Apple radio ID>-ts/index-ts.m3u8` — MPEG-TS master.
+- `/3p-tune-in/tune_in/<Apple radio ID>/<region>/<bitrate>.m3u8` — media playlist.
+
+Only for Apple Music Holiday Hits (Apple ID `6825447412`), the following
+additional opaque-alias paths are supported:
 - `/3p-tune-in/tune_in/ppa/index-cmaf.m3u8` — master playlist. Prefer this
   provider-issued URL as the playback entrypoint where permitted: it contains
   signed child URLs for 64/256 kbps and a backup host.

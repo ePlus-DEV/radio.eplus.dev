@@ -8,7 +8,7 @@
         <template v-else-if="streamError">
           <span class="truncate text-rose-500">{{ $t('alert.stream_error') }}</span>
         </template>
-        <span v-else-if="waiting" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t(hasPlayedCurrentSource ? 'recovery.buffering' : 'player.connecting') }}</span>
+        <span v-else-if="waiting || resolvingGlobalSelection" class="inline-flex items-center gap-1.5"><span class="h-1 w-1 animate-pulse rounded-full bg-rose-500"></span>{{ $t(waiting && hasPlayedCurrentSource ? 'recovery.buffering' : 'player.connecting') }}</span>
         <span v-else-if="!hasPlayableSource">{{ $t('player.choose_station') }}</span>
         <span v-if="sleepRemaining" class="shrink-0 tabular-nums">· {{ $t('player.sleep_remaining', { minutes: sleepRemaining }) }}</span>
       </div>
@@ -49,7 +49,7 @@
             </UTooltip>
           </span>
           <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
-            <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
+            <UIcon v-if="waiting || resolvingGlobalSelection" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
           <span v-if="canNavigateStations" class="hidden sm:inline-flex">
@@ -107,7 +107,7 @@
         <p v-if="nowPlayingArtist" dir="auto" class="truncate text-xs text-[var(--radio-text-muted)]">{{ nowPlayingArtist }}</p>
       </div>
       <UButton class="h-12 w-12 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 hover:bg-rose-400" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
-        <UIcon v-if="waiting" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
+        <UIcon v-if="waiting || resolvingGlobalSelection" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
@@ -183,6 +183,7 @@
 import { useListeningStore } from "~/stores/listening";
 import { useListeningDurationStore } from "~/stores/listeningDuration";
 import { createListeningDurationTracker } from "~/utils/listening-duration.mjs";
+import { createListeningDurationClock, shouldResumeListeningAfterRestore } from "~/utils/listening-duration-clock.mjs";
 import { usePlaybackStore } from "~/stores/playback";
 import { useListenerPreferencesStore } from "~/stores/listenerPreferences";
 import { shouldReconnectToLive, safeLiveSyncPosition } from "~/utils/listener-preferences.mjs";
@@ -195,9 +196,9 @@ import {
 } from "~/utils/radio-source-plan.mjs";
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
-import { buildRadioMediaMetadata } from "~/utils/radio-media-session.mjs";
+import { createRadioMediaSession } from "~/utils/radio-media-session.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
-import { playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
+import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
@@ -260,6 +261,7 @@ const emit = defineEmits<{
 
 const $store = useMainStore();
 const playback = usePlaybackStore();
+const currentRoute = useRoute();
 const preferences = useListenerPreferencesStore();
 const listening = useListeningStore();
 listening.hydrate();
@@ -268,12 +270,15 @@ const favoriteActive = computed(() => listening.library.favorites.some((item: { 
 const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
 const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
-const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
-const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value ? (hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
+// A Global station can be shown while its first HLS URL is still resolving.
+// This UI-only hint must never mark audio as playing or preload other streams.
+const resolvingGlobalSelection = computed(() => !props.stationUrl && Boolean(playback.pendingGlobalRadio));
+const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
+const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
   if (streamError.value) return "bg-red-500/10 text-red-700 dark:text-red-300";
-  if (!online.value || !hasPlayableSource.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
-  if (waiting.value) return "bg-amber-500/10 text-amber-700 dark:text-amber-300";
+  if (!online.value) return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
+  if (waiting.value || resolvingGlobalSelection.value) return "bg-amber-500/10 text-amber-700 dark:text-amber-300";
   if (playing.value) return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300";
   return "bg-[var(--radio-surface-soft)] text-[var(--radio-text-muted)]";
 });
@@ -308,9 +313,20 @@ const listeningDurationTracker = createListeningDurationTracker({
     });
   },
 });
-let durationInterval: ReturnType<typeof setInterval> | null = null;
-let durationTickCount = 0;
+const durationClock = createListeningDurationClock({
+  flush: () => listeningDurationTracker.flush(),
+  preview: () => listeningDuration.setLivePreview(
+    listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs,
+  ),
+});
+const syncDurationClock = (): void => {
+  durationClock.sync({
+    playing: Boolean(listeningDuration.enabled && listeningDurationTracker.activeUrl),
+    statsVisible: currentRoute.path === '/library' && currentRoute.hash === '#stats',
+  });
+};
 const stopListeningDuration = () => {
+  durationClock.stop();
   listeningDurationTracker.stop();
   listeningDuration.setLivePreview('', 0);
 };
@@ -344,7 +360,7 @@ const systemVolumeOnly = ref(false);
 const mobileQueueOpen = ref(false);
 const playerCompact = ref(false);
 const playerMini = toRef(playback, 'playerMini');
-const playerStatusVisible = computed(() => streamError.value || !online.value || waiting.value || !hasPlayableSource.value || Boolean(sleepRemaining.value));
+const playerStatusVisible = computed(() => streamError.value || !online.value || waiting.value || resolvingGlobalSelection.value || !hasPlayableSource.value || Boolean(sleepRemaining.value));
 const togglePlayerCompact = (): void => {
   playerCompact.value = !playerCompact.value;
   if (import.meta.client) localStorage.setItem('radio:player-compact', playerCompact.value ? '1' : '0');
@@ -1174,50 +1190,23 @@ const navigateStation = (offset: -1 | 1): void => {
 // Media Session integrates live radio with iOS lock-screen / Control Center
 // metadata and headset controls. Track controls switch STATIONS, never songs:
 // an individual song cannot be skipped in a linear live broadcast.
-const mediaSessionActions = ['play', 'pause', 'nexttrack', 'previoustrack', 'seekforward', 'seekbackward'] as const;
-const updateMediaSession = (): void => {
-  if (!import.meta.client || !('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
-  const details = buildRadioMediaMetadata({
-    title: nowPlayingTitle.value,
-    artist: nowPlayingArtist.value,
-    station: props.streamName,
-    artwork: nowPlayingArtwork.value,
-    fallbackArtwork: props.thumb,
-  }, window.location.origin);
-  navigator.mediaSession.metadata = new MediaMetadata(details);
-  navigator.mediaSession.playbackState = playing.value ? 'playing' : 'paused';
-};
-
-const registerMediaSession = (): void => {
-  if (!('mediaSession' in navigator)) return;
-  const handlers = {
+const radioMediaSession = createRadioMediaSession({
+  getEnvironment: () => import.meta.client ? {
+    session: 'mediaSession' in navigator ? navigator.mediaSession : null,
+    Metadata: typeof MediaMetadata === 'undefined' ? null : MediaMetadata,
+    origin: window.location.origin,
+  } : {},
+  getDetails: () => ({
+    title: nowPlayingTitle.value, artist: nowPlayingArtist.value, station: props.streamName,
+    artwork: nowPlayingArtwork.value, fallbackArtwork: props.thumb, playing: playing.value,
+  }),
+  actions: {
     play: () => { void onPlay(); },
     pause: () => onPause(),
-    nexttrack: () => navigateStation(1),
-    previoustrack: () => navigateStation(-1),
-    // iOS may expose ±10s controls for live audio instead of track buttons.
-    // They cannot seek the station stream, so use them to switch stations too.
-    seekforward: () => navigateStation(1),
-    seekbackward: () => navigateStation(-1),
-  } as const;
-  for (const action of mediaSessionActions) {
-    try {
-      navigator.mediaSession.setActionHandler(action, handlers[action]);
-    } catch {
-      // WebKit versions may support metadata but not every hardware action.
-    }
-  }
-  // Linear live streams do not have a meaningful timeline to seek to.
-  try { navigator.mediaSession.setActionHandler('seekto', null); } catch { /* unsupported */ }
-};
-
-const clearMediaSession = (): void => {
-  if (!('mediaSession' in navigator)) return;
-  for (const action of mediaSessionActions) {
-    try { navigator.mediaSession.setActionHandler(action, null); } catch { /* unsupported */ }
-  }
-  navigator.mediaSession.metadata = null;
-};
+    next: () => navigateStation(1),
+    previous: () => navigateStation(-1),
+  },
+});
 
 const toggleMute = (): void => {
   const media = mediaElement.value;
@@ -1274,11 +1263,13 @@ const flushHlsSongMetadata = (): void => {
 const onMediaPlaying = (): void => {
   // A queued "playing" event can arrive after the user has paused or after
   // a failed/stopped source. Never let it resurrect playback or pollute history.
-  if (userPaused.value || !hasPlayableSource.value || !activeResolvedSrc || !playback.station) return;
+  if (!isCurrentMediaPlaying({ media: mediaElement.value, userPaused: userPaused.value,
+    hasPlayableSource: hasPlayableSource.value, activeSource: activeResolvedSrc, station: playback.station })) return;
   listening.remember(playback.station, 'play', true);
   if (listeningDuration.enabled) {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
+    syncDurationClock();
   }
   clearReconnectTimer();
   clearFallbackProbeTimer();
@@ -1402,7 +1393,7 @@ watch([playing, waiting], ([isPlaying, isWaiting]) => {
 // keep lock-screen metadata synchronized without restarting playback.
 watch(
   [nowPlayingTitle, nowPlayingArtist, nowPlayingArtwork, () => props.streamName, playing],
-  updateMediaSession,
+  radioMediaSession.update,
   { flush: 'post' },
 );
 
@@ -1461,6 +1452,7 @@ watch(() => props.country, () => {
 // A privacy opt-out or explicit data deletion must discard buffered time without
 // writing storage or emitting a final GA4 listening-duration report.
 const resetListeningTracking = (): void => {
+  durationClock.stop();
   listeningDurationTracker.discard();
   listeningDuration.setLivePreview('', 0);
   if (listeningDuration.enabled && playing.value && !waiting.value && !userPaused.value
@@ -1468,20 +1460,30 @@ const resetListeningTracking = (): void => {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
   }
+  syncDurationClock();
 };
 watch(() => listeningDuration.enabled, resetListeningTracking, { flush: 'sync' });
+watch(() => [currentRoute.path, currentRoute.hash], syncDurationClock);
+
+// A bfcache restore does not necessarily emit another media `playing` event.
+// Resume accounting only for media that is still playing; never call play().
+const restoreListeningAfterPageShow = (event: PageTransitionEvent): void => {
+  const media = mediaElement.value;
+  if (!shouldResumeListeningAfterRestore({ persisted: event.persisted, media,
+    trackingEnabled: listeningDuration.enabled, playing: playing.value, waiting: waiting.value,
+    userPaused: userPaused.value, streamError: streamError.value,
+    hasSource: Boolean(activeResolvedSrc), station: playback.station })) return;
+  listeningDurationTracker.start(playback.station);
+  syncDurationClock();
+};
 
 onMounted(() => {
   preferences.hydrate();
   listeningDuration.hydrate();
-  // Update the statistics dashboard every second while only persisting
-  // checkpoints every five seconds to avoid excessive localStorage writes.
-  durationInterval = setInterval(() => {
-    durationTickCount += 1;
-    if (durationTickCount % 5 === 0) listeningDurationTracker.flush();
-    listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, listeningDurationTracker.pendingMs);
-  }, 1_000);
+  // The listening-duration clock starts only after real media playback.
+  // It continues checkpointing actual background audio without a page-visibility gate.
   window.addEventListener('pagehide', stopListeningDuration);
+  window.addEventListener('pageshow', restoreListeningAfterPageShow);
   window.addEventListener('radio:listening-duration-reset', resetListeningTracking);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
@@ -1511,8 +1513,8 @@ onMounted(() => {
     } catch { /* Ignore malformed or unavailable preferences. */ }
   }
   bindMediaEvents();
-  registerMediaSession();
-  updateMediaSession();
+  radioMediaSession.mount();
+  radioMediaSession.update();
 
   const media = mediaElement.value;
   if (media) {
@@ -1536,13 +1538,13 @@ onMounted(() => {
 
 onUnmounted(() => {
   stopListeningDuration();
-  if (durationInterval) clearInterval(durationInterval);
   window.removeEventListener('pagehide', stopListeningDuration);
+  window.removeEventListener('pageshow', restoreListeningAfterPageShow);
   window.removeEventListener('radio:listening-duration-reset', resetListeningTracking);
   sleepTimer.cancel();
   document.removeEventListener("visibilitychange", checkSleepDeadline);
   window.removeEventListener("pageshow", checkSleepDeadline);
-  clearMediaSession();
+  radioMediaSession.dispose();
   sourceVersion += 1;
   clearReconnectTimer();
   clearFallbackProbeTimer();
