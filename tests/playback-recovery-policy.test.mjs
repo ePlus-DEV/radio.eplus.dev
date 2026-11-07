@@ -70,6 +70,26 @@ test('MP3, AAC and HLS source plans preserve ordering, no unsafe HLS proxy and s
   assert.equal(playbackWatchdogAction(stalled({ sourceCount: plan.length, attemptCount: MAX_STREAM_ATTEMPTS })), 'stop');
 });
 
+test('play() promise resolution never impersonates the browser playing event', async () => {
+  const player = await read('components/player/Player.vue');
+  const promiseHandler = player.split('const tryPlay = async (): Promise<void> => {')[1]?.split('const startFallbackProbe = (): void => {')[0];
+  assert.ok(promiseHandler, 'play() handler exists');
+  assert.match(promiseHandler, /await media\.play\(\)/);
+  assert.doesNotMatch(promiseHandler, /onMediaPlaying\(\)/,
+    'a resolved play promise must not create a synthetic playing event or listening time');
+  assert.doesNotMatch(promiseHandler, /HAVE_CURRENT_DATA|hasDecodedAudio/,
+    'buffered samples alone are not evidence that live playback started');
+  assert.match(promiseHandler, /if \(playing\.value && !media\.paused && !media\.ended\) return;/,
+    'a real playing event may precede promise completion and its state must be preserved');
+  assert.match(promiseHandler, /pendingAutoPlay\.value = true;[\s\S]*?waiting\.value = true;[\s\S]*?startFallbackProbe\(\)/,
+    'without a playing event keep bounded startup recovery active');
+  const onPlaying = player.split('const onMediaPlaying = (): void => {')[1]?.split('const onMediaWaiting')[0];
+  assert.match(onPlaying, /listeningDurationTracker\.start\(playback\.station\)/,
+    'listening time still starts on an actual playing event');
+  assert.match(onPlaying, /playing\.value = true;/);
+  assert.match(onPlaying, /clearFallbackProbeTimer\(\)/);
+});
+
 test('player keeps one watchdog through loading, canplay and repeated waiting events', async () => {
   const player = await read('components/player/Player.vue');
   assert.match(player, /if \(fallbackProbeTimer \|\| userPaused\.value/);
