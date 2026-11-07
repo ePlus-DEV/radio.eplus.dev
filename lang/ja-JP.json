@@ -277,7 +277,11 @@
     "inferred_url": "URLから推測（未検証）",
     "catalog_reported": "カタログ記載値（未測定）",
     "kbps": "{count} kbps",
-    "disclaimer": "カタログの参考情報であり、配信状況や再生の保証ではありません。実際のコーデックやビットレートは異なる場合があります。"
+    "disclaimer": "カタログの参考情報であり、配信状況や再生の保証ではありません。実際のコーデックやビットレートは異なる場合があります。",
+    "category": "ジャンル",
+    "language": "言語",
+    "homepage": "ウェブサイト",
+    "homepage_catalog": "カタログ掲載のリンク（未検証）"
   },
   "collections": {
     "title": "コレクション",
