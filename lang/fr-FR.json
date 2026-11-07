@@ -277,7 +277,11 @@
     "inferred_url": "Déduit de l’URL (non vérifié)",
     "catalog_reported": "Déclaré dans le catalogue (non mesuré)",
     "kbps": "{count} kb/s",
-    "disclaimer": "Ces données sont indicatives : elles ne garantissent pas que le flux fonctionne. Codec et débit réels peuvent varier."
+    "disclaimer": "Ces données sont indicatives : elles ne garantissent pas que le flux fonctionne. Codec et débit réels peuvent varier.",
+    "category": "Catégorie",
+    "language": "Langue",
+    "homepage": "Site web",
+    "homepage_catalog": "Lien indiqué dans le catalogue (non vérifié)"
   },
   "collections": {
     "title": "Collections",
