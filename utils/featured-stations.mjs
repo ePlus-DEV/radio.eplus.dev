@@ -34,7 +34,7 @@ export const HOMEPAGE_FEATURED_STATION_PATHS = Object.freeze([
   ...VIETNAM_FEATURED_STATION_IDS.slice(0, 1).map(id => `asia/viet-nam/${id}`),
   'europe/united-kingdom/heart-uk',
   'asia/singapore/power',
-  ...VIETNAM_FEATURED_STATION_IDS.slice(1).map(id => `asia/viet-nam/${id}`),
+  ...VIETNAM_FEATURED_STATION_IDS.slice(1).filter(id => id !== 'rap-viet-radio-zing-mp3').map(id => `asia/viet-nam/${id}`),
 ]);
 
 export function selectHomepageFeaturedStations(catalogs) {
@@ -45,4 +45,16 @@ export function selectHomepageFeaturedStations(catalogs) {
     if (!meta || !meta.title || !/^https?:\/\//i.test(String(meta.stream || ''))) return [];
     return [{ area, country, id, path, meta }];
   });
+}
+
+// Global stations use provider metadata, not a fabricated geographic stream.
+export function insertHolidayFeaturedStation(stations, provider) {
+  const holiday = provider?.stations?.find(station => station.id === 'apple-music-holiday-hits');
+  if (!holiday?.title || !holiday?.listen_url) return stations;
+  const result = [...stations];
+  result.splice(Math.min(3, result.length), 0, {
+    id: holiday.id, title: holiday.title, image: holiday.image || '/brand/onair-mark.svg',
+    url: '/global-radio/apple-music/' + holiday.id,
+  });
+  return result;
 }
