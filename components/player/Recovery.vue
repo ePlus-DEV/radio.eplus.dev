@@ -13,9 +13,9 @@
       <UDropdownMenu v-if="online && sourceItems.length > 1" :items="sourceItems" :content="{ side: 'top', align: 'start' }" :ui="{ content: 'max-w-[calc(100vw-2rem)]' }">
         <UButton color="neutral" variant="outline" class="min-h-11">{{ $t('player.source') }}</UButton>
       </UDropdownMenu>
-      <a v-if="reportUrl && online" :href="reportUrl" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-rose-700 underline-offset-4 hover:underline dark:text-rose-300">{{ $t('recovery.report') }}</a>
+      <a v-if="reportUrl && online && (health === 'exhausted' || health === 'unsupported')" :href="reportUrl" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-rose-700 underline-offset-4 hover:underline dark:text-rose-300">{{ $t('recovery.report') }}</a>
     </div>
-    <p v-if="health === 'exhausted' || health === 'unsupported'" class="mt-2 text-xs text-[var(--radio-text-muted)]">{{ $t('recovery.report_hint') }}</p>
+    <p v-if="reportUrl && online && (health === 'exhausted' || health === 'unsupported')" class="mt-2 text-xs text-[var(--radio-text-muted)]">{{ $t('recovery.report_hint') }}</p>
   </div>
 </template>
 <script setup lang="ts">
