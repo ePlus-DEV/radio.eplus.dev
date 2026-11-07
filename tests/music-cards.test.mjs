@@ -15,8 +15,8 @@ test("music cards use responsive square artwork without removing navigation", as
     assert.match(source, /<NuxtLink/);
     assert.match(source, /loading="lazy"/);
   }
-  assert.match(css, /\\.radio-card-compact-country-art\\s*\\{[^}]*sm:aspect-\\[5\\/4\\][^}]*lg:aspect-square/);
-  assert.match(css, /\\.radio-card-compact-station-art\\s*\\{[^}]*sm:aspect-square/);
+  assert.ok(css.includes(".radio-card-compact-country-art { @apply") && css.includes("sm:aspect-[5/4] sm:p-4 lg:aspect-square"));
+  assert.ok(css.includes(".radio-card-compact-station-art { @apply") && css.includes("sm:aspect-square sm:p-4"));
   assert.match(css, /focus-visible:ring-rose-500/);
 });
 
