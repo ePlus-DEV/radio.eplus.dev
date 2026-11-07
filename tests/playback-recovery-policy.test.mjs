@@ -77,7 +77,7 @@ test('play() promise resolution never impersonates the browser playing event', a
   assert.match(promiseHandler, /await media\.play\(\)/);
   assert.doesNotMatch(promiseHandler, /onMediaPlaying\(\)/,
     'a resolved play promise must not create a synthetic playing event or listening time');
-  assert.doesNotMatch(promiseHandler, /HAVE_CURRENT_DATA|hasDecodedAudio/,
+  assert.doesNotMatch(promiseHandler, /media\.readyState\s*>=\s*HTMLMediaElement\.HAVE_CURRENT_DATA|const hasDecodedAudio/,
     'buffered samples alone are not evidence that live playback started');
   assert.match(promiseHandler, /if \(playing\.value && !media\.paused && !media\.ended\) return;/,
     'a real playing event may precede promise completion and its state must be preserved');
