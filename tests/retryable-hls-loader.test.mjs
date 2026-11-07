@@ -59,7 +59,7 @@ test('invalid module shape is rejected rather than permanently cached', async ()
 test('Player uses the retryable lazy module loader, preserving existing bounded fallback', async () => {
   const player = await readFile(new URL('../components/player/Player.vue', import.meta.url), 'utf8');
   assert.match(player, /createRetryableHlsLoader\(\(\) => import\(["']hls\.js["']\)\)/);
-  assert.match(player, /const Hls = await ensureHls\(\)/);
+  assert.match(player, /(?:const Hls|Hls) = await ensureHls\(\)/);
   assert.match(player, /if \(version !== sourceVersion \|\| !mediaElement\.value\) return;/);
   assert.match(player, /catch \(error\) \{[\s\S]*?scheduleReconnect\(\);/);
   assert.doesNotMatch(player, /^import .* from ["']hls\.js["']/m, 'HLS bundle must stay lazy');

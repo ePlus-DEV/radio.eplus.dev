@@ -277,7 +277,11 @@
     "inferred_url": "Suggested by the stream URL (not verified)",
     "catalog_reported": "Reported in catalog (not measured)",
     "kbps": "{count} kbps",
-    "disclaimer": "These are catalog hints, not a live check or a guarantee that the stream works. The actual codec and bitrate may differ."
+    "disclaimer": "These are catalog hints, not a live check or a guarantee that the stream works. The actual codec and bitrate may differ.",
+    "category": "Category",
+    "language": "Language",
+    "homepage": "Website",
+    "homepage_catalog": "Listed in catalog (not independently verified)"
   },
   "collections": {
     "title": "Collections",

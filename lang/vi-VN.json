@@ -277,7 +277,11 @@
     "inferred_url": "Suy đoán từ địa chỉ nguồn (chưa xác minh)",
     "catalog_reported": "Khai báo trong danh mục (chưa đo kiểm)",
     "kbps": "{count} kbps",
-    "disclaimer": "Các thông tin này chỉ mang tính tham khảo, không xác nhận đài đang hoạt động. Codec và bitrate thực tế có thể khác."
+    "disclaimer": "Các thông tin này chỉ mang tính tham khảo, không xác nhận đài đang hoạt động. Codec và bitrate thực tế có thể khác.",
+    "category": "Thể loại",
+    "language": "Ngôn ngữ",
+    "homepage": "Website",
+    "homepage_catalog": "Liên kết từ danh mục (chưa xác minh độc lập)"
   },
   "collections": {
     "title": "Bộ sưu tập",
