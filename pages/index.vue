@@ -11,7 +11,12 @@
     </section>
     <section id="featured-radio" class="scroll-mt-24">
       <div class="mb-4 flex items-center justify-between"><h2 class="text-lg font-semibold">{{ $t('home.featured') }}</h2><span class="text-xs text-[var(--radio-text-muted)]">{{ $t('home.start_listening') }}</span></div>
-      <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-url="playback.station?.url" />
+      <PanelFeaturedStations @select-station="playFeatured" :stations="featuredStations" :active-station-url="playback.station?.url"
+        :pending-station-id="pendingStationId" :unavailable-station-id="canPlayApple ? '' : holidayId" />
+      <p v-if="resolverError || !canPlayApple" role="status" class="mt-2 text-sm text-amber-700 dark:text-amber-300">
+        {{ $t('global_radio.resolver_unavailable') }}
+        <NuxtLink :to="`/global-radio/apple-music/${holidayId}`" class="underline">{{ $t('global_radio.title') }}</NuxtLink>
+      </p>
     </section>
     <ClientOnly><PanelSurpriseRadio /></ClientOnly>
     <ClientOnly><PanelResumeCard /><PanelForYou /><PanelListeningLibrary compact /></ClientOnly>
@@ -45,7 +50,7 @@ import type { RadioCatalogEntry, RadioStationOption } from "~/types/radio";
 import { usePlaybackStore } from "~/stores/playback";
 import { useListeningStore } from "~/stores/listening";
 import { createPlaybackStation } from "~/utils/playback-station.mjs";
-import { HOMEPAGE_FEATURED_STATION_PATHS, selectHomepageFeaturedStations } from "~/utils/featured-stations.mjs";
+import { HOMEPAGE_FEATURED_STATION_PATHS, selectHomepageFeaturedStations, insertHolidayFeaturedStation } from "~/utils/featured-stations.mjs";
 import { buildCollectionPageSchema } from "~/utils/seo-structured-data.mjs";
 
 const siteAssetUrl = useSiteAssetUrl();
@@ -57,6 +62,10 @@ const siteUrl = computed(() =>
 );
 const playback = usePlaybackStore();
 const listening = useListeningStore();
+const holidayId = 'apple-music-holiday-hits';
+const { data: appleProvider } = await useAppleMusicProvider();
+const { enabled: canPlayApple, play: playApple, pendingStationId, error: resolverError } =
+  useAuthorizedGlobalRadioPlayback(() => appleProvider.value?.stations || []);
 // Load only curated stations into the Nuxt payload, not entire country catalogs.
 const featuredCountries = [...new Set(HOMEPAGE_FEATURED_STATION_PATHS.map(path => path.split('/').slice(0, 2).join('/')))];
 const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalogs', async () => {
@@ -77,9 +86,11 @@ const { data: featuredCatalogs } = await useAsyncData('homepage-featured-catalog
   return Object.fromEntries(featuredCountries.map((country, index) => [country, catalogs[index]])) as Record<string, Record<string, RadioCatalogEntry>>;
 });
 const featuredEntries = computed(() => selectHomepageFeaturedStations(featuredCatalogs.value || {}));
-const featuredStations = computed<RadioStationOption[]>(() => featuredEntries.value.map(({ area, country, id, meta }) => ({
-  id, title: meta.title, image: meta.features || String(runtimeConfig.public.placeholderStation), url: `/${area}/${country}/${id}`,
-})));
+const featuredStations = computed<RadioStationOption[]>(() => insertHolidayFeaturedStation(
+  featuredEntries.value.map(({ area, country, id, meta }) => ({
+    id, title: meta.title, image: meta.features || String(runtimeConfig.public.placeholderStation), url: `/${area}/${country}/${id}`,
+  })), appleProvider.value,
+));
 
 const areaItems = computed(() =>
   Object.entries(worldData).map(([key, countries]) => ({
@@ -138,6 +149,11 @@ useSeoMeta({
 });
 
 const playFeatured = (station: RadioStationOption): void => {
+  if (station.url === `/global-radio/apple-music/${holidayId}`) {
+    const holiday = appleProvider.value?.stations.find(item => item.id === holidayId);
+    if (holiday) void playApple(holiday);
+    return;
+  }
   const selected = featuredEntries.value.find(entry => `/${entry.path}` === station.url);
   if (!selected) return;
 

@@ -38,6 +38,7 @@ import {
   HOMEPAGE_FEATURED_STATION_PATHS,
   selectVietnamFeaturedStations,
   selectHomepageFeaturedStations,
+  insertHolidayFeaturedStation,
 } from "../utils/featured-stations.mjs";
 
 test("Media Session uses song artwork and details before station logo", () => {
@@ -92,9 +93,9 @@ test("Homepage featured radio includes Heart UK and Power 98 Love Songs with uni
     "europe/united-kingdom": JSON.parse(uk),
     "asia/singapore": JSON.parse(sg),
   });
-  assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, VIETNAM_FEATURED_STATION_IDS.length + 2);
-  assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, 10);
-  assert.equal(featured.length, 10);
+  assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, VIETNAM_FEATURED_STATION_IDS.length + 1);
+  assert.equal(HOMEPAGE_FEATURED_STATION_PATHS.length, 9);
+  assert.equal(featured.length, 9);
   assert.deepEqual(featured.map(entry => entry.path), [...HOMEPAGE_FEATURED_STATION_PATHS]);
   assert.equal(featured[0].path, "asia/viet-nam/vov-gt-hcm");
   assert.equal(featured.find(entry => entry.id === "heart-uk")?.meta.title, "Heart UK");
@@ -195,4 +196,30 @@ test('Media Session controller synchronizes metadata and owns handler lifecycle'
 test('Media Session controller tolerates unavailable browser APIs', () => {
   const controller = createRadioMediaSession({ getEnvironment: () => ({}), getDetails: () => { throw new Error('should not read details'); }, actions: {} });
   assert.doesNotThrow(() => { controller.mount(); controller.update(); controller.dispose(); });
+});
+
+test('homepage replaces Rap Viet with Holiday Hits using public provider metadata', async () => {
+  const provider = JSON.parse(await readFile('public/catalog/providers/apple-music.json', 'utf8'));
+  const country = [
+    { id: 'vov', title: 'VOV', url: '/asia/viet-nam/vov' },
+    { id: 'heart', title: 'Heart', url: '/europe/united-kingdom/heart' },
+    { id: 'power', title: 'Power', url: '/asia/singapore/power' },
+    { id: 'edm', title: 'EDM', url: '/asia/viet-nam/edm' },
+  ];
+  const items = insertHolidayFeaturedStation(country, provider);
+  assert.equal(items[3].id, 'apple-music-holiday-hits');
+  assert.equal(items[3].url, '/global-radio/apple-music/apple-music-holiday-hits');
+  assert.equal(items[3].image, '/img/global-radio/apple-music-holiday-hits.png');
+  assert.ok(!HOMEPAGE_FEATURED_STATION_PATHS.some(path => path.includes('rap-viet-radio-zing-mp3')));
+  assert.equal(items.length, country.length + 1);
+  assert.deepEqual(insertHolidayFeaturedStation(country, { stations: [] }), country);
+  assert.ok(!JSON.stringify(items).includes('accessKey'));
+});
+
+test('homepage sends Holiday Hits to the existing Global playback resolver', async () => {
+  const home = await readFile('pages/index.vue', 'utf8');
+  assert.match(home, /useAuthorizedGlobalRadioPlayback/);
+  assert.match(home, /if \(holiday\) void playApple\(holiday\)/);
+  assert.match(home, /pendingStationId/);
+  assert.match(home, /resolverError/);
 });
