@@ -1,6 +1,6 @@
 # Custom radio streams: phased MVP and safety gates (#350)
 
-This first PR is a **data-model-only foundation**, not a user-facing custom-stream player. It does not publish a form, call a remote API, or cause playback.
+PR #430 established the **data-model foundation**; the subsequent Library UI PR introduces local add/edit/delete and JSON import/export. **Neither phase enables playback yet.** Neither calls a remote API, proxies a custom URL, or starts audio.
 
 ## Planned user flow
 
@@ -21,10 +21,10 @@ This first PR is a **data-model-only foundation**, not a user-facing custom-stre
 ## Phase gates
 
 - [x] Pure URL validator, bounded local collection, stable versioned import/export model, create/edit/delete helpers and safety tests
-- [ ] Client-only persistence integration using a separate localStorage key; do not migrate/mutate favorites or listening history
-- [ ] Accessible Library add/edit/delete/import/export UI, explicit delete confirmation, all seven locales and mobile themes
+- [x] Client-only localStorage persistence with cross-tab updates, damaged-data backup/reset, no favorites/history changes
+- [x] Accessible Library add/edit/delete/import/export UI, explicit delete confirmation, all seven locales and semantic theme tokens
 - [ ] Playback integration with the existing single player and bounded recovery; never proxy custom streams
 - [ ] Browser QA on Safari/iOS, Android and desktop for MP3/AAC/HLS, CORS/mixed content, reload and network recovery
 - [ ] Full CI, PR Preview, SEO/noindex/GA4 and Pages footprint checks on staging, separate reviewed production release
 
-This document does not claim any real custom stream has been verified or playable. Supabase, account sync and native app implementation are out of scope.
+The UI stores user-entered URLs locally but intentionally has no Play button until the reviewed single-player integration is complete. No real custom stream has been verified or claimed playable. Supabase, account sync and native app implementation are out of scope.
