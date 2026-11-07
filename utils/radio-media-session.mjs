@@ -48,3 +48,25 @@ export function registerRadioMediaActions(session, { play, pause, next, previous
     session.metadata = null;
   };
 }
+
+/** Own the browser Media Session independently from the audio source lifecycle. */
+export function createRadioMediaSession({ getEnvironment, getDetails, actions }) {
+  let cleanup = null;
+  return {
+    mount() {
+      const { session } = getEnvironment();
+      if (session && !cleanup) cleanup = registerRadioMediaActions(session, actions);
+    },
+    update() {
+      const { session, Metadata, origin } = getEnvironment();
+      if (!session || !Metadata) return;
+      const { playing, ...details } = getDetails();
+      session.metadata = new Metadata(buildRadioMediaMetadata(details, origin));
+      session.playbackState = playing ? 'playing' : 'paused';
+    },
+    dispose() {
+      cleanup?.();
+      cleanup = null;
+    },
+  };
+}

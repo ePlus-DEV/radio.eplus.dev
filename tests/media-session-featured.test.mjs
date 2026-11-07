@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { buildRadioMediaMetadata, registerRadioMediaActions } from "../utils/radio-media-session.mjs";
+import { buildRadioMediaMetadata, registerRadioMediaActions, createRadioMediaSession } from "../utils/radio-media-session.mjs";
 
 test('hardware actions navigate stations and unsupported actions do not prevent cleanup', () => {
   const actions = new Map();
@@ -168,6 +168,31 @@ test("Player registers iOS track commands as station navigation", async () => {
   const source = await readFile("components/player/Player.vue", "utf8");
   assert.match(source, /next:\s*\(\) => navigateStation\(1\)/);
   assert.match(source, /previous:\s*\(\) => navigateStation\(-1\)/);
-  assert.match(source, /new MediaMetadata\(details\)/);
+  assert.match(source, /radioMediaSession\.update/);
   assert.match(source, /watch\([\s\S]*?nowPlayingTitle, nowPlayingArtist, nowPlayingArtwork/);
+});
+
+test('Media Session controller synchronizes metadata and owns handler lifecycle', () => {
+  const handlers = new Map();
+  const session = { setActionHandler: (action, handler) => handlers.set(action, handler) };
+  let playing = false; let title = 'First'; let next = 0;
+  const controller = createRadioMediaSession({
+    getEnvironment: () => ({ session, Metadata: class { constructor(value) { Object.assign(this, value); } }, origin: 'https://radio.eplus.dev' }),
+    getDetails: () => ({ title, station: 'Radio', playing }),
+    actions: { play() {}, pause() {}, next: () => next++, previous() {} },
+  });
+  controller.mount(); controller.mount(); controller.update();
+  assert.equal(session.metadata.title, 'First');
+  assert.equal(session.playbackState, 'paused');
+  playing = true; title = 'Second'; controller.update();
+  assert.equal(session.metadata.title, 'Second');
+  assert.equal(session.playbackState, 'playing');
+  handlers.get('nexttrack')(); assert.equal(next, 1);
+  controller.dispose(); controller.dispose();
+  assert.equal(session.metadata, null); assert.equal(handlers.get('nexttrack'), null);
+});
+
+test('Media Session controller tolerates unavailable browser APIs', () => {
+  const controller = createRadioMediaSession({ getEnvironment: () => ({}), getDetails: () => { throw new Error('should not read details'); }, actions: {} });
+  assert.doesNotThrow(() => { controller.mount(); controller.update(); controller.dispose(); });
 });
