@@ -1,0 +1,2 @@
+# GitHub reads issue templates from the default main branch after release.
+blank_issues_enabled: false
