@@ -34,6 +34,9 @@ See [GITHUB_PAGES.md](./GITHUB_PAGES.md) and [SEPARATE_IMAGE_RELEASES.md](./SEPA
 
 ## Mandatory direct release flow and completion checks (2026-11-07)
 
+The trusted publisher re-checks the branch HEAD **both before build and immediately before the output upload**, because a 4,000+ route prerender can outlive a newer commit. An obsolete queued/running source job must skip publication rather than overwrite the latest Pages output; a successful skipped job does not prove a new deploy.
+
+
 - **Do not create release branches.** All Production promotion PRs have `staging` as the source and `main` as target. To avoid conflicts, synchronize current `main` into `staging` directly if needed before opening the release PR. CI must reject any non-`staging` PR targeting `main`; feature/fix PRs target `staging`.
 - A successful PR merge or `Deploy ePlus OnAir to GitHub Pages` *source* job means the output was generated/pushed; it does **not** establish that `radio.eplus.dev` serves it. Verify destination `onair-production-pages` commit source SHA, its **own** `pages build and deployment` workflow status = `completed/success`, and actual public homepage and representative route responses.
 - If destination deploy remains `syncing_files`, fails or times out, mark the release incomplete and fix the root cause. Issue [#413](https://github.com/ePlus-DEV/radio.eplus.dev/issues/413) documents the ~999MB/12,938-file output which timed out at 10 minutes. Preserve indexed station pages, SEO metadata and radio catalog while optimizing output. Do not rerun indefinitely or report success based only on the source workflow.

@@ -13,7 +13,9 @@ test('Apple directory reuses the exact Country card grid, Play control and separ
   assert.match(shared, /grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5/);
   assert.match(shared, /:prefetch="false"/);
   assert.match(shared, /<CountryMarquee :text="station\.title" \/>/);
-  assert.match(shared, /h-11 w-11/);
+  assert.match(shared, /radio-card-compact-station-play/);
+  const css = await read('assets/css/main.css');
+  assert.match(css, /\.radio-card-compact-station-play\s*\{\s*@apply[^;]*h-11 w-11/);
   assert.match(shared, /@click="emit\('select-station', station\)"/);
   assert.match(shared, /isPending\(station\) \? 'i-lucide-loader-circle'/);
   assert.match(page, /t\('global_radio\.eplus_play_hint'\)/);

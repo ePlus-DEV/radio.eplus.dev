@@ -1,6 +1,9 @@
 name: "Deploy ePlus OnAir to GitHub Pages"
 
 # Deploy only merged, trusted source. Never give publishing credentials to PRs.
+# A successful skipped stale job must not be treated as a public release.
+# Verify the exact branch HEAD again just before uploading generated Pages,
+# because newer changes can land while a long full-site prerender is running.
 # The integration source is staging; deprecated develop never triggers Pages publishing.
 on:
   push:
@@ -231,8 +234,17 @@ jobs:
         shell: bash
         env:
           PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+
+          # A newer staging/main commit may arrive during Nuxt prerender.
+          # Never publish an obsolete build over the newest Pages content.
+          live_sha="$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_REF_NAME" --jq '.sha')"
+          if [ "$live_sha" != "$GITHUB_SHA" ]; then
+            echo "::notice::Skip obsolete Pages upload: $GITHUB_REF_NAME is now $live_sha; this run built $GITHUB_SHA."
+            exit 0
+          fi
 
           if [ -z "$PAGES_DEPLOY_TOKEN" ]; then
             echo "::error::Missing PAGES_DEPLOY_TOKEN secret with Contents: Read and write access to both public Pages repositories."
