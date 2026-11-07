@@ -129,8 +129,9 @@ test('wire actual hls.js metadata to existing player and queue, not another stre
   assert.match(player, /extractNativeHlsId3Track\(track\.activeCues, \{ appleMusic: true \}\)/);
   assert.match(player, /detachNativeHlsMetadata\?\.\(\)/);
   assert.match(player, /hlsSongBuffer\.add\(data\?\.samples\)/);
-  assert.match(player, /media\.addEventListener\("timeupdate", flushHlsSongMetadata\)/);
-  assert.match(player, /media\.removeEventListener\("timeupdate", flushHlsSongMetadata\)/);
+  assert.match(player, /timeupdate: flushHlsSongMetadata/);
+  assert.match(player, /bindAudioMediaEvents\(media, \{/);
+  assert.match(player, /detachMediaEvents\(\);/);
   assert.match(player, /playback\.setHlsLiveTrack\(stationUrl, track\)/);
   assert.match(player, /version !== sourceVersion \|\| userPaused\.value/);
   assert.match(store, /this\.liveTrack\.source === 'hls'/);

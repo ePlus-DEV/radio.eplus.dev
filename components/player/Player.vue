@@ -197,9 +197,12 @@ import {
 import { getAdjacentStation } from "~/utils/station-navigation.mjs";
 import { createSleepTimer } from "~/utils/sleep-timer.mjs";
 import { createRadioMediaSession } from "~/utils/radio-media-session.mjs";
+import { bindAudioMediaEvents } from "~/utils/audio-media-events.mjs";
+import { createRetryableHlsLoader } from "~/utils/retryable-hls-loader.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl } from "~/utils/station-sharing.mjs";
+import { inferMime, isTextPlaylist, parsePlaylistUrls } from "~/utils/radio-playlist.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
 
@@ -377,8 +380,7 @@ const setPlayerMini = (value: boolean): void => {
 let hlsInstance: any = null;
 let detachNativeHlsMetadata: (() => void) | null = null;
 const hlsSongBuffer = createTimedHlsTrackBuffer({ appleMusic: true });
-let HlsCtor: any = null;
-let hlsImportPromise: Promise<any> | null = null;
+
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackProbeTimer: ReturnType<typeof setTimeout> | null = null;
 let stablePlaybackTimer: ReturnType<typeof setTimeout> | null = null;
@@ -541,16 +543,6 @@ const nowPlayingArtwork = computed(() => {
     props.thumb;
 });
 
-const inferMime = (url: string, fallback = "audio/mpeg"): string => {
-  const value = url.toLowerCase();
-  if (/\.m3u8(?:$|[?#])/i.test(value)) return "application/vnd.apple.mpegurl";
-  if (/\.aac(?:$|[?#])/i.test(value)) return "audio/aac";
-  if (/\.ogg(?:$|[?#])/i.test(value)) return "audio/ogg";
-  if (/\.opus(?:$|[?#])/i.test(value)) return "audio/opus";
-  if (/\.mp3(?:$|[?#])/i.test(value)) return "audio/mpeg";
-  return fallback || "audio/mpeg";
-};
-
 const isHlsSource = (source: RadioSource): boolean => {
   const type = String(source.type || "").toLowerCase();
   return (
@@ -558,29 +550,6 @@ const isHlsSource = (source: RadioSource): boolean => {
     type.includes("mpegurl") ||
     type.includes("m3u8")
   );
-};
-
-const isTextPlaylist = (url: string): boolean =>
-  /\.pls(?:$|[?#])/i.test(url) ||
-  /(?:[?&](?:output|format)=pls(?:&|$))/i.test(url) ||
-  /\.m3u(?:$|[?#])/i.test(url);
-
-const parsePlaylistUrls = (text: string): string[] => {
-  const urls = new Set<string>();
-
-  for (const line of text.split(/\r?\n/)) {
-    const value = line.trim();
-    if (!value || value.startsWith("#")) continue;
-
-    const plsMatch = value.match(/^File\d+\s*=\s*(https?:\/\/.+)$/i);
-    const candidate = plsMatch?.[1]?.trim() || value;
-
-    if (/^https?:\/\//i.test(candidate)) {
-      urls.add(candidate);
-    }
-  }
-
-  return [...urls];
 };
 
 const resolvePlaylistSource = async (
@@ -613,16 +582,9 @@ const resolvePlaylistSource = async (
   }
 };
 
-const ensureHls = async (): Promise<any> => {
-  if (HlsCtor) return HlsCtor;
-
-  hlsImportPromise ||= import("hls.js").then((module) => {
-    HlsCtor = module.default;
-    return HlsCtor;
-  });
-
-  return await hlsImportPromise;
-};
+// hls.js stays lazy. Clear only rejected imports; the source watchdog
+// remains responsible for the bounded playback retry budget.
+const ensureHls = createRetryableHlsLoader(() => import("hls.js"));
 
 const destroyHls = (): void => {
   hlsSongBuffer.clear();
@@ -677,18 +639,16 @@ const tryPlay = async (): Promise<void> => {
   try {
     await media.play();
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
-    // Resolving play() or receiving canplay does not always mean decoded
-    // audio is being delivered. Keep the watchdog armed until real playback.
-    const hasDecodedAudio = !media.paused && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA;
-    pendingAutoPlay.value = !hasDecodedAudio;
-    waiting.value = !hasDecodedAudio;
-    playing.value = hasDecodedAudio;
+    // play() resolving and HAVE_CURRENT_DATA mean that playback was allowed
+    // and a sample may be buffered, NOT that continuous live audio is audible.
+    // Only the browser's 'playing' event confirms the live state and starts
+    // listening-duration accounting. It may have arrived before this promise.
+    if (playing.value && !media.paused && !media.ended) return;
+    pendingAutoPlay.value = true;
+    waiting.value = true;
+    playing.value = false;
     streamError.value = false;
-    if (hasDecodedAudio && listeningDurationTracker.activeUrl !== playback.station?.url) {
-      onMediaPlaying();
-    } else if (!hasDecodedAudio) {
-      startFallbackProbe();
-    }
+    startFallbackProbe();
 
   } catch (error) {
     if (version !== sourceVersion || request !== playVersion || userPaused.value) return;
@@ -812,15 +772,25 @@ const configureHlsSource = async (
   // Chromium can report native HLS support via canPlayType("...mpegurl")
   // while still failing on some manifests. Native HLS is the fallback for
   // browsers where hls.js/MSE is unavailable (notably Safari/iOS cases).
-  const Hls = await ensureHls();
+  let Hls: any = null;
+  let importError: unknown = null;
+  try {
+    Hls = await ensureHls();
+  } catch (error) {
+    // Dynamic imports can fail on an interrupted connection. If this
+    // browser natively decodes HLS, it can still play the original stream.
+    // Without native support, rethrow for the existing bounded source retry.
+    importError = error;
+  }
   if (version !== sourceVersion || !mediaElement.value) return;
 
-  if (!Hls.isSupported()) {
+  if (!Hls || !Hls.isSupported()) {
     const nativeHls =
       media.canPlayType("application/vnd.apple.mpegurl") ||
       media.canPlayType("application/x-mpegURL");
 
     if (!nativeHls) {
+      if (importError) throw importError;
       unsupportedSource.value = true;
       scheduleReconnect();
       return;
@@ -1343,36 +1313,30 @@ const onVolumeChange = (): void => {
   }
 };
 
+let detachMediaEvents: () => void = () => {};
 const bindMediaEvents = (): void => {
   const media = mediaElement.value;
   if (!media) return;
-
-  media.addEventListener("canplay", onMediaCanPlay);
-  media.addEventListener("playing", onMediaPlaying);
-  media.addEventListener("waiting", onMediaWaiting);
-  media.addEventListener("stalled", onMediaStalled);
-  media.addEventListener("pause", onMediaPause);
-  media.addEventListener("ended", onMediaEnded);
-  media.addEventListener("error", onMediaError);
-  media.addEventListener("volumechange", onVolumeChange);
-  // Consume ID3 at audible playback time, not when a future HLS fragment
-  // has only been downloaded/buffered.
-  media.addEventListener("timeupdate", flushHlsSongMetadata);
+  // Rebinding never duplicates listeners. The returned teardown retains the
+  // previous media node even if the ref changes during a future remount.
+  detachMediaEvents();
+  detachMediaEvents = bindAudioMediaEvents(media, {
+    canplay: onMediaCanPlay,
+    playing: onMediaPlaying,
+    waiting: onMediaWaiting,
+    stalled: onMediaStalled,
+    pause: onMediaPause,
+    ended: onMediaEnded,
+    error: onMediaError,
+    volumechange: onVolumeChange,
+    // Consume ID3 at audible playback time, not when just downloaded.
+    timeupdate: flushHlsSongMetadata,
+  });
 };
 
 const unbindMediaEvents = (): void => {
-  const media = mediaElement.value;
-  if (!media) return;
-
-  media.removeEventListener("canplay", onMediaCanPlay);
-  media.removeEventListener("playing", onMediaPlaying);
-  media.removeEventListener("waiting", onMediaWaiting);
-  media.removeEventListener("stalled", onMediaStalled);
-  media.removeEventListener("pause", onMediaPause);
-  media.removeEventListener("ended", onMediaEnded);
-  media.removeEventListener("error", onMediaError);
-  media.removeEventListener("volumechange", onVolumeChange);
-  media.removeEventListener("timeupdate", flushHlsSongMetadata);
+  detachMediaEvents();
+  detachMediaEvents = () => {};
 };
 
 watch(() => preferences.autoReconnect, (enabled) => {

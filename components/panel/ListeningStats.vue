@@ -407,13 +407,30 @@ const tooltipLeft = computed(() => {
   return `${Math.min(89, Math.max(11, percent))}%`;
 });
 let chartBounds: DOMRect | null = null;
+const invalidateChartBounds = (): void => { chartBounds = null; };
 const cacheChartBounds = (event: PointerEvent): void => {
   chartBounds = (event.currentTarget as SVGSVGElement).getBoundingClientRect();
 };
 const clearChartHover = (): void => {
-  chartBounds = null;
+  invalidateChartBounds();
   hoveredDayIndex.value = null;
 };
+
+// Cache layout reads while the pointer moves, but discard the rectangle when
+// scrolling, rotating/zooming or resizing shifts the chart under that pointer.
+// These listeners exist only while the Library statistics panel is mounted.
+onMounted(() => {
+  window.addEventListener('resize', invalidateChartBounds, { passive: true });
+  window.addEventListener('scroll', invalidateChartBounds, { capture: true, passive: true });
+  window.visualViewport?.addEventListener('resize', invalidateChartBounds, { passive: true });
+  window.visualViewport?.addEventListener('scroll', invalidateChartBounds, { passive: true });
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', invalidateChartBounds);
+  window.removeEventListener('scroll', invalidateChartBounds, true);
+  window.visualViewport?.removeEventListener('resize', invalidateChartBounds);
+  window.visualViewport?.removeEventListener('scroll', invalidateChartBounds);
+});
 const indexFromPointer = (event: PointerEvent): number | null => {
   if (!chartBounds) cacheChartBounds(event);
   const bounds = chartBounds;

@@ -37,6 +37,7 @@
 
     <ClientOnly>
       <PanelPersonalCollections v-if="active === 'all'" class="mb-4" />
+      <PanelCustomRadioStreams v-if="active === 'all'" class="mb-4" />
       <PanelFavoritesTransfer v-if="active === 'all' || active === 'favorites'" />
       <PanelListeningStats v-if="active === 'stats'" />
       <PanelListeningLibrary v-else :group="active" />
