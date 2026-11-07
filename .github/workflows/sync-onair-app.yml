@@ -1,0 +1,82 @@
+name: Propose app synchronization
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      previous_sha:
+        description: 'Previous production commit SHA'
+        required: true
+      source_sha:
+        description: 'Production commit SHA to synchronize'
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: onair-app-sync
+  cancel-in-progress: false
+jobs:
+  propose:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out web history
+        uses: actions/checkout@v4
+        with:
+          path: web
+          fetch-depth: 0
+      - name: Check sync credentials
+        env:
+          SYNC_TOKEN: ${{ secrets.ONAIR_APP_SYNC_TOKEN }}
+        run: |
+          if [ -z "$SYNC_TOKEN" ]; then
+            echo "::error::Configure ONAIR_APP_SYNC_TOKEN with access to onair-apps contents and pull requests."
+            exit 1
+          fi
+      - name: Check out application
+        uses: actions/checkout@v4
+        with:
+          repository: ePlus-DEV/onair-apps
+          ref: main
+          path: app
+          token: ${{ secrets.ONAIR_APP_SYNC_TOKEN }}
+          persist-credentials: false
+      - name: Compare production changes
+        env:
+          SYNC_BEFORE: ${{ github.event.before || inputs.previous_sha }}
+          SYNC_AFTER: ${{ github.event.after || inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          [[ "$SYNC_BEFORE" =~ ^[0-9a-f]{40}$ && "$SYNC_AFTER" =~ ^[0-9a-f]{40}$ ]]
+          git -C web merge-base --is-ancestor "$SYNC_AFTER" origin/main
+          git -C web merge-base --is-ancestor "$SYNC_BEFORE" "$SYNC_AFTER"
+          python3 web/scripts/sync-app-catalog.py
+      - name: Create review pull request
+        env:
+          GH_TOKEN: ${{ secrets.ONAIR_APP_SYNC_TOKEN }}
+          SYNC_BEFORE: ${{ github.event.before || inputs.previous_sha }}
+          SYNC_AFTER: ${{ github.event.after || inputs.source_sha }}
+        working-directory: app
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No shared changes to propose."
+            exit 0
+          fi
+          branch="sync/web-main-$SYNC_AFTER"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "A branch for this production commit already exists; not modifying it."
+            exit 0
+          fi
+          git switch -c "$branch"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add frontend/public/radio docs/sync-reports 2>/dev/null || git add -A -- frontend/public/radio docs
+          git commit -m "sync: propose catalog updates from web main"
+          git -c "http.extraheader=AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin "$branch"
+          gh pr create --repo ePlus-DEV/onair-apps --base main --head "$branch" --draft \
+            --title "Sync web production changes ${SYNC_AFTER:0:7}" \
+            --body "Production changes: https://github.com/ePlus-DEV/radio.eplus.dev/compare/$SYNC_BEFORE...$SYNC_AFTER
+
+Unchanged app catalog files are synchronized. Conflicting catalog files and shared UI/logic changes require manual review; see the sync report when present. PR validation runs without native builds."
