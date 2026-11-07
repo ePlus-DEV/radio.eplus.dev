@@ -88,7 +88,7 @@
 
 <script setup lang="ts">
 import {
-  CUSTOM_STREAMS_STORAGE_KEY, MAX_CUSTOM_STREAMS, validateCustomStream,
+  CUSTOM_STREAMS_STORAGE_KEY, MAX_CUSTOM_STREAMS,
   addCustomStream, editCustomStream, removeCustomStream,
   normalizeCustomStreams, parseCustomStreams, serializeCustomStreams,
 } from '~/utils/custom-radio-streams.mjs';
@@ -114,6 +114,7 @@ const loadLocal = (raw: string | null) => {
   if (raw === null) {
     records.value = [];
     broken.value = false;
+    error.value = '';
     rawBackup.value = '';
     return;
   }
@@ -121,8 +122,12 @@ const loadLocal = (raw: string | null) => {
   try {
     const data = JSON.parse(raw);
     if (!data || data.version !== 1 || !Array.isArray(data.streams) || raw.length > 100_000) throw new Error('invalid');
-    records.value = parseCustomStreams(raw);
+    const parsed = parseCustomStreams(raw);
+    // Never silently drop corrupt entries when the user next saves a change.
+    if (parsed.length !== data.streams.length) throw new Error('invalid-entry');
+    records.value = parsed;
     broken.value = false;
+    error.value = '';
     rawBackup.value = '';
   } catch {
     broken.value = true;
@@ -133,6 +138,8 @@ const loadLocal = (raw: string | null) => {
 };
 const onStorage = (event: StorageEvent) => {
   if (event.key !== CUSTOM_STREAMS_STORAGE_KEY && event.key !== null) return;
+  generation += 1; // Invalidate an in-flight file read on remote tab changes.
+  busy.value = false;
   editingUrl.value = '';
   title.value = '';
   streamUrl.value = '';
