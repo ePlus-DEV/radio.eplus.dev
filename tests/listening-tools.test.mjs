@@ -72,7 +72,7 @@ test('report links fail closed for unsafe paths and do not publish untrusted dia
   for (const path of ['//evil.test/a/b', '/asia/viet-nam/test?stream=secret', '/asia/../test', '/asia/viet-nam/test#fragment', 'https://evil.test/a/b/c', '/a/b']) {
     assert.equal(stationReportUrl(path, 'Some station', 'exhausted'), '');
   }
-  const title = 'Hello\\nhttps://stream.test/secret?token=abc';
+  const title = 'Hello' + String.fromCharCode(10) + 'https://stream.test/secret?token=abc';
   const report = new URL(stationReportUrl(a.url, title, 'https://secret.test/?accessKey=foo'));
   assert.equal(report.searchParams.get('title'), '[Playback] Hello');
   assert.match(report.searchParams.get('observed_state'), /unknown/);
