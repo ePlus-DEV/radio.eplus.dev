@@ -771,15 +771,25 @@ const configureHlsSource = async (
   // Chromium can report native HLS support via canPlayType("...mpegurl")
   // while still failing on some manifests. Native HLS is the fallback for
   // browsers where hls.js/MSE is unavailable (notably Safari/iOS cases).
-  const Hls = await ensureHls();
+  let Hls: any = null;
+  let importError: unknown = null;
+  try {
+    Hls = await ensureHls();
+  } catch (error) {
+    // Dynamic imports can fail on an interrupted connection. If this
+    // browser natively decodes HLS, it can still play the original stream.
+    // Without native support, rethrow for the existing bounded source retry.
+    importError = error;
+  }
   if (version !== sourceVersion || !mediaElement.value) return;
 
-  if (!Hls.isSupported()) {
+  if (!Hls || !Hls.isSupported()) {
     const nativeHls =
       media.canPlayType("application/vnd.apple.mpegurl") ||
       media.canPlayType("application/x-mpegURL");
 
     if (!nativeHls) {
+      if (importError) throw importError;
       unsupportedSource.value = true;
       scheduleReconnect();
       return;
