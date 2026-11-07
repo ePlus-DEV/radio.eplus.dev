@@ -56,8 +56,8 @@
             </p>
           </div>
           <div class="flex shrink-0 gap-1">
-            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-pencil" :aria-label="$t('custom_streams.edit') + ': ' + stream.title" @click="startEdit(stream)" />
-            <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2" :aria-label="$t('custom_streams.delete') + ': ' + stream.title" @click="deleteUrl = stream.url" />
+            <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-pencil"  :disabled="busy || broken" :aria-label="$t('custom_streams.edit') + ': ' + stream.title" @click="startEdit(stream)" />
+            <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2"  :disabled="busy || broken" :aria-label="$t('custom_streams.delete') + ': ' + stream.title" @click="deleteUrl = stream.url" />
           </div>
         </div>
         <p class="mt-2 break-all text-[11px] leading-5 text-[var(--radio-text-muted)]">{{ stream.url }}</p>
