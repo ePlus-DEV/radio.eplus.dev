@@ -98,7 +98,7 @@ jobs:
           EVENT_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
-          read -r live_base live_head live_state < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.base.ref, .head.sha, .state] | @tsv')
+          read -r live_base live_head live_state live_source < <(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '[.base.ref, .head.sha, .state, .head.ref] | @tsv')
           if [ "$live_state" != open ] || [ "$live_head" != "$EVENT_HEAD_SHA" ]; then
             echo "::notice::Skip obsolete PR run: the PR is closed or its head commit has changed."
             echo "run=false" >> "$GITHUB_OUTPUT"
@@ -111,6 +111,12 @@ jobs:
           esac
           if [ "$live_base" != "$EVENT_BASE_REF" ]; then
             echo "::error::PR was retargeted from $EVENT_BASE_REF to $live_base while this run was queued. Wait for a fresh PR synchronize run."
+            exit 1
+          fi
+          # Production promotion has exactly one valid source: actual staging.
+          # Fix conflicts on staging first; never invent a release/* branch.
+          if [ "$live_base" = main ] && [ "$live_source" != staging ]; then
+            echo "::error::Production PR must be direct staging -> main; received $live_source -> main. Sync main into staging if necessary."
             exit 1
           fi
           echo "::notice::Confirmed PR target $live_base; safe to select its CI/SEO profile."
