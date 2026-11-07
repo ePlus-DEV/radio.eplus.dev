@@ -34,6 +34,23 @@ export function stationReportUrl(path, title, reason) {
   return `https://github.com/ePlus-DEV/radio.eplus.dev/issues/new?${params}`;
 }
 
+// Create an editable email draft with public station details only.
+// Never add raw stream URLs, signed tokens, identity or listening history.
+export function stationReportEmailUrl(path, title, subject, description) {
+  const stationPage = stationShareUrl(path);
+  if (!stationPage) return '';
+  const safeTitle = String(title || '')
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/[\u0000-\u001f\u007f]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim().slice(0, 90) || 'Radio station';
+  const params = new URLSearchParams({
+    subject: String(subject || 'ePlus OnAir - Radio playback problem').slice(0, 120),
+    body: String(description || 'I cannot hear this station.').slice(0, 500) + '\n\n' + safeTitle + '\n' + stationPage,
+  });
+  return 'mailto:report@eplus.dev?' + params;
+}
+
 export async function shareStation({ url, title }, browser) {
   if (!url) return 'failed';
   if (browser.share) {

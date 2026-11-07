@@ -1,35 +1,52 @@
 <template>
-  <div v-if="health" class="rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] p-3 text-sm text-[var(--radio-text)]">
-    <p role="status" class="leading-5">{{ $t(`recovery.${health}`) }}</p>
-    <div v-if="diagnostics?.sourceCount" class="mt-2 space-y-1 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] px-3 py-2 text-xs text-[var(--radio-text-muted)]">
-      <p class="break-words">{{ $t('recovery.source_position', { index: diagnostics.sourceIndex, total: diagnostics.sourceCount }) }} · {{ diagnostics.sourceLabel }}</p>
-      <p v-if="diagnostics.retryAttempt > 0" class="tabular-nums">{{ $t('recovery.attempt', { attempt: diagnostics.retryAttempt, limit: diagnostics.maxAttempts }) }}</p>
-      <p v-if="diagnostics.failureReason" class="text-amber-700 dark:text-amber-300">{{ $t('recovery.reason_' + diagnostics.failureReason) }}</p>
-      <p v-if="diagnostics.lastPlayedAt">{{ $t('recovery.last_played', { time: diagnostics.lastPlayedAt }) }}</p>
-      <p class="text-[11px]">{{ $t('recovery.local_observation') }}</p>
-    </div>
-    <div v-if="health !== 'connecting'" class="mt-2 flex flex-wrap items-center gap-2">
-      <UButton v-if="online && playable" color="neutral" variant="soft" class="min-h-11" @click="$emit('retry')">{{ $t('player.retry') }}</UButton>
+  <div v-if="showNotice" class="rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] p-3 text-sm text-[var(--radio-text)]">
+    <p role="alert" class="leading-5">{{ $t('recovery.' + health) }}</p>
+    <div class="mt-3 flex flex-wrap items-start gap-2">
+      <UButton v-if="online && playable" color="primary" variant="soft" class="min-h-11" @click="$emit('retry')">{{ $t('player.retry') }}</UButton>
       <UDropdownMenu v-if="online && sourceItems.length > 1" :items="sourceItems" :content="{ side: 'top', align: 'start' }" :ui="{ content: 'max-w-[calc(100vw-2rem)]' }">
-        <UButton color="neutral" variant="outline" class="min-h-11">{{ $t('player.source') }}</UButton>
+        <UButton color="neutral" variant="outline" class="min-h-11">{{ $t('recovery.change_source') }}</UButton>
       </UDropdownMenu>
-      <!-- GitHub opens a user-controlled issue form; never attach stream URLs, cookies or history. -->
-      <a v-if="reportUrl && online && (health === 'exhausted' || health === 'unsupported')" :href="reportUrl" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-rose-700 underline-offset-4 hover:underline dark:text-rose-300">{{ $t('recovery.report') }}</a>
+      <details v-if="showReport" class="min-w-0">
+        <summary class="inline-flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-lg px-2 font-semibold text-rose-700 hover:underline dark:text-rose-300">
+          {{ $t('recovery.report') }}
+          <UIcon name="i-lucide-chevron-down" class="h-4 w-4" aria-hidden="true" />
+        </summary>
+        <div class="mt-1 flex flex-col gap-1 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-2">
+          <a v-if="reportEmailUrl" :href="reportEmailUrl" class="inline-flex min-h-10 items-center gap-2 rounded-md px-2 font-medium hover:bg-[var(--radio-hover)]">
+            <UIcon name="i-lucide-mail" class="h-4 w-4" aria-hidden="true" />{{ $t('recovery.report_email') }}
+          </a>
+          <a v-if="reportUrl" :href="reportUrl" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-10 items-center gap-2 rounded-md px-2 font-medium hover:bg-[var(--radio-hover)]">
+            <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />{{ $t('recovery.report_github') }}
+          </a>
+        </div>
+      </details>
     </div>
-    <p v-if="reportUrl && online && (health === 'exhausted' || health === 'unsupported')" class="mt-2 text-xs text-[var(--radio-text-muted)]">{{ $t('recovery.report_hint') }}</p>
+    <details v-if="diagnostics?.sourceCount" class="mt-2 text-xs text-[var(--radio-text-muted)]">
+      <summary class="cursor-pointer py-1">{{ $t('recovery.details') }}</summary>
+      <div class="mt-1 space-y-1 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-2">
+        <p class="break-words">{{ $t('recovery.source_position', { index: diagnostics.sourceIndex, total: diagnostics.sourceCount }) }} · {{ diagnostics.sourceLabel }}</p>
+        <p v-if="diagnostics.retryAttempt > 0" class="tabular-nums">{{ $t('recovery.attempt', { attempt: diagnostics.retryAttempt, limit: diagnostics.maxAttempts }) }}</p>
+        <p v-if="diagnostics.failureReason">{{ $t('recovery.reason_' + diagnostics.failureReason) }}</p>
+        <p v-if="diagnostics.lastPlayedAt">{{ $t('recovery.last_played', { time: diagnostics.lastPlayedAt }) }}</p>
+        <p>{{ $t('recovery.local_observation') }}</p>
+      </div>
+    </details>
   </div>
 </template>
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui';
 interface RecoveryDiagnostics {
-  sourceIndex: number;
-  sourceCount: number;
-  sourceLabel: string;
-  retryAttempt: number;
-  maxAttempts: number;
+  sourceIndex: number; sourceCount: number; sourceLabel: string;
+  retryAttempt: number; maxAttempts: number;
   failureReason: 'network' | 'decode' | 'timeout' | 'unknown' | '';
   lastPlayedAt: string;
 }
-defineProps<{ health: string; online: boolean; playable: boolean; sourceItems: DropdownMenuItem[]; reportUrl: string; diagnostics?: RecoveryDiagnostics }>();
+const props = defineProps<{
+  health: string; online: boolean; playable: boolean;
+  sourceItems: DropdownMenuItem[]; reportUrl: string; reportEmailUrl: string;
+  diagnostics?: RecoveryDiagnostics;
+}>();
 defineEmits(['retry']);
+const showNotice = computed(() => ['offline', 'exhausted', 'unsupported'].includes(props.health));
+const showReport = computed(() => props.online && ['exhausted', 'unsupported'].includes(props.health) && Boolean(props.reportEmailUrl || props.reportUrl));
 </script>
