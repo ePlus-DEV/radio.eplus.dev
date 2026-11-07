@@ -1,0 +1,59 @@
+name: "🎧 Radio playback problem"
+description: Report a station that does not play, keeps buffering, or stops unexpectedly.
+title: "[Playback] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve ePlus OnAir. This form opens a **draft**; submitting it requires a GitHub account.
+        Please do not share signed stream links, access keys, cookies, tokens, credentials, or listening history. A failure observed on your device does **not** prove the station is offline for everyone.
+  - type: input
+    id: station_url
+    attributes:
+      label: Public station page URL
+      description: Link to the ePlus OnAir station page, not the raw audio stream.
+      placeholder: https://radio.eplus.dev/asia/viet-nam/example
+    validations:
+      required: true
+  - type: textarea
+    id: observed_state
+    attributes:
+      label: What happened?
+      description: If opened from the player, a local playback state may be prefilled here. Please add a short description.
+      placeholder: Audio does not start, cuts out after 5 minutes, or keeps buffering.
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the station page.
+        2. Press Play.
+        3. Observe the error or interruption.
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      placeholder: The live stream should play and stay connected.
+    validations:
+      required: true
+  - type: input
+    id: device_browser
+    attributes:
+      label: Device, operating system, and browser (optional)
+      placeholder: iPhone / iOS / Safari, or desktop / Windows / Chrome
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional details or screenshots (optional)
+      description: Mention whether another station/source worked. Attach redacted screenshots only.
+  - type: checkboxes
+    id: safety_check
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have checked that this report contains no private URLs, credentials, tokens, cookies, or personal listening history.
+          required: true
