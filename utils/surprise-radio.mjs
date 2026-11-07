@@ -31,11 +31,17 @@ export function randomStationCandidates(stations, filters = {}) {
 export function pickRandomStation(stations, filters = {}, random = Math.random) {
   const pool = randomStationCandidates(stations, filters);
   if (!pool.length) return null;
-  // Never immediately repeat the last random station if an alternative exists.
-  const withoutPrevious = pool.length > 1
-    ? pool.filter(item => item.url !== filters.previousUrl)
-    : pool;
-  const eligible = withoutPrevious.length ? withoutPrevious : pool;
+  // A failed catalog request is evidence only for this browser session, not a
+  // permanent live-health verdict. Prefer unfailed stations when alternatives
+  // exist, but allow explicit retries when every matching station has failed.
+  const failed = new Set(Array.isArray(filters.failedUrls) ? filters.failedUrls : []);
+  const unfailed = pool.filter(item => !failed.has(item.url));
+  const candidates = unfailed.length ? unfailed : pool;
+  // Never immediately repeat the last selection if an alternative exists.
+  const withoutPrevious = candidates.length > 1
+    ? candidates.filter(item => item.url !== filters.previousUrl)
+    : candidates;
+  const eligible = withoutPrevious.length ? withoutPrevious : candidates;
   const roll = Number(random());
   const unit = Number.isFinite(roll) ? Math.min(1 - Number.EPSILON, Math.max(0, roll)) : 0;
   return eligible[Math.floor(unit * eligible.length)] || null;
