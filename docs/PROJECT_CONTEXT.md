@@ -1112,6 +1112,10 @@ The global player owns one Media Session controller. It registers headset and lo
 
 
 ## 2026-11-07 — Permanent release flow correction and incomplete Pages deploy
+## 2026-11-07 — Structured GitHub issue intake and safe radio reporting
+
+The Player recovery report link previously used plain `/issues/new?title=&body=`, which could bypass a structured issue intake. GitHub Issue Forms are now defined for playback, website bugs, station changes and feature requests. The player opens `?template=01-playback.yml` and prefills the `station_url` and `observed_state` IDs only with the public canonical page and whitelisted local status. Report controls are only visible for terminal online failures; routine buffering is not a global station outage. Contact links to website-bug and station-update forms. All seven languages explain that the issue is submitted manually on GitHub, without stream credentials or listening history. See [docs/ISSUES.md](./ISSUES.md). Never add automatic issue posting or private context.
+
 
 The only durable release branches are `staging` and `main`. Never manufacture a `release/*` branch when promoting: first reconcile any new `main` changes back into `staging`, then open a **direct `staging` → `main` PR**, validate and merge. A separate release branch during PR #412 created needless complexity despite preserving content. CI enforces direct release sources.
 
