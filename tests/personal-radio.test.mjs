@@ -99,3 +99,25 @@ test('For You UI has translations in all 7 locales', async () => {
     ]) assert.ok(typeof d.for_you[key] === 'string' && d.for_you[key].trim(), lang + ': ' + key);
   }
 });
+
+test('For You reason labels describe Favorites and Recently Played without implying that one is the other', async () => {
+  const favoriteOnly = recommendPersonalStations([
+    station('saved-only', '', '', 'viet-nam'), station('same-country', 'Rock', 'en', 'viet-nam'),
+  ], { favorites: [{ url: '/asia/viet-nam/saved-only' }], recent: [] });
+  assert.equal(favoriteOnly.items[0].reason, 'country',
+    'A country match can come from a Favorite that has never been played');
+
+  const recentOnly = recommendPersonalStations([
+    station('heard-only', 'Jazz', 'fr', 'france'), station('same-genre', 'Jazz', 'en', 'canada'),
+  ], { favorites: [], recent: [{ url: '/asia/france/heard-only' }] });
+  assert.equal(recentOnly.items[0].reason, 'genre',
+    'A genre match can come from Recently Played without a saved Favorite');
+
+  for (const language of ['en-US', 'vi-VN']) {
+    const messages = JSON.parse(await read('lang/' + language + '.json')).for_you;
+    for (const key of ['reason_genre', 'reason_language', 'reason_country']) {
+      assert.match(messages[key], language === 'vi-VN' ? /thư viện/ : /library/i,
+        'Reason labels must accurately describe both local library sources');
+    }
+  }
+});
