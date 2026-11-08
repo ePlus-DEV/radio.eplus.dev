@@ -702,7 +702,7 @@
     "report_github": "在 GitHub 回報",
     "details": "查看更多資訊",
     "email_subject": "ePlus OnAir - 電台無法播放",
-    "email_body": "我無法收聽這個電台，請協助檢查。\n\n電台資訊："
+    "email_body": "ePlus OnAir 團隊您好！\n\n我無法收聽以下電台，請協助檢查。\n\n電台：{station}\n電台頁面：{url}\n\n補充說明（選填）：\n"
   },
   "transfer": {
     "title": "移轉收藏",

@@ -702,7 +702,7 @@
     "report_github": "Signaler sur GitHub",
     "details": "Plus d'informations",
     "email_subject": "ePlus OnAir - Problème d'écoute",
-    "email_body": "Je n'arrive pas à écouter cette station. Pouvez-vous vérifier ?\n\nDétails de la station :"
+    "email_body": "Bonjour ePlus OnAir,\n\nJe n'arrive pas à écouter cette station. Pourriez-vous vérifier ?\n\nStation : {station}\nPage de la station : {url}\n\nPrécisions (facultatif) :\n"
   },
   "transfer": {
     "title": "Transférer vos favoris",

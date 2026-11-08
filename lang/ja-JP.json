@@ -702,7 +702,7 @@
     "report_github": "GitHub で報告",
     "details": "詳しい情報",
     "email_subject": "ePlus OnAir - ラジオを再生できない問題",
-    "email_body": "このラジオを聴くことができません。確認をお願いします。\n\nラジオ情報："
+    "email_body": "ePlus OnAir ご担当者様\n\n次のラジオ局を聴くことができません。ご確認をお願いします。\n\n放送局：{station}\n放送局のページ：{url}\n\n追加情報（任意）：\n"
   },
   "transfer": {
     "title": "お気に入りを移行",

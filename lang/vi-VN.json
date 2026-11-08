@@ -702,7 +702,7 @@
     "report_github": "Báo qua GitHub",
     "details": "Xem thêm thông tin",
     "email_subject": "ePlus OnAir - Báo lỗi không nghe được radio",
-    "email_body": "Tôi không nghe được đài này. Nhờ bạn kiểm tra giúp.\n\nThông tin đài:"
+    "email_body": "Xin chào ePlus OnAir,\n\nTôi không nghe được đài radio sau. Nhờ đội ngũ kiểm tra giúp.\n\nTên đài: {station}\nTrang đài: {url}\n\nMô tả thêm (nếu có):\n"
   },
   "transfer": {
     "title": "Chuyển danh sách yêu thích",

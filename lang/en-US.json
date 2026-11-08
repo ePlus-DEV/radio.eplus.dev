@@ -702,7 +702,7 @@
     "report_github": "Report on GitHub",
     "details": "More information",
     "email_subject": "ePlus OnAir - Radio playback problem",
-    "email_body": "I can't listen to this station. Could you please check it?\n\nStation details:"
+    "email_body": "Hello ePlus OnAir,\n\nI can't listen to the following radio station. Could you please check it?\n\nStation: {station}\nStation page: {url}\n\nMore details (optional):\n"
   },
   "transfer": {
     "title": "Move your favorites",

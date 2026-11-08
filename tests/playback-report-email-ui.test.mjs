@@ -8,6 +8,10 @@ const read = (path) => readFile(new URL('../' + path, import.meta.url), 'utf8');
 test('email reports open a draft and contain only a safe station page', () => {
   const link = stationReportEmailUrl('/asia/viet-nam/demo', 'Demo & radio', 'Report a problem', 'I cannot hear it.');
   assert.match(link, /^mailto:report@eplus\.dev\?/);
+  // iOS Mail treats '+' literally; subject/body must use RFC 6068 %20 spaces.
+  assert.match(link, /subject=Report%20a%20problem&body=/);
+  assert.doesNotMatch(link, /\+/);
+  assert.match(link, /%0D%0A/);
   const query = new URLSearchParams(link.split('?')[1]);
   assert.equal(query.get('subject'), 'Report a problem');
   assert.match(query.get('body'), /Demo & radio/);
@@ -15,6 +19,20 @@ test('email reports open a draft and contain only a safe station page', () => {
   for (const path of ['//evil.example/a', '/asia/viet-nam/a?stream=secret', '/a/b', 'https://evil.example/a/b/c']) {
     assert.equal(stationReportEmailUrl(path, 'station', 'subject', 'body'), '');
   }
+  const draft = stationReportEmailUrl(
+    '/asia/viet-nam/xone-fm-96-mhz', 'Xone FM 96MHz',
+    'ePlus OnAir - Báo lỗi không nghe được radio',
+    'Xin chào,\nTên đài: {station}\nTrang đài: {url}\n\nMô tả thêm (nếu có):\n',
+  );
+  assert.doesNotMatch(draft, /\+/);
+  assert.match(draft, /%20/);
+  assert.match(draft, /%0D%0A/);
+  const draftFields = new URLSearchParams(draft.split('?')[1]);
+  assert.equal(draftFields.get('subject'), 'ePlus OnAir - Báo lỗi không nghe được radio');
+  assert.match(draftFields.get('body'), /Tên đài: Xone FM 96MHz/);
+  assert.match(draftFields.get('body'), /Trang đài: https:\/\/radio\.eplus\.dev\/asia\/viet-nam\/xone-fm-96-mhz/);
+  assert.match(draftFields.get('body'), /\r\n/);
+
   const cleaned = stationReportEmailUrl('/asia/viet-nam/demo', 'Demo https://audio.example/live?token=secret', 'Report', 'Problem');
   assert.doesNotMatch(decodeURIComponent(cleaned), /audio\.example|token=secret/);
 });
@@ -49,6 +67,8 @@ test('all seven languages have short listener-facing errors and email report lab
     for (const key of ['offline', 'unsupported', 'exhausted', 'report', 'change_source', 'report_email', 'report_github', 'details', 'email_subject', 'email_body']) {
       assert.ok(dictionary.recovery[key], lang + ' missing recovery.' + key);
     }
+    assert.match(dictionary.recovery.email_body, /\{station\}/);
+    assert.match(dictionary.recovery.email_body, /\{url\}/);
     assert.ok(dictionary.site_pages.contact.support.report_action);
     for (const key of ['offline', 'unsupported', 'exhausted']) {
       const message = dictionary.recovery[key];
