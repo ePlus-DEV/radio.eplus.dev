@@ -39,7 +39,7 @@
               <UButton color="neutral" variant="ghost" icon="i-lucide-skip-back" class="h-14 w-14 justify-center rounded-full" :disabled="!canNavigate" :aria-label="previousLabel" @click="$emit('previous')" />
             </UTooltip>
             <UTooltip :text="$t(playing || waiting ? 'player.pause' : 'player.play')">
-              <UButton :icon="waiting ? 'i-lucide-loader-circle' : playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-20 w-20 justify-center rounded-full bg-rose-500 text-white hover:bg-rose-400 [&_.iconify]:h-8 [&_.iconify]:w-8" :disabled="!playable" :aria-label="$t(playing || waiting ? 'player.pause' : 'player.play')" @click="$emit('toggle')" />
+              <UButton :icon="waiting ? 'i-lucide-loader-circle' : playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-20 w-20 justify-center rounded-full bg-rose-500 text-white hover:bg-rose-400 [&_.iconify]:h-8 [&_.iconify]:w-8" :class="waiting ? '[&_.iconify]:animate-spin' : ''" :disabled="!playable" :aria-label="$t(playing || waiting ? 'player.pause' : 'player.play')" @click="$emit('toggle')" />
             </UTooltip>
             <UTooltip :text="nextLabel">
               <UButton color="neutral" variant="ghost" icon="i-lucide-skip-forward" class="h-14 w-14 justify-center rounded-full" :disabled="!canNavigate" :aria-label="nextLabel" @click="$emit('next')" />

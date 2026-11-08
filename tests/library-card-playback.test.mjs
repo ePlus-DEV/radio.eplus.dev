@@ -40,9 +40,9 @@ test('favorite and recent cards can play without leaving the page while retainin
   assert.ok(detailsHandler, 'Library details must have their own navigation handler');
   assert.doesNotMatch(detailsHandler, /playback\.requestStation|playback\.activate|autoplay/);
   assert.match(source, /@click="togglePlayback\(station, group\.items\)"/);
-  assert.match(source, /isPlaying\(station\.url\) \? 'i-lucide-pause' : 'i-lucide-play'/);
+  assert.match(source, /isConnecting\(station\.url\) \? 'i-lucide-loader-circle' : isPlaying\(station\.url\) \? 'i-lucide-pause' : 'i-lucide-play'/);
   assert.match(source, /@click="listening\.toggleFavorite\(station\)"/);
-  assert.match(source, /if \(isPlaying\(station\.url\)\)[\s\S]*?playback\.pauseRequest \+= 1/);
+  assert.match(source, /if \(isActive\(station\.url\) && \(playback\.playing \|\| playback\.waiting\)\)[\s\S]*?playback\.pauseRequest \+= 1/);
   assert.match(source, /if \(isActive\(station\.url\) && playback\.station\?\.sources\.length\)[\s\S]*?playback\.requestStation\(station\.url\)/);
   assert.match(source, /playback\.activate\(createPlaybackStation\([\s\S]*?\{ autoplay: true, collectionQueue:/);
   assert.match(source, /generation !== selectionGeneration/);
