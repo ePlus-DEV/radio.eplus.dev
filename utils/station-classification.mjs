@@ -162,7 +162,8 @@ export function stationClassificationRecord(path, station, providerGenre = '') {
   return {
     path,
     area: match[1],
-    country: match[2],
+    country: match[1] === 'global-radio' ? '' : match[2],
+    provider: match[1] === 'global-radio' ? match[2] : '',
     title: String(station?.title || '').trim(),
     groups: classified.groups,
     genres: classified.genres,
