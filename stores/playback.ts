@@ -29,6 +29,12 @@ export const usePlaybackStore = defineStore('playback', {
     playerMini: false,
     liveTrack: null as { stationUrl: string; title: string; artist: string; artwork?: string; source: 'hls' | 'provider' } | null,
   }),
+  getters: {
+    // A connecting stream is not yet audible; all station cards and the dock
+    // use this priority so a pending request never masquerades as playing.
+    status: (state): 'connecting' | 'playing' | 'idle' =>
+      state.waiting ? 'connecting' : state.playing ? 'playing' : 'idle',
+  },
   actions: {
     activateGlobalRadio(station: PlaybackStation, listenUrl: string, expiresAt: number,
       stations: RadioStationOption[] = [], options: { autoplay?: boolean } = {}) {

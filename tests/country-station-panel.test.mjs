@@ -60,11 +60,13 @@ test("station cards marquee long titles and show Play/Pause without hover", asyn
   const css = await readFile(join(process.cwd(), 'assets/css/main.css'), 'utf8');
   assert.match(css, /\.radio-card-compact-station-play\s*\{\s*@apply[^;]*h-11 w-11/);
   assert.match(button, /:aria-pressed="isPlaying\(station\)"/);
-  assert.match(button, /:aria-label="\$t\(isPending\(station\) \? 'player\.connecting' : isPlaying\(station\) \? 'player\.pause' : 'player\.play'\)/);
+  assert.match(button, /:aria-label="\$t\(isPending\(station\) \? 'player\.connecting' : isConnecting\(station\) \? 'player\.stop_connecting' : isPlaying\(station\) \? 'player\.pause' : 'player\.play'\)/);
   assert.match(button, /@click="emit\('select-station', station\)"/);
-  assert.match(button, /isPending\(station\) \? 'i-lucide-loader-circle' : isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'/);
+  assert.match(button, /isPending\(station\) \|\| isConnecting\(station\) \? 'i-lucide-loader-circle' : isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'/);
   assert.doesNotMatch(button, /(?:^|\s)opacity-0\b|group-hover:opacity-100|(?:^|\s)scale-95\b/);
-  assert.match(stationPanel, /station\.id === props\.activeStationId && \(playback\.playing \|\| playback\.waiting\)/);
+  assert.match(stationPanel, /station\.id === props\.activeStationId && playback\.status === 'connecting'/);
+  assert.match(stationPanel, /station\.id === props\.activeStationId && playback\.status === 'playing'/);
+  assert.match(stationPanel, /:aria-busy="isPending\(station\) \|\| isConnecting\(station\)"/);
 
   // Both pages pause the active station instead of restarting its audio stream.
   for (const page of [countryPage, stationPage]) {

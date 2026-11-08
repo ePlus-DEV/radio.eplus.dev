@@ -41,11 +41,17 @@ test('single source and last source always have bounded fallback until six attem
 
 test('never recover when deliberately paused, already playing, offline or no longer waiting', () => {
   for (const state of [
-    { userPaused: true }, { playing: true }, { online: false },
+    { userPaused: true }, { playing: true, waiting: false }, { online: false },
     { waiting: false }, { sourceCount: -1 }, { sourceCount: 2.5 },
   ]) {
     assert.equal(playbackWatchdogAction(stalled(state)), 'ignore', JSON.stringify(state));
   }
+});
+
+test('a stale playing flag cannot suppress watchdog while loading is visible', () => {
+  assert.equal(playbackWatchdogAction(stalled({ playing: true, waiting: true, attemptCount: 2 })), 'advance');
+  assert.equal(playbackWatchdogAction(stalled({ playing: true, waiting: true, attemptCount: 6 })), 'stop');
+  assert.equal(playbackWatchdogAction(stalled({ playing: true, waiting: false })), 'ignore');
 });
 
 test('disable auto reconnect turns silence into manual Retry state, not infinite loading', () => {
@@ -79,7 +85,7 @@ test('play() promise resolution never impersonates the browser playing event', a
     'a resolved play promise must not create a synthetic playing event or listening time');
   assert.doesNotMatch(promiseHandler, /media\.readyState\s*>=\s*HTMLMediaElement\.HAVE_CURRENT_DATA|const hasDecodedAudio/,
     'buffered samples alone are not evidence that live playback started');
-  assert.match(promiseHandler, /if \(playing\.value && !media\.paused && !media\.ended\) return;/,
+  assert.match(promiseHandler, /if \(playing\.value && !media\.paused && !media\.ended\) \{[\s\S]*?waiting\.value = false;[\s\S]*?pendingAutoPlay\.value = false;[\s\S]*?clearFallbackProbeTimer\(\);[\s\S]*?return;/,
     'a real playing event may precede promise completion and its state must be preserved');
   assert.match(promiseHandler, /pendingAutoPlay\.value = true;[\s\S]*?waiting\.value = true;[\s\S]*?startFallbackProbe\(\)/,
     'without a playing event keep bounded startup recovery active');

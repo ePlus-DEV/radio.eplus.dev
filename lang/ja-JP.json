@@ -351,7 +351,8 @@
     "expand_player": "プレーヤーを展開",
     "window_player": "ミニプレーヤー",
     "dock_player": "ドックに戻す",
-    "schedule_loading": "番組表を読み込み中…"
+    "schedule_loading": "番組表を読み込み中…",
+    "stop_connecting": "接続を中止"
   },
   "site_pages": {
     "common": {
@@ -470,7 +471,8 @@
       "support": {
         "title": "お困りですか？",
         "body": "放送局名やページのリンクと、問題やご質問の内容を簡単にお知らせください。",
-        "action": "Email support"
+        "action": "Email support",
+        "report_action": "メールで問題を報告"
       }
     },
     "statistics": {
@@ -689,12 +691,18 @@
     "reason_unknown": "再生エラーが発生しましたが、原因は確認できていません。",
     "last_played": "この端末で最後に再生した時刻: {time}",
     "local_observation": "この端末のセッション内の記録です。放送局全体の稼働状況を保証しません。",
-    "offline": "オフラインのようです。接続を確認してから再試行してください。",
-    "unsupported": "最後の音源をデコードできないか、このブラウザーが対応していません。別の音源をお試しください。",
-    "exhausted": "再試行後も再生できませんでした。再試行するか、別の音源を選んでください。他の端末では再生できる場合があります。",
+    "offline": "インターネットに接続されていないようです。接続を確認して、もう一度お試しください。",
+    "unsupported": "この端末では現在、このラジオを再生できません。もう一度試すか、別の再生方法を選んでください。",
+    "exhausted": "このラジオを再生できませんでした。もう一度試すか、別の再生方法を選んでください。",
     "connecting": "接続またはバッファリング中…",
-    "report": "再生の問題を報告",
-    "report_hint": "GitHub のフォームを開き、内容を確認して送信できます（ログインが必要）。公開局ページと端末上の再生状態のみ入力され、配信URL、トークン、視聴履歴は含まれません。"
+    "report": "問題を報告",
+    "report_hint": "メールで報告できます。GitHub アカウントがある場合は GitHub も利用できます。",
+    "change_source": "別の再生方法",
+    "report_email": "メールで報告",
+    "report_github": "GitHub で報告",
+    "details": "詳しい情報",
+    "email_subject": "ePlus OnAir - ラジオを再生できない問題",
+    "email_body": "ePlus OnAir ご担当者様\n\n次のラジオ局を聴くことができません。ご確認をお願いします。\n\n放送局：{station}\n放送局のページ：{url}\n\n追加情報（任意）：\n"
   },
   "transfer": {
     "title": "お気に入りを移行",

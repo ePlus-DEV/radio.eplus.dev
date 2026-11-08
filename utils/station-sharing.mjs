@@ -34,6 +34,33 @@ export function stationReportUrl(path, title, reason) {
   return `https://github.com/ePlus-DEV/radio.eplus.dev/issues/new?${params}`;
 }
 
+// Create an editable email draft with public station details only.
+// Never add raw stream URLs, signed tokens, identity or listening history.
+export function stationReportEmailUrl(path, title, subject, description) {
+  const stationPage = stationShareUrl(path);
+  if (!stationPage) return '';
+  const safeTitle = String(title || '')
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/[\u0000-\u001f\u007f]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim().slice(0, 90) || 'Radio station';
+  const safeSubject = String(subject || 'ePlus OnAir - Radio playback problem')
+    .replace(/[\r\n]/g, ' ').trim().slice(0, 120);
+  const message = String(description || 'I cannot hear this station.').slice(0, 1000);
+  // Localized templates may place the station name and public URL directly in
+  // the email. Preserve the previous plain-text fallback for older callers.
+  const hasPlaceholders = message.includes('{station}') && message.includes('{url}');
+  const body = hasPlaceholders
+    ? message.replace(/\{(station|url)\}/g, (_match, key) => key === 'station' ? safeTitle : stationPage)
+    : message + '\n\n' + safeTitle + '\n' + stationPage;
+
+  // mailto URLs follow RFC 6068, not HTML form encoding. URLSearchParams
+  // produces "+" for spaces, which iOS Mail can show literally in drafts.
+  // Percent-encode text using %20 and CRLF line breaks (%0D%0A) instead.
+  return 'mailto:report@eplus.dev?subject=' + encodeURIComponent(safeSubject)
+    + '&body=' + encodeURIComponent(body.replace(/\r?\n/g, '\r\n'));
+}
+
 export async function shareStation({ url, title }, browser) {
   if (!url) return 'failed';
   if (browser.share) {

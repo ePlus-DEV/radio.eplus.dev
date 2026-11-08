@@ -50,7 +50,7 @@
               />
 
               <span
-                v-if="isPending(station)"
+                v-if="isPending(station) || isConnecting(station)"
                 class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
                 role="status"
               >
@@ -61,8 +61,8 @@
                 v-else-if="station.id === activeStationId"
                 class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-rose-500 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
               >
-                <span v-if="playback.playing" class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
-                {{ $t(playback.playing ? 'player.on_air' : 'redesign.paused') }}
+                <span v-if="isPlaying(station)" class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+                {{ $t(isPlaying(station) ? 'player.on_air' : 'redesign.paused') }}
               </span>
             </div>
 
@@ -76,15 +76,15 @@
         <button
           type="button"
           class="radio-card-compact-station-play"
-          :aria-label="$t(isPending(station) ? 'player.connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
+          :aria-label="$t(isPending(station) ? 'player.connecting' : isConnecting(station) ? 'player.stop_connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
           :aria-pressed="isPlaying(station)"
-          :aria-busy="isPending(station)"
+          :aria-busy="isPending(station) || isConnecting(station)"
           :disabled="!playEnabled || isPending(station)"
           :title="!playEnabled ? disabledReason : undefined"
           @click="emit('select-station', station)"
         >
-          <UIcon :name="isPending(station) ? 'i-lucide-loader-circle' : isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'"
-            class="h-4 w-4" :class="isPending(station) ? 'animate-spin' : isPlaying(station) ? '' : 'translate-x-px'" />
+          <UIcon :name="isPending(station) || isConnecting(station) ? 'i-lucide-loader-circle' : isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'"
+            class="h-4 w-4" :class="isPending(station) || isConnecting(station) ? 'animate-spin' : isPlaying(station) ? '' : 'translate-x-px'" />
         </button>
       </article>
     </div>
@@ -128,8 +128,10 @@ const props = withDefaults(
 );
 const isPending = (station: RadioStationOption): boolean =>
   station.id === props.pendingStationId;
+const isConnecting = (station: RadioStationOption): boolean =>
+  station.id === props.activeStationId && playback.status === 'connecting';
 const isPlaying = (station: RadioStationOption): boolean =>
-  station.id === props.activeStationId && (playback.playing || playback.waiting);
+  station.id === props.activeStationId && playback.status === 'playing';
 
 
 const siteAssetUrl = useSiteAssetUrl();

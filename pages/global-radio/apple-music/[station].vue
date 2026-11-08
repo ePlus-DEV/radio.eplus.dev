@@ -35,12 +35,12 @@
             <button v-if="station" type="button"
               :disabled="!canListenOnEplus || Boolean(pendingStationId)"
               :title="!canListenOnEplus ? t('global_radio.resolver_unavailable') : undefined" :aria-pressed="isPlayingHere"
-              :aria-label="t(isPlayingHere ? 'player.pause' : 'global_radio.listen_on_eplus') + ': ' + station.title"
+              :aria-label="t(isConnectingHere ? 'player.stop_connecting' : isPlayingHere ? 'player.pause' : 'global_radio.listen_on_eplus') + ': ' + station.title"
               @click="playOnEplus(station)"
               class="radio-interactive inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-6 text-sm font-bold text-white transition-colors hover:bg-rose-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:w-auto sm:min-w-56">
-              <UIcon :name="pendingStationId ? 'i-lucide-loader-circle' : isPlayingHere ? 'i-lucide-pause' : 'i-lucide-play'"
-                :class="pendingStationId ? 'h-5 w-5 animate-spin' : 'h-5 w-5'" aria-hidden="true" />
-              {{ t(pendingStationId ? 'global_radio.connecting_on_eplus' : isPlayingHere ? 'player.pause' : 'global_radio.listen_on_eplus') }}
+              <UIcon :name="pendingStationId || isConnectingHere ? 'i-lucide-loader-circle' : isPlayingHere ? 'i-lucide-pause' : 'i-lucide-play'"
+                :class="pendingStationId || isConnectingHere ? 'h-5 w-5 animate-spin' : 'h-5 w-5'" aria-hidden="true" />
+              {{ t(pendingStationId ? 'global_radio.connecting_on_eplus' : isConnectingHere ? 'player.stop_connecting' : isPlayingHere ? 'player.pause' : 'global_radio.listen_on_eplus') }}
             </button>
           </div>
         </div>
@@ -104,8 +104,10 @@ const {
 const stationId = computed(() => String(route.params.station || ''));
 const station = computed(() => provider.value?.stations.find(item => item.id === stationId.value));
 const stationPath = computed(() => '/global-radio/apple-music/' + stationId.value);
+const isConnectingHere = computed(() => playback.station?.url === stationPath.value
+  && playback.status === 'connecting');
 const isPlayingHere = computed(() => playback.station?.url === stationPath.value
-  && (playback.playing || playback.waiting));
+  && playback.status === 'playing');
 
 // Country detail pages honor requestedStationUrl from the shared PlayerQueue.
 // Resolve a fresh signed Global HLS only for an explicit queue/skip request;

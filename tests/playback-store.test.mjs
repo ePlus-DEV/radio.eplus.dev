@@ -6,6 +6,20 @@ import { createPlaybackStation } from '../utils/playback-station.mjs';
 
 const station = id => createPlaybackStation({ area: 'asia', country: 'viet-nam', id, meta: { title: id, stream: 'https://radio.example/' + id + '.mp3' } });
 
+test('player status prioritizes buffering over playing and never reports waiting as audible', () => {
+  setActivePinia(createPinia());
+  const playback = usePlaybackStore();
+  assert.equal(playback.status, 'idle');
+  playback.waiting = true;
+  assert.equal(playback.status, 'connecting');
+  playback.playing = true;
+  assert.equal(playback.status, 'connecting', 'mixed stale flags still show loading');
+  playback.waiting = false;
+  assert.equal(playback.status, 'playing');
+  playback.playing = false;
+  assert.equal(playback.status, 'idle');
+});
+
 test('desktop queue starts closed until the listener opens it', () => {
   setActivePinia(createPinia());
   const playback = usePlaybackStore();

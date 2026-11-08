@@ -146,7 +146,7 @@ test("Featured radio cards toggle play/pause with the global player without leav
   // Keep the direct-play control separate from the station details link.
   assert.match(card, /:to="station\.url"/);
   assert.match(card, /@click="emit\('select-station', station\)"/);
-  assert.match(card, /:name="isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'"/);
+  assert.match(card, /:name="isConnecting\(station\) \? 'i-lucide-loader-circle' : isPlaying\(station\) \? 'i-lucide-pause' : 'i-lucide-play'"/);
   assert.match(card, /:aria-pressed="isPlaying\(station\)"/);
 
   // Pause the active stream; resume with a play request; otherwise activate the chosen catalog.

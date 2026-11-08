@@ -25,6 +25,7 @@ For deeper history and rationale, read [`docs/PROJECT_CONTEXT.md`](./docs/PROJEC
 - Read [docs/ISSUES.md](./docs/ISSUES.md) before changing Report playback problem, Contact page CTAs or issue forms. There are four public `.github/ISSUE_TEMPLATE/*.yml` forms: playback, website bug, station correction, and feature request. Keep field `id` names synchronized with URL prefill from `utils/station-sharing.mjs`.
 - Playback-report drafts must use only the public canonical station page and a **whitelisted device-local health state**; no raw audio URL, signed HLS key, token, browser fingerprint, personal history or automatic issue submission. GitHub sign-in/review remains user-controlled.
 - The player shows Report only when online and terminally `exhausted` or `unsupported`; do not present normal buffering as a verified station outage. Contact bug/station request actions link directly to their templates while copyright/private cases continue to use email.
+- Keep listener-facing playback errors brief and nontechnical, with optional collapsed diagnostics. Offer email reporting via `report@eplus.dev` alongside the GitHub form; never auto-send mail or include private stream URLs or playback history.
 - Update tests and all seven locale strings with any report flow change. GitHub shows issue forms only after they reach default `main`; promote strictly by direct `staging` → `main` PR. Never change production SEO text, canonical or GA4 for this task.
 
 

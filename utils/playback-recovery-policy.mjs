@@ -22,7 +22,9 @@ export function playbackWatchdogAction({
   attemptCount = 0,
   sourceCount = 0,
 } = {}) {
-  if (!online || userPaused || playing || !waiting || !Number.isInteger(sourceCount) || sourceCount < 1) {
+  // A stale playing flag must never disable the watchdog while the UI is still
+  // waiting. An actually-playing stream has waiting=false.
+  if (!online || userPaused || !waiting || !Number.isInteger(sourceCount) || sourceCount < 1) {
     return 'ignore';
   }
   if (!autoReconnect || attemptCount >= MAX_STREAM_ATTEMPTS) return 'stop';
