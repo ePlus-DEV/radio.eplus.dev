@@ -632,6 +632,14 @@ const startStablePlaybackTimer = (): void => {
 const tryPlay = async (): Promise<void> => {
   const media = mediaElement.value;
   if (!media || userPaused.value) return;
+  // Repeated Play/Media Session actions must not turn a healthy live stream
+  // back into an endless loading spinner without any new media event.
+  if (playing.value && !media.paused && !media.ended) {
+    waiting.value = false;
+    pendingAutoPlay.value = false;
+    clearFallbackProbeTimer();
+    return;
+  }
   const version = sourceVersion;
   const request = ++playVersion;
 
@@ -644,7 +652,12 @@ const tryPlay = async (): Promise<void> => {
     // and a sample may be buffered, NOT that continuous live audio is audible.
     // Only the browser's 'playing' event confirms the live state and starts
     // listening-duration accounting. It may have arrived before this promise.
-    if (playing.value && !media.paused && !media.ended) return;
+    if (playing.value && !media.paused && !media.ended) {
+      waiting.value = false;
+      pendingAutoPlay.value = false;
+      clearFallbackProbeTimer();
+      return;
+    }
     pendingAutoPlay.value = true;
     waiting.value = true;
     playing.value = false;

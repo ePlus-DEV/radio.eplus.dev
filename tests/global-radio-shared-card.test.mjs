@@ -70,7 +70,8 @@ test('playing/paused state and SEO metadata remain separated from artwork/detail
   ]);
   assert.match(global, /useStaticPageSeo\(\{ title, description \}\)/);
   assert.match(detail, /useStaticPageSeo\(\{ title, description \}\)/);
-  assert.match(shared, /station\.id === props\.activeStationId && \(playback\.playing \|\| playback\.waiting\)/);
+  assert.match(shared, /station\.id === props\.activeStationId && playback\.status === 'playing'/);
+  assert.match(shared, /station\.id === props\.activeStationId && playback\.status === 'connecting'/);
   assert.match(shared, /:aria-pressed="isPlaying\(station\)"/);
   assert.match(shared, /:to="station\.url"/);
   assert.doesNotMatch(global, /listen_on_apple|listen_on_tunein|accessKey|\.m3u8/);
