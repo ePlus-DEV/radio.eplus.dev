@@ -11,12 +11,12 @@
           {{ $t('recovery.report') }}
           <UIcon name="i-lucide-chevron-down" class="h-4 w-4" aria-hidden="true" />
         </summary>
-        <div class="mt-1 flex flex-col gap-1 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-2">
-          <a v-if="reportEmailUrl" :href="reportEmailUrl" class="inline-flex min-h-10 items-center gap-2 rounded-md px-2 font-medium hover:bg-[var(--radio-hover)]">
-            <UIcon name="i-lucide-mail" class="h-4 w-4" aria-hidden="true" />{{ $t('recovery.report_email') }}
+        <div class="mt-1 grid w-[min(18rem,calc(100vw-3rem))] grid-cols-2 gap-1.5 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1.5">
+          <a v-if="reportEmailUrl" :href="reportEmailUrl" class="inline-flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-md px-1.5 py-2 text-center text-xs font-medium leading-4 hover:bg-[var(--radio-hover)] sm:text-sm">
+            <UIcon name="i-lucide-mail" class="h-4 w-4 shrink-0" aria-hidden="true" />{{ $t('recovery.report_email') }}
           </a>
-          <a v-if="reportUrl" :href="reportUrl" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-10 items-center gap-2 rounded-md px-2 font-medium hover:bg-[var(--radio-hover)]">
-            <UIcon name="i-lucide-external-link" class="h-4 w-4" aria-hidden="true" />{{ $t('recovery.report_github') }}
+          <a v-if="reportUrl" :href="reportUrl" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-md px-1.5 py-2 text-center text-xs font-medium leading-4 hover:bg-[var(--radio-hover)] sm:text-sm">
+            <UIcon name="i-lucide-external-link" class="h-4 w-4 shrink-0" aria-hidden="true" />{{ $t('recovery.report_github') }}
           </a>
         </div>
       </details>
