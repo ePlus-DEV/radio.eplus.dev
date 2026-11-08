@@ -351,7 +351,8 @@
     "expand_player": "展开播放器",
     "window_player": "迷你播放器",
     "dock_player": "返回底部栏",
-    "schedule_loading": "正在加载节目表…"
+    "schedule_loading": "正在加载节目表…",
+    "stop_connecting": "停止连接"
   },
   "site_pages": {
     "common": {

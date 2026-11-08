@@ -351,7 +351,8 @@
     "expand_player": "Expand player",
     "window_player": "Mini player",
     "dock_player": "Return to dock",
-    "schedule_loading": "Loading the schedule…"
+    "schedule_loading": "Loading the schedule…",
+    "stop_connecting": "Stop connecting"
   },
   "site_pages": {
     "common": {

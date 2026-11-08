@@ -351,7 +351,8 @@
     "expand_player": "Agrandir le lecteur",
     "window_player": "Mini lecteur",
     "dock_player": "Retour au lecteur",
-    "schedule_loading": "Chargement du programme…"
+    "schedule_loading": "Chargement du programme…",
+    "stop_connecting": "Arrêter la connexion"
   },
   "site_pages": {
     "common": {

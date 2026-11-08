@@ -351,7 +351,8 @@
     "expand_player": "Mở rộng trình phát",
     "window_player": "Trình phát cửa sổ",
     "dock_player": "Trở về thanh phát",
-    "schedule_loading": "Đang tải lịch phát sóng…"
+    "schedule_loading": "Đang tải lịch phát sóng…",
+    "stop_connecting": "Dừng thử phát"
   },
   "site_pages": {
     "common": {
