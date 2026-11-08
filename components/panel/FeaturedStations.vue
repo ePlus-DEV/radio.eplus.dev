@@ -26,9 +26,9 @@
               />
               <span
                 v-if="station.url === activeStationUrl"
-                class="absolute left-2 top-2 flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold" :class="isPlaying(station) ? (playback.waiting ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300') : 'radio-neutral-badge'"
+                class="absolute left-2 top-2 flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold" :class="isConnecting(station) ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300' : isPlaying(station) ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300' : 'radio-neutral-badge'"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-current"></span> {{ $t(playback.playing ? 'player.on_air' : playback.waiting ? 'player.connecting' : 'redesign.paused') }}
+                <span class="h-1.5 w-1.5 rounded-full bg-current"></span> {{ $t(isConnecting(station) ? 'player.connecting' : isPlaying(station) ? 'player.on_air' : 'redesign.paused') }}
               </span>
             </div>
             <div class="flex min-h-[4.25rem] min-w-0 items-center border-t border-[var(--radio-border)] px-3 py-3 pr-14">
@@ -41,13 +41,14 @@
         <button
           type="button"
           class="absolute bottom-4 right-3 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-rose-500 text-white shadow-md shadow-rose-950/25 transition group-hover:scale-105 hover:bg-rose-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
-          :aria-label="$t(isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
+          :aria-label="$t(isConnecting(station) ? 'player.stop_connecting' : isPlaying(station) ? 'player.pause' : 'player.play') + ': ' + station.title"
           :aria-pressed="isPlaying(station)"
+          :aria-busy="isConnecting(station) || station.id === pendingStationId"
           :disabled="station.id === pendingStationId || station.id === unavailableStationId"
           :title="station.id === unavailableStationId ? $t('global_radio.resolver_unavailable') : undefined"
           @click="emit('select-station', station)"
         >
-          <UIcon :name="isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'" class="h-4 w-4" :class="isPlaying(station) ? '' : 'translate-x-px'" />
+          <UIcon :name="isConnecting(station) ? 'i-lucide-loader-circle' : isPlaying(station) ? 'i-lucide-pause' : 'i-lucide-play'" class="h-4 w-4" :class="isConnecting(station) ? 'animate-spin' : isPlaying(station) ? '' : 'translate-x-px'" />
         </button>
       </article>
     </div>
@@ -60,7 +61,8 @@ const playback = usePlaybackStore();
 import type { RadioStationOption } from '~/types/radio';
 
 const props = defineProps<{ stations: RadioStationOption[]; activeStationUrl?: string; pendingStationId?: string; unavailableStationId?: string }>();
-const isPlaying = (station: RadioStationOption) => station.url === props.activeStationUrl && (playback.playing || playback.waiting);
+const isConnecting = (station: RadioStationOption) => station.url === props.activeStationUrl && playback.status === 'connecting';
+const isPlaying = (station: RadioStationOption) => station.url === props.activeStationUrl && playback.status === 'playing';
 const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
 const siteAssetUrl = useSiteAssetUrl();
 </script>

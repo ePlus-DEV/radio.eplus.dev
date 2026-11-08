@@ -23,12 +23,13 @@
             <UButton
               color="neutral"
               :variant="isActive(station.url) ? 'soft' : 'ghost'"
-              :icon="isPlaying(station.url) ? 'i-lucide-pause' : 'i-lucide-play'"
+              :icon="isConnecting(station.url) ? 'i-lucide-loader-circle' : isPlaying(station.url) ? 'i-lucide-pause' : 'i-lucide-play'"
               :loading="pendingStationUrl === station.url"
               :disabled="pendingStationUrl === station.url"
-              :class="isActive(station.url) ? 'text-rose-500' : ''"
+              :class="isActive(station.url) ? (isConnecting(station.url) ? 'text-rose-500 [&_.iconify]:animate-spin' : 'text-rose-500') : ''"
               class="h-10 w-10 shrink-0 justify-center rounded-full"
-              :aria-label="$t(isPlaying(station.url) ? 'player.pause' : 'player.play') + ': ' + station.title"
+              :aria-label="$t(isConnecting(station.url) ? 'player.stop_connecting' : isPlaying(station.url) ? 'player.pause' : 'player.play') + ': ' + station.title"
+              :aria-busy="isConnecting(station.url) || pendingStationUrl === station.url"
               @click="togglePlayback(station, group.items)"
             />
             <UButton
@@ -113,7 +114,8 @@ const groups = computed(() => props.collectionItems ? [{ key: 'collection', icon
 
 const isFavorite = (url: string) => listening.library.favorites.some((item: { url: string }) => item.url === url);
 const isActive = (url: string) => playback.station?.url === url;
-const isPlaying = (url: string) => isActive(url) && (playback.playing || playback.waiting);
+const isConnecting = (url: string) => isActive(url) && playback.status === 'connecting';
+const isPlaying = (url: string) => isActive(url) && playback.status === 'playing';
 
 const loadCatalog = (area: string, country: string) => {
   const key = `${area}/${country}`;
@@ -135,7 +137,7 @@ const togglePlayback = async (station: LibraryStation, items: LibraryStation[]) 
   failedStationUrl.value = null;
 
   // A second click on the active station should pause it, not reload the stream.
-  if (isPlaying(station.url)) {
+  if (isActive(station.url) && (playback.playing || playback.waiting)) {
     playback.pauseRequest += 1;
     return;
   }

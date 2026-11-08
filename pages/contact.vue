@@ -41,12 +41,17 @@
             {{ t("site_pages.contact.support.body") }}
           </p>
         </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="mailto:report@eplus.dev?subject=ePlus%20OnAir%20report" class="radio-interactive inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-[var(--radio-border)] px-4 text-sm font-semibold text-[var(--radio-text)] hover:bg-[var(--radio-hover)]">
+            {{ t("site_pages.contact.support.report_action") }}
+          </a>
         <a
           href="mailto:support@eplus.dev?subject=ePlus%20OnAir%20support"
           class="radio-interactive inline-flex h-10 shrink-0 items-center justify-center rounded-xl bg-rose-500 px-4 text-sm font-semibold text-white hover:bg-rose-600"
         >
           {{ t("site_pages.contact.support.action") }}
         </a>
+        </div>
       </div>
     </section>
   </div>

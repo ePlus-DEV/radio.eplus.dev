@@ -50,9 +50,9 @@ test('shared Country card defaults remain active; Global loading and unavailable
   assert.match(shared, /playEnabled: true/);
   assert.match(shared, /disabledReason: ""/);
   assert.match(shared, /station\.id === props\.pendingStationId/);
-  assert.match(shared, /:aria-busy="isPending\(station\)"/);
+  assert.match(shared, /:aria-busy="isPending\(station\) \|\| isConnecting\(station\)"/);
   assert.match(shared, /:disabled="!playEnabled \|\| isPending\(station\)"/);
-  assert.match(shared, /isPending\(station\) \? 'i-lucide-loader-circle'/);
+  assert.match(shared, /isPending\(station\) \|\| isConnecting\(station\) \? 'i-lucide-loader-circle'/);
   assert.match(global, /:pending-station-id="pendingStationId"/);
   assert.match(global, /:play-enabled="canListenOnEplus"/);
   assert.match(global, /:disabled-reason="t\('global_radio\.resolver_unavailable'\)"/);
@@ -70,7 +70,8 @@ test('playing/paused state and SEO metadata remain separated from artwork/detail
   ]);
   assert.match(global, /useStaticPageSeo\(\{ title, description \}\)/);
   assert.match(detail, /useStaticPageSeo\(\{ title, description \}\)/);
-  assert.match(shared, /station\.id === props\.activeStationId && \(playback\.playing \|\| playback\.waiting\)/);
+  assert.match(shared, /station\.id === props\.activeStationId && playback\.status === 'playing'/);
+  assert.match(shared, /station\.id === props\.activeStationId && playback\.status === 'connecting'/);
   assert.match(shared, /:aria-pressed="isPlaying\(station\)"/);
   assert.match(shared, /:to="station\.url"/);
   assert.doesNotMatch(global, /listen_on_apple|listen_on_tunein|accessKey|\.m3u8/);

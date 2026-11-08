@@ -37,8 +37,8 @@
           </p>
 
           <div class="mt-5 flex flex-wrap items-center gap-3">
-            <UButton :icon="isActive && playback.playing ? 'i-lucide-pause' : 'i-lucide-play'" size="xl" class="radio-station-detail-action cursor-pointer rounded-full px-6" @click="playStation">
-              {{ isActive && playback.playing ? $t('player.pause') : $t('player.play') }}
+            <UButton :icon="isActive && playback.status === 'connecting' ? 'i-lucide-loader-circle' : isActive && playback.status === 'playing' ? 'i-lucide-pause' : 'i-lucide-play'" size="xl" class="radio-station-detail-action cursor-pointer rounded-full px-6" :class="isActive && playback.status === 'connecting' ? '[&_.iconify]:animate-spin' : ''" @click="playStation">
+              {{ $t(isActive && playback.status === 'connecting' ? 'player.stop_connecting' : isActive && playback.status === 'playing' ? 'player.pause' : 'player.play') }}
             </UButton>
             <StationShare :path="stationPath" :title="stationName" />
             <UButton color="neutral" variant="soft" icon="i-lucide-list-music" class="hidden rounded-full 2xl:inline-flex" @click="playback.queueOpen = true">

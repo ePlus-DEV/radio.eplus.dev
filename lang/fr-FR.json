@@ -351,7 +351,8 @@
     "expand_player": "Agrandir le lecteur",
     "window_player": "Mini lecteur",
     "dock_player": "Retour au lecteur",
-    "schedule_loading": "Chargement du programme…"
+    "schedule_loading": "Chargement du programme…",
+    "stop_connecting": "Arrêter la connexion"
   },
   "site_pages": {
     "common": {
@@ -470,7 +471,8 @@
       "support": {
         "title": "Besoin d’aide ?",
         "body": "Envoyez-nous le nom de la station ou le lien de la page, avec quelques mots sur votre question ou le problème rencontré.",
-        "action": "Email support"
+        "action": "Email support",
+        "report_action": "Signaler par e-mail"
       }
     },
     "statistics": {
@@ -689,12 +691,18 @@
     "reason_unknown": "Erreur de lecture signalée, cause non confirmée.",
     "last_played": "Dernière lecture ici à {time}",
     "local_observation": "Observation locale de cette session, pas un état mondial vérifié.",
-    "offline": "Vous semblez hors ligne. Vérifiez votre connexion avant de réessayer.",
-    "unsupported": "La dernière source ne peut pas être décodée ou est incompatible avec ce navigateur. Essayez une autre source.",
-    "exhausted": "La lecture a échoué après plusieurs tentatives. Réessayez ou changez de source ; la station peut fonctionner sur un autre appareil.",
+    "offline": "Vous semblez hors ligne. Vérifiez votre connexion et réessayez.",
+    "unsupported": "Cette station ne peut pas être écoutée sur votre appareil pour le moment. Réessayez ou choisissez une autre option.",
+    "exhausted": "Impossible d'écouter cette station pour le moment. Réessayez ou choisissez une autre option.",
     "connecting": "Connexion ou mise en mémoire tampon…",
-    "report": "Signaler un problème de lecture",
-    "report_hint": "Ouvre un formulaire GitHub à vérifier et envoyer (connexion requise). Seuls la page publique de la station et l'état local de lecture sont préremplis, sans URL du flux, jeton ni historique d'écoute."
+    "report": "Signaler un problème",
+    "report_hint": "Envoyez un e-mail ou utilisez GitHub si vous avez un compte.",
+    "change_source": "Autre option d'écoute",
+    "report_email": "Signaler par e-mail",
+    "report_github": "Signaler sur GitHub",
+    "details": "Plus d'informations",
+    "email_subject": "ePlus OnAir - Problème d'écoute",
+    "email_body": "Bonjour ePlus OnAir,\n\nJe n'arrive pas à écouter cette station. Pourriez-vous vérifier ?\n\nStation : {station}\nPage de la station : {url}\n\nPrécisions (facultatif) :\n"
   },
   "transfer": {
     "title": "Transférer vos favoris",

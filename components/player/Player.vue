@@ -1,7 +1,7 @@
 <template>
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
-      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :diagnostics="recoveryDiagnostics"
+      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :report-email-url="reportEmailUrl" :diagnostics="recoveryDiagnostics"
         class="absolute inset-x-3 bottom-[calc(100%+0.5rem)] max-h-[40dvh] overflow-y-auto shadow-lg sm:left-auto sm:right-6 sm:w-96" @retry="retryCurrentSource" />
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <span v-if="!online">{{ $t('text.offline') }}</span>
@@ -111,7 +111,7 @@
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
-    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :diagnostics="recoveryDiagnostics" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
+    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :report-email-url="reportEmailUrl" :diagnostics="recoveryDiagnostics" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
     <div class="mt-3 flex items-center justify-between gap-1">
       <div class="flex items-center gap-1">
         <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="cursor-pointer rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
@@ -174,7 +174,7 @@
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
     <template #content>
-      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :report-email-url="reportEmailUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
     </template>
   </UModal>
 </template>
@@ -201,7 +201,7 @@ import { bindAudioMediaEvents } from "~/utils/audio-media-events.mjs";
 import { createRetryableHlsLoader } from "~/utils/retryable-hls-loader.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
-import { stationReportUrl } from "~/utils/station-sharing.mjs";
+import { stationReportUrl, stationReportEmailUrl } from "~/utils/station-sharing.mjs";
 import { inferMime, isTextPlaylist, parsePlaylistUrls } from "~/utils/radio-playlist.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
@@ -351,6 +351,7 @@ const health = computed(() => playbackHealth({
   hasPlayed: hasPlayedCurrentSource.value,
 }));
 const reportUrl = computed(() => stationReportUrl(props.stationUrl, props.streamName, health.value));
+const reportEmailUrl = computed(() => stationReportEmailUrl(props.stationUrl, props.streamName, t('recovery.email_subject'), t('recovery.email_body')));
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
@@ -631,6 +632,14 @@ const startStablePlaybackTimer = (): void => {
 const tryPlay = async (): Promise<void> => {
   const media = mediaElement.value;
   if (!media || userPaused.value) return;
+  // Repeated Play/Media Session actions must not turn a healthy live stream
+  // back into an endless loading spinner without any new media event.
+  if (playing.value && !media.paused && !media.ended) {
+    waiting.value = false;
+    pendingAutoPlay.value = false;
+    clearFallbackProbeTimer();
+    return;
+  }
   const version = sourceVersion;
   const request = ++playVersion;
 
@@ -643,7 +652,12 @@ const tryPlay = async (): Promise<void> => {
     // and a sample may be buffered, NOT that continuous live audio is audible.
     // Only the browser's 'playing' event confirms the live state and starts
     // listening-duration accounting. It may have arrived before this promise.
-    if (playing.value && !media.paused && !media.ended) return;
+    if (playing.value && !media.paused && !media.ended) {
+      waiting.value = false;
+      pendingAutoPlay.value = false;
+      clearFallbackProbeTimer();
+      return;
+    }
     pendingAutoPlay.value = true;
     waiting.value = true;
     playing.value = false;

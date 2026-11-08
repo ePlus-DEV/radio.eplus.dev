@@ -17,7 +17,7 @@ test('Apple directory reuses the exact Country card grid, Play control and separ
   const css = await read('assets/css/main.css');
   assert.match(css, /\.radio-card-compact-station-play\s*\{\s*@apply[^;]*h-11 w-11/);
   assert.match(shared, /@click="emit\('select-station', station\)"/);
-  assert.match(shared, /isPending\(station\) \? 'i-lucide-loader-circle'/);
+  assert.match(shared, /isPending\(station\) \|\| isConnecting\(station\) \? 'i-lucide-loader-circle'/);
   assert.match(page, /t\('global_radio\.eplus_play_hint'\)/);
   assert.doesNotMatch(page, /:href="station\.(?:listen_url|tunein_url)"/,
     'Apple Music and TuneIn external links only appear on station detail');
