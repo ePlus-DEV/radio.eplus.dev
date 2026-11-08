@@ -6,12 +6,12 @@
       <UDropdownMenu v-if="online && sourceItems.length > 1" :items="sourceItems" :content="{ side: 'top', align: 'start' }" :ui="{ content: 'max-w-[calc(100vw-2rem)]' }">
         <UButton color="neutral" variant="outline" class="min-h-11">{{ $t('recovery.change_source') }}</UButton>
       </UDropdownMenu>
-      <details v-if="showReport" class="min-w-0">
+      <details v-if="showReport" class="relative min-w-0 open:pb-16">
         <summary class="inline-flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-lg px-2 font-semibold text-rose-700 hover:underline dark:text-rose-300">
           {{ $t('recovery.report') }}
           <UIcon name="i-lucide-chevron-down" class="h-4 w-4" aria-hidden="true" />
         </summary>
-        <div class="mt-1 grid w-[min(18rem,calc(100vw-3rem))] grid-cols-2 gap-1.5 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1.5">
+        <div class="absolute left-0 top-11 z-20 grid w-[min(18rem,calc(100vw-7rem))] grid-cols-2 gap-1.5 rounded-lg border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1.5 shadow-lg">
           <a v-if="reportEmailUrl" :href="reportEmailUrl" class="inline-flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-md px-1.5 py-2 text-center text-xs font-medium leading-4 hover:bg-[var(--radio-hover)] sm:text-sm">
             <UIcon name="i-lucide-mail" class="h-4 w-4 shrink-0" aria-hidden="true" />{{ $t('recovery.report_email') }}
           </a>

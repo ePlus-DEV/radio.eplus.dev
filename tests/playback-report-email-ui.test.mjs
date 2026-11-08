@@ -34,6 +34,8 @@ test('compact player recovery hides internal details and keeps email and GitHub 
   assert.match(recovery, /:href="reportUrl"/);
   // Email and GitHub report options must share one responsive horizontal row.
   assert.match(recovery, /grid-cols-2 gap-1\.5/);
+  assert.match(recovery, /relative min-w-0 open:pb-16/);
+  assert.match(recovery, /absolute left-0 top-11 z-20 grid/);
   assert.doesNotMatch(recovery, /flex flex-col gap-1 rounded-lg border/);
   assert.match(player, /stationReportEmailUrl\(/);
   assert.equal((player.match(/:report-email-url="reportEmailUrl"/g) || []).length, 3);
