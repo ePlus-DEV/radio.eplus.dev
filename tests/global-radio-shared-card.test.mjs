@@ -50,9 +50,9 @@ test('shared Country card defaults remain active; Global loading and unavailable
   assert.match(shared, /playEnabled: true/);
   assert.match(shared, /disabledReason: ""/);
   assert.match(shared, /station\.id === props\.pendingStationId/);
-  assert.match(shared, /:aria-busy="isPending\(station\)"/);
+  assert.match(shared, /:aria-busy="isPending\(station\) \|\| isConnecting\(station\)"/);
   assert.match(shared, /:disabled="!playEnabled \|\| isPending\(station\)"/);
-  assert.match(shared, /isPending\(station\) \? 'i-lucide-loader-circle'/);
+  assert.match(shared, /isPending\(station\) \|\| isConnecting\(station\) \? 'i-lucide-loader-circle'/);
   assert.match(global, /:pending-station-id="pendingStationId"/);
   assert.match(global, /:play-enabled="canListenOnEplus"/);
   assert.match(global, /:disabled-reason="t\('global_radio\.resolver_unavailable'\)"/);
