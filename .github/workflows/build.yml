@@ -151,7 +151,7 @@ jobs:
 
       - name: "Attach complete radio classification report"
         if: steps.current.outputs.run == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: radio-classification-${{ github.run_id }}
           path: |
