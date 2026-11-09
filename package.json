@@ -25,23 +25,23 @@
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
-    "@iconify-json/lucide": "^1.2.147",
-    "@nuxt/image": "^2.2.0",
+    "@iconify-json/lucide": "^1.2.151",
+    "@nuxt/image": "^2.2.1",
     "@nuxt/ui": "^4.12.0",
     "@nuxtjs/algolia": "^1.11.2",
-    "@nuxtjs/color-mode": "^4.0.1",
+    "@nuxtjs/color-mode": "^4.1.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/sitemap": "^8.6.1",
     "@pinia/nuxt": "^1.0.3",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.4",
     "@vesp/nuxt-fontawesome": "^2.0.0",
     "dayjs-nuxt": "^2.1.11",
-    "hls.js": "^1.7.3",
+    "hls.js": "^1.7.4",
     "moment": "^2.31.0",
     "nuxt": "4.6.4",
     "nuxt-site-config": "^4.2.3",
     "pinia": "^4.0.3",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^4.3.4",
     "vue3-lottie": "^3.3.1",
     "sharp": "^0.35.5"
   },
@@ -49,7 +49,7 @@
     "node": "24.15.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.64.1"
+    "@playwright/test": "^1.65.0"
   },
   "overrides": {
     "fontless": {
