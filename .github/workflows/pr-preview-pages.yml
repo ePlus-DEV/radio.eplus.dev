@@ -270,7 +270,7 @@ jobs:
 
       - name: Download validated build artifact
         if: steps.current.outputs.active == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: onair-pr-preview-${{ github.event.pull_request.number }}
           path: ${{ runner.temp }}/pr-output
