@@ -3,6 +3,7 @@ import type { RadioProgram, RadioSong, RadioTrack } from '~/types/radio';
 import { isZingScheduleUrl } from '~/utils/station-schedule.mjs';
 import { getVietnamSchedule, vietnamReferencePrograms } from '~/utils/vietnam-schedules.mjs';
 import { createStationPolling } from '~/utils/station-polling.mjs';
+import { createReferenceScheduleClock } from '~/utils/reference-schedule-clock.mjs';
 import { resolveLiveTrack } from '~/utils/live-track.mjs';
 import { appleTuneInMetadataMarker, stationIdFromTuneInMetadataMarker, fetchPublicTuneInMetadata, addTuneInSessionTrack } from '~/utils/global-radio-tunein-metadata.mjs';
 
@@ -140,23 +141,26 @@ export function useStationRealtime() {
       || !appleTuneInMetadataMarker(playback.station)) return;
     playlist.value = addTuneInSessionTrack(playlist.value, track);
   });
-  let referenceTimer: ReturnType<typeof setInterval> | null = null;
+  // The player is mounted globally. Do NOT wake up every 60 seconds when
+  // the selected station has no reference-program guide (almost all stations).
+  // The existing EPG provider polling remains independently managed above.
+  const referenceClock = createReferenceScheduleClock({
+    hasReference: () => Boolean(referenceSchedule.value?.slots.length),
+    onTick: () => {
+      const next = vietnamReferencePrograms(playback.station?.url);
+      if (next[0]?.startTime !== program.value[0]?.startTime) program.value = next;
+    },
+  });
+  watch(referenceSchedule, () => { if (clientReady) referenceClock.sync(); });
   onMounted(() => {
     clientReady = true;
     activate();
-    // Update the local Vietnam date at midnight; leave provider EPG polling
-    // untouched and never reinitialize audio merely because the date changed.
-    referenceTimer = setInterval(() => {
-      const path = playback.station?.url;
-      if (!referenceSchedule.value?.slots.length) return;
-      const next = vietnamReferencePrograms(path);
-      if (next[0]?.startTime !== program.value[0]?.startTime) program.value = next;
-    }, 60_000);
+    referenceClock.sync();
   });
   onBeforeUnmount(() => {
     clientReady = false;
     polling.stop();
-    if (referenceTimer) clearInterval(referenceTimer);
+    referenceClock.stop();
   });
   return { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation, scheduleSourceUrl, scheduleIsReference };
 }
