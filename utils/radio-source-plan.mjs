@@ -51,5 +51,7 @@ export const buildPlaybackSources = (sources, corsServer) => {
 
 export const nextPlaybackIndex = (currentIndex, count) => {
   if (!Number.isInteger(count) || count <= 0) return -1;
-  return (Number(currentIndex) + 1 + count) % count;
+  // Invalid or stale indexes must never produce NaN or an out-of-range slot.
+  if (!Number.isInteger(currentIndex) || currentIndex < 0 || currentIndex >= count) return 0;
+  return (currentIndex + 1) % count;
 };
