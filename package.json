@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
-    "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@iconify-json/lucide": "^1.2.151",
     "@nuxt/image": "^2.2.1",
@@ -37,12 +36,10 @@
     "@vesp/nuxt-fontawesome": "^2.0.0",
     "dayjs-nuxt": "^2.1.11",
     "hls.js": "^1.7.4",
-    "moment": "^2.31.0",
     "nuxt": "4.6.4",
     "nuxt-site-config": "^5.0.3",
     "pinia": "^4.0.3",
     "tailwindcss": "^4.3.4",
-    "vue3-lottie": "^4.0.0",
     "sharp": "^0.35.5"
   },
   "engines": {
