@@ -115,3 +115,36 @@ export function removeCustomStream(records, url) {
   // The UI must ask for explicit delete confirmation before invoking this.
   return normalizeCustomStreams(records).filter(item => item.url !== url);
 }
+
+/** A deliberately non-routable ID: never expose the private stream URL in a link. */
+export function customStreamIdentity(rawUrl) {
+  let hash = 2166136261;
+  for (let i = 0; i < rawUrl.length; i += 1)
+    hash = Math.imul(hash ^ rawUrl.charCodeAt(i), 16777619);
+  return 'local-custom:' + (hash >>> 0).toString(16).padStart(8, '0');
+}
+
+export function isCustomStreamStation(station) {
+  return station?.area === 'custom' && typeof station.url === 'string'
+    && station.url.startsWith('local-custom:');
+}
+
+/** No new audio element, proxy, public route or persisted listening record. */
+export function createCustomPlaybackStation(input) {
+  const result = validateCustomStream(input);
+  // A playlist may redirect to an unvalidated private-network URL. Reject it.
+  if (!result.ok || result.stream.format === 'playlist') return null;
+  const stream = result.stream;
+  const mime = {
+    hls: 'application/vnd.apple.mpegurl',
+    mp3: 'audio/mpeg', aac: 'audio/aac',
+    ogg: 'audio/ogg', opus: 'audio/ogg', flac: 'audio/flac',
+  }[stream.format] || 'audio/mpeg';
+  const id = customStreamIdentity(stream.url);
+  return {
+    id, url: id, area: 'custom', country: '',
+    countryKey: 'custom_streams.title', title: stream.title,
+    image: '/brand/onair-mark.svg', schedule: '',
+    sources: [{ src: stream.url, type: mime, source: 'primary', proxied: false }],
+  };
+}
