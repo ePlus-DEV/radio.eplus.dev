@@ -224,7 +224,7 @@ jobs:
 
       - name: Store preview files (no credentials)
         if: steps.current.outputs.active == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: onair-pr-preview-${{ github.event.pull_request.number }}
           path: .output/public/
@@ -270,7 +270,7 @@ jobs:
 
       - name: Download validated build artifact
         if: steps.current.outputs.active == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: onair-pr-preview-${{ github.event.pull_request.number }}
           path: ${{ runner.temp }}/pr-output
@@ -303,8 +303,56 @@ jobs:
             }
 
           test ! -L "$target/pr-preview" || { echo "::error::Unsafe preview directory."; exit 1; }
-          mkdir -p "$target/pr-preview/pr-$PR_NUMBER"
-          rsync -a --delete "$RUNNER_TEMP/pr-output/" "$target/pr-preview/pr-$PR_NUMBER/"
+          preview_root="$target/pr-preview/pr-$PR_NUMBER"
+          mkdir -p "$preview_root/_nuxt"
+          # Keep prior hashed chunks for prerendered HTML that still references
+          # them. A wholesale --delete on _nuxt caused blank/404 PR previews.
+          # Other files retain their replace-in-place behavior.
+          rsync -a --delete --exclude='/_nuxt/' "$RUNNER_TEMP/pr-output/" "$preview_root/"
+          rsync -a "$RUNNER_TEMP/pr-output/_nuxt/" "$preview_root/_nuxt/"
+
+          # Privileged publish job runs only this trusted inline audit, not
+          # scripts from the untrusted pull request.
+          node - "$preview_root" "$PR_NUMBER" <<'NODE'
+          const { existsSync, readdirSync, readFileSync } = require('node:fs');
+          const { join } = require('node:path');
+          const root = process.argv[2];
+          const prNumber = process.argv[3];
+          const prefix = '/pr-preview/pr-' + prNumber + '/_nuxt/';
+          const assetPattern = /\/pr-preview\/pr-[1-9][0-9]*\/_nuxt\/[A-Za-z0-9_./-]+\.(?:js|css)/g;
+          let htmlCount = 0;
+          let assetCount = 0;
+          const missing = [];
+
+          function audit(dir) {
+            for (const entry of readdirSync(dir, { withFileTypes: true })) {
+              const path = join(dir, entry.name);
+              if (entry.isSymbolicLink()) throw new Error('Symlink in preview output: ' + path);
+              if (entry.isDirectory()) {
+                if (entry.name !== '_nuxt') audit(path);
+              } else if (entry.isFile() && entry.name.endsWith('.html')) {
+                htmlCount++;
+                const html = readFileSync(path, 'utf8');
+                for (const match of html.matchAll(assetPattern)) {
+                  const url = match[0];
+                  if (!url.startsWith(prefix)) continue;
+                  const asset = url.slice(prefix.length);
+                  if (asset.includes('..')) throw new Error('Invalid Nuxt chunk URL');
+                  assetCount++;
+                  if (!existsSync(join(root, '_nuxt', asset))) {
+                    missing.push(path.slice(root.length + 1) + ': ' + url);
+                  }
+                }
+              }
+            }
+          }
+          audit(root);
+          if (htmlCount === 0 || assetCount === 0 || missing.length) {
+            console.error('Preview asset audit failed:', { htmlCount, assetCount, missing: missing.slice(0, 30) });
+            process.exit(1);
+          }
+          console.log('Preview asset audit passed:', htmlCount, 'pages;', assetCount, 'bundles referenced');
+          NODE
 
           # Pages deployment syncs the full output repository. A missed
           # pull_request_target close event must not leave thousands of old
@@ -380,8 +428,17 @@ jobs:
             if [ "$published_sha" = "$EXPECTED_HEAD" ] &&
                curl --location --fail --silent --max-time 6 "$base" -o "$RUNNER_TEMP/preview-live.html" &&
                grep -q 'noindex' "$RUNNER_TEMP/preview-live.html"; then
-              live=true
-              break
+              # The HTML can return 200 while its hashed JS/CSS is 404.
+              entry_js="$(grep -oE "/pr-preview/pr-$PR_NUMBER/_nuxt/[A-Za-z0-9_.-]+\.js" "$RUNNER_TEMP/preview-live.html" | head -n 1 || true)"
+              entry_css="$(grep -oE "/pr-preview/pr-$PR_NUMBER/_nuxt/[A-Za-z0-9_.-]+\.css" "$RUNNER_TEMP/preview-live.html" | head -n 1 || true)"
+              if [ -n "$entry_js" ] && [ -n "$entry_css" ] &&
+                 curl --location --fail --silent --max-time 6 "$PREVIEW_SITE_ORIGIN$entry_js" -o /dev/null &&
+                 curl --location --fail --silent --max-time 6 "$PREVIEW_SITE_ORIGIN$entry_css" -o /dev/null &&
+                 curl --location --fail --silent --max-time 6 "$base"library/ -o "$RUNNER_TEMP/library-live.html" &&
+                 grep -q 'noindex' "$RUNNER_TEMP/library-live.html"; then
+                live=true
+                break
+              fi
             fi
             if [ "$attempt" -lt 90 ]; then sleep 10; fi
           done
