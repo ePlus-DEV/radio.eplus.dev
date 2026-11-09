@@ -35,7 +35,9 @@ test('storage changes invalidate stale imports, damaged data is preserved for ma
   assert.match(component, /if \(!broken\.value \|\| current !== rawBackup\.value\)/);
   assert.match(component, /file\.size > 100_000/);
   assert.match(component, /version !== 1 \|\| !Array\.isArray\(data\.streams\)/);
-  assert.doesNotMatch(component, /\$fetch\(|fetch\(|XMLHttpRequest|corsServer|usePlaybackStore|\.play\(\)/);
+  assert.doesNotMatch(component, /\$fetch\(|fetch\(|XMLHttpRequest|corsServer|new Audio\(|\.play\(\)/);
+  assert.match(component, /usePlaybackStore\(\)/);
+  assert.match(component, /@click="togglePlayback\(stream\)"/);
   assert.doesNotMatch(component, /sendBeacon|gtag|analytics|localStorage\.setItem\((?!CUSTOM_STREAMS_STORAGE_KEY)/);
 });
 

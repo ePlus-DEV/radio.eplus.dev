@@ -56,6 +56,12 @@
             </p>
           </div>
           <div class="flex shrink-0 gap-1">
+            <UButton color="neutral" variant="ghost" size="sm"
+              :icon="isActiveStream(stream) && playback.status === 'connecting' ? 'i-lucide-loader-circle' : isPlayingStream(stream) ? 'i-lucide-pause' : 'i-lucide-play'"
+              :disabled="busy || broken"
+              :aria-busy="isActiveStream(stream) && playback.status === 'connecting'"
+              :aria-label="$t(isActiveStream(stream) && (playback.playing || playback.waiting) ? 'player.pause' : 'player.play') + ': ' + stream.title"
+              @click="togglePlayback(stream)" />
             <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-pencil"  :disabled="busy || broken" :aria-label="$t('custom_streams.edit') + ': ' + stream.title" @click="startEdit(stream)" />
             <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2"  :disabled="busy || broken" :aria-label="$t('custom_streams.delete') + ': ' + stream.title" @click="deleteUrl = stream.url" />
           </div>
@@ -91,11 +97,14 @@ import {
   CUSTOM_STREAMS_STORAGE_KEY, MAX_CUSTOM_STREAMS,
   addCustomStream, editCustomStream, removeCustomStream,
   normalizeCustomStreams, parseCustomStreams, serializeCustomStreams,
+  createCustomPlaybackStation, customStreamIdentity,
 } from '~/utils/custom-radio-streams.mjs';
+import { usePlaybackStore } from '~/stores/playback';
 
 type CustomStream = { title: string; url: string; format: string };
 type EditResult = { ok: boolean; streams?: CustomStream[]; reason?: string };
 const { t } = useI18n();
+const playback = usePlaybackStore();
 const records = ref<CustomStream[]>([]);
 const fileInput = ref<HTMLInputElement | null>(null);
 const title = ref('');
@@ -109,6 +118,23 @@ const broken = ref(false);
 const rawBackup = ref('');
 const resetOpen = ref(false);
 let generation = 0;
+const isActiveStream = (stream: CustomStream) => playback.station?.url === customStreamIdentity(stream.url);
+const isPlayingStream = (stream: CustomStream) => isActiveStream(stream) && playback.status === 'playing';
+const togglePlayback = (stream: CustomStream) => {
+  if (broken.value || busy.value) return;
+  // Recheck every imported/cross-tab URL at the explicit Play boundary.
+  const station = createCustomPlaybackStation(stream);
+  if (!station) { error.value = t('custom_streams.errors.unsupported_format'); return; }
+  if (isActiveStream(stream) && (playback.playing || playback.waiting)) {
+    playback.pauseRequest += 1;
+    return;
+  }
+  if (isActiveStream(stream) && playback.station?.sources.length) {
+    playback.requestStation(station.url);
+    return;
+  }
+  playback.activate(station, [], { autoplay: true });
+};
 
 const loadLocal = (raw: string | null) => {
   if (raw === null) {
@@ -193,6 +219,11 @@ const submit = () => {
 const confirmDelete = () => {
   if (broken.value || !deleteUrl.value) return;
   if (save(removeCustomStream(records.value, deleteUrl.value))) {
+    if (playback.station?.url === customStreamIdentity(deleteUrl.value)) {
+      playback.pauseRequest += 1;
+      playback.station = null;
+      playback.stations = [];
+    }
     if (editingUrl.value === deleteUrl.value) cancelEdit();
     deleteUrl.value = '';
     notice.value = t('custom_streams.deleted');

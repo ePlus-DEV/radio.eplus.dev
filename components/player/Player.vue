@@ -39,7 +39,7 @@
             <p v-else dir="auto" class="radio-player-meta mt-0.5 truncate text-[10px] text-[var(--radio-text-muted)] sm:text-xs">
               <span class="sm:hidden">{{ streamName }} · {{ countryName || $t(country) }}</span>
             </p>
-            <NuxtLink v-if="stationUrl" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink>          </div>
+            <NuxtLink v-if="stationUrl && !customStation" :to="stationUrl" dir="auto" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] hover:text-rose-500 sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</NuxtLink><span v-else-if="customStation" class="radio-player-meta mt-1 hidden truncate text-[10px] text-[var(--radio-text-muted)] sm:block sm:text-xs">{{ streamName }} · {{ countryName || $t(country) }}</span>          </div>
         </div>
 
         <div class="radio-player-controls z-20 flex items-center justify-center gap-0.5 sm:gap-2">
@@ -65,7 +65,7 @@
 
         <div class="hidden min-w-0 items-center justify-end gap-1 sm:flex">
           <UButton color="neutral" variant="ghost" icon="i-lucide-maximize-2" class="h-11 w-11 shrink-0 cursor-pointer justify-center rounded-full" :aria-label="$t('redesign.now_playing')" @click="nowPlayingOpen = true" />
-          <UButton color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 cursor-pointer justify-center rounded-full" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
+          <UButton v-if="!customStation" color="neutral" :variant="favoriteActive ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 cursor-pointer justify-center rounded-full" :class="favoriteActive ? 'text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" :aria-label="$t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite')" @click="toggleFavorite" />
 
           <UDropdownMenu :items="sleepMenuItems" :content="{ align: 'end', side: 'top' }" :modal="false">
             <UTooltip :text="$t('player.sleep_timer')">
@@ -143,7 +143,7 @@
   <USlideover v-model:open="mobileQueueOpen" :title="$t('player.queue')" :description="streamName" :ui="{ content: 'w-full max-w-sm', body: 'flex min-h-0 flex-1 flex-col p-0 sm:p-0' }">
     <template #body>
       <div class="grid grid-cols-2 items-stretch gap-2 border-b border-[var(--radio-border)] p-3">
-        <UButton color="neutral" variant="ghost" icon="i-lucide-heart" class="radio-queue-action" :class="favoriteActive ? '!text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" @click="toggleFavorite">
+        <UButton v-if="!customStation" color="neutral" variant="ghost" icon="i-lucide-heart" class="radio-queue-action" :class="favoriteActive ? '!text-rose-500' : ''" :disabled="!stationUrl" :aria-pressed="favoriteActive" @click="toggleFavorite">
           <span class="min-w-0 whitespace-normal text-left">{{ $t(favoriteActive ? 'library.remove_favorite' : 'library.add_favorite') }}</span>
         </UButton>
         <div class="radio-queue-action gap-1.5">
@@ -174,13 +174,14 @@
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
     <template #content>
-      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :report-email-url="reportEmailUrl" :station-path="stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :report-email-url="reportEmailUrl" :station-path="customStation ? '' : stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :favorite-enabled="!customStation" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
     </template>
   </UModal>
 </template>
 
 <script lang="ts" setup>
 import { useListeningStore } from "~/stores/listening";
+import { isCustomStreamStation } from "~/utils/custom-radio-streams.mjs";
 import { useListeningDurationStore } from "~/stores/listeningDuration";
 import { createListeningDurationTracker } from "~/utils/listening-duration.mjs";
 import { createListeningDurationClock, shouldResumeListeningAfterRestore } from "~/utils/listening-duration-clock.mjs";
@@ -269,8 +270,9 @@ const preferences = useListenerPreferencesStore();
 const listening = useListeningStore();
 listening.hydrate();
 const PLAYER_QUEUE_OPEN_KEY = 'radio:player-queue-open';
+const customStation = computed(() => isCustomStreamStation(playback.station));
 const favoriteActive = computed(() => listening.library.favorites.some((item: { url: string }) => item.url === props.stationUrl));
-const toggleFavorite = () => { if (playback.station) listening.toggleFavorite(playback.station); };
+const toggleFavorite = () => { if (!customStation.value && playback.station) listening.toggleFavorite(playback.station); };
 const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
 // A Global station can be shown while its first HLS URL is still resolving.
@@ -305,7 +307,7 @@ const listeningDuration = useListeningDurationStore();
 const listeningDurationTracker = createListeningDurationTracker({
   onDuration: (station, elapsedMs) => listeningDuration.record(station, elapsedMs),
   onReport: (station, elapsedMs) => {
-    if (!listeningDuration.enabled || !runtimeConfig.public.ga4Enabled || window.location.hostname !== 'radio.eplus.dev') return;
+    if (!listeningDuration.enabled || isCustomStreamStation(station) || !runtimeConfig.public.ga4Enabled || window.location.hostname !== 'radio.eplus.dev') return;
     const seconds = Math.floor(elapsedMs / 1000);
     if (!seconds) return;
     const gaWindow = window as Window & { gtag?: (...args: unknown[]) => void };
@@ -350,8 +352,8 @@ const health = computed(() => playbackHealth({
   waiting: waiting.value,
   hasPlayed: hasPlayedCurrentSource.value,
 }));
-const reportUrl = computed(() => stationReportUrl(props.stationUrl, props.streamName, health.value));
-const reportEmailUrl = computed(() => stationReportEmailUrl(props.stationUrl, props.streamName, t('recovery.email_subject'), t('recovery.email_body')));
+const reportUrl = computed(() => customStation.value ? '' : stationReportUrl(props.stationUrl, props.streamName, health.value));
+const reportEmailUrl = computed(() => customStation.value ? '' : stationReportEmailUrl(props.stationUrl, props.streamName, t('recovery.email_subject'), t('recovery.email_body')));
 const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
@@ -1250,7 +1252,7 @@ const onMediaPlaying = (): void => {
   if (!isCurrentMediaPlaying({ media: mediaElement.value, userPaused: userPaused.value,
     hasPlayableSource: hasPlayableSource.value, activeSource: activeResolvedSrc, station: playback.station })) return;
   listening.remember(playback.station, 'play', true);
-  if (listeningDuration.enabled) {
+  if (listeningDuration.enabled && !customStation.value) {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
     syncDurationClock();
@@ -1434,7 +1436,7 @@ const resetListeningTracking = (): void => {
   listeningDurationTracker.discard();
   listeningDuration.setLivePreview('', 0);
   if (listeningDuration.enabled && playing.value && !waiting.value && !userPaused.value
-    && !streamError.value && activeResolvedSrc && playback.station) {
+    && !streamError.value && !customStation.value && activeResolvedSrc && playback.station) {
     listeningDurationTracker.start(playback.station);
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
   }
@@ -1451,6 +1453,7 @@ const restoreListeningAfterPageShow = (event: PageTransitionEvent): void => {
     trackingEnabled: listeningDuration.enabled, playing: playing.value, waiting: waiting.value,
     userPaused: userPaused.value, streamError: streamError.value,
     hasSource: Boolean(activeResolvedSrc), station: playback.station })) return;
+  if (customStation.value) return;
   listeningDurationTracker.start(playback.station);
   syncDurationClock();
 };

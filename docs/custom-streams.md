@@ -23,8 +23,8 @@ PR #430 established the **data-model foundation**; the subsequent Library UI PR 
 - [x] Pure URL validator, bounded local collection, stable versioned import/export model, create/edit/delete helpers and safety tests
 - [x] Client-only localStorage persistence with cross-tab updates, damaged-data backup/reset, no favorites/history changes
 - [x] Accessible Library add/edit/delete/import/export UI, explicit delete confirmation, all seven locales and semantic theme tokens
-- [ ] Playback integration with the existing single player and bounded recovery; never proxy custom streams
+- [x] Explicit local Play/Pause integrates with the single PlayerSession and bounded recovery; never proxy custom streams
 - [ ] Browser QA on Safari/iOS, Android and desktop for MP3/AAC/HLS, CORS/mixed content, reload and network recovery
 - [ ] Full CI, PR Preview, SEO/noindex/GA4 and Pages footprint checks on staging, separate reviewed production release
 
-The UI stores user-entered URLs locally but intentionally has no Play button until the reviewed single-player integration is complete. No real custom stream has been verified or claimed playable. Supabase, account sync and native app implementation are out of scope.
+Custom Play/Pause is now wired to the existing single PlayerSession. Private stream URLs are not written to public station routes, GA4, listening history, favorites, duration statistics, sharing links or issue reports. Playlist containers (.m3u/.pls) remain stored but are not playable until embedded URLs can be validated. No real custom stream or physical device has been verified. Supabase, account sync and native app implementation are out of scope.
