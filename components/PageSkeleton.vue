@@ -163,6 +163,145 @@
         </div>
       </template>
 
+
+      <!-- Global Radio: dedicated provider directory, not a geographic area. -->
+      <template v-else-if="variant === 'global-radio'">
+        <div class="radio-hero space-y-3 rounded-2xl p-5 sm:p-8">
+          <div class="radio-skeleton h-3 w-36 rounded-md" />
+          <div class="radio-skeleton h-9 w-56 max-w-full rounded-xl" />
+          <div class="radio-skeleton h-4 w-5/6 max-w-2xl rounded-md" />
+          <div class="radio-skeleton h-4 w-2/3 max-w-xl rounded-md" />
+          <div class="radio-skeleton mt-4 h-10 w-44 rounded-lg" />
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <div class="radio-skeleton h-6 w-44 rounded-lg" />
+            <div class="radio-skeleton h-4 w-20 rounded-md" />
+          </div>
+          <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <div v-for="i in 2" :key="'provider-' + i" class="radio-surface radio-skeleton-card space-y-4 rounded-2xl p-5">
+              <div class="flex items-center justify-between gap-3">
+                <div class="radio-skeleton h-12 w-12 rounded-xl" />
+                <div class="radio-skeleton h-6 w-20 rounded-full" />
+              </div>
+              <div class="space-y-2">
+                <div class="radio-skeleton h-5 w-40 rounded-md" />
+                <div class="radio-skeleton h-4 w-full rounded-md" />
+                <div class="radio-skeleton h-4 w-4/5 rounded-md" />
+              </div>
+              <div class="radio-skeleton h-4 w-36 rounded-md" />
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Apple Music provider: breadcrumb, branded hero and station grid. -->
+      <template v-else-if="variant === 'global-radio-provider'">
+        <div class="radio-skeleton h-4 w-64 max-w-full rounded-md" />
+        <div class="radio-hero flex flex-col gap-5 rounded-3xl p-5 sm:flex-row sm:items-center sm:p-7 lg:p-8">
+          <div class="radio-skeleton h-16 w-16 shrink-0 rounded-2xl sm:h-20 sm:w-20" />
+          <div class="min-w-0 flex-1 space-y-3">
+            <div class="radio-skeleton h-3 w-32 rounded-md" />
+            <div class="radio-skeleton h-8 w-60 max-w-full rounded-lg" />
+            <div class="radio-skeleton h-4 w-5/6 rounded-md" />
+            <div class="radio-skeleton h-4 w-2/3 rounded-md" />
+            <div class="flex flex-wrap gap-2 pt-1">
+              <div class="radio-skeleton h-8 w-28 rounded-full" />
+              <div class="radio-skeleton h-8 w-36 rounded-full" />
+            </div>
+          </div>
+        </div>
+        <div class="radio-skeleton h-4 w-72 max-w-full rounded-md" />
+        <div class="space-y-4">
+          <div class="radio-skeleton h-6 w-40 rounded-lg" />
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
+            <div v-for="i in 10" :key="'apple-station-' + i" class="radio-skeleton-card radio-surface overflow-hidden rounded-2xl">
+              <div class="radio-skeleton aspect-[5/4] w-full sm:aspect-square" />
+              <div class="flex items-center gap-2 p-3">
+                <div class="min-w-0 flex-1 space-y-2">
+                  <div class="radio-skeleton h-4 w-4/5 rounded-md" />
+                  <div class="radio-skeleton h-3 w-1/2 rounded-md" />
+                </div>
+                <div class="radio-skeleton h-10 w-10 shrink-0 rounded-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Apple Music station: compact artwork, play CTA and external options. -->
+      <template v-else-if="variant === 'global-radio-station'">
+        <div class="radio-skeleton h-4 w-72 max-w-full rounded-md" />
+        <div class="radio-hero rounded-2xl p-5 sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
+            <div class="radio-skeleton h-16 w-16 shrink-0 rounded-2xl" />
+            <div class="min-w-0 flex-1 space-y-3">
+              <div class="radio-skeleton h-3 w-36 rounded-md" />
+              <div class="radio-skeleton h-9 w-2/3 rounded-xl" />
+              <div class="radio-skeleton h-4 w-5/6 rounded-md" />
+              <div class="radio-skeleton h-4 w-4/5 rounded-md" />
+              <div class="flex flex-wrap gap-2 py-2">
+                <div v-for="i in 3" :key="i" class="radio-skeleton h-7 w-20 rounded-full" />
+              </div>
+              <div class="radio-skeleton h-12 w-full rounded-xl sm:w-56" />
+            </div>
+          </div>
+        </div>
+        <div class="radio-surface space-y-4 rounded-2xl p-4 sm:p-5">
+          <div class="radio-skeleton h-6 w-52 max-w-full rounded-lg" />
+          <div class="radio-skeleton h-4 w-5/6 rounded-md" />
+          <div class="grid gap-2 sm:grid-cols-2">
+            <div v-for="i in 2" :key="i" class="radio-skeleton h-11 rounded-xl" />
+          </div>
+        </div>
+      </template>
+
+      <!-- Settings: real two-column listening / appearance / privacy layout. -->
+      <template v-else-if="variant === 'settings'">
+        <div class="radio-surface flex items-center gap-4 rounded-3xl p-5 sm:p-7">
+          <div class="radio-skeleton h-12 w-12 shrink-0 rounded-2xl" />
+          <div class="min-w-0 flex-1 space-y-2">
+            <div class="radio-skeleton h-8 w-48 max-w-full rounded-lg" />
+            <div class="radio-skeleton h-4 w-4/5 rounded-md" />
+          </div>
+        </div>
+        <div class="grid items-start gap-4 lg:grid-cols-2">
+          <div class="radio-surface space-y-4 rounded-3xl p-5 sm:p-6">
+            <div class="radio-skeleton h-6 w-40 rounded-lg" />
+            <div v-for="i in 4" :key="'setting-listening-' + i" class="flex min-h-16 items-center justify-between gap-4 border-t border-[var(--radio-border)] pt-3">
+              <div class="min-w-0 flex-1 space-y-2">
+                <div class="radio-skeleton h-4 w-3/5 rounded-md" />
+                <div class="radio-skeleton h-3 w-4/5 rounded-md" />
+              </div>
+              <div class="radio-skeleton h-6 w-11 shrink-0 rounded-full" />
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="radio-surface space-y-4 rounded-3xl p-5 sm:p-6">
+              <div class="radio-skeleton h-6 w-40 rounded-lg" />
+              <div class="grid gap-3 sm:grid-cols-2">
+                <div v-for="i in 2" :key="'setting-select-' + i" class="space-y-2">
+                  <div class="radio-skeleton h-4 w-24 rounded-md" />
+                  <div class="radio-skeleton h-11 w-full rounded-xl" />
+                </div>
+              </div>
+              <div class="radio-skeleton h-11 w-full rounded-xl" />
+            </div>
+            <div class="radio-surface space-y-4 rounded-3xl p-5 sm:p-6">
+              <div class="radio-skeleton h-6 w-36 rounded-lg" />
+              <div class="radio-skeleton h-4 w-5/6 rounded-md" />
+              <div v-for="i in 2" :key="'setting-privacy-' + i" class="flex items-center justify-between gap-4 border-t border-[var(--radio-border)] pt-3">
+                <div class="min-w-0 flex-1 space-y-2">
+                  <div class="radio-skeleton h-4 w-3/5 rounded-md" />
+                  <div class="radio-skeleton h-3 w-4/5 rounded-md" />
+                </div>
+                <div class="radio-skeleton h-6 w-11 shrink-0 rounded-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
       <!-- About, contact, privacy, terms, cookies, and unknown routes. -->
       <template v-else>
         <div class="radio-surface space-y-4 p-5 sm:p-8">
