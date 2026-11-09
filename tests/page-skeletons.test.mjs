@@ -50,6 +50,30 @@ test("skeleton component mirrors real page layouts, remains noninteractive and s
   assert.match(source, /sm:grid-cols-2/);
 });
 
+test("Library renders responsive skeleton content on direct SSR and navigation without duplicating its header", async () => {
+  const library = await readFile("pages/library.vue", "utf8");
+  const page = await readFile("components/PageSkeleton.vue", "utf8");
+  const skeleton = await readFile("components/LibraryContentSkeleton.vue", "utf8");
+
+  assert.match(library, /<ClientOnly>/);
+  assert.match(library, /<LibraryContentSkeleton :tab="active"/);
+  assert.doesNotMatch(library, /<p class="radio-surface p-5 text-sm[^>]*>\{\{ \$t\('library\.loading'\)/);
+  assert.match(page, /<LibraryContentSkeleton tab="all" :announce="false"/);
+  assert.match(page, /radio-library-tabs/);
+  assert.match(skeleton, /radio-library-content-skeleton/);
+  for (const tab of ["all", "favorites", "recent", "stats"]) {
+    assert.match(skeleton, new RegExp("tab === '" + tab + "'"));
+  }
+  assert.match(skeleton, /role="status"|:role="announce \? 'status'/);
+  assert.match(skeleton, /aria-busy="true"/);
+  assert.match(skeleton, /aria-hidden="true"/);
+  assert.match(skeleton, /sr-only/);
+  assert.match(skeleton, /grid-cols-2/);
+  assert.match(skeleton, /sm:grid-cols-2/);
+  assert.match(skeleton, /md:grid-cols-4/);
+  assert.doesNotMatch(skeleton, /<NuxtLink|<button|<img|\$fetch/);
+});
+
 test("app skeleton is client-only, delayed, cancels on route failures and keeps global player mounted", async () => {
   const source = await readFile("app.vue", "utf8");
   assert.match(source, /<NuxtPage\s*\/>/);

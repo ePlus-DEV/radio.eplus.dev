@@ -122,23 +122,21 @@
         </div>
       </template>
 
-      <!-- Personal library: favorites and recent-listening cards. -->
+      <!-- Library: header, hash tabs, then the shared content-only fallback. -->
       <template v-else-if="variant === 'library'">
-        <div class="space-y-3">
-          <div class="radio-skeleton h-9 w-48 rounded-xl" />
-          <div class="radio-skeleton h-4 w-80 max-w-full rounded-md" />
-        </div>
-        <div v-for="group in 2" :key="'library-' + group" class="space-y-4">
-          <div class="radio-skeleton h-6 w-44 rounded-lg" />
-          <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            <div v-for="n in 3" :key="n" class="radio-skeleton-card radio-surface flex min-h-20 items-center gap-3 rounded-2xl p-3">
-              <div class="radio-skeleton h-12 w-12 shrink-0 rounded-xl" />
-              <div class="radio-skeleton h-4 min-w-0 flex-1 rounded-md" />
-              <div class="radio-skeleton h-10 w-10 shrink-0 rounded-full" />
-              <div class="radio-skeleton h-10 w-10 shrink-0 rounded-full" />
-            </div>
+        <div class="flex items-center gap-3">
+          <div class="radio-skeleton h-11 w-11 shrink-0 rounded-2xl" />
+          <div class="min-w-0 flex-1 space-y-2">
+            <div class="radio-skeleton h-8 w-44 rounded-xl" />
+            <div class="radio-skeleton h-4 w-72 max-w-full rounded-md" />
           </div>
         </div>
+        <div class="radio-library-tabs rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1">
+          <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+            <div v-for="i in 4" :key="'library-tab-' + i" class="radio-skeleton h-10 rounded-lg" />
+          </div>
+        </div>
+        <LibraryContentSkeleton tab="all" :announce="false" />
       </template>
 
       <!-- Statistics: summary metrics and coverage details. -->
