@@ -61,9 +61,10 @@ test("Library renders responsive skeleton content on direct SSR and navigation w
   assert.match(page, /<LibraryContentSkeleton tab="all" :announce="false"/);
   assert.match(page, /radio-library-tabs/);
   assert.match(skeleton, /radio-library-content-skeleton/);
-  for (const tab of ["all", "favorites", "recent", "stats"]) {
+  for (const tab of ["all", "favorites", "stats"]) {
     assert.match(skeleton, new RegExp("tab === '" + tab + "'"));
   }
+  assert.match(skeleton, /\['favorites', 'recent'\]/);
   assert.match(skeleton, /role="status"|:role="announce \? 'status'/);
   assert.match(skeleton, /aria-busy="true"/);
   assert.match(skeleton, /aria-hidden="true"/);
