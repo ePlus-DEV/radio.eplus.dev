@@ -29,18 +29,22 @@ export const useOnlineDurationStore = defineStore('onlineDuration', {
       } catch { /* Local storage is optional. */ }
       this.ready = true;
       window.addEventListener('storage', (event: StorageEvent) => {
-        if (event.key === ONLINE_TRACKING_ENABLED_KEY || event.key === null) {
-          this.enabled = parseOnlineTrackingEnabled(
-            event.key === null ? localStorage.getItem(ONLINE_TRACKING_ENABLED_KEY) : event.newValue,
-          );
-        }
-        if (event.key === ONLINE_DURATION_KEY || event.key === null) {
-          this.stats = durationSnapshot.external(
-            event.key === null ? localStorage.getItem(ONLINE_DURATION_KEY) : event.newValue,
-            parseOnlineDuration, emptyOnlineDuration,
-          );
-          if (event.newValue === null) window.dispatchEvent(new Event('radio:online-duration-reset'));
-        }
+        // A storage clear event has no newValue. Reads may throw when browser
+        // storage access is blocked; preserve the current in-memory state.
+        try {
+          if (event.key === ONLINE_TRACKING_ENABLED_KEY || event.key === null) {
+            this.enabled = parseOnlineTrackingEnabled(
+              event.key === null ? localStorage.getItem(ONLINE_TRACKING_ENABLED_KEY) : event.newValue,
+            );
+          }
+          if (event.key === ONLINE_DURATION_KEY || event.key === null) {
+            this.stats = durationSnapshot.external(
+              event.key === null ? localStorage.getItem(ONLINE_DURATION_KEY) : event.newValue,
+              parseOnlineDuration, emptyOnlineDuration,
+            );
+            if (event.newValue === null) window.dispatchEvent(new Event('radio:online-duration-reset'));
+          }
+        } catch { /* Keep tracking functional without persistent storage. */ }
       });
     },
     setTrackingEnabled(enabled: boolean) {
