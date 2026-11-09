@@ -3,6 +3,7 @@ import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEARCH_FEATURED_STATION_IDS, VIETNAM_FEATURED_STATION_IDS } from '../utils/featured-stations.mjs';
 import { stationCatalogIdentity } from '../utils/station-catalog-identity.mjs';
+import { classifyRadioContent } from '../utils/station-classification.mjs';
 
 const featuredIds = new Set(VIETNAM_FEATURED_STATION_IDS);
 const searchFeaturedIds = new Map(SEARCH_FEATURED_STATION_IDS.map((id, index) => [id, index + 1]));
@@ -35,6 +36,13 @@ export async function buildStationSearchIndex({
           station_name: station.title,
           station_country: `world.${area.name.replaceAll('-', '_')}.${country.replaceAll('-', '_')}`,
           country_label: humanLabel(country),
+          // Existing source metadata is retained verbatim; normalized groups
+          // are separate, evidence-based facets (unknown when not proven).
+          ...(() => {
+            const facts = classifyRadioContent(station, { path: '/' + area.name + '/' + country + '/' + id });
+            return { station_groups: facts.groups, station_genres: facts.genres,
+              station_classification_evidence: facts.evidence };
+          })(),
           // Optional public facets; do not guess a genre or language from a name.
           station_category: typeof station.category === 'string' ? station.category.trim() : '',
           station_language: typeof station.language === 'string' ? station.language.trim() : '',
@@ -89,6 +97,14 @@ export async function buildStationSearchIndex({
         country_label: provider.name,
         station_category: String(station.genre || ''),
         station_language: String(station.language || ''),
+        ...(() => {
+          const facts = classifyRadioContent(station, {
+            path: provider.href + '/' + station.id,
+            providerGenre: station.genre,
+          });
+          return { station_groups: facts.groups, station_genres: facts.genres,
+            station_classification_evidence: facts.evidence };
+        })(),
         station_image: imageIsTrusted ? image : '/brand/onair-mark.svg',
         url: provider.href + '/' + station.id,
         featured: false,

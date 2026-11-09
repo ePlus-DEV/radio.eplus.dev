@@ -1,9 +1,11 @@
-# Security updates always target the repository default branch (main).
-# Do not set target-branch: develop here: it disables this package ecosystem
-# configuration for Dependabot security updates.
-# Updates require ordinary PR review, complete CI and a tested release.
+# Dependabot reads this file on the default branch (main).
+# Security updates must remain on main; only routine VERSION updates target staging.
+# Keep separate entries for each ecosystem so target-branch does not disable
+# its security-update configuration.
 version: 2
 updates:
+  # Default branch: security updates only (limit: 0 disables routine versions,
+  # not Dependabot security alerts or their remediation PRs).
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -11,13 +13,10 @@ updates:
       day: "monday"
       time: "08:00"
       timezone: "Asia/Ho_Chi_Minh"
-    # Cap routine version-update PRs; security PRs are not subject to this cap.
-    open-pull-requests-limit: 2
+    open-pull-requests-limit: 0
     labels:
       - "dependencies"
     groups:
-      # Fix compatible vulnerable transitive/runtime packages in one reviewable PR.
-      # Vulnerabilities requiring major upgrades get their own independent PR.
       npm-security-nonbreaking:
         applies-to: security-updates
         patterns:
@@ -25,7 +24,20 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      # Keep routine dependency upkeep from flooding the repository.
+
+  # Version updates are validated in staging before staging -> main promotion.
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "staging"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+    open-pull-requests-limit: 2
+    labels:
+      - "dependencies"
+    groups:
       npm-version-nonbreaking:
         applies-to: version-updates
         patterns:
@@ -36,6 +48,18 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:15"
+      timezone: "Asia/Ho_Chi_Minh"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "staging"
     schedule:
       interval: "weekly"
       day: "monday"
