@@ -23,3 +23,18 @@ test("direct SSR landing renders real content without a skeleton flash", async (
   await expect(page.locator(".radio-page-skeleton")).toHaveCount(0);
   await expect(page.locator(".radio-player-dock")).toBeVisible();
 });
+
+
+test("Library direct landing has an SSR skeleton fallback and hydrates real tab content", async ({ page, request }) => {
+  const response = await request.get("/library");
+  expect(response.ok()).toBe(true);
+  // The ClientOnly subtree is intentionally blank on the server, but it must
+  // provide a recognizable placeholder rather than a bare Loading paragraph.
+  expect(await response.text()).toContain("radio-library-content-skeleton");
+
+  await page.goto("/library#stats");
+  await expect(page.locator(".radio-library-tabs a[aria-current='location']")).toHaveAttribute("href", "/library#stats");
+  await expect(page.locator(".radio-library-content-skeleton")).toHaveCount(0);
+  await expect(page.locator('section[aria-label="Listening time"]')).toBeVisible();
+  await expect(page.locator(".radio-player-dock")).toBeVisible();
+});
