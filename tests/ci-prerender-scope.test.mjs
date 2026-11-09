@@ -6,8 +6,9 @@ const workflow = () => readFile(new URL('../.github/workflows/build.yml', import
 
 test('documentation and workflow-only PRs use fast CI but retain unit tests', async () => {
   const yaml = await workflow();
-  assert.match(yaml, /"docs\/\*\*"/);
-  assert.match(yaml, /"README\.md"/);
+  assert.doesNotMatch(yaml, /^\s+paths:/m,
+    'pull_request edited events need to run even without a changed-file diff');
+  assert.match(yaml, /README\.md\|AGENTS\.md\|docs\/\*/);
   assert.match(yaml, /git diff --name-only "\$PR_BASE_SHA"\.\.\.HEAD/);
   assert.match(yaml, /prerender=false\s+if \[ ! -s/);
   assert.match(yaml, /README\.md\|AGENTS\.md\|docs\/\*\|tests\/\*\|\.github\/workflows\/\*\|\.github\/dependabot\.yml/);
@@ -67,6 +68,8 @@ test('production promotion is a direct staging to main PR, never an intermediate
 test('retargeted pull requests rerun CI under their new base without allowing direct production promotions', async () => {
   const yaml = await workflow();
   assert.match(yaml, /types: \[opened, synchronize, reopened, edited\]/);
+  assert.doesNotMatch(yaml, /^\s+paths:/m,
+    'a title/base edit has no file changes for PR path filters');
   assert.match(yaml, /if \[ "\$live_base" != "\$EVENT_BASE_REF" \]/);
   assert.match(yaml, /\[ "\$live_base" = main \] && \[ "\$live_source" != staging \]/);
 });

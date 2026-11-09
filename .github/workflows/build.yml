@@ -5,39 +5,9 @@ on:
     # Base-branch retargets (notably Dependabot main -> staging) emit
     # "edited", not "synchronize". Revalidate against the current base.
     types: [opened, synchronize, reopened, edited]
-    paths:
-      - "README.md"
-      - "AGENTS.md"
-      - "docs/**"
-      - "app.vue"
-      - "app.config.ts"
-      - "playwright.config.ts"
-      - "types/**"
-      - "utils/**"
-      - "nuxt.config.ts"
-      - "package.json"
-      - "package-lock.json"
-      - "tsconfig.json"
-      - "components/**"
-      - "composables/**"
-      - "layouts/**"
-      - "middleware/**"
-      - "pages/**"
-      - "plugins/**"
-      - "stores/**"
-      - "assets/**"
-      - "lang/**"
-      - "data/**"
-      - "public/radio/**"
-      - "public/brand/**"
-      - "build/**"
-      - "server/**"
-      - "scripts/**"
-      - "tests/**"
-      # Check workflow changes as well as application changes.
-      - ".github/workflows/**"
-      - ".github/dependabot.yml"
-      - "public/img/**"
+    # No paths filter: edited/base-ref changes have no changed-file diff and
+    # otherwise never reach CI. In-job scope detection still skips full
+    # prerender for docs, CI-only changes and asset-audit scripts.
 
 permissions:
   contents: read
