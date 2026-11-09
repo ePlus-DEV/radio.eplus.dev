@@ -29,7 +29,7 @@
               <p v-if="artist" dir="auto" class="mt-2 break-words text-sm text-[var(--radio-text-muted)] lg:text-base">{{ artist }}</p>
               <p dir="auto" class="mt-1 break-words text-xs text-[var(--radio-text-muted)] lg:text-sm">{{ stationName }}</p>
             </div>
-            <UTooltip :text="$t(favorite ? 'library.remove_favorite' : 'library.add_favorite')">
+            <UTooltip v-if="favoriteEnabled" :text="$t(favorite ? 'library.remove_favorite' : 'library.add_favorite')">
               <UButton color="neutral" :variant="favorite ? 'soft' : 'ghost'" icon="i-lucide-heart" class="h-11 w-11 shrink-0 justify-center rounded-full" :class="favorite ? 'text-rose-500' : ''" :aria-pressed="favorite" :aria-label="$t(favorite ? 'library.remove_favorite' : 'library.add_favorite')" @click="$emit('favorite')" />
             </UTooltip>
           </div>
@@ -82,7 +82,7 @@
 import type { DropdownMenuItem } from '@nuxt/ui';
 defineProps<{
   title: string; artist?: string; artwork?: string; stationName: string; status: string;
-  playing: boolean; waiting: boolean; playable: boolean; favorite: boolean; error: boolean;
+  playing: boolean; waiting: boolean; playable: boolean; favorite: boolean; favoriteEnabled?: boolean; error: boolean;
   canNavigate: boolean; previousLabel: string; nextLabel: string; sleepRemaining: number;
   sleepItems: DropdownMenuItem[]; sourceItems: DropdownMenuItem[]; lyricsAvailable?: boolean;
   health: string; online: boolean; reportUrl: string; reportEmailUrl: string; stationPath?: string;

@@ -10,7 +10,9 @@ test('dock metadata does not generate blank desktop rows when artist or station 
   const player = await read('components/player/Player.vue');
   assert.doesNotMatch(player, /&nbsp;|radio-player-meta-placeholder/);
   assert.match(player, /v-if="nowPlayingArtist"/);
-  assert.match(player, /v-if="stationUrl"/);
+  // Personal URLs never become public station-detail links in the dock.
+  assert.match(player, /v-if="stationUrl && !customStation"/);
+  assert.match(player, /v-else-if="customStation"/);
   assert.match(player, /sm:hidden/);
   assert.match(player, /radio-player-controls[^\"]*items-center justify-center/);
 });
