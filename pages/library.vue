@@ -42,7 +42,7 @@
       <PanelListeningStats v-if="active === 'stats'" />
       <PanelListeningLibrary v-else :group="active" />
       <template #fallback>
-        <p class="radio-surface p-5 text-sm text-[var(--radio-text-muted)]">{{ $t('library.loading') }}</p>
+        <LibraryContentSkeleton :tab="active" />
       </template>
     </ClientOnly>
   </div>

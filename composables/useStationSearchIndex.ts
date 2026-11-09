@@ -6,6 +6,10 @@ export interface StationSearchItem {
   station_country: string;
   station_category?: string;
   station_language?: string;
+  /** Catalog-reported subject groups; unknown is intentional for unverified entries. */
+  station_groups?: string[];
+  station_genres?: string[];
+  station_classification_evidence?: string[];
   country_label?: string;
   station_image: string;
   url: string;

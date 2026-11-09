@@ -82,3 +82,18 @@ test('publisher prunes only verified closed PR preview folders before uploading'
   assert.ok(publish.includes('Cannot verify PR #$old_number; retain its Preview'));
   assert.doesNotMatch(publish, /git push --force/);
 });
+
+
+test('publisher overlays hashed Nuxt chunks and verifies every HTML reference before publishing', () => {
+  assert.match(publish, /rsync -a --delete --exclude='\/_nuxt\/'/);
+  assert.match(publish, /rsync -a "\$RUNNER_TEMP\/pr-output\/_nuxt\/" "\$preview_root\/_nuxt\/"/);
+  assert.match(publish, /const assetPattern = \//);
+  assert.match(publish, /missing\.push/);
+  assert.match(publish, /Preview asset audit passed/);
+  assert.match(publish, /if \(htmlCount === 0 \|\| assetCount === 0 \|\| missing\.length\)/);
+  assert.match(verify, /entry_js=/);
+  assert.match(verify, /entry_css=/);
+  assert.match(verify, /"\$base"library\//);
+  assert.match(verify, /\$PREVIEW_SITE_ORIGIN\$entry_js/);
+  assert.match(verify, /\$PREVIEW_SITE_ORIGIN\$entry_css/);
+});

@@ -2,40 +2,12 @@ name: "CI"
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-    paths:
-      - "README.md"
-      - "AGENTS.md"
-      - "docs/**"
-      - "app.vue"
-      - "app.config.ts"
-      - "playwright.config.ts"
-      - "types/**"
-      - "utils/**"
-      - "nuxt.config.ts"
-      - "package.json"
-      - "package-lock.json"
-      - "tsconfig.json"
-      - "components/**"
-      - "composables/**"
-      - "layouts/**"
-      - "middleware/**"
-      - "pages/**"
-      - "plugins/**"
-      - "stores/**"
-      - "assets/**"
-      - "lang/**"
-      - "data/**"
-      - "public/radio/**"
-      - "public/brand/**"
-      - "build/**"
-      - "server/**"
-      - "scripts/**"
-      - "tests/**"
-      # Check workflow changes as well as application changes.
-      - ".github/workflows/**"
-      - ".github/dependabot.yml"
-      - "public/img/**"
+    # Base-branch retargets (notably Dependabot main -> staging) emit
+    # "edited", not "synchronize". Revalidate against the current base.
+    types: [opened, synchronize, reopened, edited]
+    # No paths filter: edited/base-ref changes have no changed-file diff and
+    # otherwise never reach CI. In-job scope detection still skips full
+    # prerender for docs, CI-only changes and asset-audit scripts.
 
 permissions:
   contents: read
@@ -171,6 +143,23 @@ jobs:
         if: steps.current.outputs.run == 'true'
         run: npm test
 
+      # Complete geographic/content audit. This creates no website routes or
+      # background job and exposes a per-station CSV for review on the PR.
+      - name: "Classify every radio catalog record"
+        if: steps.current.outputs.run == 'true'
+        run: npm run catalog:classify
+
+      - name: "Attach complete radio classification report"
+        if: steps.current.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: radio-classification-${{ github.run_id }}
+          path: |
+            reports/radio-classification.csv
+            reports/radio-classification-summary.json
+          retention-days: 14
+          if-no-files-found: error
+
       # Review the installed production dependency tree (including transitives),
       # not just top-level package.json versions. Fail CI on high/critical alerts.
       # Keep the existing single CI job and the original full prerender gates.
@@ -185,7 +174,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: public/search/stations.json
-          key: ${{ runner.os }}-onair-search-v1-${{ hashFiles('public/radio/**/*.json', 'public/catalog/providers/**/*.json', 'utils/featured-stations.mjs', 'scripts/build-station-search-index.mjs') }}
+          key: ${{ runner.os }}-onair-search-v1-${{ hashFiles('public/radio/**/*.json', 'public/catalog/providers/**/*.json', 'utils/featured-stations.mjs', 'scripts/build-station-search-index.mjs', 'utils/station-classification.mjs') }}
 
       - name: "Restore generated social preview"
         id: social_cache

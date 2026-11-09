@@ -240,12 +240,18 @@ const rememberSearch = (value: string): void => {
   const term = value.trim();
   if (!term || !import.meta.client) return;
   searchHistory.value = [term, ...searchHistory.value.filter(item => item.toLowerCase() !== term.toLowerCase())].slice(0, 6);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(searchHistory.value));
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(searchHistory.value));
+  } catch {
+    // Search must remain usable when storage is disabled or quota is exhausted.
+  }
 };
 
 const clearHistory = (): void => {
   searchHistory.value = [];
-  if (import.meta.client) localStorage.removeItem(HISTORY_KEY);
+  if (import.meta.client) {
+    try { localStorage.removeItem(HISTORY_KEY); } catch { /* Storage is optional. */ }
+  }
 };
 
 onMounted(() => {

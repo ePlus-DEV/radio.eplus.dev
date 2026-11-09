@@ -97,16 +97,18 @@ test('existing translation keys retain their original meanings', async () => {
 });
 
 test('search, library, schedule and station-empty messages use the right translation keys', async () => {
-  const [search, library, queue, stations, realtime] = await Promise.all([
+  const [search, library, librarySkeleton, queue, stations, realtime] = await Promise.all([
     readFile('components/search/Box.vue', 'utf8'),
     readFile('pages/library.vue', 'utf8'),
+    readFile('components/LibraryContentSkeleton.vue', 'utf8'),
     readFile('components/player/Queue.vue', 'utf8'),
     readFile('components/panel/Station.vue', 'utf8'),
     readFile('composables/useStationRealtime.ts', 'utf8'),
   ]);
   assert.equal((search.match(/search\.loading/g) || []).length, 2);
   assert.doesNotMatch(search, /panel\.updating/);
-  assert.match(library, /library\.loading/);
+  assert.match(library, /<LibraryContentSkeleton/);
+  assert.match(librarySkeleton, /library\.loading/);
   assert.match(queue, /scheduleLoading[^\n]*player\.schedule_loading/);
   // Missing playlist metadata can still legitimately be "updating".
   assert.match(queue, /panel\.updating/);

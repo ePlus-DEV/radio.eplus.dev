@@ -8,8 +8,11 @@ test("CI owns PR validation, including lightweight radio sync bot checks", async
   const ci = await read(".github/workflows/build.yml");
   assert.match(ci, /name: "CI"/);
   assert.match(ci, /^  pull_request:/m);
-  assert.match(ci, /"\.github\/workflows\/\*\*"/);
-  assert.match(ci, /"public\/img\/\*\*"/);
+  assert.match(ci, /types: \[opened, synchronize, reopened, edited\]/);
+  assert.doesNotMatch(ci, /^\s+paths:/m,
+    'edited PRs, including base retargets, must reach CI even without file changes');
+  assert.match(ci, /\.github\/workflows\/\*/);
+  assert.match(ci, /prerender=true/);
   assert.match(ci, /bot\/instant-audio-sync/);
   assert.match(ci, /github\.event\.pull_request\.head\.repo\.full_name == github\.repository/);
   assert.match(ci, /node --check scripts\/sync-instant-audio\.mjs/);

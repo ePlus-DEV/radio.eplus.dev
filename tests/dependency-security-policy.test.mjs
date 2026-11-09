@@ -4,17 +4,33 @@ import { readFile } from 'node:fs/promises';
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
-test('Dependabot includes npm and GitHub Actions but does not bypass default-branch security updates', async () => {
+test('Dependabot routes routine versions to staging while retaining default-branch security updates', async () => {
   const config = await read('.github/dependabot.yml');
   assert.match(config, /version:\s*2/);
-  assert.match(config, /package-ecosystem:\s*["']npm["']/);
-  assert.match(config, /package-ecosystem:\s*["']github-actions["']/);
-  // GitHub security updates must target the default branch, not a special branch.
-  const effective = config.split('\n').filter((line) => !line.trimStart().startsWith('#')).join('\n');
-  assert.doesNotMatch(effective, /^\s*target-branch\s*:/m);
-  assert.match(effective, /open-pull-requests-limit:\s*2/);
-  assert.match(effective, /applies-to:\s*security-updates/);
-  assert.match(effective, /applies-to:\s*version-updates/);
+  const effective = config.split('\n').filter(line => !line.trimStart().startsWith('#')).join('\n');
+  const blocks = effective.split(/(?=^  - package-ecosystem:)/m)
+    .filter(value => /package-ecosystem:/.test(value));
+  assert.equal(blocks.length, 4, 'two configurations per ecosystem: security/main and versions/staging');
+
+  for (const ecosystem of ['npm', 'github-actions']) {
+    const matching = blocks.filter(block =>
+      block.includes('package-ecosystem: "' + ecosystem + '"'));
+    assert.equal(matching.length, 2, ecosystem + ': must retain both security and version entries');
+    const security = matching.find(block => !/target-branch:/.test(block));
+    const versions = matching.find(block => /target-branch:\s*"staging"/.test(block));
+    assert.ok(security, ecosystem + ': default-branch security entry must exist');
+    assert.ok(versions, ecosystem + ': routine version updates must target staging');
+    assert.match(security, /open-pull-requests-limit:\s*0/,
+      'default branch must not receive ordinary version PRs');
+    assert.match(versions, /open-pull-requests-limit:\s*2/,
+      'preserve routine version update PR cap');
+    assert.match(versions, /applies-to:\s*version-updates/);
+    assert.doesNotMatch(security, /applies-to:\s*version-updates/);
+    assert.doesNotMatch(versions, /applies-to:\s*security-updates/);
+  }
+  const mainNpm = blocks.find(block => block.includes('package-ecosystem: "npm"') &&
+    !block.includes('target-branch:'));
+  assert.match(mainNpm, /applies-to:\s*security-updates/);
 });
 
 test('PR CI audits the entire installed production tree for high or critical advisories', async () => {
