@@ -11,7 +11,7 @@ export function pageSkeletonKind(path = "/") {
   if (value === "/settings") return "settings";
   if (value === "/global-radio") return "global-radio";
   if (value === "/global-radio/apple-music") return "global-radio-provider";
-  if (parts.length === 4 && parts[0] === "global-radio" && parts[1] === "apple-music") {
+  if (parts.length === 3 && parts[0] === "global-radio" && parts[1] === "apple-music") {
     return "global-radio-station";
   }
   if (parts[0] === "global-radio") return "info";
