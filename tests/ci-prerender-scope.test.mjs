@@ -62,3 +62,11 @@ test('production promotion is a direct staging to main PR, never an intermediate
   assert.match(environments, /head=staging, base=main/);
   assert.match(environments, /pages build and deployment/);
 });
+
+
+test('retargeted pull requests rerun CI under their new base without allowing direct production promotions', async () => {
+  const yaml = await workflow();
+  assert.match(yaml, /types: \[opened, synchronize, reopened, edited\]/);
+  assert.match(yaml, /if \[ "\$live_base" != "\$EVENT_BASE_REF" \]/);
+  assert.match(yaml, /\[ "\$live_base" = main \] && \[ "\$live_source" != staging \]/);
+});

@@ -2,7 +2,9 @@ name: "CI"
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    # Base-branch retargets (notably Dependabot main -> staging) emit
+    # "edited", not "synchronize". Revalidate against the current base.
+    types: [opened, synchronize, reopened, edited]
     paths:
       - "README.md"
       - "AGENTS.md"
