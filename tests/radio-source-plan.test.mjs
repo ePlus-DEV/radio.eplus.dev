@@ -81,5 +81,10 @@ test("cycles playback candidates while the global retry budget remains", () => {
   assert.equal(nextPlaybackIndex(0, 4), 1);
   assert.equal(nextPlaybackIndex(3, 4), 0);
   assert.equal(nextPlaybackIndex(0, 0), -1);
+  assert.equal(nextPlaybackIndex(undefined, 3), 0);
+  assert.equal(nextPlaybackIndex(NaN, 3), 0);
+  assert.equal(nextPlaybackIndex(-1, 3), 0);
+  assert.equal(nextPlaybackIndex(99, 3), 0);
+  assert.equal(nextPlaybackIndex(1, 3), 2);
   assert.equal(MAX_STREAM_ATTEMPTS, 6);
 });
