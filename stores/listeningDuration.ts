@@ -35,17 +35,21 @@ export const useListeningDurationStore = defineStore('listeningDuration', {
       } catch { /* Blocked storage should not interrupt playback or the controls. */ }
       this.ready = true;
       window.addEventListener('storage', (event: StorageEvent) => {
-        if (event.key === LISTENING_TRACKING_ENABLED_KEY || event.key === null) {
-          this.enabled = parseListeningTrackingEnabled(event.key === null
-            ? localStorage.getItem(LISTENING_TRACKING_ENABLED_KEY) : event.newValue);
-        }
-        if (event.key === LISTENING_DURATION_KEY || event.key === null) {
-          this.stats = durationSnapshot.external(
-            event.key === null ? localStorage.getItem(LISTENING_DURATION_KEY) : event.newValue,
-            parseListeningDuration, emptyListeningDuration,
-          );
-          if (event.newValue === null) window.dispatchEvent(new Event('radio:listening-duration-reset'));
-        }
+        // A storage clear event requires fresh reads, which can throw if the
+        // browser denies storage access. Keep the current session usable.
+        try {
+          if (event.key === LISTENING_TRACKING_ENABLED_KEY || event.key === null) {
+            this.enabled = parseListeningTrackingEnabled(event.key === null
+              ? localStorage.getItem(LISTENING_TRACKING_ENABLED_KEY) : event.newValue);
+          }
+          if (event.key === LISTENING_DURATION_KEY || event.key === null) {
+            this.stats = durationSnapshot.external(
+              event.key === null ? localStorage.getItem(LISTENING_DURATION_KEY) : event.newValue,
+              parseListeningDuration, emptyListeningDuration,
+            );
+            if (event.newValue === null) window.dispatchEvent(new Event('radio:listening-duration-reset'));
+          }
+        } catch { /* Persistent storage is optional; playback must continue. */ }
       });
     },
     setTrackingEnabled(enabled: boolean) {
