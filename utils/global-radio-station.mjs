@@ -40,10 +40,11 @@ export function createAppleRadioQueue(stations, placeholder = '/brand/onair-mark
 }
 
 /**
- * Station deep links normally own their own initialization. Global Radio
- * detail routes are the exception: they do not activate a player until Play,
- * so a reload may restore the SAME last-selected Global station's identity.
- * Never replace a different explicit deep link with listening history.
+ * Country station deep links initialize themselves and take precedence over
+ * saved history. Global Radio detail pages are different: browsing a detail
+ * route does NOT select its station or stop the active Global stream. Thus F5
+ * must restore the actual last selected Global station, even when the visitor
+ * is looking at a different Apple Music detail page.
  */
 export function canRestoreSavedStationOnRoute(savedUrl, routePath) {
   if (typeof routePath !== 'string') return false;
@@ -51,5 +52,5 @@ export function canRestoreSavedStationOnRoute(savedUrl, routePath) {
   if (path.split('/').filter(Boolean).length < 3) return true;
   return typeof savedUrl === 'string'
     && savedUrl.startsWith('/global-radio/apple-music/')
-    && path === savedUrl;
+    && /^\/global-radio\/apple-music\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(path);
 }
