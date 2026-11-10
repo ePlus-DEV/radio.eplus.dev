@@ -51,5 +51,9 @@ test('the shared player displays an explicit pending station without faking audi
 test('late idle restoration cannot override the pending explicit Global selection', async () => {
   const restore = await read('composables/useRestoreLastStation.ts');
   assert.match(restore, /!preferences\.restoreStation \|\| playback\.pendingGlobalRadio/);
-  assert.equal((restore.match(/if \(playback\.pendingGlobalRadio\) return;/g) || []).length, 2);
+  assert.equal((restore.match(/if \(playback\.pendingGlobalRadio\) return;/g) || []).length, 1);
+  assert.match(restore, /playback\.pendingGlobalRadio \|\| playback\.playing/,
+    'late public queue loading cannot replace an explicit newer Global selection');
+  assert.doesNotMatch(restore, /resolvePublicTuneInStream/,
+    'idle restore must never fetch a signed HLS stream');
 });

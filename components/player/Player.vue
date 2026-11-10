@@ -48,7 +48,7 @@
               <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="h-11 w-11 cursor-pointer justify-center rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
             </UTooltip>
           </span>
-          <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
+          <UButton class="radio-player-main-action h-11 w-11 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 ring-4 ring-rose-500/10 transition hover:bg-rose-400 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12" :disabled="!canStartPlayback" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
             <UIcon v-if="waiting || resolvingGlobalSelection" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
             <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
           </UButton>
@@ -106,7 +106,7 @@
         <p dir="auto" class="mt-1 truncate text-sm font-semibold">{{ nowPlayingTitle }}</p>
         <p v-if="nowPlayingArtist" dir="auto" class="truncate text-xs text-[var(--radio-text-muted)]">{{ nowPlayingArtist }}</p>
       </div>
-      <UButton class="h-12 w-12 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 hover:bg-rose-400" :disabled="!hasPlayableSource" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
+      <UButton class="h-12 w-12 cursor-pointer justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-950/25 hover:bg-rose-400" :disabled="!canStartPlayback" :aria-label="playing || waiting ? $t('player.pause') : $t('player.play')" @click="playing || waiting ? onPause() : onPlay()">
         <UIcon v-if="waiting || resolvingGlobalSelection" name="i-lucide-loader-circle" class="h-5 w-5 animate-spin" />
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
@@ -174,7 +174,7 @@
   </USlideover>
   <UModal v-model:open="nowPlayingOpen" fullscreen :title="$t('redesign.now_playing')" :ui="{ content: 'bg-[var(--radio-page-bg)]' }" @after:leave="finishPlayerAction">
     <template #content>
-      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :report-email-url="reportEmailUrl" :station-path="customStation ? '' : stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="hasPlayableSource" :favorite="favoriteActive" :favorite-enabled="!customStation" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
+      <PlayerNowPlaying :health="health" :online="online" :report-url="reportUrl" :report-email-url="reportEmailUrl" :station-path="customStation ? '' : stationUrl" :title="nowPlayingTitle" :artist="nowPlayingArtist" :artwork="nowPlayingArtwork" :station-name="streamName" :status="playerStatus" :playing="playing" :waiting="waiting" :playable="canStartPlayback" :favorite="favoriteActive" :favorite-enabled="!customStation" :error="streamError" :can-navigate="canNavigateStations" :previous-label="previousStationLabel" :next-label="nextStationLabel" :sleep-remaining="sleepRemaining" :sleep-items="sleepMenuItems" :source-items="sourceMenuItems" :diagnostics="recoveryDiagnostics" :lyrics-available="lyricsAvailable" :next-title="song?.nextMedia?.title" :next-artist="song?.nextMedia?.artists" :next-station-title="nextStation?.title" @close="nowPlayingOpen = false" @favorite="toggleFavorite" @previous="navigateStation(-1)" @next="navigateStation(1)" @toggle="playing || waiting ? onPause() : onPlay()" @retry="retryCurrentSource" @queue="deferPlayerAction('queue')" @lyrics="deferPlayerAction('lyrics')" />
     </template>
   </UModal>
 </template>
@@ -277,7 +277,11 @@ const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
 // A Global station can be shown while its first HLS URL is still resolving.
 // This UI-only hint must never mark audio as playing or preload other streams.
-const resolvingGlobalSelection = computed(() => !props.stationUrl && Boolean(playback.pendingGlobalRadio));
+const resolvingGlobalSelection = computed(() => Boolean(
+  (!props.stationUrl && playback.pendingGlobalRadio)
+  || (playback.globalRadioPendingId
+    && props.stationUrl === '/global-radio/apple-music/' + playback.globalRadioPendingId),
+));
 const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
 const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
@@ -414,6 +418,13 @@ const sourceList = computed<RadioSource[]>(() => {
 });
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
+// After a reload, a Global Radio station has a safe catalog identity but no
+// reusable signed HLS source. Keep Play enabled: the user click must resolve a
+// NEW URL via the same detail-page action as the regular Apple Music button.
+const canRequestGlobalStream = computed(() => !hasPlayableSource.value
+  && Boolean(props.stationUrl?.startsWith('/global-radio/apple-music/'))
+  && playback.station?.url === props.stationUrl);
+const canStartPlayback = computed(() => hasPlayableSource.value || (canRequestGlobalStream.value && !resolvingGlobalSelection.value));
 
 const sourceName = (source: RadioSource, index: number): string => {
   if (source.label?.trim()) return source.label.trim();
@@ -1036,7 +1047,19 @@ const scheduleReconnect = (): void => {
 };
 
 const onPlay = async (): Promise<void> => {
-  if (!hasPlayableSource.value) return;
+  if (!hasPlayableSource.value) {
+    if (canRequestGlobalStream.value && playback.station) {
+      // Uses the app-scoped resolver only after a real Play gesture. In
+      // particular, never use an old HLS accessKey on restore.
+      emit('select-station', {
+        id: playback.station.id,
+        title: playback.station.title,
+        image: playback.station.image,
+        url: playback.station.url,
+      });
+    }
+    return;
+  }
   if (streamError.value) { retryCurrentSource(); return; }
 
   listening.remember(playback.station, 'play');

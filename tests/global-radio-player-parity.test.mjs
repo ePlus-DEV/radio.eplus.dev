@@ -90,25 +90,34 @@ test('transient TuneIn renewal failure preserves an unexpired playing station', 
   assert.match(renew, /playback\.globalRadioLease = null/);
 });
 
-test('saved Global station restores an idle player from fresh HLS, never old accessKey or autoplay', async () => {
+test('saved Global station restores its identity with no HLS lease, accessKey or autoplay', async () => {
   setActivePinia(createPinia());
   const playback = usePlaybackStore();
   const provider = await getProvider();
   const first = provider.stations[0];
   const queue = createAppleRadioQueue(provider.stations);
-  playback.activateGlobalRadio(
-    createAuthorizedApplePlaybackStation(first, appleStream),
-    first.listen_url, Date.now() + 120_000, queue, { autoplay: false },
-  );
+
+  // Reload is metadata-only, even if the previous session had a valid
+  // expiring Apple HLS source. A user Play must resolve a NEW signed URL.
+  const restored = createAuthorizedApplePlaybackStation(first, '');
+  playback.activate(restored, queue, { autoplay: false, onlyIfIdle: true });
   assert.equal(playback.playRequest, 0);
   assert.equal(playback.stations.length, 7);
-  assert.equal(playback.station.sources.length, 1);
+  assert.equal(playback.station.sources.length, 0);
+  assert.equal(playback.globalRadioLease, null);
+
   const restore = await read('composables/useRestoreLastStation.ts');
+  const player = await read('components/player/Player.vue');
   assert.match(restore, /PUBLIC_APPLE_TUNEIN_STATIONS/);
-  assert.match(restore, /resolvePublicTuneInStream\(\{ station, corsServer: String\(config\.public\.corsServer \|\| ''\) \}\)/);
+  assert.match(restore, /canRestoreSavedStationOnRoute\(saved\.url, route\.path\)/);
+  assert.match(restore, /createAuthorizedApplePlaybackStation\(\{/);
   assert.match(restore, /siteAssetUrl\('\/catalog\/providers\/apple-music\.json'\)/);
-  assert.match(restore, /\{ autoplay: false \}/);
-  assert.match(restore, /playback\.station \|\| playback\.playing/);
+  assert.match(restore, /autoplay: false, onlyIfIdle: true/);
+  assert.match(restore, /playback\.station\?\.url !== saved\.url/);
+  assert.match(player, /const canRequestGlobalStream = computed/);
+  assert.match(player, /emit\('select-station', \{/);
+  assert.doesNotMatch(restore, /resolvePublicTuneInStream/,
+    'reload must not contact TuneIn or reuse a signed accessKey');
   assert.doesNotMatch(restore, /localStorage\.setItem\([^\n]*accessKey/);
 });
 
