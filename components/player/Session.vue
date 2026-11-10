@@ -64,7 +64,8 @@ const selectGlobalStation = async (target: RadioStationOption, version: number, 
       throw error;
     }));
     if (version !== selectionVersion || playback.station?.url !== previousUrl
-      || playback.requestedStationUrl !== previousRequested) return;
+      || playback.requestedStationUrl !== previousRequested
+      || (playback.globalRadioPendingId && playback.globalRadioPendingId !== target.id)) return;
     globalCatalog = provider;
     const chosen = provider.stations?.find(item => '/global-radio/apple-music/' + item.id === target.url);
     if (!chosen) {
