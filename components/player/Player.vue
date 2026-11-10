@@ -277,7 +277,11 @@ const { t, locale } = useI18n();
 const nowPlayingOpen = ref(false);
 // A Global station can be shown while its first HLS URL is still resolving.
 // This UI-only hint must never mark audio as playing or preload other streams.
-const resolvingGlobalSelection = computed(() => !props.stationUrl && Boolean(playback.pendingGlobalRadio));
+const resolvingGlobalSelection = computed(() => Boolean(
+  (!props.stationUrl && playback.pendingGlobalRadio)
+  || (playback.globalRadioPendingId
+    && props.stationUrl === '/global-radio/apple-music/' + playback.globalRadioPendingId),
+));
 const playerStatus = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'redesign.paused'));
 const liveStateLabel = computed(() => t(!online.value ? 'text.offline' : streamError.value ? 'alert.stream_error' : waiting.value || resolvingGlobalSelection.value ? (waiting.value && hasPlayedCurrentSource.value ? 'recovery.buffering' : 'player.connecting') : playing.value ? 'player.on_air' : 'player.ready'));
 const liveStateClass = computed(() => {
@@ -420,7 +424,7 @@ const hasPlayableSource = computed(() => sourceList.value.length > 0);
 const canRequestGlobalStream = computed(() => !hasPlayableSource.value
   && Boolean(props.stationUrl?.startsWith('/global-radio/apple-music/'))
   && playback.station?.url === props.stationUrl);
-const canStartPlayback = computed(() => hasPlayableSource.value || canRequestGlobalStream.value);
+const canStartPlayback = computed(() => hasPlayableSource.value || (canRequestGlobalStream.value && !resolvingGlobalSelection.value));
 
 const sourceName = (source: RadioSource, index: number): string => {
   if (source.label?.trim()) return source.label.trim();
