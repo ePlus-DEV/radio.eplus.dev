@@ -112,3 +112,38 @@ test('Global details without listening history stay passive and never auto-start
   const state = await currentPlayback(page);
   expect(state).toMatchObject({ url: '', playRequest: 0, playing: false, audioSrc: '' });
 });
+
+test('Global dock Play after F5 resolves in place and never opens station detail', async ({ page }) => {
+  await page.addInitScript(library => {
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify(library));
+  }, savedLibrary(hits));
+
+  // From the directory, the saved station is selected in the dock but the
+  // browser stays on the directory. The dock Play must not turn into a link.
+  await page.goto('/global-radio/apple-music');
+  await expect(page.locator('.radio-player-dock .radio-player-title')).toHaveText(hits.title);
+  await page.reload();
+  await expect(page.locator('.radio-player-dock .radio-player-title')).toHaveText(hits.title);
+  const originalUrl = page.url();
+  await page.locator('.radio-player-dock .radio-player-main-action').click();
+  await page.waitForTimeout(500);
+  expect(page.url()).toBe(originalUrl, 'Global Play may fetch a fresh stream but must not navigate to details');
+
+  // The source may be unavailable in a secret-free preview, but the selected
+  // station still must not change to a different route or auto-play on reload.
+  expect((await currentPlayback(page)).url).toBe(pathFor(hits));
+});
+
+test('Global dock Play preserves another Global detail route currently being viewed', async ({ page }) => {
+  await page.addInitScript(library => {
+    localStorage.setItem('radio_listening_library_v1', JSON.stringify(library));
+  }, savedLibrary(hits));
+  await page.goto('/global-radio/apple-music/apple-music-1');
+  await expect(page.locator('main h1')).toHaveText('Apple Music 1');
+  await expect(page.locator('.radio-player-dock .radio-player-title')).toHaveText(hits.title);
+  const originalUrl = page.url();
+  await page.locator('.radio-player-dock .radio-player-main-action').click();
+  await page.waitForTimeout(500);
+  expect(page.url()).toBe(originalUrl);
+  await expect(page.locator('main h1')).toHaveText('Apple Music 1');
+});
