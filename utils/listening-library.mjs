@@ -3,7 +3,14 @@ export const emptyListeningLibrary = () => ({ recent: [], favorites: [], lastSta
 
 export function stationIdentity(value) {
   if (!value || typeof value.url !== 'string' || !/^\/(?!\/)[^/?#]+\/[^/?#]+\/[^/?#]+$/.test(value.url)) return null;
-  if (value.url.split('/').some(part => part === '.' || part === '..') || value.url.includes('\\')) return null;
+  // Encoded dot segments are normalized by browsers and can escape the station route.
+  // Reject encoded separators and malformed escapes while allowing Unicode slugs.
+  try {
+    if (value.url.split('/').some(part => {
+      const decoded = decodeURIComponent(part);
+      return decoded === '.' || decoded === '..' || /[\\/?#]/.test(decoded);
+    })) return null;
+  } catch { return null; }
   if (typeof value.title !== 'string' || !value.title.trim()) return null;
   const image = typeof value.image === 'string' && /^(?:\/(?!\/)|https?:\/\/)/i.test(value.image) ? value.image : '/brand/onair-mark.svg';
   return { url: value.url, title: value.title.slice(0, 300), image, countryKey: String(value.countryKey || '').slice(0, 150) };
