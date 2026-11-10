@@ -32,7 +32,7 @@ test('favorite toggle persists independently of history and last playback prefer
 
 test('corrupt storage, duplicate entries and unsafe station URLs are ignored', () => {
   assert.deepEqual(parseListeningLibrary('invalid json'), emptyListeningLibrary());
-  for (const url of ['https://evil.example/a/b/c', '//evil.example/a/b', '/asia/../station', '/asia/viet-nam/radio?autoplay=1', '/asia/viet-nam/radio#x']) {
+  for (const url of ['https://evil.example/a/b/c', '//evil.example/a/b', '/asia/../station', '/asia/viet-nam/radio?autoplay=1', '/asia/viet-nam/radio#x', '/asia/viet-nam/%2e%2e', '/asia/viet-nam/%2Fadmin', '/asia/viet-nam/%5cadmin', '/asia/viet-nam/%ZZ']) {
     assert.equal(rememberStation(emptyListeningLibrary(), { ...station('test'), url }, 'play').lastStation, null);
   }
   const library = parseListeningLibrary(JSON.stringify({ favorites: [station('one'), station('one'), null], lastStation: station('one'), lastState: 'unexpected' }));
@@ -61,4 +61,10 @@ test('remove a single recent station while keeping other history, favorites and 
   const withoutLast = removeRecentStation(removed, station('last').url);
   assert.equal(withoutLast.lastStation.url, station('last').url);
   assert.deepEqual(withoutLast.recent.map(entry => entry.title), ['first']);
+});
+
+
+test('encoded path validation preserves valid percent-encoded Unicode station slugs', () => {
+  const valid = station('%E1%BB%95n-%C4%91%E1%BB%8Bnh');
+  assert.equal(rememberStation(emptyListeningLibrary(), valid, 'pause').lastStation?.url, valid.url);
 });
