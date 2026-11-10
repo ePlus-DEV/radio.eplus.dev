@@ -8,7 +8,7 @@ export function stationIdentity(value) {
   try {
     if (value.url.split('/').some(part => {
       const decoded = decodeURIComponent(part);
-      return decoded === '.' || decoded === '..' || /[\\/?#]/.test(decoded);
+      return decoded === '.' || decoded === '..' || /[\\/?#\u0000-\u001f\u007f]/.test(decoded);
     })) return null;
   } catch { return null; }
   if (typeof value.title !== 'string' || !value.title.trim()) return null;

@@ -121,6 +121,25 @@ test('saved Global station restores its identity with no HLS lease, accessKey or
   assert.doesNotMatch(restore, /localStorage\.setItem\([^\n]*accessKey/);
 });
 
+test('Global dock and queue Play resolve in the app session without a detail route navigation', async () => {
+  const session = await read('components/player/Session.vue');
+  const player = await read('components/player/Player.vue');
+  assert.match(player, /emit\('select-station', \{/,
+    'metadata-only dock Play still goes through the shared session');
+  assert.match(session, /useAuthorizedGlobalRadioPlayback\(/);
+  assert.match(session, /const chosen = provider\.stations\?\.find/);
+  assert.match(session, /await playGlobalRadio\(chosen\)/);
+  assert.match(session, /if \(target\.url\.startsWith\('\/global-radio\/apple-music\/'\)\) \{/);
+  const directGlobal = session.split("if (target.url.startsWith('/global-radio/apple-music/')) {")[1].split('return;')[0];
+  assert.match(directGlobal, /selectGlobalStation\(/);
+  assert.doesNotMatch(directGlobal, /navigateTo|requestedStationUrl\s*=/,
+    'clicking Play on Global station must not navigate into its detail');
+  assert.match(session, /playback\.requestStation\(target\.url\)/,
+    'Country navigation still requests the target before routing');
+  assert.match(session, /void navigateTo\(target\.url\)/,
+    'Country navigation remains unchanged');
+});
+
 test('Global queue and Next/Previous requests use the same shared player navigation contract', async () => {
   const session = await read('components/player/Session.vue');
   const detail = await read('pages/global-radio/apple-music/[station].vue');

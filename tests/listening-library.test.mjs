@@ -68,3 +68,16 @@ test('encoded path validation preserves valid percent-encoded Unicode station sl
   const valid = station('%E1%BB%95n-%C4%91%E1%BB%8Bnh');
   assert.equal(rememberStation(emptyListeningLibrary(), valid, 'pause').lastStation?.url, valid.url);
 });
+
+
+test('rejects percent-encoded control characters in station slugs', () => {
+  for (const url of [
+    '/asia/viet-nam/radio%00test',
+    '/asia/viet-nam/radio%0Atest',
+    '/asia/viet-nam/radio%09test',
+    '/asia/viet-nam/radio%7Ftest',
+  ]) {
+    assert.equal(rememberStation(emptyListeningLibrary(), { ...station('test'), url }, 'play').lastStation, null, url);
+  }
+  assert.equal(rememberStation(emptyListeningLibrary(), station('radio-1'), 'pause').lastStation?.url, '/asia/viet-nam/radio-1');
+});
