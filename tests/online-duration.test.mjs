@@ -152,3 +152,15 @@ test('all seven locales explain online time and independent listening metrics', 
     }
   }
 });
+
+test('foreground activity checkpoints a delayed timer before later time is lost', () => {
+  let now = 0;
+  const commits = [];
+  const tracker = createOnlineDurationTracker({ now: () => now, onDuration: ms => commits.push(ms) });
+  tracker.start();
+  now = MAX_ONLINE_CHECKPOINT_MS;
+  tracker.activity(); // Interval callback has not fired yet.
+  now += 5_000;
+  tracker.stop();
+  assert.deepEqual(commits, [MAX_ONLINE_CHECKPOINT_MS, 5_000]);
+});

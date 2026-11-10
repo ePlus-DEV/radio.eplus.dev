@@ -196,6 +196,24 @@ Regression guards include `tests/playback-store.test.mjs`, `tests/station-pollin
 
 See `docs/instant-audio-sync.md`.
 
+## Licensing and rights guardrails
+
+- The repository `LICENSE` grants MIT rights only for **original project-owned
+  source code**, not broadcaster audio, stream rights, provider data/artwork,
+  third-party icons/packages or ePlus OnAir branding. Preserve the
+  [content-rights policy](./CONTENT_AND_THIRD_PARTY_RIGHTS.md).
+- Do not treat a stream URL, public provider page, locally copied logo or an
+  `artwork_source_url` as proof of a redistribution/playback license. Review
+  provenance and permissions before importing assets or catalogs.
+- Do not relicense `public/radio/**`, `public/catalog/providers/**`,
+  `public/img/**`, `public/brand/**` or derived third-party catalog data as
+  MIT just because they live in the same GitHub repository.
+- Private `.env`, backend credentials and GitHub Environment Secrets are
+  never part of the public source grant. `NUXT_PUBLIC_*` settings are
+  browser-visible and must not contain secrets.
+- License documentation changes must not alter audio behavior, station data,
+  production SEO/GA4, images or deployment configuration.
+
 ## i18n and text direction
 
 Station names/descriptions may use Arabic or other RTL/mixed scripts.
