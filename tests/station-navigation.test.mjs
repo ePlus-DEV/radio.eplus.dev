@@ -28,3 +28,11 @@ test("does not navigate when fewer than two stations are available", () => {
   assert.equal(getAdjacentStation([], "a", 1), undefined);
   assert.equal(getAdjacentStation([{ id: "a" }], "a", 1), undefined);
 });
+
+test("skips missing or malformed queue entries without selecting an unplayable station", () => {
+  const partial = [null, { id: "a" }, undefined, { id: "" }, { id: "b" }, {}];
+  assert.equal(getAdjacentStation(partial, "a", 1)?.id, "b");
+  assert.equal(getAdjacentStation(partial, "b", -1)?.id, "a");
+  assert.equal(getAdjacentStation(partial, undefined, -1)?.id, "b");
+  assert.equal(getAdjacentStation([null, { id: "a" }, {}], "a", 1), undefined);
+});
