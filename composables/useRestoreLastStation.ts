@@ -52,14 +52,21 @@ export function useRestoreLastStation() {
         const provider = await $fetch<GlobalRadioProvider>(
           siteAssetUrl('/catalog/providers/apple-music.json'), { timeout: 10_000 },
         );
-        if (!provider.stations?.some(entry => entry.id === stationId)) return;
+        const canonical = provider.stations?.find(entry => entry.id === stationId);
+        if (!canonical) return;
         if (disposed || route.fullPath !== path || playback.playRequest !== request
           || playback.station?.url !== saved.url || playback.station.sources.length
           || playback.pendingGlobalRadio || playback.playing || playback.globalRadioPendingId
           || playback.requestedStationUrl) return;
         const queue = createAppleRadioQueue(provider.stations);
         for (const item of queue) item.image = siteAssetUrl(item.image);
-        playback.activate(playback.station, queue, { autoplay: false });
+        // Saved name/artwork is an immediate offline fallback, not the source
+        // of truth. Refresh only the still-idle selected station from the
+        // public catalog. A late response must not overwrite a newer Play.
+        const updated = createAuthorizedApplePlaybackStation(canonical, '');
+        updated.image = siteAssetUrl(updated.image);
+        playback.station = updated;
+        playback.activate(updated, queue, { autoplay: false });
       } catch { /* The selected station remains visible offline. */ }
       return;
     }
