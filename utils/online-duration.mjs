@@ -100,6 +100,9 @@ export function createOnlineDurationTracker({
     },
     activity() {
       const current = now();
+      // An input event after the idle deadline must not retroactively make
+      // the entire unattended gap count as foreground activity.
+      if (active && current >= lastActivityAt + idleMs) flush();
       if (!active) { active = true; lastAt = current; }
       lastActivityAt = current;
     },
