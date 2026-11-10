@@ -10,12 +10,14 @@ export function createAuthorizedApplePlaybackStation(station, source, placeholde
     country: 'apple-music',
     countryKey: 'global_radio.title',
     schedule: '',
-    sources: [{
+    // A saved station can restore its public identity without an expiring HLS
+    // accessKey. A fresh signed source is fetched only after explicit Play.
+    sources: source ? [{
       src: source,
       type: 'application/vnd.apple.mpegurl',
       source: 'primary',
       label: 'Apple Music HLS',
-    }],
+    }] : [],
   };
 }
 
@@ -35,4 +37,19 @@ export function createAppleRadioQueue(stations, placeholder = '/brand/onair-mark
       url: '/global-radio/apple-music/' + station.id,
     }];
   });
+}
+
+/**
+ * Station deep links normally own their own initialization. Global Radio
+ * detail routes are the exception: they do not activate a player until Play,
+ * so a reload may restore the SAME last-selected Global station's identity.
+ * Never replace a different explicit deep link with listening history.
+ */
+export function canRestoreSavedStationOnRoute(savedUrl, routePath) {
+  if (typeof routePath !== 'string') return false;
+  const path = routePath.replace(/\/+$/, '') || '/';
+  if (path.split('/').filter(Boolean).length < 3) return true;
+  return typeof savedUrl === 'string'
+    && savedUrl.startsWith('/global-radio/apple-music/')
+    && path === savedUrl;
 }
