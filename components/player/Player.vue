@@ -419,8 +419,8 @@ const sourceList = computed<RadioSource[]>(() => {
 
 const hasPlayableSource = computed(() => sourceList.value.length > 0);
 // After a reload, a Global Radio station has a safe catalog identity but no
-// reusable signed HLS source. Keep Play enabled: the user click must resolve a
-// NEW URL via the same detail-page action as the regular Apple Music button.
+// reusable signed HLS source. Keep Play enabled: a user click resolves a
+// NEW URL in the app-scoped Session without navigating to the detail page.
 const canRequestGlobalStream = computed(() => !hasPlayableSource.value
   && Boolean(props.stationUrl?.startsWith('/global-radio/apple-music/'))
   && playback.station?.url === props.stationUrl);
