@@ -36,3 +36,12 @@ test("skips missing or malformed queue entries without selecting an unplayable s
   assert.equal(getAdjacentStation(partial, undefined, -1)?.id, "b");
   assert.equal(getAdjacentStation([null, { id: "a" }, {}], "a", 1), undefined);
 });
+
+
+test("deduplicates repeated station IDs before navigating", () => {
+  const repeated = [{ id: "a" }, { id: "a" }, { id: "b" }, { id: "b" }];
+  assert.equal(getAdjacentStation(repeated, "a", 1)?.id, "b");
+  assert.equal(getAdjacentStation(repeated, "b", -1)?.id, "a");
+  assert.equal(getAdjacentStation(repeated, "b", 1)?.id, "a");
+  assert.equal(getAdjacentStation([{ id: "a" }, { id: "a" }], "a", 1), undefined);
+});
