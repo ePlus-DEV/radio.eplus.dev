@@ -3,19 +3,28 @@ export const getAdjacentStation = (
   activeStationId,
   offset,
 ) => {
-  if (!Array.isArray(stations) || stations.length < 2) return undefined;
-  if (offset !== -1 && offset !== 1) return undefined;
+  if (!Array.isArray(stations) || (offset !== -1 && offset !== 1)) return undefined;
 
-  const currentIndex = stations.findIndex(
-    (station) => station?.id === activeStationId,
+  // A partially loaded queue can contain empty entries. Never select one as
+  // the next playable station or match its missing ID against an unset ID.
+  const seenIds = new Set();
+  const playable = stations.filter((station) => {
+    if (!station || station.id == null || station.id === '' || seenIds.has(station.id)) return false;
+    seenIds.add(station.id);
+    return true;
+  });
+  if (playable.length < 2) return undefined;
+
+  const currentIndex = playable.findIndex(
+    (station) => station.id === activeStationId,
   );
 
   if (currentIndex < 0) {
-    return offset > 0 ? stations[0] : stations[stations.length - 1];
+    return offset > 0 ? playable[0] : playable[playable.length - 1];
   }
 
   const nextIndex =
-    (currentIndex + offset + stations.length) % stations.length;
+    (currentIndex + offset + playable.length) % playable.length;
 
-  return stations[nextIndex];
+  return playable[nextIndex];
 };

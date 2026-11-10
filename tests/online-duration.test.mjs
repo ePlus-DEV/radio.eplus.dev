@@ -105,6 +105,20 @@ test('idle state stops accumulation after five minutes; resuming requires user a
   assert.equal(counted, ONLINE_IDLE_MS + 2_000);
 });
 
+test('activity after an unflushed idle gap does not revive idle time', () => {
+  let now = 0;
+  const commits = [];
+  const tracker = createOnlineDurationTracker({
+    now: () => now, idleMs: 10_000, onDuration: ms => commits.push(ms),
+  });
+  tracker.start();
+  now = 60_000; // Timer callbacks were delayed while the user was away.
+  tracker.activity();
+  now = 62_000;
+  tracker.stop();
+  assert.deepEqual(commits, [10_000, 2_000]);
+});
+
 test('online tracking is in the global app, separate from player, with visibility and privacy controls', async () => {
   const [app, online, stats, settings, store] = await Promise.all([
     read('app.vue'), read('composables/useOnlinePresence.ts'),
