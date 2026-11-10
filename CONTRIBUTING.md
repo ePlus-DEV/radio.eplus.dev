@@ -27,6 +27,22 @@ and [coding guide](./AGENTS.md) before proposing changes.
 7. If a security issue is discovered, report it **privately** as described
    in [SECURITY.md](./SECURITY.md), not in a public issue.
 
-Source code publication does not itself grant permission to redistribute
-radio station logos, audio streams, third-party media or proprietary metadata.
-A repository source license will need to be selected and published separately.
+## Licensing and content provenance
+
+Original code you contribute must be your own or material you have the right
+to submit under the project's [MIT License](./LICENSE). Contributors retain
+their own copyright; submission does not transfer ownership to ePlus OnAir.
+Keep attribution and license notices required by upstream dependencies.
+
+The [Content & third-party rights](./CONTENT_AND_THIRD_PARTY_RIGHTS.md)
+policy excludes broadcasters' audio, third-party station logos/artwork,
+provider metadata and ePlus branding from the default MIT code grant.
+A publicly accessible stream URL is **not** permission to record, mirror,
+rebroadcast or redistribute audio. Explain the provenance of any new
+catalog entry, logo, image or provider integration in its PR and include
+evidence of permission when available.
+
+Never place private environment values, tokens or service credentials in
+source, screenshots, test fixtures, issue comments or PR descriptions.
+Browser-visible `NUXT_PUBLIC_*` values are not a safe place for secrets.
+For copyright or takedown requests, contact **report@eplus.dev** directly.
