@@ -53,4 +53,7 @@ For contributions, see [CONTRIBUTING.md](./CONTRIBUTING.md), [SECURITY.md](./SEC
 
 ## License
 
-A source license has **not yet been selected**. Public visibility alone does not grant permission to reuse or redistribute the code, station artwork or third-party streams.
+Original ePlus OnAir source code is available under the [MIT License](./LICENSE).
+**Radio streams, station artwork, provider metadata and logos are not included**
+in that grant; see [Content & third-party rights](./CONTENT_AND_THIRD_PARTY_RIGHTS.md).
+Private environment secrets are never part of the published source.
