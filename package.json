@@ -4,6 +4,7 @@
   "repository": "https://github.com/ePlus-DEV/radio.eplus.dev",
   "description": "ePlus OnAir — Listen Beyond Borders. Live radio from around the world.",
   "author": "David Nguyen",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
