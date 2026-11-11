@@ -589,7 +589,9 @@
     "clear": "Effacer",
     "loading": "Chargement des stations…",
     "results_title": "Résultats de recherche",
-    "view_all": "Voir tous les résultats"
+    "view_all": "Voir tous les résultats",
+    "showing_results": "{shown} stations sur {total} affichées",
+    "load_more": "Afficher plus de stations"
   },
   "chat": {
     "open": "Ouvrir l'assistant",
