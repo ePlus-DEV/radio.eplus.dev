@@ -14,14 +14,22 @@
 
     <section class="radio-surface rounded-3xl p-4 sm:p-5">
       <form @submit.prevent="submitSearch">
-        <UInput
-          v-model="draft"
-          type="search"
-          icon="i-lucide-search"
-          class="w-full"
-          :placeholder="t('popup.search.text')"
-          :aria-label="t('popup.search.text')"
-        />
+        <!-- Match the header search box exactly (components/search/Box.vue):
+             same surface class, height, radius and icon placement. -->
+        <div class="relative">
+          <fa
+            :icon="['fas', 'magnifying-glass']"
+            class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--radio-text-muted)]"
+          />
+          <UInput
+            v-model="draft"
+            type="search"
+            class="w-full"
+            :ui="{ base: 'radio-search-panel-input h-11 rounded-2xl pl-11 pr-4 text-sm' }"
+            :placeholder="t('popup.search.text')"
+            :aria-label="t('popup.search.text')"
+          />
+        </div>
       </form>
 
       <ClientOnly>
