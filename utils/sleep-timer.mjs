@@ -2,7 +2,9 @@
 export function createSleepTimer({ onExpire, onChange, now = Date.now, setTimer = setTimeout, clearTimer = clearTimeout }) {
   let deadline = 0;
   let timer;
+  let generation = 0;
   const cancel = () => {
+    generation++;
     if (timer !== undefined) clearTimer(timer);
     timer = undefined;
     deadline = 0;
@@ -10,6 +12,9 @@ export function createSleepTimer({ onExpire, onChange, now = Date.now, setTimer 
   };
   const check = () => {
     if (!deadline) return;
+    // Invalidate a callback already queued before a manual resume check.
+    generation++;
+    const currentGeneration = generation;
     if (timer !== undefined) clearTimer(timer);
     timer = undefined;
     const remaining = deadline - now();
@@ -19,7 +24,9 @@ export function createSleepTimer({ onExpire, onChange, now = Date.now, setTimer 
       return;
     }
     onChange(Math.ceil(remaining / 60_000));
-    timer = setTimer(check, Math.min(remaining, 60_000));
+    timer = setTimer(() => {
+      if (currentGeneration === generation) check();
+    }, Math.min(remaining, 60_000));
   };
   const start = minutes => {
     cancel();
