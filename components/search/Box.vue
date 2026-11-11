@@ -24,6 +24,7 @@
             :ui="{ base: inline ? 'radio-search-panel-input h-11 rounded-2xl pl-11 pr-10 text-sm' : 'h-12 rounded-2xl pl-11 pr-4 text-base sm:text-sm' }"
             :placeholder="$t('popup.search.text')"
             @keydown.esc="closeResults"
+            @keydown.enter="goToResults"
           />
           <kbd v-if="inline && !input" class="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 text-xs text-[var(--radio-text-muted)] sm:block">/</kbd>
         </div>
@@ -127,6 +128,15 @@
           class="px-3 py-8 text-center text-sm text-[var(--radio-text-muted)]" role="status">
           {{ $t('panel.no_channels') }}
         </p>
+        <button
+          v-if="input.trim() && displayHits.length > 0"
+          type="button"
+          class="radio-search-panel-row mt-2 flex w-full items-center justify-center gap-2 rounded-2xl px-3 py-2.5 text-sm font-semibold text-rose-700 transition dark:text-rose-300"
+          @click="goToResults"
+        >
+          {{ $t('search.view_all') }}
+          <UIcon name="i-lucide-arrow-right" class="h-4 w-4" />
+        </button>
       </div>
     </div>
   </div>
@@ -227,6 +237,17 @@ const onFocusout = (event: FocusEvent): void => {
   const nextTarget = event.relatedTarget as Node | null;
   if (nextTarget && event.currentTarget instanceof Node && event.currentTarget.contains(nextTarget)) return;
   resultsOpen.value = false;
+};
+
+// Enter (or "view all") leaves the dropdown for the full results page; the
+// dropdown itself stays a quick-jump surface capped at a short hit list.
+const goToResults = (): void => {
+  const term = input.value.trim();
+  if (!term) return;
+  rememberSearch(term);
+  resultsOpen.value = false;
+  emit("close");
+  void navigateTo({ path: "/search", query: { q: term } });
 };
 
 const handleSelect = (value?: string): void => {
