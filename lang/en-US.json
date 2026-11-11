@@ -219,7 +219,12 @@
     "channels": "All channels",
     "station_count": "{count} stations",
     "search_channels": "Search channels...",
-    "no_channels": "No channels found"
+    "no_channels": "No channels found",
+    "filter_stations": "Filter stations by name…",
+    "sort_default": "Default order",
+    "sort_az": "Name A–Z",
+    "sort_za": "Name Z–A",
+    "clear_filter": "Clear filter"
   },
   "button": {
     "back": "Back",
@@ -582,7 +587,9 @@
     "suggestions": "Suggested for you",
     "recent": "Recent searches",
     "clear": "Clear",
-    "loading": "Loading stations…"
+    "loading": "Loading stations…",
+    "results_title": "Search results",
+    "view_all": "View all results"
   },
   "chat": {
     "open": "Open chatbot",

@@ -219,7 +219,12 @@
     "channels": "Toutes les stations",
     "station_count": "{count} stations",
     "search_channels": "Rechercher des stations…",
-    "no_channels": "Aucune station trouvée"
+    "no_channels": "Aucune station trouvée",
+    "filter_stations": "Filtrer les stations par nom…",
+    "sort_default": "Ordre par défaut",
+    "sort_az": "Nom A–Z",
+    "sort_za": "Nom Z–A",
+    "clear_filter": "Effacer le filtre"
   },
   "button": {
     "back": "Retour",
@@ -582,7 +587,9 @@
     "suggestions": "Suggestions pour vous",
     "recent": "Recherches récentes",
     "clear": "Effacer",
-    "loading": "Chargement des stations…"
+    "loading": "Chargement des stations…",
+    "results_title": "Résultats de recherche",
+    "view_all": "Voir tous les résultats"
   },
   "chat": {
     "open": "Ouvrir l'assistant",
