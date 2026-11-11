@@ -60,16 +60,14 @@
 
 <script setup lang="ts">
 import { searchLocalStations } from '~/utils/station-search.mjs';
+import { parseSearchQueryParam } from '~/utils/search-route-query.mjs';
 
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
 const { t } = useI18n();
 
-const query = computed(() => {
-  const raw = route.query.q;
-  return (Array.isArray(raw) ? raw[0] : raw || '').trim();
-});
+const query = computed(() => parseSearchQueryParam(route.query.q));
 
 // The input edits a draft; the URL query stays the single source of truth so
 // the page remains shareable and Back/Forward restore earlier searches.
