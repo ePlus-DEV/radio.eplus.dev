@@ -589,7 +589,9 @@
     "clear": "清除",
     "loading": "正在加载电台列表…",
     "results_title": "搜索结果",
-    "view_all": "查看全部结果"
+    "view_all": "查看全部结果",
+    "showing_results": "显示 {shown} / {total} 个电台",
+    "load_more": "加载更多电台"
   },
   "chat": {
     "open": "打开聊天助手",
