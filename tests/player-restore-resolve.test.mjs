@@ -50,7 +50,9 @@ test('Session resolves a restored country station in place before generic naviga
   assert.ok(branch, 'in-place branch exists');
   assert.match(branch, /!playback\.station\?\.sources\?\.length/);
   assert.match(branch, /!target\.url\.startsWith\('\/global-radio\/'\)/);
-  assert.match(branch, /resolveCountryStationInPlace\(target\)/);
+  assert.match(branch, /resolveCountryStationInPlace\(target, isCurrent\)/);
+  assert.match(branch, /if \(resolved \|\| !isCurrent\(\)\) return;/,
+    'stale resolution must not trigger fallback navigation');
 });
 
 test('slow connecting hint is wired through Recovery with report hidden for connecting', async () => {
