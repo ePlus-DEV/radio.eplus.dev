@@ -102,6 +102,13 @@ export function mergeGlobalSearchHits(localHits, remoteHits, limit = 20) {
   const global = local
     .filter(item => typeof item?.url === 'string' && item.url.startsWith('/global-radio/'));
   const remote = Array.isArray(remoteHits) ? remoteHits : [];
+  // Algolia can legitimately return zero hits for a station known by the
+  // freshly generated static index (for example, while remote sync lags).
+  // Never erase visible local Country matches merely because that empty
+  // response arrived. A response with valid URLs keeps its Algolia ranking.
+  const usableRemote = remote.filter(item => item && typeof item.url === 'string'
+    && item.url.startsWith('/') && !item.url.startsWith('//'));
+  if (!usableRemote.length) return local.slice(0, Math.max(0, limit));
 
   const canonical = new Map();
   for (const item of local) {
@@ -112,7 +119,7 @@ export function mergeGlobalSearchHits(localHits, remoteHits, limit = 20) {
     canonical.set(key, canonical.has(key) ? null : item);
   }
   const seen = new Set();
-  return [...global, ...remote.map(item => canonical.get(geographicHitKey(item)) || item)]
+  return [...global, ...usableRemote.map(item => canonical.get(geographicHitKey(item)) || item)]
     .filter(item => {
       if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') ||
         item.url.startsWith('//') || seen.has(item.url)) return false;
