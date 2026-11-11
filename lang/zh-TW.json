@@ -589,7 +589,9 @@
     "clear": "清除",
     "loading": "正在載入電台清單…",
     "results_title": "搜尋結果",
-    "view_all": "查看全部結果"
+    "view_all": "查看全部結果",
+    "showing_results": "顯示 {shown} / {total} 個電台",
+    "load_more": "載入更多電台"
   },
   "chat": {
     "open": "開啟聊天助理",
