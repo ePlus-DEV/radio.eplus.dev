@@ -43,6 +43,7 @@
       :stations="stations"
       :active-station-id="activeStationId"
       :country-name="countryName"
+      filterable
     />
   </div>
 </template>
