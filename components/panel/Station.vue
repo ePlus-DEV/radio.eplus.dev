@@ -14,16 +14,35 @@
       <span
         class="radio-count-badge inline-flex h-7 shrink-0 items-center rounded-full px-2.5 text-xs font-semibold"
       >
-        {{ stations.length }}
+        {{ filterable && filterActive ? `${visibleStations.length} / ${stations.length}` : stations.length }}
       </span>
     </div>
 
     <div
-      v-if="stations.length"
+      v-if="filterable"
+      class="flex flex-col gap-2 border-b border-[var(--radio-border)] px-3 py-3 sm:flex-row sm:items-center sm:px-4"
+    >
+      <UInput
+        v-model="filterQuery"
+        icon="i-lucide-search"
+        type="search"
+        class="min-w-0 flex-1"
+        :placeholder="$t('panel.filter_stations')"
+        :aria-label="$t('panel.filter_stations')"
+      />
+      <USelect
+        v-model="sortMode"
+        :items="sortItems"
+        class="w-full shrink-0 sm:w-52"
+      />
+    </div>
+
+    <div
+      v-if="visibleStations.length"
       class="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-4 2xl:grid-cols-5"
     >
       <article
-        v-for="station in stations"
+        v-for="station in visibleStations"
         :key="station.id"
         class="radio-station-card group radio-card-compact-station"
         :class="
@@ -90,6 +109,23 @@
     </div>
 
     <div
+      v-else-if="stations.length"
+      class="px-5 py-10 text-center"
+    >
+      <p class="text-sm text-[var(--radio-text-muted)]">
+        {{ $t("panel.no_channels") }}
+      </p>
+      <UButton
+        color="neutral"
+        variant="soft"
+        class="mt-3 cursor-pointer"
+        @click="clearFilter"
+      >
+        {{ $t("panel.clear_filter") }}
+      </UButton>
+    </div>
+
+    <div
       v-else
       class="px-5 py-10 text-center text-sm text-[var(--radio-text-muted)]"
     >
@@ -102,6 +138,7 @@
 import { usePlaybackStore } from '~/stores/playback';
 const playback = usePlaybackStore();
 import type { RadioStationOption } from "~/types/radio";
+import { filterAndSortStations } from "~/utils/station-search.mjs";
 
 const emit = defineEmits<{ (event: 'select-station', station: RadioStationOption): void }>();
 const props = withDefaults(
@@ -115,6 +152,8 @@ const props = withDefaults(
     pendingStationId?: string;
     playEnabled?: boolean;
     disabledReason?: string;
+    /** Country pages opt in to the client-side name filter + sort toolbar. */
+    filterable?: boolean;
   }>(),
   {
     stations: () => [],
@@ -124,8 +163,28 @@ const props = withDefaults(
     pendingStationId: "",
     playEnabled: true,
     disabledReason: "",
+    filterable: false,
   },
 );
+
+// Toolbar state is purely local: with an empty query the visible list is the
+// full catalog in its original order, so SSR/prerender output is unchanged.
+const { t } = useI18n();
+const filterQuery = ref("");
+const sortMode = ref<"default" | "az" | "za">("default");
+const sortItems = computed(() => [
+  { label: t("panel.sort_default"), value: "default" },
+  { label: t("panel.sort_az"), value: "az" },
+  { label: t("panel.sort_za"), value: "za" },
+]);
+const visibleStations = computed(() =>
+  filterAndSortStations(props.stations, filterQuery.value, sortMode.value),
+);
+const filterActive = computed(() => Boolean(filterQuery.value.trim()));
+const clearFilter = (): void => {
+  filterQuery.value = "";
+  sortMode.value = "default";
+};
 const isPending = (station: RadioStationOption): boolean =>
   station.id === props.pendingStationId;
 const isConnecting = (station: RadioStationOption): boolean =>
