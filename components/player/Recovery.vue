@@ -1,6 +1,7 @@
 <template>
   <div v-if="showNotice" class="rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] p-3 text-sm text-[var(--radio-text)]">
-    <p role="alert" class="leading-5">{{ $t('recovery.' + health) }}</p>
+    <p v-if="isConnectingSlow" role="status" class="leading-5">{{ $t('recovery.connecting_slow', { attempt: diagnostics?.retryAttempt ?? 0, limit: diagnostics?.maxAttempts ?? 0 }) }}</p>
+    <p v-else role="alert" class="leading-5">{{ $t('recovery.' + health) }}</p>
     <div class="mt-3 flex flex-wrap items-start gap-2">
       <UButton v-if="online && playable" color="primary" variant="soft" class="min-h-11" @click="$emit('retry')">{{ $t('player.retry') }}</UButton>
       <UDropdownMenu v-if="online && sourceItems.length > 1" :items="sourceItems" :content="{ side: 'top', align: 'start' }" :ui="{ content: 'max-w-[calc(100vw-2rem)]' }">
@@ -45,8 +46,10 @@ const props = defineProps<{
   health: string; online: boolean; playable: boolean;
   sourceItems: DropdownMenuItem[]; reportUrl: string; reportEmailUrl: string;
   diagnostics?: RecoveryDiagnostics;
+  connectingSlow?: boolean;
 }>();
 defineEmits(['retry']);
-const showNotice = computed(() => ['offline', 'exhausted', 'unsupported'].includes(props.health));
+const isConnectingSlow = computed(() => props.health === 'connecting' && Boolean(props.connectingSlow));
+const showNotice = computed(() => ['offline', 'exhausted', 'unsupported'].includes(props.health) || isConnectingSlow.value);
 const showReport = computed(() => props.online && ['exhausted', 'unsupported'].includes(props.health) && Boolean(props.reportEmailUrl || props.reportUrl));
 </script>

@@ -37,7 +37,7 @@
     "external_badge": "Opens externally",
     "apple_description": "Explore six core Apple Music live radio stations plus seasonal Holiday Hits, listed as a global provider rather than a country catalog.",
     "explore_provider": "Explore stations",
-    "external_note": "Apple Music radio opens on Apple's website. It does not play through the ePlus OnAir player or count toward local listening statistics.",
+    "external_note": "Apple Music stations play right in ePlus OnAir when an authorized source is available. When one is not, the station opens on Apple Music or TuneIn instead and does not count toward local listening statistics.",
     "by_country": "Browse radio by country",
     "home": "Home",
     "breadcrumb": "Breadcrumb",
@@ -219,7 +219,12 @@
     "channels": "All channels",
     "station_count": "{count} stations",
     "search_channels": "Search channels...",
-    "no_channels": "No channels found"
+    "no_channels": "No channels found",
+    "filter_stations": "Filter stations by name…",
+    "sort_default": "Default order",
+    "sort_az": "Name A–Z",
+    "sort_za": "Name Z–A",
+    "clear_filter": "Clear filter"
   },
   "button": {
     "back": "Back",
@@ -582,7 +587,9 @@
     "suggestions": "Suggested for you",
     "recent": "Recent searches",
     "clear": "Clear",
-    "loading": "Loading stations…"
+    "loading": "Loading stations…",
+    "results_title": "Search results",
+    "view_all": "View all results"
   },
   "chat": {
     "open": "Open chatbot",
@@ -695,6 +702,7 @@
     "unsupported": "This station can't play on your device right now. Try again or choose another way to play it.",
     "exhausted": "We couldn't play this station. Try again or choose another way to play it.",
     "connecting": "Connecting or buffering…",
+    "connecting_slow": "Still connecting — this station is slower than usual. Attempt {attempt} of {limit}; you can keep waiting or choose another station.",
     "report": "Report an issue",
     "report_hint": "Send an email, or use GitHub if you have an account.",
     "change_source": "Another way to play",

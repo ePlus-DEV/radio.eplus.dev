@@ -24,6 +24,29 @@ test('patched Vue I18n tree does not include unsupported/vulnerable v10 copies',
   }
 });
 
+// GHSA-3g3m-2fjr-6pw4 (glob <=14.0.1) and GHSA-g3hv-75wg-m249 (minimatch <11.0.1).
+// Nitro 2.13.6 still declares glob ^13 and minimatch ^10. These overrides select
+// the patched majors. deepmerge has no patched release and is intentionally not overridden.
+test('glob and minimatch resolve to the patched majors Nitro parents do not declare', async () => {
+  const manifest = JSON.parse(await read('package.json'));
+  const lock = JSON.parse(await read('package-lock.json'));
+  assert.equal(manifest.overrides.glob, '14.0.4');
+  assert.equal(manifest.overrides.minimatch, '11.0.7');
+  assert.equal(manifest.overrides['readdir-glob'], '4.0.0');
+  assert.equal(manifest.overrides.deepmerge, undefined);
+
+  const installed = (name) => Object.entries(lock.packages)
+    .filter(([path]) => path === 'node_modules/' + name || path.endsWith('/node_modules/' + name));
+
+  for (const name of ['glob', 'minimatch', 'readdir-glob']) {
+    const entries = installed(name);
+    assert.ok(entries.length, 'Package missing: ' + name);
+    for (const [path, entry] of entries) {
+      assert.equal(entry.version, manifest.overrides[name], 'Unpatched package: ' + path);
+    }
+  }
+});
+
 test('redirect client must be patched to prevent cross-origin credential forwarding', async () => {
   const manifest = JSON.parse(await read('package.json'));
   const lock = JSON.parse(await read('package-lock.json'));

@@ -22,7 +22,7 @@
                 decoding="async"
                 :src="siteAssetUrl(station.image)"
                 :alt="station.title"
-                class="max-h-[75%] max-w-[85%] object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
+                class="max-h-[88%] max-w-[92%] object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
               />
               <span
                 v-if="station.url === activeStationUrl"

@@ -88,3 +88,25 @@ test("cycles playback candidates while the global retry budget remains", () => {
   assert.equal(nextPlaybackIndex(1, 3), 2);
   assert.equal(MAX_STREAM_ATTEMPTS, 6);
 });
+
+test("ignores invalid, unsafe or credential-bearing proxy configuration", () => {
+  const source = [{ src: "https://radio.example/live.mp3" }];
+  for (const proxy of [
+    "not-a-url",
+    "ftp://proxy.example",
+    "https://user:secret@proxy.example/",
+    "https://proxy.example/?key=secret",
+    "https://proxy.example/#fragment",
+  ]) {
+    assert.deepEqual(buildPlaybackSources(source, proxy).map(item => item.src),
+      ["https://radio.example/live.mp3"], proxy);
+  }
+});
+
+test("preserves valid HTTP(S) proxy fallback without a trailing slash", () => {
+  assert.deepEqual(
+    buildPlaybackSources([{ src: "https://radio.example/live.mp3" }], "https://proxy.example")
+      .map(item => item.src),
+    ["https://radio.example/live.mp3", "https://proxy.example/https://radio.example/live.mp3"],
+  );
+});
