@@ -547,6 +547,19 @@ the resolved lockfile contains no `simple-git` dependency. Do not restore the
 legacy override to address a future tooling issue; upgrade the compatible
 upstream dependency instead. CI runs a high/critical production npm audit.
 
+`package.json` overrides pin `glob@14.0.4`, `minimatch@11.0.7`, and `readdir-glob@4.0.0`.
+Nitro 2.13.6 still declares `glob` 13 (`@vercel/nft`) and `minimatch` 10
+(`@typescript-eslint/typescript-estree`, `readdir-glob` 3 via `archiver`). Those
+ranges have no patched release: the fixes are glob 14.0.2+ ([GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4))
+and minimatch 11.0.1+ ([GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)).
+The overrides stay inside the call surface those parents use (`glob()`, `minimatch()`,
+and `Minimatch#match()`), and `readdir-glob` 4.0.0 is the release that declares
+minimatch 11. Do not replace them with `npm audit fix --force`; that resolution
+downgrades Nuxt to 4.1.3. `deepmerge` 4.3.1 ([GHSA-gcqx-w48m-w2h4](https://github.com/advisories/GHSA-gcqx-w48m-w2h4))
+has no patched release. `@rollup/plugin-node-resolve` only merges a hardcoded
+defaults object at build time, so leave that dependency on the version the plugin
+declares until upstream publishes a fix.
+
 Nitro 2.13.4's string externals rules never match Windows module ids that use
 backslashes (nitrojs/nitro#4732, nuxt/nuxt#36467). Without a workaround, the
 Nuxt server renderer is left external, native Node resolves
