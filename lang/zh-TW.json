@@ -219,7 +219,12 @@
     "channels": "所有電台",
     "station_count": "{count} 個電台",
     "search_channels": "搜尋電台...",
-    "no_channels": "找不到電台"
+    "no_channels": "找不到電台",
+    "filter_stations": "按名稱篩選電台…",
+    "sort_default": "預設順序",
+    "sort_az": "名稱 A–Z",
+    "sort_za": "名稱 Z–A",
+    "clear_filter": "清除篩選"
   },
   "button": {
     "back": "返回",
@@ -582,7 +587,9 @@
     "suggestions": "為你推薦",
     "recent": "最近搜尋",
     "clear": "清除",
-    "loading": "正在載入電台清單…"
+    "loading": "正在載入電台清單…",
+    "results_title": "搜尋結果",
+    "view_all": "查看全部結果"
   },
   "chat": {
     "open": "開啟聊天助理",

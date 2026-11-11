@@ -219,7 +219,12 @@
     "channels": "Tất cả đài",
     "station_count": "{count} đài radio",
     "search_channels": "Tìm đài radio...",
-    "no_channels": "Không tìm thấy đài radio"
+    "no_channels": "Không tìm thấy đài radio",
+    "filter_stations": "Lọc đài theo tên…",
+    "sort_default": "Thứ tự mặc định",
+    "sort_az": "Tên A–Z",
+    "sort_za": "Tên Z–A",
+    "clear_filter": "Xóa bộ lọc"
   },
   "button": {
     "back": "Quay lại",
@@ -582,7 +587,9 @@
     "suggestions": "Đề xuất cho bạn",
     "recent": "Tìm kiếm gần đây",
     "clear": "Xóa",
-    "loading": "Đang tải danh sách đài…"
+    "loading": "Đang tải danh sách đài…",
+    "results_title": "Kết quả tìm kiếm",
+    "view_all": "Xem tất cả kết quả"
   },
   "chat": {
     "open": "Mở trợ lý trò chuyện",

@@ -9,6 +9,7 @@ export function pageSkeletonKind(path = "/") {
   // routes. Otherwise /settings looks like a continent and Apple Radio looks
   // like an ordinary country/station page.
   if (value === "/settings") return "settings";
+  if (value === "/search") return "info";
   if (value === "/global-radio") return "global-radio";
   if (value === "/global-radio/apple-music") return "global-radio-provider";
   if (parts.length === 3 && parts[0] === "global-radio" && parts[1] === "apple-music") {

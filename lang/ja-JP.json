@@ -219,7 +219,12 @@
     "channels": "すべての局",
     "station_count": "{count} 局",
     "search_channels": "局を検索...",
-    "no_channels": "局が見つかりません"
+    "no_channels": "局が見つかりません",
+    "filter_stations": "局名で絞り込む…",
+    "sort_default": "デフォルト順",
+    "sort_az": "名前 A–Z",
+    "sort_za": "名前 Z–A",
+    "clear_filter": "フィルターをクリア"
   },
   "button": {
     "back": "戻る",
@@ -582,7 +587,9 @@
     "suggestions": "おすすめ",
     "recent": "最近の検索",
     "clear": "消去",
-    "loading": "放送局を読み込み中…"
+    "loading": "放送局を読み込み中…",
+    "results_title": "検索結果",
+    "view_all": "すべての結果を表示"
   },
   "chat": {
     "open": "チャットボットを開く",
