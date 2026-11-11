@@ -296,6 +296,7 @@ export default defineNuxtConfig({
         ...staticSeoRoutes.map((route) => route.loc),
         "/library",
         "/settings",
+        "/search",
         "/robots.txt",
         ...(!noIndex ? ["/sitemap.xml"] : []),
       ],
