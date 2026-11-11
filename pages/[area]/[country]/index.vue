@@ -123,7 +123,9 @@ const { data: catalogPayload, error: catalogError } =
           Channel
         >;
       } else {
-        data = await $fetch<Record<string, Channel>>(catalogUrl.value);
+        data = await $fetch<Record<string, Channel>>(catalogUrl.value, {
+          timeout: 8000,
+        });
       }
 
       return { key, stations: data };

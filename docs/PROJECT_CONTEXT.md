@@ -99,6 +99,8 @@ Breadcrumbs are route-semantic rather than placeholder-level based:
 
 The Back-to-top control is available on mobile and desktop after scrolling, and its arrow is an inline SVG rather than a Font Awesome dependency.
 
+Footer social links are env-driven (`NUXT_PUBLIC_FACEBOOK` / `NUXT_PUBLIC_X`): an entry whose configured URL is empty is not rendered at all, never as a dead `href=""` anchor.
+
 ### Language, theme and overlay lifecycle
 
 Nuxt UI `UDropdownMenu` binds to explicit Vue open state for theme and language.

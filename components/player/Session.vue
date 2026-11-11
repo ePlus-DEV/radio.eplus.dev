@@ -31,11 +31,13 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { usePlaybackStore } from '~/stores/playback';
-import type { RadioSource, RadioStationOption } from '~/types/radio';
+import { createPlaybackStation } from '~/utils/playback-station.mjs';
+import type { RadioSource, RadioStationOption, RadioCatalogEntry } from '~/types/radio';
 import type { GlobalRadioProvider } from '~/types/global-radio';
 
 const playback = usePlaybackStore();
 useRestoreLastStation();
+const config = useRuntimeConfig();
 const { station } = storeToRefs(playback);
 const { program, playlist, song, lyrics, lyricsOpen, loading, isZingStation, scheduleSourceUrl, scheduleIsReference } = useStationRealtime();
 const emptySource: RadioSource = { src: '', type: 'audio/mpeg' };
@@ -80,11 +82,49 @@ const selectGlobalStation = async (target: RadioStationOption, version: number, 
   }
 };
 
+const resolveCountryStationInPlace = async (target: RadioStationOption): Promise<boolean> => {
+  if (!target.url) return false;
+  const [, area, country, id] = target.url.split('/');
+  if (!area || !country || !id) return false;
+  try {
+    const catalog = await $fetch<Record<string, RadioCatalogEntry>>(
+      siteAssetUrl(`/radio/${area}/${country}.json`), { timeout: 10_000 },
+    );
+    const meta = catalog?.[id];
+    if (!meta?.stream) return false;
+    const options: RadioStationOption[] = Object.entries(catalog).map(([key, entry]) => ({
+      id: key, title: entry.title, image: entry.features || '/brand/onair-mark.svg', url: `/${area}/${country}/${key}`,
+    }));
+    playback.activate(createPlaybackStation({
+      area, country, id, meta,
+      corsServer: String(config.public.corsServer || ''), placeholder: '/brand/onair-mark.svg',
+    }), options, { autoplay: true });
+    return playback.station?.url === target.url && Boolean(playback.station.sources.length);
+  } catch {
+    return false;
+  }
+};
+
 const selectStation = (target: RadioStationOption) => {
   if (!target.url) return;
   const version = ++selectionVersion;
   if (target.url.startsWith('/global-radio/apple-music/')) {
     void selectGlobalStation(target, version, playback.station?.url || '', playback.requestedStationUrl);
+    return;
+  }
+
+  // Restored country station with no sources (reload): resolve in place on
+  // Play instead of navigating to its own detail route. Mirrors the Global
+  // resolve-on-Play path; a failed catalog fetch falls back to navigation.
+  if (target.url === playback.station?.url && !playback.station?.sources?.length
+    && !target.url.startsWith('/global-radio/')) {
+    void (async () => {
+      const resolved = await resolveCountryStationInPlace(target);
+      if (resolved) return;
+      if (version !== selectionVersion) return;
+      playback.requestStation(target.url!);
+      void navigateTo(target.url!);
+    })();
     return;
   }
 
