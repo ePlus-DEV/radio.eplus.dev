@@ -589,7 +589,9 @@
     "clear": "Clear",
     "loading": "Loading stations…",
     "results_title": "Search results",
-    "view_all": "View all results"
+    "view_all": "View all results",
+    "showing_results": "Showing {shown} of {total} stations",
+    "load_more": "Load more stations"
   },
   "chat": {
     "open": "Open chatbot",
