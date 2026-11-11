@@ -115,20 +115,24 @@ const links = [
   { id: 6, to: "/cookie-policy", text: "navmenu.cookie" },
 ];
 
-const socialLinks = computed(() => [
-  {
-    id: 1,
-    name: "Facebook",
-    href: config.public.facebook,
-    icon: "facebook-f",
-  },
-  {
-    id: 2,
-    name: "X",
-    href: config.public.x,
-    icon: "x-twitter",
-  },
-]);
+const socialLinks = computed(() =>
+  [
+    {
+      id: 1,
+      name: "Facebook",
+      href: config.public.facebook,
+      icon: "facebook-f",
+    },
+    {
+      id: 2,
+      name: "X",
+      href: config.public.x,
+      icon: "x-twitter",
+    },
+  ].filter(
+    (link) => typeof link.href === "string" && link.href.trim().length > 0,
+  ),
+);
 
 const handleScroll = (): void => {
   showTop.value = window.scrollY > 500;

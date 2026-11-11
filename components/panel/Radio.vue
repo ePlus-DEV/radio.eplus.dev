@@ -30,7 +30,7 @@
         class="flex items-center justify-between gap-3 border-b border-[var(--radio-border)] px-4 py-4  sm:px-5"
       >
         <div class="min-w-0">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
+          <p v-if="continentIndex === firstAreaKey" class="text-[11px] font-semibold uppercase tracking-[0.16em] text-rose-500">
             {{ $t("panel.country") }}
           </p>
           <h2 class="mt-1 truncate text-lg font-semibold tracking-tight text-[var(--radio-text)] sm:text-xl">
@@ -147,6 +147,7 @@ const createLocalWorld = (): GroupedResults => {
 };
 
 const world = computed<GroupedResults>(createLocalWorld);
+const firstAreaKey = computed(() => Object.keys(world.value)[0]);
 const loading = computed(() => Object.keys(world.value).length === 0);
 
 const siteAssetUrl = useSiteAssetUrl();
