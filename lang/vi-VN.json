@@ -695,6 +695,7 @@
     "unsupported": "Chưa phát được đài này trên thiết bị của bạn. Hãy thử lại hoặc chọn cách phát khác.",
     "exhausted": "Chưa nghe được đài này. Bạn có thể thử lại hoặc chọn cách phát khác.",
     "connecting": "Đang kết nối hoặc tải âm thanh…",
+    "connecting_slow": "Vẫn đang kết nối — đài này phản hồi chậm hơn thường lệ. Lần thử {attempt}/{limit}; bạn có thể chờ tiếp hoặc chọn đài khác.",
     "report": "Báo lỗi",
     "report_hint": "Bạn có thể gửi email hoặc dùng GitHub nếu có tài khoản.",
     "change_source": "Cách phát khác",

@@ -695,6 +695,7 @@
     "unsupported": "Cette station ne peut pas être écoutée sur votre appareil pour le moment. Réessayez ou choisissez une autre option.",
     "exhausted": "Impossible d'écouter cette station pour le moment. Réessayez ou choisissez une autre option.",
     "connecting": "Connexion ou mise en mémoire tampon…",
+    "connecting_slow": "Connexion toujours en cours — cette station répond plus lentement que d’habitude. Tentative {attempt} sur {limit} ; vous pouvez continuer d’attendre ou choisir une autre station.",
     "report": "Signaler un problème",
     "report_hint": "Envoyez un e-mail ou utilisez GitHub si vous avez un compte.",
     "change_source": "Autre option d'écoute",

@@ -1,7 +1,7 @@
 <template>
   <section v-show="!nowPlayingOpen" class="radio-player-dock fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--radio-border)] bg-[var(--radio-surface-elevated)] shadow-[0_-12px_40px_-28px_rgba(15,23,42,0.4)]" :class="{ 'hidden': playerMini }" :aria-label="$t('player.title')">
     <div class="radio-player-inner mx-auto max-w-[1920px] px-3 sm:px-6">
-      <PlayerRecovery v-if="health && health !== 'connecting'" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :report-email-url="reportEmailUrl" :diagnostics="recoveryDiagnostics"
+      <PlayerRecovery v-if="health && (health !== 'connecting' || slowConnecting)" :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :report-email-url="reportEmailUrl" :diagnostics="recoveryDiagnostics" :connecting-slow="slowConnecting"
         class="absolute inset-x-3 bottom-[calc(100%+0.5rem)] max-h-[40dvh] overflow-y-auto shadow-lg sm:left-auto sm:right-6 sm:w-96" @retry="retryCurrentSource" />
       <div v-if="playerStatusVisible" class="sr-only" aria-live="polite">
         <span v-if="!online">{{ $t('text.offline') }}</span>
@@ -111,7 +111,7 @@
         <UIcon v-else :name="playing ? 'i-lucide-pause' : 'i-lucide-play'" class="h-5 w-5" />
       </UButton>
     </div>
-    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :report-email-url="reportEmailUrl" :diagnostics="recoveryDiagnostics" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
+    <PlayerRecovery :health="health" :online="online" :playable="hasPlayableSource" :source-items="sourceMenuItems" :report-url="reportUrl" :report-email-url="reportEmailUrl" :diagnostics="recoveryDiagnostics" :connecting-slow="slowConnecting" class="mt-3 max-h-[35dvh] overflow-y-auto" @retry="retryCurrentSource" />
     <div class="mt-3 flex items-center justify-between gap-1">
       <div class="flex items-center gap-1">
         <UButton v-if="canNavigateStations" color="neutral" variant="ghost" size="sm" icon="i-lucide-skip-back" class="cursor-pointer rounded-full" :aria-label="previousStationLabel" @click="navigateStation(-1)" />
@@ -201,7 +201,7 @@ import { createRadioMediaSession } from "~/utils/radio-media-session.mjs";
 import { bindAudioMediaEvents } from "~/utils/audio-media-events.mjs";
 import { createRetryableHlsLoader } from "~/utils/retryable-hls-loader.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
-import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS } from "~/utils/playback-recovery-policy.mjs";
+import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS, CONNECTING_SLOW_AFTER_MS, connectDeadlineExceeded, canExtendStallProbe } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl, stationReportEmailUrl } from "~/utils/station-sharing.mjs";
 import { inferMime, isTextPlaylist, parsePlaylistUrls } from "~/utils/radio-playlist.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
@@ -362,6 +362,32 @@ const activeSourceIndex = ref(0);
 const pendingAutoPlay = ref(false);
 const userPaused = ref(true);
 const attemptCount = ref(0);
+const connectStartedAt = ref<number | null>(null);
+const slowConnecting = ref(false);
+let connectSlowTimer: ReturnType<typeof setTimeout> | null = null;
+let extensionsUsed = 0;
+const clearConnectClock = (): void => {
+  connectStartedAt.value = null;
+  slowConnecting.value = false;
+  if (connectSlowTimer) {
+    clearTimeout(connectSlowTimer);
+    connectSlowTimer = null;
+  }
+};
+const startConnectClock = (): void => {
+  if (connectStartedAt.value !== null) return;
+  connectStartedAt.value = Date.now();
+  if (connectSlowTimer) {
+    clearTimeout(connectSlowTimer);
+    connectSlowTimer = null;
+  }
+  connectSlowTimer = setTimeout(() => {
+    connectSlowTimer = null;
+    if (connectStartedAt.value !== null && waiting.value) {
+      slowConnecting.value = true;
+    }
+  }, CONNECTING_SLOW_AFTER_MS);
+};
 const AUDIO_PREFERENCES_KEY = "radio:audio-preferences:v1";
 const volume = ref(1);
 const muted = ref(false);
@@ -424,7 +450,11 @@ const hasPlayableSource = computed(() => sourceList.value.length > 0);
 const canRequestGlobalStream = computed(() => !hasPlayableSource.value
   && Boolean(props.stationUrl?.startsWith('/global-radio/apple-music/'))
   && playback.station?.url === props.stationUrl);
-const canStartPlayback = computed(() => hasPlayableSource.value || (canRequestGlobalStream.value && !resolvingGlobalSelection.value));
+const canResolveCountryStation = computed(() => !hasPlayableSource.value
+  && !canRequestGlobalStream.value
+  && Boolean(props.stationUrl && /^\/[^\/]+\/[^\/]+\/[^\/]+$/.test(props.stationUrl))
+  && playback.station?.url === props.stationUrl);
+const canStartPlayback = computed(() => hasPlayableSource.value || canResolveCountryStation.value || (canRequestGlobalStream.value && !resolvingGlobalSelection.value));
 
 const sourceName = (source: RadioSource, index: number): string => {
   if (source.label?.trim()) return source.label.trim();
@@ -722,6 +752,11 @@ const startFallbackProbe = (): void => {
     fallbackProbeTimer = null;
     // The timer belongs to a particular source/station, never a later one.
     if (version !== sourceVersion) return;
+    if (connectDeadlineExceeded(connectStartedAt.value, Date.now())) {
+      sourceFailureReason.value = playbackFailureReason({ timeout: true });
+      stopPlaybackFailure();
+      return;
+    }
     const action = playbackWatchdogAction({
       waiting: waiting.value,
       playing: playing.value,
@@ -920,6 +955,7 @@ const stopPlaybackFailure = (): void => {
     playback.clearHlsLiveTrack(props.stationUrl);
   }
   stopListeningDuration();
+  clearConnectClock();
   clearReconnectTimer();
   clearFallbackProbeTimer();
   clearStablePlaybackTimer();
@@ -974,11 +1010,13 @@ const applySource = async (
   pendingAutoPlay.value = autoplay && !userPaused.value;
   waiting.value = autoplay && !userPaused.value;
 
+  extensionsUsed = 0;
   clearReconnectTimer();
   clearFallbackProbeTimer();
   clearStablePlaybackTimer();
   // Start before playlist fetch / HLS manifest parsing so every candidate
   // (including a single or last source) has an upper bound on silence.
+  if (pendingAutoPlay.value) startConnectClock();
   if (pendingAutoPlay.value) startFallbackProbe();
 
   try {
@@ -1048,7 +1086,7 @@ const scheduleReconnect = (): void => {
 
 const onPlay = async (): Promise<void> => {
   if (!hasPlayableSource.value) {
-    if (canRequestGlobalStream.value && playback.station) {
+    if ((canRequestGlobalStream.value || canResolveCountryStation.value) && playback.station) {
       // Uses the app-scoped resolver only after a real Play gesture. In
       // particular, never use an old HLS accessKey on restore.
       emit('select-station', {
@@ -1116,6 +1154,7 @@ const onPause = (): void => {
 
   userPaused.value = true;
   pendingAutoPlay.value = false;
+  clearConnectClock();
   clearReconnectTimer();
   clearFallbackProbeTimer();
   clearStablePlaybackTimer();
@@ -1257,6 +1296,11 @@ const onMediaCanPlay = (): void => {
   // Metadata/buffer readiness is not proof of actual audio delivery.
   // Keep both reconnect and stall deadlines until onMediaPlaying confirms it.
   if (userPaused.value || !pendingAutoPlay.value) return;
+  if (fallbackProbeTimer && canExtendStallProbe(extensionsUsed)) {
+    clearFallbackProbeTimer();
+    extensionsUsed += 1;
+    startFallbackProbe();
+  }
   if (!playing.value) void tryPlay();
 };
 
@@ -1280,6 +1324,7 @@ const onMediaPlaying = (): void => {
     listeningDuration.setLivePreview(listeningDurationTracker.activeUrl, 0);
     syncDurationClock();
   }
+  clearConnectClock();
   clearReconnectTimer();
   clearFallbackProbeTimer();
   startStablePlaybackTimer();
@@ -1431,6 +1476,7 @@ watch(
     playing.value = false;
     waiting.value = false;
     pendingAutoPlay.value = false;
+    clearConnectClock();
     clearReconnectTimer();
     clearFallbackProbeTimer();
     clearStablePlaybackTimer();
@@ -1550,6 +1596,7 @@ onUnmounted(() => {
   window.removeEventListener("pageshow", checkSleepDeadline);
   radioMediaSession.dispose();
   sourceVersion += 1;
+  clearConnectClock();
   clearReconnectTimer();
   clearFallbackProbeTimer();
   clearStablePlaybackTimer();

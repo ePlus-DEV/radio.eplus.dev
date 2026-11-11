@@ -5,6 +5,8 @@ import { MAX_STREAM_ATTEMPTS, buildPlaybackSources } from '../utils/radio-source
 import {
   isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex,
   STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS,
+  CONNECT_DEADLINE_MS, CONNECTING_SLOW_AFTER_MS, STALL_PROBE_MAX_EXTENSIONS,
+  connectDeadlineExceeded, canExtendStallProbe,
 } from '../utils/playback-recovery-policy.mjs';
 
 const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
@@ -100,13 +102,15 @@ test('player keeps one watchdog through loading, canplay and repeated waiting ev
   const player = await read('components/player/Player.vue');
   assert.match(player, /if \(fallbackProbeTimer \|\| userPaused\.value/);
   assert.match(player, /const version = sourceVersion;\s*fallbackProbeTimer = setTimeout/);
-  assert.match(player, /if \(version !== sourceVersion\) return;\s*const action = playbackWatchdogAction/);
+  assert.match(player, /if \(version !== sourceVersion\) return;[\s\S]*?const action = playbackWatchdogAction/);
   assert.match(player, /if \(pendingAutoPlay\.value\) startFallbackProbe\(\);/);
   assert.match(player, /if \(action === 'stop'\) stopPlaybackFailure\(\);\s*else advanceFallbackSource\(\);/);
   const canplay = player.split('const onMediaCanPlay = (): void => {')[1].split('const onMediaPlaying')[0];
   assert.match(canplay, /if \(userPaused\.value \|\| !pendingAutoPlay\.value\) return;/);
-  assert.doesNotMatch(canplay, /clearFallbackProbeTimer\(\)|clearReconnectTimer\(\)/,
-    'canplay alone must never cancel any recovery timer');
+  assert.doesNotMatch(canplay, /clearReconnectTimer\(\)/,
+    'canplay alone must never cancel the reconnect timer');
+  assert.match(canplay, /clearFallbackProbeTimer\(\);\s*extensionsUsed \+= 1;\s*startFallbackProbe\(\)/,
+    'canplay may only extend the stall probe by clearing and immediately re-arming it, bounded by canExtendStallProbe');
   const waiting = player.split('const onMediaWaiting = (): void => {')[1].split('const onMediaStalled')[0];
   assert.match(waiting, /pendingAutoPlay\.value = true;/);
   assert.match(waiting, /startFallbackProbe\(\);/);
@@ -132,6 +136,50 @@ test('retry budget resets only after stable real playback, and timers are cancel
   }
   const pause = player.split('const onPause = (): void => {')[1].split('const sleepRemaining')[0];
   assert.match(pause, /clearFallbackProbeTimer\(\);\s*clearStablePlaybackTimer\(\);/);
+});
+
+test('connect deadline caps a continuous connecting episode at 90s', () => {
+  assert.equal(CONNECT_DEADLINE_MS, 90_000);
+  assert.equal(CONNECTING_SLOW_AFTER_MS, 20_000);
+  const start = 1_000_000;
+  assert.equal(connectDeadlineExceeded(start, start), false);
+  assert.equal(connectDeadlineExceeded(start, start + CONNECT_DEADLINE_MS - 1), false);
+  assert.equal(connectDeadlineExceeded(start, start + CONNECT_DEADLINE_MS), true);
+  assert.equal(connectDeadlineExceeded(start, start + CONNECT_DEADLINE_MS + 5_000), true);
+  for (const invalid of [null, undefined, Number.NaN, 0, -1, '1000']) {
+    assert.equal(connectDeadlineExceeded(invalid, start + CONNECT_DEADLINE_MS + 1), false, String(invalid));
+  }
+  assert.equal(connectDeadlineExceeded(start, Number.NaN), false);
+});
+
+test('stall probe extensions are bounded to two canplay progress signals', () => {
+  assert.equal(STALL_PROBE_MAX_EXTENSIONS, 2);
+  assert.equal(canExtendStallProbe(0), true);
+  assert.equal(canExtendStallProbe(1), true);
+  assert.equal(canExtendStallProbe(2), false);
+  assert.equal(canExtendStallProbe(3), false);
+  for (const invalid of [-1, 0.5, Number.NaN, '1', null, undefined]) {
+    assert.equal(canExtendStallProbe(invalid), false, String(invalid));
+  }
+});
+
+test('player enforces the connect deadline before the watchdog and extends probes only on canplay progress', async () => {
+  const player = await read('components/player/Player.vue');
+  const probe = player.split('const startFallbackProbe = (): void => {')[1]?.split('const configureNativeSource')[0];
+  assert.ok(probe, 'fallback probe exists');
+  const deadlineIdx = probe.indexOf('connectDeadlineExceeded(connectStartedAt.value, Date.now())');
+  const watchdogIdx = probe.indexOf('playbackWatchdogAction');
+  assert.ok(deadlineIdx >= 0 && watchdogIdx > deadlineIdx, 'deadline check must precede watchdog action');
+  assert.match(probe, /connectDeadlineExceeded[\s\S]*?playbackFailureReason\(\{ timeout: true \}\)[\s\S]*?stopPlaybackFailure\(\)/);
+  const canplay = player.split('const onMediaCanPlay = (): void => {')[1].split('const flushHlsSongMetadata')[0];
+  assert.match(canplay, /fallbackProbeTimer && canExtendStallProbe\(extensionsUsed\)/);
+  assert.match(canplay, /clearFallbackProbeTimer\(\);\s*extensionsUsed \+= 1;\s*startFallbackProbe\(\)/);
+  const apply = player.split('const applySource = async (')[1]?.split('const advanceFallbackSource')[0];
+  assert.match(apply, /extensionsUsed = 0;/);
+  assert.match(apply, /startConnectClock\(\)/);
+  assert.match(player, /const connectStartedAt = ref/);
+  assert.match(player, /const slowConnecting = ref/);
+  assert.match(player, /CONNECTING_SLOW_AFTER_MS/);
 });
 
 test('manual retry and offline/online restoration keep explicit intent and source identity', async () => {

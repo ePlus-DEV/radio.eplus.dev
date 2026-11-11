@@ -695,6 +695,7 @@
     "unsupported": "您的裝置目前無法播放此電台。請重試或選擇其他播放方式。",
     "exhausted": "目前無法收聽此電台。請重試或選擇其他播放方式。",
     "connecting": "正在連線或緩衝…",
+    "connecting_slow": "仍在連線 — 此電台回應比平常慢。嘗試 {attempt}/{limit}；您可以繼續等待或選擇其他電台。",
     "report": "回報問題",
     "report_hint": "可寄送電子郵件，或登入 GitHub 後回報。",
     "change_source": "其他播放方式",
