@@ -37,7 +37,7 @@
     "external_badge": "Opens externally",
     "apple_description": "Explore six core Apple Music live radio stations plus seasonal Holiday Hits, listed as a global provider rather than a country catalog.",
     "explore_provider": "Explore stations",
-    "external_note": "Apple Music radio opens on Apple's website. It does not play through the ePlus OnAir player or count toward local listening statistics.",
+    "external_note": "Apple Music stations play right in ePlus OnAir when an authorized source is available. When one is not, the station opens on Apple Music or TuneIn instead and does not count toward local listening statistics.",
     "by_country": "Browse radio by country",
     "home": "Home",
     "breadcrumb": "Breadcrumb",

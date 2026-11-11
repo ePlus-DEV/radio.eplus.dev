@@ -176,6 +176,7 @@ const { data: stationCatalogPayload, error: stationCatalogError } =
       } else {
         stations = await $fetch<Record<string, StationCatalogEntry>>(
           stationCatalogUrl.value,
+          { timeout: 8000 },
         );
       }
 
