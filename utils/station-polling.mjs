@@ -26,6 +26,8 @@ export function createStationPolling({ load, onData, onError, onLoading, interva
     onLoading(true);
 
     const poll = async () => {
+      // A queued timeout may fire after clearTimeout or a station switch.
+      if (version !== generation || signal.aborted) return;
       try {
         if (!shouldPoll()) return;
         const data = await load(url, signal);
