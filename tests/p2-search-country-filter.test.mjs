@@ -44,6 +44,11 @@ test('search page is a noindex utility page over the local index, capped at 100 
   assert.match(page, /search\.unavailable/);
   assert.match(page, /panel\.no_channels/);
   assert.match(page, /<ClientOnly>/);
+  // The page search input must look like the header search box, not a bare
+  // default UInput: same panel surface class and geometry as search/Box.vue.
+  const box = await read('components/search/Box.vue');
+  assert.match(box, /radio-search-panel-input h-11 rounded-2xl pl-11/);
+  assert.match(page, /radio-search-panel-input h-11 rounded-2xl pl-11 pr-4 text-sm/);
   // The URL query is the source of truth, updated via router.replace.
   assert.match(page, /route\.query\.q/);
   assert.match(page, /router\.replace\(\{ path: '\/search', query:/);
