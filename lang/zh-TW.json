@@ -37,7 +37,7 @@
     "external_badge": "在外部開啟",
     "apple_description": "探索 Apple Music 六個主要直播電台與季節性 Holiday Hits，依全球服務商而非國家分類。",
     "explore_provider": "探索電台",
-    "external_note": "Apple Music 電台將於 Apple 網站開啟，不會在 ePlus OnAir 內播放，也不計入本機收聽統計。",
+    "external_note": "當有獲授權的來源時，Apple Music 電台可直接在 ePlus OnAir 內播放。當沒有時，該電台將在 Apple Music 或 TuneIn 開啟，且不計入本機收聽統計。",
     "by_country": "依國家瀏覽",
     "home": "首頁",
     "breadcrumb": "麵包屑導覽",
