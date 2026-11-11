@@ -47,6 +47,32 @@ export function searchLocalStations(stations, query, limit = 20) {
   return ranked.slice(0, limit).map(({ station }) => station);
 }
 
+/**
+ * Client-side filter + sort for one already-loaded station list (country page
+ * toolbar). Matching mirrors searchLocalStations title semantics: every word
+ * of the accent-insensitive query must appear in the normalized station
+ * title. Sorting compares normalized titles; ties keep the input order and
+ * the input array is never mutated.
+ */
+export function filterAndSortStations(stations, query, sort = 'default') {
+  if (!Array.isArray(stations)) return [];
+  const words = normalizeStationQuery(query).split(/\s+/).filter(Boolean);
+  const matched = stations.filter(station => {
+    if (!words.length) return true;
+    const title = normalizeStationQuery(station?.title);
+    return words.every(word => title.includes(word));
+  });
+  if (sort !== 'az' && sort !== 'za') return matched;
+  const direction = sort === 'az' ? 1 : -1;
+  return matched
+    .map((station, index) => ({ station, index, key: normalizeStationQuery(station?.title) }))
+    .sort((a, b) => {
+      const order = a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
+      return order * direction || a.index - b.index;
+    })
+    .map(({ station }) => station);
+}
+
 export function filterQueueStations(stations, query, favoriteUrls, favoritesOnly) {
   const term = normalizeStationQuery(query);
   const favorites = new Set(favoriteUrls);
