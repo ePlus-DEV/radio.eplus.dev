@@ -589,7 +589,9 @@
     "clear": "Xóa",
     "loading": "Đang tải danh sách đài…",
     "results_title": "Kết quả tìm kiếm",
-    "view_all": "Xem tất cả kết quả"
+    "view_all": "Xem tất cả kết quả",
+    "showing_results": "Đang hiển thị {shown} / {total} đài",
+    "load_more": "Tải thêm đài"
   },
   "chat": {
     "open": "Mở trợ lý trò chuyện",

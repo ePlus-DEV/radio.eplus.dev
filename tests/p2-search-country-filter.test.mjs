@@ -31,14 +31,15 @@ test('PanelStation toolbar is opt-in via filterable and only the country page en
   assert.doesNotMatch(globalPage, /filterable/);
 });
 
-test('search page is a noindex utility page over the local index, capped at 100 results', async () => {
+test('search page is a noindex utility page over the local index, with accurate totals and 100-item batches', async () => {
   const page = await read('pages/search.vue');
   // Same robots pattern as pages/library.vue: follow on indexable envs,
   // stricter when the deployment is noindex.
   assert.match(page, /config\.public\.noIndex \? 'noindex, nofollow, noarchive' : 'noindex, follow'/);
   assert.match(page, /search\.results_title/);
   assert.match(page, /useStationSearchIndex\(\)/);
-  assert.match(page, /searchLocalStations\(index\.value, query\.value, 100\)/);
+  assert.match(page, /searchLocalStations\(index\.value, query\.value, index\.value\.length\)/);
+  assert.match(page, /paginateStationResults\(allResults\.value, visiblePages\.value\)/);
   assert.match(page, /<SearchResult :result="results" \/>/);
   assert.match(page, /search\.loading/);
   assert.match(page, /search\.unavailable/);

@@ -130,6 +130,30 @@ test('Algolia results retain Global Radio matches and deduplicate by URL', () =>
   assert.deepEqual(mergeGlobalSearchHits(global, remote, 1).map(item => item.url), [global[0].url]);
 });
 
+test('empty or unusable Algolia results preserve local Country matches', () => {
+  const local = [
+    { url: '/global-radio/apple-music/apple-music-1', station_name: 'Apple Music 1' },
+    { url: '/asia/viet-nam/vov1', station_name: 'VOV1' },
+    { url: '/europe/united-kingdom/heart-uk', station_name: 'Heart UK' },
+  ];
+  const urls = items => items.map(item => item.url);
+  assert.deepEqual(urls(mergeGlobalSearchHits(local, [])), urls(local),
+    'a completed zero-hit Algolia query must not erase geographic matches');
+  assert.deepEqual(urls(mergeGlobalSearchHits(local, null)), urls(local));
+  assert.deepEqual(urls(mergeGlobalSearchHits(local, [null, { url: '//invalid.example' }])), urls(local),
+    'malformed remote entries must not suppress valid static results');
+  assert.deepEqual(urls(mergeGlobalSearchHits(local, [], 2)), urls(local).slice(0, 2));
+  assert.deepEqual(mergeGlobalSearchHits(local, [], 0), []);
+
+  // Nonempty valid Algolia results keep remote order and canonical URL mapping.
+  const hits = [
+    { url: '/europe/united-kingdom/heart-uk', station_name: 'Heart UK' },
+    { url: '/asia/viet-nam/vov1', station_name: 'VOV1' },
+  ];
+  assert.deepEqual(urls(mergeGlobalSearchHits(local, hits)),
+    ['/global-radio/apple-music/apple-music-1', '/europe/united-kingdom/heart-uk', '/asia/viet-nam/vov1']);
+});
+
 test('UI has featured carousel, compact country cards, and fallback search', async () => {
   const [home, featured, countries, queue, box, result, packageSource] = await Promise.all([
     readFile('pages/index.vue', 'utf8'),
