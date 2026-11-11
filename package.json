@@ -60,6 +60,9 @@
     "@intlify/message-compiler": "11.4.14",
     "@intlify/shared": "11.4.14",
     "vue-i18n": "11.4.14",
-    "follow-redirects": "1.16.2"
+    "follow-redirects": "1.16.2",
+    "glob": "14.0.4",
+    "minimatch": "11.0.7",
+    "readdir-glob": "4.0.0"
   }
 }
