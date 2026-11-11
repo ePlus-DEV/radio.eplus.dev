@@ -32,6 +32,7 @@
 import { storeToRefs } from 'pinia';
 import { usePlaybackStore } from '~/stores/playback';
 import { createPlaybackStation } from '~/utils/playback-station.mjs';
+import { isCurrentRestoredCountrySelection } from '~/utils/restored-country-selection.mjs';
 import type { RadioSource, RadioStationOption, RadioCatalogEntry } from '~/types/radio';
 import type { GlobalRadioProvider } from '~/types/global-radio';
 
@@ -82,19 +83,23 @@ const selectGlobalStation = async (target: RadioStationOption, version: number, 
   }
 };
 
-const resolveCountryStationInPlace = async (target: RadioStationOption): Promise<boolean> => {
-  if (!target.url) return false;
+const resolveCountryStationInPlace = async (target: RadioStationOption, isCurrent: () => boolean): Promise<boolean> => {
+  if (!target.url || !isCurrent()) return false;
   const [, area, country, id] = target.url.split('/');
   if (!area || !country || !id) return false;
   try {
     const catalog = await $fetch<Record<string, RadioCatalogEntry>>(
       siteAssetUrl(`/radio/${area}/${country}.json`), { timeout: 10_000 },
     );
+    // A different Play/Pause or route request may have happened during fetch.
+    if (!isCurrent()) return false;
     const meta = catalog?.[id];
     if (!meta?.stream) return false;
     const options: RadioStationOption[] = Object.entries(catalog).map(([key, entry]) => ({
       id: key, title: entry.title, image: entry.features || '/brand/onair-mark.svg', url: `/${area}/${country}/${key}`,
     }));
+    // This guard also handles a newer request that arrived during queue construction.
+    if (!isCurrent()) return false;
     playback.activate(createPlaybackStation({
       area, country, id, meta,
       corsServer: String(config.public.corsServer || ''), placeholder: '/brand/onair-mark.svg',
@@ -118,10 +123,17 @@ const selectStation = (target: RadioStationOption) => {
   // resolve-on-Play path; a failed catalog fetch falls back to navigation.
   if (target.url === playback.station?.url && !playback.station?.sources?.length
     && !target.url.startsWith('/global-radio/')) {
+    const intent = { generation: version, pauseRequest: playback.pauseRequest, stationUrl: target.url };
+    const isCurrent = (): boolean => isCurrentRestoredCountrySelection(intent, {
+      generation: selectionVersion,
+      pauseRequest: playback.pauseRequest,
+      stationUrl: playback.station?.url || '',
+      requestedStationUrl: playback.requestedStationUrl,
+      hasSources: Boolean(playback.station?.sources?.length),
+    });
     void (async () => {
-      const resolved = await resolveCountryStationInPlace(target);
-      if (resolved) return;
-      if (version !== selectionVersion) return;
+      const resolved = await resolveCountryStationInPlace(target, isCurrent);
+      if (resolved || !isCurrent()) return;
       playback.requestStation(target.url!);
       void navigateTo(target.url!);
     })();
