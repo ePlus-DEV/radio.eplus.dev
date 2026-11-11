@@ -41,9 +41,14 @@
         </p>
         <template v-else>
           <p class="px-2 pb-1 pt-4 text-xs font-semibold tabular-nums text-[var(--radio-text-muted)]">
-            {{ t('panel.station_count', { count: results.length }) }}
+            {{ t('search.showing_results', { shown: pagination.shown, total: pagination.total }) }}
           </p>
           <SearchResult :result="results" />
+          <div v-if="pagination.hasMore" class="mt-4 flex justify-center">
+            <UButton color="neutral" variant="outline" class="min-h-11" @click="visiblePages += 1">
+              {{ t('search.load_more') }}
+            </UButton>
+          </div>
           <p v-if="!results.length" class="px-3 py-8 text-center text-sm text-[var(--radio-text-muted)]" role="status">
             {{ t('panel.no_channels') }}
           </p>
@@ -60,6 +65,7 @@
 
 <script setup lang="ts">
 import { searchLocalStations } from '~/utils/station-search.mjs';
+import { paginateStationResults } from '~/utils/search-pagination.mjs';
 import { parseSearchQueryParam } from '~/utils/search-route-query.mjs';
 
 const route = useRoute();
@@ -77,7 +83,13 @@ watch(query, value => { draft.value = value; });
 // The static search index loads client-side only, on page mount.
 const { index, loading, error, load } = useStationSearchIndex();
 onMounted(() => { void load(); });
-const results = computed(() => searchLocalStations(index.value, query.value, 100));
+// Rank once per query/index change. Render only the first 100 rows until the
+// listener asks for more; never confuse a capped list with the true total.
+const allResults = computed(() => searchLocalStations(index.value, query.value, index.value.length));
+const visiblePages = ref(1);
+watch(query, () => { visiblePages.value = 1; });
+const pagination = computed(() => paginateStationResults(allResults.value, visiblePages.value));
+const results = computed(() => pagination.value.items);
 
 let debounce: ReturnType<typeof setTimeout> | null = null;
 const applyQuery = (value: string): void => {
