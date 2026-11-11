@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { buildStationSearchIndex } from '../scripts/build-station-search-index.mjs';
-import { searchLocalStations, normalizeStationQuery, mergeGlobalSearchHits } from '../utils/station-search.mjs';
+import { searchLocalStations, normalizeStationQuery, mergeGlobalSearchHits, filterAndSortStations } from '../utils/station-search.mjs';
 
 test('local station search ignores accents, matches words, and ranks names', () => {
   const stations = [
@@ -21,6 +21,53 @@ test('local station search ignores accents, matches words, and ranks names', () 
   assert.deepEqual(searchLocalStations(stations, '', 3).map(x => x.url), ['/d', '/e', '/b']);
   assert.deepEqual(searchLocalStations(stations, 'zzzzz'), []);
   assert.deepEqual(searchLocalStations(stations, 'rap', 0), []);
+});
+
+test('filterAndSortStations matches accents word-wise, sorts stably, never mutates input', () => {
+  const stations = [
+    { title: 'VOV Giao Thông' },
+    { title: 'Đài Tiếng Nói' },
+    { title: 'Chạm Radio' },
+    { title: 'BBC World Service' },
+    { title: 'Đài Hà Nội' },
+  ];
+  const titles = list => list.map(station => station.title);
+
+  // Accent-insensitive, including the non-decomposable Đ/đ.
+  assert.deepEqual(titles(filterAndSortStations(stations, 'giao thong')), ['VOV Giao Thông']);
+  assert.deepEqual(titles(filterAndSortStations(stations, 'dai')), ['Đài Tiếng Nói', 'Đài Hà Nội']);
+  // Every query word must appear in the title.
+  assert.deepEqual(titles(filterAndSortStations(stations, 'dai ha noi')), ['Đài Hà Nội']);
+  assert.deepEqual(filterAndSortStations(stations, 'khong co'), []);
+
+  // Default order is the input order; an empty query keeps the full list.
+  assert.deepEqual(titles(filterAndSortStations(stations, '')), titles(stations));
+  assert.deepEqual(titles(filterAndSortStations(stations, '   ', 'default')), titles(stations));
+
+  // Sorting compares normalized titles.
+  assert.deepEqual(titles(filterAndSortStations(stations, '', 'az')),
+    ['BBC World Service', 'Chạm Radio', 'Đài Hà Nội', 'Đài Tiếng Nói', 'VOV Giao Thông']);
+  assert.deepEqual(titles(filterAndSortStations(stations, '', 'za')),
+    ['VOV Giao Thông', 'Đài Tiếng Nói', 'Đài Hà Nội', 'Chạm Radio', 'BBC World Service']);
+  // Filter and sort compose.
+  assert.deepEqual(titles(filterAndSortStations(stations, 'dai', 'az')), ['Đài Hà Nội', 'Đài Tiếng Nói']);
+
+  // Ties keep the input order in both directions.
+  const ties = [
+    { title: 'Heart UK', id: 1 },
+    { title: 'heart uk', id: 2 },
+    { title: 'Alpha', id: 3 },
+  ];
+  assert.deepEqual(filterAndSortStations(ties, '', 'az').map(station => station.id), [3, 1, 2]);
+  assert.deepEqual(filterAndSortStations(ties, '', 'za').map(station => station.id), [1, 2, 3]);
+
+  // Input array is neither mutated nor returned by reference.
+  const snapshot = [...stations];
+  const result = filterAndSortStations(stations, '', 'za');
+  assert.notEqual(result, stations);
+  assert.deepEqual(stations, snapshot);
+  assert.deepEqual(filterAndSortStations(null, 'x'), []);
+  assert.deepEqual(filterAndSortStations(undefined, ''), []);
 });
 
 test('build-time fallback index includes only playable radio catalog entries', async () => {
