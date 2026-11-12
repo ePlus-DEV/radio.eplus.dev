@@ -74,9 +74,12 @@ export function filterAndSortStations(stations, query, sort = 'default') {
 }
 
 export function filterQueueStations(stations, query, favoriteUrls, favoritesOnly) {
-  const term = normalizeStationQuery(query);
+  // Match every query word independently, like the header and country searches.
+  // A phrase such as "giao minh" should find "VOV Giao Thông Hồ Chí Minh".
+  const words = normalizeStationQuery(query).split(/\\s+/).filter(Boolean);
   const favorites = new Set(favoriteUrls);
-  return stations.filter(station => (!favoritesOnly || favorites.has(station.url)) && (!term || normalizeStationQuery(station.title).includes(term)));
+  return stations.filter(station => (!favoritesOnly || favorites.has(station.url))
+    && words.every(word => normalizeStationQuery(station.title).includes(word)));
 }
 
 /**
