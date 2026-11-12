@@ -122,7 +122,10 @@ export function mergeGlobalSearchHits(localHits, remoteHits, limit = 20) {
     canonical.set(key, canonical.has(key) ? null : item);
   }
   const seen = new Set();
-  return [...global, ...usableRemote.map(item => canonical.get(geographicHitKey(item)) || item)]
+  return [...global, ...usableRemote.map(item => canonical.get(geographicHitKey(item)) || item),
+    // A partial/stale Algolia index must not hide locally known matches.
+    // Keep remote ranking first, then fill unused slots from the static index.
+    ...local]
     .filter(item => {
       if (!item || typeof item.url !== 'string' || !item.url.startsWith('/') ||
         item.url.startsWith('//') || seen.has(item.url)) return false;
