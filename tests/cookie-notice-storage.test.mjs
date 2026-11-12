@@ -6,7 +6,7 @@ const source = await readFile(new URL('../components/CookieConsent.vue', import.
 
 // Exercise the actual script callbacks with mocked Vue/Nuxt globals and storage.
 function setup(storage) {
-  const script = source.match(/<script setup lang="ts">([\\s\\S]*?)<\\/script>/)?.[1];
+  const script = source.match(/<script setup lang="ts">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(script);
   const callbacks = [];
   const ref = value => ({ value });
@@ -15,7 +15,7 @@ function setup(storage) {
   const useRuntimeConfig = () => ({ public: { ga4Enabled: true } });
   const runnable = script.replace(/: void/g, '');
   return new Function('ref', 'window', 'onMounted', 'useRuntimeConfig', 'callbacks',
-    runnable + '\\nreturn { accept, visible, mounted: callbacks[0] };'
+    runnable + '\nreturn { accept, visible, mounted: callbacks[0] };'
   )(ref, window, onMounted, useRuntimeConfig, callbacks);
 }
 
