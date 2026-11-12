@@ -51,3 +51,31 @@ test('replacing or cancelling a timer removes the old deadline and pending work'
     assert.equal(f.pending.size, 0);
   }
 });
+
+test('queued callback from an old timer cannot replace the active timer', () => {
+  const f = fixture();
+  f.timer.start(1);
+  const oldCallback = f.pending.values().next().value.callback;
+  f.timer.start(10);
+  const activeId = [...f.pending.keys()][0];
+  f.advance(60_000);
+  oldCallback(); // A callback can already be queued when clearTimeout runs.
+  assert.deepEqual([...f.pending.keys()], [activeId]);
+  assert.equal(f.remaining, 10);
+  assert.equal(f.expired, 0);
+});
+
+test('queued callback before foreground resume cannot cancel refreshed timer', () => {
+  const f = fixture();
+  f.timer.start(10);
+  const oldCallback = f.pending.values().next().value.callback;
+  f.advance(2 * 60_000);
+  f.timer.check();
+  const activeId = [...f.pending.keys()][0];
+  oldCallback();
+  assert.deepEqual([...f.pending.keys()], [activeId]);
+  assert.equal(f.remaining, 8);
+  f.advance(8 * 60_000);
+  f.timer.check();
+  assert.equal(f.expired, 1);
+});

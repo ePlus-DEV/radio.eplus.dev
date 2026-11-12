@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { buildStationSearchIndex } from '../scripts/build-station-search-index.mjs';
-import { searchLocalStations, normalizeStationQuery, mergeGlobalSearchHits, filterAndSortStations } from '../utils/station-search.mjs';
+import { searchLocalStations, normalizeStationQuery, mergeGlobalSearchHits, filterAndSortStations, filterQueueStations } from '../utils/station-search.mjs';
 
 test('local station search ignores accents, matches words, and ranks names', () => {
   const stations = [
@@ -68,6 +68,20 @@ test('filterAndSortStations matches accents word-wise, sorts stably, never mutat
   assert.deepEqual(stations, snapshot);
   assert.deepEqual(filterAndSortStations(null, 'x'), []);
   assert.deepEqual(filterAndSortStations(undefined, ''), []);
+});
+
+
+test('queue search matches non-adjacent query words and respects favorites', () => {
+  const stations = [
+    { url: '/vov', title: 'VOV Giao Thông Hồ Chí Minh' },
+    { url: '/other', title: 'Minh Giao Radio' },
+    { url: '/news', title: 'BBC World Service' },
+  ];
+  assert.deepEqual(filterQueueStations(stations, 'giao minh', [], false).map(x => x.url), ['/vov', '/other']);
+  assert.deepEqual(filterQueueStations(stations, 'GIAO   MINH', ['/vov'], true).map(x => x.url), ['/vov']);
+  assert.deepEqual(filterQueueStations(stations, 'giao minh', ['/news'], true), []);
+  assert.deepEqual(filterQueueStations(stations, '   ', [], false), stations);
+  assert.deepEqual(filterQueueStations(stations, 'not found', [], false), []);
 });
 
 test('build-time fallback index includes only playable radio catalog entries', async () => {
