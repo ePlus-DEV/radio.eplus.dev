@@ -53,7 +53,11 @@ const analyticsAvailable = ref(false);
 
 const accept = (): void => {
   // Dismiss an informational notice only; GA4 never depends on this value.
-  window.localStorage.setItem(STORAGE_KEY, 'dismissed');
+  try {
+    window.localStorage.setItem(STORAGE_KEY, 'dismissed');
+  } catch {
+    // Private browsing or storage policies may block writes; dismiss for this session.
+  }
   visible.value = false;
 };
 
@@ -61,6 +65,11 @@ onMounted(() => {
   analyticsAvailable.value = Boolean(config.public.ga4Enabled)
     && window.location.hostname === 'radio.eplus.dev';
   // New notice key makes previous opt-in/opt-out choices irrelevant.
-  visible.value = window.localStorage.getItem(STORAGE_KEY) !== 'dismissed';
+  try {
+    visible.value = window.localStorage.getItem(STORAGE_KEY) !== 'dismissed';
+  } catch {
+    // A blocked storage read must not crash the component or prevent dismissal.
+    visible.value = true;
+  }
 });
 </script>
