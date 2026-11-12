@@ -14,9 +14,9 @@ function setup(storage) {
   const onMounted = callback => callbacks.push(callback);
   const useRuntimeConfig = () => ({ public: { ga4Enabled: true } });
   const runnable = script.replace(/: void/g, '');
-  return new Function('ref', 'window', 'onMounted', 'useRuntimeConfig',
+  return new Function('ref', 'window', 'onMounted', 'useRuntimeConfig', 'callbacks',
     runnable + '\\nreturn { accept, visible, mounted: callbacks[0] };'
-  )(ref, window, onMounted, useRuntimeConfig);
+  )(ref, window, onMounted, useRuntimeConfig, callbacks);
 }
 
 test('tracking notice remains dismissible when storage access is blocked', () => {
