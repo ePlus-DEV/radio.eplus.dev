@@ -168,6 +168,19 @@ test('empty or unusable Algolia results preserve local Country matches', () => {
     ['/global-radio/apple-music/apple-music-1', '/europe/united-kingdom/heart-uk', '/asia/viet-nam/vov1']);
 });
 
+
+test('partial Algolia results retain unmatched local stations after remote ranking', () => {
+  const local = [
+    { url: '/asia/viet-nam/vov1', station_name: 'VOV1' },
+    { url: '/asia/viet-nam/vov2', station_name: 'VOV2' },
+  ];
+  const remote = [{ url: '/asia/viet-nam/vov2', station_name: 'VOV2' }];
+  assert.deepEqual(mergeGlobalSearchHits(local, remote).map(hit => hit.url),
+    ['/asia/viet-nam/vov2', '/asia/viet-nam/vov1']);
+  assert.deepEqual(mergeGlobalSearchHits(local, remote, 1).map(hit => hit.url),
+    ['/asia/viet-nam/vov2']);
+});
+
 test('UI has featured carousel, compact country cards, and fallback search', async () => {
   const [home, featured, countries, queue, box, result, packageSource] = await Promise.all([
     readFile('pages/index.vue', 'utf8'),
