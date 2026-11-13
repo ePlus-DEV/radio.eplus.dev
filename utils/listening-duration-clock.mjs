@@ -26,8 +26,10 @@ export function createListeningDurationClock({
   let intervalId = null;
   let periodMs = 0;
   let ticks = 0;
+  let generation = 0;
 
   const stop = () => {
+    generation += 1;
     if (intervalId !== null) clearIntervalFn(intervalId);
     intervalId = null;
     periodMs = 0;
@@ -43,9 +45,12 @@ export function createListeningDurationClock({
     if (!nextPeriod) return;
 
     periodMs = nextPeriod;
+    const currentGeneration = generation;
     // Route changes update the visible value immediately without writing stats.
     preview();
     intervalId = setIntervalFn(() => {
+      // A queued interval callback may run after pause, opt-out or mode switch.
+      if (currentGeneration !== generation) return;
       ticks += 1;
       if (nextPeriod === LISTENING_CHECKPOINT_MS || ticks % 5 === 0) flush();
       // The preview is not a persisted checkpoint. Background audio is still

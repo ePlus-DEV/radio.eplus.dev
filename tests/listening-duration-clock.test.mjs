@@ -121,3 +121,29 @@ test('misconfigured clocks reject missing callbacks', () => {
   assert.throws(() => createListeningDurationClock(), TypeError);
   assert.throws(() => createListeningDurationClock({ flush() {} }), TypeError);
 });
+
+test('queued interval callbacks cannot record listening after pause or a mode switch', () => {
+  const { clock, timers, events } = harness();
+  clock.sync({ playing: true });
+  const staleCheckpoint = [...timers.values()][0].callback;
+  clock.sync({ playing: false });
+  const afterPause = events.length;
+  staleCheckpoint(); // Simulates a callback queued before clearInterval.
+  assert.equal(events.length, afterPause);
+
+  clock.sync({ playing: true, statsVisible: true });
+  const stalePreview = [...timers.values()][0].callback;
+  clock.sync({ playing: true, statsVisible: false });
+  const afterSwitch = events.length;
+  for (let i = 0; i < 5; i++) stalePreview();
+  assert.equal(events.length, afterSwitch);
+  assert.equal(events.filter(event => event === 'flush').length, 0);
+
+  const activeCheckpoint = [...timers.values()][0].callback;
+  activeCheckpoint();
+  assert.equal(events.filter(event => event === 'flush').length, 1);
+  clock.stop();
+  const afterStop = events.length;
+  activeCheckpoint();
+  assert.equal(events.length, afterStop);
+});
