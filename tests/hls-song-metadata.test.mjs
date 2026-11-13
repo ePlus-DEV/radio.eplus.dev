@@ -368,3 +368,24 @@ test('Apple artwork is scoped to the current live track, never a stale history r
   const player = await readFile(new URL('../components/player/Player.vue', import.meta.url), 'utf8');
   assert.match(player, /live\?\.stationUrl === props\.stationUrl && live\.artwork/);
 });
+
+test('late out-of-order HLS fragments cannot revert the displayed song', () => {
+  const older = makeTag([title('Earlier Song', 4), artist('Earlier Artist', 4)], 4);
+  const newer = makeTag([title('Current Song', 4), artist('Current Artist', 4)], 4);
+  const buffer = createTimedHlsTrackBuffer();
+  buffer.add([{ data: newer, pts: 120 }]);
+  assert.deepEqual(buffer.consume(120),
+    { title: 'Current Song', artist: 'Current Artist' });
+  // A delayed network fragment with an earlier PTS must not roll back UI.
+  buffer.add([{ data: older, pts: 100 }]);
+  assert.equal(buffer.consume(125), null);
+  // A later song must still be published.
+  buffer.add([{ data: older, pts: 130 }]);
+  assert.deepEqual(buffer.consume(130),
+    { title: 'Earlier Song', artist: 'Earlier Artist' });
+  // Clearing the buffer starts a new playback timeline.
+  buffer.clear();
+  buffer.add([{ data: older, pts: 5 }]);
+  assert.deepEqual(buffer.consume(5),
+    { title: 'Earlier Song', artist: 'Earlier Artist' });
+});
