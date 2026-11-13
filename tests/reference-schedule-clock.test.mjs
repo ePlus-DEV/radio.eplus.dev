@@ -52,3 +52,46 @@ test('global player starts clock only after client mount and cancels it on teard
   assert.match(composable, /onBeforeUnmount\(\(\) => \{[\s\S]*?referenceClock\.stop\(\)/);
   assert.doesNotMatch(composable, /referenceTimer = setInterval/);
 });
+
+test('queued reference guide callbacks cannot tick after deactivation or teardown', () => {
+  let active = true;
+  let ticks = 0;
+  let nextId = 0;
+  const timers = new Map();
+  const clock = createReferenceScheduleClock({
+    hasReference: () => active,
+    onTick: () => { ticks += 1; },
+    setTimer: callback => {
+      const id = ++nextId;
+      timers.set(id, callback);
+      return id;
+    },
+    clearTimer: id => timers.delete(id),
+  });
+
+  clock.sync();
+  const stale = timers.get(1);
+  stale();
+  assert.equal(ticks, 1);
+
+  // The station's reference may disappear before its watcher cancels the timer.
+  active = false;
+  stale();
+  assert.equal(ticks, 1);
+
+  clock.sync();
+  stale();
+  assert.equal(ticks, 1);
+
+  active = true;
+  clock.sync();
+  const current = timers.get(2);
+  stale(); // Callback queued before clearInterval must not affect a new guide.
+  assert.equal(ticks, 1);
+  current();
+  assert.equal(ticks, 2);
+
+  clock.stop();
+  current();
+  assert.equal(ticks, 2);
+});
