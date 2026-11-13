@@ -21,7 +21,8 @@
     "test:ui": "playwright test",
     "generate:site": "node scripts/generate-site.mjs",
     "generate:images": "node scripts/generate-station-og-images.mjs --images-only",
-    "audit:report": "node scripts/audit-dependencies.mjs"
+    "audit:report": "node scripts/audit-dependencies.mjs",
+    "perf:measure": "node scripts/measure-client-performance.mjs"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
