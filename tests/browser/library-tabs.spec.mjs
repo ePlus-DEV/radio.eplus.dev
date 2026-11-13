@@ -3,7 +3,9 @@ import { test, expect } from '@playwright/test';
 const links = page => page.locator('nav.radio-library-tabs');
 const selected = page => links(page).locator('a[aria-current="location"]');
 
-test('Library tabs keep URL, active panel, reload and browser Back/Forward synchronized', async ({ page }) => {
+test('Library deep links, Back/Forward, reload and panel selection stay synchronized', async ({ page }) => {
+  // Below xl, page navigation replaces the desktop sidebar.
+  await page.setViewportSize({ width: 1024, height: 800 });
   await page.goto('/library#recent');
   await expect(selected(page)).toHaveAttribute('href', '/library#recent');
   await expect(page.locator('section[aria-label="Recently played"]')).toBeVisible();
@@ -12,45 +14,42 @@ test('Library tabs keep URL, active panel, reload and browser Back/Forward synch
   await expect(page).toHaveURL(/\/library#favorites$/);
   await expect(selected(page)).toHaveAttribute('href', '/library#favorites');
   await expect(page.locator('section[aria-label="Favorites"]')).toBeVisible();
-  await expect(page.locator('section[aria-label="Recently played"]')).toHaveCount(0);
 
-  // A real link makes a browser-history entry; replacing the URL breaks Back.
+  await links(page).locator('a[href="/library#collections"]').click();
+  await expect(page).toHaveURL(/\/library#collections$/);
+  await expect(page.locator('section[aria-label="Collections"]')).toBeVisible();
+
+  await links(page).locator('a[href="/library#custom"]').click();
+  await expect(page).toHaveURL(/\/library#custom$/);
+  await expect(page.locator('section[aria-label="Added stations"]')).toBeVisible();
+
   await links(page).locator('a[href="/library#stats"]').click();
   await expect(page).toHaveURL(/\/library#stats$/);
   await expect(selected(page)).toHaveAttribute('href', '/library#stats');
-  await expect(page.locator('section[aria-label="Listening time"]')).toBeVisible();
+  await expect(page.locator('section[aria-label="Listening activity"]')).toBeVisible();
+
   await page.goBack();
-  await expect(page).toHaveURL(/\/library#favorites$/);
-  await expect(selected(page)).toHaveAttribute('href', '/library#favorites');
-  await expect(page.locator('section[aria-label="Favorites"]')).toBeVisible();
+  await expect(page).toHaveURL(/\/library#custom$/);
   await page.goForward();
   await expect(page).toHaveURL(/\/library#stats$/);
-  await expect(selected(page)).toHaveAttribute('href', '/library#stats');
-  await expect(page.locator('section[aria-label="Listening time"]')).toBeVisible();
-
   await page.reload();
   await expect(selected(page)).toHaveAttribute('href', '/library#stats');
-  await expect(page.locator('section[aria-label="Listening time"]')).toBeVisible();
 
   await links(page).locator('a[href="/library"]').click();
   await expect(page).toHaveURL(/\/library$/);
   await expect(selected(page)).toHaveAttribute('href', '/library');
-  await expect(page.locator('section[aria-label="Favorites"]')).toBeVisible();
-  await expect(page.locator('section[aria-label="Recently played"]')).toBeVisible();
+  await expect(page.locator('section[aria-label="Overview"]')).toBeVisible();
 
   await page.goto('/library#unknown');
   await expect(selected(page)).toHaveAttribute('href', '/library');
 });
 
-test('Library navigation shows two readable rows on mobile with touch and keyboard support', async ({ page }) => {
+test('mobile Library navigation has six usable touch targets, and desktop has no duplicate tabs', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 780 });
   await page.goto('/library#recent');
   const nav = links(page);
-  await expect(nav.locator('a')).toHaveCount(4);
-  expect(await nav.evaluate(element => {
-    const grid = element.firstElementChild;
-    return getComputedStyle(grid).gridTemplateColumns.split(' ').length;
-  })).toBe(2);
+  await expect(nav.locator('a')).toHaveCount(6);
+  expect(await nav.evaluate(element => getComputedStyle(element.firstElementChild).gridTemplateColumns.split(' ').length)).toBe(2);
   expect(await nav.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
   const tabMetrics = await nav.locator('a').evaluateAll(elements => elements.map(element => {
     const box = element.getBoundingClientRect();
@@ -67,8 +66,13 @@ test('Library navigation shows two readable rows on mobile with touch and keyboa
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/library#stats$/);
   await expect(stats).toHaveAttribute('aria-current', 'location');
-  await expect(page.locator('section[aria-label="Listening time"]')).toBeVisible();
 
   await page.setViewportSize({ width: 1024, height: 768 });
-  expect(await nav.evaluate(element => getComputedStyle(element.firstElementChild).gridTemplateColumns.split(' ').length)).toBe(4);
+  expect(await nav.evaluate(element => getComputedStyle(element.firstElementChild).gridTemplateColumns.split(' ').length)).toBe(3);
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(nav).toBeHidden();
+  const sidebar = page.locator('#radio-library-subnav-desktop');
+  await expect(sidebar).toBeVisible();
+  await expect(sidebar.locator('a')).toHaveCount(6);
 });

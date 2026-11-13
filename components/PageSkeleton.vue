@@ -122,7 +122,7 @@
         </div>
       </template>
 
-      <!-- Library: header, hash tabs, then the shared content-only fallback. -->
+      <!-- Library: responsive navigation only where the desktop sidebar is absent. -->
       <template v-else-if="variant === 'library'">
         <div class="flex items-center gap-3">
           <div class="radio-skeleton h-11 w-11 shrink-0 rounded-2xl" />
@@ -131,9 +131,9 @@
             <div class="radio-skeleton h-4 w-72 max-w-full rounded-md" />
           </div>
         </div>
-        <div class="radio-library-tabs rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1">
-          <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
-            <div v-for="i in 4" :key="'library-tab-' + i" class="radio-skeleton h-10 rounded-lg" />
+        <div class="radio-library-tabs rounded-xl border border-[var(--radio-border)] bg-[var(--radio-surface-soft)] p-1 xl:hidden">
+          <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+            <div v-for="i in 6" :key="'library-tab-' + i" class="radio-skeleton h-10 rounded-lg" />
           </div>
         </div>
         <LibraryContentSkeleton tab="all" :announce="false" />

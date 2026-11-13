@@ -29,7 +29,7 @@ test('compact dashboard uses four KPI cards, full-width trend and separate top-s
 test('chart pointer geometry is invalidated on scroll, resize and viewport zoom with listener cleanup', async () => {
   const chart = await read('components/panel/ListeningStats.vue');
   const library = await read('pages/library.vue');
-  assert.match(library, /<PanelListeningStats v-if="active === 'stats'" \/>/,
+  assert.match(library, /<PanelListeningStats v-else-if="active === 'stats'" \/>/,
     'geometry listeners should only exist when the statistics tab is active');
   assert.match(chart, /if \(!chartBounds\) cacheChartBounds\(event\)/,
     'pointermove should not synchronously measure the SVG every time');

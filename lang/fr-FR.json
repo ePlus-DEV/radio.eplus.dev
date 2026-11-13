@@ -63,7 +63,7 @@
     "contact": "Contact",
     "language": "Langue:",
     "old_version": "Ancienne version",
-    "statistics": "Statistiques",
+    "statistics": "Statistiques des stations",
     "changelog": "Journal des modifications",
     "cookie": "Politique relative aux cookies"
   },
@@ -626,7 +626,7 @@
     "favorites_empty": "Touchez le cœur pour ajouter une station aux favoris.",
     "clear_recent": "Effacer l’historique récent",
     "remove_recent": "Retirer de l’historique",
-    "listening_stats": "Durée d’écoute",
+    "listening_stats": "Activité d’écoute",
     "listening_live": "Calcul du temps d’écoute en direct",
     "listening_tracking_title": "Suivre le temps d’écoute",
     "listening_tracking_description": "Désactiver le comptage et l’envoi d’analyses sur la durée d’écoute. Les statistiques enregistrées, la lecture et l’historique récent sont conservés.",
@@ -674,7 +674,7 @@
     "timer": "Minuteur",
     "channel_list": "Stations",
     "next_station": "Station suivante",
-    "library_description": "Vos favoris et votre historique sont enregistrés sur cet appareil.",
+    "library_description": "Vos stations, collections et activités d’écoute enregistrées sur cet appareil.",
     "all": "Tout",
     "see_all": "Voir tout"
   },
@@ -817,7 +817,7 @@
     "show_less": "Réduire"
   },
   "custom_streams": {
-    "title": "Radios personnalisées",
+    "title": "Stations ajoutées",
     "description": "Liens de flux privés à ce navigateur, sans ajout au catalogue public.",
     "name": "Nom de la station",
     "url": "URL du flux public",
@@ -829,7 +829,7 @@
     "export": "Exporter JSON",
     "import": "Importer JSON",
     "empty": "Aucun flux personnel enregistré.",
-    "disclaimer": "Le format de l'URL est indicatif, pas une preuve de disponibilité. Codec, CORS ou HTTP peuvent bloquer la lecture. La lecture de ces flux n'est pas encore activée.",
+    "disclaimer": "Les flux ne sont pas vérifiés. La lecture dépend du navigateur, du format, de CORS et des politiques HTTP/HTTPS.",
     "format_hint": "Format supposé",
     "unverified": "Non vérifié · état inconnu",
     "http_warning": "Flux HTTP · possiblement bloqué sur HTTPS",
@@ -855,5 +855,16 @@
       "limit": "Limite de 40 flux personnels atteinte.",
       "not_found": "Cette entrée a changé. Actualisez la page."
     }
+  },
+  "library_navigation": {
+    "overview": "Vue d’ensemble",
+    "activity": "Activité d’écoute",
+    "empty_title": "Commencez votre bibliothèque",
+    "empty_description": "Explorez les stations et utilisez le cœur pour enregistrer vos favoris. Les stations écoutées apparaîtront ici.",
+    "browse": "Découvrir les radios",
+    "organize": "Gérer votre bibliothèque",
+    "collections_hint": "Créez des groupes et écoutez vos listes.",
+    "custom_hint": "{count} stations ajoutées · Gérez vos flux.",
+    "activity_hint": "Consultez vos durées d’écoute et d’utilisation du site."
   }
 }

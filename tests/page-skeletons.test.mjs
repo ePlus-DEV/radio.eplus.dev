@@ -65,6 +65,7 @@ test("Library renders responsive skeleton content on direct SSR and navigation w
     assert.match(skeleton, new RegExp("tab === '" + tab + "'"));
   }
   assert.match(skeleton, /\['favorites', 'recent'\]/);
+  assert.match(skeleton, /tab === 'collections' \|\| tab === 'custom'/);
   assert.match(skeleton, /role="status"|:role="announce \? 'status'/);
   assert.match(skeleton, /aria-busy="true"/);
   assert.match(skeleton, /aria-hidden="true"/);
