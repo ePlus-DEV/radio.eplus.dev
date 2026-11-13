@@ -58,9 +58,9 @@ test('inferMime honors recognized extensions, query strings and unknown fallback
 
 test('global Player imports playlist resolution without duplicating transport', async () => {
   const player = await readFile(new URL('../components/player/Player.vue', import.meta.url), 'utf8');
-  assert.match(player, /import \\{ resolvePlaylistSource \\} from ["']~\\/utils\\/radio-playlist\\.mjs["']/);
-  assert.match(player, /await resolvePlaylistSource\\(rawSource\\)/);
-  assert.doesNotMatch(player, /const resolvePlaylistSource = async \\(/);
-  assert.doesNotMatch(player, /const parsePlaylistUrls = /);
-  assert.doesNotMatch(player, /const isTextPlaylist = /);
+  assert.ok(player.includes('import { resolvePlaylistSource } from "~/utils/radio-playlist.mjs";'));
+  assert.ok(player.includes('await resolvePlaylistSource(rawSource)'));
+  assert.ok(!player.includes('const resolvePlaylistSource = async ('));
+  assert.ok(!player.includes('const parsePlaylistUrls = '));
+  assert.ok(!player.includes('const isTextPlaylist = '));
 });
