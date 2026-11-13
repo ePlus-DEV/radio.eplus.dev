@@ -63,7 +63,7 @@
     "contact": "聯絡我們",
     "language": "語言：",
     "old_version": "舊版網站",
-    "statistics": "統計",
+    "statistics": "電台統計",
     "changelog": "更新日誌",
     "cookie": "Cookie 政策"
   },
@@ -626,7 +626,7 @@
     "favorites_empty": "點擊愛心即可收藏電台。",
     "clear_recent": "清除收聽記錄",
     "remove_recent": "從歷史記錄中移除",
-    "listening_stats": "收聽時長",
+    "listening_stats": "收聽活動",
     "listening_live": "正在即時統計收聽時長",
     "listening_tracking_title": "記錄收聽時長",
     "listening_tracking_description": "關閉後將停止累計收聽時長並停止傳送收聽時長分析事件。已儲存的統計、播放及最近收聽紀錄不受影響。",
@@ -674,7 +674,7 @@
     "timer": "定時",
     "channel_list": "頻道列表",
     "next_station": "下一個電台",
-    "library_description": "收藏和收聽記錄儲存在此裝置上。",
+    "library_description": "此裝置儲存的電台、收藏集與收聽活動。",
     "all": "全部",
     "see_all": "查看全部"
   },
@@ -817,7 +817,7 @@
     "show_less": "收合"
   },
   "custom_streams": {
-    "title": "個人電台",
+    "title": "自行新增的電台",
     "description": "個人串流網址僅儲存於此瀏覽器，不會加入公開電台目錄。",
     "name": "電台名稱",
     "url": "公開串流 URL",
@@ -829,7 +829,7 @@
     "export": "匯出 JSON",
     "import": "匯入 JSON",
     "empty": "尚未新增個人電台。",
-    "disclaimer": "URL 格式僅供參考，不代表直播已經驗證。編碼、CORS 或 HTTP 限制可能阻擋播放。個人串流播放功能目前尚未啟用。",
+    "disclaimer": "音源未經驗證。能否播放取決於瀏覽器、格式、CORS 和 HTTP/HTTPS 限制。",
     "format_hint": "推測格式",
     "unverified": "尚未驗證 · 狀態未知",
     "http_warning": "HTTP 串流 · HTTPS 瀏覽器可能封鎖",
@@ -855,5 +855,16 @@
       "limit": "最多儲存 40 個個人電台。",
       "not_found": "紀錄已變更，請重新整理頁面。"
     }
+  },
+  "library_navigation": {
+    "overview": "總覽",
+    "activity": "收聽活動",
+    "empty_title": "開始建立你的電台庫",
+    "empty_description": "探索電台並點擊愛心加入最愛。播放過的電台也會顯示在這裡。",
+    "browse": "探索電台",
+    "organize": "管理電台庫",
+    "collections_hint": "建立電台群組並依清單播放。",
+    "custom_hint": "已新增 {count} 個電台 · 管理自訂音源。",
+    "activity_hint": "查看收聽時長與網站使用情況。"
   }
 }

@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { LIBRARY_TAB_VALUES, libraryTabFromHash, libraryTabHref } from '../utils/library-tabs.mjs';
 
-test('library URL hash selects only recognized sections', () => {
-  assert.deepEqual(LIBRARY_TAB_VALUES, ['favorites', 'recent', 'stats']);
+test('library URL hash recognizes all five deep-linked sections without changing old links', () => {
+  assert.deepEqual(LIBRARY_TAB_VALUES, ['favorites', 'recent', 'collections', 'custom', 'stats']);
   for (const value of LIBRARY_TAB_VALUES) {
     assert.equal(libraryTabFromHash(`#${value}`), value);
     assert.equal(libraryTabHref(value), `/library#${value}`);
@@ -13,7 +13,7 @@ test('library URL hash selects only recognized sections', () => {
   }
 });
 
-test('all tab has a clean URL and unsupported values cannot inject a hash or route', () => {
+test('overview uses clean URL; unsupported values cannot inject a hash or route', () => {
   assert.equal(libraryTabHref('all'), '/library');
   assert.equal(libraryTabHref(''), '/library');
   assert.equal(libraryTabHref('#stats'), '/library');

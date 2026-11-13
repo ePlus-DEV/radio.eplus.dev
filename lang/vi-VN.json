@@ -63,7 +63,7 @@
     "contact": "Liên Hệ",
     "language": "Ngôn ngữ:",
     "old_version": "Phiên bản cũ",
-    "statistics": "Thống kê",
+    "statistics": "Thống kê đài",
     "changelog": "Nhật ký thay đổi",
     "cookie": "Chính sách cookie"
   },
@@ -626,7 +626,7 @@
     "favorites_empty": "Bấm biểu tượng trái tim để lưu kênh yêu thích.",
     "clear_recent": "Xóa lịch sử nghe",
     "remove_recent": "Xóa khỏi lịch sử",
-    "listening_stats": "Thời gian nghe",
+    "listening_stats": "Hoạt động nghe",
     "listening_live": "Đang đếm thời gian nghe trực tiếp",
     "listening_tracking_title": "Theo dõi thời gian nghe",
     "listening_tracking_description": "Tắt để ngừng đếm thời gian và gửi thống kê thời lượng nghe radio. Dữ liệu cũ vẫn được giữ; radio và danh sách Nghe gần đây vẫn hoạt động.",
@@ -674,7 +674,7 @@
     "timer": "Hẹn giờ",
     "channel_list": "Danh sách kênh",
     "next_station": "Kênh tiếp theo",
-    "library_description": "Kênh yêu thích và lịch sử nghe được lưu trên thiết bị này.",
+    "library_description": "Các đài đã lưu, bộ sưu tập và hoạt động nghe trên thiết bị này.",
     "all": "Tất cả",
     "see_all": "Xem tất cả"
   },
@@ -817,7 +817,7 @@
     "show_less": "Thu gọn"
   },
   "custom_streams": {
-    "title": "Radio cá nhân",
+    "title": "Đài tự thêm",
     "description": "Lưu địa chỉ nguồn phát trên trình duyệt này; không thêm vào danh mục đài công khai.",
     "name": "Tên đài",
     "url": "URL nguồn phát công khai",
@@ -829,7 +829,7 @@
     "export": "Xuất JSON",
     "import": "Nhập JSON",
     "empty": "Bạn chưa thêm đài cá nhân nào.",
-    "disclaimer": "Định dạng URL chỉ là gợi ý, không xác nhận đài đang hoạt động. Trình duyệt có thể chặn do codec, CORS hoặc HTTP. Chức năng phát nguồn cá nhân chưa được bật ở bước này.",
+    "disclaimer": "Nguồn phát chưa được xác minh. Việc phát phụ thuộc vào trình duyệt, định dạng, CORS và chính sách HTTP/HTTPS.",
     "format_hint": "Định dạng tham khảo",
     "unverified": "Chưa xác minh · chưa biết trạng thái",
     "http_warning": "Nguồn HTTP · có thể bị trình duyệt HTTPS chặn",
@@ -855,5 +855,16 @@
       "limit": "Chỉ được lưu tối đa 40 đài cá nhân.",
       "not_found": "Bản ghi đã thay đổi. Hãy tải lại trang và thử lại."
     }
+  },
+  "library_navigation": {
+    "overview": "Tổng quan",
+    "activity": "Hoạt động nghe",
+    "empty_title": "Bắt đầu thư viện của bạn",
+    "empty_description": "Khám phá các đài và nhấn biểu tượng trái tim để lưu đài yêu thích. Các đài đã nghe cũng xuất hiện tại đây.",
+    "browse": "Khám phá đài radio",
+    "organize": "Quản lý thư viện",
+    "collections_hint": "Tạo nhóm đài và phát theo danh sách riêng.",
+    "custom_hint": "{count} đài tự thêm · Quản lý nguồn phát riêng.",
+    "activity_hint": "Xem thời gian nghe và sử dụng website."
   }
 }

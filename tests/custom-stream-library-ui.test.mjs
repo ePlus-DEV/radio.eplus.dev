@@ -4,12 +4,12 @@ import { readFile } from 'node:fs/promises';
 
 const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 
-test('custom stream form is confined to client-only Library and never becomes a public SEO route', async () => {
+test('custom stream form has a dedicated client-only Library section and never becomes a public SEO route', async () => {
   const [library, component] = await Promise.all([
     read('pages/library.vue'), read('components/panel/CustomRadioStreams.vue'),
   ]);
   assert.match(library, /<ClientOnly>/);
-  assert.match(library, /<PanelCustomRadioStreams v-if="active === 'all'"/);
+  assert.match(library, /<PanelCustomRadioStreams v-else-if="active === 'custom'"/);
   assert.match(library, /'noindex, follow'/);
   assert.doesNotMatch(library, /custom-streams\.json|pages\/custom-stream/);
   assert.match(component, /autocomplete="off" maxlength="96"/);

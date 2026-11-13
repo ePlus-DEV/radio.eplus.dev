@@ -63,7 +63,7 @@
     "contact": "联系我们",
     "language": "语言：",
     "old_version": "旧版网站",
-    "statistics": "统计",
+    "statistics": "电台统计",
     "changelog": "更新日志",
     "cookie": "Cookie 政策"
   },
@@ -626,7 +626,7 @@
     "favorites_empty": "点击爱心即可收藏电台。",
     "clear_recent": "清除收听记录",
     "remove_recent": "从历史记录中移除",
-    "listening_stats": "收听时长",
+    "listening_stats": "收听活动",
     "listening_live": "正在实时统计收听时长",
     "listening_tracking_title": "记录收听时长",
     "listening_tracking_description": "关闭后将停止累计收听时长并停止发送收听时长分析事件。已保存的统计、播放和最近收听记录不受影响。",
@@ -674,7 +674,7 @@
     "timer": "定时",
     "channel_list": "频道列表",
     "next_station": "下一个电台",
-    "library_description": "收藏和收听记录保存在此设备上。",
+    "library_description": "此设备保存的电台、收藏集和收听活动。",
     "all": "全部",
     "see_all": "查看全部"
   },
@@ -817,7 +817,7 @@
     "show_less": "收起"
   },
   "custom_streams": {
-    "title": "个人电台",
+    "title": "自行添加的电台",
     "description": "个人音频流地址仅保存在本浏览器，不会加入公开电台目录。",
     "name": "电台名称",
     "url": "公开音频流 URL",
@@ -829,7 +829,7 @@
     "export": "导出 JSON",
     "import": "导入 JSON",
     "empty": "尚未添加个人电台。",
-    "disclaimer": "URL 格式仅供参考，不表示直播已验证可用。编码、CORS 或 HTTP 限制可能阻止播放。个人流播放功能目前尚未启用。",
+    "disclaimer": "音源未经验证。能否播放取决于浏览器、格式、CORS 和 HTTP/HTTPS 限制。",
     "format_hint": "推测格式",
     "unverified": "未经验证 · 状态未知",
     "http_warning": "HTTP 流 · HTTPS 浏览器可能拦截",
@@ -855,5 +855,16 @@
       "limit": "最多保存 40 个个人电台。",
       "not_found": "记录已更改，请刷新页面。"
     }
+  },
+  "library_navigation": {
+    "overview": "概览",
+    "activity": "收听活动",
+    "empty_title": "开始建立你的电台库",
+    "empty_description": "探索电台并点击爱心收藏。播放过的电台也会显示在这里。",
+    "browse": "探索电台",
+    "organize": "管理电台库",
+    "collections_hint": "创建电台分组并按列表播放。",
+    "custom_hint": "已添加 {count} 个电台 · 管理自定义音源。",
+    "activity_hint": "查看收听时长和网站使用情况。"
   }
 }
