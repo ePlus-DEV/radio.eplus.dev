@@ -1,0 +1,43 @@
+name: "Dependency advisory evidence"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly, not an expensive hourly audit; repo rules govern any remediation PR.
+    - cron: '23 2 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: onair-repository-work
+  queue: max
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: "Audit full locked tree (all severities)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: staging
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24.15.0"
+          cache: npm
+      - name: "Install exact lockfile"
+        run: npm ci
+      - name: "Collect full and production audit evidence"
+        run: npm run audit:report
+      - name: "Upload sanitized audit summaries"
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependency-audit-${{ github.run_id }}
+          path: |
+            reports/npm-audit-summary.json
+            reports/npm-audit-summary.md
+          if-no-files-found: warn
+          retention-days: 30
