@@ -32,3 +32,32 @@ export const parsePlaylistUrls = (text) => {
 
   return [...urls];
 };
+
+/**
+ * Resolve legacy PLS/M3U playlists using a bounded request. This does not
+ * parse HLS manifests or create a second audio player. Failure returns the
+ * original source so the global Player owns retries and fallback ordering.
+ */
+export async function resolvePlaylistSource(source, {
+  fetchFn = fetch,
+  setTimeoutFn = setTimeout,
+  clearTimeoutFn = clearTimeout,
+  timeoutMs = 5_000,
+} = {}) {
+  if (!source || !isTextPlaylist(source.src)) return source;
+  const controller = new AbortController();
+  const timer = setTimeoutFn(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetchFn(source.src, {
+      signal: controller.signal,
+      headers: { accept: 'audio/x-scpls,audio/x-mpegurl,text/plain,*/*' },
+    });
+    if (!response.ok) return source;
+    const first = parsePlaylistUrls(await response.text())[0];
+    return first ? { src: first, type: inferMime(first, source.type) } : source;
+  } catch {
+    return source;
+  } finally {
+    clearTimeoutFn(timer);
+  }
+}
