@@ -11,7 +11,7 @@ test('overview prefers saved stations over editing forms and never writes local 
   assert.match(overview, /<PanelListeningLibrary compact/);
   assert.match(overview, /parseCollections\(localStorage\.getItem\(COLLECTIONS_KEY\)\)/);
   assert.match(overview, /parseCustomStreams\(localStorage\.getItem\(CUSTOM_STREAMS_STORAGE_KEY\)\)/);
-  assert.doesNotMatch(overview, /localStorage\.setItem|\$fetch\(|gtag\\(/);
+  assert.doesNotMatch(overview, /localStorage\.setItem|\$fetch\(|gtag/);
   for (const section of ['favorites', 'collections', 'recent', 'custom', 'stats']) {
     assert.ok(overview.includes('/library#' + section), section + ' overview link missing');
   }
