@@ -163,6 +163,7 @@ export function extractHlsId3Tracks(samples, options = {}) {
 export function createTimedHlsTrackBuffer(options = {}) {
   let pending = [];
   let lastTrack = null;
+  let lastPts = -Infinity;
   return {
     add(samples) {
       const tracks = extractHlsId3Tracks(samples, options);
@@ -181,6 +182,10 @@ export function createTimedHlsTrackBuffer(options = {}) {
       }
       pending = waiting;
       if (!ready) return null;
+      // HLS fragments can arrive out of order. Never let late metadata
+      // overwrite a newer song already shown to the listener.
+      if (ready.pts !== null && ready.pts < lastPts) return null;
+      if (ready.pts !== null) lastPts = ready.pts;
       // A following fragment can add artwork to an initially text-only song.
       if (lastTrack?.title === ready.title && lastTrack?.artist === ready.artist &&
         (!ready.artwork || lastTrack.artwork === ready.artwork)) return null;
@@ -190,6 +195,7 @@ export function createTimedHlsTrackBuffer(options = {}) {
     clear() {
       pending = [];
       lastTrack = null;
+      lastPts = -Infinity;
     },
   };
 }
