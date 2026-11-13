@@ -14,7 +14,7 @@
             class="radio-interactive flex min-h-11 w-full items-center gap-3 rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition"
             :class="route.path === '/library' ? 'bg-rose-500/10 text-rose-700 dark:text-rose-300' : 'text-[var(--radio-text-muted)] hover:bg-[var(--radio-hover)] hover:text-[var(--radio-text)]'"
             :aria-expanded="libraryOpen"
-            :aria-controls="mobile ? 'radio-library-subnav-mobile' : 'radio-library-subnav-desktop'"
+            :aria-controls="'radio-library-subnav-desktop'"
             @click="libraryOpen = !libraryOpen">
             <UIcon name="i-lucide-library" class="h-4 w-4 shrink-0" aria-hidden="true" />
             <span class="min-w-0 flex-1">{{ $t('redesign.library') }}</span>
@@ -22,7 +22,7 @@
               :class="libraryOpen ? 'rotate-180' : ''" aria-hidden="true" />
           </button>
           <nav v-show="libraryOpen"
-            :id="mobile ? 'radio-library-subnav-mobile' : 'radio-library-subnav-desktop'"
+            id="radio-library-subnav-desktop"
             :aria-label="$t('redesign.library')"
             class="ml-5 space-y-1 border-l border-[var(--radio-border)] pl-3">
             <NuxtLink v-for="section in librarySections" :key="section.value"
@@ -121,10 +121,12 @@ watch(() => route.path, path => {
   if (path === '/library') libraryOpen.value = true;
 });
 const librarySections = [
-  { value: 'all', label: 'redesign.all', icon: 'i-lucide-layout-grid' },
+  { value: 'all', label: 'library_navigation.overview', icon: 'i-lucide-layout-dashboard' },
   { value: 'favorites', label: 'library.favorites', icon: 'i-lucide-heart' },
   { value: 'recent', label: 'library.recent', icon: 'i-lucide-history' },
-  { value: 'stats', label: 'library.listening_stats', icon: 'i-lucide-chart-no-axes-column-increasing' },
+  { value: 'collections', label: 'collections.title', icon: 'i-lucide-list-music' },
+  { value: 'custom', label: 'custom_streams.title', icon: 'i-lucide-radio-tower' },
+  { value: 'stats', label: 'library_navigation.activity', icon: 'i-lucide-headphones' },
 ] as const;
 // Only real prerendered routes. Match the established footer links so all
 // informational pages remain reachable at phone widths.

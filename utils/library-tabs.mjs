@@ -1,6 +1,6 @@
-// Keep the Library's selected section in the URL so direct links,
-// reload and browser Back/Forward all resolve to the same visible panel.
-export const LIBRARY_TAB_VALUES = Object.freeze(['favorites', 'recent', 'stats']);
+// Library panels share the existing /library route. Preserve legacy hashes and
+// reject unknown values instead of constructing arbitrary URLs.
+export const LIBRARY_TAB_VALUES = Object.freeze(['favorites', 'recent', 'collections', 'custom', 'stats']);
 
 export const libraryTabFromHash = hash => {
   const value = typeof hash === 'string' && hash.startsWith('#') ? hash.slice(1) : '';

@@ -63,7 +63,7 @@
     "contact": "コンタクト",
     "language": "言語：",
     "old_version": "旧バージョン",
-    "statistics": "統計",
+    "statistics": "放送局の統計",
     "changelog": "変更ログ",
     "cookie": "Cookieポリシー"
   },
@@ -626,7 +626,7 @@
     "favorites_empty": "ハートを押すとお気に入りに保存できます。",
     "clear_recent": "履歴を消去",
     "remove_recent": "履歴から削除",
-    "listening_stats": "聴取時間",
+    "listening_stats": "聴取アクティビティ",
     "listening_live": "聴取時間をリアルタイムで計測中",
     "listening_tracking_title": "聴取時間の記録",
     "listening_tracking_description": "オフにすると聴取時間の計測と聴取時間に関する分析イベントの送信を停止します。保存済みの統計、再生、最近聴いた局はそのままです。",
@@ -674,7 +674,7 @@
     "timer": "タイマー",
     "channel_list": "チャンネル",
     "next_station": "次の放送局",
-    "library_description": "お気に入りと再生履歴はこの端末に保存されます。",
+    "library_description": "この端末に保存された放送局、コレクション、聴取履歴。",
     "all": "すべて",
     "see_all": "すべて見る"
   },
@@ -817,7 +817,7 @@
     "show_less": "折りたたむ"
   },
   "custom_streams": {
-    "title": "マイラジオ",
+    "title": "追加した放送局",
     "description": "個人の配信URLはこのブラウザだけに保存され、公開カタログには追加されません。",
     "name": "局名",
     "url": "公開ストリームURL",
@@ -829,7 +829,7 @@
     "export": "JSONを書き出す",
     "import": "JSONを読み込む",
     "empty": "個人のラジオはまだありません。",
-    "disclaimer": "URL形式は推測であり、配信の稼働を保証しません。コーデック、CORS、HTTP制限で再生できない場合があります。個人ストリームの再生機能はまだ未対応です。",
+    "disclaimer": "ストリームは未検証です。再生可否はブラウザ、形式、CORS、HTTP/HTTPS の制限によります。",
     "format_hint": "推測形式",
     "unverified": "未検証・稼働状況不明",
     "http_warning": "HTTP配信・HTTPS環境ではブロックされる場合があります",
@@ -855,5 +855,16 @@
       "limit": "40件まで保存できます。",
       "not_found": "データが更新されました。再読み込みしてください。"
     }
+  },
+  "library_navigation": {
+    "overview": "概要",
+    "activity": "聴取アクティビティ",
+    "empty_title": "ライブラリを始めましょう",
+    "empty_description": "放送局を探してハートでお気に入りに登録。再生した局もここに表示されます。",
+    "browse": "ラジオを探す",
+    "organize": "ライブラリを管理",
+    "collections_hint": "放送局をグループ化し、自分のリストで再生。",
+    "custom_hint": "追加した放送局 {count} 件 · ストリームを管理。",
+    "activity_hint": "聴取時間とサイト利用状況を確認。"
   }
 }

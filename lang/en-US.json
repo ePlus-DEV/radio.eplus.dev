@@ -63,7 +63,7 @@
     "contact": "Contact",
     "language": "Language:",
     "old_version": "Previous version",
-    "statistics": "Statistics",
+    "statistics": "Station statistics",
     "changelog": "Changelog",
     "cookie": "Cookie Policy"
   },
@@ -626,7 +626,7 @@
     "favorites_empty": "Tap the heart on a station to save it here.",
     "clear_recent": "Clear recent history",
     "remove_recent": "Remove from history",
-    "listening_stats": "Listening time",
+    "listening_stats": "Listening activity",
     "listening_live": "Counting listening time live",
     "listening_tracking_title": "Track listening time",
     "listening_tracking_description": "Turn this off to stop counting listening time and sending radio listening-duration analytics. Saved stats stay; playback and Recently played still work.",
@@ -674,7 +674,7 @@
     "timer": "Timer",
     "channel_list": "Channels",
     "next_station": "Next station",
-    "library_description": "Your favorite stations and listening history, saved on this device.",
+    "library_description": "Saved stations, collections, and listening activity on this device.",
     "all": "All",
     "see_all": "See all"
   },
@@ -817,7 +817,7 @@
     "show_less": "Show less"
   },
   "custom_streams": {
-    "title": "Custom radio streams",
+    "title": "Added stations",
     "description": "Personal stream URLs stored only in this browser. They are not added to the public station catalog.",
     "name": "Station name",
     "url": "Public stream URL",
@@ -829,7 +829,7 @@
     "export": "Export JSON",
     "import": "Import JSON",
     "empty": "No personal streams yet.",
-    "disclaimer": "URL formats are only hints, not proof of live playback. Browser codec, CORS, and mixed-content policies may block streams. Playback integration is not enabled yet.",
+    "disclaimer": "Streams are not verified. Playback depends on browser capabilities, formats, CORS, and HTTP/HTTPS policies.",
     "format_hint": "Format hint",
     "unverified": "Not verified · availability unknown",
     "http_warning": "HTTP stream · HTTPS browsers may block it",
@@ -855,5 +855,16 @@
       "limit": "You have reached the limit of 40 personal streams.",
       "not_found": "This record changed. Refresh the page and try again."
     }
+  },
+  "library_navigation": {
+    "overview": "Overview",
+    "activity": "Listening activity",
+    "empty_title": "Start your library",
+    "empty_description": "Explore stations and tap the heart to save favorites. Stations you play will also appear here.",
+    "browse": "Explore radio stations",
+    "organize": "Manage your library",
+    "collections_hint": "Create groups and play your own station lists.",
+    "custom_hint": "{count} added stations · Manage your own streams.",
+    "activity_hint": "Review listening time and website usage."
   }
 }
