@@ -203,7 +203,7 @@ import { createRetryableHlsLoader } from "~/utils/retryable-hls-loader.mjs";
 import { playbackHealth, playbackFailureReason } from "~/utils/playback-health.mjs";
 import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex, STREAM_STALL_TIMEOUT_MS, STABLE_PLAYBACK_WINDOW_MS, CONNECTING_SLOW_AFTER_MS, connectDeadlineExceeded, canExtendStallProbe } from "~/utils/playback-recovery-policy.mjs";
 import { stationReportUrl, stationReportEmailUrl } from "~/utils/station-sharing.mjs";
-import { inferMime, isTextPlaylist, parsePlaylistUrls } from "~/utils/radio-playlist.mjs";
+import { resolvePlaylistSource } from "~/utils/radio-playlist.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
 import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
 
@@ -594,36 +594,6 @@ const isHlsSource = (source: RadioSource): boolean => {
     type.includes("mpegurl") ||
     type.includes("m3u8")
   );
-};
-
-const resolvePlaylistSource = async (
-  source: RadioSource,
-): Promise<RadioSource> => {
-  if (!isTextPlaylist(source.src)) return source;
-
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 5000);
-
-  try {
-    const response = await fetch(source.src, {
-      signal: controller.signal,
-      headers: { accept: "audio/x-scpls,audio/x-mpegurl,text/plain,*/*" },
-    });
-    if (!response.ok) return source;
-
-    const urls = parsePlaylistUrls(await response.text());
-    const first = urls[0];
-    if (!first) return source;
-
-    return {
-      src: first,
-      type: inferMime(first, source.type),
-    };
-  } catch {
-    return source;
-  } finally {
-    clearTimeout(timer);
-  }
 };
 
 // hls.js stays lazy. Clear only rejected imports; the source watchdog
