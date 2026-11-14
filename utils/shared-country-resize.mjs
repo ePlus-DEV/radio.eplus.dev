@@ -36,7 +36,10 @@ export function observeCountrySize(element, callback) {
   }
   callbacks.set(callback, (callbacks.get(callback) || 0) + 1);
 
+  let disposed = false;
   return () => {
+    if (disposed) return;
+    disposed = true;
     const existing = subscribers.get(element);
     if (!existing) return;
     const count = existing.get(callback);
