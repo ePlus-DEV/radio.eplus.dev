@@ -11,7 +11,7 @@ let fallbackListening = false;
 const notify = element => {
   const callbacks = subscribers.get(element);
   if (!callbacks) return;
-  for (const callback of callbacks) callback();
+  for (const callback of callbacks.keys()) callback();
 };
 
 const onWindowResize = () => {
@@ -22,7 +22,7 @@ export function observeCountrySize(element, callback) {
   if (!element || typeof callback !== 'function' || typeof window === 'undefined') return () => {};
   let callbacks = subscribers.get(element);
   if (!callbacks) {
-    callbacks = new Set();
+    callbacks = new Map();
     subscribers.set(element, callbacks);
     if (typeof ResizeObserver !== 'undefined') {
       if (!observer) observer = new ResizeObserver(entries => {
@@ -34,12 +34,18 @@ export function observeCountrySize(element, callback) {
       fallbackListening = true;
     }
   }
-  callbacks.add(callback);
+  callbacks.set(callback, (callbacks.get(callback) || 0) + 1);
 
+  let disposed = false;
   return () => {
+    if (disposed) return;
+    disposed = true;
     const existing = subscribers.get(element);
     if (!existing) return;
-    existing.delete(callback);
+    const count = existing.get(callback);
+    if (!count) return;
+    if (count > 1) existing.set(callback, count - 1);
+    else existing.delete(callback);
     if (existing.size) return;
     subscribers.delete(element);
     observer?.unobserve(element);
