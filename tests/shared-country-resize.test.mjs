@@ -33,6 +33,8 @@ test('duplicate callback subscriptions remain active until both disposers run', 
 
     disposeA();
     assert.equal(removed, 0, 'first disposer must not unsubscribe second subscriber');
+    disposeA();
+    assert.equal(removed, 0, 'repeat dispose must not unsubscribe another owner');
     listeners.get('resize')();
     assert.equal(calls, 2);
 
