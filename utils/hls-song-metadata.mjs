@@ -184,6 +184,10 @@ export function createTimedHlsTrackBuffer(options = {}) {
       if (!ready) return null;
       // HLS fragments can arrive out of order. Never let late metadata
       // overwrite a newer song already shown to the listener.
+      // Untimed samples are valid before a timeline is established, but once
+      // a timed track has been shown they cannot be ordered safely. Ignore
+      // them rather than replacing the current song with stale metadata.
+      if (ready.pts === null && lastPts !== -Infinity) return null;
       if (ready.pts !== null && ready.pts < lastPts) return null;
       if (ready.pts !== null) lastPts = ready.pts;
       // A following fragment can add artwork to an initially text-only song.
