@@ -12,10 +12,14 @@ export const inferMime = (url, fallback = 'audio/mpeg') => {
   return fallback || 'audio/mpeg';
 };
 
-export const isTextPlaylist = (url) =>
-  /\.pls(?:$|[?#])/i.test(url) ||
-  /(?:[?&](?:output|format)=pls(?:[&#]|$))/i.test(url) ||
-  /\.m3u(?:$|[?#])/i.test(url);
+export const isTextPlaylist = (url) => {
+  // Match extensions only in the URL path: query values may mention a
+  // backup .pls/.m3u file without making the current stream a playlist.
+  const path = url.split(/[?#]/, 1)[0];
+  return /\.pls$/i.test(path) ||
+    /(?:[?&](?:output|format)=pls(?:[&#]|$))/i.test(url) ||
+    /\.m3u$/i.test(path);
+};
 
 export const parsePlaylistUrls = (text) => {
   const urls = new Set();
