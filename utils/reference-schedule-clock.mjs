@@ -21,7 +21,10 @@ export function createReferenceScheduleClock({
         const currentGeneration = generation;
         timer = setTimer(() => {
           // Ignore callbacks queued before teardown or a reference-guide change.
-          if (currentGeneration !== generation || !hasReference()) return;
+          if (currentGeneration !== generation) return;
+          // A reference guide can disappear before its reactive watcher runs.
+          // Release the interval rather than waking up forever while inactive.
+          if (!hasReference()) { stop(); return; }
           onTick();
         }, intervalMs);
       }
