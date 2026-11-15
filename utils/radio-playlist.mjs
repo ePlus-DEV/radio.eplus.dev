@@ -12,7 +12,7 @@ export const inferMime = (url, fallback = 'audio/mpeg') => {
 
 export const isTextPlaylist = (url) =>
   /\.pls(?:$|[?#])/i.test(url) ||
-  /(?:[?&](?:output|format)=pls(?:&|$))/i.test(url) ||
+  /(?:[?&](?:output|format)=pls(?:[&#]|$))/i.test(url) ||
   /\.m3u(?:$|[?#])/i.test(url);
 
 export const parsePlaylistUrls = (text) => {
