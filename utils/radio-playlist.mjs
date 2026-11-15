@@ -1,7 +1,7 @@
 // Pure radio playlist helpers shared by the global player. Keep transport
 // orchestration and timeouts inside the single audio session.
 export const inferMime = (url, fallback = 'audio/mpeg') => {
-  const value = url.toLowerCase();
+  // Only the stream path determines its MIME type; query/fragment values may\n  // contain unrelated backup URLs or filenames.\n  const value = String(url).split(/[?#]/, 1)[0].toLowerCase();
   if (/\.m3u8(?:$|[?#])/i.test(value)) return 'application/vnd.apple.mpegurl';
   if (/\.aac(?:$|[?#])/i.test(value)) return 'audio/aac';
   if (/\.ogg(?:$|[?#])/i.test(value)) return 'audio/ogg';
