@@ -16,6 +16,9 @@ test('detects PLS and M3U text playlists but not HLS playlists', () => {
     'https://station.test/hls/index.m3u8',
     'https://station.test/live.mp3',
     'https://station.test/listen?format=m3u8',
+    'https://station.test/live?next=backup.pls',
+    'https://station.test/live?next=backup.m3u',
+    'https://station.test/live?redirect=https://backup.test/playlist.pls',
   ]) assert.equal(isTextPlaylist(url), false, url);
 });
 
