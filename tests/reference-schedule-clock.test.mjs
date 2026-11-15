@@ -95,3 +95,36 @@ test('queued reference guide callbacks cannot tick after deactivation or teardow
   current();
   assert.equal(ticks, 2);
 });
+
+test('reference clock releases interval when guide disappears before watcher sync', () => {
+  let active = true;
+  let ticks = 0;
+  let nextId = 0;
+  const timers = new Map();
+  const clock = createReferenceScheduleClock({
+    hasReference: () => active,
+    onTick: () => { ticks += 1; },
+    setTimer: callback => {
+      const id = ++nextId;
+      timers.set(id, callback);
+      return id;
+    },
+    clearTimer: id => timers.delete(id),
+  });
+
+  clock.sync();
+  const stale = timers.get(1);
+  active = false;
+  stale(); // Reactive watcher has not called sync() yet.
+  assert.equal(timers.size, 0, 'inactive guide must not retain an idle interval');
+  assert.equal(ticks, 0);
+
+  active = true;
+  clock.sync();
+  stale(); // Already-queued callback from previous guide is inert.
+  assert.equal(ticks, 0);
+  timers.get(2)();
+  assert.equal(ticks, 1);
+  clock.stop();
+  assert.equal(timers.size, 0);
+});

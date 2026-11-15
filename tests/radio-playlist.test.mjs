@@ -9,6 +9,8 @@ test('detects PLS and M3U text playlists but not HLS playlists', () => {
     'https://station.test/playlist.m3u?session=1',
     'https://station.test/listen?output=pls',
     'https://station.test/listen?format=pls&unused=yes',
+    'https://station.test/listen?format=pls#player',
+    'https://station.test/listen?output=pls#now-playing',
   ]) assert.equal(isTextPlaylist(url), true, url);
   for (const url of [
     'https://station.test/hls/index.m3u8',
