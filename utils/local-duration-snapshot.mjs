@@ -9,13 +9,15 @@ export function createRawStorageSnapshot() {
   return {
     read(raw, previous, parse, empty) {
       if (lastRaw === raw) return previous;
+      const value = parseRaw(raw, parse, empty);
       lastRaw = raw;
-      return parseRaw(raw, parse, empty);
+      return value;
     },
     external(raw, parse, empty) {
       // Explicit storage events, including clear(), always update the store.
+      const value = parseRaw(raw, parse, empty);
       lastRaw = raw;
-      return parseRaw(raw, parse, empty);
+      return value;
     },
     saved(raw) { lastRaw = raw; },
   };

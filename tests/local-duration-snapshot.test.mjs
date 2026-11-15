@@ -70,3 +70,27 @@ test('stores revalidate changed cross-tab data and preserve legacy duration keys
   assert.match(online, /ONLINE_DURATION_KEY/);
   assert.match(listening, /LISTENING_DURATION_KEY/);
 });
+
+test('failed parse does not mark a raw snapshot as successfully cached', () => {
+  const snapshot = createRawStorageSnapshot();
+  const previous = { totalMs: 100 };
+  let attempts = 0;
+  const parse = raw => {
+    attempts++;
+    if (attempts === 1) throw new Error('transient validation failure');
+    return JSON.parse(raw);
+  };
+  const empty = () => ({ totalMs: 0 });
+  assert.throws(() => snapshot.read('{"totalMs":200}', previous, parse, empty), /transient/);
+  assert.deepEqual(snapshot.read('{"totalMs":200}', previous, parse, empty), { totalMs: 200 });
+  assert.equal(attempts, 2);
+});
+
+test('failed external parse leaves the previous snapshot eligible for retry', () => {
+  const snapshot = createRawStorageSnapshot();
+  const previous = { totalMs: 100 };
+  const empty = () => ({ totalMs: 0 });
+  snapshot.saved('{"totalMs":100}');
+  assert.throws(() => snapshot.external('{"totalMs":200}', () => { throw Error('temporary'); }, empty));
+  assert.deepEqual(snapshot.read('{"totalMs":200}', previous, JSON.parse, empty), { totalMs: 200 });
+});
