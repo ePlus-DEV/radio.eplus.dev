@@ -16,6 +16,9 @@ test('detects PLS and M3U text playlists but not HLS playlists', () => {
     'https://station.test/hls/index.m3u8',
     'https://station.test/live.mp3',
     'https://station.test/listen?format=m3u8',
+    'https://station.test/live?next=backup.pls',
+    'https://station.test/live?next=backup.m3u',
+    'https://station.test/live?redirect=https://backup.test/playlist.pls',
   ]) assert.equal(isTextPlaylist(url), false, url);
 });
 
@@ -54,6 +57,10 @@ test('inferMime honors recognized extensions, query strings and unknown fallback
   assert.equal(inferMime('https://x.test/live.ogg'), 'audio/ogg');
   assert.equal(inferMime('https://x.test/live.opus'), 'audio/opus');
   assert.equal(inferMime('https://x.test/live.mp3'), 'audio/mpeg');
+  assert.equal(inferMime('https://x.test/live.mp3?backup=other.m3u8'), 'audio/mpeg');
+  assert.equal(inferMime('https://x.test/live?redirect=https://backup.test/live.aac', 'audio/custom'), 'audio/custom');
+  assert.equal(inferMime('https://x.test/live.ogg#backup.opus'), 'audio/ogg');
+  assert.equal(inferMime('https://x.test/live.m3u8?token=abc#backup.mp3'), 'application/vnd.apple.mpegurl');
   assert.equal(inferMime('https://x.test/live', 'audio/custom'), 'audio/custom');
   assert.equal(inferMime('https://x.test/live', ''), 'audio/mpeg');
 });
