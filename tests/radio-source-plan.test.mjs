@@ -30,6 +30,27 @@ test("does not auto-proxy HLS manifests but keeps proxy fallback for plain strea
   );
 });
 
+test("does not mistake backup HLS URL mentions for an HLS stream", () => {
+  const result = buildPlaybackSources(
+    [
+      { src: "https://radio.example/live.mp3?backup=alternate.m3u8" },
+      { src: "https://radio.example/live.mp3#fallback.m3u8" },
+      { src: "https://radio.example/live.m3u8?token=abc" },
+      { src: "https://radio.example/live?backup=alternate.m3u8", type: "application/x-mpegURL" },
+    ],
+    "https://cors.example/",
+  );
+
+  assert.deepEqual(result.map(item => [item.src, Boolean(item.proxied)]), [
+    ["https://radio.example/live.mp3?backup=alternate.m3u8", false],
+    ["https://cors.example/https://radio.example/live.mp3?backup=alternate.m3u8", true],
+    ["https://radio.example/live.mp3#fallback.m3u8", false],
+    ["https://cors.example/https://radio.example/live.mp3#fallback.m3u8", true],
+    ["https://radio.example/live.m3u8?token=abc", false],
+    ["https://radio.example/live?backup=alternate.m3u8", false],
+  ]);
+});
+
 test("does not proxy a source that is already proxied", () => {
   const result = buildPlaybackSources(
     [
