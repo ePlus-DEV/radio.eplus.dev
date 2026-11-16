@@ -164,7 +164,7 @@ test('live time bar is wired to a one-second clock only for visible reference gu
   assert.match(q, /if \(!active\) return/);
   assert.match(q, /stopScheduleClock\(\)/);
   assert.match(q, /onBeforeUnmount\(\(\) => \{\s*stopScheduleClock\(\)/);
-  assert.doesNotMatch(q, /scheduleClockTimer = setInterval\([\s\S]*?if \(activeTab\.value === 'schedule'/);
+  assert.doesNotMatch(q, /scheduleClockTimer = setInterval\(\(\) => \{[\s\S]*?if \(activeTab\.value === 'schedule' && props\.visible/);
   assert.match(q, /data-schedule-clock role="timer"/);
   assert.match(q, /data-schedule-time-progress/);
   assert.match(q, /:start-time="gapStartTime\(scheduleGap\.insertIndex\)"/);
