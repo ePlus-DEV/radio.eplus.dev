@@ -205,6 +205,7 @@ import { isCurrentMediaPlaying, playbackWatchdogAction, nextRecoverySourceIndex,
 import { stationReportUrl, stationReportEmailUrl } from "~/utils/station-sharing.mjs";
 import { resolvePlaylistSource } from "~/utils/radio-playlist.mjs";
 import { resolveLiveTrack } from "~/utils/live-track.mjs";
+import { readPlayerStorage, writePlayerStorage } from "~/utils/player-storage.mjs";
 import { createTimedHlsTrackBuffer, extractNativeHlsId3Track } from "~/utils/hls-song-metadata.mjs";
 
 interface CurrentMedia {
@@ -297,7 +298,7 @@ const finishPlayerAction = () => { const action = pendingPlayerAction; pendingPl
 const wideViewport = ref(false);
 const updateViewport = () => { wideViewport.value = window.innerWidth >= 1536; if (wideViewport.value) mobileQueueOpen.value = false; };
 const persistQueueOpen = (): void => {
-  if (import.meta.client) localStorage.setItem(PLAYER_QUEUE_OPEN_KEY, playback.queueOpen ? '1' : '0');
+  if (import.meta.client) writePlayerStorage(PLAYER_QUEUE_OPEN_KEY, playback.queueOpen ? '1' : '0');
 };
 const setQueueOpen = (value: boolean): void => {
   playback.queueOpen = value;
@@ -399,7 +400,7 @@ const playerMini = toRef(playback, 'playerMini');
 const playerStatusVisible = computed(() => streamError.value || !online.value || waiting.value || resolvingGlobalSelection.value || !hasPlayableSource.value || Boolean(sleepRemaining.value));
 const togglePlayerCompact = (): void => {
   playerCompact.value = !playerCompact.value;
-  if (import.meta.client) localStorage.setItem('radio:player-compact', playerCompact.value ? '1' : '0');
+  if (import.meta.client) writePlayerStorage('radio:player-compact', playerCompact.value ? '1' : '0');
 };
 const setPlayerMini = (value: boolean): void => {
   playerMini.value = value;
@@ -407,7 +408,7 @@ const setPlayerMini = (value: boolean): void => {
     setQueueOpen(false);
     mobileQueueOpen.value = false;
   }
-  if (import.meta.client) localStorage.setItem('radio:player-mini', value ? '1' : '0');
+  if (import.meta.client) writePlayerStorage('radio:player-mini', value ? '1' : '0');
 };
 
 let hlsInstance: any = null;
@@ -1362,7 +1363,7 @@ const onVolumeChange = (): void => {
   muted.value = media.muted;
   if (preferences.rememberVolume) {
     try {
-      localStorage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify({ volume: media.volume, muted: media.muted }));
+      writePlayerStorage(AUDIO_PREFERENCES_KEY, JSON.stringify({ volume: media.volume, muted: media.muted }));
     } catch { /* Storage restrictions must not interrupt audio. */ }
   }
 };
@@ -1507,9 +1508,9 @@ onMounted(() => {
   window.addEventListener('radio:listening-duration-reset', resetListeningTracking);
   document.addEventListener("visibilitychange", checkSleepDeadline);
   window.addEventListener("pageshow", checkSleepDeadline);
-  playerCompact.value = localStorage.getItem('radio:player-compact') === '1';
-  playerMini.value = localStorage.getItem('radio:player-mini') === '1';
-  playback.queueOpen = localStorage.getItem(PLAYER_QUEUE_OPEN_KEY) === '1' && !playerMini.value;
+  playerCompact.value = readPlayerStorage('radio:player-compact') === '1';
+  playerMini.value = readPlayerStorage('radio:player-mini') === '1';
+  playback.queueOpen = readPlayerStorage(PLAYER_QUEUE_OPEN_KEY) === '1' && !playerMini.value;
   systemVolumeOnly.value = usesSystemVolumeControls(navigator);
   const [, area, country] = props.country.split(".");
   if (area && country) {
@@ -1524,7 +1525,7 @@ onMounted(() => {
   const savedMedia = mediaElement.value;
   if (savedMedia && preferences.rememberVolume) {
     try {
-      const saved = JSON.parse(localStorage.getItem(AUDIO_PREFERENCES_KEY) || 'null');
+      const saved = JSON.parse(readPlayerStorage(AUDIO_PREFERENCES_KEY) || 'null');
       if (saved && typeof saved.muted === 'boolean') savedMedia.muted = saved.muted;
       if (!systemVolumeOnly.value && typeof saved?.volume === 'number'
         && Number.isFinite(saved.volume) && saved.volume >= 0 && saved.volume <= 1) {
