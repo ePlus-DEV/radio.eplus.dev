@@ -157,9 +157,16 @@ test('live time bar is wired to a one-second clock only for visible reference gu
   const q = await readFile(new URL('../components/player/Queue.vue', import.meta.url), 'utf8');
   const gap = await readFile(new URL('../components/player/ScheduleGap.vue', import.meta.url), 'utf8');
   assert.match(q, /scheduleTimelineProgress\(item\.startTime, item\.endTime, scheduleNow\.value\)/);
+  assert.match(q, /watch\(needsScheduleClock, \(active\) => \{/);
   assert.match(q, /scheduleClockTimer = setInterval\(/);
   assert.match(q, /\}, 1_000\)/);
-  assert.match(q, /props\.visible && props\.scheduleIsReference/);
+  assert.match(q, /activeTab\.value === 'schedule' && props\.visible && props\.scheduleIsReference && props\.program\.length > 0/);
+  assert.match(q, /if \(!active\) return/);
+  assert.match(q, /stopScheduleClock\(\)/);
+  assert.match(q, /onBeforeUnmount\(\(\) => \{\s*stopScheduleClock\(\)/);
+  const intervalBody = q.match(/scheduleClockTimer = setInterval\(\(\) => \{([\s\S]*?)\}, 1_000\)/)?.[1];
+  assert.ok(intervalBody, 'one-second callback exists only behind the eligibility watcher');
+  assert.doesNotMatch(intervalBody, /if \(activeTab\.value === 'schedule'/);
   assert.match(q, /data-schedule-clock role="timer"/);
   assert.match(q, /data-schedule-time-progress/);
   assert.match(q, /:start-time="gapStartTime\(scheduleGap\.insertIndex\)"/);
