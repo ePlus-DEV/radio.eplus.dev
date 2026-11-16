@@ -31,8 +31,10 @@ export const buildPlaybackSources = (sources, corsServer) => {
     push(source);
 
     const type = String(source?.type || "").toLowerCase();
+    // Query/fragment values can mention backup HLS URLs without making this source HLS.
+    const path = src.split(/[?#]/, 1)[0];
     const isHls =
-      /\.m3u8(?:$|[?#])/i.test(src) ||
+      /\.m3u8$/i.test(path) ||
       type.includes("mpegurl") ||
       type.includes("m3u8");
 

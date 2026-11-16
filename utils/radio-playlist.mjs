@@ -1,7 +1,9 @@
 // Pure radio playlist helpers shared by the global player. Keep transport
 // orchestration and timeouts inside the single audio session.
 export const inferMime = (url, fallback = 'audio/mpeg') => {
-  const value = url.toLowerCase();
+  // Only the stream path determines its MIME type; query/fragment values may
+  // contain unrelated backup URLs or filenames.
+  const value = String(url).split(/[?#]/, 1)[0].toLowerCase();
   if (/\.m3u8(?:$|[?#])/i.test(value)) return 'application/vnd.apple.mpegurl';
   if (/\.aac(?:$|[?#])/i.test(value)) return 'audio/aac';
   if (/\.ogg(?:$|[?#])/i.test(value)) return 'audio/ogg';
@@ -10,10 +12,15 @@ export const inferMime = (url, fallback = 'audio/mpeg') => {
   return fallback || 'audio/mpeg';
 };
 
-export const isTextPlaylist = (url) =>
-  /\.pls(?:$|[?#])/i.test(url) ||
-  /(?:[?&](?:output|format)=pls(?:[&#]|$))/i.test(url) ||
-  /\.m3u(?:$|[?#])/i.test(url);
+export const isTextPlaylist = (url) => {
+  // Match extensions only in the URL path: query values may mention a
+  // backup .pls/.m3u file without making the current stream a playlist.
+  const path = url.split(/[?#]/, 1)[0];
+  const query = url.split('#', 1)[0].split('?', 2)[1];
+  return /\.pls$/i.test(path) ||
+    (query !== undefined && /(?:^|&)(?:output|format)=pls(?:&|$)/i.test(query)) ||
+    /\.m3u$/i.test(path);
+};
 
 export const parsePlaylistUrls = (text) => {
   const urls = new Set();
