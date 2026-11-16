@@ -492,19 +492,29 @@ watch(
 );
 
 let scheduleClockTimer: ReturnType<typeof setInterval> | null = null;
+const needsScheduleClock = computed(() =>
+  activeTab.value === 'schedule' && props.visible && props.scheduleIsReference && props.program.length > 0,
+);
+const stopScheduleClock = () => {
+  if (scheduleClockTimer === null) return;
+  clearInterval(scheduleClockTimer);
+  scheduleClockTimer = null;
+};
 onMounted(() => {
   scheduleNow.value = Math.floor(Date.now() / 1000);
-  scheduleClockTimer = setInterval(() => {
-    // Clock and the timeline fill move once per second. Only update the
-    // visible reference guide; real-time provider EPG is unaffected.
-    if (activeTab.value === 'schedule' && props.visible && props.scheduleIsReference) {
+  watch(needsScheduleClock, (active) => {
+    stopScheduleClock();
+    if (!active) return;
+    scheduleNow.value = Math.floor(Date.now() / 1000);
+    scheduleClockTimer = setInterval(() => {
+      // Do not wake the queue when hidden, showing stations or without a guide.
       scheduleNow.value = Math.floor(Date.now() / 1000);
-    }
-  }, 1_000);
+    }, 1_000);
+  }, { immediate: true });
   if (activeTab.value === 'schedule' && props.visible) void jumpToSchedulePosition();
 });
 onBeforeUnmount(() => {
-  if (scheduleClockTimer !== null) clearInterval(scheduleClockTimer);
+  stopScheduleClock();
   scrollGeneration += 1;
 });
 
