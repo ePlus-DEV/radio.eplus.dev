@@ -27,7 +27,7 @@
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
-    "@iconify-json/lucide": "^1.2.151",
+    "@iconify-json/lucide": "^1.2.154",
     "@nuxt/image": "^2.2.1",
     "@nuxt/ui": "^4.12.0",
     "@nuxtjs/algolia": "^1.11.2",
@@ -35,7 +35,7 @@
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/sitemap": "^9.1.0",
     "@pinia/nuxt": "^1.0.3",
-    "@tailwindcss/vite": "^4.3.4",
+    "@tailwindcss/vite": "^4.3.5",
     "@vesp/nuxt-fontawesome": "^2.0.0",
     "dayjs-nuxt": "^2.1.11",
     "hls.js": "^1.7.4",
