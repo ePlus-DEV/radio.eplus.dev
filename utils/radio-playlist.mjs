@@ -16,8 +16,9 @@ export const isTextPlaylist = (url) => {
   // Match extensions only in the URL path: query values may mention a
   // backup .pls/.m3u file without making the current stream a playlist.
   const path = url.split(/[?#]/, 1)[0];
+  const query = url.split('#', 1)[0].split('?', 2)[1];
   return /\.pls$/i.test(path) ||
-    /(?:[?&](?:output|format)=pls(?:[&#]|$))/i.test(url) ||
+    (query !== undefined && /(?:^|&)(?:output|format)=pls(?:&|$)/i.test(query)) ||
     /\.m3u$/i.test(path);
 };
 
