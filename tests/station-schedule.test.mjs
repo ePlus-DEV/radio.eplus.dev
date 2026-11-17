@@ -20,6 +20,10 @@ test("normalizes only real HTTP schedule URLs", () => {
   assert.equal(normalizeScheduleUrl(false), "");
   assert.equal(normalizeScheduleUrl(""), "");
   assert.equal(normalizeScheduleUrl("schedule-only"), "");
+  assert.equal(normalizeScheduleUrl("https://"), "");
+  assert.equal(normalizeScheduleUrl("https://example.com:bad/epg"), "");
+  assert.equal(normalizeScheduleUrl("https://user:pass@example.com/epg"), "");
+  assert.equal(normalizeScheduleUrl("https://example.com/epg"), "https://example.com/epg");
 });
 
 test("detects Zing schedule by provider endpoint instead of country", () => {

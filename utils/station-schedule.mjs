@@ -4,7 +4,14 @@ export const normalizeScheduleUrl = (value) => {
   const url = value.trim();
   if (!/^https?:\/\//i.test(url)) return "";
 
-  return url;
+  try {
+    const parsed = new URL(url);
+    // Reject malformed endpoints and embedded credentials before a schedule fetch.
+    if (!["http:", "https:"].includes(parsed.protocol) || !parsed.hostname || parsed.username || parsed.password) return "";
+    return url;
+  } catch {
+    return "";
+  }
 };
 
 export const isZingScheduleUrl = (value) => {
