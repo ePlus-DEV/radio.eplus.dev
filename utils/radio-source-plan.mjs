@@ -38,8 +38,19 @@ export const buildPlaybackSources = (sources, corsServer) => {
       type.includes("mpegurl") ||
       type.includes("m3u8");
 
+    // Never forward URL-embedded credentials to a third-party CORS proxy.
+    // Preserve the direct candidate; only suppress its proxy fallback.
+    let hasCredentials = false;
+    try {
+      const parsed = new URL(src);
+      hasCredentials = Boolean(parsed.username || parsed.password);
+    } catch { /* Invalid URLs are not eligible for proxy fallback. */
+      hasCredentials = true;
+    }
+
     const canProxy =
       proxyBase &&
+      !hasCredentials &&
       !isHls &&
       !source.proxied &&
       /^https?:\/\//i.test(src) &&
