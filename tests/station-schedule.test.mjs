@@ -20,6 +20,10 @@ test("normalizes only real HTTP schedule URLs", () => {
   assert.equal(normalizeScheduleUrl(false), "");
   assert.equal(normalizeScheduleUrl(""), "");
   assert.equal(normalizeScheduleUrl("schedule-only"), "");
+  assert.equal(normalizeScheduleUrl("https://"), "");
+  assert.equal(normalizeScheduleUrl("https://example.com:bad/epg"), "");
+  assert.equal(normalizeScheduleUrl("https://user:pass@example.com/epg"), "");
+  assert.equal(normalizeScheduleUrl("https://example.com/epg"), "https://example.com/epg");
 });
 
 test("detects Zing schedule by provider endpoint instead of country", () => {
@@ -157,9 +161,16 @@ test('live time bar is wired to a one-second clock only for visible reference gu
   const q = await readFile(new URL('../components/player/Queue.vue', import.meta.url), 'utf8');
   const gap = await readFile(new URL('../components/player/ScheduleGap.vue', import.meta.url), 'utf8');
   assert.match(q, /scheduleTimelineProgress\(item\.startTime, item\.endTime, scheduleNow\.value\)/);
+  assert.match(q, /watch\(needsScheduleClock, \(active\) => \{/);
   assert.match(q, /scheduleClockTimer = setInterval\(/);
   assert.match(q, /\}, 1_000\)/);
-  assert.match(q, /props\.visible && props\.scheduleIsReference/);
+  assert.match(q, /activeTab\.value === 'schedule' && props\.visible && props\.scheduleIsReference && props\.program\.length > 0/);
+  assert.match(q, /if \(!active\) return/);
+  assert.match(q, /stopScheduleClock\(\)/);
+  assert.match(q, /onBeforeUnmount\(\(\) => \{\s*stopScheduleClock\(\)/);
+  const intervalBody = q.match(/scheduleClockTimer = setInterval\(\(\) => \{([\s\S]*?)\}, 1_000\)/)?.[1];
+  assert.ok(intervalBody, 'one-second callback exists only behind the eligibility watcher');
+  assert.doesNotMatch(intervalBody, /if \(activeTab\.value === 'schedule'/);
   assert.match(q, /data-schedule-clock role="timer"/);
   assert.match(q, /data-schedule-time-progress/);
   assert.match(q, /:start-time="gapStartTime\(scheduleGap\.insertIndex\)"/);
