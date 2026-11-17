@@ -58,7 +58,7 @@ export function stationReportEmailUrl(path, title, subject, description) {
   // produces "+" for spaces, which iOS Mail can show literally in drafts.
   // Percent-encode text using %20 and CRLF line breaks (%0D%0A) instead.
   return 'mailto:report@eplus.dev?subject=' + encodeURIComponent(safeSubject)
-    + '&body=' + encodeURIComponent(body.replace(/\r?\n/g, '\r\n'));
+    + '&body=' + encodeURIComponent(body.replace(/\r\n|\r|\n/g, '\r\n'));
 }
 
 export async function shareStation({ url, title }, browser) {
