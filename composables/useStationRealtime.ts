@@ -133,7 +133,17 @@ export function useStationRealtime() {
     // station switches abort old requests, no extra player or background timer.
     polling.start(appleTuneInMetadataMarker(playback.station) || playback.station?.schedule || '');
   };
-  watch(() => playback.station?.url, activate);
+  // A provider schedule may change without changing the selected station.
+  // Refresh its polling source, but keep the current song and session history.
+  // One combined watcher avoids starting two overlapping polls on station changes.
+  watch(() => [playback.station?.url, playback.station?.schedule, appleTuneInMetadataMarker(playback.station)],
+    ([url], previous) => {
+      if (url !== previous?.[0]) {
+        activate();
+      } else if (clientReady) {
+        polling.start(appleTuneInMetadataMarker(playback.station) || playback.station?.schedule || '');
+      }
+    });
   // A track observed inside the actual HLS audio should also appear in the
   // session-only Queue history. TuneIn Describe may never publish songs.
   watch(() => playback.liveTrack, (track) => {

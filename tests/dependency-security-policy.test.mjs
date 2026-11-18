@@ -36,8 +36,16 @@ test('Dependabot routes routine versions to staging while retaining default-bran
 test('PR CI audits the entire installed production tree for high or critical advisories', async () => {
   const ci = await read('.github/workflows/build.yml');
   const install = ci.indexOf('run: npm ci');
-  const audit = ci.indexOf('run: npm audit --omit=dev --audit-level=high');
+  const audit = ci.indexOf('run: node scripts/check-production-audit.mjs');
   assert.ok(install >= 0 && audit > install, 'audit must run after npm ci');
+  const script = await read('scripts/check-production-audit.mjs');
+  const gate = await read('utils/npm-audit-gate.mjs');
+  assert.ok(script.includes("'--omit=dev', '--audit-level=high', '--json'"),
+    'audit the complete production dependency tree');
+  assert.ok(script.includes('evaluateProductionAudit'),
+    'only approved security findings may be exempted');
+  assert.ok(gate.includes('2026-12-01T00:00:00.000Z'),
+    'temporary exception must have an explicit expiry');
   assert.doesNotMatch(ci, /npm audit[^\n]*(?:\|\|\s*true|continue-on-error)/,
     'do not ignore high-severity security audit failures');
   assert.match(ci, /steps\.current\.outputs\.run == 'true'/,

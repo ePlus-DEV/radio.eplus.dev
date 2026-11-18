@@ -131,3 +131,20 @@ test("preserves valid HTTP(S) proxy fallback without a trailing slash", () => {
     ["https://radio.example/live.mp3", "https://proxy.example/https://radio.example/live.mp3"],
   );
 });
+
+
+test("does not disclose embedded stream credentials through a CORS proxy", () => {
+  const sources = [
+    { src: "https://user:secret@radio.example/live.mp3" },
+    { src: "https://user@radio.example/live.aac" },
+    { src: "https://radio.example/live.mp3" },
+  ];
+  const result = buildPlaybackSources(sources, "https://cors.example/");
+  assert.deepEqual(result.map(item => item.src), [
+    "https://user:secret@radio.example/live.mp3",
+    "https://user@radio.example/live.aac",
+    "https://radio.example/live.mp3",
+    "https://cors.example/https://radio.example/live.mp3",
+  ]);
+  assert.equal(result.filter(item => item.proxied).length, 1);
+});
