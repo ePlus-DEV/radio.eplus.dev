@@ -26,7 +26,7 @@ test('audit collection preserves a strict high-severity CI gate and does not mod
   assert.match(source, /--omit=dev/);
   assert.match(source, /spawnSync\('npm', \['audit'/);
   assert.doesNotMatch(source, /npm audit fix|npm install |push|pull_request_target/);
-  assert.match(ci, /node scripts\\/check-production-audit\\.mjs/);
+  assert.ok(ci.includes('run: node scripts/check-production-audit.mjs'));
   const gate = await readFile(new URL('../scripts/check-production-audit.mjs', import.meta.url), 'utf8');
   assert.match(gate, /'--omit=dev', '--audit-level=high', '--json'/);
   assert.match(gate, /evaluateProductionAudit/);
