@@ -73,7 +73,11 @@ test('entire current catalog has an auditable inventory without stream URLs or m
     assert.equal(summary.geographicStations+summary.globalProviderStations, summary.total);
     assert.equal(new Set(records.map(r=>r.path)).size, records.length);
     assert.ok(summary.declaredCategory>0);
-    assert.equal(summary.declaredLanguage, 7, 'only Global Radio currently declares explicit languages');
+    const languageRecords = records.filter(record => Boolean(record.language));
+    assert.equal(summary.declaredLanguage, languageRecords.length,
+      'summary must count actual declared station languages');
+    assert.equal(records.filter(record => record.area === 'global-radio' && record.language).length,
+      summary.globalProviderStations, 'Global Radio stations retain their explicit languages');
     assert.equal(summary.awaitingContentReview+summary.contentClassified,summary.total);
     assert.ok(summary.awaitingContentReview>0, 'missing evidence must stay visible');
     assert.ok(Object.values(summary.countByArea).every(n=>n>0));

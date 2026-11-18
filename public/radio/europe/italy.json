@@ -379,5 +379,16 @@
         "cros": false,
         "stream": "https://s.streampunk.cc/ondarossa.mp3",
         "features": "/img/europe/italy/ondarossa.png"
+    },
+    "mi-amigo-radio": {
+        "title": "Mi Amigo Radio",
+        "description": "Classic Hits and Oldies from Legnano, Lombardy, Italy.",
+        "type": "audio/aac",
+        "url": "https://www.miamigoradio.it/",
+        "category": "Classic Hits and Oldies",
+        "language": "Italian",
+        "cros": false,
+        "stream": "https://nr12.newradio.it:8662/Live",
+        "features": "https://www.miamigoradio.it/css-img/logoRadioMiAmigo.svg"
     }
 }
