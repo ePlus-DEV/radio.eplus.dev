@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// A full, non-silenced audit report. High/critical production advisories
-// remain enforced independently by the existing CI `npm audit --omit=dev --audit-level=high`.
+// A full, non-silenced audit report. The separate CI production audit gate
+// fails on unapproved high/critical advisories; one known upstream picomatch
+// advisory is temporarily exempted and clearly reported until 2026-12-01.
 import { spawnSync } from 'node:child_process';
 import { mkdir, writeFile, appendFile } from 'node:fs/promises';
 import { summarizeNpmAudit } from '../utils/npm-audit-report.mjs';

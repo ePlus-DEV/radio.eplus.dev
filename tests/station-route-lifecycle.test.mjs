@@ -18,7 +18,9 @@ test('station page owns the static catalog and the application owns playback lif
 test('Zing metadata belongs to the selected provider and is reset on station changes', async () => {
   const realtime = await readFile('composables/useStationRealtime.ts', 'utf8');
   assert.match(realtime, /if \(isZingScheduleUrl\(url\)\)/);
-  assert.match(realtime, /watch\(\(\) => playback\.station\?\.url, activate\)/);
+  assert.match(realtime, /watch\(\(\) => \[playback\.station\?\.url, playback\.station\?\.schedule, appleTuneInMetadataMarker\(playback\.station\)\]/);
+  assert.match(realtime, /if \(url !== previous\?\.\[0\]\) \{\s*activate\(\)/);
+  assert.match(realtime, /else if \(clientReady\) \{\s*polling\.start\(/);
   assert.match(realtime, /lyricsOpen\.value = false/);
   assert.doesNotMatch(realtime, /useRoute|viet-nam/);
 });

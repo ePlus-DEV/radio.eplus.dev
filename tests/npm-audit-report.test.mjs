@@ -19,14 +19,17 @@ test('audit summary preserves low/moderate advisories and counts without inventi
   assert.throws(() => summarizeNpmAudit({ error: 'network' }), /recognizable/);
 });
 
-test('audit collection does not bypass high-severity CI gate or automatically modify dependencies', async () => {
+test('audit collection preserves a strict high-severity CI gate and does not modify dependencies', async () => {
   const source = await readFile(new URL('../scripts/audit-dependencies.mjs', import.meta.url), 'utf8');
   const workflow = await readFile(new URL('../.github/workflows/dependency-audit.yml', import.meta.url), 'utf8');
   const ci = await readFile(new URL('../.github/workflows/build.yml', import.meta.url), 'utf8');
   assert.match(source, /--omit=dev/);
   assert.match(source, /spawnSync\('npm', \['audit'/);
   assert.doesNotMatch(source, /npm audit fix|npm install |push|pull_request_target/);
-  assert.match(ci, /npm audit --omit=dev --audit-level=high/);
+  assert.ok(ci.includes('run: node scripts/check-production-audit.mjs'));
+  const gate = await readFile(new URL('../scripts/check-production-audit.mjs', import.meta.url), 'utf8');
+  assert.match(gate, /'--omit=dev', '--audit-level=high', '--json'/);
+  assert.match(gate, /evaluateProductionAudit/);
   assert.match(workflow, /ref: staging/);
   assert.match(workflow, /workflow_dispatch/);
   assert.match(workflow, /schedule:/);
