@@ -160,12 +160,12 @@ jobs:
           retention-days: 14
           if-no-files-found: error
 
-      # Review the installed production dependency tree (including transitives),
-      # not just top-level package.json versions. Fail CI on high/critical alerts.
-      # Keep the existing single CI job and the original full prerender gates.
+      # Keep high/critical findings blocking except a single explicitly
+      # identified, time-limited upstream picomatch advisory without a patch.
+      # The gate fails closed for unrelated advisories and audit errors.
       - name: "Audit production npm dependencies (high/critical)"
         if: steps.current.outputs.run == 'true'
-        run: npm audit --omit=dev --audit-level=high
+        run: node scripts/check-production-audit.mjs
 
       # Cache small deterministic pregenerate assets, not thousands of HTML pages.
       - name: "Restore generated radio search index"
