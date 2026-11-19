@@ -32,5 +32,5 @@ test('mailto expands a single localized placeholder without leaking literal brac
   const urlBody = urlOnly.searchParams.get('body');
   assert.equal(stationBody, 'Station: Test Radio\r\nhttps://radio.eplus.dev/vn/ho-chi-minh/test-radio');
   assert.equal(urlBody, 'Station page: https://radio.eplus.dev/vn/ho-chi-minh/test-radio\r\nTest Radio');
-  assert.doesNotMatch(stationBody + urlBody, /\\{(?:station|url)\\}/);
+  assert.doesNotMatch(stationBody + urlBody, /\{(?:station|url)\}/);
 });
