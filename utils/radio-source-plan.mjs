@@ -43,9 +43,9 @@ export const buildPlaybackSources = (sources, corsServer) => {
     let hasCredentials = false;
     try {
       const parsed = new URL(src);
-      // Signed stream URLs must not be forwarded to third-party CORS proxies.
+      // Signed stream URLs (including AWS/GCS provider-specific query fields) must not reach third-party proxies.
       const sensitiveQuery = [...parsed.searchParams.keys()].some(key =>
-        /^(?:token|access[_-]?key|api[_-]?key|auth(?:orization)?|signature|sig|secret|password|jwt|expires?|policy|key[_-]?pair[_-]?id)$/i.test(key));
+        /^(?:x-amz-.+|x-goog-.+|awsaccesskeyid|googleaccessid|token|access[_-]?key|api[_-]?key|auth(?:orization)?|signature|sig|secret|password|jwt|expires?|policy|key[_-]?pair[_-]?id)$/i.test(key));
       hasCredentials = Boolean(parsed.username || parsed.password || sensitiveQuery);
     } catch { /* Invalid URLs are not eligible for proxy fallback. */
       hasCredentials = true;
