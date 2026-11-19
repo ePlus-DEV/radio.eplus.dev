@@ -148,3 +148,19 @@ test("does not disclose embedded stream credentials through a CORS proxy", () =>
   ]);
   assert.equal(result.filter(item => item.proxied).length, 1);
 });
+
+
+test("never forwards signed query credentials to a third-party proxy", () => {
+  const sources = [
+    { src: "https://radio.example/live.mp3?token=private-test-value" },
+    { src: "https://radio.example/live.aac?accessKey=private-test-value" },
+    { src: "https://radio.example/live.mp3?Signature=private-test-value" },
+    { src: "https://radio.example/live.mp3?quality=high" },
+  ];
+  const result = buildPlaybackSources(sources, "https://cors.example/");
+  assert.deepEqual(result.map(item => item.src), [
+    ...sources.slice(0, 3).map(item => item.src),
+    "https://radio.example/live.mp3?quality=high",
+    "https://cors.example/https://radio.example/live.mp3?quality=high",
+  ]);
+});
