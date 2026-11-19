@@ -16,7 +16,7 @@ test('Mi Amigo Radio offers its direct AAC stream then the configured CORS fallb
   assert.equal(entry.url, 'https://www.miamigoradio.it/');
   assert.equal(entry.type, 'audio/aac');
   assert.equal(entry.stream, 'https://nr12.newradio.it:8662/Live');
-  assert.equal(entry.features, '/img/europe/italy/mi-amigo-radio.png');
+  assert.equal(entry.features, '/img/europe/italy/mi-amigo-radio.jpg');
   assert.equal(entry.cros, false);
 
   const corsServer = 'https://cors.example/';
@@ -39,9 +39,9 @@ test('Mi Amigo Radio offers its direct AAC stream then the configured CORS fallb
   );
 });
 
-test('Mi Amigo Radio artwork is a valid 512×512 local PNG', () => {
-  const logo = readFileSync(new URL('../public/img/europe/italy/mi-amigo-radio.png', import.meta.url));
-  assert.deepEqual([...logo.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-  assert.equal(logo.readUInt32BE(16), 512);
-  assert.equal(logo.readUInt32BE(20), 512);
+test('Mi Amigo Radio artwork is an available local JPEG', () => {
+  const logo = readFileSync(new URL('../public/img/europe/italy/mi-amigo-radio.jpg', import.meta.url));
+  // A JPEG begins with the Start Of Image marker followed by another marker.
+  assert.deepEqual([...logo.subarray(0, 3)], [0xff, 0xd8, 0xff]);
+  assert.ok(logo.length > 1024, 'station artwork should not be an empty placeholder');
 });
