@@ -19,3 +19,18 @@ test('mailto body normalizes mixed CRLF, CR and LF to single CRLF', () => {
   assert.equal((body.match(/\r\n/g) || []).length, 6);
   assert.equal(body.replace(/\r\n/g, '').includes('\r'), false);
 });
+
+
+test('mailto expands a single localized placeholder without leaking literal braces or duplicating station details', () => {
+  const stationOnly = new URL(stationReportEmailUrl(
+    '/vn/ho-chi-minh/test-radio', 'Test Radio', 'Playback problem', 'Station: {station}',
+  ));
+  const urlOnly = new URL(stationReportEmailUrl(
+    '/vn/ho-chi-minh/test-radio', 'Test Radio', 'Playback problem', 'Station page: {url}',
+  ));
+  const stationBody = stationOnly.searchParams.get('body');
+  const urlBody = urlOnly.searchParams.get('body');
+  assert.equal(stationBody, 'Station: Test Radio\r\nhttps://radio.eplus.dev/vn/ho-chi-minh/test-radio');
+  assert.equal(urlBody, 'Station page: https://radio.eplus.dev/vn/ho-chi-minh/test-radio\r\nTest Radio');
+  assert.doesNotMatch(stationBody + urlBody, /\{(?:station|url)\}/);
+});

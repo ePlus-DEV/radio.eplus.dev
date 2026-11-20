@@ -49,9 +49,11 @@ export function stationReportEmailUrl(path, title, subject, description) {
   const message = String(description || 'I cannot hear this station.').slice(0, 1000);
   // Localized templates may place the station name and public URL directly in
   // the email. Preserve the previous plain-text fallback for older callers.
-  const hasPlaceholders = message.includes('{station}') && message.includes('{url}');
+  const hasPlaceholders = /\{(?:station|url)\}/.test(message);
   const body = hasPlaceholders
     ? message.replace(/\{(station|url)\}/g, (_match, key) => key === 'station' ? safeTitle : stationPage)
+      + (message.includes('{station}') ? '' : '\n' + safeTitle)
+      + (message.includes('{url}') ? '' : '\n' + stationPage)
     : message + '\n\n' + safeTitle + '\n' + stationPage;
 
   // mailto URLs follow RFC 6068, not HTML form encoding. URLSearchParams
