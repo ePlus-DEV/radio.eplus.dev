@@ -5,7 +5,7 @@ import { runInNewContext } from 'node:vm';
 
 const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 
-async function offlinePageHarness({ reachable = false, hidden = false, validManifest = true } = {}) {
+async function offlinePageHarness({ reachable = false, hidden = false, validManifest = true, serviceWorkerFails = false } = {}) {
   const html = await read('public/offline.html');
   const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
   assert.ok(script, 'offline page must contain a self-contained reconnect script');
@@ -35,6 +35,7 @@ async function offlinePageHarness({ reachable = false, hidden = false, validMani
   const window = {
     location: {
       origin: 'https://preview.radio.eplus.dev',
+      pathname: '/pr-preview/pr-24/asia/viet-nam/station',
       reload: () => { reloadCount += 1; },
     },
     addEventListener: (name, listener) => windowEvents.set(name, listener),
@@ -42,9 +43,10 @@ async function offlinePageHarness({ reachable = false, hidden = false, validMani
   const navigator = {
     language: 'vi-VN',
     serviceWorker: {
-      getRegistration: async () => ({
-        scope: 'https://preview.radio.eplus.dev/pr-preview/pr-24/',
-      }),
+      getRegistration: async () => {
+        if (serviceWorkerFails) throw new Error('Service worker lookup blocked');
+        return { scope: 'https://preview.radio.eplus.dev/pr-preview/pr-24/' };
+      },
     },
   };
 
@@ -151,4 +153,12 @@ test('PWA offline shell suspends probing when hidden and checks on foreground', 
   page.emitDocument('visibilitychange');
   await page.flush();
   assert.equal(page.reloadCount, 1);
+});
+
+test('PWA offline shell survives denied service-worker lookup and retains preview scope', async () => {
+  const page = await offlinePageHarness({ reachable: true, serviceWorkerFails: true });
+  await page.flush();
+  assert.equal(page.reloadCount, 1);
+  assert.equal(page.requests[0].url,
+    'https://preview.radio.eplus.dev/pr-preview/pr-24/brand/site.webmanifest');
 });
