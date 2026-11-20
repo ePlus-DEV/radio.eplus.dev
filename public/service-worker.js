@@ -4,7 +4,7 @@
  */
 const OFFLINE_SCOPE_KEY = encodeURIComponent(new URL(self.registration.scope).pathname);
 const OFFLINE_CACHE_PREFIX = 'onair-offline-shell-' + OFFLINE_SCOPE_KEY + '-v';
-const OFFLINE_CACHE_NAME = OFFLINE_CACHE_PREFIX + '1';
+const OFFLINE_CACHE_NAME = OFFLINE_CACHE_PREFIX + '2';
 const OFFLINE_URL = new URL('offline.html', self.registration.scope).href;
 
 self.addEventListener('install', event => {

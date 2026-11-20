@@ -18,7 +18,9 @@
     button { appearance: none; border: 0; border-radius: 13px; background: #e11d48; color: white; font: inherit; font-weight: 650; padding: 13px 25px; min-height: 48px; cursor: pointer; }
     button:focus-visible { outline: 3px solid #fda4af; outline-offset: 4px; }
     button:hover { background: #be123c; }
-    .note { display: block; margin-top: 18px; color: #aaaab6; font-size: 12px; }
+    .connection-state { display: block; min-height: 20px; margin-top: 14px; color: #fda4af; font-size: 13px; }
+    .note { display: block; margin-top: 12px; color: #aaaab6; font-size: 12px; }
+    button:disabled { cursor: progress; opacity: .75; }
     @media (prefers-reduced-motion: no-preference) { button { transition: background .15s ease; } }
   </style>
 </head>
@@ -31,18 +33,19 @@
     <h1 id="offline-title">You're offline</h1>
     <p id="offline-description">Live radio needs an internet connection. Reconnect to keep listening.</p>
     <button type="button" id="retry">Try again</button>
+    <span class="connection-state" id="connection-state" role="status" aria-live="polite">Waiting for a connection…</span>
     <small class="note" id="offline-note">Live stations cannot play offline.</small>
   </main>
   <script>
     (() => {
       const messages = {
-        en: ["You're offline", "Live radio needs an internet connection. Reconnect to keep listening.", "Try again", "Live stations cannot play offline."],
-        vi: ["Bạn đang ngoại tuyến", "Radio trực tiếp cần kết nối Internet. Hãy kết nối lại để tiếp tục nghe.", "Thử lại", "Không thể nghe đài trực tiếp khi ngoại tuyến."],
-        ja: ["オフラインです", "ライブ配信のラジオにはインターネット接続が必要です。再接続してください。", "再試行", "オフラインではライブ放送を再生できません。"],
-        "zh-CN": ["当前处于离线状态", "收听直播电台需要网络连接。请重新连接后继续收听。", "重试", "离线时无法播放直播电台。"],
-        "zh-TW": ["目前處於離線狀態", "收聽直播電台需要網路連線。請重新連線後繼續收聽。", "重試", "離線時無法播放直播電台。"],
-        fr: ["Vous êtes hors ligne", "Une connexion Internet est nécessaire pour écouter la radio en direct. Reconnectez-vous pour continuer.", "Réessayer", "Les radios en direct ne fonctionnent pas hors ligne."],
-        ru: ["Вы не в сети", "Для прямого эфира радио требуется интернет. Подключитесь к сети, чтобы продолжить.", "Повторить", "Прямой эфир недоступен без интернета."],
+        en: ["You're offline", "Live radio needs an internet connection. Reconnect to keep listening.", "Try again", "Live stations cannot play offline.", "Waiting for a connection…", "Checking connection…", "Connection restored. Reopening radio…"],
+        vi: ["Bạn đang ngoại tuyến", "Radio trực tiếp cần kết nối Internet. Hãy kết nối lại để tiếp tục nghe.", "Thử lại", "Không thể nghe đài trực tiếp khi ngoại tuyến.", "Đang chờ kết nối mạng…", "Đang kiểm tra kết nối…", "Đã có mạng. Đang mở lại radio…"],
+        ja: ["オフラインです", "ライブ配信のラジオにはインターネット接続が必要です。再接続してください。", "再試行", "オフラインではライブ放送を再生できません。", "接続を待っています…", "接続を確認しています…", "接続が回復しました。ラジオを開き直します…"],
+        "zh-CN": ["当前处于离线状态", "收听直播电台需要网络连接。请重新连接后继续收听。", "重试", "离线时无法播放直播电台。", "正在等待网络连接…", "正在检查网络连接…", "连接已恢复，正在重新打开电台…"],
+        "zh-TW": ["目前處於離線狀態", "收聽直播電台需要網路連線。請重新連線後繼續收聽。", "重試", "離線時無法播放直播電台。", "正在等待網路連線…", "正在檢查網路連線…", "連線已恢復，正在重新開啟電台…"],
+        fr: ["Vous êtes hors ligne", "Une connexion Internet est nécessaire pour écouter la radio en direct. Reconnectez-vous pour continuer.", "Réessayer", "Les radios en direct ne fonctionnent pas hors ligne.", "En attente de connexion…", "Vérification de la connexion…", "Connexion rétablie. Réouverture de la radio…"],
+        ru: ["Вы не в сети", "Для прямого эфира радио требуется интернет. Подключитесь к сети, чтобы продолжить.", "Повторить", "Прямой эфир недоступен без интернета.", "Ожидание подключения…", "Проверка соединения…", "Соединение восстановлено. Открываем радио…"],
       };
       const browserLanguage = (navigator.language || 'en').toLowerCase();
       const language = browserLanguage.startsWith('zh-tw') || browserLanguage.startsWith('zh-hk') || browserLanguage.startsWith('zh-mo')
@@ -50,12 +53,113 @@
         : browserLanguage.startsWith('vi') ? 'vi' : browserLanguage.startsWith('ja') ? 'ja'
         : browserLanguage.startsWith('fr') ? 'fr' : browserLanguage.startsWith('ru') ? 'ru' : 'en';
       document.documentElement.lang = language;
-      const [title, description, retry, note] = messages[language];
+      const [title, description, retry, note, waiting, checking, connected] = messages[language];
       document.getElementById('offline-title').textContent = title;
       document.getElementById('offline-description').textContent = description;
-      document.getElementById('retry').textContent = retry;
       document.getElementById('offline-note').textContent = note;
-      document.getElementById('retry').addEventListener('click', () => window.location.reload());
+
+      const retryButton = document.getElementById('retry');
+      const connectionState = document.getElementById('connection-state');
+      retryButton.textContent = retry;
+      connectionState.textContent = waiting;
+
+      let retryTimer = null;
+      let checkingConnection = false;
+      let pendingCheck = false;
+      let restored = false;
+      let failedAttempts = 0;
+
+      const scheduleRetry = () => {
+        clearTimeout(retryTimer);
+        if (restored || document.hidden) return;
+        // Back off while the connection is unavailable; never reload in a loop.
+        const delay = Math.min(15_000, 3_000 * 2 ** Math.min(Math.max(0, failedAttempts - 1), 3));
+        retryTimer = setTimeout(() => { void checkConnection(); }, delay);
+      };
+
+      async function checkConnection() {
+        if (restored || document.hidden) return;
+        if (checkingConnection) {
+          pendingCheck = true;
+          return;
+        }
+        checkingConnection = true;
+        clearTimeout(retryTimer);
+        retryButton.disabled = true;
+        connectionState.textContent = checking;
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5_000);
+        try {
+          // The active worker gives us the correct deployment scope for deep
+          // links and /pr-preview/pr-N/ paths, not just the production root.
+          let registration;
+          try {
+            registration = await navigator.serviceWorker?.getRegistration?.();
+          } catch {
+            // A blocked or unavailable service-worker API must not prevent
+            // recovery when the website is already reachable again.
+          }
+          const previewPath = window.location.pathname.match(/^\/pr-preview\/pr-[1-9]\d*\//)?.[0];
+          const fallbackScope = new URL(previewPath || '/', window.location.origin).href;
+          const scope = registration?.scope || fallbackScope;
+          // A non-navigation request bypasses our navigation-only offline
+          // fallback. Require a real, valid manifest before reloading.
+          const probeUrl = new URL('brand/site.webmanifest', scope);
+          const response = await fetch(probeUrl.href, {
+            cache: 'no-store',
+            redirect: 'error',
+            signal: controller.signal,
+          });
+          if (!response.ok) throw new Error('Connection unavailable');
+          const manifest = await response.json();
+          if (manifest?.name !== 'ePlus OnAir — Listen Beyond Borders.'
+            || manifest?.start_url !== '../' || manifest?.scope !== '../') {
+            throw new Error('Unexpected website manifest');
+          }
+
+          restored = true;
+          connectionState.textContent = connected;
+          // The address bar still contains the requested station/page URL.
+          // Do not initiate playback; normal restore-on-reload rules apply.
+          window.location.reload();
+        } catch {
+          failedAttempts += 1;
+          connectionState.textContent = waiting;
+        } finally {
+          clearTimeout(timeout);
+          checkingConnection = false;
+          retryButton.disabled = false;
+          if (!restored) {
+            if (pendingCheck) {
+              pendingCheck = false;
+              void checkConnection();
+            } else {
+              scheduleRetry();
+            }
+          }
+        }
+      }
+
+      retryButton.addEventListener('click', () => {
+        failedAttempts = 0;
+        void checkConnection();
+      });
+      window.addEventListener('online', () => {
+        failedAttempts = 0;
+        void checkConnection();
+      });
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          clearTimeout(retryTimer);
+          pendingCheck = false;
+          return;
+        }
+        failedAttempts = 0;
+        void checkConnection();
+      });
+      // Also recover when the network returns without firing an online event.
+      void checkConnection();
     })();
   </script>
 </body>

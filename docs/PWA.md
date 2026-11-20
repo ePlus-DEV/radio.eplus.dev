@@ -14,6 +14,11 @@ This is an **online-first app shell**, not an offline radio player.
 - The worker pre-caches **only** `offline.html`, a small static, noindex,
   self-contained explanation. Navigation requests go to the network first.
   On a network failure, the worker displays the translated offline explanation.
+  The fallback page listens for browser connectivity changes and also probes the
+  same-origin, deployment-scoped web manifest with a 5-second timeout and
+  backoff (3 to 15 seconds). It reloads the **original URL** only after a valid
+  network response, does not loop-refresh while offline, and pauses background
+  probes while hidden. The manual Retry button uses the same verification.
 - There is **no audio cache**: MP3/AAC, .m3u8 playlists, HLS segments, provider
   requests, API, JS, CSS, search index JSON and all real station HTML stay
   network-only. A stream always requires a current online connection.
@@ -41,7 +46,12 @@ tabs; test on the actual device before marking #340 or #346 complete.
 - [ ] Install on Android Chrome and open the app from its launcher.
 - [ ] Add to Home Screen on Safari iOS, test lock-screen/audio interruptions.
 - [ ] With the app open, go offline then navigate: see the offline explanation;
-      retry after restoring connection should fetch a fresh live page.
+      restore connection and verify automatic recovery to the same page without
+      pressing Retry. Also verify Retry works and no repeated reloads occur
+      while disconnected, including when the browser omits an online event.
+- [ ] Repeat the recovery test on a station deep link and on a
+      `/pr-preview/pr-N/` deployment: its connectivity probe must stay within
+      the active Pages scope. A browser reload must leave the player paused.
 - [ ] Use DevTools Application → Cache Storage: **only** `offline.html` is
       precached; no station catalog, stream segments or signed URLs.
 - [ ] Update the worker: no forced reload, old audio continues, next visits
@@ -49,5 +59,6 @@ tabs; test on the actual device before marking #340 or #346 complete.
 - [ ] `npm test`, `npm run generate:site`, SEO/GA4 noindex and GitHub Pages
       subpath validations, mobile light/dark and safe-area smoke tests.
 
-The automated tests verify worker/cache policy and manifest URL resolution.
+The automated tests verify worker/cache policy, manifest URL resolution, and
+offline-page automatic recovery, polling backoff and preview-scoped probes.
 Physical iOS/Android QA remains **not run** until independently documented.
