@@ -164,3 +164,24 @@ test("never forwards signed query credentials to a third-party proxy", () => {
     "https://cors.example/https://radio.example/live.mp3?quality=high",
   ]);
 });
+
+test("never forwards cloud-provider signed stream query parameters to a third-party proxy", () => {
+  const signed = [
+    "https://radio.example/live.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=test&X-Amz-Signature=test",
+    "https://radio.example/live.aac?X-Amz-Security-Token=test",
+    "https://radio.example/live.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Signature=test",
+    "https://radio.example/live.mp3?AWSAccessKeyId=test",
+    "https://radio.example/live.mp3?GoogleAccessId=test",
+  ];
+  const ordinary = "https://radio.example/live.mp3?quality=high";
+  const result = buildPlaybackSources(
+    [...signed, ordinary].map(src => ({ src })),
+    "https://cors.example/",
+  );
+  assert.deepEqual(result.map(item => item.src), [
+    ...signed,
+    ordinary,
+    `https://cors.example/${ordinary}`,
+  ]);
+  assert.equal(result.filter(item => item.proxied).length, 1);
+});
