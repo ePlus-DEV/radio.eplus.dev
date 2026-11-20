@@ -113,8 +113,9 @@
           });
           if (!response.ok) throw new Error('Connection unavailable');
           const manifest = await response.json();
-          if (typeof manifest?.name !== 'string' || typeof manifest?.start_url !== 'string') {
-            throw new Error('Invalid response');
+          if (manifest?.name !== 'ePlus OnAir — Listen Beyond Borders.'
+            || manifest?.start_url !== '../' || manifest?.scope !== '../') {
+            throw new Error('Unexpected website manifest');
           }
 
           restored = true;
