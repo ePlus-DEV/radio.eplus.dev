@@ -93,8 +93,16 @@
         try {
           // The active worker gives us the correct deployment scope for deep
           // links and /pr-preview/pr-N/ paths, not just the production root.
-          const registration = await navigator.serviceWorker?.getRegistration?.();
-          const scope = registration?.scope || new URL('/', window.location.origin).href;
+          let registration;
+          try {
+            registration = await navigator.serviceWorker?.getRegistration?.();
+          } catch {
+            // A blocked or unavailable service-worker API must not prevent
+            // recovery when the website is already reachable again.
+          }
+          const previewPath = window.location.pathname.match(/^\\/pr-preview\\/pr-[1-9]\\d*\\//)?.[0];
+          const fallbackScope = new URL(previewPath || '/', window.location.origin).href;
+          const scope = registration?.scope || fallbackScope;
           // A non-navigation request bypasses our navigation-only offline
           // fallback. Require a real, valid manifest before reloading.
           const probeUrl = new URL('brand/site.webmanifest', scope);
