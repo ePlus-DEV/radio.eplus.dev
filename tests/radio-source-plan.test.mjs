@@ -185,3 +185,21 @@ test("never forwards cloud-provider signed stream query parameters to a third-pa
   ]);
   assert.equal(result.filter(item => item.proxied).length, 1);
 });
+
+test("never forwards OAuth-style stream credentials to a third-party proxy", () => {
+  const privateKeys = [
+    "access_token", "refresh_token", "id_token", "auth_token",
+    "session_token", "session_key", "client_secret",
+  ];
+  const sources = privateKeys.map(key => ({
+    src: `https://radio.example/live.mp3?${key}=private-test-value`,
+  }));
+  const publicSource = { src: "https://radio.example/live.mp3?quality=high" };
+  const result = buildPlaybackSources([...sources, publicSource], "https://cors.example/");
+  assert.deepEqual(result.map(item => item.src), [
+    ...sources.map(item => item.src),
+    publicSource.src,
+    `https://cors.example/${publicSource.src}`,
+  ]);
+  assert.equal(result.filter(item => item.proxied).length, 1);
+});
