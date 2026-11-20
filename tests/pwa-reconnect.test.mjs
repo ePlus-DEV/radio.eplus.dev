@@ -7,8 +7,11 @@ const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 
 async function offlinePageHarness({ reachable = false, hidden = false, validManifest = true, serviceWorkerFails = false } = {}) {
   const html = await read('public/offline.html');
-  const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
-  assert.ok(script, 'offline page must contain a self-contained reconnect script');
+  const openingTag = '<script>';
+  const start = html.indexOf(openingTag);
+  const end = html.indexOf('</script>', start);
+  assert.ok(start >= 0 && end > start, 'offline page must contain a self-contained reconnect script');
+  const script = html.slice(start + openingTag.length, end);
 
   const state = { reachable, validManifest };
   const windowEvents = new Map();
@@ -58,7 +61,7 @@ async function offlinePageHarness({ reachable = false, hidden = false, validMani
       return {
         ok: true,
         json: async () => state.validManifest
-          ? { name: 'ePlus OnAir', start_url: '../' }
+          ? { name: 'ePlus OnAir — Listen Beyond Borders.', start_url: '../', scope: '../' }
           : { unexpected: 'captive portal' },
       };
     },
