@@ -13,6 +13,7 @@ function workerHarness(source) {
   const cacheKeys = [
     'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v0',
     'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v1',
+    'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v2',
     'onair-offline-shell-%2Fpr-preview%2Fpr-3%2F-v0',
     'some-other-app',
   ];
@@ -22,7 +23,7 @@ function workerHarness(source) {
     add: async request => { saved.push(request.url || request); },
   };
   const caches = {
-    open: async name => { assert.equal(name, 'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v1'); return cache; },
+    open: async name => { assert.equal(name, 'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v2'); return cache; },
     keys: async () => cacheKeys,
     delete: async name => { deleted.push(name); return true; },
     match: async url => url === 'https://radio.example/pr-preview/pr-2/offline.html'
@@ -79,7 +80,10 @@ test('service worker caches only the noindex offline explanation, not stations o
   assert.deepEqual(worker.saved, ['https://radio.example/pr-preview/pr-2/offline.html']);
   assert.doesNotMatch(source, /self\.skipWaiting\(|self\.clients\.claim\(|cache\.put\(/);
   await worker.run('activate');
-  assert.deepEqual(worker.deleted, ['onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v0']);
+  assert.deepEqual(worker.deleted, [
+    'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v0',
+    'onair-offline-shell-%2Fpr-preview%2Fpr-2%2F-v1',
+  ]);
 
   for (const request of [
     { mode: 'no-cors', method: 'GET', destination: 'audio', url: 'https://stream.example/live.mp3' },
@@ -124,4 +128,9 @@ test('offline HTML explicitly refuses offline radio, is noindex and is self-cont
   assert.doesNotMatch(html, /<(?:script|link)[^>]+(?:src|href)=["']https?:\/\//i);
   assert.match(html, /env\(safe-area-inset-bottom\)/);
   assert.match(html, /window\.location\.reload\(\)/);
+  assert.match(html, /getRegistration\?\.\(\)/);
+  assert.match(html, /brand\/site\.webmanifest/);
+  assert.match(html, /aria-live="polite"/);
+  assert.match(html, /cache: 'no-store'/);
+  assert.match(html, /document\.addEventListener\('visibilitychange'/);
 });
