@@ -1231,7 +1231,14 @@ const radioMediaSession = createRadioMediaSession({
 const toggleMute = (): void => {
   const media = mediaElement.value;
   if (!media) return;
-  media.muted = !media.muted;
+  // A zero-volume element stays silent even after clearing its muted flag.
+  // Restore an audible level only for browsers with writable media volume.
+  if (media.muted || media.volume === 0) {
+    if (media.volume === 0 && !systemVolumeOnly.value) media.volume = 1;
+    media.muted = false;
+  } else {
+    media.muted = true;
+  }
 };
 
 const onVolumeInput = (event: Event): void => {

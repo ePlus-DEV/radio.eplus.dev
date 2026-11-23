@@ -1,4 +1,5 @@
 import { createCachedLoader } from '~/utils/cached-loader.mjs';
+import { createSearchIndexLoadState } from '~/utils/search-index-load-state.mjs';
 
 export interface StationSearchItem {
   objectID: string;
@@ -36,6 +37,7 @@ export function useStationSearchIndex() {
   const index = shallowRef<StationSearchItem[]>([]);
   const loading = ref(false);
   const error = ref(false);
+  const loadState = createSearchIndexLoadState();
   let disposed = false;
   let requested: Promise<void> | undefined;
 
@@ -43,12 +45,12 @@ export function useStationSearchIndex() {
   // Load on search focus/open; the cached loader deduplicates across mobile
   // modal and desktop header, and failed requests remain retryable.
   const load = (): Promise<void> => {
-    if (index.value.length) return Promise.resolve();
+    if (loadState.isLoaded()) return Promise.resolve();
     if (requested) return requested;
     loading.value = true;
     error.value = false;
     requested = loaderFor(searchUrl)()
-      .then(items => { if (!disposed) index.value = items; })
+      .then(items => { if (!disposed) { index.value = items; loadState.markLoaded(); } })
       .catch(() => { if (!disposed) error.value = true; })
       .finally(() => {
         requested = undefined;
