@@ -216,3 +216,19 @@ test("does not re-proxy an already proxied URL with canonical-equivalent host ca
     [otherStream, "https://cors.example/https://radio.example/live.mp3"],
   );
 });
+
+test("rejects proxy URLs with empty query or fragment delimiters", () => {
+  const source = [{ src: "https://radio.example/live.mp3" }];
+  for (const proxy of [
+    "https://proxy.example/?",
+    "https://proxy.example/#",
+    "https://proxy.example/path?",
+    "https://proxy.example/path#",
+  ]) {
+    assert.deepEqual(
+      buildPlaybackSources(source, proxy).map(item => item.src),
+      [source[0].src],
+      proxy,
+    );
+  }
+});
