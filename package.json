@@ -27,9 +27,9 @@
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
-    "@iconify-json/lucide": "^1.2.154",
+    "@iconify-json/lucide": "^1.2.157",
     "@nuxt/image": "^2.2.1",
-    "@nuxt/ui": "^4.12.0",
+    "@nuxt/ui": "^4.13.0",
     "@nuxtjs/algolia": "^1.11.2",
     "@nuxtjs/color-mode": "^4.1.0",
     "@nuxtjs/i18n": "^10.6.0",
@@ -49,7 +49,7 @@
     "node": "24.15.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.65.0"
+    "@playwright/test": "^1.65.1"
   },
   "overrides": {
     "fontless": {
