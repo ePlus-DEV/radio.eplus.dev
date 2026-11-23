@@ -7,7 +7,7 @@ const normalizeProxyBase = (value) => {
   // an unusable playback candidate (or exposing credentials in its URL).
   try {
     const url = new URL(base);
-    if (!["http:", "https:"].includes(url.protocol) || url.username || url.password || url.search || url.hash) return "";
+    if (!["http:", "https:"].includes(url.protocol) || url.username || url.password || base.includes("?") || base.includes("#")) return "";
     return base.endsWith("/") ? base : `${base}/`;
   } catch { return ""; }
 };
