@@ -66,7 +66,7 @@ test('production lockfile excludes the vulnerable nested esbuild copy', async ()
     'No outdated nested esbuild platform binaries should remain',
   );
   const uiVersion = lock.packages['node_modules/@nuxt/ui']?.version;
-  assert.match(uiVersion ?? '', /^4\\.\\d+\\.\\d+$/,
+  assert.match(uiVersion ?? '', /^4[.]\\d+[.]\\d+$/ ,
     'Retain a resolved Nuxt UI v4 release in the production lockfile');
   assert.ok(manifest.dependencies['@nuxt/ui']?.startsWith('^4.'),
     'Keep Nuxt UI on the supported v4 dependency line');
