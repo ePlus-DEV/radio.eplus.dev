@@ -63,3 +63,17 @@ test("a failed hls.js import uses native HLS only when supported", async () => {
   assert.ok(nativeStart > 0 && nativeMetadata > nativeStart && nativeLoad > nativeMetadata,
     "native fallback reuses the existing source and metadata lifecycle");
 });
+
+
+test("native HLS registers readiness before loading the stream", async () => {
+  const source = await readFile(playerPath, "utf8");
+  const start = source.indexOf("const configureHlsSource");
+  const end = source.indexOf("const stopPlaybackFailure", start);
+  const block = source.slice(start, end);
+  const nativeStart = block.indexOf("media.src = source.src;");
+  const listener = block.indexOf('media.addEventListener(\n        "loadedmetadata"', nativeStart);
+  const load = block.indexOf("media.load();", nativeStart);
+
+  assert.ok(nativeStart >= 0 && listener > nativeStart && load > listener,
+    "native HLS can emit loadedmetadata synchronously after load(); listen first");
+});
