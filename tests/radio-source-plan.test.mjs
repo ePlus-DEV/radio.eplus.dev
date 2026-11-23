@@ -203,3 +203,16 @@ test("never forwards OAuth-style stream credentials to a third-party proxy", () 
   ]);
   assert.equal(result.filter(item => item.proxied).length, 1);
 });
+
+
+test("does not re-proxy an already proxied URL with canonical-equivalent host casing or port", () => {
+  const alreadyProxied = "https://CORS.EXAMPLE:443/https://radio.example/live.mp3";
+  const result = buildPlaybackSources([{ src: alreadyProxied }], "https://cors.example/");
+  assert.deepEqual(result.map(item => item.src), [alreadyProxied]);
+
+  const otherStream = "https://radio.example/live.mp3";
+  assert.deepEqual(
+    buildPlaybackSources([{ src: otherStream }], "https://cors.example/").map(item => item.src),
+    [otherStream, "https://cors.example/https://radio.example/live.mp3"],
+  );
+});
