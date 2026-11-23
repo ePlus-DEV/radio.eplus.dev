@@ -831,10 +831,9 @@ const configureHlsSource = async (
 
     media.src = source.src;
     attachNativeHlsSongMetadata(media, version);
-    media.load();
 
     if (autoplay && !userPaused.value) {
-      startFallbackProbe();
+      // Register before load(): cached/native manifests can become ready immediately.
       media.addEventListener(
         "loadedmetadata",
         () => {
@@ -843,7 +842,9 @@ const configureHlsSource = async (
         },
         { once: true },
       );
+      startFallbackProbe();
     }
+    media.load();
     return;
   }
 
